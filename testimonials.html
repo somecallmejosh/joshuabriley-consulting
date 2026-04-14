@@ -1,0 +1,1248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      Testimonials — Joshua Briley | UX Engineer &amp; Design Systems Consultant
+    </title>
+    <meta
+      name="description"
+      content="Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&family=Caveat:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Fraunces', 'Georgia', 'serif'],
+              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+              body: ['DM Sans', 'system-ui', 'sans-serif'],
+              logo: ['Style Script', 'cursive'],
+              hand: ['Caveat', 'cursive'],
+            },
+            colors: {
+              cream: '#FFFBF5',
+              peach: '#FFE8D6',
+              coral: '#E8573D',
+              sunset: '#FF8E53',
+              plum: '#6C4AB6',
+              navy: '#2D2B55',
+              charcoal: '#2E2E30',
+              sage: '#7BB47A',
+              sky: '#5DADE2',
+              lemon: '#FDE68A',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'DM Sans', system-ui, sans-serif;
+      }
+      .wavy-underline {
+        text-decoration: underline wavy;
+        text-decoration-color: #e8573d;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
+      }
+      .blob-shape {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      .blob-shape-alt {
+        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      }
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(2deg);
+        }
+      }
+      @keyframes float-slow {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
+      }
+      @keyframes wiggle {
+        0%,
+        100% {
+          transform: rotate(-2deg);
+        }
+        50% {
+          transform: rotate(2deg);
+        }
+      }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-float-slow {
+        animation: float-slow 8s ease-in-out infinite;
+      }
+      .animate-float-delay {
+        animation: float 6s ease-in-out 2s infinite;
+      }
+      .animate-wiggle {
+        animation: wiggle 4s ease-in-out infinite;
+      }
+      .squiggle-divider {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: 30px;
+      }
+      .logo-monogram {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        background: linear-gradient(135deg, #6c4ab6, #e8573d);
+        color: white;
+        font-family: 'Style Script', cursive;
+        font-size: 1.1rem;
+        line-height: 1;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
+      }
+      .logo-monogram-sm {
+        width: 30px;
+        height: 30px;
+        font-size: 0.95rem;
+      }
+      .sticker {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1.5px dashed;
+        transform: rotate(-1deg);
+      }
+      .nav-open .mobile-menu {
+        display: flex;
+      }
+
+      /* ====== Testimonial card variants ====== */
+      /* Masonry columns — CSS columns keep the collaged, pinboard feel */
+      .pinboard {
+        column-count: 1;
+        column-gap: 1.75rem;
+      }
+      @media (min-width: 640px) {
+        .pinboard {
+          column-count: 2;
+        }
+      }
+      @media (min-width: 1024px) {
+        .pinboard {
+          column-count: 3;
+        }
+      }
+      .pin-item {
+        break-inside: avoid;
+        margin-bottom: 1.75rem;
+        display: block;
+      }
+
+      .card-base {
+        position: relative;
+        padding: 1.75rem 1.75rem 1.5rem;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
+      .card-base:hover {
+        transform: rotate(0deg) translateY(-4px) !important;
+        box-shadow:
+          0 24px 50px -18px rgba(45, 43, 85, 0.28),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+        z-index: 2;
+      }
+
+      /* Polaroid — white card with a photo-strip-ish top accent */
+      .card-polaroid {
+        background: #fff;
+        padding: 1.25rem 1.25rem 1.5rem;
+        box-shadow: 0 18px 38px -18px rgba(45, 43, 85, 0.28);
+        border-radius: 4px;
+      }
+      .card-polaroid .avatar-slab {
+        aspect-ratio: 5 / 2;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
+
+      /* Sticky note — lemon/peach paper with slight curl */
+      .card-sticky {
+        background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+        border-radius: 3px 3px 18px 3px;
+        box-shadow:
+          0 2px 0 rgba(0, 0, 0, 0.04),
+          0 18px 30px -18px rgba(180, 120, 20, 0.35);
+      }
+      .card-sticky.variant-peach {
+        background: linear-gradient(180deg, #ffe8d6 0%, #ffd4b0 100%);
+        box-shadow:
+          0 2px 0 rgba(0, 0, 0, 0.04),
+          0 18px 30px -18px rgba(200, 100, 50, 0.3);
+      }
+
+      /* Index card — cream with ruled lines feel */
+      .card-index {
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 16px 34px -18px rgba(45, 43, 85, 0.22);
+        background-image: linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 2.9rem,
+          rgba(232, 87, 61, 0.25) 2.9rem,
+          rgba(232, 87, 61, 0.25) calc(2.9rem + 1px),
+          transparent calc(2.9rem + 1px)
+        );
+        border-left: 3px double rgba(232, 87, 61, 0.35);
+      }
+
+      /* Plum/navy letterhead card */
+      .card-plum {
+        background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
+        color: #fff;
+        border-radius: 14px;
+        box-shadow: 0 22px 44px -22px rgba(45, 43, 85, 0.55);
+      }
+
+      /* Tape — paper tape on top of cards */
+      .tape {
+        position: absolute;
+        top: -12px;
+        width: 74px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.9);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
+      }
+      .tape.left {
+        left: 14%;
+        transform: rotate(-5deg);
+      }
+      .tape.right {
+        right: 14%;
+        transform: rotate(4deg);
+      }
+      .tape.center {
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        background: rgba(125, 211, 252, 0.55);
+      }
+      .tape.coral {
+        background: rgba(232, 87, 61, 0.45);
+      }
+
+      /* Pushpin */
+      .pin {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #ff8e53,
+          #e8573d 55%,
+          #9a2f1a
+        );
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.3),
+          inset -2px -2px 4px rgba(0, 0, 0, 0.25),
+          inset 2px 2px 3px rgba(255, 255, 255, 0.4);
+      }
+      .pin.plum {
+        background: radial-gradient(
+          circle at 35% 30%,
+          #9b7ed9,
+          #6c4ab6 55%,
+          #3a2478
+        );
+      }
+      .pin.sage {
+        background: radial-gradient(
+          circle at 35% 30%,
+          #a8d4a6,
+          #7bb47a 55%,
+          #3e6e3d
+        );
+      }
+
+      /* Avatar initials — round badge with gradient */
+      .avatar {
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #fff;
+        flex-shrink: 0;
+        box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.3);
+      }
+      .avatar-lg {
+        width: 72px;
+        height: 72px;
+        font-size: 1.4rem;
+      }
+      .avatar.coral {
+        background: linear-gradient(135deg, #ff8e53, #e8573d);
+      }
+      .avatar.plum {
+        background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
+      }
+      .avatar.sage {
+        background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+      }
+      .avatar.sky {
+        background: linear-gradient(135deg, #8ccff0, #5dadE2);
+      }
+      .avatar.navy {
+        background: linear-gradient(135deg, #4a4784, #2d2b55);
+      }
+
+      /* Rotations for collage vibe */
+      .rot-1 {
+        transform: rotate(-1.6deg);
+      }
+      .rot-2 {
+        transform: rotate(1.2deg);
+      }
+      .rot-3 {
+        transform: rotate(-0.8deg);
+      }
+      .rot-4 {
+        transform: rotate(2deg);
+      }
+      .rot-5 {
+        transform: rotate(-2.2deg);
+      }
+
+      /* Big quote mark */
+      .quote-mark {
+        font-family: 'Fraunces', serif;
+        font-size: 4.5rem;
+        line-height: 0.6;
+        color: rgba(232, 87, 61, 0.22);
+        position: absolute;
+        top: 1rem;
+        right: 1.25rem;
+        pointer-events: none;
+      }
+
+      /* Hero stacked card flourish */
+      .hero-stack {
+        position: relative;
+      }
+      .hero-stack > div {
+        position: absolute;
+        inset: 0;
+      }
+    </style>
+  </head>
+  <body class="bg-cream text-charcoal antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- ====== HEADER / NAV ====== -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+          <span
+            class="logo-monogram group-hover:scale-105 transition-transform"
+            aria-hidden="true"
+            >jb</span
+          >
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
+          <a href="index.html" class="hover:text-coral transition-colors">Home</a>
+          <a href="services.html" class="hover:text-coral transition-colors">Services</a>
+          <a href="projects/index.html" class="hover:text-coral transition-colors">Projects</a>
+        </nav>
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
+          aria-label="Toggle navigation menu"
+          onclick="document.body.classList.toggle('nav-open')"
+        >
+          <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
+        </button>
+      </div>
+      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
+        <a href="index.html" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="services.html" class="hover:text-coral transition-colors py-2">Services</a>
+        <a href="projects/index.html" class="hover:text-coral transition-colors py-2">Projects</a>
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ====== HERO — "open letter" with stacked cards ====== -->
+      <section class="relative overflow-hidden pt-20 md:pt-28 pb-16 md:pb-24">
+        <!-- Floating decorations -->
+        <div
+          class="absolute top-16 right-[8%] w-20 h-20 bg-lemon/60 blob-shape animate-float opacity-70"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-40 left-[6%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-8 right-[16%] w-14 h-14 bg-sky/30 blob-shape-alt animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-20 left-[14%] w-9 h-9 bg-coral/20 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+        <svg
+          class="absolute top-20 left-1/2 -translate-x-1/2 w-52 opacity-40"
+          viewBox="0 0 220 40"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 30 Q 55 5 110 25 T 215 15"
+            stroke="#6C4AB6"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-dasharray="1 7"
+          />
+        </svg>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+          <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <!-- Copy column -->
+            <div class="lg:col-span-7 text-center lg:text-left">
+              <div
+                class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium border border-lemon/60"
+              >
+                <iconify-icon
+                  icon="ph:chat-teardrop-dots-duotone"
+                  width="20"
+                  class="text-sunset"
+                ></iconify-icon>
+                Kind words from people I've worked with
+              </div>
+
+              <h1
+                class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+              >
+                A
+                <span class="relative inline-block">
+                  pinboard
+                  <svg
+                    class="absolute -bottom-2 left-0 w-full"
+                    viewBox="0 0 200 12"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 8 Q 50 2 100 8 Q 150 14 198 6"
+                      stroke="#6C4AB6"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      opacity="0.5"
+                    />
+                  </svg>
+                </span>
+                of
+                <span class="wavy-underline">kind words</span>.
+              </h1>
+
+              <p
+                class="text-lg md:text-xl text-charcoal/75 max-w-2xl mx-auto lg:mx-0 mb-8 font-body leading-relaxed"
+              >
+                These come from clients and colleagues I've had the pleasure of
+                working with. Their words reflect what I care about most —
+                <strong class="text-charcoal font-semibold"
+                  >collaboration, accessibility, and work that holds up over
+                  time.</strong
+                >
+              </p>
+
+              <div
+                class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8"
+              >
+                <span
+                  class="sticker bg-peach/60 text-coral border-coral/50"
+                  style="transform: rotate(-1.5deg)"
+                >
+                  18 voices
+                </span>
+                <span
+                  class="sticker bg-sky/20 text-plum border-plum/40"
+                  style="transform: rotate(1deg)"
+                >
+                  20 years
+                </span>
+                <span
+                  class="sticker bg-sage/20 text-sage border-sage/50"
+                  style="transform: rotate(-0.5deg)"
+                >
+                  Apple · HubSpot · BHSI
+                </span>
+              </div>
+
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3"
+              >
+                <a
+                  href="#wall"
+                  class="inline-flex items-center gap-2 bg-coral text-white px-6 py-3 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-sm"
+                >
+                  <iconify-icon
+                    icon="ph:arrow-down-duotone"
+                    width="18"
+                  ></iconify-icon>
+                  Read the wall
+                </a>
+                <a
+                  href="https://calendly.com/josh-thebrileys/30min/"
+                  class="inline-flex items-center gap-2 bg-white text-navy border border-navy/15 px-6 py-3 rounded-full hover:border-navy/40 transition-all font-heading font-semibold text-sm"
+                >
+                  <iconify-icon
+                    icon="ph:calendar-check-duotone"
+                    width="18"
+                  ></iconify-icon>
+                  Book an intro call
+                </a>
+              </div>
+            </div>
+
+            <!-- Stacked hero cards -->
+            <div class="lg:col-span-5 flex justify-center">
+              <div class="relative w-full max-w-sm h-80">
+                <!-- Back card -->
+                <div
+                  class="card-base card-sticky variant-peach absolute top-2 -right-4 w-64 rot-4 animate-float-slow"
+                  aria-hidden="true"
+                >
+                  <span class="pin plum"></span>
+                  <p class="font-hand text-2xl text-navy leading-tight">
+                    "the gold standard for building UIs…"
+                  </p>
+                  <p class="font-heading text-xs text-navy/70 mt-3">
+                    — Adam C., Evidation
+                  </p>
+                </div>
+                <!-- Middle card -->
+                <div
+                  class="card-base card-index absolute top-14 left-0 w-72 rot-5 animate-float"
+                  aria-hidden="true"
+                >
+                  <span class="tape left"></span>
+                  <p
+                    class="font-display italic text-navy text-lg leading-snug mt-2"
+                  >
+                    "truly builds for everyone — technically rigorous and
+                    deeply human."
+                  </p>
+                  <p class="font-heading text-xs text-charcoal/60 mt-3">
+                    — Ryan D., BHSI
+                  </p>
+                </div>
+                <!-- Front card -->
+                <div
+                  class="card-base card-polaroid absolute bottom-0 right-2 w-64 rot-2 animate-float-delay"
+                  aria-hidden="true"
+                >
+                  <span class="tape right coral"></span>
+                  <div
+                    class="avatar-slab bg-gradient-to-br from-plum/30 via-coral/20 to-lemon/40"
+                  >
+                    <iconify-icon
+                      icon="ph:quotes-duotone"
+                      width="48"
+                      class="text-plum/70"
+                    ></iconify-icon>
+                  </div>
+                  <p class="font-hand text-2xl text-navy text-center">
+                    "ahead of schedule, every time."
+                  </p>
+                  <p
+                    class="font-heading text-xs text-charcoal/60 mt-1 text-center"
+                  >
+                    — Ethan B., Domino Data Lab
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-6xl mx-auto px-6" aria-hidden="true"></div>
+
+      <!-- ====== THE WALL — masonry of testimonial cards ====== -->
+      <section id="wall" class="relative py-16 md:py-24">
+        <div
+          class="absolute top-10 right-[4%] w-16 h-16 bg-plum/15 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-10 left-[4%] w-12 h-12 bg-lemon/60 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+          <div class="text-center mb-14 max-w-2xl mx-auto">
+            <span
+              class="font-hand text-3xl text-coral inline-block rotate-[-2deg]"
+              >the wall</span
+            >
+            <h2
+              class="font-display text-3xl md:text-5xl font-semibold text-navy leading-[1.1] mt-2 mb-5"
+            >
+              Notes from collaborators
+            </h2>
+            <p class="text-charcoal/75 font-body leading-relaxed">
+              A working wall of quotes, lightly shuffled — hover any card to
+              straighten it out.
+            </p>
+          </div>
+
+          <div class="pinboard">
+            <!-- 1. Drew DiPasquale — Polaroid -->
+            <article class="pin-item">
+              <div class="card-base card-polaroid rot-1">
+                <span class="tape left"></span>
+                <div
+                  class="avatar-slab bg-gradient-to-br from-coral/25 via-sunset/20 to-lemon/40"
+                >
+                  <span class="avatar avatar-lg coral" aria-hidden="true"
+                    >DD</span
+                  >
+                </div>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mb-4"
+                >
+                  "Josh was always a great design and research partner… Josh
+                  always worked hard to ensure accessibility across our
+                  experience."
+                </p>
+                <div class="border-t border-charcoal/10 pt-3">
+                  <p class="font-heading font-semibold text-navy text-sm">
+                    Drew DiPasquale
+                  </p>
+                  <p class="text-xs text-charcoal/60">
+                    Principal Researcher · HubSpot
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 2. Rebecca Cachia — Sticky note -->
+            <article class="pin-item">
+              <div class="card-base card-sticky rot-2">
+                <span class="pin"></span>
+                <p
+                  class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-5"
+                >
+                  "Working with Josh was an absolute privilege and pleasure.
+                  His ability to foresee challenges and simplify implementation
+                  was invaluable."
+                </p>
+                <div class="flex items-center gap-3 pt-3 border-t border-navy/15">
+                  <span class="avatar plum" aria-hidden="true">RC</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Rebecca Cachia, PMP
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      Web Product &amp; Project Manager · Publicis Sapient
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 3. John Miller — Index card -->
+            <article class="pin-item">
+              <div class="card-base card-index rot-3">
+                <span class="tape center"></span>
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug pt-2 mb-4 pr-6"
+                >
+                  "Josh… consistently delivered exceptional work. Even with a
+                  high bar set for timelines and quality, Josh met or exceeded
+                  expectations every time."
+                </p>
+                <div class="flex items-center gap-3">
+                  <span class="avatar sage" aria-hidden="true">JM</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      John Miller
+                    </p>
+                    <p class="text-xs text-charcoal/60">
+                      CEO · Logatot, Inc.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 4. Hugh Ferguson — Plum letterhead -->
+            <article class="pin-item">
+              <div class="card-base card-plum rot-4">
+                <span class="pin sage"></span>
+                <iconify-icon
+                  icon="ph:quotes-duotone"
+                  width="36"
+                  class="text-lemon/70 mb-3"
+                ></iconify-icon>
+                <p
+                  class="font-display italic text-white text-lg leading-snug mb-5"
+                >
+                  "He owns projects and becomes a knowledge resource. Incredibly
+                  talented at learning fast and getting tools up and running
+                  for the team."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-4 border-t border-white/15"
+                >
+                  <span class="avatar coral" aria-hidden="true">HF</span>
+                  <div>
+                    <p class="font-heading font-semibold text-white text-sm">
+                      Hugh Ferguson
+                    </p>
+                    <p class="text-xs text-white/60">
+                      Developer · Berkshire Hathaway Specialty Insurance
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 5. Gabriel Bressi — Sticky peach -->
+            <article class="pin-item">
+              <div class="card-base card-sticky variant-peach rot-5">
+                <span class="tape left coral"></span>
+                <p
+                  class="font-hand text-2xl text-navy leading-snug mb-5"
+                >
+                  "Josh has always communicated his daily updates efficiently…
+                  Josh used to deliver his assignments as planned."
+                </p>
+                <div class="flex items-center gap-3 pt-3 border-t border-coral/25">
+                  <span class="avatar sky" aria-hidden="true">GB</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Gabriel Bressi
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      QA Lead · Kopius, Inc.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 6. Welling LaGrone — Polaroid -->
+            <article class="pin-item">
+              <div class="card-base card-polaroid rot-2">
+                <span class="tape right"></span>
+                <div
+                  class="avatar-slab bg-gradient-to-br from-sky/25 via-plum/20 to-sage/25"
+                >
+                  <span class="avatar avatar-lg navy" aria-hidden="true"
+                    >WL</span
+                  >
+                </div>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mb-4"
+                >
+                  "Josh is an outstanding front-end engineer with incredible
+                  focus and discipline… a strong partner willing to work across
+                  functions."
+                </p>
+                <div class="border-t border-charcoal/10 pt-3">
+                  <p class="font-heading font-semibold text-navy text-sm">
+                    Welling LaGrone
+                  </p>
+                  <p class="text-xs text-charcoal/60">
+                    Vice President · Triverus Consulting
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 7. Ethan Brown — Index -->
+            <article class="pin-item">
+              <div class="card-base card-index rot-1">
+                <span class="pin plum"></span>
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug pt-2 mb-4 pr-6"
+                >
+                  "Josh is a highly productive and well-organized front end
+                  designer… always ahead of schedule with the implementation of
+                  his responsibilities."
+                </p>
+                <div class="flex items-center gap-3">
+                  <span class="avatar plum" aria-hidden="true">EB</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Ethan Brown
+                    </p>
+                    <p class="text-xs text-charcoal/60">
+                      Chief Architect · Domino Data Lab
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 8. Kevin Fecteau — Sticky lemon -->
+            <article class="pin-item">
+              <div class="card-base card-sticky rot-3">
+                <span class="pin"></span>
+                <p
+                  class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-5"
+                >
+                  "Josh creates truly amazing UI designs and has the passion to
+                  ensure they are not compromised — a fantastic team player."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-3 border-t border-navy/15"
+                >
+                  <span class="avatar coral" aria-hidden="true">KF</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Kevin Fecteau
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      Senior Rails Developer · Sincere Corporation
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 9. Jack Gillete — Polaroid -->
+            <article class="pin-item">
+              <div class="card-base card-polaroid rot-5">
+                <span class="tape center"></span>
+                <div
+                  class="avatar-slab bg-gradient-to-br from-sage/25 via-lemon/40 to-sky/20"
+                >
+                  <span class="avatar avatar-lg sage" aria-hidden="true"
+                    >JG</span
+                  >
+                </div>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mb-4"
+                >
+                  "Josh was able to hit the ground running and immediately
+                  start contributing to the project. I would definitely
+                  recommend Josh."
+                </p>
+                <div class="border-t border-charcoal/10 pt-3">
+                  <p class="font-heading font-semibold text-navy text-sm">
+                    Jack Gillete
+                  </p>
+                  <p class="text-xs text-charcoal/60">
+                    Senior UX Engineer · Berkshire Hathaway Specialty Insurance
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 10. Ryan Dunlavey — Plum letterhead (featured) -->
+            <article class="pin-item">
+              <div class="card-base card-plum rot-2">
+                <span class="tape left"></span>
+                <iconify-icon
+                  icon="ph:quotes-duotone"
+                  width="36"
+                  class="text-lemon/70 mb-3"
+                ></iconify-icon>
+                <p
+                  class="font-display italic text-white text-xl leading-snug mb-5"
+                >
+                  "Josh is a rare UX Engineer who truly builds for everyone.
+                  His ability to architect design systems that are both
+                  technically rigorous and deeply human makes him invaluable."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-4 border-t border-white/15"
+                >
+                  <span class="avatar sky" aria-hidden="true">RD</span>
+                  <div>
+                    <p class="font-heading font-semibold text-white text-sm">
+                      Ryan Dunlavey
+                    </p>
+                    <p class="text-xs text-white/60">
+                      Senior Product Designer · BHSI
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 11. Owen Snyder — Index -->
+            <article class="pin-item">
+              <div class="card-base card-index rot-4">
+                <span class="tape right coral"></span>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mt-1 mb-4"
+                >
+                  "He is one of the most talented and adaptable front-end
+                  engineers I've ever collaborated with. His ability to quickly
+                  learn and master new technologies…"
+                </p>
+                <div class="flex items-center gap-3">
+                  <span class="avatar sage" aria-hidden="true">OS</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Owen Snyder
+                    </p>
+                    <p class="text-xs text-charcoal/60">
+                      Full Stack Engineer · America's Test Kitchen
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 12. Adam Czerepinkski — Sticky -->
+            <article class="pin-item">
+              <div class="card-base card-sticky rot-1">
+                <span class="pin"></span>
+                <p
+                  class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-5"
+                >
+                  "He's still the gold standard to me for building UIs. He's
+                  the type of leader who multiplies everyone else's
+                  effectiveness."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-3 border-t border-navy/15"
+                >
+                  <span class="avatar plum" aria-hidden="true">AC</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Adam Czerepinkski
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      Senior Software Engineer · Evidation Health
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 13. Chris Griffin — Polaroid -->
+            <article class="pin-item">
+              <div class="card-base card-polaroid rot-3">
+                <span class="tape left coral"></span>
+                <div
+                  class="avatar-slab bg-gradient-to-br from-lemon/50 via-peach/40 to-coral/20"
+                >
+                  <span class="avatar avatar-lg coral" aria-hidden="true"
+                    >CG</span
+                  >
+                </div>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mb-4"
+                >
+                  "Joshua is highly skilled and always looking to expand his
+                  capabilities and grow professionally — very adaptable."
+                </p>
+                <div class="border-t border-charcoal/10 pt-3">
+                  <p class="font-heading font-semibold text-navy text-sm">
+                    Chris Griffin
+                  </p>
+                  <p class="text-xs text-charcoal/60">
+                    Web Development Manager · Burt Process Equipment
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 14. Michael Pertiore — Plum letterhead -->
+            <article class="pin-item">
+              <div class="card-base card-plum rot-5">
+                <span class="pin sage"></span>
+                <iconify-icon
+                  icon="ph:star-duotone"
+                  width="32"
+                  class="text-lemon/80 mb-2"
+                ></iconify-icon>
+                <p
+                  class="font-display italic text-white text-lg leading-snug mb-5"
+                >
+                  "I've had the privilege of working with Josh for over a
+                  decade. His blend of speed, technical skill, and willingness
+                  to collaborate makes him invaluable."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-4 border-t border-white/15"
+                >
+                  <span class="avatar sky" aria-hidden="true">MP</span>
+                  <div>
+                    <p class="font-heading font-semibold text-white text-sm">
+                      Michael Pertiore
+                    </p>
+                    <p class="text-xs text-white/60">
+                      Application Architect / Developer · Apple
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 15. David Merkt — Sticky peach -->
+            <article class="pin-item">
+              <div class="card-base card-sticky variant-peach rot-2">
+                <span class="tape center"></span>
+                <p
+                  class="font-hand text-2xl text-navy leading-snug mb-5"
+                >
+                  "Josh has a fantastic eye for elegant design… produces a
+                  great product. He is a valuable member of any team."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-3 border-t border-coral/25"
+                >
+                  <span class="avatar sage" aria-hidden="true">DM</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      David Merkt
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      Quality Assurance Engineer · WEX Benefits
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 16. Fred Johanns III — Index -->
+            <article class="pin-item">
+              <div class="card-base card-index rot-1">
+                <span class="tape right"></span>
+                <span class="quote-mark" aria-hidden="true">"</span>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug pt-2 mb-4 pr-6"
+                >
+                  "Josh has a great eye for simple design — a self-starter in
+                  every sense of the term."
+                </p>
+                <div class="flex items-center gap-3">
+                  <span class="avatar navy" aria-hidden="true">FJ</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Fred Johanns III
+                    </p>
+                    <p class="text-xs text-charcoal/60">
+                      VP of Software Engineering · Chubb Insurance
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- 17. Nicholas Dos Santos — Polaroid -->
+            <article class="pin-item">
+              <div class="card-base card-polaroid rot-4">
+                <span class="tape left"></span>
+                <div
+                  class="avatar-slab bg-gradient-to-br from-plum/25 via-sky/25 to-sage/25"
+                >
+                  <span class="avatar avatar-lg plum" aria-hidden="true"
+                    >ND</span
+                  >
+                </div>
+                <p
+                  class="font-display italic text-navy text-lg leading-snug mb-4"
+                >
+                  "Josh is an expert in accessibility and UI design. A
+                  fantastic team player, always approachable, collaborative."
+                </p>
+                <div class="border-t border-charcoal/10 pt-3">
+                  <p class="font-heading font-semibold text-navy text-sm">
+                    Nicholas Dos Santos
+                  </p>
+                  <p class="text-xs text-charcoal/60">
+                    Software Engineer · America's Test Kitchen
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <!-- 18. Corky Mower — Sticky -->
+            <article class="pin-item">
+              <div class="card-base card-sticky rot-3">
+                <span class="pin plum"></span>
+                <p
+                  class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-5"
+                >
+                  "Josh was a pleasure to work with — very pragmatic and takes
+                  the time to really understand what a business offers."
+                </p>
+                <div
+                  class="flex items-center gap-3 pt-3 border-t border-navy/15"
+                >
+                  <span class="avatar coral" aria-hidden="true">CM</span>
+                  <div>
+                    <p class="font-heading font-semibold text-navy text-sm">
+                      Ephraim "Corky" Mower
+                    </p>
+                    <p class="text-xs text-navy/70">
+                      Software Engineer &amp; Architect · ZSuite Technologies
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== CTA ====== -->
+      <section class="py-20 md:py-28">
+        <div class="max-w-4xl mx-auto px-6 text-center relative">
+          <div
+            class="absolute top-0 left-8 w-12 h-12 bg-coral/20 blob-shape animate-float"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="absolute top-4 right-12 w-8 h-8 bg-sky/30 rounded-full animate-float-delay"
+            aria-hidden="true"
+          ></div>
+          <div
+            class="absolute bottom-0 right-4 w-10 h-10 bg-lemon/60 blob-shape-alt animate-float-slow"
+            aria-hidden="true"
+          ></div>
+
+          <span
+            class="font-hand text-3xl text-coral inline-block rotate-[-2deg] mb-2"
+            >your turn</span
+          >
+          <h2
+            class="font-display text-3xl md:text-5xl font-semibold text-navy leading-[1.1] mb-6"
+          >
+            Add your name to the
+            <span class="wavy-underline">wall</span>?
+          </h2>
+          <p
+            class="text-lg text-charcoal/75 max-w-2xl mx-auto mb-10 font-body leading-relaxed"
+          >
+            Start with the free 10-minute scorecard, or grab an intro call.
+            I'll tell you honestly whether I can help — and if not, I probably
+            know who can.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="scorecard.html"
+              class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base"
+            >
+              <iconify-icon
+                icon="ph:clipboard-text-duotone"
+                width="20"
+              ></iconify-icon>
+              Score your design system
+            </a>
+            <a
+              href="https://calendly.com/josh-thebrileys/30min/"
+              class="inline-flex items-center gap-2 bg-navy text-white px-7 py-4 rounded-full hover:bg-navy/90 transition-all hover:shadow-lg hover:shadow-navy/20 font-heading font-semibold text-base"
+            >
+              <iconify-icon
+                icon="ph:calendar-check-duotone"
+                width="20"
+              ></iconify-icon>
+              Book an intro call
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8 mb-10">
+          <div class="md:col-span-2">
+            <a href="index.html" class="inline-flex items-center gap-2.5 group">
+              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
+              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            </a>
+            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
+            <p class="text-sm mt-1">Available for UX engineering work. <a href="contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <div class="flex items-center gap-4 mt-5">
+              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
+              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
+              <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
+              <li><a href="blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
+              <li><a href="testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
+              <li><a href="faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

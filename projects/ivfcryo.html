@@ -1,0 +1,898 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IVFCRYO — Joshua Briley</title>
+    <meta
+      name="description"
+      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture — not tested for at the end."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Fraunces', 'Georgia', 'serif'],
+              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+              body: ['DM Sans', 'system-ui', 'sans-serif'],
+              logo: ['Style Script', 'cursive'],
+            },
+            colors: {
+              cream: '#FFFBF5',
+              peach: '#FFE8D6',
+              coral: '#E8573D',
+              sunset: '#FF8E53',
+              plum: '#6C4AB6',
+              navy: '#2D2B55',
+              charcoal: '#2E2E30',
+              sage: '#7BB47A',
+              sky: '#5DADE2',
+              lemon: '#FDE68A',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'DM Sans', system-ui, sans-serif;
+      }
+      .wavy-underline {
+        text-decoration: underline wavy;
+        text-decoration-color: #e8573d;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
+      }
+      .blob-shape {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(2deg); }
+      }
+      @keyframes float-slow {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+      @keyframes steam {
+        0% { transform: translateY(0) scaleX(1); opacity: 0.5; }
+        50% { transform: translateY(-14px) scaleX(1.15); opacity: 0.85; }
+        100% { transform: translateY(-28px) scaleX(0.9); opacity: 0; }
+      }
+      .animate-float { animation: float 6s ease-in-out infinite; }
+      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
+      .animate-steam { animation: steam 4s ease-in-out infinite; }
+      .animate-steam-delay { animation: steam 4s ease-in-out 1.3s infinite; }
+      .animate-steam-delay-2 { animation: steam 4s ease-in-out 2.6s infinite; }
+      .squiggle-divider {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: 30px;
+      }
+      .logo-monogram {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        background: linear-gradient(135deg, #6c4ab6, #e8573d);
+        color: white;
+        font-family: 'Style Script', cursive;
+        font-size: 1.1rem;
+        line-height: 1;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
+      }
+      .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
+      .sticker {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1.5px dashed;
+        transform: rotate(-1deg);
+      }
+      .nav-open .mobile-menu { display: flex; }
+
+      .recipe-card {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow:
+          0 30px 60px -28px rgba(45, 43, 85, 0.28),
+          0 4px 10px rgba(45, 43, 85, 0.06);
+        position: relative;
+      }
+      .recipe-card::before {
+        content: '';
+        position: absolute;
+        inset: 10px;
+        border: 1.5px dashed rgba(108, 74, 182, 0.25);
+        border-radius: 12px;
+        pointer-events: none;
+      }
+      .tape {
+        position: absolute;
+        width: 90px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.88);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
+      .marker-label {
+        font-family: 'Style Script', cursive;
+        color: #6c4ab6;
+        line-height: 1;
+      }
+      .corkboard {
+        background-color: #fffbf5;
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(232, 87, 61, 0.05) 0, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(108, 74, 182, 0.05) 0, transparent 40%);
+      }
+      .step-num {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 54px;
+        height: 54px;
+        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+        background: linear-gradient(135deg, #ff8e53, #e8573d);
+        color: white;
+        font-family: 'Fraunces', serif;
+        font-size: 1.6rem;
+        font-weight: 700;
+        box-shadow: 0 8px 18px -8px rgba(232, 87, 61, 0.55);
+        flex-shrink: 0;
+      }
+      .pull-quote {
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+      }
+      .steam {
+        position: absolute;
+        width: 10px;
+        height: 22px;
+        border-radius: 9999px;
+        background: linear-gradient(to top, rgba(108, 74, 182, 0.35), transparent);
+        filter: blur(1px);
+      }
+      .ingredient-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #fff;
+        border: 1.5px dashed rgba(45, 43, 85, 0.18);
+        padding: 8px 14px;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.88rem;
+        color: #2d2b55;
+      }
+    </style>
+  </head>
+  <body class="bg-cream text-charcoal antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- ====== HEADER / NAV ====== -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+          <span
+            class="logo-monogram group-hover:scale-105 transition-transform"
+            aria-hidden="true"
+            >jb</span
+          >
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
+          <a href="../index.html" class="hover:text-coral transition-colors">Home</a>
+          <a href="../services.html" class="hover:text-coral transition-colors">Services</a>
+          <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors">Projects</a>
+        </nav>
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
+          aria-label="Toggle navigation menu"
+          onclick="document.body.classList.toggle('nav-open')"
+        >
+          <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
+        </button>
+      </div>
+      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
+        <a href="../index.html" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="../services.html" class="hover:text-coral transition-colors py-2">Services</a>
+        <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors py-2">Projects</a>
+      </div>
+    </header>
+
+    <main id="main" class="corkboard">
+      <!-- ====== HERO — recipe card ====== -->
+      <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+        <div
+          class="absolute top-14 right-[6%] w-20 h-20 bg-sky/50 blob-shape animate-float opacity-70"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-40 left-[4%] w-12 h-12 bg-plum/30 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-20 right-[18%] w-14 h-14 bg-lemon/60 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <nav
+            class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60"
+            aria-label="Breadcrumb"
+          >
+            <a href="./" class="hover:text-coral transition-colors">Projects</a>
+            <iconify-icon icon="ph:caret-right-bold" width="12"></iconify-icon>
+            <span class="text-navy">IVFCRYO</span>
+          </nav>
+
+          <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
+            <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
+            <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
+
+            <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
+              <span class="steam animate-steam"></span>
+              <span class="steam animate-steam-delay"></span>
+              <span class="steam animate-steam-delay-2"></span>
+            </div>
+
+            <div class="relative text-center">
+              <div
+                class="inline-flex items-center gap-2 bg-plum/10 text-plum px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-plum/20 uppercase tracking-wider"
+              >
+                <iconify-icon icon="ph:snowflake-duotone" width="18"></iconify-icon>
+                Case study &middot; Recipe no. 03
+              </div>
+
+              <p class="marker-label text-2xl md:text-3xl mb-4">from the lab notebook —</p>
+
+              <h1
+                class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+              >
+                What it looks like when
+                <br />
+                <span class="relative inline-block">
+                  accessibility
+                  <svg
+                    class="absolute -bottom-3 left-0 w-full"
+                    viewBox="0 0 260 14"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M3 9 Q 65 2 130 9 Q 195 16 257 7"
+                      stroke="#6C4AB6"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      opacity="0.55"
+                    />
+                  </svg>
+                </span>
+                <span class="text-coral">,</span> is built in from the start.
+              </h1>
+
+              <p
+                class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
+              >
+                A self-service shipping application for
+                <span class="wavy-underline">fertility specimen logistics</span>,
+                with real-time environmental tracking, multi-carrier labels,
+                and a legally blind collaborator in the room from day one.
+              </p>
+
+              <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
+                <dl
+                  class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center"
+                >
+                  <div>
+                    <dt
+                      class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1"
+                    >
+                      Role
+                    </dt>
+                    <dd class="font-display text-lg text-navy font-semibold">
+                      UX Engineer
+                    </dd>
+                  </div>
+                  <div>
+                    <dt
+                      class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1"
+                    >
+                      Domain
+                    </dt>
+                    <dd class="font-display text-lg text-navy font-semibold">
+                      Fertility logistics
+                    </dd>
+                  </div>
+                  <div>
+                    <dt
+                      class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1"
+                    >
+                      Stack
+                    </dt>
+                    <dd class="font-display text-lg text-navy font-semibold">
+                      Web &middot; Sensors
+                    </dd>
+                  </div>
+                  <div>
+                    <dt
+                      class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1"
+                    >
+                      Focus
+                    </dt>
+                    <dd class="font-display text-lg text-navy font-semibold">
+                      A11y-first arch.
+                    </dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== INGREDIENTS (outline) ====== -->
+      <section class="py-16 md:py-20 relative">
+        <div
+          class="absolute top-10 right-6 w-24 h-24 bg-plum/10 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div class="flex items-center gap-3 mb-6">
+            <iconify-icon
+              icon="ph:list-checks-duotone"
+              width="28"
+              class="text-sunset"
+            ></iconify-icon>
+            <h2
+              class="font-display text-2xl md:text-3xl text-navy font-semibold"
+            >
+              On the bench
+            </h2>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <a href="#stakes" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon icon="ph:warning-circle-duotone" width="18" class="text-coral"></iconify-icon>
+              The stakes behind the product</a
+            >
+            <a href="#collaborator" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon icon="ph:users-three-duotone" width="18" class="text-plum"></iconify-icon>
+              A blind user in the room</a
+            >
+            <a href="#architecture" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon icon="ph:stack-duotone" width="18" class="text-sunset"></iconify-icon>
+              Accessibility in the architecture</a
+            >
+            <a href="#scale" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon icon="ph:trend-up-duotone" width="18" class="text-sage"></iconify-icon>
+              Why this compounds at scale</a
+            >
+          </div>
+
+          <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+            IVFCRYO replaced a manual, paper-based shipping process with a web
+            application that handles shipment requests, label generation across
+            multiple carriers, and real-time specimen tracking from integrated
+            sensor data. The people using it are usually in the middle of
+            something high-stakes and emotionally sensitive. Clarity and
+            reliability aren't nice-to-haves here — they're features of the
+            product, and accessibility is how that clarity reaches everyone.
+          </p>
+        </div>
+      </section>
+
+      <!-- ====== STEP 01 — STAKES ====== -->
+      <section id="stakes" class="py-16 md:py-20 relative scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-6">
+          <div class="flex items-start gap-6 mb-8">
+            <span class="step-num" aria-hidden="true">01</span>
+            <div>
+              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+                Step one
+              </p>
+              <h2
+                class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+              >
+                The stakes behind the product
+              </h2>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+            <p>
+              Fertility logistics has a narrow margin for error. A mislabeled
+              shipment, a missed temperature excursion, or an ambiguous status
+              update isn't just a workflow annoyance — it can have irreversible
+              consequences for someone's family. The people using this tool are
+              often clinicians working under time pressure, or patients and
+              couriers navigating a process they've never touched before,
+              during one of the most stressful weeks of their lives.
+            </p>
+            <p>
+              That reframes what accessibility means here. It isn't a
+              compliance checkbox to satisfy at the end of the build. It's part
+              of how the product communicates <em>at all</em> — whether status
+              updates reach the person who needs to act on them, whether form
+              errors are recoverable, whether a screen reader user can trust
+              what the page is telling them.
+            </p>
+          </div>
+
+          <!-- stakes pair -->
+          <div class="mt-10 grid md:grid-cols-2 gap-6">
+            <div
+              class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative"
+              style="transform: rotate(-0.6deg)"
+            >
+              <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5">
+                High-stakes input
+              </span>
+              <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">
+                Specimens &amp; sensors
+              </h3>
+              <p class="text-charcoal/70">
+                Temperature data, chain-of-custody details, carrier handoffs —
+                all flowing through forms people may be filling out under
+                duress.
+              </p>
+            </div>
+            <div
+              class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative"
+              style="transform: rotate(0.5deg)"
+            >
+              <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5">
+                High-stakes output
+              </span>
+              <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">
+                Status &amp; recovery
+              </h3>
+              <p class="text-charcoal/70">
+                A shipment that has moved, a label that has printed, an error
+                that needs correcting — the app has to surface all of it,
+                reliably, to every user.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== STEP 02 — COLLABORATOR ====== -->
+      <section id="collaborator" class="py-16 md:py-20 relative scroll-mt-24">
+        <div
+          class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div class="flex items-start gap-6 mb-8">
+            <span class="step-num" aria-hidden="true">02</span>
+            <div>
+              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+                Step two
+              </p>
+              <h2
+                class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+              >
+                A blind user in the room, from day one
+              </h2>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+            <p>
+              The most consequential decision on this project wasn't technical.
+              Instead of treating accessibility as an end-of-project audit, the
+              team brought in a legally blind customer as an ongoing
+              collaborator. He reviewed interface decisions as they were being
+              made, tested with a screen reader while components were still
+              being built, and kept offering feedback as features shipped.
+            </p>
+            <p>
+              That changes what you build, not just what you fix. Problems that
+              would have surfaced as a long list of bugs at the end — the kind
+              that usually get triaged, downgraded, and half-addressed —
+              instead showed up as design conversations while the design was
+              still cheap to change. The output wasn't a remediation report. It
+              was different decisions.
+            </p>
+          </div>
+
+          <ul class="mt-8 space-y-5">
+            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+              <iconify-icon
+                icon="ph:megaphone-duotone"
+                width="28"
+                class="text-plum flex-shrink-0 mt-1"
+              ></iconify-icon>
+              <div>
+                <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                  Real-time form validation
+                </h3>
+                <p class="text-charcoal/70">
+                  Errors announced to a screen reader the moment they happen —
+                  not buried in a summary at the top of the page after submit.
+                </p>
+              </div>
+            </li>
+            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+              <iconify-icon
+                icon="ph:broadcast-duotone"
+                width="28"
+                class="text-coral flex-shrink-0 mt-1"
+              ></iconify-icon>
+              <div>
+                <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                  Status updates that reach you
+                </h3>
+                <p class="text-charcoal/70">
+                  Shipment state changes are announced automatically, so a user
+                  doesn't have to go hunting through the page to learn that
+                  something moved.
+                </p>
+              </div>
+            </li>
+            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+              <iconify-icon
+                icon="ph:compass-duotone"
+                width="28"
+                class="text-sunset flex-shrink-0 mt-1"
+              ></iconify-icon>
+              <div>
+                <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                  Navigation you can learn once
+                </h3>
+                <p class="text-charcoal/70">
+                  Consistent, predictable patterns across the app — the kind of
+                  thing a sighted user takes for granted and a screen reader
+                  user notices immediately when it's missing.
+                </p>
+              </div>
+            </li>
+          </ul>
+
+          <!-- pull quote -->
+          <figure
+            class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative"
+            style="transform: rotate(-0.3deg)"
+          >
+            <iconify-icon
+              icon="ph:quotes-duotone"
+              width="32"
+              class="text-coral/60 absolute -top-3 left-6 bg-cream px-1"
+            ></iconify-icon>
+            <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+              Accessible output at scale comes from accessible architecture —
+              not from accessible intent.
+            </blockquote>
+          </figure>
+        </div>
+      </section>
+
+      <!-- ====== STEP 03 — ARCHITECTURE ====== -->
+      <section id="architecture" class="py-16 md:py-20 relative scroll-mt-24">
+        <div class="max-w-4xl mx-auto px-6">
+          <div class="flex items-start gap-6 mb-8">
+            <span class="step-num" aria-hidden="true">03</span>
+            <div>
+              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+                Step three
+              </p>
+              <h2
+                class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+              >
+                Accessibility in the architecture
+              </h2>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+            <p>
+              Collaboration gave us the right instincts. Architecture made those
+              instincts load-bearing. Interactive components were built with
+              keyboard operability and ARIA as
+              <strong class="text-coral">primary requirements</strong>, not
+              post-hoc additions. Components that controlled visibility managed
+              their own focus internally, so the user never lost their place.
+              Dynamic content — the part of the app that changes while you're
+              looking at it — announced itself to assistive tech instead of
+              silently updating the DOM.
+            </p>
+            <p>
+              Every piece of information in the UI was expressed through more
+              than one channel: text <em>and</em> icon <em>and</em> color, never
+              color alone. That rule is small, almost boring, and it prevents an
+              enormous class of failures that would otherwise quietly ship.
+            </p>
+          </div>
+
+          <!-- a11y checklist -->
+          <div
+            class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
+            style="transform: rotate(0.4deg)"
+          >
+            <div
+              class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50"
+              style="transform: rotate(-3deg)"
+            >
+              <iconify-icon icon="ph:check-fat-duotone" width="14" class="mr-1"></iconify-icon>
+              Built-in, not bolted-on
+            </div>
+            <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80">
+              <li class="flex items-center gap-3">
+                <iconify-icon icon="ph:keyboard-duotone" width="22" class="text-plum"></iconify-icon>
+                Full keyboard operability
+              </li>
+              <li class="flex items-center gap-3">
+                <iconify-icon icon="ph:target-duotone" width="22" class="text-coral"></iconify-icon>
+                Internal focus management
+              </li>
+              <li class="flex items-center gap-3">
+                <iconify-icon icon="ph:megaphone-duotone" width="22" class="text-sunset"></iconify-icon>
+                Live regions for dynamic updates
+              </li>
+              <li class="flex items-center gap-3">
+                <iconify-icon icon="ph:eye-duotone" width="22" class="text-sky"></iconify-icon>
+                Multi-channel information design
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== STEP 04 — SCALE ====== -->
+      <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
+        <div
+          class="absolute top-10 right-6 w-20 h-20 bg-lemon/50 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div class="flex items-start gap-6 mb-8">
+            <span class="step-num" aria-hidden="true">04</span>
+            <div>
+              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+                Step four
+              </p>
+              <h2
+                class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+              >
+                Why this compounds at scale
+              </h2>
+            </div>
+          </div>
+
+          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+            <p>
+              Once the component library has the right behaviors baked in,
+              every feature built on top of it inherits them. A developer
+              shipping a new shipment form doesn't have to remember to wire up
+              live regions, or decide how focus should move when a dialog
+              opens, or check contrast against the palette. Those decisions
+              have already been made, correctly, once.
+            </p>
+            <p>
+              That's the structural benefit of putting accessibility at the
+              architectural level: it stops being a discipline individual
+              developers have to sustain, and starts being a property of the
+              system they're building inside. The ceiling of accessibility in
+              the product is no longer the ceiling of any one engineer's
+              attention.
+            </p>
+          </div>
+
+          <!-- outcomes grid -->
+          <div class="mt-12 grid md:grid-cols-3 gap-6">
+            <div
+              class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
+              style="transform: rotate(-0.6deg)"
+            >
+              <iconify-icon
+                icon="ph:shield-check-duotone"
+                width="32"
+                class="text-coral mb-3"
+              ></iconify-icon>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                Inherited by default
+              </h3>
+              <p class="text-charcoal/70 text-sm">
+                New features get accessible behavior without anyone having to
+                remember to add it.
+              </p>
+            </div>
+            <div
+              class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
+              style="transform: rotate(0.4deg)"
+            >
+              <iconify-icon
+                icon="ph:chat-circle-dots-duotone"
+                width="32"
+                class="text-plum mb-3"
+              ></iconify-icon>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                Clarity for every user
+              </h3>
+              <p class="text-charcoal/70 text-sm">
+                Status changes, errors, and recovery paths reach the person who
+                needs to act on them.
+              </p>
+            </div>
+            <div
+              class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
+              style="transform: rotate(-0.3deg)"
+            >
+              <iconify-icon
+                icon="ph:infinity-duotone"
+                width="32"
+                class="text-sunset mb-3"
+              ></iconify-icon>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">
+                Costs that don't snowball
+              </h3>
+              <p class="text-charcoal/70 text-sm">
+                No remediation backlog waiting at the end of the project —
+                because the backlog was never created.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== CTA ====== -->
+      <section class="py-20 md:py-28">
+        <div class="max-w-4xl mx-auto px-6">
+          <div
+            class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden"
+          >
+            <div
+              class="absolute -top-10 -right-10 w-40 h-40 bg-coral/30 blob-shape animate-float-slow"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float"
+              aria-hidden="true"
+            ></div>
+            <div class="relative z-10 text-center">
+              <span
+                class="sticker bg-white/10 text-lemon border-lemon/40 mb-6"
+                style="transform: rotate(-2deg)"
+              >
+                <iconify-icon
+                  icon="ph:magnifying-glass-duotone"
+                  width="14"
+                  class="mr-1"
+                ></iconify-icon>
+                Component library leaking accessibility?
+              </span>
+              <h2
+                class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5"
+              >
+                Let's audit your design system.
+              </h2>
+              <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+                Start with a free scorecard, or grab 30 minutes on my calendar
+                to talk through where accessibility is slipping out of your
+                architecture.
+              </p>
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
+                <a
+                  href="../scorecard.html"
+                  class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold"
+                >
+                  <iconify-icon
+                    icon="ph:clipboard-text-duotone"
+                    width="20"
+                  ></iconify-icon>
+                  Score your design system
+                </a>
+                <a
+                  href="https://calendly.com/josh-thebrileys/30min/"
+                  class="inline-flex items-center gap-2 bg-white/10 text-white px-7 py-4 rounded-full hover:bg-white/20 transition-all font-heading font-semibold border border-white/20"
+                >
+                  <iconify-icon
+                    icon="ph:calendar-check-duotone"
+                    width="20"
+                  ></iconify-icon>
+                  Book an intro call
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- next project -->
+          <div class="mt-14 flex justify-center">
+            <a
+              href="./"
+              class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors"
+            >
+              <iconify-icon
+                icon="ph:arrow-left-bold"
+                width="18"
+                class="group-hover:-translate-x-1 transition-transform"
+              ></iconify-icon>
+              Back to all projects on the corkboard
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8 mb-10">
+          <div class="md:col-span-2">
+            <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
+              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            </a>
+            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
+            <p class="text-sm mt-1">Available for UX engineering work. <a href="../contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <div class="flex items-center gap-4 mt-5">
+              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
+              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="../services.html" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="../projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
+              <li><a href="../about.html" class="hover:text-white transition-colors">About</a></li>
+              <li><a href="../blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="../contact.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="../scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
+              <li><a href="../testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
+              <li><a href="../faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

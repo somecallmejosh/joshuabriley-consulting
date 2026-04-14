@@ -1,0 +1,687 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Projects — Joshua Briley</title>
+    <meta
+      name="description"
+      content="Recent work by Joshua Briley: design systems, component libraries, and accessible web applications built for teams with real constraints."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Fraunces', 'Georgia', 'serif'],
+              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+              body: ['DM Sans', 'system-ui', 'sans-serif'],
+              logo: ['Style Script', 'cursive'],
+            },
+            colors: {
+              cream: '#FFFBF5',
+              peach: '#FFE8D6',
+              coral: '#E8573D',
+              sunset: '#FF8E53',
+              plum: '#6C4AB6',
+              navy: '#2D2B55',
+              charcoal: '#2E2E30',
+              sage: '#7BB47A',
+              sky: '#5DADE2',
+              lemon: '#FDE68A',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'DM Sans', system-ui, sans-serif;
+      }
+      .wavy-underline {
+        text-decoration: underline wavy;
+        text-decoration-color: #e8573d;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
+      }
+      .blob-shape {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      @keyframes float {
+        0%, 100% { transform: translateY(0px) rotate(0deg); }
+        50% { transform: translateY(-12px) rotate(2deg); }
+      }
+      @keyframes float-slow {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-8px); }
+      }
+      .animate-float { animation: float 6s ease-in-out infinite; }
+      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
+      .squiggle-divider {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-size: 100% 100%;
+        height: 30px;
+      }
+      .logo-monogram {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        background: linear-gradient(135deg, #6c4ab6, #e8573d);
+        color: white;
+        font-family: 'Style Script', cursive;
+        font-size: 1.1rem;
+        line-height: 1;
+        flex-shrink: 0;
+        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
+      }
+      .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
+      .sticker {
+        display: inline-flex;
+        align-items: center;
+        padding: 4px 12px;
+        border-radius: 9999px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        border: 1.5px dashed;
+        transform: rotate(-1deg);
+      }
+      .nav-open .mobile-menu { display: flex; }
+
+      /* Polaroid-style project card */
+      .polaroid {
+        background: #fff;
+        padding: 14px 14px 20px;
+        border-radius: 10px;
+        box-shadow:
+          0 18px 40px -18px rgba(45, 43, 85, 0.25),
+          0 2px 4px rgba(45, 43, 85, 0.06);
+        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        position: relative;
+      }
+      .polaroid:hover {
+        transform: translateY(-6px) rotate(0deg) !important;
+        box-shadow:
+          0 30px 60px -20px rgba(108, 74, 182, 0.28),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+      }
+      .polaroid .thumb {
+        position: relative;
+        border-radius: 6px;
+        overflow: hidden;
+        aspect-ratio: 4 / 3;
+        background: linear-gradient(135deg, #ffe8d6, #fde68a);
+      }
+      .polaroid .thumb img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      .tape {
+        position: absolute;
+        top: -14px;
+        width: 90px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.88);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
+      .tape-l { left: 8%; transform: rotate(-6deg); }
+      .tape-r { right: 8%; transform: rotate(5deg); }
+      .pin {
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 9999px;
+        background: radial-gradient(circle at 35% 35%, #ff8e53, #e8573d 60%, #8a2a1a);
+        box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.3);
+        z-index: 6;
+      }
+      .marker-label {
+        font-family: 'Style Script', cursive;
+        font-size: 1.6rem;
+        color: #6c4ab6;
+        line-height: 1;
+      }
+      .corkboard {
+        background-color: #fffbf5;
+        background-image:
+          radial-gradient(circle at 20% 30%, rgba(232, 87, 61, 0.05) 0, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(108, 74, 182, 0.05) 0, transparent 40%);
+      }
+    </style>
+  </head>
+  <body class="bg-cream text-charcoal antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- ====== HEADER / NAV ====== -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+          <span
+            class="logo-monogram group-hover:scale-105 transition-transform"
+            aria-hidden="true"
+            >jb</span
+          >
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
+          <a href="../index.html" class="hover:text-coral transition-colors">Home</a>
+          <a href="../services.html" class="hover:text-coral transition-colors">Services</a>
+          <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors">Projects</a>
+        </nav>
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
+          aria-label="Toggle navigation menu"
+          onclick="document.body.classList.toggle('nav-open')"
+        >
+          <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
+        </button>
+      </div>
+      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
+        <a href="../index.html" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="../services.html" class="hover:text-coral transition-colors py-2">Services</a>
+        <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors py-2">Projects</a>
+      </div>
+    </header>
+
+    <main id="main" class="corkboard">
+      <!-- ====== HERO — scrapbook style ====== -->
+      <section class="relative overflow-hidden pt-20 pb-16 md:pt-28 md:pb-20">
+        <div
+          class="absolute top-14 right-[8%] w-20 h-20 bg-lemon/60 blob-shape animate-float opacity-70"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-40 left-[6%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-6 right-[22%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-16 left-[12%] w-9 h-9 bg-coral/20 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+        <svg
+          class="absolute top-16 left-1/2 -translate-x-1/2 w-48 opacity-40"
+          viewBox="0 0 200 40"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 25 Q 40 5 80 22 T 160 20 T 195 15"
+            stroke="#6C4AB6"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            fill="none"
+          />
+        </svg>
+
+        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
+          <div
+            class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-lemon/60"
+          >
+            <iconify-icon
+              icon="ph:sparkle-duotone"
+              width="20"
+              class="text-sunset"
+            ></iconify-icon>
+            A peek at the workbench
+          </div>
+
+          <h1
+            class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[1.05] tracking-tight mb-8"
+          >
+            Recent
+            <span class="relative inline-block">
+              projects
+              <svg
+                class="absolute -bottom-3 left-0 w-full"
+                viewBox="0 0 220 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 9 Q 55 2 110 9 Q 165 16 217 7"
+                  stroke="#6C4AB6"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.55"
+                />
+              </svg>
+            </span>
+            <br />pinned to the
+            <span class="wavy-underline">corkboard</span>.
+          </h1>
+
+          <p
+            class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed"
+          >
+            Component libraries, design systems, and accessible web apps built
+            for teams with real constraints — messy timelines, mixed stacks,
+            and real humans using them on the other side.
+          </p>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== PROJECT GRID — staggered polaroids ====== -->
+      <section class="py-20 md:py-24 relative">
+        <div
+          class="absolute top-10 right-6 w-24 h-24 bg-plum/10 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+          <div class="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
+            <!-- Project 1 — Rudiment UI -->
+            <article
+              class="polaroid"
+              style="transform: rotate(-1.8deg)"
+            >
+              <span class="pin" aria-hidden="true"></span>
+              <a
+                href="../projects/index.htmlrudiment-ui/"
+                class="block group"
+              >
+                <div class="thumb">
+                  <img
+                    src="../index.htmlimages/projects/rudiment.png"
+                    alt="Rudiment UI component library preview"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="pt-5 px-1">
+                  <div class="flex items-center justify-between mb-2 gap-3">
+                    <span
+                      class="sticker bg-plum/10 text-plum border-plum/30"
+                      style="transform: rotate(-1.5deg)"
+                    >
+                      <iconify-icon
+                        icon="ph:package-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon>
+                      Component library
+                    </span>
+                    <span class="marker-label">01</span>
+                  </div>
+                  <h2
+                    class="font-display text-2xl md:text-[1.7rem] font-semibold text-navy leading-tight mb-3 group-hover:text-coral transition-colors"
+                  >
+                    Rudiment UI: Building a component library from scratch
+                  </h2>
+                  <p class="text-charcoal/70 text-base leading-relaxed mb-4">
+                    An open-source React component library and companion guide
+                    covering architectural decisions, a three-tier token system,
+                    intrinsic layout primitives, accessible components with
+                    React Aria, Storybook docs, testing, and npm distribution.
+                  </p>
+                  <span
+                    class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-coral"
+                  >
+                    Read the case study
+                    <iconify-icon
+                      icon="ph:arrow-right-bold"
+                      width="16"
+                      class="group-hover:translate-x-1 transition-transform"
+                    ></iconify-icon>
+                  </span>
+                </div>
+              </a>
+            </article>
+
+            <!-- Project 2 — America's Test Kitchen -->
+            <article
+              class="polaroid md:mt-16"
+              style="transform: rotate(1.4deg)"
+            >
+              <span class="tape tape-l" aria-hidden="true"></span>
+              <span class="tape tape-r" aria-hidden="true"></span>
+              <a
+                href="../projects/index.htmlamericas-test-kitchen/"
+                class="block group"
+              >
+                <div class="thumb">
+                  <img
+                    src="../index.htmlimages/projects/americas-test-kitchen.webp"
+                    alt="America's Test Kitchen CMS and component library preview"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="pt-5 px-1">
+                  <div class="flex items-center justify-between mb-2 gap-3">
+                    <span
+                      class="sticker bg-coral/10 text-coral border-coral/30"
+                      style="transform: rotate(1deg)"
+                    >
+                      <iconify-icon
+                        icon="ph:chef-hat-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon>
+                      Multi-brand system
+                    </span>
+                    <span class="marker-label">02</span>
+                  </div>
+                  <h2
+                    class="font-display text-2xl md:text-[1.7rem] font-semibold text-navy leading-tight mb-3 group-hover:text-coral transition-colors"
+                  >
+                    America's Test Kitchen: one library, multiple brands
+                  </h2>
+                  <p class="text-charcoal/70 text-base leading-relaxed mb-4">
+                    Improving an inaccessible CMS and building a shared
+                    component library for one of the most recognized cooking
+                    brands in the US.
+                  </p>
+                  <span
+                    class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-coral"
+                  >
+                    Read the case study
+                    <iconify-icon
+                      icon="ph:arrow-right-bold"
+                      width="16"
+                      class="group-hover:translate-x-1 transition-transform"
+                    ></iconify-icon>
+                  </span>
+                </div>
+              </a>
+            </article>
+
+            <!-- Project 3 — Berxi -->
+            <article
+              class="polaroid md:-mt-6"
+              style="transform: rotate(1.2deg)"
+            >
+              <span class="pin" aria-hidden="true"></span>
+              <a
+                href="../projects/index.htmlberxi-insurance/"
+                class="block group"
+              >
+                <div class="thumb">
+                  <img
+                    src="../index.htmlimages/projects/berxi-insurance.webp"
+                    alt="Berxi.com design system preview"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="pt-5 px-1">
+                  <div class="flex items-center justify-between mb-2 gap-3">
+                    <span
+                      class="sticker bg-sky/15 text-sky border-sky/40"
+                      style="transform: rotate(-1deg)"
+                    >
+                      <iconify-icon
+                        icon="ph:shield-check-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon>
+                      Design system
+                    </span>
+                    <span class="marker-label">03</span>
+                  </div>
+                  <h2
+                    class="font-display text-2xl md:text-[1.7rem] font-semibold text-navy leading-tight mb-3 group-hover:text-coral transition-colors"
+                  >
+                    Berxi.com: a design system for a growing platform
+                  </h2>
+                  <p class="text-charcoal/70 text-base leading-relaxed mb-4">
+                    Building a custom design system for a growing insurance
+                    platform — from stakeholder alignment through component
+                    library, documentation, and cross-team adoption.
+                  </p>
+                  <span
+                    class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-coral"
+                  >
+                    Read the case study
+                    <iconify-icon
+                      icon="ph:arrow-right-bold"
+                      width="16"
+                      class="group-hover:translate-x-1 transition-transform"
+                    ></iconify-icon>
+                  </span>
+                </div>
+              </a>
+            </article>
+
+            <!-- Project 4 — IVFCRYO -->
+            <article
+              class="polaroid md:mt-10"
+              style="transform: rotate(-1.1deg)"
+            >
+              <span class="tape tape-l" aria-hidden="true"></span>
+              <a
+                href="../projects/index.htmlivfcryo/"
+                class="block group"
+              >
+                <div class="thumb">
+                  <img
+                    src="../index.htmlimages/projects/ivfcryo.webp"
+                    alt="IVFCRYO self-service shipping application preview"
+                    loading="lazy"
+                  />
+                </div>
+                <div class="pt-5 px-1">
+                  <div class="flex items-center justify-between mb-2 gap-3">
+                    <span
+                      class="sticker bg-sage/20 text-sage border-sage/40"
+                      style="transform: rotate(1.5deg)"
+                    >
+                      <iconify-icon
+                        icon="ph:heart-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon>
+                      Accessibility first
+                    </span>
+                    <span class="marker-label">04</span>
+                  </div>
+                  <h2
+                    class="font-display text-2xl md:text-[1.7rem] font-semibold text-navy leading-tight mb-3 group-hover:text-coral transition-colors"
+                  >
+                    IVFCRYO: accessibility built in from the start
+                  </h2>
+                  <p class="text-charcoal/70 text-base leading-relaxed mb-4">
+                    A self-service shipping application for a fertility specimen
+                    logistics provider, with real-time environmental tracking,
+                    multi-carrier label printing, and accessibility built in
+                    from day one.
+                  </p>
+                  <span
+                    class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-coral"
+                  >
+                    Read the case study
+                    <iconify-icon
+                      icon="ph:arrow-right-bold"
+                      width="16"
+                      class="group-hover:translate-x-1 transition-transform"
+                    ></iconify-icon>
+                  </span>
+                </div>
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== COMMON THEME NOTE ====== -->
+      <section class="py-20 md:py-24">
+        <div class="max-w-3xl mx-auto px-6">
+          <div
+            class="bg-white rounded-3xl p-8 md:p-12 border border-charcoal/5 shadow-sm relative"
+            style="transform: rotate(-0.4deg)"
+          >
+            <div
+              class="absolute -top-5 left-10 sticker bg-lemon/60 text-navy border-navy/20"
+              style="transform: rotate(-3deg)"
+            >
+              <iconify-icon
+                icon="ph:bookmark-simple-duotone"
+                width="14"
+                class="mr-1"
+              ></iconify-icon>
+              The through-line
+            </div>
+            <p
+              class="font-display text-2xl md:text-3xl text-navy leading-snug"
+            >
+              Component libraries, design systems, and accessible web
+              applications —
+              <span class="text-coral"
+                >built for teams with real constraints.</span
+              >
+            </p>
+            <p
+              class="mt-5 text-charcoal/70 text-base md:text-lg leading-relaxed font-body"
+            >
+              Different industries, different stacks, same underlying problem:
+              turn scattered UI decisions into a system the whole team can
+              trust. If that sounds like where you're stuck, let's talk.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== CTA ====== -->
+      <section class="pb-24 md:pb-32">
+        <div class="max-w-4xl mx-auto px-6">
+          <div
+            class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden"
+          >
+            <div
+              class="absolute -top-10 -right-10 w-40 h-40 bg-coral/30 blob-shape animate-float-slow"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float"
+              aria-hidden="true"
+            ></div>
+            <div class="relative z-10 text-center">
+              <span
+                class="sticker bg-white/10 text-lemon border-lemon/40 mb-6"
+                style="transform: rotate(-2deg)"
+              >
+                <iconify-icon
+                  icon="ph:hand-waving-duotone"
+                  width="14"
+                  class="mr-1"
+                ></iconify-icon>
+                Got a messy system?
+              </span>
+              <h2
+                class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5"
+              >
+                Your project could be the next one on the board.
+              </h2>
+              <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+                Start with a free scorecard, or grab 30 minutes on my calendar
+                to talk through where you're stuck.
+              </p>
+              <div
+                class="flex flex-col sm:flex-row items-center justify-center gap-4"
+              >
+                <a
+                  href="../scorecard.html"
+                  class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold"
+                >
+                  <iconify-icon
+                    icon="ph:clipboard-text-duotone"
+                    width="20"
+                  ></iconify-icon>
+                  Score your design system
+                </a>
+                <a
+                  href="https://calendly.com/josh-thebrileys/30min/"
+                  class="inline-flex items-center gap-2 bg-white/10 text-white px-7 py-4 rounded-full hover:bg-white/20 transition-all font-heading font-semibold border border-white/20"
+                >
+                  <iconify-icon
+                    icon="ph:calendar-check-duotone"
+                    width="20"
+                  ></iconify-icon>
+                  Book an intro call
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8 mb-10">
+          <div class="md:col-span-2">
+            <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
+              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            </a>
+            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
+            <p class="text-sm mt-1">Available for UX engineering work. <a href="../contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <div class="flex items-center gap-4 mt-5">
+              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
+              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li>
+              <li><a href="../services.html" class="hover:text-white transition-colors">Services</a></li>
+              <li><a href="../projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
+              <li><a href="../about.html" class="hover:text-white transition-colors">About</a></li>
+              <li><a href="../blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <ul class="space-y-2 text-sm">
+              <li><a href="../contact.html" class="hover:text-white transition-colors">Contact</a></li>
+              <li><a href="../scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
+              <li><a href="../testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
+              <li><a href="../faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
