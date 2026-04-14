@@ -59,16 +59,32 @@
         border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
       }
       @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-12px) rotate(2deg); }
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-12px) rotate(2deg);
+        }
       }
       @keyframes float-slow {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-8px);
+        }
       }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
+      .animate-float {
+        animation: float 6s ease-in-out infinite;
+      }
+      .animate-float-slow {
+        animation: float-slow 8s ease-in-out infinite;
+      }
+      .animate-float-delay {
+        animation: float 6s ease-in-out 2s infinite;
+      }
       .squiggle-divider {
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
         background-repeat: no-repeat;
@@ -90,7 +106,11 @@
         flex-shrink: 0;
         box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
       }
-      .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
+      .logo-monogram-sm {
+        width: 30px;
+        height: 30px;
+        font-size: 0.95rem;
+      }
       .sticker {
         display: inline-flex;
         align-items: center;
@@ -101,7 +121,9 @@
         border: 1.5px dashed;
         transform: rotate(-1deg);
       }
-      .nav-open .mobile-menu { display: flex; }
+      .nav-open .mobile-menu {
+        display: flex;
+      }
 
       /* Polaroid-style project card */
       .polaroid {
@@ -111,7 +133,9 @@
         box-shadow:
           0 18px 40px -18px rgba(45, 43, 85, 0.25),
           0 2px 4px rgba(45, 43, 85, 0.06);
-        transition: transform 0.35s ease, box-shadow 0.35s ease;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
         position: relative;
       }
       .polaroid:hover {
@@ -142,8 +166,14 @@
         box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
         z-index: 5;
       }
-      .tape-l { left: 8%; transform: rotate(-6deg); }
-      .tape-r { right: 8%; transform: rotate(5deg); }
+      .tape-l {
+        left: 8%;
+        transform: rotate(-6deg);
+      }
+      .tape-r {
+        right: 8%;
+        transform: rotate(5deg);
+      }
       .pin {
         position: absolute;
         top: -10px;
@@ -152,7 +182,12 @@
         width: 18px;
         height: 18px;
         border-radius: 9999px;
-        background: radial-gradient(circle at 35% 35%, #ff8e53, #e8573d 60%, #8a2a1a);
+        background: radial-gradient(
+          circle at 35% 35%,
+          #ff8e53,
+          #e8573d 60%,
+          #8a2a1a
+        );
         box-shadow: 0 3px 6px -1px rgba(0, 0, 0, 0.3);
         z-index: 6;
       }
@@ -165,8 +200,16 @@
       .corkboard {
         background-color: #fffbf5;
         background-image:
-          radial-gradient(circle at 20% 30%, rgba(232, 87, 61, 0.05) 0, transparent 40%),
-          radial-gradient(circle at 80% 70%, rgba(108, 74, 182, 0.05) 0, transparent 40%);
+          radial-gradient(
+            circle at 20% 30%,
+            rgba(232, 87, 61, 0.05) 0,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 80% 70%,
+            rgba(108, 74, 182, 0.05) 0,
+            transparent 40%
+          );
       }
     </style>
   </head>
@@ -182,7 +225,9 @@
     <header
       class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
     >
-      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
         <a href="../index.html" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
@@ -193,10 +238,21 @@
             >joshua<span class="text-coral">Briley</span></span
           >
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
-          <a href="../index.html" class="hover:text-coral transition-colors">Home</a>
-          <a href="../services.html" class="hover:text-coral transition-colors">Services</a>
-          <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors">Projects</a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="../index.html" class="hover:text-coral transition-colors"
+            >Home</a
+          >
+          <a href="../services.html" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a
+            href="../projects/index.html"
+            aria-current="page"
+            class="hover:text-coral transition-colors"
+            >Projects</a
+          >
         </nav>
         <button
           type="button"
@@ -207,10 +263,23 @@
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
-      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
-        <a href="../index.html" class="hover:text-coral transition-colors py-2">Home</a>
-        <a href="../services.html" class="hover:text-coral transition-colors py-2">Services</a>
-        <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors py-2">Projects</a>
+      <div
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="../index.html" class="hover:text-coral transition-colors py-2"
+          >Home</a
+        >
+        <a
+          href="../services.html"
+          class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a
+          href="../projects/index.html"
+          aria-current="page"
+          class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
       </div>
     </header>
 
@@ -281,16 +350,15 @@
                 />
               </svg>
             </span>
-            <br />pinned to the
-            <span class="wavy-underline">corkboard</span>.
+            <br />pinned to the <span class="wavy-underline">corkboard</span>.
           </h1>
 
           <p
             class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed"
           >
             Component libraries, design systems, and accessible web apps built
-            for teams with real constraints — messy timelines, mixed stacks,
-            and real humans using them on the other side.
+            for teams with real constraints — messy timelines, mixed stacks, and
+            real humans using them on the other side.
           </p>
         </div>
       </section>
@@ -311,18 +379,12 @@
         <div class="max-w-6xl mx-auto px-6 relative z-10">
           <div class="grid md:grid-cols-2 gap-12 md:gap-16 lg:gap-20">
             <!-- Project 1 — Rudiment UI -->
-            <article
-              class="polaroid"
-              style="transform: rotate(-1.8deg)"
-            >
+            <article class="polaroid" style="transform: rotate(-1.8deg)">
               <span class="pin" aria-hidden="true"></span>
-              <a
-                href="../projects/index.htmlrudiment-ui/"
-                class="block group"
-              >
+              <a href="../projects/index.htmlrudiment-ui/" class="block group">
                 <div class="thumb">
                   <img
-                    src="../index.htmlimages/projects/rudiment.png"
+                    src="https://joshuabriley.com/projects/rudiment.png"
                     alt="Rudiment UI component library preview"
                     loading="lazy"
                   />
@@ -380,7 +442,7 @@
               >
                 <div class="thumb">
                   <img
-                    src="../index.htmlimages/projects/americas-test-kitchen.webp"
+                    src="https://joshuabriley.com/projects/americas-test-kitchen.webp"
                     alt="America's Test Kitchen CMS and component library preview"
                     loading="lazy"
                   />
@@ -436,7 +498,7 @@
               >
                 <div class="thumb">
                   <img
-                    src="../index.htmlimages/projects/berxi-insurance.webp"
+                    src="https://joshuabriley.com/projects/berxi-insurance.webp"
                     alt="Berxi.com design system preview"
                     loading="lazy"
                   />
@@ -486,13 +548,10 @@
               style="transform: rotate(-1.1deg)"
             >
               <span class="tape tape-l" aria-hidden="true"></span>
-              <a
-                href="../projects/index.htmlivfcryo/"
-                class="block group"
-              >
+              <a href="../projects/index.htmlivfcryo/" class="block group">
                 <div class="thumb">
                   <img
-                    src="../index.htmlimages/projects/ivfcryo.webp"
+                    src="https://joshuabriley.com/projects/ivfcryo.webp"
                     alt="IVFCRYO self-service shipping application preview"
                     loading="lazy"
                   />
@@ -560,9 +619,7 @@
               ></iconify-icon>
               The through-line
             </div>
-            <p
-              class="font-display text-2xl md:text-3xl text-navy leading-snug"
-            >
+            <p class="font-display text-2xl md:text-3xl text-navy leading-snug">
               Component libraries, design systems, and accessible web
               applications —
               <span class="text-coral"
@@ -650,34 +707,130 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="../index.html" class="inline-flex items-center gap-2.5 group">
-              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
-              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            <a
+              href="../index.html"
+              class="inline-flex items-center gap-2.5 group"
+            >
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
             </a>
-            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
-            <p class="text-sm mt-1">Available for UX engineering work. <a href="../contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="../contact.html"
+                class="text-coral hover:text-coral/80 transition-colors"
+                >Get in touch</a
+              >.
+            </p>
             <div class="flex items-center gap-4 mt-5">
-              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
-              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
             </div>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li>
-              <li><a href="../services.html" class="hover:text-white transition-colors">Services</a></li>
-              <li><a href="../projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="../about.html" class="hover:text-white transition-colors">About</a></li>
-              <li><a href="../blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <a
+                  href="../index.html"
+                  class="hover:text-white transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../services.html"
+                  class="hover:text-white transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../projects/index.html"
+                  class="hover:text-white transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../about.html"
+                  class="hover:text-white transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../blog/index.html"
+                  class="hover:text-white transition-colors"
+                  >Blog</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../contact.html" class="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="../scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
-              <li><a href="../testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
-              <li><a href="../faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+              <li>
+                <a
+                  href="../contact.html"
+                  class="hover:text-white transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../scorecard.html"
+                  class="hover:text-white transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../testimonials.html"
+                  class="hover:text-white transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../faqs.html"
+                  class="hover:text-white transition-colors"
+                  >FAQs</a
+                >
+              </li>
             </ul>
           </div>
         </div>
