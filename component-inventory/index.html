@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <title>Component Inventory — Joshua Briley</title>
     <meta
       name="description"
@@ -16,338 +17,436 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
       body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-        background: #fffbf5;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
+                    font-family: 'DM Sans', system-ui, sans-serif;
+                    background: #fffbf5;
+                  }
       .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.375rem 0.875rem;
-        border-radius: 9999px;
-        border-width: 1px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.8125rem;
-        font-weight: 500;
-      }
-      /* Category sidebar */
+                    display: inline-flex;
+                    align-items: center;
+                    padding: 0.375rem 0.875rem;
+                    border-radius: 9999px;
+                    border-width: 1px;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.8125rem;
+                    font-weight: 500;
+                  }
       .cat-link {
-        display: flex;
-        align-items: center;
-        gap: 0.625rem;
-        padding: 0.5rem 0.875rem;
-        border-radius: 0.625rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: #2e2e30;
-        transition: all 0.2s;
-      }
+                    display: flex;
+                    align-items: center;
+                    gap: 0.625rem;
+                    padding: 0.5rem 0.875rem;
+                    border-radius: 0.625rem;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    color: #2e2e30;
+                    transition: all 0.2s;
+                  }
       .cat-link:hover {
-        background: rgba(108, 74, 182, 0.08);
-        color: #6c4ab6;
-      }
+                    background: rgba(108, 74, 182, 0.08);
+                    color: #6c4ab6;
+                  }
       .cat-link .dot {
-        width: 0.5rem;
-        height: 0.5rem;
-        border-radius: 9999px;
-        flex-shrink: 0;
-      }
-      /* Component card */
+                    width: 0.5rem;
+                    height: 0.5rem;
+                    border-radius: 9999px;
+                    flex-shrink: 0;
+                  }
       .comp-card {
-        background: #fff;
-        border: 1px solid rgba(46, 46, 48, 0.06);
-        border-radius: 1.25rem;
-        padding: 1.5rem;
-        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-        margin-bottom: 1.5rem;
-      }
+                    background: #fff;
+                    border: 1px solid rgba(46, 46, 48, 0.06);
+                    border-radius: 1.25rem;
+                    padding: 1.5rem;
+                    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+                    margin-bottom: 1.5rem;
+                  }
       .comp-card h3 {
-        font-family: 'Fraunces', serif;
-        font-weight: 600;
-        font-size: 1.5rem;
-        color: #2d2b55;
-        line-height: 1.2;
-      }
+                    font-family: 'Fraunces', serif;
+                    font-weight: 600;
+                    font-size: 1.5rem;
+                    color: #2d2b55;
+                    line-height: 1.2;
+                  }
       .comp-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-        margin: 0.75rem 0 1rem;
-      }
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: 0.5rem;
+                    margin: 0.75rem 0 1rem;
+                  }
       .comp-meta .pill {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.6875rem;
-        font-weight: 500;
-        padding: 0.25rem 0.625rem;
-        border-radius: 9999px;
-        background: rgba(108, 74, 182, 0.08);
-        color: #6c4ab6;
-        text-transform: uppercase;
-        letter-spacing: 0.03em;
-      }
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.6875rem;
+                    font-weight: 500;
+                    padding: 0.25rem 0.625rem;
+                    border-radius: 9999px;
+                    background: rgba(108, 74, 182, 0.08);
+                    color: #6c4ab6;
+                    text-transform: uppercase;
+                    letter-spacing: 0.03em;
+                  }
       .comp-desc {
-        color: rgba(46, 46, 48, 0.72);
-        line-height: 1.6;
-        margin-bottom: 1rem;
-      }
-      /* Visual preview */
+                    color: rgba(46, 46, 48, 0.72);
+                    line-height: 1.6;
+                    margin-bottom: 1rem;
+                  }
       .comp-preview {
-        position: relative;
-        background: repeating-linear-gradient(
-            45deg,
-            rgba(46, 46, 48, 0.025) 0 10px,
-            transparent 10px 20px
-          ),
-          #fffbf5;
-        border: 1px dashed rgba(46, 46, 48, 0.15);
-        border-radius: 0.875rem;
-        padding: 1.75rem 1.5rem;
-        margin-bottom: 1rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 96px;
-        overflow: hidden;
-      }
+                    position: relative;
+                    background:
+                      repeating-linear-gradient(
+                        45deg,
+                        rgba(46, 46, 48, 0.025) 0 10px,
+                        transparent 10px 20px
+                      ),
+                      #fffbf5;
+                    border: 1px dashed rgba(46, 46, 48, 0.15);
+                    border-radius: 0.875rem;
+                    padding: 1.75rem 1.5rem;
+                    margin-bottom: 1rem;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    min-height: 96px;
+                    overflow: hidden;
+                  }
       .comp-preview > * {
-        max-width: 100%;
-      }
+                    max-width: 100%;
+                  }
       .comp-preview::before {
-        content: 'Preview';
-        position: absolute;
-        top: 0.5rem;
-        left: 0.75rem;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.625rem;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.08em;
-        color: rgba(46, 46, 48, 0.35);
-      }
-      /* Code block */
+                    content: 'Preview';
+                    position: absolute;
+                    top: 0.5rem;
+                    left: 0.75rem;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.625rem;
+                    font-weight: 500;
+                    text-transform: uppercase;
+                    letter-spacing: 0.08em;
+                    color: rgba(46, 46, 48, 0.35);
+                  }
       .comp-card {
-        min-width: 0;
-      }
+                    min-width: 0;
+                  }
       .code-wrap {
-        position: relative;
-        background: #2d2b55;
-        border-radius: 0.875rem;
-        overflow: hidden;
-        max-width: 100%;
-      }
+                    position: relative;
+                    background: #2d2b55;
+                    border-radius: 0.875rem;
+                    overflow: hidden;
+                    max-width: 100%;
+                  }
       .code-wrap pre {
-        margin: 0;
-        padding: 1.25rem 1.25rem 1.25rem 1.25rem;
-        overflow-x: auto;
-        font-family: 'JetBrains Mono', ui-monospace, monospace;
-        font-size: 0.8125rem;
-        line-height: 1.55;
-        color: #f5f3ff;
-      }
+                    margin: 0;
+                    padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+                    overflow-x: auto;
+                    font-family: 'JetBrains Mono', ui-monospace, monospace;
+                    font-size: 0.8125rem;
+                    line-height: 1.55;
+                    color: #f5f3ff;
+                  }
       .code-wrap pre code {
-        white-space: pre;
-        font-family: inherit;
-      }
+                    white-space: pre;
+                    font-family: inherit;
+                  }
       .copy-btn {
-        position: absolute;
-        top: 0.625rem;
-        right: 0.625rem;
-        display: inline-flex;
-        align-items: center;
-        gap: 0.375rem;
-        background: rgba(255, 255, 255, 0.1);
-        color: #fff;
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 0.375rem 0.75rem;
-        border-radius: 9999px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.75rem;
-        font-weight: 500;
-        cursor: pointer;
-        transition: all 0.2s;
-      }
+                    position: absolute;
+                    top: 0.625rem;
+                    right: 0.625rem;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.375rem;
+                    background: rgba(255, 255, 255, 0.1);
+                    color: #fff;
+                    border: 1px solid rgba(255, 255, 255, 0.18);
+                    padding: 0.375rem 0.75rem;
+                    border-radius: 9999px;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.75rem;
+                    font-weight: 500;
+                    cursor: pointer;
+                    transition: all 0.2s;
+                  }
       .copy-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
+                    background: rgba(255, 255, 255, 0.2);
+                  }
       .copy-btn.copied {
-        background: #7bb47a;
-        border-color: #7bb47a;
-      }
-      /* Foundations — swatch tiles */
+                    background: #7bb47a;
+                    border-color: #7bb47a;
+                  }
+      .logo-monogram {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+                    background: linear-gradient(135deg, #6c4ab6, #e8573d);
+                    color: #fff;
+                    font-family: 'Style Script', cursive;
+                    font-size: 1.1rem;
+                    line-height: 1;
+                    flex-shrink: 0;
+                    box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
+                  }
+      .logo-monogram-lg {
+                    width: 56px;
+                    height: 56px;
+                    font-size: 1.7rem;
+                  }
       .swatch {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-      }
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.5rem;
+                  }
       .swatch .chip {
-        aspect-ratio: 4 / 3;
-        border-radius: 0.875rem;
-        border: 1px solid rgba(46, 46, 48, 0.06);
-        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
-      }
+                    aspect-ratio: 4 / 3;
+                    border-radius: 0.875rem;
+                    border: 1px solid rgba(46, 46, 48, 0.06);
+                    box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+                  }
       .swatch .meta {
-        display: flex;
-        flex-direction: column;
-        gap: 0.125rem;
-        padding: 0 0.125rem;
-      }
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.125rem;
+                    padding: 0 0.125rem;
+                  }
       .swatch .name {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.8125rem;
-        font-weight: 600;
-        color: #2d2b55;
-      }
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.8125rem;
+                    font-weight: 600;
+                    color: #2d2b55;
+                  }
       .swatch .hex {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.6875rem;
-        color: rgba(46, 46, 48, 0.55);
-      }
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.6875rem;
+                    color: rgba(46, 46, 48, 0.55);
+                  }
       .token-row {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 0.75rem 0;
-        border-bottom: 1px dashed rgba(46, 46, 48, 0.08);
-      }
+                    display: flex;
+                    align-items: center;
+                    gap: 1rem;
+                    padding: 0.75rem 0;
+                    border-bottom: 1px dashed rgba(46, 46, 48, 0.08);
+                  }
       .token-row:last-child {
-        border-bottom: none;
-      }
+                    border-bottom: none;
+                  }
       .token-row .label {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.75rem;
-        color: #6c4ab6;
-        min-width: 7rem;
-        flex-shrink: 0;
-      }
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.75rem;
+                    color: #6c4ab6;
+                    min-width: 7rem;
+                    flex-shrink: 0;
+                  }
       .token-row .sample {
-        flex: 1;
-        min-width: 0;
-      }
+                    flex: 1;
+                    min-width: 0;
+                  }
       .token-row .value {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.6875rem;
-        color: rgba(46, 46, 48, 0.55);
-        margin-left: auto;
-        flex-shrink: 0;
-      }
-      /* Motion — keyframes + helpers for live previews */
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.6875rem;
+                    color: rgba(46, 46, 48, 0.55);
+                    margin-left: auto;
+                    flex-shrink: 0;
+                  }
+      .icon-tile {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    justify-content: flex-start;
+                    gap: 0.5rem;
+                    padding: 0.875rem 0.5rem;
+                    background: #fffbf5;
+                    border: 1px solid rgba(46, 46, 48, 0.06);
+                    border-radius: 0.875rem;
+                    text-align: center;
+                    transition: all 0.2s;
+                  }
+      .icon-tile:hover {
+                    border-color: rgba(108, 74, 182, 0.25);
+                    background: #fff;
+                    transform: translateY(-1px);
+                  }
+      .icon-tile code {
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 0.6875rem;
+                    color: rgba(46, 46, 48, 0.6);
+                    word-break: break-all;
+                    line-height: 1.3;
+                  }
       @keyframes float {
-        0%, 100% { transform: translateY(0) rotate(0); }
-        50% { transform: translateY(-12px) rotate(2deg); }
-      }
+                    0%,
+                    100% {
+                      transform: translateY(0) rotate(0);
+                    }
+                    50% {
+                      transform: translateY(-12px) rotate(2deg);
+                    }
+                  }
       @keyframes float-slow {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-8px); }
-      }
+                    0%,
+                    100% {
+                      transform: translateY(0);
+                    }
+                    50% {
+                      transform: translateY(-8px);
+                    }
+                  }
       @keyframes wiggle {
-        0%, 100% { transform: rotate(-2deg); }
-        50% { transform: rotate(2deg); }
-      }
+                    0%,
+                    100% {
+                      transform: rotate(-2deg);
+                    }
+                    50% {
+                      transform: rotate(2deg);
+                    }
+                  }
       @keyframes stamp-in {
-        0% { opacity: 0; transform: scale(1.6) rotate(-18deg); }
-        100% { opacity: 1; transform: scale(1) rotate(-6deg); }
-      }
+                    0% {
+                      opacity: 0;
+                      transform: scale(1.6) rotate(-18deg);
+                    }
+                    100% {
+                      opacity: 1;
+                      transform: scale(1) rotate(-6deg);
+                    }
+                  }
       @keyframes spin-slow {
-        from { transform: rotate(0); }
-        to { transform: rotate(360deg); }
-      }
+                    from {
+                      transform: rotate(0);
+                    }
+                    to {
+                      transform: rotate(360deg);
+                    }
+                  }
       @keyframes pulse-ring {
-        0%, 100% { transform: scale(1); opacity: 0.35; }
-        50% { transform: scale(1.08); opacity: 0.55; }
-      }
+                    0%,
+                    100% {
+                      transform: scale(1);
+                      opacity: 0.35;
+                    }
+                    50% {
+                      transform: scale(1.08);
+                      opacity: 0.55;
+                    }
+                  }
       @keyframes steam {
-        0% { opacity: 0; transform: translateY(0) scaleX(1); }
-        30% { opacity: 0.7; }
-        100% { opacity: 0; transform: translateY(-28px) scaleX(0.9); }
-      }
+                    0% {
+                      opacity: 0;
+                      transform: translateY(0) scaleX(1);
+                    }
+                    30% {
+                      opacity: 0.7;
+                    }
+                    100% {
+                      opacity: 0;
+                      transform: translateY(-28px) scaleX(0.9);
+                    }
+                  }
       @keyframes dash-flow {
-        to { stroke-dashoffset: -20; }
-      }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
-      .animate-wiggle { animation: wiggle 4s ease-in-out infinite; }
-      .animate-spin-slow { animation: spin-slow 28s linear infinite; }
-      .animate-pulse-ring { animation: pulse-ring 4s ease-in-out infinite; }
-      .animate-steam { animation: steam 4s ease-out infinite; }
-      .animate-stamp { animation: stamp-in 0.5s ease-out both; }
+                    to {
+                      stroke-dashoffset: -20;
+                    }
+                  }
+      .animate-wiggle {
+                    animation: wiggle 4s ease-in-out infinite;
+                  }
+      .animate-spin-slow {
+                    animation: spin-slow 28s linear infinite;
+                  }
+      .animate-pulse-ring {
+                    animation: pulse-ring 4s ease-in-out infinite;
+                  }
+      .animate-steam {
+                    animation: steam 4s ease-out infinite;
+                  }
+      .animate-stamp {
+                    animation: stamp-in 0.5s ease-out both;
+                  }
       .card-hover-demo {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
+                    transition:
+                      transform 0.3s ease,
+                      box-shadow 0.3s ease;
+                  }
       .card-hover-demo:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1),
-          0 0 0 1px rgba(108, 74, 182, 0.08);
-      }
-      /* Section headings */
+                    transform: translateY(-4px);
+                    box-shadow:
+                      0 20px 40px -12px rgba(0, 0, 0, 0.1),
+                      0 0 0 1px rgba(108, 74, 182, 0.08);
+                  }
       .cat-section {
-        scroll-margin-top: 6rem;
-      }
+                    scroll-margin-top: 6rem;
+                  }
       .cat-heading {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        margin-bottom: 1.5rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 2px dashed rgba(46, 46, 48, 0.1);
-      }
+                    display: flex;
+                    align-items: center;
+                    gap: 0.75rem;
+                    margin-bottom: 1.5rem;
+                    padding-bottom: 0.75rem;
+                    border-bottom: 2px dashed rgba(46, 46, 48, 0.1);
+                  }
       .cat-heading h2 {
-        font-family: 'Fraunces', serif;
-        font-weight: 600;
-        font-size: 2rem;
-        color: #2d2b55;
-      }
+                    font-family: 'Fraunces', serif;
+                    font-weight: 600;
+                    font-size: 2rem;
+                    color: #2d2b55;
+                  }
       .cat-heading .badge {
-        width: 2.75rem;
-        height: 2.75rem;
-        border-radius: 0.875rem;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-      }
+                    width: 2.75rem;
+                    height: 2.75rem;
+                    border-radius: 0.875rem;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    flex-shrink: 0;
+                  }
+      .report-paper {
+                    position: relative;
+                    background: #fff;
+                    border-radius: 6px;
+                    padding: 2rem 2rem 2.25rem;
+                    box-shadow:
+                      0 30px 60px -25px rgba(45, 43, 85, 0.35),
+                      0 0 0 1px rgba(108, 74, 182, 0.06);
+                    background-image: repeating-linear-gradient(
+                      to bottom,
+                      transparent 0,
+                      transparent 31px,
+                      rgba(93, 173, 226, 0.18) 31px,
+                      rgba(93, 173, 226, 0.18) 32px
+                    );
+                  }
+      .report-paper::before {
+                    content: '';
+                    position: absolute;
+                    top: 0;
+                    bottom: 0;
+                    left: 52px;
+                    width: 2px;
+                    background: rgba(232, 87, 61, 0.4);
+                  }
+      .report-paper .tape {
+                    position: absolute;
+                    width: 82px;
+                    height: 24px;
+                    background: rgba(253, 230, 138, 0.85);
+                    box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
+                  }
+      .report-paper .tape.tl {
+                    top: -12px;
+                    left: 8%;
+                    transform: rotate(-6deg);
+                  }
+      .report-paper .tape.tr {
+                    top: -12px;
+                    right: 8%;
+                    transform: rotate(5deg);
+                    background: rgba(125, 211, 252, 0.7);
+                  }
     </style>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="text-charcoal">
     <a
@@ -363,7 +462,7 @@
       <div
         class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span class="font-logo text-2xl text-navy"
             >joshua<span class="text-coral">Briley</span></span
           >
@@ -371,15 +470,11 @@
         <nav
           class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
         >
-          <a href="index.html" class="hover:text-coral transition-colors"
-            >Home</a
-          >
-          <a href="services.html" class="hover:text-coral transition-colors"
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services" class="hover:text-coral transition-colors"
             >Services</a
           >
-          <a
-            href="projects/index.html"
-            class="hover:text-coral transition-colors"
+          <a href="/projects/" class="hover:text-coral transition-colors"
             >Projects</a
           >
           <a href="component-inventory.html" class="text-coral">Inventory</a>
@@ -610,8 +705,8 @@
                 </div>
                 <p class="comp-desc">
                   Five typefaces cover display, UI, body, monospace, and
-                  decorative roles. Loaded from Google Fonts and wired up in
-                  the Tailwind config.
+                  decorative roles. Loaded from Google Fonts and wired up in the
+                  Tailwind config.
                 </p>
                 <div class="comp-preview" style="padding: 1.5rem">
                   <div class="w-full space-y-0">
@@ -633,8 +728,7 @@
                     </div>
                     <div class="token-row">
                       <span class="label">font-body</span>
-                      <span
-                        class="sample font-body text-base text-charcoal/80"
+                      <span class="sample font-body text-base text-charcoal/80"
                         >DM Sans — the default body voice.</span
                       >
                       <span class="value">DM Sans</span>
@@ -858,67 +952,67 @@ font-bold      &#47;* 700 — strong emphasis *&#47;</code></pre>
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-md mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-md</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >6px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-md
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        6px
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-lg mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-lg</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >8px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-lg
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        8px
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-xl mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-xl</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >12px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-xl
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        12px
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-2xl mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-2xl</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >16px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-2xl
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        16px
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-3xl mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-3xl</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >24px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-3xl
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        24px
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-full mb-2"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >rounded-full</div>
-                      <div
-                        class="font-mono text-[9px] text-charcoal/50"
-                      >9999px</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        rounded-full
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        9999px
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1063,9 +1157,9 @@ border-white&#47;20       &#47;* ghost buttons on navy *&#47;</code></pre>
                 </div>
                 <p class="comp-desc">
                   Soft, subtle elevation. <code>shadow-sm</code> is the card
-                  default; <code>shadow-lg</code> signals hover and
-                  elevation. Colored shadows (<code>shadow-coral/20</code>)
-                  appear on hover for primary CTAs.
+                  default; <code>shadow-lg</code> signals hover and elevation.
+                  Colored shadows (<code>shadow-coral/20</code>) appear on hover
+                  for primary CTAs.
                 </p>
                 <div class="comp-preview" style="padding: 2rem">
                   <div
@@ -1075,33 +1169,33 @@ border-white&#47;20       &#47;* ghost buttons on navy *&#47;</code></pre>
                       <div
                         class="w-full aspect-square bg-white rounded-xl shadow-sm mb-3"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >shadow-sm</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        shadow-sm
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-white rounded-xl shadow-md mb-3"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >shadow-md</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        shadow-md
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-white rounded-xl shadow-lg mb-3"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >shadow-lg</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        shadow-lg
+                      </div>
                     </div>
                     <div class="text-center">
                       <div
                         class="w-full aspect-square bg-coral rounded-xl shadow-lg shadow-coral/40 mb-3"
                       ></div>
-                      <div
-                        class="font-mono text-[10px] text-plum"
-                      >shadow-coral/20</div>
+                      <div class="font-mono text-[10px] text-plum">
+                        shadow-coral/20
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1123,94 +1217,130 @@ shadow-coral&#47;20     &#47;* colored hover glow on coral CTAs *&#47;</code></p
                   <span class="pill">Tailwind defaults</span>
                 </div>
                 <p class="comp-desc">
-                  The spacing values that show up most often in padding,
-                  margin, and gap. Section rhythm uses the bigger steps
-                  (<code>py-20</code>, <code>py-28</code>), card interiors
-                  use <code>p-6</code>/<code>p-8</code>.
+                  The spacing values that show up most often in padding, margin,
+                  and gap. Section rhythm uses the bigger steps
+                  (<code>py-20</code>, <code>py-28</code>), card interiors use
+                  <code>p-6</code>/<code>p-8</code>.
                 </p>
                 <div class="comp-preview" style="padding: 1.5rem">
                   <div class="w-full space-y-0">
                     <div class="token-row">
                       <span class="label">2</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 8px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 8px"
+                        ></div>
                       </div>
                       <span class="value">8px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">3</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 12px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 12px"
+                        ></div>
                       </div>
                       <span class="value">12px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">4</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 16px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 16px"
+                        ></div>
                       </div>
                       <span class="value">16px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">5</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 20px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 20px"
+                        ></div>
                       </div>
                       <span class="value">20px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">6</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 24px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 24px"
+                        ></div>
                       </div>
                       <span class="value">24px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">8</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 32px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 32px"
+                        ></div>
                       </div>
                       <span class="value">32px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">12</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 48px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 48px"
+                        ></div>
                       </div>
                       <span class="value">48px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">16</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 64px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 64px"
+                        ></div>
                       </div>
                       <span class="value">64px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">20</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 80px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 80px"
+                        ></div>
                       </div>
                       <span class="value">80px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">24</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 96px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 96px"
+                        ></div>
                       </div>
                       <span class="value">96px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">28</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 112px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 112px"
+                        ></div>
                       </div>
                       <span class="value">112px</span>
                     </div>
                     <div class="token-row">
                       <span class="label">32</span>
                       <div class="sample">
-                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 128px"></div>
+                        <div
+                          class="h-3 bg-coral/70 rounded-sm"
+                          style="width: 128px"
+                        ></div>
                       </div>
                       <span class="value">128px</span>
                     </div>
@@ -1227,6 +1357,569 @@ p-8                 &#47;* 32px — large card interior *&#47;
 py-20               &#47;* 80px — section rhythm *&#47;
 py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre>
                 </div>
+              </article>
+
+              <!-- Iconography -->
+              <article class="comp-card">
+                <h3>Iconography</h3>
+                <div class="comp-meta">
+                  <span class="pill">Iconify</span>
+                  <span class="pill">Phosphor set</span>
+                  <span class="pill">Web component</span>
+                </div>
+                <p class="comp-desc">
+                  Icons are rendered with the
+                  <a
+                    href="https://iconify.design/docs/iconify-icon/"
+                    class="text-plum underline decoration-plum/30 hover:decoration-plum"
+                    target="_blank"
+                    rel="noopener"
+                    >Iconify</a
+                  >
+                  <code>&lt;iconify-icon&gt;</code> web component loaded in the
+                  <code>&lt;head&gt;</code>. The site standardizes on the
+                  <strong>Phosphor</strong> set (<code>ph:</code> prefix),
+                  mostly the <code>-duotone</code> variant for decorative
+                  accents and solid/regular for inline UI. Browse the full
+                  catalog at
+                  <a
+                    href="https://icones.js.org/collection/ph"
+                    class="text-plum underline decoration-plum/30 hover:decoration-plum"
+                    target="_blank"
+                    rel="noopener"
+                    >icones.js.org/collection/ph</a
+                  >.
+                </p>
+
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-6">
+                    <!-- Anatomy -->
+                    <div>
+                      <p
+                        class="font-heading text-xs uppercase tracking-wider text-charcoal/50 mb-3"
+                      >
+                        Anatomy
+                      </p>
+                      <div
+                        class="flex flex-wrap items-end gap-8 p-4 bg-cream rounded-xl border border-charcoal/5"
+                      >
+                        <div class="flex flex-col items-center gap-2">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="16"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <span class="font-mono text-xs text-charcoal/60"
+                            >16px</span
+                          >
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="24"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <span class="font-mono text-xs text-charcoal/60"
+                            >24px</span
+                          >
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="32"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <span class="font-mono text-xs text-charcoal/60"
+                            >32px</span
+                          >
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="48"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <span class="font-mono text-xs text-charcoal/60"
+                            >48px</span
+                          >
+                        </div>
+                        <div class="flex flex-col items-center gap-2">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="72"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <span class="font-mono text-xs text-charcoal/60"
+                            >72px</span
+                          >
+                        </div>
+                      </div>
+                      <p
+                        class="mt-3 text-xs text-charcoal/60 font-body leading-relaxed"
+                      >
+                        Size via the <code>width</code> attribute (pixels).
+                        Color inherits from <code>currentColor</code>, so any
+                        Tailwind <code>text-*</code> utility works — including
+                        duotone accents via the <code>--icon-accent-color</code>
+                        CSS variable.
+                      </p>
+                    </div>
+
+                    <!-- Color via text-* -->
+                    <div>
+                      <p
+                        class="font-heading text-xs uppercase tracking-wider text-charcoal/50 mb-3"
+                      >
+                        Color via <code>text-*</code>
+                      </p>
+                      <div
+                        class="flex flex-wrap items-center gap-6 p-4 bg-cream rounded-xl border border-charcoal/5"
+                      >
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-coral"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-plum"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-sunset"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-sage"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-sky"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-navy"
+                        ></iconify-icon>
+                        <iconify-icon
+                          icon="ph:heart-duotone"
+                          width="32"
+                          class="text-charcoal/40"
+                        ></iconify-icon>
+                      </div>
+                    </div>
+
+                    <!-- Variant families -->
+                    <div>
+                      <p
+                        class="font-heading text-xs uppercase tracking-wider text-charcoal/50 mb-3"
+                      >
+                        Phosphor variants
+                      </p>
+                      <div
+                        class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3"
+                      >
+                        <div
+                          class="flex flex-col items-center gap-2 p-4 bg-cream rounded-xl border border-charcoal/5"
+                        >
+                          <iconify-icon
+                            icon="ph:star"
+                            width="32"
+                            class="text-navy"
+                          ></iconify-icon>
+                          <code class="text-[11px] text-charcoal/60"
+                            >ph:star</code
+                          >
+                          <span class="text-[10px] text-charcoal/40"
+                            >regular</span
+                          >
+                        </div>
+                        <div
+                          class="flex flex-col items-center gap-2 p-4 bg-cream rounded-xl border border-charcoal/5"
+                        >
+                          <iconify-icon
+                            icon="ph:star-bold"
+                            width="32"
+                            class="text-navy"
+                          ></iconify-icon>
+                          <code class="text-[11px] text-charcoal/60"
+                            >ph:star-bold</code
+                          >
+                          <span class="text-[10px] text-charcoal/40">bold</span>
+                        </div>
+                        <div
+                          class="flex flex-col items-center gap-2 p-4 bg-cream rounded-xl border border-charcoal/5"
+                        >
+                          <iconify-icon
+                            icon="ph:star-fill"
+                            width="32"
+                            class="text-navy"
+                          ></iconify-icon>
+                          <code class="text-[11px] text-charcoal/60"
+                            >ph:star-fill</code
+                          >
+                          <span class="text-[10px] text-charcoal/40">fill</span>
+                        </div>
+                        <div
+                          class="flex flex-col items-center gap-2 p-4 bg-cream rounded-xl border border-charcoal/5"
+                        >
+                          <iconify-icon
+                            icon="ph:star-duotone"
+                            width="32"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code class="text-[11px] text-charcoal/60"
+                            >ph:star-duotone</code
+                          >
+                          <span class="text-[10px] text-charcoal/40"
+                            >duotone ★</span
+                          >
+                        </div>
+                        <div
+                          class="flex flex-col items-center gap-2 p-4 bg-cream rounded-xl border border-charcoal/5"
+                        >
+                          <iconify-icon
+                            icon="ph:star-thin"
+                            width="32"
+                            class="text-navy"
+                          ></iconify-icon>
+                          <code class="text-[11px] text-charcoal/60"
+                            >ph:star-thin</code
+                          >
+                          <span class="text-[10px] text-charcoal/40">thin</span>
+                        </div>
+                      </div>
+                      <p
+                        class="mt-3 text-xs text-charcoal/60 font-body leading-relaxed"
+                      >
+                        ★ Default to <code>-duotone</code> for decorative
+                        accents on cards and headings. Use
+                        <code>regular</code> or <code>-bold</code> for inline UI
+                        (buttons, links, labels).
+                      </p>
+                    </div>
+
+                    <!-- Icons in use -->
+                    <div>
+                      <p
+                        class="font-heading text-xs uppercase tracking-wider text-charcoal/50 mb-3"
+                      >
+                        Icons used across the site
+                      </p>
+                      <div
+                        class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3"
+                      >
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:stack-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:stack-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:palette-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:palette-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:columns-duotone"
+                            width="28"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code>ph:columns-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:compass-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:compass-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:text-aa-duotone"
+                            width="28"
+                            class="text-sunset"
+                          ></iconify-icon>
+                          <code>ph:text-aa-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:cursor-click-duotone"
+                            width="28"
+                            class="text-sky"
+                          ></iconify-icon>
+                          <code>ph:cursor-click-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:cards-three-duotone"
+                            width="28"
+                            class="text-sage"
+                          ></iconify-icon>
+                          <code>ph:cards-three-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:image-duotone"
+                            width="28"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code>ph:image-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:package-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:package-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:puzzle-piece-duotone"
+                            width="28"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code>ph:puzzle-piece-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:sparkle-duotone"
+                            width="28"
+                            class="text-sunset"
+                          ></iconify-icon>
+                          <code>ph:sparkle-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:binoculars-duotone"
+                            width="28"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code>ph:binoculars-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:hand-waving-duotone"
+                            width="28"
+                            class="text-sunset"
+                          ></iconify-icon>
+                          <code>ph:hand-waving-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:clipboard-text-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:clipboard-text-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:quotes-duotone"
+                            width="28"
+                            class="text-plum/60"
+                          ></iconify-icon>
+                          <code>ph:quotes-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:check-circle-duotone"
+                            width="28"
+                            class="text-sage"
+                          ></iconify-icon>
+                          <code>ph:check-circle-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:warning-duotone"
+                            width="28"
+                            class="text-coral"
+                          ></iconify-icon>
+                          <code>ph:warning-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:copy"
+                            width="28"
+                            class="text-charcoal/70"
+                          ></iconify-icon>
+                          <code>ph:copy</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:arrow-right"
+                            width="28"
+                            class="text-charcoal/70"
+                          ></iconify-icon>
+                          <code>ph:arrow-right</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:arrow-bend-down-right-duotone"
+                            width="28"
+                            class="text-plum"
+                          ></iconify-icon>
+                          <code>ph:arrow-bend-down-right-duotone</code>
+                        </div>
+                        <div class="icon-tile">
+                          <iconify-icon
+                            icon="ph:caret-down-bold"
+                            width="28"
+                            class="text-charcoal/40"
+                          ></iconify-icon>
+                          <code>ph:caret-down-bold</code>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;!-- Load once in &lt;head&gt; --&gt;
+&lt;script src=&quot;https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js&quot;&gt;&lt;/script&gt;
+
+&lt;!-- Basic usage: size with width, color with text-* --&gt;
+&lt;iconify-icon icon=&quot;ph:sparkle-duotone&quot; width=&quot;24&quot; class=&quot;text-coral&quot;&gt;&lt;/iconify-icon&gt;
+
+&lt;!-- Inline in a button --&gt;
+&lt;button class=&quot;inline-flex items-center gap-2 ...&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:arrow-right&quot; width=&quot;16&quot;&gt;&lt;/iconify-icon&gt;
+  Read more
+&lt;/button&gt;
+
+&lt;!-- Decorative accent on a card --&gt;
+&lt;iconify-icon icon=&quot;ph:binoculars-duotone&quot; width=&quot;36&quot; class=&quot;text-coral mb-3&quot;&gt;&lt;/iconify-icon&gt;</code></pre>
+                </div>
+              </article>
+              <!-- Brand Logo -->
+              <article class="comp-card">
+                <h3>Brand Logo</h3>
+                <div class="comp-meta">
+                  <span class="pill">Identity</span>
+                  <span class="pill">Wordmark</span>
+                  <span class="pill">Monogram</span>
+                </div>
+                <p class="comp-desc">
+                  The brand identity has two parts: a
+                  <strong>wordmark</strong> set in <code>font-logo</code> (<em
+                    >Style Script</em
+                  >) with the surname accented in <code>text-coral</code>, and a
+                  <strong>logo mark</strong> — a blob-shaped monogram with the
+                  initials <code>jb</code> on a plum&rarr;coral gradient. They
+                  usually appear together as a lockup in the site header and
+                  footer, but either can stand alone.
+                </p>
+
+                <!-- Full lockup, light background -->
+                <div class="comp-preview">
+                  <a href="#" class="inline-flex items-center gap-2.5 group">
+                    <span class="logo-monogram" aria-hidden="true">jb</span>
+                    <span class="font-logo text-2xl text-navy"
+                      >joshua<span class="text-coral">Briley</span></span
+                    >
+                  </a>
+                </div>
+
+                <!-- Full lockup, dark background -->
+                <div class="comp-preview" style="background: #2d2b55">
+                  <a href="#" class="inline-flex items-center gap-2.5 group">
+                    <span
+                      class="logo-monogram logo-monogram-sm"
+                      aria-hidden="true"
+                      >jb</span
+                    >
+                    <span class="font-logo text-xl text-white"
+                      >joshua<span class="text-coral">Briley</span></span
+                    >
+                  </a>
+                </div>
+
+                <!-- Variant row: wordmark-only + monogram sizes -->
+                <div class="comp-preview" style="gap: 2.5rem; flex-wrap: wrap">
+                  <span class="font-logo text-3xl text-navy"
+                    >joshua<span class="text-coral">Briley</span></span
+                  >
+                  <span
+                    class="logo-monogram logo-monogram-lg"
+                    aria-hidden="true"
+                    >jb</span
+                  >
+                  <span class="logo-monogram" aria-hidden="true">jb</span>
+                  <span
+                    class="logo-monogram logo-monogram-sm"
+                    aria-hidden="true"
+                    >jb</span
+                  >
+                </div>
+
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;!-- 1. Full lockup (header default) — mark + wordmark on light bg --&gt;
+&lt;a href=&quot;index.html&quot; class=&quot;inline-flex items-center gap-2.5 group&quot;&gt;
+  &lt;span class=&quot;logo-monogram group-hover:scale-105 transition-transform&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt;
+  &lt;span class=&quot;font-logo text-2xl text-navy&quot;&gt;joshua&lt;span class=&quot;text-coral&quot;&gt;Briley&lt;/span&gt;&lt;/span&gt;
+&lt;/a&gt;
+
+&lt;!-- 2. Full lockup (footer) — small mark + white wordmark on dark bg --&gt;
+&lt;a href=&quot;index.html&quot; class=&quot;inline-flex items-center gap-2.5 group&quot;&gt;
+  &lt;span class=&quot;logo-monogram logo-monogram-sm&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt;
+  &lt;span class=&quot;font-logo text-xl text-white&quot;&gt;joshua&lt;span class=&quot;text-coral&quot;&gt;Briley&lt;/span&gt;&lt;/span&gt;
+&lt;/a&gt;
+
+&lt;!-- 3. Wordmark only — use when space is tight or the mark would compete --&gt;
+&lt;span class=&quot;font-logo text-2xl text-navy&quot;&gt;joshua&lt;span class=&quot;text-coral&quot;&gt;Briley&lt;/span&gt;&lt;/span&gt;
+
+&lt;!-- 4. Logo mark only — favicon-style, avatar slots, tight UI --&gt;
+&lt;span class=&quot;logo-monogram&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt;            &lt;!-- 36px, default --&gt;
+&lt;span class=&quot;logo-monogram logo-monogram-sm&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt; &lt;!-- 30px --&gt;
+&lt;span class=&quot;logo-monogram logo-monogram-lg&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt; &lt;!-- 56px --&gt;
+
+&lt;!-- CSS (defined once per page, mirrors site-wide styles) --&gt;
+&lt;style&gt;
+  .logo-monogram {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 36px; height: 36px;
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%; /* organic blob */
+    background: linear-gradient(135deg, #6c4ab6, #e8573d); /* plum → coral */
+    color: #fff;
+    font-family: 'Style Script', cursive;
+    font-size: 1.1rem; line-height: 1;
+    box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
+    flex-shrink: 0;
+  }
+  .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
+  .logo-monogram-lg { width: 56px; height: 56px; font-size: 1.7rem; }
+&lt;/style&gt;</code></pre>
+                </div>
+
+                <p class="comp-desc" style="margin-top: 1rem; margin-bottom: 0">
+                  <strong>Usage notes.</strong> Keep
+                  <code>aria-hidden="true"</code> on the monogram when it sits
+                  next to the wordmark so screen readers don't announce
+                  &ldquo;jb joshua Briley.&rdquo; Wrap the lockup in an anchor
+                  with <code>group</code> and add
+                  <code>group-hover:scale-105 transition-transform</code> on the
+                  mark for the standard nudge. The coral accent on
+                  <em>Briley</em> is required — never render the surname in the
+                  same color as the first name.
+                </p>
               </article>
             </section>
 
@@ -1254,12 +1947,22 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   overflow clipping so decorative blobs can bleed in safely.
                 </p>
                 <div class="comp-preview">
-                  <div class="relative w-full bg-cream border border-charcoal/10 rounded-lg py-10 overflow-hidden">
-                    <div class="absolute top-3 right-4 w-8 h-8 bg-lemon/60 rounded-full"></div>
-                    <div class="absolute bottom-2 left-6 w-10 h-10 bg-peach/70 rounded-full"></div>
+                  <div
+                    class="relative w-full bg-cream border border-charcoal/10 rounded-lg py-10 overflow-hidden"
+                  >
+                    <div
+                      class="absolute top-3 right-4 w-8 h-8 bg-lemon/60 rounded-full"
+                    ></div>
+                    <div
+                      class="absolute bottom-2 left-6 w-10 h-10 bg-peach/70 rounded-full"
+                    ></div>
                     <div class="text-center px-4">
-                      <div class="font-display text-lg text-navy font-semibold">Hero headline</div>
-                      <div class="text-xs text-charcoal/60 mt-1">full-bleed padded section</div>
+                      <div class="font-display text-lg text-navy font-semibold">
+                        Hero headline
+                      </div>
+                      <div class="text-xs text-charcoal/60 mt-1">
+                        full-bleed padded section
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1285,8 +1988,14 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   constrain line length.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-full bg-charcoal/5 rounded-md py-6 flex justify-center">
-                    <div class="w-3/5 border-2 border-dashed border-plum/40 rounded-md py-4 text-center text-xs font-heading text-plum">max-w-6xl · mx-auto · px-6</div>
+                  <div
+                    class="w-full bg-charcoal/5 rounded-md py-6 flex justify-center"
+                  >
+                    <div
+                      class="w-3/5 border-2 border-dashed border-plum/40 rounded-md py-4 text-center text-xs font-heading text-plum"
+                    >
+                      max-w-6xl · mx-auto · px-6
+                    </div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1303,7 +2012,7 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>Two-Column Split (Text + Media)</h3>
                 <div class="comp-meta">
-                  <span class="pill">about.html</span>
+                  <span class="pill">about/</span>
                   <span class="pill">index.html</span>
                 </div>
                 <p class="comp-desc">
@@ -1312,11 +2021,19 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="flex items-center gap-4 w-full">
-                    <div class="w-24 h-20 bg-peach/70 rounded-lg flex items-center justify-center">
-                      <iconify-icon icon="ph:image-duotone" width="28" class="text-coral"></iconify-icon>
+                    <div
+                      class="w-24 h-20 bg-peach/70 rounded-lg flex items-center justify-center"
+                    >
+                      <iconify-icon
+                        icon="ph:image-duotone"
+                        width="28"
+                        class="text-coral"
+                      ></iconify-icon>
                     </div>
                     <div class="flex-1 space-y-2">
-                      <div class="h-2 bg-charcoal/15 rounded-full w-11/12"></div>
+                      <div
+                        class="h-2 bg-charcoal/15 rounded-full w-11/12"
+                      ></div>
                       <div class="h-2 bg-charcoal/15 rounded-full w-9/12"></div>
                       <div class="h-2 bg-charcoal/15 rounded-full w-7/12"></div>
                     </div>
@@ -1345,9 +2062,15 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="grid grid-cols-3 gap-2 w-full">
-                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
-                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
-                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
+                    <div
+                      class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"
+                    ></div>
+                    <div
+                      class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"
+                    ></div>
+                    <div
+                      class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"
+                    ></div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1372,10 +2095,18 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   spotlight key moments.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-full bg-navy rounded-lg py-8 text-center relative overflow-hidden">
-                    <div class="absolute -top-4 -left-4 w-16 h-16 bg-plum/40 rounded-full"></div>
-                    <div class="font-display text-white text-lg">Ready to ship?</div>
-                    <div class="text-white/60 text-xs mt-1">Navy feature section</div>
+                  <div
+                    class="w-full bg-navy rounded-lg py-8 text-center relative overflow-hidden"
+                  >
+                    <div
+                      class="absolute -top-4 -left-4 w-16 h-16 bg-plum/40 rounded-full"
+                    ></div>
+                    <div class="font-display text-white text-lg">
+                      Ready to ship?
+                    </div>
+                    <div class="text-white/60 text-xs mt-1">
+                      Navy feature section
+                    </div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1399,8 +2130,19 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Decorative wavy divider that sits between long-form sections.
                 </p>
                 <div class="comp-preview">
-                  <svg class="w-full max-w-sm" viewBox="0 0 400 20" fill="none" aria-hidden="true">
-                    <path d="M2 10 Q 50 0 100 10 T 200 10 T 300 10 T 398 10" stroke="#E8573D" stroke-width="3" stroke-linecap="round" fill="none"/>
+                  <svg
+                    class="w-full max-w-sm"
+                    viewBox="0 0 400 20"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M2 10 Q 50 0 100 10 T 200 10 T 300 10 T 398 10"
+                      stroke="#E8573D"
+                      stroke-width="3"
+                      stroke-linecap="round"
+                      fill="none"
+                    />
                   </svg>
                 </div>
                 <div class="code-wrap">
@@ -1436,10 +2178,17 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   and a mobile toggle.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-full bg-cream/90 backdrop-blur border-b border-charcoal/10 rounded-lg px-4 py-3 flex items-center justify-between">
-                    <span class="font-logo text-lg text-navy">joshua<span class="text-coral">Briley</span></span>
-                    <nav class="hidden sm:flex gap-5 font-heading text-xs text-charcoal">
-                      <span>Home</span><span>Services</span><span>Projects</span>
+                  <div
+                    class="w-full bg-cream/90 backdrop-blur border-b border-charcoal/10 rounded-lg px-4 py-3 flex items-center justify-between"
+                  >
+                    <span class="font-logo text-lg text-navy"
+                      >joshua<span class="text-coral">Briley</span></span
+                    >
+                    <nav
+                      class="hidden sm:flex gap-5 font-heading text-xs text-charcoal"
+                    >
+                      <span>Home</span><span>Services</span
+                      ><span>Projects</span>
                     </nav>
                   </div>
                 </div>
@@ -1455,7 +2204,7 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
     &lt;/a&gt;
     &lt;nav class=&quot;hidden md:flex items-center gap-8 font-heading text-sm font-medium&quot;&gt;
       &lt;a href=&quot;index.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Home&lt;/a&gt;
-      &lt;a href=&quot;services.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Services&lt;/a&gt;
+      &lt;a href=&quot;/services&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Services&lt;/a&gt;
       &lt;a href=&quot;projects/index.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Projects&lt;/a&gt;
     &lt;/nav&gt;
     &lt;button type=&quot;button&quot; class=&quot;md:hidden p-2 rounded-lg hover:bg-charcoal/5&quot; aria-label=&quot;Toggle navigation menu&quot;&gt;
@@ -1477,13 +2226,23 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   icons.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-full bg-navy rounded-lg px-4 py-4 grid grid-cols-4 gap-3 text-white/60 text-[10px]">
+                  <div
+                    class="w-full bg-navy rounded-lg px-4 py-4 grid grid-cols-4 gap-3 text-white/60 text-[10px]"
+                  >
                     <div class="col-span-2">
-                      <div class="font-logo text-sm text-white">joshua<span class="text-coral">Briley</span></div>
+                      <div class="font-logo text-sm text-white">
+                        joshua<span class="text-coral">Briley</span>
+                      </div>
                       <div class="mt-2">&copy; 2026</div>
                     </div>
-                    <div><div class="text-white font-semibold mb-1">Site</div>Home<br/>About</div>
-                    <div><div class="text-white font-semibold mb-1">More</div>FAQs<br/>Contact</div>
+                    <div>
+                      <div class="text-white font-semibold mb-1">Site</div>
+                      Home<br />About
+                    </div>
+                    <div>
+                      <div class="text-white font-semibold mb-1">More</div>
+                      FAQs<br />Contact
+                    </div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1527,8 +2286,13 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   can skip straight to main content.
                 </p>
                 <div class="comp-preview">
-                  <span class="inline-flex items-center gap-2 bg-plum text-white px-4 py-2 rounded-lg font-heading text-sm font-medium shadow-lg">
-                    <iconify-icon icon="ph:arrow-bend-down-right-duotone" width="16"></iconify-icon>
+                  <span
+                    class="inline-flex items-center gap-2 bg-plum text-white px-4 py-2 rounded-lg font-heading text-sm font-medium shadow-lg"
+                  >
+                    <iconify-icon
+                      icon="ph:arrow-bend-down-right-duotone"
+                      width="16"
+                    ></iconify-icon>
                     Skip to main content
                   </span>
                 </div>
@@ -1544,17 +2308,32 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>Jump Link (In-page Nav)</h3>
                 <div class="comp-meta">
-                  <span class="pill">faqs.html</span>
+                  <span class="pill">/faqs/</span>
                 </div>
                 <p class="comp-desc">
                   Sidebar anchor link with a color dot to orient the user inside
                   long-scroll pages.
                 </p>
                 <div class="comp-preview">
-                  <div class="flex flex-col gap-1 bg-white rounded-lg p-3 border border-charcoal/10 w-48">
-                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-plum/10 font-heading text-sm text-plum"><span class="w-2 h-2 rounded-full bg-coral"></span>Services &amp; Fit</div>
-                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"><span class="w-2 h-2 rounded-full bg-plum"></span>Process</div>
-                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"><span class="w-2 h-2 rounded-full bg-sage"></span>Pricing</div>
+                  <div
+                    class="flex flex-col gap-1 bg-white rounded-lg p-3 border border-charcoal/10 w-48"
+                  >
+                    <div
+                      class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-plum/10 font-heading text-sm text-plum"
+                    >
+                      <span class="w-2 h-2 rounded-full bg-coral"></span
+                      >Services &amp; Fit
+                    </div>
+                    <div
+                      class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"
+                    >
+                      <span class="w-2 h-2 rounded-full bg-plum"></span>Process
+                    </div>
+                    <div
+                      class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"
+                    >
+                      <span class="w-2 h-2 rounded-full bg-sage"></span>Pricing
+                    </div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1592,8 +2371,11 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   accent on a focus word.
                 </p>
                 <div class="comp-preview">
-                  <h1 class="font-display text-2xl md:text-3xl font-semibold text-navy leading-[1.1] tracking-tight text-center">
-                    I fix <span class="wavy-underline">inconsistent</span> UI systems.
+                  <h1
+                    class="font-display text-2xl md:text-3xl font-semibold text-navy leading-[1.1] tracking-tight text-center"
+                  >
+                    I fix <span class="wavy-underline">inconsistent</span> UI
+                    systems.
                   </h1>
                 </div>
                 <div class="code-wrap">
@@ -1618,11 +2400,22 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="text-center">
-                    <span class="sticker bg-coral/10 text-coral" style="border-color: rgba(232,87,61,0.3)">
-                      <iconify-icon icon="ph:warning-duotone" width="14" class="mr-1"></iconify-icon>
+                    <span
+                      class="sticker bg-coral/10 text-coral"
+                      style="border-color: rgba(232, 87, 61, 0.3)"
+                    >
+                      <iconify-icon
+                        icon="ph:warning-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon>
                       Sound familiar?
                     </span>
-                    <h2 class="font-display text-xl md:text-2xl font-semibold text-navy mt-3">Signs your system isn't working</h2>
+                    <h2
+                      class="font-display text-xl md:text-2xl font-semibold text-navy mt-3"
+                    >
+                      Signs your system isn't working
+                    </h2>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1650,8 +2443,14 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   context.
                 </p>
                 <div class="comp-preview">
-                  <div class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full font-heading text-sm font-medium border border-lemon">
-                    <iconify-icon icon="ph:hand-waving-duotone" width="20" class="text-sunset"></iconify-icon>
+                  <div
+                    class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full font-heading text-sm font-medium border border-lemon"
+                  >
+                    <iconify-icon
+                      icon="ph:hand-waving-duotone"
+                      width="20"
+                      class="text-sunset"
+                    ></iconify-icon>
                     UX Engineer &amp; Design Systems Consultant
                   </div>
                 </div>
@@ -1677,8 +2476,13 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   headings.
                 </p>
                 <div class="comp-preview">
-                  <p class="text-base md:text-lg text-charcoal/70 max-w-md text-center font-body leading-relaxed">
-                    Most teams don't have a tooling problem. They have a <strong class="text-charcoal font-semibold">structure problem</strong>.
+                  <p
+                    class="text-base md:text-lg text-charcoal/70 max-w-md text-center font-body leading-relaxed"
+                  >
+                    Most teams don't have a tooling problem. They have a
+                    <strong class="text-charcoal font-semibold"
+                      >structure problem</strong
+                    >.
                   </p>
                 </div>
                 <div class="code-wrap">
@@ -1715,8 +2519,14 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   final conversion sections.
                 </p>
                 <div class="comp-preview">
-                  <a href="#" class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base">
-                    <iconify-icon icon="ph:clipboard-text-duotone" width="20"></iconify-icon>
+                  <a
+                    href="#"
+                    class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base"
+                  >
+                    <iconify-icon
+                      icon="ph:clipboard-text-duotone"
+                      width="20"
+                    ></iconify-icon>
                     Score your design system
                   </a>
                 </div>
@@ -1741,9 +2551,15 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Translucent button for use on navy backgrounds as a secondary
                   action.
                 </p>
-                <div class="comp-preview" style="background: #2d2b55;">
-                  <a href="#" class="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base">
-                    <iconify-icon icon="ph:clipboard-text-duotone" width="20"></iconify-icon>
+                <div class="comp-preview" style="background: #2d2b55">
+                  <a
+                    href="#"
+                    class="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base"
+                  >
+                    <iconify-icon
+                      icon="ph:clipboard-text-duotone"
+                      width="20"
+                    ></iconify-icon>
                     Start with the scorecard
                   </a>
                 </div>
@@ -1769,16 +2585,22 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   hover.
                 </p>
                 <div class="comp-preview">
-                  <a href="#" class="inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all">
+                  <a
+                    href="#"
+                    class="inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all"
+                  >
                     How audits help
-                    <iconify-icon icon="ph:arrow-right" width="16"></iconify-icon>
+                    <iconify-icon
+                      icon="ph:arrow-right"
+                      width="16"
+                    ></iconify-icon>
                   </a>
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
                     <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
                   </button>
-                  <pre><code>&lt;a href=&quot;services/audit.html&quot; class=&quot;inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all&quot;&gt;
+                  <pre><code>&lt;a href=&quot;services/audit&quot; class=&quot;inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all&quot;&gt;
   How audits help
   &lt;iconify-icon icon=&quot;ph:arrow-right&quot; width=&quot;16&quot;&gt;&lt;/iconify-icon&gt;
 &lt;/a&gt;</code></pre>
@@ -1789,7 +2611,7 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>Filter Pill Button</h3>
                 <div class="comp-meta">
-                  <span class="pill">blog/index.html</span>
+                  <span class="pill">blog/</span>
                 </div>
                 <p class="comp-desc">
                   Rounded toggle used for filtering content lists. Active state
@@ -1798,14 +2620,35 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="flex gap-2 flex-wrap justify-center">
-                    <button type="button" class="inline-flex items-center gap-1.5 bg-coral text-white px-4 py-2 rounded-full font-heading text-sm font-medium">
-                      <iconify-icon icon="ph:sparkle-duotone" width="14"></iconify-icon>All posts
+                    <button
+                      type="button"
+                      class="inline-flex items-center gap-1.5 bg-coral text-white px-4 py-2 rounded-full font-heading text-sm font-medium"
+                    >
+                      <iconify-icon
+                        icon="ph:sparkle-duotone"
+                        width="14"
+                      ></iconify-icon
+                      >All posts
                     </button>
-                    <button type="button" class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium">
-                      <iconify-icon icon="ph:package-duotone" width="14"></iconify-icon>Components
+                    <button
+                      type="button"
+                      class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium"
+                    >
+                      <iconify-icon
+                        icon="ph:package-duotone"
+                        width="14"
+                      ></iconify-icon
+                      >Components
                     </button>
-                    <button type="button" class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium">
-                      <iconify-icon icon="ph:palette-duotone" width="14"></iconify-icon>Design
+                    <button
+                      type="button"
+                      class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium"
+                    >
+                      <iconify-icon
+                        icon="ph:palette-duotone"
+                        width="14"
+                      ></iconify-icon
+                      >Design
                     </button>
                   </div>
                 </div>
@@ -1844,11 +2687,22 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   statement. Slight tilt adds personality.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm max-w-xs" style="transform: rotate(-0.8deg)">
-                    <div class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center mb-4">
-                      <iconify-icon icon="ph:puzzle-piece-duotone" width="24" class="text-coral"></iconify-icon>
+                  <div
+                    class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm max-w-xs"
+                    style="transform: rotate(-0.8deg)"
+                  >
+                    <div
+                      class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center mb-4"
+                    >
+                      <iconify-icon
+                        icon="ph:puzzle-piece-duotone"
+                        width="24"
+                        class="text-coral"
+                      ></iconify-icon>
                     </div>
-                    <p class="font-heading font-medium text-navy">UI looks different across products or teams</p>
+                    <p class="font-heading font-medium text-navy">
+                      UI looks different across products or teams
+                    </p>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -1869,21 +2723,55 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 <h3>Service Card (Numbered)</h3>
                 <div class="comp-meta">
                   <span class="pill">index.html</span>
-                  <span class="pill">services.html</span>
+                  <span class="pill">/services</span>
                 </div>
                 <p class="comp-desc">
                   Service offering card with a step-number badge, icon, title,
                   description, and feature list.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-2xl p-8 border border-charcoal/5 shadow-sm relative max-w-sm" style="transform: rotate(-0.6deg)">
-                    <div class="absolute -top-4 -left-2 bg-coral text-white w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-lg shadow-md" style="transform: rotate(-6deg)">1</div>
-                    <div class="mt-2 mb-4"><iconify-icon icon="ph:binoculars-duotone" width="36" class="text-coral"></iconify-icon></div>
-                    <h3 class="font-heading text-lg font-semibold text-navy mb-2">Audit</h3>
-                    <p class="text-charcoal/70 text-sm leading-relaxed mb-4">Before you build anything new, understand what's broken.</p>
+                  <div
+                    class="bg-white rounded-2xl p-8 border border-charcoal/5 shadow-sm relative max-w-sm"
+                    style="transform: rotate(-0.6deg)"
+                  >
+                    <div
+                      class="absolute -top-4 -left-2 bg-coral text-white w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-lg shadow-md"
+                      style="transform: rotate(-6deg)"
+                    >
+                      1
+                    </div>
+                    <div class="mt-2 mb-4">
+                      <iconify-icon
+                        icon="ph:binoculars-duotone"
+                        width="36"
+                        class="text-coral"
+                      ></iconify-icon>
+                    </div>
+                    <h3
+                      class="font-heading text-lg font-semibold text-navy mb-2"
+                    >
+                      Audit
+                    </h3>
+                    <p class="text-charcoal/70 text-sm leading-relaxed mb-4">
+                      Before you build anything new, understand what's broken.
+                    </p>
                     <ul class="space-y-1.5 text-xs text-charcoal/60">
-                      <li class="flex items-start gap-2"><iconify-icon icon="ph:check-circle-duotone" width="16" class="text-sage mt-0.5 flex-shrink-0"></iconify-icon>Inconsistent component library</li>
-                      <li class="flex items-start gap-2"><iconify-icon icon="ph:check-circle-duotone" width="16" class="text-sage mt-0.5 flex-shrink-0"></iconify-icon>Undefined token system</li>
+                      <li class="flex items-start gap-2">
+                        <iconify-icon
+                          icon="ph:check-circle-duotone"
+                          width="16"
+                          class="text-sage mt-0.5 flex-shrink-0"
+                        ></iconify-icon
+                        >Inconsistent component library
+                      </li>
+                      <li class="flex items-start gap-2">
+                        <iconify-icon
+                          icon="ph:check-circle-duotone"
+                          width="16"
+                          class="text-sage mt-0.5 flex-shrink-0"
+                        ></iconify-icon
+                        >Undefined token system
+                      </li>
                     </ul>
                   </div>
                 </div>
@@ -1919,17 +2807,29 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   name.
                 </p>
                 <div class="comp-preview">
-                  <a href="#" class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center block max-w-xs" style="transform: rotate(-0.5deg)">
-                    <iconify-icon icon="ph:binoculars-duotone" width="32" class="text-coral mb-3"></iconify-icon>
-                    <p class="font-heading font-medium text-navy mb-1">System feels inconsistent?</p>
-                    <p class="text-sm text-coral font-medium">Design System Audit</p>
+                  <a
+                    href="#"
+                    class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center block max-w-xs"
+                    style="transform: rotate(-0.5deg)"
+                  >
+                    <iconify-icon
+                      icon="ph:binoculars-duotone"
+                      width="32"
+                      class="text-coral mb-3"
+                    ></iconify-icon>
+                    <p class="font-heading font-medium text-navy mb-1">
+                      System feels inconsistent?
+                    </p>
+                    <p class="text-sm text-coral font-medium">
+                      Design System Audit
+                    </p>
                   </a>
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
                     <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
                   </button>
-                  <pre><code>&lt;a href=&quot;services/audit.html&quot; class=&quot;card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center&quot; style=&quot;transform: rotate(-0.5deg)&quot;&gt;
+                  <pre><code>&lt;a href=&quot;services/audit&quot; class=&quot;card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center&quot; style=&quot;transform: rotate(-0.5deg)&quot;&gt;
   &lt;iconify-icon icon=&quot;ph:binoculars-duotone&quot; width=&quot;32&quot; class=&quot;text-coral mb-3&quot;&gt;&lt;/iconify-icon&gt;
   &lt;p class=&quot;font-heading font-medium text-navy mb-1&quot;&gt;System feels inconsistent?&lt;/p&gt;
   &lt;p class=&quot;text-sm text-coral font-medium group-hover:underline&quot;&gt;Design System Audit&lt;/p&gt;
@@ -1949,14 +2849,35 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   attribution.
                 </p>
                 <div class="comp-preview">
-                  <blockquote class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm relative max-w-sm" style="transform: rotate(-0.5deg)">
-                    <iconify-icon icon="ph:quotes-duotone" width="28" class="text-plum/30 absolute top-4 right-4"></iconify-icon>
-                    <p class="text-charcoal/70 text-sm leading-relaxed mb-4 italic">"Josh is an expert in accessibility and UI design — he ships thoughtful systems."</p>
+                  <blockquote
+                    class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm relative max-w-sm"
+                    style="transform: rotate(-0.5deg)"
+                  >
+                    <iconify-icon
+                      icon="ph:quotes-duotone"
+                      width="28"
+                      class="text-plum/30 absolute top-4 right-4"
+                    ></iconify-icon>
+                    <p
+                      class="text-charcoal/70 text-sm leading-relaxed mb-4 italic"
+                    >
+                      "Josh is an expert in accessibility and UI design — he
+                      ships thoughtful systems."
+                    </p>
                     <footer class="flex items-center gap-3">
-                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold text-sm">ND</div>
+                      <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold text-sm"
+                      >
+                        ND
+                      </div>
                       <div>
-                        <cite class="font-heading font-semibold text-navy not-italic block text-sm">Nicholas Dos Santos</cite>
-                        <span class="text-xs text-charcoal/50">Software Engineer</span>
+                        <cite
+                          class="font-heading font-semibold text-navy not-italic block text-sm"
+                          >Nicholas Dos Santos</cite
+                        >
+                        <span class="text-xs text-charcoal/50"
+                          >Software Engineer</span
+                        >
                       </div>
                     </footer>
                   </blockquote>
@@ -1991,10 +2912,23 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   rotation.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-peach rounded-sm p-5 shadow-lg relative w-56" style="transform: rotate(4deg)">
-                    <span class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-plum shadow"></span>
-                    <p class="font-display text-lg text-navy leading-tight italic">"the gold standard for building UIs…"</p>
-                    <p class="font-heading text-[10px] uppercase tracking-wide text-navy/70 mt-3">— Adam C., Evidation</p>
+                  <div
+                    class="bg-peach rounded-sm p-5 shadow-lg relative w-56"
+                    style="transform: rotate(4deg)"
+                  >
+                    <span
+                      class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-plum shadow"
+                    ></span>
+                    <p
+                      class="font-display text-lg text-navy leading-tight italic"
+                    >
+                      "the gold standard for building UIs…"
+                    </p>
+                    <p
+                      class="font-heading text-[10px] uppercase tracking-wide text-navy/70 mt-3"
+                    >
+                      — Adam C., Evidation
+                    </p>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2013,18 +2947,31 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>FAQ Accordion Item</h3>
                 <div class="comp-meta">
-                  <span class="pill">faqs.html</span>
+                  <span class="pill">/faqs/</span>
                 </div>
                 <p class="comp-desc">
                   Native <code>&lt;details&gt;</code> accordion with a Q icon,
                   summary, and animated chevron.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-xl border border-charcoal/10 shadow-sm max-w-md w-full">
+                  <div
+                    class="bg-white rounded-xl border border-charcoal/10 shadow-sm max-w-md w-full"
+                  >
                     <div class="flex items-center gap-3 p-4">
-                      <div class="w-8 h-8 rounded-full bg-coral text-white font-display font-bold flex items-center justify-center flex-shrink-0">Q</div>
-                      <span class="font-heading font-medium text-navy text-sm flex-1">What's included in the starter package?</span>
-                      <iconify-icon icon="ph:caret-down-bold" width="18" class="text-charcoal/40"></iconify-icon>
+                      <div
+                        class="w-8 h-8 rounded-full bg-coral text-white font-display font-bold flex items-center justify-center flex-shrink-0"
+                      >
+                        Q
+                      </div>
+                      <span
+                        class="font-heading font-medium text-navy text-sm flex-1"
+                        >What's included in the starter package?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="18"
+                        class="text-charcoal/40"
+                      ></iconify-icon>
                     </div>
                   </div>
                 </div>
@@ -2056,16 +3003,39 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   sticker, and title.
                 </p>
                 <div class="comp-preview">
-                  <article class="bg-white p-3 pb-6 shadow-lg relative w-56" style="transform: rotate(-1.8deg)">
-                    <span class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-coral shadow"></span>
-                    <div class="h-24 bg-gradient-to-br from-plum/30 to-sky/30 rounded-sm flex items-center justify-center">
-                      <iconify-icon icon="ph:package-duotone" width="40" class="text-plum"></iconify-icon>
+                  <article
+                    class="bg-white p-3 pb-6 shadow-lg relative w-56"
+                    style="transform: rotate(-1.8deg)"
+                  >
+                    <span
+                      class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-coral shadow"
+                    ></span>
+                    <div
+                      class="h-24 bg-gradient-to-br from-plum/30 to-sky/30 rounded-sm flex items-center justify-center"
+                    >
+                      <iconify-icon
+                        icon="ph:package-duotone"
+                        width="40"
+                        class="text-plum"
+                      ></iconify-icon>
                     </div>
                     <div class="pt-3 px-1">
-                      <span class="sticker bg-plum/10 text-plum text-[10px]" style="border-color: rgba(108,74,182,0.3)">
-                        <iconify-icon icon="ph:package-duotone" width="12" class="mr-1"></iconify-icon>Component library
+                      <span
+                        class="sticker bg-plum/10 text-plum text-[10px]"
+                        style="border-color: rgba(108, 74, 182, 0.3)"
+                      >
+                        <iconify-icon
+                          icon="ph:package-duotone"
+                          width="12"
+                          class="mr-1"
+                        ></iconify-icon
+                        >Component library
                       </span>
-                      <h2 class="font-display text-sm font-semibold text-navy leading-tight mt-2">Rudiment UI: Building a library from scratch</h2>
+                      <h2
+                        class="font-display text-sm font-semibold text-navy leading-tight mt-2"
+                      >
+                        Rudiment UI: Building a library from scratch
+                      </h2>
                     </div>
                   </article>
                 </div>
@@ -2099,21 +3069,42 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>Blog Post Card</h3>
                 <div class="comp-meta">
-                  <span class="pill">blog/index.html</span>
+                  <span class="pill">blog/</span>
                 </div>
                 <p class="comp-desc">
                   Article preview with gradient header, tag sticker, category
                   eyebrow, and title.
                 </p>
                 <div class="comp-preview">
-                  <article class="bg-white rounded-2xl overflow-hidden border border-charcoal/5 shadow-sm max-w-xs" style="transform: rotate(-0.6deg)">
-                    <div class="h-28 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center relative">
-                      <iconify-icon icon="ph:puzzle-piece-duotone" class="text-navy/70" width="56"></iconify-icon>
-                      <span class="absolute top-3 right-3 sticker bg-white/90 text-coral text-[10px]" style="border-color: rgba(232,87,61,0.4)">Best Practices</span>
+                  <article
+                    class="bg-white rounded-2xl overflow-hidden border border-charcoal/5 shadow-sm max-w-xs"
+                    style="transform: rotate(-0.6deg)"
+                  >
+                    <div
+                      class="h-28 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center relative"
+                    >
+                      <iconify-icon
+                        icon="ph:puzzle-piece-duotone"
+                        class="text-navy/70"
+                        width="56"
+                      ></iconify-icon>
+                      <span
+                        class="absolute top-3 right-3 sticker bg-white/90 text-coral text-[10px]"
+                        style="border-color: rgba(232, 87, 61, 0.4)"
+                        >Best Practices</span
+                      >
                     </div>
                     <div class="p-5">
-                      <p class="font-heading text-[10px] uppercase tracking-wider text-plum mb-2">Component Libraries</p>
-                      <h3 class="font-display text-base font-semibold text-navy leading-tight">The hidden cost of component inconsistency</h3>
+                      <p
+                        class="font-heading text-[10px] uppercase tracking-wider text-plum mb-2"
+                      >
+                        Component Libraries
+                      </p>
+                      <h3
+                        class="font-display text-base font-semibold text-navy leading-tight"
+                      >
+                        The hidden cost of component inconsistency
+                      </h3>
                     </div>
                   </article>
                 </div>
@@ -2160,7 +3151,9 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Standardized form label with required-field indicator.
                 </p>
                 <div class="comp-preview">
-                  <label class="font-heading text-sm font-medium text-navy">Name<span class="text-coral ml-0.5">*</span></label>
+                  <label class="font-heading text-sm font-medium text-navy"
+                    >Name<span class="text-coral ml-0.5">*</span></label
+                  >
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
@@ -2180,7 +3173,11 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Base text input used across all single-line fields.
                 </p>
                 <div class="comp-preview">
-                  <input type="text" placeholder="Your full name" class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral"/>
+                  <input
+                    type="text"
+                    placeholder="Your full name"
+                    class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral"
+                  />
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
@@ -2198,7 +3195,11 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </div>
                 <p class="comp-desc">Multi-line message input.</p>
                 <div class="comp-preview">
-                  <textarea placeholder="Tell me what you're working on..." rows="4" class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral resize-none"></textarea>
+                  <textarea
+                    placeholder="Tell me what you're working on..."
+                    rows="4"
+                    class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral resize-none"
+                  ></textarea>
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
@@ -2220,12 +3221,18 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="relative w-full max-w-sm">
-                    <select class="appearance-none w-full bg-white border border-charcoal/15 rounded-lg px-4 py-3 pr-10 font-body text-sm text-charcoal focus:outline-none focus:border-coral">
+                    <select
+                      class="appearance-none w-full bg-white border border-charcoal/15 rounded-lg px-4 py-3 pr-10 font-body text-sm text-charcoal focus:outline-none focus:border-coral"
+                    >
                       <option>What are you interested in?</option>
                       <option>Design System Audit</option>
                       <option>Component Library Starter</option>
                     </select>
-                    <iconify-icon icon="ph:caret-down-bold" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/50 pointer-events-none"></iconify-icon>
+                    <iconify-icon
+                      icon="ph:caret-down-bold"
+                      width="16"
+                      class="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/50 pointer-events-none"
+                    ></iconify-icon>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2257,10 +3264,21 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   answers.
                 </p>
                 <div class="comp-preview">
-                  <div class="inline-flex gap-2 bg-white p-1.5 rounded-full border border-charcoal/10">
-                    <span class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60">No</span>
-                    <span class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60">Partial</span>
-                    <span class="px-5 py-2 rounded-full bg-sage text-white font-heading text-sm font-medium shadow-sm">Yes</span>
+                  <div
+                    class="inline-flex gap-2 bg-white p-1.5 rounded-full border border-charcoal/10"
+                  >
+                    <span
+                      class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60"
+                      >No</span
+                    >
+                    <span
+                      class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60"
+                      >Partial</span
+                    >
+                    <span
+                      class="px-5 py-2 rounded-full bg-sage text-white font-heading text-sm font-medium shadow-sm"
+                      >Yes</span
+                    >
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2326,9 +3344,22 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="relative inline-block">
-                    <span class="font-display text-2xl font-semibold text-navy">focus word</span>
-                    <svg class="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 12" fill="none" aria-hidden="true">
-                      <path d="M2 8 Q 50 2 100 8 Q 150 14 198 6" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    <span class="font-display text-2xl font-semibold text-navy"
+                      >focus word</span
+                    >
+                    <svg
+                      class="absolute -bottom-1 left-0 w-full"
+                      viewBox="0 0 200 12"
+                      fill="none"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M2 8 Q 50 2 100 8 Q 150 14 198 6"
+                        stroke="#6C4AB6"
+                        stroke-width="3"
+                        stroke-linecap="round"
+                        opacity="0.5"
+                      />
                     </svg>
                   </div>
                 </div>
@@ -2353,9 +3384,21 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="flex gap-3 items-center">
-                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold">JS</div>
-                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-plum to-sky flex items-center justify-center text-white font-heading font-semibold text-sm">ND</div>
-                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-sage to-lemon flex items-center justify-center text-navy font-heading font-semibold text-sm">AC</div>
+                    <div
+                      class="w-14 h-14 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold"
+                    >
+                      JS
+                    </div>
+                    <div
+                      class="w-12 h-12 rounded-full bg-gradient-to-br from-plum to-sky flex items-center justify-center text-white font-heading font-semibold text-sm"
+                    >
+                      ND
+                    </div>
+                    <div
+                      class="w-10 h-10 rounded-full bg-gradient-to-br from-sage to-lemon flex items-center justify-center text-navy font-heading font-semibold text-sm"
+                    >
+                      AC
+                    </div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2378,9 +3421,21 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   paper/scrapbook motif.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-lg w-48 h-24 shadow-sm border border-charcoal/5 relative">
-                    <span class="absolute -top-2 -left-3 w-14 h-5 bg-lemon/80 rotate-[-6deg] shadow-sm" style="clip-path: polygon(4% 0, 100% 10%, 96% 100%, 0 90%)"></span>
-                    <span class="absolute -top-2 -right-3 w-14 h-5 bg-peach/90 rotate-[4deg] shadow-sm" style="clip-path: polygon(0 10%, 96% 0, 100% 90%, 4% 100%)"></span>
+                  <div
+                    class="bg-white rounded-lg w-48 h-24 shadow-sm border border-charcoal/5 relative"
+                  >
+                    <span
+                      class="absolute -top-2 -left-3 w-14 h-5 bg-lemon/80 rotate-[-6deg] shadow-sm"
+                      style="
+                        clip-path: polygon(4% 0, 100% 10%, 96% 100%, 0 90%);
+                      "
+                    ></span>
+                    <span
+                      class="absolute -top-2 -right-3 w-14 h-5 bg-peach/90 rotate-[4deg] shadow-sm"
+                      style="
+                        clip-path: polygon(0 10%, 96% 0, 100% 90%, 4% 100%);
+                      "
+                    ></span>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2404,14 +3459,38 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 </p>
                 <div class="comp-preview">
                   <div class="flex gap-2 flex-wrap justify-center">
-                    <span class="sticker bg-plum/10 text-plum" style="border-color: rgba(108,74,182,0.3)">
-                      <iconify-icon icon="ph:package-duotone" width="14" class="mr-1"></iconify-icon>Component library
+                    <span
+                      class="sticker bg-plum/10 text-plum"
+                      style="border-color: rgba(108, 74, 182, 0.3)"
+                    >
+                      <iconify-icon
+                        icon="ph:package-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon
+                      >Component library
                     </span>
-                    <span class="sticker bg-coral/10 text-coral" style="border-color: rgba(232,87,61,0.3)">
-                      <iconify-icon icon="ph:warning-duotone" width="14" class="mr-1"></iconify-icon>Audit
+                    <span
+                      class="sticker bg-coral/10 text-coral"
+                      style="border-color: rgba(232, 87, 61, 0.3)"
+                    >
+                      <iconify-icon
+                        icon="ph:warning-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon
+                      >Audit
                     </span>
-                    <span class="sticker bg-sage/15 text-sage" style="border-color: rgba(123,180,122,0.4)">
-                      <iconify-icon icon="ph:check-circle-duotone" width="14" class="mr-1"></iconify-icon>Shipped
+                    <span
+                      class="sticker bg-sage/15 text-sage"
+                      style="border-color: rgba(123, 180, 122, 0.4)"
+                    >
+                      <iconify-icon
+                        icon="ph:check-circle-duotone"
+                        width="14"
+                        class="mr-1"
+                      ></iconify-icon
+                      >Shipped
                     </span>
                   </div>
                 </div>
@@ -2439,6 +3518,84 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                 <h2>Specialized</h2>
               </div>
 
+              <!-- Report Paper -->
+              <article class="comp-card">
+                <h3>Report Paper</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                  <span class="pill">blog/</span>
+                </div>
+                <p class="comp-desc">
+                  Ruled-paper card with a red margin rule and washi tape
+                  accents. Used as the hero artifact on scorecard.html and as
+                  the notebook-style article wrapper
+                  (<code>.notebook-card</code>) on the blog index.
+                </p>
+                <div class="comp-preview">
+                  <div
+                    class="report-paper max-w-sm mx-auto"
+                    style="transform: rotate(-1.5deg)"
+                  >
+                    <span class="tape tl" aria-hidden="true"></span>
+                    <span class="tape tr" aria-hidden="true"></span>
+                    <div class="pl-12">
+                      <p class="font-logo text-plum text-xl leading-none mb-1">
+                        Briley &amp; Co.
+                      </p>
+                      <h4
+                        class="font-display text-lg font-bold text-navy leading-tight mb-3"
+                      >
+                        Report Card
+                      </h4>
+                      <ul class="space-y-1.5 font-heading text-xs">
+                        <li class="flex items-center justify-between">
+                          <span class="text-charcoal/80"
+                            >01 &middot; Consistency</span
+                          >
+                          <span class="font-display font-bold text-plum"
+                            >A</span
+                          >
+                        </li>
+                        <li class="flex items-center justify-between">
+                          <span class="text-charcoal/80"
+                            >02 &middot; Accessibility</span
+                          >
+                          <span class="font-display font-bold text-plum"
+                            >B+</span
+                          >
+                        </li>
+                        <li class="flex items-center justify-between">
+                          <span class="text-charcoal/80"
+                            >03 &middot; Documentation</span
+                          >
+                          <span class="font-display font-bold text-plum"
+                            >A-</span
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;report-paper rotate-[-1.5deg] relative&quot;&gt;
+  &lt;span class=&quot;tape tl&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+  &lt;span class=&quot;tape tr&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+  &lt;div class=&quot;pl-12&quot;&gt;
+    &lt;h2 class=&quot;font-display text-2xl font-bold text-navy&quot;&gt;Report Card&lt;/h2&gt;
+    &lt;ul class=&quot;space-y-2 font-heading text-sm&quot;&gt;
+      &lt;li class=&quot;flex items-center justify-between&quot;&gt;
+        &lt;span&gt;01 &middot; Component Consistency&lt;/span&gt;
+        &lt;span class=&quot;font-display font-bold text-plum&quot;&gt;A&lt;/span&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
               <!-- Grade Stamp -->
               <article class="comp-card">
                 <h3>Grade Stamp</h3>
@@ -2450,7 +3607,15 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   letter grade.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-24 h-24 rounded-full border-4 border-coral flex items-center justify-center font-display font-bold text-5xl text-coral" style="transform: rotate(-8deg); box-shadow: inset 0 0 0 2px rgba(232,87,61,0.4);">B</div>
+                  <div
+                    class="w-24 h-24 rounded-full border-4 border-coral flex items-center justify-center font-display font-bold text-5xl text-coral"
+                    style="
+                      transform: rotate(-8deg);
+                      box-shadow: inset 0 0 0 2px rgba(232, 87, 61, 0.4);
+                    "
+                  >
+                    B
+                  </div>
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
@@ -2470,8 +3635,13 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Animated progress bar for tracking scorecard progress.
                 </p>
                 <div class="comp-preview">
-                  <div class="w-full max-w-sm h-3 bg-charcoal/10 rounded-full overflow-hidden">
-                    <div class="h-full bg-gradient-to-r from-coral to-sunset rounded-full" style="width: 62%"></div>
+                  <div
+                    class="w-full max-w-sm h-3 bg-charcoal/10 rounded-full overflow-hidden"
+                  >
+                    <div
+                      class="h-full bg-gradient-to-r from-coral to-sunset rounded-full"
+                      style="width: 62%"
+                    ></div>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2488,18 +3658,29 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
               <article class="comp-card">
                 <h3>Speech Bubble</h3>
                 <div class="comp-meta">
-                  <span class="pill">faqs.html</span>
+                  <span class="pill">/faqs/</span>
                 </div>
                 <p class="comp-desc">
                   Conversational speech bubble used to surface common client
                   questions.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-2xl rounded-bl-sm px-5 py-4 border border-charcoal/10 shadow-sm max-w-xs relative" style="transform: rotate(-1.2deg)">
-                    <div class="flex items-center gap-2 text-[10px] font-heading uppercase tracking-wider text-plum mb-1">
-                      <iconify-icon icon="ph:user-circle-duotone" width="16"></iconify-icon>Client
+                  <div
+                    class="bg-white rounded-2xl rounded-bl-sm px-5 py-4 border border-charcoal/10 shadow-sm max-w-xs relative"
+                    style="transform: rotate(-1.2deg)"
+                  >
+                    <div
+                      class="flex items-center gap-2 text-[10px] font-heading uppercase tracking-wider text-plum mb-1"
+                    >
+                      <iconify-icon
+                        icon="ph:user-circle-duotone"
+                        width="16"
+                      ></iconify-icon
+                      >Client
                     </div>
-                    <p class="font-display text-navy text-base leading-snug">"How long does a typical engagement take?"</p>
+                    <p class="font-display text-navy text-base leading-snug">
+                      "How long does a typical engagement take?"
+                    </p>
                   </div>
                 </div>
                 <div class="code-wrap">
@@ -2526,7 +3707,12 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   Colored category tab attached to scorecard section cards.
                 </p>
                 <div class="comp-preview">
-                  <div class="inline-block bg-coral text-white px-5 py-2 rounded-t-lg font-heading font-semibold text-sm shadow-sm" style="transform: rotate(-1deg)">Component Consistency</div>
+                  <div
+                    class="inline-block bg-coral text-white px-5 py-2 rounded-t-lg font-heading font-semibold text-sm shadow-sm"
+                    style="transform: rotate(-1deg)"
+                  >
+                    Component Consistency
+                  </div>
                 </div>
                 <div class="code-wrap">
                   <button class="copy-btn" type="button">
@@ -2547,15 +3733,32 @@ py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre
                   "from" label.
                 </p>
                 <div class="comp-preview">
-                  <div class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative w-64" style="transform: rotate(3deg)">
-                    <div class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"></div>
-                    <div class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10">
-                      <iconify-icon icon="ph:envelope-open-duotone" width="22" class="text-coral"></iconify-icon>
-                      <span class="font-heading text-xs text-charcoal/50">FROM: you</span>
+                  <div
+                    class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative w-64"
+                    style="transform: rotate(3deg)"
+                  >
+                    <div
+                      class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"
+                    ></div>
+                    <div
+                      class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10"
+                    >
+                      <iconify-icon
+                        icon="ph:envelope-open-duotone"
+                        width="22"
+                        class="text-coral"
+                      ></iconify-icon>
+                      <span class="font-heading text-xs text-charcoal/50"
+                        >FROM: you</span
+                      >
                     </div>
                     <div class="pt-4 space-y-2">
-                      <div class="h-2 bg-charcoal/10 rounded-full w-11/12"></div>
-                      <div class="h-2 bg-charcoal/10 rounded-full w-10/12"></div>
+                      <div
+                        class="h-2 bg-charcoal/10 rounded-full w-11/12"
+                      ></div>
+                      <div
+                        class="h-2 bg-charcoal/10 rounded-full w-10/12"
+                      ></div>
                       <div class="h-2 bg-charcoal/10 rounded-full w-8/12"></div>
                     </div>
                   </div>
@@ -2691,8 +3894,8 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                 </div>
                 <p class="comp-desc">
                   Gentle continuous bob applied to decorative blobs, stickers,
-                  and sticky notes. Three variants share the same keyframes
-                  with different speeds/delays for a natural "crowd" feel.
+                  and sticky notes. Three variants share the same keyframes with
+                  different speeds/delays for a natural "crowd" feel.
                 </p>
                 <div class="comp-preview" style="padding: 2rem">
                   <div class="flex items-end gap-8">
@@ -2757,8 +3960,8 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                   <span class="pill">scorecard · about</span>
                 </div>
                 <p class="comp-desc">
-                  Slow side-to-side rotation used on stickers and playful
-                  accent badges to draw the eye.
+                  Slow side-to-side rotation used on stickers and playful accent
+                  badges to draw the eye.
                 </p>
                 <div class="comp-preview" style="padding: 2rem">
                   <span
@@ -2807,7 +4010,12 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                     </div>
                     <button
                       type="button"
-                      onclick="var s=document.getElementById('stamp-demo');s.classList.remove('animate-stamp');void s.offsetWidth;s.classList.add('animate-stamp');"
+                      onclick="
+                        var s = document.getElementById('stamp-demo')
+                        s.classList.remove('animate-stamp')
+                        void s.offsetWidth
+                        s.classList.add('animate-stamp')
+                      "
                       class="font-heading text-xs font-medium text-plum hover:text-coral transition-colors"
                     >
                       ↻ replay
@@ -2836,9 +4044,9 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                 </div>
                 <p class="comp-desc">
                   A pair of ambient animations used on service-page hero
-                  ornaments. <code>animate-spin-slow</code> rotates a badge
-                  over 28 seconds; <code>animate-pulse-ring</code> breathes a
-                  soft halo around it.
+                  ornaments. <code>animate-spin-slow</code> rotates a badge over
+                  28 seconds; <code>animate-pulse-ring</code> breathes a soft
+                  halo around it.
                 </p>
                 <div class="comp-preview" style="padding: 2.5rem">
                   <div class="relative w-28 h-28">
@@ -2926,33 +4134,34 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                   <span class="pill">Reference</span>
                 </div>
                 <p class="comp-desc">
-                  A handful of animations live only in the pages that use
-                  them. They're listed here for completeness — move them to
-                  the global stylesheet if they get reused.
+                  A handful of animations live only in the pages that use them.
+                  They're listed here for completeness — move them to the global
+                  stylesheet if they get reused.
                 </p>
                 <div class="comp-preview" style="padding: 1.5rem">
                   <div class="w-full space-y-0">
                     <div class="token-row">
                       <span class="label">animate-stack-bob</span>
                       <span class="sample text-xs text-charcoal/70"
-                        >Stacked-card bobbing with per-card rotation
-                        (<code>--r</code> CSS var), 5s ease-in-out</span
+                        >Stacked-card bobbing with per-card rotation (<code
+                          >--r</code
+                        >
+                        CSS var), 5s ease-in-out</span
                       >
                       <span class="value">starter</span>
                     </div>
                     <div class="token-row">
                       <span class="label">animate-dash-flow</span>
                       <span class="sample text-xs text-charcoal/70"
-                        >SVG connector flow via
-                        <code>stroke-dashoffset</code>, 1.6s linear</span
+                        >SVG connector flow via <code>stroke-dashoffset</code>,
+                        1.6s linear</span
                       >
                       <span class="value">workflow</span>
                     </div>
                     <div class="token-row">
                       <span class="label">animate-slide-chip</span>
                       <span class="sample text-xs text-charcoal/70"
-                        >Horizontal
-                        <code>translateX(-8px → 8px)</code> bounce,
+                        >Horizontal <code>translateX(-8px → 8px)</code> bounce,
                         4s ease-in-out</span
                       >
                       <span class="value">workflow</span>
@@ -2991,10 +4200,9 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                 </div>
                 <p class="comp-desc">
                   The site has zero
-                  <code>@media (prefers-reduced-motion)</code> overrides
-                  today. Before the next release, wrap every animation above
-                  in the guard below so motion-sensitive visitors opt out
-                  cleanly.
+                  <code>@media (prefers-reduced-motion)</code> overrides today.
+                  Before the next release, wrap every animation above in the
+                  guard below so motion-sensitive visitors opt out cleanly.
                 </p>
                 <div class="comp-preview" style="padding: 1.5rem">
                   <div
@@ -3010,8 +4218,8 @@ class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
                         >Not yet implemented.</strong
                       >
                       All animations currently run unconditionally — add the
-                      media query below to <code>app.css</code> to respect
-                      the user's system setting.
+                      media query below to <code>app.css</code> to respect the
+                      user's system setting.
                     </div>
                   </div>
                 </div>

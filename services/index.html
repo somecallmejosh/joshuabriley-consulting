@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <title>Services — Joshua Briley | Design Systems Consulting</title>
     <meta
       name="description"
@@ -16,126 +17,9 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
-    <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-12px) rotate(2deg);
-        }
-      }
-      @keyframes float-slow {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-      .animate-float-slow {
-        animation: float-slow 8s ease-in-out infinite;
-      }
-      .animate-float-delay {
-        animation: float 6s ease-in-out 2s infinite;
-      }
-      .squiggle-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 30px;
-      }
-      .logo-monogram {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #6c4ab6, #e8573d);
-        color: white;
-        font-family: 'Style Script', cursive;
-        font-size: 1.1rem;
-        line-height: 1;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
-      }
-      .logo-monogram-sm {
-        width: 30px;
-        height: 30px;
-        font-size: 0.95rem;
-      }
-      .card-hover {
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-4px) rotate(0deg) !important;
-        box-shadow:
-          0 20px 40px -12px rgba(0, 0, 0, 0.1),
-          0 0 0 1px rgba(108, 74, 182, 0.08);
-      }
-      .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1.5px dashed;
-        transform: rotate(-1deg);
-      }
-      .nav-open .mobile-menu {
-        display: flex;
-      }
-    </style>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -152,7 +36,7 @@
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
             aria-hidden="true"
@@ -165,18 +49,14 @@
         <nav
           class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
         >
-          <a href="index.html" class="hover:text-coral transition-colors"
-            >Home</a
-          >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
           <a
-            href="services.html"
+            href="/services"
             aria-current="page"
             class="hover:text-coral transition-colors"
             >Services</a
           >
-          <a
-            href="projects/index.html"
-            class="hover:text-coral transition-colors"
+          <a href="/projects/" class="hover:text-coral transition-colors"
             >Projects</a
           >
         </nav>
@@ -192,18 +72,14 @@
       <div
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
-        <a href="index.html" class="hover:text-coral transition-colors py-2"
-          >Home</a
-        >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
         <a
-          href="services.html"
+          href="/services"
           aria-current="page"
           class="hover:text-coral transition-colors py-2"
           >Services</a
         >
-        <a
-          href="projects/index.html"
-          class="hover:text-coral transition-colors py-2"
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
           >Projects</a
         >
       </div>
@@ -495,7 +371,7 @@
                   </li>
                 </ul>
                 <a
-                  href="/services/audit.html"
+                  href="audit"
                   class="inline-flex items-center gap-2 text-coral font-heading font-semibold hover:gap-3 transition-all"
                 >
                   Start with an audit
@@ -565,7 +441,7 @@
                   </li>
                 </ul>
                 <a
-                  href="/services/starter.html"
+                  href="starter"
                   class="inline-flex items-center gap-2 text-plum font-heading font-semibold hover:gap-3 transition-all"
                 >
                   Talk about a starter
@@ -634,7 +510,7 @@
                   </li>
                 </ul>
                 <a
-                  href="/services/workflow.html"
+                  href="workflow"
                   class="inline-flex items-center gap-2 text-sky font-heading font-semibold hover:gap-3 transition-all"
                 >
                   Smooth out the handoff
@@ -812,7 +688,7 @@
                 </p>
               </div>
               <a
-                href="scorecard.html"
+                href="/scorecard/"
                 class="inline-flex items-center gap-2 bg-navy text-white px-6 py-3.5 rounded-full hover:bg-navy/90 transition-all hover:shadow-lg hover:shadow-navy/20 font-heading font-semibold whitespace-nowrap"
               >
                 Get the scorecard
@@ -867,7 +743,7 @@
               Book an intro call
             </a>
             <a
-              href="contact.html"
+              href="/contact/"
               class="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base"
             >
               <iconify-icon
@@ -886,7 +762,7 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="index.html" class="inline-flex items-center gap-2.5 group">
+            <a href="/" class="inline-flex items-center gap-2.5 group">
               <span
                 class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
                 aria-hidden="true"
@@ -902,8 +778,8 @@
             <p class="text-sm mt-1">
               Available for UX engineering work.
               <a
-                href="contact.html"
-                class="text-coral hover:text-coral/80 transition-colors"
+                href="/contact/"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
                 >Get in touch</a
               >.
             </p>
@@ -936,33 +812,25 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="index.html" class="hover:text-white transition-colors"
-                  >Home</a
-                >
+                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
               </li>
               <li>
-                <a
-                  href="services.html"
-                  class="hover:text-white transition-colors"
+                <a href="/services" class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a
-                  href="projects/index.html"
-                  class="hover:text-white transition-colors"
+                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="about.html" class="hover:text-white transition-colors"
+                <a href="/about/" class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a
-                  href="blog/index.html"
-                  class="hover:text-white transition-colors"
+                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -976,28 +844,24 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a
-                  href="contact.html"
-                  class="hover:text-white transition-colors"
+                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
-                <a
-                  href="scorecard.html"
-                  class="hover:text-white transition-colors"
+                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
               <li>
                 <a
-                  href="testimonials.html"
-                  class="hover:text-white transition-colors"
+                  href="/testimonials/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Kind Words</a
                 >
               </li>
               <li>
-                <a href="faqs.html" class="hover:text-white transition-colors"
+                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

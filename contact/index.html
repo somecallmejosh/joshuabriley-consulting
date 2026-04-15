@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <title>Contact — Joshua Briley</title>
     <meta
       name="description"
@@ -16,209 +17,90 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-12px) rotate(2deg);
-        }
-      }
-      @keyframes float-slow {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-      .animate-float-slow {
-        animation: float-slow 8s ease-in-out infinite;
-      }
-      .animate-float-delay {
-        animation: float 6s ease-in-out 2s infinite;
-      }
-      .squiggle-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 30px;
-      }
-      .logo-monogram {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #6c4ab6, #e8573d);
-        color: white;
-        font-family: 'Style Script', cursive;
-        font-size: 1.1rem;
-        line-height: 1;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
-      }
-      .logo-monogram-sm {
-        width: 30px;
-        height: 30px;
-        font-size: 0.95rem;
-      }
-      .card-hover {
-        transition:
-          transform 0.3s ease,
-          box-shadow 0.3s ease;
-      }
-      .card-hover:hover {
-        transform: translateY(-4px) rotate(0deg) !important;
-        box-shadow:
-          0 20px 40px -12px rgba(0, 0, 0, 0.1),
-          0 0 0 1px rgba(108, 74, 182, 0.08);
-      }
-      .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1.5px dashed;
-        transform: rotate(-1deg);
-      }
-      /* Form field */
       .field-input {
-        width: 100%;
-        background: #fffbf5;
-        border: 1.5px solid rgba(46, 46, 48, 0.12);
-        border-radius: 14px;
-        padding: 14px 16px;
-        font-family: 'DM Sans', system-ui, sans-serif;
-        font-size: 1rem;
-        color: #2e2e30;
-        transition:
-          border-color 0.2s ease,
-          box-shadow 0.2s ease,
-          transform 0.2s ease;
-      }
+                    width: 100%;
+                    background: #fffbf5;
+                    border: 1.5px solid rgba(46, 46, 48, 0.12);
+                    border-radius: 14px;
+                    padding: 14px 16px;
+                    font-family: 'DM Sans', system-ui, sans-serif;
+                    font-size: 1rem;
+                    color: #2e2e30;
+                    transition:
+                      border-color 0.2s ease,
+                      box-shadow 0.2s ease,
+                      transform 0.2s ease;
+                  }
       .field-input::placeholder {
-        color: rgba(46, 46, 48, 0.4);
-      }
+                    color: rgba(46, 46, 48, 0.4);
+                  }
       .field-input:hover {
-        border-color: rgba(108, 74, 182, 0.35);
-      }
+                    border-color: rgba(108, 74, 182, 0.35);
+                  }
       .field-input:focus {
-        outline: none;
-        border-color: #6c4ab6;
-        box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.12);
-      }
+                    outline: none;
+                    border-color: #6c4ab6;
+                    box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.12);
+                  }
       .field-label {
-        display: block;
-        font-family: 'Space Grotesk', system-ui, sans-serif;
-        font-weight: 500;
-        font-size: 0.9rem;
-        color: #2d2b55;
-        margin-bottom: 8px;
-      }
+                    display: block;
+                    font-family: 'Space Grotesk', system-ui, sans-serif;
+                    font-weight: 500;
+                    font-size: 0.9rem;
+                    color: #2d2b55;
+                    margin-bottom: 8px;
+                  }
       .field-label .req {
-        color: #e8573d;
-        margin-left: 2px;
-      }
+                    color: #e8573d;
+                    margin-left: 2px;
+                  }
       .select-wrap {
-        display: inline-grid;
-        grid-template-columns: 1fr auto;
-        width: 100%;
-      }
+                    display: inline-grid;
+                    grid-template-columns: 1fr auto;
+                    width: 100%;
+                  }
       .select-wrap select {
-        appearance: none;
-        -webkit-appearance: none;
-        grid-column: 1 / -1;
-        grid-row: 1;
-        padding-right: 44px;
-        cursor: pointer;
-      }
+                    appearance: none;
+                    -webkit-appearance: none;
+                    grid-column: 1 / -1;
+                    grid-row: 1;
+                    padding-right: 44px;
+                    cursor: pointer;
+                  }
       .select-wrap svg {
-        grid-column: 2;
-        grid-row: 1;
-        align-self: center;
-        justify-self: center;
-        margin-right: 16px;
-        pointer-events: none;
-        color: #6c4ab6;
-      }
-      .nav-open .mobile-menu {
-        display: flex;
-      }
-      /* Notebook paper feel for the form card */
+                    grid-column: 2;
+                    grid-row: 1;
+                    align-self: center;
+                    justify-self: center;
+                    margin-right: 16px;
+                    pointer-events: none;
+                    color: #6c4ab6;
+                  }
       .paper-card {
-        background: #ffffff;
-        background-image:
-          linear-gradient(
-            180deg,
-            transparent 0,
-            transparent calc(100% - 1px),
-            rgba(108, 74, 182, 0.06) calc(100% - 1px)
-          );
-        background-size: 100% 48px;
-      }
-      /* Dotted connector for process steps */
+                    background: #ffffff;
+                    background-image: linear-gradient(
+                      180deg,
+                      transparent 0,
+                      transparent calc(100% - 1px),
+                      rgba(108, 74, 182, 0.06) calc(100% - 1px)
+                    );
+                    background-size: 100% 48px;
+                  }
       .dotted-line {
-        background-image: radial-gradient(
-          circle,
-          rgba(108, 74, 182, 0.4) 1.5px,
-          transparent 1.5px
-        );
-        background-size: 10px 10px;
-        background-repeat: repeat-y;
-        background-position: center top;
-      }
+                    background-image: radial-gradient(
+                      circle,
+                      rgba(108, 74, 182, 0.4) 1.5px,
+                      transparent 1.5px
+                    );
+                    background-size: 10px 10px;
+                    background-repeat: repeat-y;
+                    background-position: center top;
+                  }
     </style>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -235,7 +117,7 @@
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
             aria-hidden="true"
@@ -245,10 +127,16 @@
             >joshua<span class="text-coral">Briley</span></span
           >
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
-          <a href="index.html" class="hover:text-coral transition-colors">Home</a>
-          <a href="services.html" class="hover:text-coral transition-colors">Services</a>
-          <a href="projects/index.html" class="hover:text-coral transition-colors">Projects</a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a href="/projects/" class="hover:text-coral transition-colors"
+            >Projects</a
+          >
         </nav>
         <button
           type="button"
@@ -259,10 +147,16 @@
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
-      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
-        <a href="index.html" class="hover:text-coral transition-colors py-2">Home</a>
-        <a href="services.html" class="hover:text-coral transition-colors py-2">Services</a>
-        <a href="projects/index.html" class="hover:text-coral transition-colors py-2">Projects</a>
+      <div
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="/services" class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
       </div>
     </header>
 
@@ -355,10 +249,7 @@
             </div>
 
             <!-- Whimsical postcard illustration -->
-            <div
-              class="hidden md:block relative"
-              aria-hidden="true"
-            >
+            <div class="hidden md:block relative" aria-hidden="true">
               <div
                 class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative"
                 style="transform: rotate(3deg)"
@@ -423,7 +314,9 @@
         ></div>
 
         <div class="max-w-6xl mx-auto px-6">
-          <div class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start">
+          <div
+            class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start"
+          >
             <!-- Form Card -->
             <div
               class="bg-white rounded-3xl p-8 md:p-12 border border-charcoal/5 shadow-sm relative"
@@ -468,7 +361,9 @@
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label for="first-name" class="field-label"
-                      >First name<span class="req" aria-hidden="true">*</span></label
+                      >First name<span class="req" aria-hidden="true"
+                        >*</span
+                      ></label
                     >
                     <input
                       type="text"
@@ -482,7 +377,9 @@
                   </div>
                   <div>
                     <label for="last-name" class="field-label"
-                      >Last name<span class="req" aria-hidden="true">*</span></label
+                      >Last name<span class="req" aria-hidden="true"
+                        >*</span
+                      ></label
                     >
                     <input
                       type="text"
@@ -536,12 +433,7 @@
                       <option value="workflow">Design-to-Code Workflow</option>
                       <option value="other">Something else</option>
                     </select>
-                    <svg
-                      viewBox="0 0 8 5"
-                      width="12"
-                      height="7"
-                      fill="none"
-                    >
+                    <svg viewBox="0 0 8 5" width="12" height="7" fill="none">
                       <path
                         d="M.5.5 4 4 7.5.5"
                         stroke="currentcolor"
@@ -553,7 +445,9 @@
 
                 <div>
                   <label for="message" class="field-label"
-                    >Your message<span class="req" aria-hidden="true">*</span></label
+                    >Your message<span class="req" aria-hidden="true"
+                      >*</span
+                    ></label
                   >
                   <textarea
                     id="message"
@@ -620,7 +514,10 @@
                     >
                       1
                     </div>
-                    <div class="w-px flex-1 dotted-line mt-2" aria-hidden="true"></div>
+                    <div
+                      class="w-px flex-1 dotted-line mt-2"
+                      aria-hidden="true"
+                    ></div>
                   </div>
                   <div class="pb-2">
                     <p class="font-heading font-semibold text-navy mb-1">
@@ -640,7 +537,10 @@
                     >
                       2
                     </div>
-                    <div class="w-px flex-1 dotted-line mt-2" aria-hidden="true"></div>
+                    <div
+                      class="w-px flex-1 dotted-line mt-2"
+                      aria-hidden="true"
+                    ></div>
                   </div>
                   <div class="pb-2">
                     <p class="font-heading font-semibold text-navy mb-1">
@@ -659,7 +559,10 @@
                     >
                       3
                     </div>
-                    <div class="w-px flex-1 dotted-line mt-2" aria-hidden="true"></div>
+                    <div
+                      class="w-px flex-1 dotted-line mt-2"
+                      aria-hidden="true"
+                    ></div>
                   </div>
                   <div class="pb-2">
                     <p class="font-heading font-semibold text-navy mb-1">
@@ -740,7 +643,9 @@
                   ensuring performance and accessibility.
                 </p>
               </blockquote>
-              <figcaption class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10">
+              <figcaption
+                class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10"
+              >
                 <div
                   class="w-11 h-11 rounded-2xl bg-plum/15 flex items-center justify-center font-heading font-semibold text-plum"
                   style="transform: rotate(-3deg)"
@@ -777,7 +682,9 @@
                   allowed him bandwidth for additional responsibilities.
                 </p>
               </blockquote>
-              <figcaption class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10">
+              <figcaption
+                class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10"
+              >
                 <div
                   class="w-11 h-11 rounded-2xl bg-sage/20 flex items-center justify-center font-heading font-semibold text-sage"
                   style="transform: rotate(3deg)"
@@ -789,9 +696,7 @@
                   <p class="font-heading font-semibold text-navy">
                     Gabriel Bressi
                   </p>
-                  <p class="text-sm text-charcoal/60">
-                    QA Lead, Kopius, Inc.
-                  </p>
+                  <p class="text-sm text-charcoal/60">QA Lead, Kopius, Inc.</p>
                 </div>
               </figcaption>
             </figure>
@@ -865,34 +770,109 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="index.html" class="inline-flex items-center gap-2.5 group">
-              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
-              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
             </a>
-            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
-            <p class="text-sm mt-1">Available for UX engineering work. <a href="contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="/contact/"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
             <div class="flex items-center gap-4 mt-5">
-              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
-              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
             </div>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
-              <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
-              <li><a href="projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-              <li><a href="blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+              </li>
+              <li>
+                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                  >Blog</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
-              <li><a href="testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
-              <li><a href="faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+              <li>
+                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/testimonials/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
             </ul>
           </div>
         </div>

@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
     <title>IVFCRYO — Joshua Briley</title>
     <meta
       name="description"
@@ -16,176 +17,120 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
-      @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-12px) rotate(2deg); }
-      }
-      @keyframes float-slow {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-      }
       @keyframes steam {
-        0% { transform: translateY(0) scaleX(1); opacity: 0.5; }
-        50% { transform: translateY(-14px) scaleX(1.15); opacity: 0.85; }
-        100% { transform: translateY(-28px) scaleX(0.9); opacity: 0; }
-      }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
-      .animate-steam { animation: steam 4s ease-in-out infinite; }
-      .animate-steam-delay { animation: steam 4s ease-in-out 1.3s infinite; }
-      .animate-steam-delay-2 { animation: steam 4s ease-in-out 2.6s infinite; }
-      .squiggle-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 30px;
-      }
-      .logo-monogram {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #6c4ab6, #e8573d);
-        color: white;
-        font-family: 'Style Script', cursive;
-        font-size: 1.1rem;
-        line-height: 1;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
-      }
-      .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
-      .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1.5px dashed;
-        transform: rotate(-1deg);
-      }
-      .nav-open .mobile-menu { display: flex; }
-
+                    0% {
+                      transform: translateY(0) scaleX(1);
+                      opacity: 0.5;
+                    }
+                    50% {
+                      transform: translateY(-14px) scaleX(1.15);
+                      opacity: 0.85;
+                    }
+                    100% {
+                      transform: translateY(-28px) scaleX(0.9);
+                      opacity: 0;
+                    }
+                  }
+      .animate-steam {
+                    animation: steam 4s ease-in-out infinite;
+                  }
+      .animate-steam-delay {
+                    animation: steam 4s ease-in-out 1.3s infinite;
+                  }
+      .animate-steam-delay-2 {
+                    animation: steam 4s ease-in-out 2.6s infinite;
+                  }
       .recipe-card {
-        background: #fff;
-        border-radius: 18px;
-        box-shadow:
-          0 30px 60px -28px rgba(45, 43, 85, 0.28),
-          0 4px 10px rgba(45, 43, 85, 0.06);
-        position: relative;
-      }
+                    background: #fff;
+                    border-radius: 18px;
+                    box-shadow:
+                      0 30px 60px -28px rgba(45, 43, 85, 0.28),
+                      0 4px 10px rgba(45, 43, 85, 0.06);
+                    position: relative;
+                  }
       .recipe-card::before {
-        content: '';
-        position: absolute;
-        inset: 10px;
-        border: 1.5px dashed rgba(108, 74, 182, 0.25);
-        border-radius: 12px;
-        pointer-events: none;
-      }
+                    content: '';
+                    position: absolute;
+                    inset: 10px;
+                    border: 1.5px dashed rgba(108, 74, 182, 0.25);
+                    border-radius: 12px;
+                    pointer-events: none;
+                  }
       .tape {
-        position: absolute;
-        width: 90px;
-        height: 22px;
-        background: rgba(253, 230, 138, 0.88);
-        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
-        z-index: 5;
-      }
+                    position: absolute;
+                    width: 90px;
+                    height: 22px;
+                    background: rgba(253, 230, 138, 0.88);
+                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+                    z-index: 5;
+                  }
       .marker-label {
-        font-family: 'Style Script', cursive;
-        color: #6c4ab6;
-        line-height: 1;
-      }
+                    font-family: 'Style Script', cursive;
+                    color: #6c4ab6;
+                    line-height: 1;
+                  }
       .corkboard {
-        background-color: #fffbf5;
-        background-image:
-          radial-gradient(circle at 20% 30%, rgba(232, 87, 61, 0.05) 0, transparent 40%),
-          radial-gradient(circle at 80% 70%, rgba(108, 74, 182, 0.05) 0, transparent 40%);
-      }
+                    background-color: #fffbf5;
+                    background-image:
+                      radial-gradient(
+                        circle at 20% 30%,
+                        rgba(232, 87, 61, 0.05) 0,
+                        transparent 40%
+                      ),
+                      radial-gradient(
+                        circle at 80% 70%,
+                        rgba(108, 74, 182, 0.05) 0,
+                        transparent 40%
+                      );
+                  }
       .step-num {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 54px;
-        height: 54px;
-        border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #ff8e53, #e8573d);
-        color: white;
-        font-family: 'Fraunces', serif;
-        font-size: 1.6rem;
-        font-weight: 700;
-        box-shadow: 0 8px 18px -8px rgba(232, 87, 61, 0.55);
-        flex-shrink: 0;
-      }
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: 54px;
+                    height: 54px;
+                    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+                    background: linear-gradient(135deg, #ff8e53, #e8573d);
+                    color: white;
+                    font-family: 'Fraunces', serif;
+                    font-size: 1.6rem;
+                    font-weight: 700;
+                    box-shadow: 0 8px 18px -8px rgba(232, 87, 61, 0.55);
+                    flex-shrink: 0;
+                  }
       .pull-quote {
-        font-family: 'Fraunces', serif;
-        font-style: italic;
-      }
+                    font-family: 'Fraunces', serif;
+                    font-style: italic;
+                  }
       .steam {
-        position: absolute;
-        width: 10px;
-        height: 22px;
-        border-radius: 9999px;
-        background: linear-gradient(to top, rgba(108, 74, 182, 0.35), transparent);
-        filter: blur(1px);
-      }
+                    position: absolute;
+                    width: 10px;
+                    height: 22px;
+                    border-radius: 9999px;
+                    background: linear-gradient(
+                      to top,
+                      rgba(108, 74, 182, 0.35),
+                      transparent
+                    );
+                    filter: blur(1px);
+                  }
       .ingredient-chip {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        background: #fff;
-        border: 1.5px dashed rgba(45, 43, 85, 0.18);
-        padding: 8px 14px;
-        border-radius: 9999px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.88rem;
-        color: #2d2b55;
-      }
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 8px;
+                    background: #fff;
+                    border: 1.5px dashed rgba(45, 43, 85, 0.18);
+                    padding: 8px 14px;
+                    border-radius: 9999px;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.88rem;
+                    color: #2d2b55;
+                  }
     </style>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -199,8 +144,10 @@
     <header
       class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
     >
-      <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
             aria-hidden="true"
@@ -210,10 +157,19 @@
             >joshua<span class="text-coral">Briley</span></span
           >
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
-          <a href="../index.html" class="hover:text-coral transition-colors">Home</a>
-          <a href="../services.html" class="hover:text-coral transition-colors">Services</a>
-          <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors">Projects</a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services/" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a
+            href="/projects/"
+            aria-current="page"
+            class="hover:text-coral transition-colors"
+            >Projects</a
+          >
         </nav>
         <button
           type="button"
@@ -224,10 +180,19 @@
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
-      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
-        <a href="../index.html" class="hover:text-coral transition-colors py-2">Home</a>
-        <a href="../services.html" class="hover:text-coral transition-colors py-2">Services</a>
-        <a href="../projects/index.html" aria-current="page" class="hover:text-coral transition-colors py-2">Projects</a>
+      <div
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="/services/" class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a
+          href="/projects/"
+          aria-current="page"
+          class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
       </div>
     </header>
 
@@ -256,16 +221,32 @@
             class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60"
             aria-label="Breadcrumb"
           >
-            <a href="./" class="hover:text-coral transition-colors">Projects</a>
+            <a href="/projects/" class="hover:text-coral transition-colors"
+              >Projects</a
+            >
             <iconify-icon icon="ph:caret-right-bold" width="12"></iconify-icon>
             <span class="text-navy">IVFCRYO</span>
           </nav>
 
-          <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
-            <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
-            <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
+          <article
+            class="recipe-card p-8 md:p-14"
+            style="transform: rotate(-0.4deg)"
+          >
+            <span
+              class="tape"
+              style="top: -14px; left: 10%; transform: rotate(-6deg)"
+              aria-hidden="true"
+            ></span>
+            <span
+              class="tape"
+              style="top: -14px; right: 10%; transform: rotate(5deg)"
+              aria-hidden="true"
+            ></span>
 
-            <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
+            <div
+              class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3"
+              aria-hidden="true"
+            >
               <span class="steam animate-steam"></span>
               <span class="steam animate-steam-delay"></span>
               <span class="steam animate-steam-delay-2"></span>
@@ -275,11 +256,16 @@
               <div
                 class="inline-flex items-center gap-2 bg-plum/10 text-plum px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-plum/20 uppercase tracking-wider"
               >
-                <iconify-icon icon="ph:snowflake-duotone" width="18"></iconify-icon>
+                <iconify-icon
+                  icon="ph:snowflake-duotone"
+                  width="18"
+                ></iconify-icon>
                 Case study &middot; Recipe no. 03
               </div>
 
-              <p class="marker-label text-2xl md:text-3xl mb-4">from the lab notebook —</p>
+              <p class="marker-label text-2xl md:text-3xl mb-4">
+                from the lab notebook —
+              </p>
 
               <h1
                 class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
@@ -310,8 +296,8 @@
                 class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
               >
                 A self-service shipping application for
-                <span class="wavy-underline">fertility specimen logistics</span>,
-                with real-time environmental tracking, multi-carrier labels,
+                <span class="wavy-underline">fertility specimen logistics</span
+                >, with real-time environmental tracking, multi-carrier labels,
                 and a legally blind collaborator in the room from day one.
               </p>
 
@@ -389,25 +375,51 @@
             </h2>
           </div>
           <div class="flex flex-wrap gap-3">
-            <a href="#stakes" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-              ><iconify-icon icon="ph:warning-circle-duotone" width="18" class="text-coral"></iconify-icon>
+            <a
+              href="#stakes"
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon
+                icon="ph:warning-circle-duotone"
+                width="18"
+                class="text-coral"
+              ></iconify-icon>
               The stakes behind the product</a
             >
-            <a href="#collaborator" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-              ><iconify-icon icon="ph:users-three-duotone" width="18" class="text-plum"></iconify-icon>
+            <a
+              href="#collaborator"
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon
+                icon="ph:users-three-duotone"
+                width="18"
+                class="text-plum"
+              ></iconify-icon>
               A blind user in the room</a
             >
-            <a href="#architecture" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-              ><iconify-icon icon="ph:stack-duotone" width="18" class="text-sunset"></iconify-icon>
+            <a
+              href="#architecture"
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon
+                icon="ph:stack-duotone"
+                width="18"
+                class="text-sunset"
+              ></iconify-icon>
               Accessibility in the architecture</a
             >
-            <a href="#scale" class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-              ><iconify-icon icon="ph:trend-up-duotone" width="18" class="text-sage"></iconify-icon>
+            <a
+              href="#scale"
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon
+                icon="ph:trend-up-duotone"
+                width="18"
+                class="text-sage"
+              ></iconify-icon>
               Why this compounds at scale</a
             >
           </div>
 
-          <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+          <p
+            class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body"
+          >
             IVFCRYO replaced a manual, paper-based shipping process with a web
             application that handles shipment requests, label generation across
             multiple carriers, and real-time specimen tracking from integrated
@@ -425,7 +437,9 @@
           <div class="flex items-start gap-6 mb-8">
             <span class="step-num" aria-hidden="true">01</span>
             <div>
-              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+              <p
+                class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1"
+              >
                 Step one
               </p>
               <h2
@@ -436,23 +450,25 @@
             </div>
           </div>
 
-          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <div
+            class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+          >
             <p>
               Fertility logistics has a narrow margin for error. A mislabeled
               shipment, a missed temperature excursion, or an ambiguous status
               update isn't just a workflow annoyance — it can have irreversible
               consequences for someone's family. The people using this tool are
               often clinicians working under time pressure, or patients and
-              couriers navigating a process they've never touched before,
-              during one of the most stressful weeks of their lives.
+              couriers navigating a process they've never touched before, during
+              one of the most stressful weeks of their lives.
             </p>
             <p>
-              That reframes what accessibility means here. It isn't a
-              compliance checkbox to satisfy at the end of the build. It's part
-              of how the product communicates <em>at all</em> — whether status
-              updates reach the person who needs to act on them, whether form
-              errors are recoverable, whether a screen reader user can trust
-              what the page is telling them.
+              That reframes what accessibility means here. It isn't a compliance
+              checkbox to satisfy at the end of the build. It's part of how the
+              product communicates <em>at all</em> — whether status updates
+              reach the person who needs to act on them, whether form errors are
+              recoverable, whether a screen reader user can trust what the page
+              is telling them.
             </p>
           </div>
 
@@ -462,10 +478,14 @@
               class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative"
               style="transform: rotate(-0.6deg)"
             >
-              <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5">
+              <span
+                class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5"
+              >
                 High-stakes input
               </span>
-              <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">
+              <h3
+                class="font-display text-xl text-navy font-semibold mt-4 mb-2"
+              >
                 Specimens &amp; sensors
               </h3>
               <p class="text-charcoal/70">
@@ -478,10 +498,14 @@
               class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative"
               style="transform: rotate(0.5deg)"
             >
-              <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5">
+              <span
+                class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5"
+              >
                 High-stakes output
               </span>
-              <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">
+              <h3
+                class="font-display text-xl text-navy font-semibold mt-4 mb-2"
+              >
                 Status &amp; recovery
               </h3>
               <p class="text-charcoal/70">
@@ -504,7 +528,9 @@
           <div class="flex items-start gap-6 mb-8">
             <span class="step-num" aria-hidden="true">02</span>
             <div>
-              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+              <p
+                class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1"
+              >
                 Step two
               </p>
               <h2
@@ -515,7 +541,9 @@
             </div>
           </div>
 
-          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <div
+            class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+          >
             <p>
               The most consequential decision on this project wasn't technical.
               Instead of treating accessibility as an end-of-project audit, the
@@ -527,15 +555,17 @@
             <p>
               That changes what you build, not just what you fix. Problems that
               would have surfaced as a long list of bugs at the end — the kind
-              that usually get triaged, downgraded, and half-addressed —
-              instead showed up as design conversations while the design was
-              still cheap to change. The output wasn't a remediation report. It
-              was different decisions.
+              that usually get triaged, downgraded, and half-addressed — instead
+              showed up as design conversations while the design was still cheap
+              to change. The output wasn't a remediation report. It was
+              different decisions.
             </p>
           </div>
 
           <ul class="mt-8 space-y-5">
-            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <li
+              class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
+            >
               <iconify-icon
                 icon="ph:megaphone-duotone"
                 width="28"
@@ -551,7 +581,9 @@
                 </p>
               </div>
             </li>
-            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <li
+              class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
+            >
               <iconify-icon
                 icon="ph:broadcast-duotone"
                 width="28"
@@ -568,7 +600,9 @@
                 </p>
               </div>
             </li>
-            <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <li
+              class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
+            >
               <iconify-icon
                 icon="ph:compass-duotone"
                 width="28"
@@ -597,7 +631,9 @@
               width="32"
               class="text-coral/60 absolute -top-3 left-6 bg-cream px-1"
             ></iconify-icon>
-            <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+            <blockquote
+              class="pull-quote text-xl md:text-2xl text-navy leading-snug"
+            >
               Accessible output at scale comes from accessible architecture —
               not from accessible intent.
             </blockquote>
@@ -611,7 +647,9 @@
           <div class="flex items-start gap-6 mb-8">
             <span class="step-num" aria-hidden="true">03</span>
             <div>
-              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+              <p
+                class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1"
+              >
                 Step three
               </p>
               <h2
@@ -622,7 +660,9 @@
             </div>
           </div>
 
-          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <div
+            class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+          >
             <p>
               Collaboration gave us the right instincts. Architecture made those
               instincts load-bearing. Interactive components were built with
@@ -651,24 +691,46 @@
               class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50"
               style="transform: rotate(-3deg)"
             >
-              <iconify-icon icon="ph:check-fat-duotone" width="14" class="mr-1"></iconify-icon>
+              <iconify-icon
+                icon="ph:check-fat-duotone"
+                width="14"
+                class="mr-1"
+              ></iconify-icon>
               Built-in, not bolted-on
             </div>
-            <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80">
+            <ul
+              class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80"
+            >
               <li class="flex items-center gap-3">
-                <iconify-icon icon="ph:keyboard-duotone" width="22" class="text-plum"></iconify-icon>
+                <iconify-icon
+                  icon="ph:keyboard-duotone"
+                  width="22"
+                  class="text-plum"
+                ></iconify-icon>
                 Full keyboard operability
               </li>
               <li class="flex items-center gap-3">
-                <iconify-icon icon="ph:target-duotone" width="22" class="text-coral"></iconify-icon>
+                <iconify-icon
+                  icon="ph:target-duotone"
+                  width="22"
+                  class="text-coral"
+                ></iconify-icon>
                 Internal focus management
               </li>
               <li class="flex items-center gap-3">
-                <iconify-icon icon="ph:megaphone-duotone" width="22" class="text-sunset"></iconify-icon>
+                <iconify-icon
+                  icon="ph:megaphone-duotone"
+                  width="22"
+                  class="text-sunset"
+                ></iconify-icon>
                 Live regions for dynamic updates
               </li>
               <li class="flex items-center gap-3">
-                <iconify-icon icon="ph:eye-duotone" width="22" class="text-sky"></iconify-icon>
+                <iconify-icon
+                  icon="ph:eye-duotone"
+                  width="22"
+                  class="text-sky"
+                ></iconify-icon>
                 Multi-channel information design
               </li>
             </ul>
@@ -686,7 +748,9 @@
           <div class="flex items-start gap-6 mb-8">
             <span class="step-num" aria-hidden="true">04</span>
             <div>
-              <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">
+              <p
+                class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1"
+              >
                 Step four
               </p>
               <h2
@@ -697,14 +761,16 @@
             </div>
           </div>
 
-          <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <div
+            class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+          >
             <p>
-              Once the component library has the right behaviors baked in,
-              every feature built on top of it inherits them. A developer
-              shipping a new shipment form doesn't have to remember to wire up
-              live regions, or decide how focus should move when a dialog
-              opens, or check contrast against the palette. Those decisions
-              have already been made, correctly, once.
+              Once the component library has the right behaviors baked in, every
+              feature built on top of it inherits them. A developer shipping a
+              new shipment form doesn't have to remember to wire up live
+              regions, or decide how focus should move when a dialog opens, or
+              check contrast against the palette. Those decisions have already
+              been made, correctly, once.
             </p>
             <p>
               That's the structural benefit of putting accessibility at the
@@ -861,34 +927,113 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="../index.html" class="inline-flex items-center gap-2.5 group">
-              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
-              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
             </a>
-            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
-            <p class="text-sm mt-1">Available for UX engineering work. <a href="../contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="../contact.html"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
             <div class="flex items-center gap-4 mt-5">
-              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
-              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
             </div>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li>
-              <li><a href="../services.html" class="hover:text-white transition-colors">Services</a></li>
-              <li><a href="../projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="../about.html" class="hover:text-white transition-colors">About</a></li>
-              <li><a href="../blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+              </li>
+              <li>
+                <a href="/services/" class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a href="../about/" class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="../blog/" class="hover:text-white hover:underline transition-colors"
+                  >Blog</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../contact.html" class="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="../scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
-              <li><a href="../testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
-              <li><a href="../faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+              <li>
+                <a
+                  href="../contact.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../scorecard.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../testimonials.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a href="../faqs/" class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
             </ul>
           </div>
         </div>

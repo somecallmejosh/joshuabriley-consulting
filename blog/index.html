@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
     <title>Blog — Joshua Briley | UX Engineering, in Practice</title>
     <meta
       name="description"
@@ -16,199 +17,128 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
       .blob-shape-alt {
-        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-      }
-      @keyframes float {
-        0%, 100% { transform: translateY(0px) rotate(0deg); }
-        50% { transform: translateY(-12px) rotate(2deg); }
-      }
-      @keyframes float-slow {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-8px); }
-      }
+                    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+                  }
       @keyframes wiggle {
-        0%, 100% { transform: rotate(-2deg); }
-        50% { transform: rotate(2deg); }
-      }
-      .animate-float { animation: float 6s ease-in-out infinite; }
-      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
-      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
-      .animate-wiggle { animation: wiggle 4s ease-in-out infinite; }
-      .squiggle-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 30px;
-      }
-      .logo-monogram {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #6c4ab6, #e8573d);
-        color: white;
-        font-family: 'Style Script', cursive;
-        font-size: 1.1rem;
-        line-height: 1;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
-      }
-      .logo-monogram-sm { width: 30px; height: 30px; font-size: 0.95rem; }
-      .card-hover {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-      }
+                    0%,
+                    100% {
+                      transform: rotate(-2deg);
+                    }
+                    50% {
+                      transform: rotate(2deg);
+                    }
+                  }
+      .animate-wiggle {
+                    animation: wiggle 4s ease-in-out infinite;
+                  }
       .card-hover:hover {
-        transform: translateY(-6px) rotate(0deg) !important;
-        box-shadow:
-          0 24px 44px -14px rgba(45, 43, 85, 0.18),
-          0 0 0 1px rgba(108, 74, 182, 0.08);
-      }
-      .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1.5px dashed;
-        transform: rotate(-1deg);
-      }
-      .nav-open .mobile-menu { display: flex; }
-
-      /* Blog-specific: notebook hero */
+                    transform: translateY(-6px) rotate(0deg) !important;
+                    box-shadow:
+                      0 24px 44px -14px rgba(45, 43, 85, 0.18),
+                      0 0 0 1px rgba(108, 74, 182, 0.08);
+                  }
       .notebook-card {
-        position: relative;
-        background: #fff;
-        border-radius: 14px;
-        box-shadow:
-          0 30px 60px -28px rgba(45, 43, 85, 0.3),
-          0 0 0 1px rgba(108, 74, 182, 0.06);
-      }
+                    position: relative;
+                    background: #fff;
+                    border-radius: 14px;
+                    box-shadow:
+                      0 30px 60px -28px rgba(45, 43, 85, 0.3),
+                      0 0 0 1px rgba(108, 74, 182, 0.06);
+                  }
       .notebook-card::before {
-        content: '';
-        position: absolute;
-        left: 42px;
-        top: 24px;
-        bottom: 24px;
-        width: 1px;
-        background: rgba(232, 87, 61, 0.35);
-      }
+                    content: '';
+                    position: absolute;
+                    left: 42px;
+                    top: 24px;
+                    bottom: 24px;
+                    width: 1px;
+                    background: rgba(232, 87, 61, 0.35);
+                  }
       .notebook-card::after {
-        content: '';
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 24px;
-        bottom: 24px;
-        background-image: repeating-linear-gradient(
-          to bottom,
-          transparent 0,
-          transparent 31px,
-          rgba(93, 173, 226, 0.22) 32px
-        );
-        pointer-events: none;
-        border-radius: 14px;
-      }
-      .notebook-inner { position: relative; z-index: 1; }
-
-      /* Paper-taped note */
+                    content: '';
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    top: 24px;
+                    bottom: 24px;
+                    background-image: repeating-linear-gradient(
+                      to bottom,
+                      transparent 0,
+                      transparent 31px,
+                      rgba(93, 173, 226, 0.22) 32px
+                    );
+                    pointer-events: none;
+                    border-radius: 14px;
+                  }
+      .notebook-inner {
+                    position: relative;
+                    z-index: 1;
+                  }
       .paper-note {
-        position: relative;
-        background: #fff;
-        padding: 1.5rem 1.75rem;
-        border-radius: 6px;
-        box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.18);
-      }
+                    position: relative;
+                    background: #fff;
+                    padding: 1.5rem 1.75rem;
+                    border-radius: 6px;
+                    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.18);
+                  }
       .paper-note::before,
+                  .paper-note::after {
+                    content: '';
+                    position: absolute;
+                    width: 56px;
+                    height: 18px;
+                    background: rgba(253, 230, 138, 0.85);
+                    top: -9px;
+                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1);
+                  }
+      .paper-note::before {
+                    left: 12%;
+                    transform: rotate(-4deg);
+                  }
       .paper-note::after {
-        content: '';
-        position: absolute;
-        width: 56px;
-        height: 18px;
-        background: rgba(253, 230, 138, 0.85);
-        top: -9px;
-        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1);
-      }
-      .paper-note::before { left: 12%; transform: rotate(-4deg); }
-      .paper-note::after { right: 12%; transform: rotate(3deg); }
-
-      /* Filter pills */
+                    right: 12%;
+                    transform: rotate(3deg);
+                  }
       .filter-pill {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        padding: 8px 16px;
-        border-radius: 9999px;
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 500;
-        background: #fff;
-        border: 1.5px solid rgba(45, 43, 85, 0.1);
-        color: #2d2b55;
-        transition: all 0.2s ease;
-        cursor: pointer;
-      }
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 6px;
+                    padding: 8px 16px;
+                    border-radius: 9999px;
+                    font-family: 'Space Grotesk', sans-serif;
+                    font-size: 0.85rem;
+                    font-weight: 500;
+                    background: #fff;
+                    border: 1.5px solid rgba(45, 43, 85, 0.1);
+                    color: #2d2b55;
+                    transition: all 0.2s ease;
+                    cursor: pointer;
+                  }
       .filter-pill:hover {
-        border-color: #e8573d;
-        color: #e8573d;
-        transform: translateY(-2px);
-      }
+                    border-color: #e8573d;
+                    color: #e8573d;
+                    transform: translateY(-2px);
+                  }
       .filter-pill.active {
-        background: #2d2b55;
-        color: #fff;
-        border-color: #2d2b55;
-      }
-
-      /* Blog card polaroid stagger */
-      .post-card:nth-child(3n) { transform: rotate(-0.6deg); }
-      .post-card:nth-child(3n + 1) { transform: rotate(0.4deg); }
-      .post-card:nth-child(3n + 2) { transform: rotate(-0.2deg); }
+                    background: #2d2b55;
+                    color: #fff;
+                    border-color: #2d2b55;
+                  }
+      .post-card:nth-child(3n) {
+                    transform: rotate(-0.6deg);
+                  }
+      .post-card:nth-child(3n + 1) {
+                    transform: rotate(0.4deg);
+                  }
+      .post-card:nth-child(3n + 2) {
+                    transform: rotate(-0.2deg);
+                  }
     </style>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -225,7 +155,7 @@
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="../index.html" class="inline-flex items-center gap-2.5 group">
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
             aria-hidden="true"
@@ -235,10 +165,16 @@
             >joshua<span class="text-coral">Briley</span></span
           >
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
-          <a href="../index.html" class="hover:text-coral transition-colors">Home</a>
-          <a href="../services.html" class="hover:text-coral transition-colors">Services</a>
-          <a href="../projects/index.html" class="hover:text-coral transition-colors">Projects</a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services/" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a href="/projects/" class="hover:text-coral transition-colors"
+            >Projects</a
+          >
         </nav>
         <button
           type="button"
@@ -249,10 +185,16 @@
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
-      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
-        <a href="../index.html" class="hover:text-coral transition-colors py-2">Home</a>
-        <a href="../services.html" class="hover:text-coral transition-colors py-2">Services</a>
-        <a href="../projects/index.html" class="hover:text-coral transition-colors py-2">Projects</a>
+      <div
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="/services/" class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
       </div>
     </header>
 
@@ -340,8 +282,7 @@
             <article class="notebook-card p-8 md:p-12">
               <div class="notebook-inner md:pl-10">
                 <div class="flex flex-wrap items-center gap-3 mb-4">
-                  <span
-                    class="sticker bg-peach/60 text-coral border-coral/40"
+                  <span class="sticker bg-peach/60 text-coral border-coral/40"
                     >Design Systems</span
                   >
                   <span
@@ -359,11 +300,11 @@
                   class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold text-navy leading-[1.1] mb-4"
                 >
                   <a
-                    href="../blog/index.htmlturning-your-design-system-into-something-your-teams-actually-want-to-contribute-to/"
+                    href="example.html"
                     class="hover:text-coral transition-colors"
                   >
-                    How to turn your design system into something teams
-                    actually want to contribute to
+                    How to turn your design system into something teams actually
+                    want to contribute to
                   </a>
                 </h2>
                 <p
@@ -376,7 +317,7 @@
                 </p>
                 <div class="flex flex-wrap items-center gap-6">
                   <a
-                    href="../blog/index.htmlturning-your-design-system-into-something-your-teams-actually-want-to-contribute-to/"
+                    href="example.html"
                     class="inline-flex items-center gap-2 bg-coral text-white px-6 py-3 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-sm"
                   >
                     Read the essay
@@ -401,10 +342,7 @@
         </div>
       </section>
 
-      <div
-        class="squiggle-divider max-w-5xl mx-auto"
-        aria-hidden="true"
-      ></div>
+      <div class="squiggle-divider max-w-5xl mx-auto" aria-hidden="true"></div>
 
       <!-- ====== FILTER + LISTING ====== -->
       <section class="py-16 md:py-20 relative">
@@ -451,9 +389,13 @@
             </button>
             <button type="button" class="filter-pill">Design Systems</button>
             <button type="button" class="filter-pill">Accessibility</button>
-            <button type="button" class="filter-pill">Component Libraries</button>
+            <button type="button" class="filter-pill">
+              Component Libraries
+            </button>
             <button type="button" class="filter-pill">Best Practices</button>
-            <button type="button" class="filter-pill">Front End Development</button>
+            <button type="button" class="filter-pill">
+              Front End Development
+            </button>
           </div>
 
           <!-- Post grid -->
@@ -462,10 +404,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlcomponent-inconsistency-cost/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center relative"
                 >
@@ -490,9 +429,7 @@
                   >
                     The hidden cost of component inconsistency
                   </h3>
-                  <p
-                    class="text-charcoal/70 text-sm leading-relaxed mb-4"
-                  >
+                  <p class="text-charcoal/70 text-sm leading-relaxed mb-4">
                     Inconsistent components fragment the user experience and
                     quietly inflate maintenance costs. Here's what they really
                     cost you.
@@ -515,7 +452,7 @@
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
               <a
-                href="../blog/index.htmldesign-tokens-doing-more-harm-than-good/"
+                href="../blog/design-tokens-doing-more-harm-than-good/"
                 class="block"
               >
                 <div
@@ -563,10 +500,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlwhy-your-design-system-score-is-lower-than-you-think/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-sage/40 via-lemon/60 to-sunset/30 flex items-center justify-center relative"
                 >
@@ -612,10 +546,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlaccessibility-debt/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-coral/40 via-sunset/40 to-lemon/50 flex items-center justify-center relative"
                 >
@@ -642,8 +573,8 @@
                   </h3>
                   <p class="text-charcoal/70 text-sm leading-relaxed mb-4">
                     Accessibility debt doesn't start with bad code. It starts
-                    with bad architecture. Here's how it compounds — and the
-                    way out.
+                    with bad architecture. Here's how it compounds — and the way
+                    out.
                   </p>
                   <div
                     class="flex items-center gap-2 text-coral font-heading text-sm font-semibold"
@@ -662,10 +593,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlcost-of-a-broken-handoff-process/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-plum/30 via-sky/30 to-sage/25 flex items-center justify-center relative"
                 >
@@ -711,10 +639,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlcomponent-library-build-or-buy/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-lemon/80 via-peach to-coral/30 flex items-center justify-center relative"
                 >
@@ -761,10 +686,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmlcomponent-library-for-multi-framework-teams/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-sky/50 via-plum/20 to-coral/25 flex items-center justify-center relative"
                 >
@@ -810,10 +732,7 @@
             <article
               class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5"
             >
-              <a
-                href="../blog/index.htmldesign-system-audit/"
-                class="block"
-              >
+              <a href="example.html" class="block">
                 <div
                   class="h-40 bg-gradient-to-br from-sage/50 via-sky/30 to-lemon/60 flex items-center justify-center relative"
                 >
@@ -870,8 +789,8 @@
                   More essays in the margins.
                 </p>
                 <p class="text-sm text-charcoal/70 leading-relaxed">
-                  New field notes land roughly every other week. Subscribe
-                  below so they find you.
+                  New field notes land roughly every other week. Subscribe below
+                  so they find you.
                 </p>
               </div>
             </div>
@@ -917,15 +836,17 @@
               <p
                 class="text-white/70 text-lg max-w-xl mx-auto mb-8 leading-relaxed"
               >
-                One honest essay at a time. No spam, no funnels — just the
-                stuff I'd send a friend running into the same design system
-                problems you are.
+                One honest essay at a time. No spam, no funnels — just the stuff
+                I'd send a friend running into the same design system problems
+                you are.
               </p>
               <form
                 class="flex flex-col sm:flex-row items-stretch gap-3 max-w-md mx-auto"
                 onsubmit="event.preventDefault()"
               >
-                <label class="sr-only" for="newsletter-email">Email address</label>
+                <label class="sr-only" for="newsletter-email"
+                  >Email address</label
+                >
                 <input
                   id="newsletter-email"
                   type="email"
@@ -958,34 +879,113 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="../index.html" class="inline-flex items-center gap-2.5 group">
-              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
-              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
             </a>
-            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
-            <p class="text-sm mt-1">Available for UX engineering work. <a href="../contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="../contact.html"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
             <div class="flex items-center gap-4 mt-5">
-              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
-              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
             </div>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../index.html" class="hover:text-white transition-colors">Home</a></li>
-              <li><a href="../services.html" class="hover:text-white transition-colors">Services</a></li>
-              <li><a href="../projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="../about.html" class="hover:text-white transition-colors">About</a></li>
-              <li><a href="../blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+              </li>
+              <li>
+                <a href="/services/" class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a href="../about/" class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="../blog/" class="hover:text-white hover:underline transition-colors"
+                  >Blog</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="../contact.html" class="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="../scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
-              <li><a href="../testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
-              <li><a href="../faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+              <li>
+                <a
+                  href="../contact.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../scorecard.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="../testimonials.html"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a href="../faqs/" class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
             </ul>
           </div>
         </div>

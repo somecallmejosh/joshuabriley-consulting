@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant</title>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <title>
+      FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant
+    </title>
     <meta
       name="description"
       content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
@@ -16,269 +19,153 @@
       href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
       rel="stylesheet"
     />
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            fontFamily: {
-              display: ['Fraunces', 'Georgia', 'serif'],
-              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
-              body: ['DM Sans', 'system-ui', 'sans-serif'],
-              logo: ['Style Script', 'cursive'],
-            },
-            colors: {
-              cream: '#FFFBF5',
-              peach: '#FFE8D6',
-              coral: '#E8573D',
-              sunset: '#FF8E53',
-              plum: '#6C4AB6',
-              navy: '#2D2B55',
-              charcoal: '#2E2E30',
-              sage: '#7BB47A',
-              sky: '#5DADE2',
-              lemon: '#FDE68A',
-            },
-          },
-        },
-      }
-    </script>
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      html {
-        scroll-behavior: smooth;
-      }
-      body {
-        font-family: 'DM Sans', system-ui, sans-serif;
-      }
-      .wavy-underline {
-        text-decoration: underline wavy;
-        text-decoration-color: #e8573d;
-        text-underline-offset: 6px;
-        text-decoration-thickness: 2px;
-      }
-      .blob-shape {
-        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
-      }
       .blob-shape-alt {
-        border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-      }
-      @keyframes float {
-        0%,
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-12px) rotate(2deg);
-        }
-      }
-      @keyframes float-slow {
-        0%,
-        100% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-8px);
-        }
-      }
-      .animate-float {
-        animation: float 6s ease-in-out infinite;
-      }
-      .animate-float-slow {
-        animation: float-slow 8s ease-in-out infinite;
-      }
-      .animate-float-delay {
-        animation: float 6s ease-in-out 2s infinite;
-      }
-      .squiggle-divider {
-        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 30' preserveAspectRatio='none'%3E%3Cpath d='M0 15 Q 150 0 300 15 Q 450 30 600 15 Q 750 0 900 15 Q 1050 30 1200 15' stroke='%23E8573D' fill='none' stroke-width='2.5' opacity='0.35'/%3E%3C/svg%3E");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
-        height: 30px;
-      }
-      .logo-monogram {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        background: linear-gradient(135deg, #6c4ab6, #e8573d);
-        color: white;
-        font-family: 'Style Script', cursive;
-        font-size: 1.1rem;
-        line-height: 1;
-        flex-shrink: 0;
-        box-shadow: 0 2px 8px rgba(108, 74, 182, 0.25);
-      }
-      .logo-monogram-sm {
-        width: 30px;
-        height: 30px;
-        font-size: 0.95rem;
-      }
-      .sticker {
-        display: inline-flex;
-        align-items: center;
-        padding: 4px 12px;
-        border-radius: 9999px;
-        font-size: 0.8rem;
-        font-weight: 500;
-        border: 1.5px dashed;
-        transform: rotate(-1deg);
-      }
-      .nav-open .mobile-menu {
-        display: flex;
-      }
-
-      /* ============================
-         FAQ page-specific flourishes
-         ============================ */
-
-      /* Speech-bubble hero cards */
+                    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+                  }
       .bubble {
-        position: relative;
-        background: #ffffff;
-        border: 1.5px solid rgba(45, 43, 85, 0.08);
-        border-radius: 22px;
-        padding: 1rem 1.25rem;
-        box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
-      }
+                    position: relative;
+                    background: #ffffff;
+                    border: 1.5px solid rgba(45, 43, 85, 0.08);
+                    border-radius: 22px;
+                    padding: 1rem 1.25rem;
+                    box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
+                  }
       .bubble::after {
-        content: '';
-        position: absolute;
-        width: 18px;
-        height: 18px;
-        background: #ffffff;
-        border-right: 1.5px solid rgba(45, 43, 85, 0.08);
-        border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
-        bottom: -10px;
-        left: 28px;
-        transform: rotate(45deg);
-        border-bottom-right-radius: 4px;
-      }
+                    content: '';
+                    position: absolute;
+                    width: 18px;
+                    height: 18px;
+                    background: #ffffff;
+                    border-right: 1.5px solid rgba(45, 43, 85, 0.08);
+                    border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
+                    bottom: -10px;
+                    left: 28px;
+                    transform: rotate(45deg);
+                    border-bottom-right-radius: 4px;
+                  }
       .bubble-right::after {
-        left: auto;
-        right: 28px;
-      }
-
-      /* Accordion (details) styling — "index card" feel */
+                    left: auto;
+                    right: 28px;
+                  }
       .faq-card {
-        background: #ffffff;
-        border: 1.5px solid rgba(45, 43, 85, 0.08);
-        border-radius: 18px;
-        box-shadow: 0 14px 32px -22px rgba(45, 43, 85, 0.22);
-        transition:
-          transform 0.25s ease,
-          box-shadow 0.25s ease,
-          border-color 0.25s ease;
-      }
+                    background: #ffffff;
+                    border: 1.5px solid rgba(45, 43, 85, 0.08);
+                    border-radius: 18px;
+                    box-shadow: 0 14px 32px -22px rgba(45, 43, 85, 0.22);
+                    transition:
+                      transform 0.25s ease,
+                      box-shadow 0.25s ease,
+                      border-color 0.25s ease;
+                  }
       .faq-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 22px 42px -22px rgba(45, 43, 85, 0.28);
-        border-color: rgba(108, 74, 182, 0.2);
-      }
+                    transform: translateY(-2px);
+                    box-shadow: 0 22px 42px -22px rgba(45, 43, 85, 0.28);
+                    border-color: rgba(108, 74, 182, 0.2);
+                  }
       .faq-card[open] {
-        border-color: rgba(232, 87, 61, 0.35);
-        box-shadow: 0 24px 48px -22px rgba(232, 87, 61, 0.25);
-      }
+                    border-color: rgba(232, 87, 61, 0.35);
+                    box-shadow: 0 24px 48px -22px rgba(232, 87, 61, 0.25);
+                  }
       .faq-card > summary {
-        list-style: none;
-        cursor: pointer;
-        padding: 1.25rem 1.5rem;
-        display: flex;
-        align-items: flex-start;
-        gap: 1rem;
-        font-family: 'Fraunces', Georgia, serif;
-        font-weight: 500;
-        font-size: 1.125rem;
-        color: #2d2b55;
-        line-height: 1.35;
-      }
+                    list-style: none;
+                    cursor: pointer;
+                    padding: 1.25rem 1.5rem;
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 1rem;
+                    font-family: 'Fraunces', Georgia, serif;
+                    font-weight: 500;
+                    font-size: 1.125rem;
+                    color: #2d2b55;
+                    line-height: 1.35;
+                  }
       .faq-card > summary::-webkit-details-marker {
-        display: none;
-      }
+                    display: none;
+                  }
       .faq-card .q-icon {
-        flex-shrink: 0;
-        width: 36px;
-        height: 36px;
-        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        color: #ffffff;
-        font-family: 'Space Grotesk', system-ui, sans-serif;
-        font-weight: 600;
-        font-size: 0.95rem;
-        box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
-      }
+                    flex-shrink: 0;
+                    width: 36px;
+                    height: 36px;
+                    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    color: #ffffff;
+                    font-family: 'Space Grotesk', system-ui, sans-serif;
+                    font-weight: 600;
+                    font-size: 0.95rem;
+                    box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
+                  }
       .faq-card .chevron {
-        margin-left: auto;
-        flex-shrink: 0;
-        color: #6c4ab6;
-        transition: transform 0.3s ease;
-      }
+                    margin-left: auto;
+                    flex-shrink: 0;
+                    color: #6c4ab6;
+                    transition: transform 0.3s ease;
+                  }
       .faq-card[open] .chevron {
-        transform: rotate(180deg);
-      }
+                    transform: rotate(180deg);
+                  }
       .faq-card .answer {
-        padding: 0 1.5rem 1.5rem 4.25rem;
-        color: rgba(46, 46, 48, 0.8);
-        font-size: 1rem;
-        line-height: 1.7;
-      }
+                    padding: 0 1.5rem 1.5rem 4.25rem;
+                    color: rgba(46, 46, 48, 0.8);
+                    font-size: 1rem;
+                    line-height: 1.7;
+                  }
       .faq-card .answer::before {
-        content: '';
-        display: block;
-        height: 1px;
-        background: linear-gradient(
-          to right,
-          rgba(232, 87, 61, 0.3),
-          rgba(108, 74, 182, 0.1),
-          transparent
-        );
-        margin-bottom: 1rem;
-      }
-
-      /* Category tab header */
+                    content: '';
+                    display: block;
+                    height: 1px;
+                    background: linear-gradient(
+                      to right,
+                      rgba(232, 87, 61, 0.3),
+                      rgba(108, 74, 182, 0.1),
+                      transparent
+                    );
+                    margin-bottom: 1rem;
+                  }
       .tab-label {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        padding: 0.5rem 1.15rem;
-        border-radius: 9999px;
-        font-family: 'Space Grotesk', system-ui, sans-serif;
-        font-weight: 600;
-        font-size: 0.78rem;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
-
-      /* Sidebar sticky jump list */
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 0.6rem;
+                    padding: 0.5rem 1.15rem;
+                    border-radius: 9999px;
+                    font-family: 'Space Grotesk', system-ui, sans-serif;
+                    font-weight: 600;
+                    font-size: 0.78rem;
+                    letter-spacing: 0.08em;
+                    text-transform: uppercase;
+                  }
       .jump-link {
-        display: flex;
-        align-items: center;
-        gap: 0.65rem;
-        padding: 0.65rem 0.9rem;
-        border-radius: 12px;
-        font-family: 'Space Grotesk', system-ui, sans-serif;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: rgba(46, 46, 48, 0.72);
-        transition:
-          background 0.2s ease,
-          color 0.2s ease,
-          transform 0.2s ease;
-      }
+                    display: flex;
+                    align-items: center;
+                    gap: 0.65rem;
+                    padding: 0.65rem 0.9rem;
+                    border-radius: 12px;
+                    font-family: 'Space Grotesk', system-ui, sans-serif;
+                    font-size: 0.875rem;
+                    font-weight: 500;
+                    color: rgba(46, 46, 48, 0.72);
+                    transition:
+                      background 0.2s ease,
+                      color 0.2s ease,
+                      transform 0.2s ease;
+                  }
       .jump-link:hover {
-        background: rgba(232, 87, 61, 0.08);
-        color: #e8573d;
-        transform: translateX(2px);
-      }
+                    background: rgba(232, 87, 61, 0.08);
+                    color: #e8573d;
+                    transform: translateX(2px);
+                  }
       .jump-link .dot {
-        width: 10px;
-        height: 10px;
-        border-radius: 9999px;
-        flex-shrink: 0;
-      }
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 9999px;
+                    flex-shrink: 0;
+                  }
     </style>
+      <script defer src="/scripts/nav-active.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -295,7 +182,7 @@
       <div
         class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
       >
-        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+        <a href="/" class="inline-flex items-center gap-2.5 group">
           <span
             class="logo-monogram group-hover:scale-105 transition-transform"
             aria-hidden="true"
@@ -305,10 +192,16 @@
             >joshua<span class="text-coral">Briley</span></span
           >
         </a>
-        <nav class="hidden md:flex items-center gap-8 font-heading text-sm font-medium">
-          <a href="index.html" class="hover:text-coral transition-colors">Home</a>
-          <a href="services.html" class="hover:text-coral transition-colors">Services</a>
-          <a href="projects/index.html" class="hover:text-coral transition-colors">Projects</a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a href="/projects/" class="hover:text-coral transition-colors"
+            >Projects</a
+          >
         </nav>
         <button
           type="button"
@@ -319,10 +212,16 @@
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
-      <div class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium">
-        <a href="index.html" class="hover:text-coral transition-colors py-2">Home</a>
-        <a href="services.html" class="hover:text-coral transition-colors py-2">Services</a>
-        <a href="projects/index.html" class="hover:text-coral transition-colors py-2">Projects</a>
+      <div
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="/services" class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
       </div>
     </header>
 
@@ -401,7 +300,7 @@
             These questions come from clients and colleagues I've worked with
             over the years. If yours isn't here,
             <a
-              href="contact.html"
+              href="/contact/"
               class="text-coral font-semibold hover:text-coral/80 wavy-underline"
               >just ask</a
             >.
@@ -500,7 +399,7 @@
                   <p class="text-sm text-charcoal/75 leading-relaxed">
                     Click any question to expand its answer. Still stuck?
                     <a
-                      href="contact.html"
+                      href="/contact/"
                       class="text-coral font-semibold hover:text-coral/80"
                       >Send me a note</a
                     >.
@@ -583,11 +482,10 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      The Component Library Starter is built for that. You
-                      don't need anything in place before we begin, just a
-                      clear picture of the product you're building for. We
-                      align on tokens, components, and approach during the
-                      kickoff call.
+                      The Component Library Starter is built for that. You don't
+                      need anything in place before we begin, just a clear
+                      picture of the product you're building for. We align on
+                      tokens, components, and approach during the kickoff call.
                     </div>
                   </details>
 
@@ -605,10 +503,9 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      Yes, and that's the most common path. The audit
-                      identifies exactly what needs to be built or rebuilt,
-                      which makes the component library engagement more
-                      focused and efficient.
+                      Yes, and that's the most common path. The audit identifies
+                      exactly what needs to be built or rebuilt, which makes the
+                      component library engagement more focused and efficient.
                     </div>
                   </details>
 
@@ -624,8 +521,8 @@
                     </summary>
                     <div class="answer">
                       Get in touch and describe what you're working with. If
-                      it's something I can help with, I'll put together a
-                      custom proposal. If it isn't, I'll tell you that too.
+                      it's something I can help with, I'll put together a custom
+                      proposal. If it isn't, I'll tell you that too.
                     </div>
                   </details>
 
@@ -683,14 +580,13 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      The intro call is 30 minutes. We cover who owns the
-                      system and who uses it day to day, when it was last
-                      actively maintained, whether there is an existing
-                      component inventory or changelog, what prompted you to
-                      reach out, and which parts of the product are highest
-                      priority if scope needs to be narrowed. By the end, we'll
-                      both have a clear sense of whether the engagement is a
-                      good fit.
+                      The intro call is 30 minutes. We cover who owns the system
+                      and who uses it day to day, when it was last actively
+                      maintained, whether there is an existing component
+                      inventory or changelog, what prompted you to reach out,
+                      and which parts of the product are highest priority if
+                      scope needs to be narrowed. By the end, we'll both have a
+                      clear sense of whether the engagement is a good fit.
                     </div>
                   </details>
 
@@ -705,11 +601,10 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      For an audit, nothing special. Share your Storybook,
-                      Figma file, or codebase and that's enough to get started.
-                      For a component library build, we align on tokens,
-                      styling approach, and product requirements during a
-                      kickoff call.
+                      For an audit, nothing special. Share your Storybook, Figma
+                      file, or codebase and that's enough to get started. For a
+                      component library build, we align on tokens, styling
+                      approach, and product requirements during a kickoff call.
                     </div>
                   </details>
 
@@ -725,10 +620,10 @@
                     </summary>
                     <div class="answer">
                       The audit timeline depends on the size and complexity of
-                      your system. The starter component library build
-                      typically takes 2–3 weeks. More advanced component
-                      libraries take longer, depending on the requirements.
-                      Exact timelines are confirmed during the intro call.
+                      your system. The starter component library build typically
+                      takes 2–3 weeks. More advanced component libraries take
+                      longer, depending on the requirements. Exact timelines are
+                      confirmed during the intro call.
                     </div>
                   </details>
 
@@ -746,11 +641,10 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      A single point of contact is all I need. I'll
-                      occasionally have questions about existing implementation
-                      decisions or other project details and will reach out by
-                      email. A response within one business day keeps things
-                      moving.
+                      A single point of contact is all I need. I'll occasionally
+                      have questions about existing implementation decisions or
+                      other project details and will reach out by email. A
+                      response within one business day keeps things moving.
                     </div>
                   </details>
 
@@ -808,9 +702,8 @@
                     </summary>
                     <div class="answer">
                       The component library starter includes one round of
-                      revisions. The audit includes a debrief call where we
-                      walk through findings together before you act on
-                      anything.
+                      revisions. The audit includes a debrief call where we walk
+                      through findings together before you act on anything.
                     </div>
                   </details>
 
@@ -830,10 +723,10 @@
                     <div class="answer">
                       Yes. Both engagements include a structured walkthrough.
                       For the audit, we walk through the findings together in a
-                      debrief call so your team knows exactly what to
-                      prioritize and why. For the component library build, I
-                      deliver the library to your repo and walk your team
-                      through it so you can start using it immediately.
+                      debrief call so your team knows exactly what to prioritize
+                      and why. For the component library build, I deliver the
+                      library to your repo and walk your team through it so you
+                      can start using it immediately.
                     </div>
                   </details>
                 </div>
@@ -887,8 +780,8 @@
                       ></iconify-icon>
                     </summary>
                     <div class="answer">
-                      50% upfront to reserve your spot, 50% on delivery.
-                      Payment is via invoice.
+                      50% upfront to reserve your spot, 50% on delivery. Payment
+                      is via invoice.
                     </div>
                   </details>
 
@@ -1004,7 +897,7 @@
               class="flex flex-col sm:flex-row items-center justify-center gap-4"
             >
               <a
-                href="contact.html"
+                href="/contact/"
                 class="inline-flex items-center gap-2 bg-coral hover:bg-coral/90 text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-lg"
               >
                 <iconify-icon
@@ -1014,7 +907,7 @@
                 Book the intro call
               </a>
               <a
-                href="scorecard.html"
+                href="/scorecard/"
                 class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-7 py-4 rounded-full transition-colors"
               >
                 <iconify-icon
@@ -1034,34 +927,109 @@
       <div class="max-w-6xl mx-auto px-6">
         <div class="grid md:grid-cols-4 gap-8 mb-10">
           <div class="md:col-span-2">
-            <a href="index.html" class="inline-flex items-center gap-2.5 group">
-              <span class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform" aria-hidden="true">jb</span>
-              <span class="font-logo text-xl text-white">joshua<span class="text-coral">Briley</span></span>
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
             </a>
-            <p class="text-sm mt-3">&copy;2026 Briley Creative &middot; Joshua Briley, DBA</p>
-            <p class="text-sm mt-1">Available for UX engineering work. <a href="contact.html" class="text-coral hover:text-coral/80 transition-colors">Get in touch</a>.</p>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="/contact/"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
             <div class="flex items-center gap-4 mt-5">
-              <a href="https://www.linkedin.com/in/joshuabriley/" class="hover:text-white transition-colors" aria-label="LinkedIn profile"><iconify-icon icon="ph:linkedin-logo-duotone" width="26"></iconify-icon></a>
-              <a href="https://x.com/joshuabriley" class="hover:text-white transition-colors" aria-label="X (formerly Twitter) profile"><iconify-icon icon="ph:x-logo-duotone" width="26"></iconify-icon></a>
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
             </div>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">Site</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="index.html" class="hover:text-white transition-colors">Home</a></li>
-              <li><a href="services.html" class="hover:text-white transition-colors">Services</a></li>
-              <li><a href="projects/index.html" class="hover:text-white transition-colors">Projects</a></li>
-              <li><a href="about.html" class="hover:text-white transition-colors">About</a></li>
-              <li><a href="blog/index.html" class="hover:text-white transition-colors">Blog</a></li>
+              <li>
+                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+              </li>
+              <li>
+                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+              <li>
+                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                  >Blog</a
+                >
+              </li>
             </ul>
           </div>
           <div>
-            <h3 class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide">More</h3>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
             <ul class="space-y-2 text-sm">
-              <li><a href="contact.html" class="hover:text-white transition-colors">Contact</a></li>
-              <li><a href="scorecard.html" class="hover:text-white transition-colors">Free Scorecard</a></li>
-              <li><a href="testimonials.html" class="hover:text-white transition-colors">Kind Words</a></li>
-              <li><a href="faqs.html" class="hover:text-white transition-colors">FAQs</a></li>
+              <li>
+                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/testimonials/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
             </ul>
           </div>
         </div>
