@@ -1,0 +1,3073 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Component Inventory — Joshua Briley</title>
+    <meta
+      name="description"
+      content="A catalog of reusable components across the site, grouped by category with copy-paste code examples to support a future migration to a component-based framework."
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              display: ['Fraunces', 'Georgia', 'serif'],
+              heading: ['Space Grotesk', 'system-ui', 'sans-serif'],
+              body: ['DM Sans', 'system-ui', 'sans-serif'],
+              mono: ['JetBrains Mono', 'ui-monospace', 'monospace'],
+              logo: ['Style Script', 'cursive'],
+            },
+            colors: {
+              cream: '#FFFBF5',
+              peach: '#FFE8D6',
+              coral: '#E8573D',
+              sunset: '#FF8E53',
+              plum: '#6C4AB6',
+              navy: '#2D2B55',
+              charcoal: '#2E2E30',
+              sage: '#7BB47A',
+              sky: '#5DADE2',
+              lemon: '#FDE68A',
+            },
+          },
+        },
+      }
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'DM Sans', system-ui, sans-serif;
+        background: #fffbf5;
+      }
+      .wavy-underline {
+        text-decoration: underline wavy;
+        text-decoration-color: #e8573d;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
+      }
+      .blob-shape {
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+      }
+      .sticker {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.375rem 0.875rem;
+        border-radius: 9999px;
+        border-width: 1px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 500;
+      }
+      /* Category sidebar */
+      .cat-link {
+        display: flex;
+        align-items: center;
+        gap: 0.625rem;
+        padding: 0.5rem 0.875rem;
+        border-radius: 0.625rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #2e2e30;
+        transition: all 0.2s;
+      }
+      .cat-link:hover {
+        background: rgba(108, 74, 182, 0.08);
+        color: #6c4ab6;
+      }
+      .cat-link .dot {
+        width: 0.5rem;
+        height: 0.5rem;
+        border-radius: 9999px;
+        flex-shrink: 0;
+      }
+      /* Component card */
+      .comp-card {
+        background: #fff;
+        border: 1px solid rgba(46, 46, 48, 0.06);
+        border-radius: 1.25rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
+        margin-bottom: 1.5rem;
+      }
+      .comp-card h3 {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 1.5rem;
+        color: #2d2b55;
+        line-height: 1.2;
+      }
+      .comp-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin: 0.75rem 0 1rem;
+      }
+      .comp-meta .pill {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.6875rem;
+        font-weight: 500;
+        padding: 0.25rem 0.625rem;
+        border-radius: 9999px;
+        background: rgba(108, 74, 182, 0.08);
+        color: #6c4ab6;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+      }
+      .comp-desc {
+        color: rgba(46, 46, 48, 0.72);
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+      /* Visual preview */
+      .comp-preview {
+        position: relative;
+        background: repeating-linear-gradient(
+            45deg,
+            rgba(46, 46, 48, 0.025) 0 10px,
+            transparent 10px 20px
+          ),
+          #fffbf5;
+        border: 1px dashed rgba(46, 46, 48, 0.15);
+        border-radius: 0.875rem;
+        padding: 1.75rem 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 96px;
+        overflow: hidden;
+      }
+      .comp-preview > * {
+        max-width: 100%;
+      }
+      .comp-preview::before {
+        content: 'Preview';
+        position: absolute;
+        top: 0.5rem;
+        left: 0.75rem;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.625rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: rgba(46, 46, 48, 0.35);
+      }
+      /* Code block */
+      .comp-card {
+        min-width: 0;
+      }
+      .code-wrap {
+        position: relative;
+        background: #2d2b55;
+        border-radius: 0.875rem;
+        overflow: hidden;
+        max-width: 100%;
+      }
+      .code-wrap pre {
+        margin: 0;
+        padding: 1.25rem 1.25rem 1.25rem 1.25rem;
+        overflow-x: auto;
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 0.8125rem;
+        line-height: 1.55;
+        color: #f5f3ff;
+      }
+      .code-wrap pre code {
+        white-space: pre;
+        font-family: inherit;
+      }
+      .copy-btn {
+        position: absolute;
+        top: 0.625rem;
+        right: 0.625rem;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        background: rgba(255, 255, 255, 0.1);
+        color: #fff;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 0.375rem 0.75rem;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.75rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+      }
+      .copy-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .copy-btn.copied {
+        background: #7bb47a;
+        border-color: #7bb47a;
+      }
+      /* Foundations — swatch tiles */
+      .swatch {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+      .swatch .chip {
+        aspect-ratio: 4 / 3;
+        border-radius: 0.875rem;
+        border: 1px solid rgba(46, 46, 48, 0.06);
+        box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+      }
+      .swatch .meta {
+        display: flex;
+        flex-direction: column;
+        gap: 0.125rem;
+        padding: 0 0.125rem;
+      }
+      .swatch .name {
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        color: #2d2b55;
+      }
+      .swatch .hex {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.6875rem;
+        color: rgba(46, 46, 48, 0.55);
+      }
+      .token-row {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 0.75rem 0;
+        border-bottom: 1px dashed rgba(46, 46, 48, 0.08);
+      }
+      .token-row:last-child {
+        border-bottom: none;
+      }
+      .token-row .label {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.75rem;
+        color: #6c4ab6;
+        min-width: 7rem;
+        flex-shrink: 0;
+      }
+      .token-row .sample {
+        flex: 1;
+        min-width: 0;
+      }
+      .token-row .value {
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.6875rem;
+        color: rgba(46, 46, 48, 0.55);
+        margin-left: auto;
+        flex-shrink: 0;
+      }
+      /* Motion — keyframes + helpers for live previews */
+      @keyframes float {
+        0%, 100% { transform: translateY(0) rotate(0); }
+        50% { transform: translateY(-12px) rotate(2deg); }
+      }
+      @keyframes float-slow {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-8px); }
+      }
+      @keyframes wiggle {
+        0%, 100% { transform: rotate(-2deg); }
+        50% { transform: rotate(2deg); }
+      }
+      @keyframes stamp-in {
+        0% { opacity: 0; transform: scale(1.6) rotate(-18deg); }
+        100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+      }
+      @keyframes spin-slow {
+        from { transform: rotate(0); }
+        to { transform: rotate(360deg); }
+      }
+      @keyframes pulse-ring {
+        0%, 100% { transform: scale(1); opacity: 0.35; }
+        50% { transform: scale(1.08); opacity: 0.55; }
+      }
+      @keyframes steam {
+        0% { opacity: 0; transform: translateY(0) scaleX(1); }
+        30% { opacity: 0.7; }
+        100% { opacity: 0; transform: translateY(-28px) scaleX(0.9); }
+      }
+      @keyframes dash-flow {
+        to { stroke-dashoffset: -20; }
+      }
+      .animate-float { animation: float 6s ease-in-out infinite; }
+      .animate-float-slow { animation: float-slow 8s ease-in-out infinite; }
+      .animate-float-delay { animation: float 6s ease-in-out 2s infinite; }
+      .animate-wiggle { animation: wiggle 4s ease-in-out infinite; }
+      .animate-spin-slow { animation: spin-slow 28s linear infinite; }
+      .animate-pulse-ring { animation: pulse-ring 4s ease-in-out infinite; }
+      .animate-steam { animation: steam 4s ease-out infinite; }
+      .animate-stamp { animation: stamp-in 0.5s ease-out both; }
+      .card-hover-demo {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .card-hover-demo:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+      }
+      /* Section headings */
+      .cat-section {
+        scroll-margin-top: 6rem;
+      }
+      .cat-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 2px dashed rgba(46, 46, 48, 0.1);
+      }
+      .cat-heading h2 {
+        font-family: 'Fraunces', serif;
+        font-weight: 600;
+        font-size: 2rem;
+        color: #2d2b55;
+      }
+      .cat-heading .badge {
+        width: 2.75rem;
+        height: 2.75rem;
+        border-radius: 0.875rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+    </style>
+  </head>
+  <body class="text-charcoal">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+      >Skip to main content</a
+    >
+
+    <!-- Header -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div
+        class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="index.html" class="inline-flex items-center gap-2.5 group">
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="index.html" class="hover:text-coral transition-colors"
+            >Home</a
+          >
+          <a href="services.html" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a
+            href="projects/index.html"
+            class="hover:text-coral transition-colors"
+            >Projects</a
+          >
+          <a href="component-inventory.html" class="text-coral">Inventory</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="relative overflow-hidden py-16 md:py-24">
+      <div
+        class="absolute top-12 right-[10%] w-16 h-16 bg-lemon/60 blob-shape opacity-70"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="absolute bottom-6 left-[8%] w-24 h-24 bg-plum/10 blob-shape opacity-70"
+        aria-hidden="true"
+      ></div>
+      <div class="max-w-5xl mx-auto px-6 text-center relative">
+        <div
+          class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium border border-lemon/60"
+        >
+          <iconify-icon
+            icon="ph:stack-duotone"
+            width="20"
+            class="text-sunset"
+          ></iconify-icon>
+          Component Inventory
+        </div>
+        <h1
+          class="font-display text-4xl md:text-6xl font-semibold text-navy leading-[1.1] tracking-tight mb-6"
+        >
+          A catalog of every <span class="wavy-underline">reusable</span> piece.
+        </h1>
+        <p
+          class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed"
+        >
+          Every recurring pattern across the site, grouped by category with
+          copy-paste code. The launchpad for moving this project to a
+          component-based framework.
+        </p>
+      </div>
+    </section>
+
+    <!-- Main -->
+    <main id="main" class="pb-24">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid lg:grid-cols-[260px_1fr] gap-10">
+          <!-- Sidebar -->
+          <aside class="lg:sticky lg:top-24 lg:self-start">
+            <div
+              class="bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
+            >
+              <p
+                class="font-heading text-xs uppercase tracking-wider text-charcoal/50 mb-3 px-2"
+              >
+                Jump to category
+              </p>
+              <nav class="flex flex-col gap-1">
+                <a href="#foundations" class="cat-link"
+                  ><span class="dot bg-lemon"></span>Foundations</a
+                >
+                <a href="#layout" class="cat-link"
+                  ><span class="dot bg-coral"></span>Layout &amp; Structure</a
+                >
+                <a href="#navigation" class="cat-link"
+                  ><span class="dot bg-plum"></span>Navigation</a
+                >
+                <a href="#typography" class="cat-link"
+                  ><span class="dot bg-sunset"></span>Typography</a
+                >
+                <a href="#interactive" class="cat-link"
+                  ><span class="dot bg-sky"></span>Buttons &amp; Links</a
+                >
+                <a href="#cards" class="cat-link"
+                  ><span class="dot bg-sage"></span>Cards &amp; Content</a
+                >
+                <a href="#forms" class="cat-link"
+                  ><span class="dot bg-lemon"></span>Forms</a
+                >
+                <a href="#media" class="cat-link"
+                  ><span class="dot bg-peach"></span>Media &amp; Decorative</a
+                >
+                <a href="#specialized" class="cat-link"
+                  ><span class="dot bg-navy"></span>Specialized</a
+                >
+                <a href="#motion" class="cat-link"
+                  ><span class="dot bg-sunset"></span>Motion</a
+                >
+              </nav>
+              <p
+                class="mt-4 pt-4 border-t border-dashed border-charcoal/10 text-xs text-charcoal/50 font-body px-2"
+              >
+                Click any
+                <span class="font-heading font-medium text-plum">Copy</span>
+                button to grab the markup.
+              </p>
+            </div>
+          </aside>
+
+          <!-- Content -->
+          <div class="min-w-0">
+            <!-- ===== FOUNDATIONS ===== -->
+            <section id="foundations" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-lemon text-navy"
+                  ><iconify-icon
+                    icon="ph:palette-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Foundations</h2>
+              </div>
+
+              <!-- Color Palette -->
+              <article class="comp-card">
+                <h3>Color Palette</h3>
+                <div class="comp-meta">
+                  <span class="pill">Tailwind config</span>
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  The full brand palette. All custom colors are registered in
+                  the Tailwind config and available as utility classes
+                  (<code>bg-coral</code>, <code>text-navy</code>, etc.) plus
+                  every opacity variant (<code>/5</code>, <code>/10</code>,
+                  <code>/70</code>, …).
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div
+                    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 w-full"
+                  >
+                    <div class="swatch">
+                      <div class="chip" style="background: #fffbf5"></div>
+                      <div class="meta">
+                        <span class="name">cream</span
+                        ><span class="hex">#FFFBF5</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #2d2b55"></div>
+                      <div class="meta">
+                        <span class="name">navy</span
+                        ><span class="hex">#2D2B55</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #2e2e30"></div>
+                      <div class="meta">
+                        <span class="name">charcoal</span
+                        ><span class="hex">#2E2E30</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #e8573d"></div>
+                      <div class="meta">
+                        <span class="name">coral</span
+                        ><span class="hex">#E8573D</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #ff8e53"></div>
+                      <div class="meta">
+                        <span class="name">sunset</span
+                        ><span class="hex">#FF8E53</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #6c4ab6"></div>
+                      <div class="meta">
+                        <span class="name">plum</span
+                        ><span class="hex">#6C4AB6</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #5dade2"></div>
+                      <div class="meta">
+                        <span class="name">sky</span
+                        ><span class="hex">#5DADE2</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #7bb47a"></div>
+                      <div class="meta">
+                        <span class="name">sage</span
+                        ><span class="hex">#7BB47A</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #fde68a"></div>
+                      <div class="meta">
+                        <span class="name">lemon</span
+                        ><span class="hex">#FDE68A</span>
+                      </div>
+                    </div>
+                    <div class="swatch">
+                      <div class="chip" style="background: #ffe8d6"></div>
+                      <div class="meta">
+                        <span class="name">peach</span
+                        ><span class="hex">#FFE8D6</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>colors: {
+  cream:    &#39;#FFFBF5&#39;,
+  navy:     &#39;#2D2B55&#39;,
+  charcoal: &#39;#2E2E30&#39;,
+  coral:    &#39;#E8573D&#39;,
+  sunset:   &#39;#FF8E53&#39;,
+  plum:     &#39;#6C4AB6&#39;,
+  sky:      &#39;#5DADE2&#39;,
+  sage:     &#39;#7BB47A&#39;,
+  lemon:    &#39;#FDE68A&#39;,
+  peach:    &#39;#FFE8D6&#39;,
+}</code></pre>
+                </div>
+              </article>
+
+              <!-- Font Families -->
+              <article class="comp-card">
+                <h3>Font Families</h3>
+                <div class="comp-meta">
+                  <span class="pill">Google Fonts</span>
+                </div>
+                <p class="comp-desc">
+                  Five typefaces cover display, UI, body, monospace, and
+                  decorative roles. Loaded from Google Fonts and wired up in
+                  the Tailwind config.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">font-display</span>
+                      <span
+                        class="sample font-display text-2xl text-navy font-semibold"
+                        >Fraunces — a serif display</span
+                      >
+                      <span class="value">Fraunces</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-heading</span>
+                      <span
+                        class="sample font-heading text-lg text-navy font-medium"
+                        >Space Grotesk — UI &amp; headings</span
+                      >
+                      <span class="value">Space Grotesk</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-body</span>
+                      <span
+                        class="sample font-body text-base text-charcoal/80"
+                        >DM Sans — the default body voice.</span
+                      >
+                      <span class="value">DM Sans</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-mono</span>
+                      <span class="sample font-mono text-sm text-plum"
+                        >JetBrains Mono — for code snippets</span
+                      >
+                      <span class="value">JetBrains Mono</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-logo</span>
+                      <span class="sample font-logo text-2xl text-navy"
+                        >joshua<span class="text-coral">Briley</span></span
+                      >
+                      <span class="value">Style Script</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>fontFamily: {
+  display: [&#39;Fraunces&#39;, &#39;Georgia&#39;, &#39;serif&#39;],
+  heading: [&#39;Space Grotesk&#39;, &#39;system-ui&#39;, &#39;sans-serif&#39;],
+  body:    [&#39;DM Sans&#39;, &#39;system-ui&#39;, &#39;sans-serif&#39;],
+  mono:    [&#39;JetBrains Mono&#39;, &#39;ui-monospace&#39;, &#39;monospace&#39;],
+  logo:    [&#39;Style Script&#39;, &#39;cursive&#39;],
+}</code></pre>
+                </div>
+              </article>
+
+              <!-- Font Size Scale -->
+              <article class="comp-card">
+                <h3>Type Scale</h3>
+                <div class="comp-meta">
+                  <span class="pill">Tailwind defaults</span>
+                </div>
+                <p class="comp-desc">
+                  The vertical type ramp used from small meta text up to hero
+                  display headlines.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">text-xs</span>
+                      <span class="sample font-body text-xs text-charcoal"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">12px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-sm</span>
+                      <span class="sample font-body text-sm text-charcoal"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">14px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-base</span>
+                      <span class="sample font-body text-base text-charcoal"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">16px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-lg</span>
+                      <span class="sample font-body text-lg text-charcoal"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">18px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-xl</span>
+                      <span class="sample font-body text-xl text-charcoal"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">20px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-2xl</span>
+                      <span class="sample font-display text-2xl text-navy"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">24px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-3xl</span>
+                      <span class="sample font-display text-3xl text-navy"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">30px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-4xl</span>
+                      <span class="sample font-display text-4xl text-navy"
+                        >The quick brown fox</span
+                      >
+                      <span class="value">36px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-5xl</span>
+                      <span
+                        class="sample font-display text-5xl text-navy font-semibold"
+                        >Quick fox</span
+                      >
+                      <span class="value">48px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-6xl</span>
+                      <span
+                        class="sample font-display text-6xl text-navy font-semibold"
+                        >Quick fox</span
+                      >
+                      <span class="value">60px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">text-7xl</span>
+                      <span
+                        class="sample font-display text-7xl text-navy font-semibold"
+                        >Hero</span
+                      >
+                      <span class="value">72px</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>text-xs     &#47;* 12px *&#47;
+text-sm     &#47;* 14px — UI body default *&#47;
+text-base   &#47;* 16px *&#47;
+text-lg     &#47;* 18px — lead paragraphs *&#47;
+text-xl     &#47;* 20px *&#47;
+text-2xl    &#47;* 24px *&#47;
+text-3xl    &#47;* 30px — H2 *&#47;
+text-4xl    &#47;* 36px *&#47;
+text-5xl    &#47;* 48px *&#47;
+text-6xl    &#47;* 60px *&#47;
+text-7xl    &#47;* 72px — hero H1 *&#47;</code></pre>
+                </div>
+              </article>
+
+              <!-- Font Weights -->
+              <article class="comp-card">
+                <h3>Font Weights</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Four weights do all the work. <code>font-semibold</code> is
+                  the default for headings; body text inherits the normal
+                  weight.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">font-normal</span>
+                      <span
+                        class="sample font-display text-2xl text-navy font-normal"
+                        >Design system</span
+                      >
+                      <span class="value">400</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-medium</span>
+                      <span
+                        class="sample font-display text-2xl text-navy font-medium"
+                        >Design system</span
+                      >
+                      <span class="value">500</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-semibold</span>
+                      <span
+                        class="sample font-display text-2xl text-navy font-semibold"
+                        >Design system</span
+                      >
+                      <span class="value">600</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">font-bold</span>
+                      <span
+                        class="sample font-display text-2xl text-navy font-bold"
+                        >Design system</span
+                      >
+                      <span class="value">700</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>font-normal    &#47;* 400 — body default *&#47;
+font-medium    &#47;* 500 — UI labels, buttons *&#47;
+font-semibold  &#47;* 600 — headings default *&#47;
+font-bold      &#47;* 700 — strong emphasis *&#47;</code></pre>
+                </div>
+              </article>
+
+              <!-- Border Radii -->
+              <article class="comp-card">
+                <h3>Border Radii</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  The site leans heavily on soft, generous radii.
+                  <code>rounded-full</code> for pills and CTAs,
+                  <code>rounded-2xl</code> as the default card shape.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div
+                    class="grid grid-cols-3 sm:grid-cols-6 gap-4 w-full items-end"
+                  >
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-md mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-md</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >6px</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-lg mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-lg</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >8px</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-xl mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-xl</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >12px</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-2xl mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-2xl</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >16px</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-3xl mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-3xl</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >24px</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral/20 border border-coral/30 rounded-full mb-2"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >rounded-full</div>
+                      <div
+                        class="font-mono text-[9px] text-charcoal/50"
+                      >9999px</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>rounded-md    &#47;* 6px  — minor elements *&#47;
+rounded-lg    &#47;* 8px  — inputs, small cards *&#47;
+rounded-xl    &#47;* 12px — medium containers *&#47;
+rounded-2xl   &#47;* 16px — default card radius *&#47;
+rounded-3xl   &#47;* 24px — large blocks *&#47;
+rounded-full  &#47;* 9999px — pills &amp; CTAs *&#47;</code></pre>
+                </div>
+              </article>
+
+              <!-- Border Styles -->
+              <article class="comp-card">
+                <h3>Border Styles</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Borders stay subtle — almost always a hairline against a
+                  translucent charcoal. Dashed borders are a signature touch
+                  used for dividers and "paper note" framing.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">border</span>
+                      <div class="sample">
+                        <div
+                          class="h-10 bg-white rounded-lg border border-charcoal/10"
+                        ></div>
+                      </div>
+                      <span class="value">1px solid</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">border-2</span>
+                      <div class="sample">
+                        <div
+                          class="h-10 bg-white rounded-lg border-2 border-charcoal/10"
+                        ></div>
+                      </div>
+                      <span class="value">2px solid</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">border-4</span>
+                      <div class="sample">
+                        <div
+                          class="h-10 bg-white rounded-lg border-4 border-coral"
+                        ></div>
+                      </div>
+                      <span class="value">4px solid</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">border-dashed</span>
+                      <div class="sample">
+                        <div
+                          class="h-10 bg-white rounded-lg border border-dashed border-charcoal/20"
+                        ></div>
+                      </div>
+                      <span class="value">dashed hairline</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">border-b-2 dashed</span>
+                      <div class="sample">
+                        <div
+                          class="h-10 border-b-2 border-dashed border-charcoal/10 flex items-end pb-1 font-heading text-xs text-charcoal/50"
+                        >
+                          Section heading divider
+                        </div>
+                      </div>
+                      <span class="value">cat-heading</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">border-coral/30</span>
+                      <div class="sample">
+                        <div class="flex gap-2">
+                          <span
+                            class="sticker bg-coral/10 text-coral"
+                            style="border-color: rgba(232, 87, 61, 0.3)"
+                            >coral sticker</span
+                          >
+                          <span
+                            class="sticker bg-plum/10 text-plum"
+                            style="border-color: rgba(108, 74, 182, 0.3)"
+                            >plum sticker</span
+                          >
+                          <span
+                            class="sticker bg-sage/15 text-sage"
+                            style="border-color: rgba(123, 180, 122, 0.4)"
+                            >sage sticker</span
+                          >
+                        </div>
+                      </div>
+                      <span class="value">tinted</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">focus ring</span>
+                      <div class="sample">
+                        <input
+                          type="text"
+                          value="Focused input"
+                          readonly
+                          class="w-full max-w-xs bg-white border border-coral rounded-lg px-3 py-2 font-body text-sm text-charcoal focus:outline-none"
+                        />
+                      </div>
+                      <span class="value">border-coral</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&#47;* Widths *&#47;
+border                &#47;* 1px — hairline default *&#47;
+border-2              &#47;* 2px — emphasis, dividers *&#47;
+border-4              &#47;* 4px — grade-stamp rings *&#47;
+
+&#47;* Styles *&#47;
+border-solid          &#47;* default *&#47;
+border-dashed         &#47;* paper / notepad framing *&#47;
+
+&#47;* Common color treatments *&#47;
+border-charcoal&#47;5     &#47;* cards — 73 uses *&#47;
+border-charcoal&#47;10    &#47;* inputs, dividers — 34 uses *&#47;
+border-charcoal&#47;20    &#47;* dashed dividers *&#47;
+border-coral&#47;30       &#47;* tinted sticker pills *&#47;
+border-plum&#47;30        &#47;* tinted sticker pills *&#47;
+border-white&#47;20       &#47;* ghost buttons on navy *&#47;</code></pre>
+                </div>
+              </article>
+
+              <!-- Shadows -->
+              <article class="comp-card">
+                <h3>Shadows</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Soft, subtle elevation. <code>shadow-sm</code> is the card
+                  default; <code>shadow-lg</code> signals hover and
+                  elevation. Colored shadows (<code>shadow-coral/20</code>)
+                  appear on hover for primary CTAs.
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <div
+                    class="grid grid-cols-2 sm:grid-cols-4 gap-5 w-full items-end"
+                  >
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-white rounded-xl shadow-sm mb-3"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >shadow-sm</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-white rounded-xl shadow-md mb-3"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >shadow-md</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-white rounded-xl shadow-lg mb-3"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >shadow-lg</div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-full aspect-square bg-coral rounded-xl shadow-lg shadow-coral/40 mb-3"
+                      ></div>
+                      <div
+                        class="font-mono text-[10px] text-plum"
+                      >shadow-coral/20</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>shadow-sm           &#47;* cards, subtle depth *&#47;
+shadow-md           &#47;* medium depth *&#47;
+shadow-lg           &#47;* hover &amp; elevated cards *&#47;
+shadow-coral&#47;20     &#47;* colored hover glow on coral CTAs *&#47;</code></pre>
+                </div>
+              </article>
+
+              <!-- Spacing Scale -->
+              <article class="comp-card">
+                <h3>Spacing Scale</h3>
+                <div class="comp-meta">
+                  <span class="pill">Tailwind defaults</span>
+                </div>
+                <p class="comp-desc">
+                  The spacing values that show up most often in padding,
+                  margin, and gap. Section rhythm uses the bigger steps
+                  (<code>py-20</code>, <code>py-28</code>), card interiors
+                  use <code>p-6</code>/<code>p-8</code>.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">2</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 8px"></div>
+                      </div>
+                      <span class="value">8px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">3</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 12px"></div>
+                      </div>
+                      <span class="value">12px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">4</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 16px"></div>
+                      </div>
+                      <span class="value">16px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">5</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 20px"></div>
+                      </div>
+                      <span class="value">20px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">6</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 24px"></div>
+                      </div>
+                      <span class="value">24px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">8</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 32px"></div>
+                      </div>
+                      <span class="value">32px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">12</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 48px"></div>
+                      </div>
+                      <span class="value">48px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">16</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 64px"></div>
+                      </div>
+                      <span class="value">64px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">20</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 80px"></div>
+                      </div>
+                      <span class="value">80px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">24</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 96px"></div>
+                      </div>
+                      <span class="value">96px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">28</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 112px"></div>
+                      </div>
+                      <span class="value">112px</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">32</span>
+                      <div class="sample">
+                        <div class="h-3 bg-coral/70 rounded-sm" style="width: 128px"></div>
+                      </div>
+                      <span class="value">128px</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>gap-2  px-2  py-2   &#47;* 8px  — tight item spacing *&#47;
+gap-4  px-4  py-4   &#47;* 16px — standard UI spacing *&#47;
+p-6                 &#47;* 24px — card interior default *&#47;
+p-8                 &#47;* 32px — large card interior *&#47;
+py-20               &#47;* 80px — section rhythm *&#47;
+py-24  py-28  py-32 &#47;* 96-128px — hero / large sections *&#47;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== LAYOUT ===== -->
+            <section id="layout" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-coral/15 text-coral"
+                  ><iconify-icon
+                    icon="ph:columns-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Layout &amp; Structure</h2>
+              </div>
+
+              <!-- Hero Section Container -->
+              <article class="comp-card">
+                <h3>Hero Section Container</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">All pages</span>
+                </div>
+                <p class="comp-desc">
+                  Full-width hero wrapper with generous vertical padding and
+                  overflow clipping so decorative blobs can bleed in safely.
+                </p>
+                <div class="comp-preview">
+                  <div class="relative w-full bg-cream border border-charcoal/10 rounded-lg py-10 overflow-hidden">
+                    <div class="absolute top-3 right-4 w-8 h-8 bg-lemon/60 rounded-full"></div>
+                    <div class="absolute bottom-2 left-6 w-10 h-10 bg-peach/70 rounded-full"></div>
+                    <div class="text-center px-4">
+                      <div class="font-display text-lg text-navy font-semibold">Hero headline</div>
+                      <div class="text-xs text-charcoal/60 mt-1">full-bleed padded section</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;section class=&quot;relative overflow-hidden py-24 md:py-32 lg:py-40&quot;&gt;
+  &lt;!-- Hero content --&gt;
+&lt;/section&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Content Container -->
+              <article class="comp-card">
+                <h3>Content Container</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">Every section</span>
+                </div>
+                <p class="comp-desc">
+                  Centered max-width wrapper used inside every section to
+                  constrain line length.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-full bg-charcoal/5 rounded-md py-6 flex justify-center">
+                    <div class="w-3/5 border-2 border-dashed border-plum/40 rounded-md py-4 text-center text-xs font-heading text-plum">max-w-6xl · mx-auto · px-6</div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;max-w-6xl mx-auto px-6&quot;&gt;
+  &lt;!-- Section content --&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Two Column Split -->
+              <article class="comp-card">
+                <h3>Two-Column Split (Text + Media)</h3>
+                <div class="comp-meta">
+                  <span class="pill">about.html</span>
+                  <span class="pill">index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Responsive flex layout that stacks on mobile and splits into
+                  image + content on medium+ breakpoints.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex items-center gap-4 w-full">
+                    <div class="w-24 h-20 bg-peach/70 rounded-lg flex items-center justify-center">
+                      <iconify-icon icon="ph:image-duotone" width="28" class="text-coral"></iconify-icon>
+                    </div>
+                    <div class="flex-1 space-y-2">
+                      <div class="h-2 bg-charcoal/15 rounded-full w-11/12"></div>
+                      <div class="h-2 bg-charcoal/15 rounded-full w-9/12"></div>
+                      <div class="h-2 bg-charcoal/15 rounded-full w-7/12"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;flex flex-col md:flex-row items-center gap-12 md:gap-16&quot;&gt;
+  &lt;div class=&quot;flex-shrink-0 relative&quot;&gt;&lt;!-- Image side --&gt;&lt;/div&gt;
+  &lt;div class=&quot;flex-1&quot;&gt;&lt;!-- Content side --&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Card Grid -->
+              <article class="comp-card">
+                <h3>Responsive Card Grid</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  1-column on mobile, 2 on small, 3 on large — the default grid
+                  used for services, projects, and blog cards.
+                </p>
+                <div class="comp-preview">
+                  <div class="grid grid-cols-3 gap-2 w-full">
+                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
+                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
+                    <div class="h-16 bg-white border border-charcoal/10 rounded-lg shadow-sm"></div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;grid sm:grid-cols-2 lg:grid-cols-3 gap-5&quot;&gt;
+  &lt;!-- Grid items --&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Dark Section -->
+              <article class="comp-card">
+                <h3>Navy Feature Section</h3>
+                <div class="comp-meta">
+                  <span class="pill">index.html</span>
+                  <span class="pill">Final CTAs</span>
+                </div>
+                <p class="comp-desc">
+                  Dark-on-dark section treatment used to create rhythm and
+                  spotlight key moments.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-full bg-navy rounded-lg py-8 text-center relative overflow-hidden">
+                    <div class="absolute -top-4 -left-4 w-16 h-16 bg-plum/40 rounded-full"></div>
+                    <div class="font-display text-white text-lg">Ready to ship?</div>
+                    <div class="text-white/60 text-xs mt-1">Navy feature section</div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;section class=&quot;py-20 md:py-28 bg-navy text-white relative overflow-hidden&quot;&gt;
+  &lt;!-- Section content --&gt;
+&lt;/section&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Squiggle Divider -->
+              <article class="comp-card">
+                <h3>Squiggle Divider</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">Decorative</span>
+                </div>
+                <p class="comp-desc">
+                  Decorative wavy divider that sits between long-form sections.
+                </p>
+                <div class="comp-preview">
+                  <svg class="w-full max-w-sm" viewBox="0 0 400 20" fill="none" aria-hidden="true">
+                    <path d="M2 10 Q 50 0 100 10 T 200 10 T 300 10 T 398 10" stroke="#E8573D" stroke-width="3" stroke-linecap="round" fill="none"/>
+                  </svg>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;squiggle-divider max-w-4xl mx-auto&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== NAVIGATION ===== -->
+            <section id="navigation" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-plum/15 text-plum"
+                  ><iconify-icon
+                    icon="ph:compass-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Navigation</h2>
+              </div>
+
+              <!-- Site Header -->
+              <article class="comp-card">
+                <h3>Site Header</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">Sticky</span>
+                </div>
+                <p class="comp-desc">
+                  Sticky, blurred, translucent header with logo, primary nav,
+                  and a mobile toggle.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-full bg-cream/90 backdrop-blur border-b border-charcoal/10 rounded-lg px-4 py-3 flex items-center justify-between">
+                    <span class="font-logo text-lg text-navy">joshua<span class="text-coral">Briley</span></span>
+                    <nav class="hidden sm:flex gap-5 font-heading text-xs text-charcoal">
+                      <span>Home</span><span>Services</span><span>Projects</span>
+                    </nav>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;header class=&quot;sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5&quot;&gt;
+  &lt;div class=&quot;max-w-6xl mx-auto px-6 py-4 flex items-center justify-between&quot;&gt;
+    &lt;a href=&quot;/&quot; class=&quot;inline-flex items-center gap-2.5 group&quot;&gt;
+      &lt;span class=&quot;logo-monogram group-hover:scale-105 transition-transform&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt;
+      &lt;span class=&quot;font-logo text-2xl text-navy&quot;&gt;joshua&lt;span class=&quot;text-coral&quot;&gt;Briley&lt;/span&gt;&lt;/span&gt;
+    &lt;/a&gt;
+    &lt;nav class=&quot;hidden md:flex items-center gap-8 font-heading text-sm font-medium&quot;&gt;
+      &lt;a href=&quot;index.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Home&lt;/a&gt;
+      &lt;a href=&quot;services.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Services&lt;/a&gt;
+      &lt;a href=&quot;projects/index.html&quot; class=&quot;hover:text-coral transition-colors&quot;&gt;Projects&lt;/a&gt;
+    &lt;/nav&gt;
+    &lt;button type=&quot;button&quot; class=&quot;md:hidden p-2 rounded-lg hover:bg-charcoal/5&quot; aria-label=&quot;Toggle navigation menu&quot;&gt;
+      &lt;iconify-icon icon=&quot;ph:list-bold&quot; width=&quot;24&quot;&gt;&lt;/iconify-icon&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+&lt;/header&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Footer -->
+              <article class="comp-card">
+                <h3>Site Footer</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Navy footer with branding column, link columns, and social
+                  icons.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-full bg-navy rounded-lg px-4 py-4 grid grid-cols-4 gap-3 text-white/60 text-[10px]">
+                    <div class="col-span-2">
+                      <div class="font-logo text-sm text-white">joshua<span class="text-coral">Briley</span></div>
+                      <div class="mt-2">&copy; 2026</div>
+                    </div>
+                    <div><div class="text-white font-semibold mb-1">Site</div>Home<br/>About</div>
+                    <div><div class="text-white font-semibold mb-1">More</div>FAQs<br/>Contact</div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;footer class=&quot;bg-navy text-white/60 py-12&quot;&gt;
+  &lt;div class=&quot;max-w-6xl mx-auto px-6&quot;&gt;
+    &lt;div class=&quot;grid md:grid-cols-4 gap-8 mb-10&quot;&gt;
+      &lt;div class=&quot;md:col-span-2&quot;&gt;
+        &lt;a href=&quot;index.html&quot; class=&quot;inline-flex items-center gap-2.5 group&quot;&gt;
+          &lt;span class=&quot;logo-monogram logo-monogram-sm&quot; aria-hidden=&quot;true&quot;&gt;jb&lt;/span&gt;
+          &lt;span class=&quot;font-logo text-xl text-white&quot;&gt;joshua&lt;span class=&quot;text-coral&quot;&gt;Briley&lt;/span&gt;&lt;/span&gt;
+        &lt;/a&gt;
+        &lt;p class=&quot;text-sm mt-3&quot;&gt;&amp;copy;2026 Briley Creative&lt;/p&gt;
+        &lt;div class=&quot;flex items-center gap-4 mt-5&quot;&gt;
+          &lt;a href=&quot;#&quot; class=&quot;hover:text-white&quot;&gt;&lt;iconify-icon icon=&quot;ph:linkedin-logo-duotone&quot; width=&quot;26&quot;&gt;&lt;/iconify-icon&gt;&lt;/a&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div&gt;
+        &lt;h3 class=&quot;font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide&quot;&gt;Site&lt;/h3&gt;
+        &lt;ul class=&quot;space-y-2 text-sm&quot;&gt;
+          &lt;li&gt;&lt;a href=&quot;index.html&quot; class=&quot;hover:text-white&quot;&gt;Home&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/footer&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Skip Link -->
+              <article class="comp-card">
+                <h3>Skip Link</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">a11y</span>
+                </div>
+                <p class="comp-desc">
+                  Visually hidden link that appears on focus so keyboard users
+                  can skip straight to main content.
+                </p>
+                <div class="comp-preview">
+                  <span class="inline-flex items-center gap-2 bg-plum text-white px-4 py-2 rounded-lg font-heading text-sm font-medium shadow-lg">
+                    <iconify-icon icon="ph:arrow-bend-down-right-duotone" width="16"></iconify-icon>
+                    Skip to main content
+                  </span>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;#main&quot; class=&quot;sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none&quot;&gt;Skip to main content&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Jump Link -->
+              <article class="comp-card">
+                <h3>Jump Link (In-page Nav)</h3>
+                <div class="comp-meta">
+                  <span class="pill">faqs.html</span>
+                </div>
+                <p class="comp-desc">
+                  Sidebar anchor link with a color dot to orient the user inside
+                  long-scroll pages.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex flex-col gap-1 bg-white rounded-lg p-3 border border-charcoal/10 w-48">
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md bg-plum/10 font-heading text-sm text-plum"><span class="w-2 h-2 rounded-full bg-coral"></span>Services &amp; Fit</div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"><span class="w-2 h-2 rounded-full bg-plum"></span>Process</div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-md font-heading text-sm text-charcoal/70"><span class="w-2 h-2 rounded-full bg-sage"></span>Pricing</div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;#services-fit&quot; class=&quot;jump-link&quot;&gt;
+  &lt;span class=&quot;dot bg-coral&quot;&gt;&lt;/span&gt;
+  Services &amp;amp; Fit
+&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== TYPOGRAPHY ===== -->
+            <section id="typography" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-sunset/15 text-sunset"
+                  ><iconify-icon
+                    icon="ph:text-aa-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Typography</h2>
+              </div>
+
+              <!-- Hero Title -->
+              <article class="comp-card">
+                <h3>Hero Title (H1)</h3>
+                <div class="comp-meta">
+                  <span class="pill">Every hero</span>
+                </div>
+                <p class="comp-desc">
+                  Oversized serif display headline with wavy underline and SVG
+                  accent on a focus word.
+                </p>
+                <div class="comp-preview">
+                  <h1 class="font-display text-2xl md:text-3xl font-semibold text-navy leading-[1.1] tracking-tight text-center">
+                    I fix <span class="wavy-underline">inconsistent</span> UI systems.
+                  </h1>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;h1 class=&quot;font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[1.1] tracking-tight mb-8&quot;&gt;
+  I fix &lt;span class=&quot;wavy-underline&quot;&gt;inconsistent&lt;/span&gt; UI systems so teams can ship faster.
+&lt;/h1&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Section Heading -->
+              <article class="comp-card">
+                <h3>Section Heading Group</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Centered section intro with sticker badge, eyebrow icon, and
+                  H2 title.
+                </p>
+                <div class="comp-preview">
+                  <div class="text-center">
+                    <span class="sticker bg-coral/10 text-coral" style="border-color: rgba(232,87,61,0.3)">
+                      <iconify-icon icon="ph:warning-duotone" width="14" class="mr-1"></iconify-icon>
+                      Sound familiar?
+                    </span>
+                    <h2 class="font-display text-xl md:text-2xl font-semibold text-navy mt-3">Signs your system isn't working</h2>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;text-center mb-16&quot;&gt;
+  &lt;span class=&quot;sticker bg-coral/10 text-coral border-coral/30 mb-6 inline-flex&quot;&gt;
+    &lt;iconify-icon icon=&quot;ph:warning-duotone&quot; width=&quot;16&quot; class=&quot;mr-1.5&quot;&gt;&lt;/iconify-icon&gt;
+    Sound familiar?
+  &lt;/span&gt;
+  &lt;h2 class=&quot;font-display text-3xl md:text-4xl font-semibold text-navy mb-4&quot;&gt;Signs your system isn&#39;t working&lt;/h2&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Intro Badge -->
+              <article class="comp-card">
+                <h3>Intro Sticker Badge</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Pill-shaped intro label used above hero headlines to set
+                  context.
+                </p>
+                <div class="comp-preview">
+                  <div class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full font-heading text-sm font-medium border border-lemon">
+                    <iconify-icon icon="ph:hand-waving-duotone" width="20" class="text-sunset"></iconify-icon>
+                    UX Engineer &amp; Design Systems Consultant
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-lemon/60&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:hand-waving-duotone&quot; width=&quot;20&quot; class=&quot;text-sunset&quot;&gt;&lt;/iconify-icon&gt;
+  UX Engineer &amp;amp; Design Systems Consultant
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Body Paragraph -->
+              <article class="comp-card">
+                <h3>Lead Paragraph</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Standard lead paragraph sizing below hero and section
+                  headings.
+                </p>
+                <div class="comp-preview">
+                  <p class="text-base md:text-lg text-charcoal/70 max-w-md text-center font-body leading-relaxed">
+                    Most teams don't have a tooling problem. They have a <strong class="text-charcoal font-semibold">structure problem</strong>.
+                  </p>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;p class=&quot;text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto mb-12 font-body leading-relaxed&quot;&gt;
+  Most teams don&#39;t have a tooling problem. They have a &lt;strong class=&quot;text-charcoal font-semibold&quot;&gt;structure problem&lt;/strong&gt;.
+&lt;/p&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== INTERACTIVE ===== -->
+            <section id="interactive" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-sky/15 text-sky"
+                  ><iconify-icon
+                    icon="ph:cursor-click-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Buttons &amp; Links</h2>
+              </div>
+
+              <!-- Primary Button -->
+              <article class="comp-card">
+                <h3>Primary Button (Coral CTA)</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Filled coral pill button — the primary CTA used in heroes and
+                  final conversion sections.
+                </p>
+                <div class="comp-preview">
+                  <a href="#" class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base">
+                    <iconify-icon icon="ph:clipboard-text-duotone" width="20"></iconify-icon>
+                    Score your design system
+                  </a>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;scorecard.html&quot; class=&quot;inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:clipboard-text-duotone&quot; width=&quot;20&quot;&gt;&lt;/iconify-icon&gt;
+  Score your design system
+&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Secondary Button -->
+              <article class="comp-card">
+                <h3>Secondary Button (Ghost on Dark)</h3>
+                <div class="comp-meta">
+                  <span class="pill">Dark sections</span>
+                </div>
+                <p class="comp-desc">
+                  Translucent button for use on navy backgrounds as a secondary
+                  action.
+                </p>
+                <div class="comp-preview" style="background: #2d2b55;">
+                  <a href="#" class="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base">
+                    <iconify-icon icon="ph:clipboard-text-duotone" width="20"></iconify-icon>
+                    Start with the scorecard
+                  </a>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;scorecard.html&quot; class=&quot;inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:clipboard-text-duotone&quot; width=&quot;20&quot;&gt;&lt;/iconify-icon&gt;
+  Start with the scorecard
+&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Arrow Link -->
+              <article class="comp-card">
+                <h3>Arrow Text Link</h3>
+                <div class="comp-meta">
+                  <span class="pill">Cards</span>
+                </div>
+                <p class="comp-desc">
+                  Inline link with a trailing arrow that animates its gap on
+                  hover.
+                </p>
+                <div class="comp-preview">
+                  <a href="#" class="inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all">
+                    How audits help
+                    <iconify-icon icon="ph:arrow-right" width="16"></iconify-icon>
+                  </a>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;services/audit.html&quot; class=&quot;inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all&quot;&gt;
+  How audits help
+  &lt;iconify-icon icon=&quot;ph:arrow-right&quot; width=&quot;16&quot;&gt;&lt;/iconify-icon&gt;
+&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Filter Pill -->
+              <article class="comp-card">
+                <h3>Filter Pill Button</h3>
+                <div class="comp-meta">
+                  <span class="pill">blog/index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Rounded toggle used for filtering content lists. Active state
+                  applied via
+                  <code>.active</code>.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex gap-2 flex-wrap justify-center">
+                    <button type="button" class="inline-flex items-center gap-1.5 bg-coral text-white px-4 py-2 rounded-full font-heading text-sm font-medium">
+                      <iconify-icon icon="ph:sparkle-duotone" width="14"></iconify-icon>All posts
+                    </button>
+                    <button type="button" class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium">
+                      <iconify-icon icon="ph:package-duotone" width="14"></iconify-icon>Components
+                    </button>
+                    <button type="button" class="inline-flex items-center gap-1.5 bg-white border border-charcoal/10 text-charcoal/70 px-4 py-2 rounded-full font-heading text-sm font-medium">
+                      <iconify-icon icon="ph:palette-duotone" width="14"></iconify-icon>Design
+                    </button>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;button type=&quot;button&quot; class=&quot;filter-pill active&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:sparkle-duotone&quot; width=&quot;16&quot;&gt;&lt;/iconify-icon&gt;
+  All posts
+&lt;/button&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== CARDS ===== -->
+            <section id="cards" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-sage/15 text-sage"
+                  ><iconify-icon
+                    icon="ph:cards-three-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Cards &amp; Content Blocks</h2>
+              </div>
+
+              <!-- Problem Card -->
+              <article class="comp-card">
+                <h3>Problem Statement Card</h3>
+                <div class="comp-meta">
+                  <span class="pill">index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Small card containing an icon tile and a bolded problem
+                  statement. Slight tilt adds personality.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm max-w-xs" style="transform: rotate(-0.8deg)">
+                    <div class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center mb-4">
+                      <iconify-icon icon="ph:puzzle-piece-duotone" width="24" class="text-coral"></iconify-icon>
+                    </div>
+                    <p class="font-heading font-medium text-navy">UI looks different across products or teams</p>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm&quot; style=&quot;transform: rotate(-0.8deg)&quot;&gt;
+  &lt;div class=&quot;w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center mb-4&quot;&gt;
+    &lt;iconify-icon icon=&quot;ph:puzzle-piece-duotone&quot; width=&quot;24&quot; class=&quot;text-coral&quot;&gt;&lt;/iconify-icon&gt;
+  &lt;/div&gt;
+  &lt;p class=&quot;font-heading font-medium text-navy&quot;&gt;UI looks different across products or teams&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Service Card -->
+              <article class="comp-card">
+                <h3>Service Card (Numbered)</h3>
+                <div class="comp-meta">
+                  <span class="pill">index.html</span>
+                  <span class="pill">services.html</span>
+                </div>
+                <p class="comp-desc">
+                  Service offering card with a step-number badge, icon, title,
+                  description, and feature list.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-2xl p-8 border border-charcoal/5 shadow-sm relative max-w-sm" style="transform: rotate(-0.6deg)">
+                    <div class="absolute -top-4 -left-2 bg-coral text-white w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-lg shadow-md" style="transform: rotate(-6deg)">1</div>
+                    <div class="mt-2 mb-4"><iconify-icon icon="ph:binoculars-duotone" width="36" class="text-coral"></iconify-icon></div>
+                    <h3 class="font-heading text-lg font-semibold text-navy mb-2">Audit</h3>
+                    <p class="text-charcoal/70 text-sm leading-relaxed mb-4">Before you build anything new, understand what's broken.</p>
+                    <ul class="space-y-1.5 text-xs text-charcoal/60">
+                      <li class="flex items-start gap-2"><iconify-icon icon="ph:check-circle-duotone" width="16" class="text-sage mt-0.5 flex-shrink-0"></iconify-icon>Inconsistent component library</li>
+                      <li class="flex items-start gap-2"><iconify-icon icon="ph:check-circle-duotone" width="16" class="text-sage mt-0.5 flex-shrink-0"></iconify-icon>Undefined token system</li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;card-hover bg-white rounded-2xl p-8 border border-charcoal/5 shadow-sm relative&quot; style=&quot;transform: rotate(-0.6deg)&quot;&gt;
+  &lt;div class=&quot;absolute -top-4 -left-2 bg-coral text-white w-10 h-10 rounded-full flex items-center justify-center font-display font-bold text-lg shadow-md&quot; style=&quot;transform: rotate(-6deg)&quot;&gt;1&lt;/div&gt;
+  &lt;div class=&quot;mt-4 mb-5&quot;&gt;
+    &lt;iconify-icon icon=&quot;ph:binoculars-duotone&quot; width=&quot;40&quot; class=&quot;text-coral&quot;&gt;&lt;/iconify-icon&gt;
+  &lt;/div&gt;
+  &lt;h3 class=&quot;font-heading text-xl font-semibold text-navy mb-3&quot;&gt;Audit&lt;/h3&gt;
+  &lt;p class=&quot;text-charcoal/70 leading-relaxed mb-5&quot;&gt;Before you build anything new, you need to understand what&#39;s actually broken...&lt;/p&gt;
+  &lt;ul class=&quot;space-y-2 text-sm text-charcoal/60&quot;&gt;
+    &lt;li class=&quot;flex items-start gap-2&quot;&gt;
+      &lt;iconify-icon icon=&quot;ph:check-circle-duotone&quot; width=&quot;18&quot; class=&quot;text-sage mt-0.5 flex-shrink-0&quot;&gt;&lt;/iconify-icon&gt;
+      Inconsistent component library
+    &lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Quick Link Card -->
+              <article class="comp-card">
+                <h3>Quick Link Card</h3>
+                <div class="comp-meta">
+                  <span class="pill">index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Compact linked card with icon, prompt, and target service
+                  name.
+                </p>
+                <div class="comp-preview">
+                  <a href="#" class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center block max-w-xs" style="transform: rotate(-0.5deg)">
+                    <iconify-icon icon="ph:binoculars-duotone" width="32" class="text-coral mb-3"></iconify-icon>
+                    <p class="font-heading font-medium text-navy mb-1">System feels inconsistent?</p>
+                    <p class="text-sm text-coral font-medium">Design System Audit</p>
+                  </a>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;a href=&quot;services/audit.html&quot; class=&quot;card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center&quot; style=&quot;transform: rotate(-0.5deg)&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:binoculars-duotone&quot; width=&quot;32&quot; class=&quot;text-coral mb-3&quot;&gt;&lt;/iconify-icon&gt;
+  &lt;p class=&quot;font-heading font-medium text-navy mb-1&quot;&gt;System feels inconsistent?&lt;/p&gt;
+  &lt;p class=&quot;text-sm text-coral font-medium group-hover:underline&quot;&gt;Design System Audit&lt;/p&gt;
+&lt;/a&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Testimonial -->
+              <article class="comp-card">
+                <h3>Testimonial Card</h3>
+                <div class="comp-meta">
+                  <span class="pill">index.html</span>
+                  <span class="pill">testimonials.html</span>
+                </div>
+                <p class="comp-desc">
+                  Blockquote card with pull-quote icon, body, avatar, and
+                  attribution.
+                </p>
+                <div class="comp-preview">
+                  <blockquote class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm relative max-w-sm" style="transform: rotate(-0.5deg)">
+                    <iconify-icon icon="ph:quotes-duotone" width="28" class="text-plum/30 absolute top-4 right-4"></iconify-icon>
+                    <p class="text-charcoal/70 text-sm leading-relaxed mb-4 italic">"Josh is an expert in accessibility and UI design — he ships thoughtful systems."</p>
+                    <footer class="flex items-center gap-3">
+                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold text-sm">ND</div>
+                      <div>
+                        <cite class="font-heading font-semibold text-navy not-italic block text-sm">Nicholas Dos Santos</cite>
+                        <span class="text-xs text-charcoal/50">Software Engineer</span>
+                      </div>
+                    </footer>
+                  </blockquote>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;blockquote class=&quot;card-hover bg-white rounded-2xl p-8 border border-charcoal/5 shadow-sm relative&quot; style=&quot;transform: rotate(-0.5deg)&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:quotes-duotone&quot; width=&quot;32&quot; class=&quot;text-plum/30 absolute top-6 right-6&quot;&gt;&lt;/iconify-icon&gt;
+  &lt;p class=&quot;text-charcoal/70 leading-relaxed mb-6 italic&quot;&gt;&quot;Josh is an expert in accessibility and UI design...&quot;&lt;/p&gt;
+  &lt;footer class=&quot;flex items-center gap-4&quot;&gt;
+    &lt;img src=&quot;/images/person.jpeg&quot; alt=&quot;&quot; class=&quot;w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm&quot; loading=&quot;lazy&quot;/&gt;
+    &lt;div&gt;
+      &lt;cite class=&quot;font-heading font-semibold text-navy not-italic block&quot;&gt;Nicholas Dos Santos&lt;/cite&gt;
+      &lt;span class=&quot;text-sm text-charcoal/50&quot;&gt;Software Engineer &middot; America&#39;s Test Kitchen&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/footer&gt;
+&lt;/blockquote&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Sticky Note -->
+              <article class="comp-card">
+                <h3>Sticky Note Testimonial</h3>
+                <div class="comp-meta">
+                  <span class="pill">testimonials.html</span>
+                  <span class="pill">Decorative</span>
+                </div>
+                <p class="comp-desc">
+                  Paper-sticky-note variant for short pull quotes, with pin and
+                  rotation.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-peach rounded-sm p-5 shadow-lg relative w-56" style="transform: rotate(4deg)">
+                    <span class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-plum shadow"></span>
+                    <p class="font-display text-lg text-navy leading-tight italic">"the gold standard for building UIs…"</p>
+                    <p class="font-heading text-[10px] uppercase tracking-wide text-navy/70 mt-3">— Adam C., Evidation</p>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;card-base card-sticky variant-peach absolute top-2 -right-4 w-64 rot-4 animate-float-slow&quot;&gt;
+  &lt;span class=&quot;pin plum&quot;&gt;&lt;/span&gt;
+  &lt;p class=&quot;font-hand text-2xl text-navy leading-tight&quot;&gt;&quot;the gold standard for building UIs…&quot;&lt;/p&gt;
+  &lt;p class=&quot;font-heading text-xs text-navy/70 mt-3&quot;&gt;— Adam C., Evidation&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- FAQ Accordion -->
+              <article class="comp-card">
+                <h3>FAQ Accordion Item</h3>
+                <div class="comp-meta">
+                  <span class="pill">faqs.html</span>
+                </div>
+                <p class="comp-desc">
+                  Native <code>&lt;details&gt;</code> accordion with a Q icon,
+                  summary, and animated chevron.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-xl border border-charcoal/10 shadow-sm max-w-md w-full">
+                    <div class="flex items-center gap-3 p-4">
+                      <div class="w-8 h-8 rounded-full bg-coral text-white font-display font-bold flex items-center justify-center flex-shrink-0">Q</div>
+                      <span class="font-heading font-medium text-navy text-sm flex-1">What's included in the starter package?</span>
+                      <iconify-icon icon="ph:caret-down-bold" width="18" class="text-charcoal/40"></iconify-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;details class=&quot;faq-card&quot;&gt;
+  &lt;summary&gt;
+    &lt;div class=&quot;q-icon bg-coral&quot;&gt;Q&lt;/div&gt;
+    &lt;span&gt;What&#39;s included in the starter package?&lt;/span&gt;
+    &lt;iconify-icon icon=&quot;ph:caret-down-bold&quot; width=&quot;20&quot; class=&quot;chevron&quot;&gt;&lt;/iconify-icon&gt;
+  &lt;/summary&gt;
+  &lt;div class=&quot;answer&quot;&gt;
+    &lt;p&gt;The starter includes...&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/details&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Project Card -->
+              <article class="comp-card">
+                <h3>Project Polaroid Card</h3>
+                <div class="comp-meta">
+                  <span class="pill">projects/index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Polaroid-styled project card with pin, thumb image, tag
+                  sticker, and title.
+                </p>
+                <div class="comp-preview">
+                  <article class="bg-white p-3 pb-6 shadow-lg relative w-56" style="transform: rotate(-1.8deg)">
+                    <span class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-coral shadow"></span>
+                    <div class="h-24 bg-gradient-to-br from-plum/30 to-sky/30 rounded-sm flex items-center justify-center">
+                      <iconify-icon icon="ph:package-duotone" width="40" class="text-plum"></iconify-icon>
+                    </div>
+                    <div class="pt-3 px-1">
+                      <span class="sticker bg-plum/10 text-plum text-[10px]" style="border-color: rgba(108,74,182,0.3)">
+                        <iconify-icon icon="ph:package-duotone" width="12" class="mr-1"></iconify-icon>Component library
+                      </span>
+                      <h2 class="font-display text-sm font-semibold text-navy leading-tight mt-2">Rudiment UI: Building a library from scratch</h2>
+                    </div>
+                  </article>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;article class=&quot;polaroid&quot; style=&quot;transform: rotate(-1.8deg)&quot;&gt;
+  &lt;span class=&quot;pin&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+  &lt;a href=&quot;../projects/rudiment-ui/&quot; class=&quot;block group&quot;&gt;
+    &lt;div class=&quot;thumb&quot;&gt;
+      &lt;img src=&quot;/images/projects/rudiment.png&quot; alt=&quot;Rudiment UI preview&quot; loading=&quot;lazy&quot;/&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;pt-5 px-1&quot;&gt;
+      &lt;div class=&quot;flex items-center justify-between mb-2 gap-3&quot;&gt;
+        &lt;span class=&quot;sticker bg-plum/10 text-plum border-plum/30&quot;&gt;
+          &lt;iconify-icon icon=&quot;ph:package-duotone&quot; width=&quot;14&quot; class=&quot;mr-1&quot;&gt;&lt;/iconify-icon&gt;
+          Component library
+        &lt;/span&gt;
+        &lt;span class=&quot;marker-label&quot;&gt;01&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;h2 class=&quot;font-display text-2xl font-semibold text-navy leading-tight mb-3 group-hover:text-coral&quot;&gt;Rudiment UI: Building a component library from scratch&lt;/h2&gt;
+      &lt;p class=&quot;text-charcoal/70 text-base leading-relaxed mb-4&quot;&gt;An open-source React component library...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/article&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Blog Card -->
+              <article class="comp-card">
+                <h3>Blog Post Card</h3>
+                <div class="comp-meta">
+                  <span class="pill">blog/index.html</span>
+                </div>
+                <p class="comp-desc">
+                  Article preview with gradient header, tag sticker, category
+                  eyebrow, and title.
+                </p>
+                <div class="comp-preview">
+                  <article class="bg-white rounded-2xl overflow-hidden border border-charcoal/5 shadow-sm max-w-xs" style="transform: rotate(-0.6deg)">
+                    <div class="h-28 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center relative">
+                      <iconify-icon icon="ph:puzzle-piece-duotone" class="text-navy/70" width="56"></iconify-icon>
+                      <span class="absolute top-3 right-3 sticker bg-white/90 text-coral text-[10px]" style="border-color: rgba(232,87,61,0.4)">Best Practices</span>
+                    </div>
+                    <div class="p-5">
+                      <p class="font-heading text-[10px] uppercase tracking-wider text-plum mb-2">Component Libraries</p>
+                      <h3 class="font-display text-base font-semibold text-navy leading-tight">The hidden cost of component inconsistency</h3>
+                    </div>
+                  </article>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;article class=&quot;post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5&quot; style=&quot;transform: rotate(-0.6deg)&quot;&gt;
+  &lt;a href=&quot;../blog/component-inconsistency-cost/&quot; class=&quot;block&quot;&gt;
+    &lt;div class=&quot;h-40 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center relative&quot;&gt;
+      &lt;iconify-icon icon=&quot;ph:puzzle-piece-duotone&quot; class=&quot;text-navy/70&quot; width=&quot;72&quot;&gt;&lt;/iconify-icon&gt;
+      &lt;span class=&quot;absolute top-3 right-3 sticker bg-white/90 text-coral border-coral/40&quot;&gt;Best Practices&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;p-6&quot;&gt;
+      &lt;p class=&quot;font-heading text-xs uppercase tracking-wider text-plum mb-3&quot;&gt;Component Libraries&lt;/p&gt;
+      &lt;h3 class=&quot;font-display text-2xl font-semibold text-navy leading-tight mb-3 group-hover:text-coral&quot;&gt;The hidden cost of component inconsistency&lt;/h3&gt;
+      &lt;p class=&quot;text-charcoal/70 text-sm leading-relaxed mb-4&quot;&gt;Inconsistent components fragment the user experience...&lt;/p&gt;
+    &lt;/div&gt;
+  &lt;/a&gt;
+&lt;/article&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== FORMS ===== -->
+            <section id="forms" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-lemon text-navy"
+                  ><iconify-icon
+                    icon="ph:text-box-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Forms</h2>
+              </div>
+
+              <!-- Label -->
+              <article class="comp-card">
+                <h3>Field Label</h3>
+                <div class="comp-meta">
+                  <span class="pill">contact.html</span>
+                </div>
+                <p class="comp-desc">
+                  Standardized form label with required-field indicator.
+                </p>
+                <div class="comp-preview">
+                  <label class="font-heading text-sm font-medium text-navy">Name<span class="text-coral ml-0.5">*</span></label>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;label class=&quot;field-label&quot;&gt;Name&lt;span class=&quot;req&quot;&gt;*&lt;/span&gt;&lt;/label&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Text Input -->
+              <article class="comp-card">
+                <h3>Text Input</h3>
+                <div class="comp-meta">
+                  <span class="pill">contact.html</span>
+                </div>
+                <p class="comp-desc">
+                  Base text input used across all single-line fields.
+                </p>
+                <div class="comp-preview">
+                  <input type="text" placeholder="Your full name" class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral"/>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;input type=&quot;text&quot; name=&quot;name&quot; class=&quot;field-input&quot; placeholder=&quot;Your full name&quot; required/&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Textarea -->
+              <article class="comp-card">
+                <h3>Textarea</h3>
+                <div class="comp-meta">
+                  <span class="pill">contact.html</span>
+                </div>
+                <p class="comp-desc">Multi-line message input.</p>
+                <div class="comp-preview">
+                  <textarea placeholder="Tell me what you're working on..." rows="4" class="w-full max-w-sm bg-white border border-charcoal/15 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/40 focus:outline-none focus:border-coral resize-none"></textarea>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;textarea name=&quot;message&quot; class=&quot;field-input&quot; placeholder=&quot;Tell me what you&#39;re working on...&quot; rows=&quot;5&quot; required&gt;&lt;/textarea&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Select -->
+              <article class="comp-card">
+                <h3>Custom Select</h3>
+                <div class="comp-meta">
+                  <span class="pill">contact.html</span>
+                </div>
+                <p class="comp-desc">
+                  Select wrapped in a container with a custom chevron for
+                  consistent cross-browser styling.
+                </p>
+                <div class="comp-preview">
+                  <div class="relative w-full max-w-sm">
+                    <select class="appearance-none w-full bg-white border border-charcoal/15 rounded-lg px-4 py-3 pr-10 font-body text-sm text-charcoal focus:outline-none focus:border-coral">
+                      <option>What are you interested in?</option>
+                      <option>Design System Audit</option>
+                      <option>Component Library Starter</option>
+                    </select>
+                    <iconify-icon icon="ph:caret-down-bold" width="16" class="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/50 pointer-events-none"></iconify-icon>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;select-wrap&quot;&gt;
+  &lt;select name=&quot;inquiry_type&quot; class=&quot;field-input&quot; required&gt;
+    &lt;option value=&quot;&quot;&gt;What are you interested in?&lt;/option&gt;
+    &lt;option value=&quot;audit&quot;&gt;Design System Audit&lt;/option&gt;
+    &lt;option value=&quot;starter&quot;&gt;Component Library Starter&lt;/option&gt;
+    &lt;option value=&quot;workflow&quot;&gt;Design-to-Code Workflow&lt;/option&gt;
+  &lt;/select&gt;
+  &lt;svg viewBox=&quot;0 0 24 24&quot; fill=&quot;none&quot; stroke=&quot;currentColor&quot; stroke-width=&quot;2&quot;&gt;
+    &lt;polyline points=&quot;6 9 12 15 18 9&quot;&gt;&lt;/polyline&gt;
+  &lt;/svg&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Radio Choice Group -->
+              <article class="comp-card">
+                <h3>Choice Group (Radio Pills)</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                </div>
+                <p class="comp-desc">
+                  Grouped radio input styled as toggle pills — used for scoring
+                  answers.
+                </p>
+                <div class="comp-preview">
+                  <div class="inline-flex gap-2 bg-white p-1.5 rounded-full border border-charcoal/10">
+                    <span class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60">No</span>
+                    <span class="px-5 py-2 rounded-full font-heading text-sm text-charcoal/60">Partial</span>
+                    <span class="px-5 py-2 rounded-full bg-sage text-white font-heading text-sm font-medium shadow-sm">Yes</span>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;choice-group&quot;&gt;
+  &lt;label class=&quot;choice&quot; data-v=&quot;0&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;q1&quot; value=&quot;0&quot;/&gt;&lt;span&gt;No&lt;/span&gt;&lt;/label&gt;
+  &lt;label class=&quot;choice&quot; data-v=&quot;1&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;q1&quot; value=&quot;1&quot;/&gt;&lt;span&gt;Partial&lt;/span&gt;&lt;/label&gt;
+  &lt;label class=&quot;choice&quot; data-v=&quot;2&quot;&gt;&lt;input type=&quot;radio&quot; name=&quot;q1&quot; value=&quot;2&quot;/&gt;&lt;span&gt;Yes&lt;/span&gt;&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== MEDIA ===== -->
+            <section id="media" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-peach text-coral"
+                  ><iconify-icon
+                    icon="ph:image-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Media &amp; Decorative</h2>
+              </div>
+
+              <!-- Blob -->
+              <article class="comp-card">
+                <h3>Floating Blob</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">Decorative</span>
+                </div>
+                <p class="comp-desc">
+                  Positioned, animated blob shape used to add warmth and motion
+                  to heroes and sections.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex gap-4 items-center">
+                    <div class="w-14 h-14 bg-lemon/80 blob-shape"></div>
+                    <div class="w-16 h-16 bg-peach blob-shape"></div>
+                    <div class="w-12 h-12 bg-coral/40 blob-shape"></div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;absolute top-12 right-[10%] w-16 h-16 bg-lemon/60 blob-shape animate-float opacity-70&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- SVG Underline -->
+              <article class="comp-card">
+                <h3>Hand-Drawn SVG Underline</h3>
+                <div class="comp-meta">
+                  <span class="pill">Heroes</span>
+                </div>
+                <p class="comp-desc">
+                  Loose SVG path positioned under a focus word for a hand-drawn
+                  accent.
+                </p>
+                <div class="comp-preview">
+                  <div class="relative inline-block">
+                    <span class="font-display text-2xl font-semibold text-navy">focus word</span>
+                    <svg class="absolute -bottom-1 left-0 w-full" viewBox="0 0 200 12" fill="none" aria-hidden="true">
+                      <path d="M2 8 Q 50 2 100 8 Q 150 14 198 6" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.5"/>
+                    </svg>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;svg class=&quot;absolute -bottom-2 left-0 w-full&quot; viewBox=&quot;0 0 200 12&quot; fill=&quot;none&quot; aria-hidden=&quot;true&quot;&gt;
+  &lt;path d=&quot;M2 8 Q 50 2 100 8 Q 150 14 198 6&quot; stroke=&quot;#6C4AB6&quot; stroke-width=&quot;3&quot; stroke-linecap=&quot;round&quot; opacity=&quot;0.5&quot;/&gt;
+&lt;/svg&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Avatar -->
+              <article class="comp-card">
+                <h3>Initials Avatar</h3>
+                <div class="comp-meta">
+                  <span class="pill">testimonials.html</span>
+                </div>
+                <p class="comp-desc">
+                  Circular avatar with gradient background and initials.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex gap-3 items-center">
+                    <div class="w-14 h-14 rounded-full bg-gradient-to-br from-coral to-sunset flex items-center justify-center text-white font-heading font-semibold">JS</div>
+                    <div class="w-12 h-12 rounded-full bg-gradient-to-br from-plum to-sky flex items-center justify-center text-white font-heading font-semibold text-sm">ND</div>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-br from-sage to-lemon flex items-center justify-center text-navy font-heading font-semibold text-sm">AC</div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;avatar avatar-lg coral&quot;&gt;JS&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Tape -->
+              <article class="comp-card">
+                <h3>Washi Tape Accent</h3>
+                <div class="comp-meta">
+                  <span class="pill">testimonials.html</span>
+                  <span class="pill">projects</span>
+                </div>
+                <p class="comp-desc">
+                  Decorative tape strips applied to cards to reinforce the
+                  paper/scrapbook motif.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-lg w-48 h-24 shadow-sm border border-charcoal/5 relative">
+                    <span class="absolute -top-2 -left-3 w-14 h-5 bg-lemon/80 rotate-[-6deg] shadow-sm" style="clip-path: polygon(4% 0, 100% 10%, 96% 100%, 0 90%)"></span>
+                    <span class="absolute -top-2 -right-3 w-14 h-5 bg-peach/90 rotate-[4deg] shadow-sm" style="clip-path: polygon(0 10%, 96% 0, 100% 90%, 4% 100%)"></span>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;span class=&quot;tape left&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;
+&lt;span class=&quot;tape right&quot; aria-hidden=&quot;true&quot;&gt;&lt;/span&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Sticker -->
+              <article class="comp-card">
+                <h3>Sticker Badge</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  Reusable pill/sticker component used for tags, categories, and
+                  status labels.
+                </p>
+                <div class="comp-preview">
+                  <div class="flex gap-2 flex-wrap justify-center">
+                    <span class="sticker bg-plum/10 text-plum" style="border-color: rgba(108,74,182,0.3)">
+                      <iconify-icon icon="ph:package-duotone" width="14" class="mr-1"></iconify-icon>Component library
+                    </span>
+                    <span class="sticker bg-coral/10 text-coral" style="border-color: rgba(232,87,61,0.3)">
+                      <iconify-icon icon="ph:warning-duotone" width="14" class="mr-1"></iconify-icon>Audit
+                    </span>
+                    <span class="sticker bg-sage/15 text-sage" style="border-color: rgba(123,180,122,0.4)">
+                      <iconify-icon icon="ph:check-circle-duotone" width="14" class="mr-1"></iconify-icon>Shipped
+                    </span>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;span class=&quot;sticker bg-plum/10 text-plum border-plum/30&quot;&gt;
+  &lt;iconify-icon icon=&quot;ph:package-duotone&quot; width=&quot;14&quot; class=&quot;mr-1&quot;&gt;&lt;/iconify-icon&gt;
+  Component library
+&lt;/span&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== SPECIALIZED ===== -->
+            <section id="specialized" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-navy/15 text-navy"
+                  ><iconify-icon
+                    icon="ph:sparkle-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Specialized</h2>
+              </div>
+
+              <!-- Grade Stamp -->
+              <article class="comp-card">
+                <h3>Grade Stamp</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                </div>
+                <p class="comp-desc">
+                  Circular rubber-stamp style badge that animates with a result
+                  letter grade.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-24 h-24 rounded-full border-4 border-coral flex items-center justify-center font-display font-bold text-5xl text-coral" style="transform: rotate(-8deg); box-shadow: inset 0 0 0 2px rgba(232,87,61,0.4);">B</div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;grade-stamp&quot; data-grade=&quot;B&quot;&gt;B&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Progress Meter -->
+              <article class="comp-card">
+                <h3>Progress Meter</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                </div>
+                <p class="comp-desc">
+                  Animated progress bar for tracking scorecard progress.
+                </p>
+                <div class="comp-preview">
+                  <div class="w-full max-w-sm h-3 bg-charcoal/10 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-coral to-sunset rounded-full" style="width: 62%"></div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;meter-track&quot;&gt;
+  &lt;div class=&quot;meter-fill&quot; style=&quot;width: 0%&quot;&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Speech Bubble -->
+              <article class="comp-card">
+                <h3>Speech Bubble</h3>
+                <div class="comp-meta">
+                  <span class="pill">faqs.html</span>
+                </div>
+                <p class="comp-desc">
+                  Conversational speech bubble used to surface common client
+                  questions.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-2xl rounded-bl-sm px-5 py-4 border border-charcoal/10 shadow-sm max-w-xs relative" style="transform: rotate(-1.2deg)">
+                    <div class="flex items-center gap-2 text-[10px] font-heading uppercase tracking-wider text-plum mb-1">
+                      <iconify-icon icon="ph:user-circle-duotone" width="16"></iconify-icon>Client
+                    </div>
+                    <p class="font-display text-navy text-base leading-snug">"How long does a typical engagement take?"</p>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;bubble&quot; style=&quot;transform: rotate(-1.2deg)&quot;&gt;
+  &lt;div class=&quot;flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-plum mb-1&quot;&gt;
+    &lt;iconify-icon icon=&quot;ph:user-circle-duotone&quot; width=&quot;18&quot;&gt;&lt;/iconify-icon&gt;
+    Client
+  &lt;/div&gt;
+  &lt;p class=&quot;font-display text-navy text-lg leading-snug&quot;&gt;&quot;How long does a typical engagement take?&quot;&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Subject Tab -->
+              <article class="comp-card">
+                <h3>Subject Tab</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                </div>
+                <p class="comp-desc">
+                  Colored category tab attached to scorecard section cards.
+                </p>
+                <div class="comp-preview">
+                  <div class="inline-block bg-coral text-white px-5 py-2 rounded-t-lg font-heading font-semibold text-sm shadow-sm" style="transform: rotate(-1deg)">Component Consistency</div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;subject-tab coral&quot;&gt;Component Consistency&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+
+              <!-- Paper Note -->
+              <article class="comp-card">
+                <h3>Paper Note with Tape</h3>
+                <div class="comp-meta">
+                  <span class="pill">contact.html</span>
+                </div>
+                <p class="comp-desc">
+                  Decorative notepad card with dashed divider and placeholder
+                  "from" label.
+                </p>
+                <div class="comp-preview">
+                  <div class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative w-64" style="transform: rotate(3deg)">
+                    <div class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"></div>
+                    <div class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10">
+                      <iconify-icon icon="ph:envelope-open-duotone" width="22" class="text-coral"></iconify-icon>
+                      <span class="font-heading text-xs text-charcoal/50">FROM: you</span>
+                    </div>
+                    <div class="pt-4 space-y-2">
+                      <div class="h-2 bg-charcoal/10 rounded-full w-11/12"></div>
+                      <div class="h-2 bg-charcoal/10 rounded-full w-10/12"></div>
+                      <div class="h-2 bg-charcoal/10 rounded-full w-8/12"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&lt;div class=&quot;bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative&quot; style=&quot;transform: rotate(3deg)&quot;&gt;
+  &lt;div class=&quot;absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape&quot;&gt;&lt;/div&gt;
+  &lt;div class=&quot;flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10&quot;&gt;
+    &lt;iconify-icon icon=&quot;ph:envelope-open-duotone&quot; width=&quot;22&quot; class=&quot;text-coral&quot;&gt;&lt;/iconify-icon&gt;
+    &lt;span class=&quot;font-heading text-xs text-charcoal/50&quot;&gt;FROM: you&lt;/span&gt;
+  &lt;/div&gt;
+  &lt;div class=&quot;pt-4 space-y-2&quot;&gt;
+    &lt;div class=&quot;h-2 bg-charcoal/10 rounded-full w-11/12&quot;&gt;&lt;/div&gt;
+    &lt;div class=&quot;h-2 bg-charcoal/10 rounded-full w-10/12&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                </div>
+              </article>
+            </section>
+
+            <!-- ===== MOTION ===== -->
+            <section id="motion" class="cat-section mb-16">
+              <div class="cat-heading">
+                <span class="badge bg-sunset/15 text-sunset"
+                  ><iconify-icon
+                    icon="ph:lightning-duotone"
+                    width="24"
+                  ></iconify-icon
+                ></span>
+                <h2>Motion</h2>
+              </div>
+
+              <!-- Transition utilities -->
+              <article class="comp-card">
+                <h3>Transition Utilities</h3>
+                <div class="comp-meta">
+                  <span class="pill">Global</span>
+                  <span class="pill">Tailwind</span>
+                </div>
+                <p class="comp-desc">
+                  The three transition classes that cover nearly every
+                  interaction. <code>transition-colors</code> for links and
+                  text, <code>transition-all</code> for buttons and cards,
+                  <code>transition-transform</code> for logo/icon nudges.
+                </p>
+                <div class="comp-preview" style="padding: 1.75rem">
+                  <div class="flex flex-wrap items-center justify-center gap-4">
+                    <a
+                      href="#"
+                      class="font-heading text-sm font-medium text-charcoal hover:text-coral transition-colors"
+                      >transition-colors →</a
+                    >
+                    <a
+                      href="#"
+                      class="inline-flex items-center gap-2 bg-coral text-white px-5 py-3 rounded-full hover:bg-coral/90 hover:shadow-lg hover:shadow-coral/20 transition-all font-heading text-sm font-semibold"
+                      >transition-all</a
+                    >
+                    <span
+                      class="inline-flex items-center gap-2 font-logo text-2xl text-navy hover:scale-105 transition-transform cursor-pointer"
+                      >transition-transform</span
+                    >
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&#47;* Links &amp; text recolors *&#47;
+class=&quot;hover:text-coral transition-colors&quot;
+
+&#47;* Buttons &amp; elevated cards (color + shadow + transform) *&#47;
+class=&quot;hover:bg-coral&#47;90 hover:shadow-lg hover:shadow-coral&#47;20 transition-all&quot;
+
+&#47;* Logo &amp; icon nudges *&#47;
+class=&quot;group-hover:scale-105 transition-transform&quot;</code></pre>
+                </div>
+              </article>
+
+              <!-- Card Hover -->
+              <article class="comp-card">
+                <h3>Card Hover Lift</h3>
+                <div class="comp-meta">
+                  <span class="pill">.card-hover</span>
+                  <span class="pill">Global</span>
+                </div>
+                <p class="comp-desc">
+                  The bundled lift-on-hover effect used on every interactive
+                  card across the site. Raises the card, softens the shadow,
+                  adds a faint plum ring. (Hover the card below.)
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <div
+                    class="card-hover-demo bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm max-w-xs cursor-pointer"
+                  >
+                    <div
+                      class="w-10 h-10 bg-coral/10 rounded-xl flex items-center justify-center mb-3"
+                    >
+                      <iconify-icon
+                        icon="ph:cursor-click-duotone"
+                        width="22"
+                        class="text-coral"
+                      ></iconify-icon>
+                    </div>
+                    <p class="font-heading font-medium text-navy text-sm">
+                      Hover me to see the lift
+                    </p>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(108, 74, 182, 0.08);
+}</code></pre>
+                </div>
+              </article>
+
+              <!-- Float -->
+              <article class="comp-card">
+                <h3>Float Animation</h3>
+                <div class="comp-meta">
+                  <span class="pill">.animate-float</span>
+                  <span class="pill">Decorative</span>
+                </div>
+                <p class="comp-desc">
+                  Gentle continuous bob applied to decorative blobs, stickers,
+                  and sticky notes. Three variants share the same keyframes
+                  with different speeds/delays for a natural "crowd" feel.
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <div class="flex items-end gap-8">
+                    <div class="text-center">
+                      <div
+                        class="w-16 h-16 bg-lemon/70 blob-shape animate-float mb-2"
+                      ></div>
+                      <div class="font-mono text-[10px] text-plum">
+                        animate-float
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        6s
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-16 h-16 bg-peach blob-shape animate-float-slow mb-2"
+                      ></div>
+                      <div class="font-mono text-[10px] text-plum">
+                        animate-float-slow
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        8s
+                      </div>
+                    </div>
+                    <div class="text-center">
+                      <div
+                        class="w-16 h-16 bg-coral/30 blob-shape animate-float-delay mb-2"
+                      ></div>
+                      <div class="font-mono text-[10px] text-plum">
+                        animate-float-delay
+                      </div>
+                      <div class="font-mono text-[9px] text-charcoal/50">
+                        6s · +2s
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-12px) rotate(2deg); }
+}
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.animate-float       { animation: float 6s ease-in-out infinite; }
+.animate-float-slow  { animation: float-slow 8s ease-in-out infinite; }
+.animate-float-delay { animation: float 6s ease-in-out 2s infinite; }</code></pre>
+                </div>
+              </article>
+
+              <!-- Wiggle -->
+              <article class="comp-card">
+                <h3>Wiggle Animation</h3>
+                <div class="comp-meta">
+                  <span class="pill">.animate-wiggle</span>
+                  <span class="pill">scorecard · about</span>
+                </div>
+                <p class="comp-desc">
+                  Slow side-to-side rotation used on stickers and playful
+                  accent badges to draw the eye.
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <span
+                    class="sticker bg-coral/10 text-coral animate-wiggle"
+                    style="border-color: rgba(232, 87, 61, 0.3)"
+                  >
+                    <iconify-icon
+                      icon="ph:sparkle-duotone"
+                      width="14"
+                      class="mr-1"
+                    ></iconify-icon>
+                    Wiggling sticker
+                  </span>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@keyframes wiggle {
+  0%, 100% { transform: rotate(-2deg); }
+  50%      { transform: rotate(2deg); }
+}
+.animate-wiggle { animation: wiggle 4s ease-in-out infinite; }</code></pre>
+                </div>
+              </article>
+
+              <!-- Stamp In -->
+              <article class="comp-card">
+                <h3>Stamp-In Reveal</h3>
+                <div class="comp-meta">
+                  <span class="pill">scorecard.html</span>
+                </div>
+                <p class="comp-desc">
+                  One-shot reveal for the grade-stamp badge. Scales down from
+                  1.6 and rotates into place like a real rubber stamp. (Click
+                  the button to replay.)
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <div class="flex flex-col items-center gap-3">
+                    <div
+                      id="stamp-demo"
+                      class="w-24 h-24 rounded-full border-4 border-coral flex items-center justify-center font-display font-bold text-5xl text-coral animate-stamp"
+                      style="box-shadow: inset 0 0 0 2px rgba(232, 87, 61, 0.4)"
+                    >
+                      B
+                    </div>
+                    <button
+                      type="button"
+                      onclick="var s=document.getElementById('stamp-demo');s.classList.remove('animate-stamp');void s.offsetWidth;s.classList.add('animate-stamp');"
+                      class="font-heading text-xs font-medium text-plum hover:text-coral transition-colors"
+                    >
+                      ↻ replay
+                    </button>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@keyframes stamp-in {
+  0%   { opacity: 0; transform: scale(1.6) rotate(-18deg); }
+  100% { opacity: 1; transform: scale(1) rotate(-6deg); }
+}
+.grade-stamp[data-grade] {
+  animation: stamp-in 0.5s ease-out both;
+}</code></pre>
+                </div>
+              </article>
+
+              <!-- Spin Slow + Pulse Ring -->
+              <article class="comp-card">
+                <h3>Spin &amp; Pulse Ring</h3>
+                <div class="comp-meta">
+                  <span class="pill">services/*</span>
+                </div>
+                <p class="comp-desc">
+                  A pair of ambient animations used on service-page hero
+                  ornaments. <code>animate-spin-slow</code> rotates a badge
+                  over 28 seconds; <code>animate-pulse-ring</code> breathes a
+                  soft halo around it.
+                </p>
+                <div class="comp-preview" style="padding: 2.5rem">
+                  <div class="relative w-28 h-28">
+                    <div
+                      class="absolute inset-0 rounded-full bg-coral/20 animate-pulse-ring"
+                    ></div>
+                    <div
+                      class="absolute inset-3 rounded-full border-2 border-dashed border-plum/40 animate-spin-slow flex items-center justify-center"
+                    >
+                      <iconify-icon
+                        icon="ph:sparkle-duotone"
+                        width="28"
+                        class="text-plum"
+                      ></iconify-icon>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@keyframes spin-slow {
+  from { transform: rotate(0); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes pulse-ring {
+  0%, 100% { transform: scale(1);    opacity: 0.35; }
+  50%      { transform: scale(1.08); opacity: 0.55; }
+}
+.animate-spin-slow  { animation: spin-slow 28s linear infinite; }
+.animate-pulse-ring { animation: pulse-ring 4s ease-in-out infinite; }</code></pre>
+                </div>
+              </article>
+
+              <!-- Steam -->
+              <article class="comp-card">
+                <h3>Steam Animation</h3>
+                <div class="comp-meta">
+                  <span class="pill">projects/americas-test-kitchen</span>
+                  <span class="pill">projects/ivfcryo</span>
+                </div>
+                <p class="comp-desc">
+                  Rising vapor effect for project hero illustrations. Three
+                  staggered copies (<code>animate-steam</code>,
+                  <code>-delay</code>, <code>-delay-2</code>) create a
+                  continuous plume.
+                </p>
+                <div class="comp-preview" style="padding: 2rem">
+                  <div class="relative w-32 h-28 flex items-end justify-center">
+                    <div
+                      class="absolute bottom-0 left-1/2 -translate-x-1/2 w-6 h-10 bg-white/80 rounded-full blur-md animate-steam"
+                    ></div>
+                    <div
+                      class="absolute bottom-0 left-[40%] w-5 h-8 bg-white/70 rounded-full blur-md animate-steam"
+                      style="animation-delay: 1.3s"
+                    ></div>
+                    <div
+                      class="absolute bottom-0 left-[60%] w-5 h-8 bg-white/70 rounded-full blur-md animate-steam"
+                      style="animation-delay: 2.6s"
+                    ></div>
+                    <div
+                      class="relative w-16 h-10 bg-navy/80 rounded-t-2xl rounded-b-md border-x-2 border-t-2 border-plum/30"
+                    ></div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@keyframes steam {
+  0%   { opacity: 0; transform: translateY(0) scaleX(1); }
+  30%  { opacity: 0.7; }
+  100% { opacity: 0; transform: translateY(-28px) scaleX(0.9); }
+}
+.animate-steam         { animation: steam 4s ease-out infinite; }
+.animate-steam-delay   { animation: steam 4s ease-out 1.3s infinite; }
+.animate-steam-delay-2 { animation: steam 4s ease-out 2.6s infinite; }</code></pre>
+                </div>
+              </article>
+
+              <!-- Page-specific motion -->
+              <article class="comp-card">
+                <h3>Page-Specific Motion</h3>
+                <div class="comp-meta">
+                  <span class="pill">Reference</span>
+                </div>
+                <p class="comp-desc">
+                  A handful of animations live only in the pages that use
+                  them. They're listed here for completeness — move them to
+                  the global stylesheet if they get reused.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div class="w-full space-y-0">
+                    <div class="token-row">
+                      <span class="label">animate-stack-bob</span>
+                      <span class="sample text-xs text-charcoal/70"
+                        >Stacked-card bobbing with per-card rotation
+                        (<code>--r</code> CSS var), 5s ease-in-out</span
+                      >
+                      <span class="value">starter</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">animate-dash-flow</span>
+                      <span class="sample text-xs text-charcoal/70"
+                        >SVG connector flow via
+                        <code>stroke-dashoffset</code>, 1.6s linear</span
+                      >
+                      <span class="value">workflow</span>
+                    </div>
+                    <div class="token-row">
+                      <span class="label">animate-slide-chip</span>
+                      <span class="sample text-xs text-charcoal/70"
+                        >Horizontal
+                        <code>translateX(-8px → 8px)</code> bounce,
+                        4s ease-in-out</span
+                      >
+                      <span class="value">workflow</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>&#47;* services/starter — stacked component cards *&#47;
+@keyframes stack-bob {
+  0%, 100% { transform: rotate(var(--r)) translateY(0); }
+  50%      { transform: rotate(var(--r)) translateY(-6px); }
+}
+
+&#47;* services/workflow — SVG connector flow *&#47;
+@keyframes dash-flow {
+  to { stroke-dashoffset: -20; }
+}
+
+&#47;* services/workflow — moving chip along a connector *&#47;
+@keyframes slide-chip {
+  0%, 100% { transform: translateX(-8px); }
+  50%      { transform: translateX(8px); }
+}</code></pre>
+                </div>
+              </article>
+
+              <!-- Reduced Motion -->
+              <article class="comp-card">
+                <h3>Reduced-Motion Handling</h3>
+                <div class="comp-meta">
+                  <span class="pill">a11y</span>
+                  <span class="pill">TODO</span>
+                </div>
+                <p class="comp-desc">
+                  The site has zero
+                  <code>@media (prefers-reduced-motion)</code> overrides
+                  today. Before the next release, wrap every animation above
+                  in the guard below so motion-sensitive visitors opt out
+                  cleanly.
+                </p>
+                <div class="comp-preview" style="padding: 1.5rem">
+                  <div
+                    class="w-full bg-white rounded-xl border border-dashed border-coral/40 p-5 flex items-start gap-3"
+                  >
+                    <iconify-icon
+                      icon="ph:warning-duotone"
+                      width="22"
+                      class="text-coral mt-0.5 flex-shrink-0"
+                    ></iconify-icon>
+                    <div class="text-sm text-charcoal/80 font-body">
+                      <strong class="text-navy font-heading font-semibold"
+                        >Not yet implemented.</strong
+                      >
+                      All animations currently run unconditionally — add the
+                      media query below to <code>app.css</code> to respect
+                      the user's system setting.
+                    </div>
+                  </div>
+                </div>
+                <div class="code-wrap">
+                  <button class="copy-btn" type="button">
+                    <iconify-icon icon="ph:copy" width="14"></iconify-icon>Copy
+                  </button>
+                  <pre><code>@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}</code></pre>
+                </div>
+              </article>
+            </section>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6 text-center">
+        <p class="text-sm">
+          &copy; 2026 Briley Creative &middot; Component inventory for internal
+          reference.
+        </p>
+      </div>
+    </footer>
+
+    <script>
+      // Copy-to-clipboard for code blocks
+      document.querySelectorAll('.copy-btn').forEach((btn) => {
+        btn.addEventListener('click', async () => {
+          const code = btn.parentElement.querySelector('code')
+          if (!code) return
+          try {
+            await navigator.clipboard.writeText(code.innerText)
+            const original = btn.innerHTML
+            btn.classList.add('copied')
+            btn.innerHTML =
+              '<iconify-icon icon="ph:check-bold" width="14"></iconify-icon>Copied'
+            setTimeout(() => {
+              btn.classList.remove('copied')
+              btn.innerHTML = original
+            }, 1800)
+          } catch (e) {
+            console.error('Copy failed', e)
+          }
+        })
+      })
+    </script>
+  </body>
+</html>
