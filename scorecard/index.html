@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>
       Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems
       Consultant
@@ -45,63 +45,6 @@
     />
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
-      @keyframes stamp-in {
-        0% {
-          opacity: 0;
-          transform: scale(1.6) rotate(-18deg);
-        }
-        60% {
-          opacity: 1;
-          transform: scale(0.92) rotate(-8deg);
-        }
-        100% {
-          opacity: 1;
-          transform: scale(1) rotate(-6deg);
-        }
-      }
-      .report-paper {
-        position: relative;
-        background: #fff;
-        border-radius: 6px;
-        padding: 2rem 2rem 2.25rem;
-        box-shadow:
-          0 30px 60px -25px rgba(45, 43, 85, 0.35),
-          0 0 0 1px rgba(108, 74, 182, 0.06);
-        background-image: repeating-linear-gradient(
-          to bottom,
-          transparent 0,
-          transparent 31px,
-          rgba(93, 173, 226, 0.18) 31px,
-          rgba(93, 173, 226, 0.18) 32px
-        );
-      }
-      .report-paper::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        left: 52px;
-        width: 2px;
-        background: rgba(232, 87, 61, 0.4);
-      }
-      .tape {
-        position: absolute;
-        width: 82px;
-        height: 24px;
-        background: rgba(253, 230, 138, 0.85);
-        box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
-      }
-      .tape.tl {
-        top: -12px;
-        left: 8%;
-        transform: rotate(-6deg);
-      }
-      .tape.tr {
-        top: -12px;
-        right: 8%;
-        transform: rotate(5deg);
-        background: rgba(125, 211, 252, 0.7);
-      }
       .subject-card {
         position: relative;
         background: #fff;
@@ -148,36 +91,6 @@
       }
       .subject-tab.sunset {
         background: linear-gradient(135deg, #fdba74, #ff8e53);
-      }
-      .grade-stamp {
-        position: absolute;
-        top: 1.25rem;
-        right: 1.25rem;
-        width: 68px;
-        height: 68px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Fraunces', serif;
-        font-weight: 900;
-        font-size: 1.75rem;
-        color: #fff;
-        background: radial-gradient(
-          circle at 30% 25%,
-          #9b7ed9,
-          #6c4ab6 55%,
-          #3a2478
-        );
-        box-shadow:
-          0 8px 20px -8px rgba(108, 74, 182, 0.5),
-          inset -3px -3px 6px rgba(0, 0, 0, 0.25),
-          inset 3px 3px 5px rgba(255, 255, 255, 0.25);
-        transform: rotate(-8deg);
-        border: 2px dashed rgba(255, 255, 255, 0.35);
-      }
-      .grade-stamp[data-grade] {
-        animation: stamp-in 0.5s ease-out;
       }
       .q-row {
         display: grid;
@@ -252,22 +165,6 @@
         outline: 2px dashed #6c4ab6;
         outline-offset: 3px;
       }
-      .meter-track {
-        position: relative;
-        height: 14px;
-        background: #fef3c7;
-        border-radius: 999px;
-        border: 1.5px solid rgba(108, 74, 182, 0.18);
-        overflow: hidden;
-        box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.08);
-      }
-      .meter-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(90deg, #ff8e53, #e8573d 40%, #6c4ab6);
-        border-radius: 999px;
-        transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-      }
       .score-float {
         position: fixed;
         right: 1.25rem;
@@ -322,28 +219,6 @@
         font-size: 3rem;
         color: #6c4ab6;
         transform: rotate(-22deg);
-      }
-      .reveal-card {
-        position: relative;
-        border-radius: 20px;
-        padding: 2.5rem 2rem;
-        background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
-        color: #fff;
-        box-shadow: 0 30px 70px -25px rgba(45, 43, 85, 0.55);
-        overflow: hidden;
-      }
-      .reveal-card::before {
-        content: '';
-        position: absolute;
-        top: -40px;
-        right: -40px;
-        width: 180px;
-        height: 180px;
-        background: radial-gradient(
-          circle,
-          rgba(253, 230, 138, 0.25),
-          transparent 65%
-        );
       }
       @media (max-width: 640px) {
         .q-row {
@@ -478,7 +353,7 @@
               <p
                 class="text-lg md:text-xl text-charcoal/75 leading-relaxed max-w-xl mb-8 font-body"
               >
-                Ten minutes, five subjects, thirty-eight questions. An honest
+                Ten minutes, five subjects, thirty-two questions. An honest
                 snapshot of where your system shines and where it&rsquo;s
                 quietly burning your team out.
               </p>
@@ -691,8 +566,8 @@
                 Watch the score
               </h3>
               <p class="text-sm text-charcoal/75 leading-relaxed">
-                Subject grades appear live. The floating badge keeps the running
-                tally so you can feel the system take shape.
+                Subject grades appear live. The floating badge tracks your
+                running total as you go.
               </p>
             </div>
             <div
@@ -709,8 +584,8 @@
                 Read the report
               </h3>
               <p class="text-sm text-charcoal/75 leading-relaxed">
-                Finish every row and a written report card unfolds with what to
-                tackle first &mdash; and what to leave alone.
+                Finish every row and a written report card appears with what to
+                tackle first, and what to leave alone.
               </p>
             </div>
           </div>
@@ -793,7 +668,7 @@
                   Questions answered
                 </p>
                 <p class="font-display text-2xl font-bold text-navy">
-                  <span id="answered">0</span>/38
+                  <span id="answered">0</span>/32
                 </p>
               </div>
             </div>
@@ -816,8 +691,8 @@
                     Component Consistency
                   </h3>
                   <p class="text-sm text-charcoal/70 leading-relaxed">
-                    Are the pieces of your UI actually the same pieces &mdash;
-                    or are there six buttons wearing the same trench coat?
+                    Are the pieces of your UI actually the same pieces, or are
+                    there six buttons wearing the same trench coat?
                   </p>
                 </div>
                 <div class="q-list"></div>
@@ -973,26 +848,27 @@
                   will appear here with the two things I&rsquo;d prioritize
                   first.
                 </p>
-                <div class="mt-8 flex flex-col sm:flex-row gap-3">
+                <div id="resultActions" class="mt-8 flex flex-col sm:flex-row gap-3" style="display:none">
+                  <a
+                    id="resultsLink"
+                    href="/scorecard/results/"
+                    class="inline-flex items-center justify-center gap-2 bg-coral text-white px-6 py-3.5 rounded-full hover:bg-coral/90 transition-colors font-heading font-semibold text-sm"
+                  >
+                    <iconify-icon
+                      icon="ph:chart-bar-duotone"
+                      width="18"
+                    ></iconify-icon>
+                    See your detailed results
+                  </a>
                   <a
                     href="https://calendly.com/josh-thebrileys/30min/"
-                    class="inline-flex items-center justify-center gap-2 bg-coral text-white px-6 py-3.5 rounded-full hover:bg-coral/90 transition-colors font-heading font-semibold text-sm"
+                    class="inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/25 px-6 py-3.5 rounded-full hover:bg-white/15 transition-colors font-heading font-semibold text-sm"
                   >
                     <iconify-icon
                       icon="ph:calendar-check-duotone"
                       width="18"
                     ></iconify-icon>
                     Talk through your results
-                  </a>
-                  <a
-                    href="/services"
-                    class="inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/25 px-6 py-3.5 rounded-full hover:bg-white/15 transition-colors font-heading font-semibold text-sm"
-                  >
-                    <iconify-icon
-                      icon="ph:toolbox-duotone"
-                      width="18"
-                    ></iconify-icon>
-                    See how I help
                   </a>
                 </div>
               </div>
@@ -1017,7 +893,7 @@
             aria-hidden="true"
           ></div>
           <h2
-            class="font-display text-3xl md:text-5xl font-semibold text-navy leading-[1.1] mb-6"
+            class="text-pretty font-display text-3xl md:text-5xl font-semibold text-navy leading-[1.1] mb-6"
           >
             Want a second pair of eyes on your
             <span class="wavy-underline">score</span>?
@@ -1027,7 +903,7 @@
           >
             Screenshot the report, send it over, and we&rsquo;ll spend 30
             minutes on what to tackle first. I&rsquo;ll tell you honestly
-            whether I can help &mdash; and if not, I probably know who can.
+            whether I can help, and if not, I probably know who can.
           </p>
           <div
             class="flex flex-col sm:flex-row items-center justify-center gap-4"
@@ -1062,7 +938,7 @@
         <p
           class="font-heading text-xs text-charcoal/60 uppercase tracking-wider"
         >
-          <span id="floatAnswered">0</span> of 38 answered
+          <span id="floatAnswered">0</span> of 32 answered
         </p>
       </div>
     </div>
@@ -1204,7 +1080,7 @@
         1: [
           'Shared components are reused across the codebase instead of being duplicated.',
           'Component APIs follow consistent, predictable naming conventions.',
-          'Visual decisions reference tokens &mdash; not hardcoded values.',
+          'Visual decisions reference tokens, not hardcoded values.',
           'Components render consistently across browsers and viewports.',
           'Designers and engineers don&rsquo;t ship one-off duplicates of existing components.',
           'Deprecated components carry documented migration paths.',
@@ -1221,7 +1097,7 @@
         ],
         3: [
           'There is a single source of truth for token definitions.',
-          'Token names follow consistent patterns &mdash; no mystery abbreviations.',
+          'Token names follow consistent patterns, not mystery abbreviations.',
           'Semantic tokens reference primitive tokens (not raw values).',
           'Names describe intent (surface-default) rather than value (gray-100).',
           'Tokens cover theme, mode, and brand variations.',
@@ -1251,7 +1127,10 @@
         { v: 2, label: 'Yes' },
       ]
 
-      const TOTAL_QUESTIONS = 38
+      const TOTAL_QUESTIONS = 32
+
+      // Subject-to-item-count map for encoding
+      const SUBJECT_COUNTS = { 1: 6, 2: 8, 3: 6, 4: 6, 5: 6 }
 
       function letterGrade(pct) {
         if (pct >= 93) return 'A'
@@ -1262,6 +1141,20 @@
         if (pct >= 54) return 'C'
         if (pct >= 45) return 'D'
         return 'F'
+      }
+
+      // Encode current radio selections into a 32-char string
+      function encodeSelections() {
+        let encoded = ''
+        for (let s = 1; s <= 5; s++) {
+          const count = SUBJECT_COUNTS[s]
+          for (let i = 0; i < count; i++) {
+            const name = `q-${s}-${i}`
+            const checked = form.querySelector(`input[name="${name}"]:checked`)
+            encoded += checked ? checked.value : '0'
+          }
+        }
+        return encoded
       }
 
       document.querySelectorAll('.subject-card').forEach((card) => {
@@ -1298,6 +1191,8 @@
       const finalGradeEl = document.getElementById('finalGrade')
       const resultHeadline = document.getElementById('resultHeadline')
       const resultBody = document.getElementById('resultBody')
+      const resultActions = document.getElementById('resultActions')
+      const resultsLink = document.getElementById('resultsLink')
 
       function updateScore() {
         let total = 0
@@ -1322,14 +1217,29 @@
           const max = parseInt(card.dataset.total, 10)
           const score = subjectTotals[subject]
           const stamp = card.querySelector('.grade-stamp')
-          const hasAny =
-            form.querySelectorAll(`input[data-subject="${subject}"]:checked`)
-              .length > 0
-          if (!hasAny) {
-            stamp.textContent = '—'
+          const totalQs = SUBJECT_COUNTS[subject]
+          const answeredInSubject = form.querySelectorAll(
+            `input[data-subject="${subject}"]:checked`,
+          ).length
+
+          if (answeredInSubject === 0) {
+            stamp.textContent = '\u2014'
             stamp.removeAttribute('data-grade')
+            stamp.removeAttribute('data-state')
             return
           }
+
+          if (answeredInSubject < totalQs) {
+            const progressText = `${answeredInSubject}/${totalQs}`
+            if (stamp.textContent !== progressText) {
+              stamp.textContent = progressText
+            }
+            stamp.removeAttribute('data-grade')
+            stamp.setAttribute('data-state', 'progress')
+            return
+          }
+
+          stamp.removeAttribute('data-state')
           const pct = (score / max) * 100
           const g = letterGrade(pct)
           if (stamp.textContent !== g) {
@@ -1345,33 +1255,40 @@
         if (answered === TOTAL_QUESTIONS) {
           const pct = (total / 64) * 100
           finalGradeEl.textContent = letterGrade(pct)
+
+          // Update results link with encoded ratings
+          const encoded = encodeSelections()
+          resultsLink.href = `/scorecard/results/?r=${encoded}`
+          resultActions.style.display = ''
+
           if (pct >= 85) {
             resultHeadline.textContent = 'Gold stars all around.'
             resultBody.textContent =
-              'Your system is doing its job: accessibility is architecture, tokens are trusted, and documentation travels with the work. The next wins are small polishes \u2014 maybe formalizing deprecation paths or tightening the handoff ceremony. Mostly: don\u2019t let this slip.'
+              'Your system is doing its job. Click below for a detailed breakdown with your radar chart and personalized recommendation.'
           } else if (pct >= 70) {
             resultHeadline.textContent = 'Solid fundamentals, a few soft spots.'
             resultBody.textContent =
-              'The bones are good. The usual culprits at this grade are documentation that drifts and handoff that depends on tribal knowledge. Pick the two lowest-scoring subjects and give them a dedicated sprint \u2014 you\u2019ll move the needle faster than another round of components.'
+              'The bones are good. Click below for a detailed breakdown showing exactly where to focus first.'
           } else if (pct >= 55) {
             resultHeadline.textContent =
-              'A system in the making \u2014 not quite trusted yet.'
+              'A system in the making, not quite trusted yet.'
             resultBody.textContent =
-              'This score usually means the components exist but the system around them doesn\u2019t: tokens half-applied, docs stale, designers and devs speaking different vocabularies. The cure is almost never more components. It\u2019s deciding who owns this, writing the missing docs, and auditing tokens once, thoroughly.'
+              'The components exist but the system around them needs work. Click below for your radar chart and a prioritized recommendation.'
           } else if (pct >= 40) {
             resultHeadline.textContent = 'Quietly burning your team out.'
             resultBody.textContent =
-              'This is the score where every new feature costs more than the last one. You don\u2019t need a redesign \u2014 you need a reset. Start with accessibility and tokens; they\u2019re the two subjects that unlock everything downstream. I\u2019d be happy to walk through what a first sprint looks like.'
+              'Every new feature costs more than the last one. Click below for a detailed breakdown with a specific recommendation on where to start.'
           } else {
             resultHeadline.textContent =
-              'You\u2019re building on sand \u2014 and that\u2019s okay to name.'
+              'You\u2019re building on sand, and that\u2019s okay to name.'
             resultBody.textContent =
-              'A low score isn\u2019t a failing grade; it\u2019s a starting map. The worst thing you could do right now is launch five parallel workstreams. Pick one subject \u2014 probably accessibility or tokens \u2014 stand up an owner, and ship a version 0.1 that the team can trust. Everything else follows from there.'
+              'A low score isn\u2019t a failing grade \u2014 it\u2019s a starting map. Click below for your personalized report with exactly what to tackle first.'
           }
         } else {
-          finalGradeEl.textContent = '—'
+          finalGradeEl.textContent = '\u2014'
+          resultActions.style.display = 'none'
           resultHeadline.textContent =
-            'Keep going \u2014 answer every question to unlock your report.'
+            'Keep going. Answer every question to see your report.'
           resultBody.textContent = `You\u2019re ${answered} of ${TOTAL_QUESTIONS} questions in. A personalized writeup appears here once you\u2019ve scored every row.`
         }
       }
@@ -1395,6 +1312,27 @@
           .getElementById('scorecard')
           .scrollIntoView({ behavior: 'smooth' })
       })
+
+      // ─── Retake pre-fill from URL param ──────────────────────────────────────
+      ;(function prefillFromUrl() {
+        const params = new URLSearchParams(window.location.search)
+        const r = params.get('r')
+        if (!r || !/^[012]{32}$/.test(r)) return
+
+        let idx = 0
+        for (let s = 1; s <= 5; s++) {
+          const count = SUBJECT_COUNTS[s]
+          for (let i = 0; i < count; i++) {
+            const value = r[idx++]
+            const name = `q-${s}-${i}`
+            const radio = form.querySelector(`input[name="${name}"][value="${value}"]`)
+            if (radio) {
+              radio.checked = true
+              radio.closest('.choice').classList.add('is-on')
+            }
+          }
+        }
+      })()
 
       updateScore()
     </script>

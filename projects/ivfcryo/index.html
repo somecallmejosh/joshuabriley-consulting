@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/../favicon.svg" />
     <title>IVFCRYO — Joshua Briley</title>
     <meta
       name="description"
-      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture — not tested for at the end."
+      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one."
     />
     <link rel="canonical" href="https://joshuabriley.com/projects/ivfcryo/" />
     <meta property="og:type" content="website" />
@@ -18,7 +18,7 @@
     <meta property="og:title" content="IVFCRYO — Joshua Briley" />
     <meta
       property="og:description"
-      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture — not tested for at the end."
+      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one."
     />
     <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
@@ -26,7 +26,7 @@
     <meta name="twitter:title" content="IVFCRYO — Joshua Briley" />
     <meta
       name="twitter:description"
-      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture — not tested for at the end."
+      content="Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one."
     />
     <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
@@ -211,7 +211,7 @@
                     />
                   </svg>
                 </span>
-                <span class="text-coral">,</span> is built in from the start.
+                is built in from the start.
               </h1>
 
               <p
@@ -347,7 +347,7 @@
             multiple carriers, and real-time specimen tracking from integrated
             sensor data. The people using it are usually in the middle of
             something high-stakes and emotionally sensitive. Clarity and
-            reliability aren't nice-to-haves here — they're features of the
+            reliability aren't nice-to-haves here. They're features of the
             product, and accessibility is how that clarity reaches everyone.
           </p>
         </div>
@@ -378,7 +378,7 @@
             <p>
               Fertility logistics has a narrow margin for error. A mislabeled
               shipment, a missed temperature excursion, or an ambiguous status
-              update isn't just a workflow annoyance — it can have irreversible
+              update isn't just a workflow annoyance. It can have irreversible
               consequences for someone's family. The people using this tool are
               often clinicians working under time pressure, or patients and
               couriers navigating a process they've never touched before, during
@@ -387,7 +387,7 @@
             <p>
               That reframes what accessibility means here. It isn't a compliance
               checkbox to satisfy at the end of the build. It's part of how the
-              product communicates <em>at all</em> — whether status updates
+              product communicates <em>at all</em>: whether status updates
               reach the person who needs to act on them, whether form errors are
               recoverable, whether a screen reader user can trust what the page
               is telling them.
@@ -411,7 +411,7 @@
                 Specimens &amp; sensors
               </h3>
               <p class="text-charcoal/70">
-                Temperature data, chain-of-custody details, carrier handoffs —
+                Temperature data, chain-of-custody details, carrier handoffs,
                 all flowing through forms people may be filling out under
                 duress.
               </p>
@@ -432,7 +432,7 @@
               </h3>
               <p class="text-charcoal/70">
                 A shipment that has moved, a label that has printed, an error
-                that needs correcting — the app has to surface all of it,
+                that needs correcting. The app has to surface all of it,
                 reliably, to every user.
               </p>
             </div>
@@ -476,8 +476,8 @@
             </p>
             <p>
               That changes what you build, not just what you fix. Problems that
-              would have surfaced as a long list of bugs at the end — the kind
-              that usually get triaged, downgraded, and half-addressed — instead
+              would have surfaced as a long list of bugs at the end (the kind
+              that usually get triaged, downgraded, and half-addressed) instead
               showed up as design conversations while the design was still cheap
               to change. The output wasn't a remediation report. It was
               different decisions.
@@ -498,7 +498,7 @@
                   Real-time form validation
                 </h3>
                 <p class="text-charcoal/70">
-                  Errors announced to a screen reader the moment they happen —
+                  Errors announced to a screen reader the moment they happen,
                   not buried in a summary at the top of the page after submit.
                 </p>
               </div>
@@ -535,7 +535,7 @@
                   Navigation you can learn once
                 </h3>
                 <p class="text-charcoal/70">
-                  Consistent, predictable patterns across the app — the kind of
+                  Consistent, predictable patterns across the app. The kind of
                   thing a sighted user takes for granted and a screen reader
                   user notices immediately when it's missing.
                 </p>
@@ -556,7 +556,7 @@
             <blockquote
               class="pull-quote text-xl md:text-2xl text-navy leading-snug"
             >
-              Accessible output at scale comes from accessible architecture —
+              Accessible output at scale comes from accessible architecture,
               not from accessible intent.
             </blockquote>
           </figure>
@@ -592,8 +592,8 @@
               <strong class="text-coral">primary requirements</strong>, not
               post-hoc additions. Components that controlled visibility managed
               their own focus internally, so the user never lost their place.
-              Dynamic content — the part of the app that changes while you're
-              looking at it — announced itself to assistive tech instead of
+              Dynamic content (the part of the app that changes while you're
+              looking at it) announced itself to assistive tech instead of
               silently updating the DOM.
             </p>
             <p>
@@ -753,7 +753,7 @@
                 Costs that don't snowball
               </h3>
               <p class="text-charcoal/70 text-sm">
-                No remediation backlog waiting at the end of the project —
+                No remediation backlog waiting at the end of the project,
                 because the backlog was never created.
               </p>
             </div>
@@ -803,7 +803,7 @@
                 class="flex flex-col sm:flex-row items-center justify-center gap-4"
               >
                 <a
-                  href="../scorecard.html"
+                  href="/scorecard/"
                   class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold"
                 >
                   <iconify-icon
@@ -865,7 +865,7 @@
             <p class="text-sm mt-1">
               Available for UX engineering work.
               <a
-                href="../contact.html"
+                href="/contact/"
                 class="text-coral hover:text-coral/80 hover:underline transition-colors"
                 >Get in touch</a
               >.
@@ -921,14 +921,14 @@
               </li>
               <li>
                 <a
-                  href="../about/"
+                  href="/about/"
                   class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
                 <a
-                  href="../blog/"
+                  href="/blog/"
                   class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
@@ -944,28 +944,28 @@
             <ul class="space-y-2 text-sm">
               <li>
                 <a
-                  href="../contact.html"
+                  href="/contact/"
                   class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
                 <a
-                  href="../scorecard.html"
+                  href="/scorecard/"
                   class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
               <li>
                 <a
-                  href="../testimonials.html"
+                  href="/testimonials/"
                   class="hover:text-white hover:underline transition-colors"
                   >Kind Words</a
                 >
               </li>
               <li>
                 <a
-                  href="../faqs/"
+                  href="/faqs/"
                   class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >

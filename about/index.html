@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <title>
       About — Joshua Briley | UX Engineer &amp; Design Systems Consultant
     </title>
@@ -58,10 +58,6 @@
         align-items: center;
         justify-content: center;
         box-shadow: 0 30px 60px -25px rgba(108, 74, 182, 0.35);
-      }
-      .portrait-frame iconify-icon {
-        font-size: 9rem;
-        color: rgba(45, 43, 85, 0.55);
       }
       .dot-pulse {
         width: 14px;
@@ -196,10 +192,14 @@
                 </div>
                 <!-- Portrait -->
                 <div
-                  class="portrait-frame blob-shape-alt relative"
-                  aria-hidden="true"
+                  class="portrait-frame blob-shape-alt relative overflow-hidden"
                 >
-                  <iconify-icon icon="ph:user-duotone"></iconify-icon>
+                  <img
+                    src="/images/josh-biz-cazsh.png"
+                    alt="Joshua Briley"
+                    loading="lazy"
+                    class="absolute inset-0 w-full h-full object-cover"
+                  />
                 </div>
               </div>
             </div>

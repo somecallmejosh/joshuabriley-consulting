@@ -41,6 +41,13 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
+    <style>
+      @keyframes dash-flow {
+        to {
+          stroke-dashoffset: -40;
+        }
+      }
+    </style>
     <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
@@ -110,94 +117,116 @@
 
     <main id="main">
       <!-- ====== HERO ====== -->
-      <section class="relative overflow-hidden py-24 md:py-32 lg:py-40">
-        <!-- Decorative floating shapes -->
-        <div
-          class="absolute top-12 right-[10%] w-16 h-16 bg-lemon/60 blob-shape animate-float opacity-70"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="absolute top-32 left-[8%] w-10 h-10 bg-sage/40 rounded-full animate-float-delay"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="absolute bottom-16 right-[20%] w-12 h-12 bg-sky/30 blob-shape animate-float-slow"
-          aria-hidden="true"
-        ></div>
-        <div
-          class="absolute bottom-24 left-[15%] w-8 h-8 bg-coral/20 rounded-full animate-float"
-          aria-hidden="true"
-        ></div>
+      <section class="relative overflow-hidden pt-16 md:pt-24 pb-24 md:pb-32">
+        <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
+        <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
 
-        <div class="max-w-5xl mx-auto px-6 text-center relative z-10">
-          <!-- Fun little intro tag -->
-          <div
-            class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-lemon/60"
-          >
-            <iconify-icon
-              icon="ph:hand-waving-duotone"
-              width="20"
-              class="text-sunset"
-            ></iconify-icon>
-            UX Engineer &amp; Design Systems Consultant
-          </div>
+        <div class="absolute top-24 right-[10%] w-16 h-16 bg-plum/20 blob-shape animate-float" aria-hidden="true"></div>
+        <div class="absolute top-40 left-[6%] w-10 h-10 bg-lemon/70 rounded-full animate-float-delay" aria-hidden="true"></div>
+        <div class="absolute bottom-20 right-[16%] w-12 h-12 bg-sage/30 blob-shape animate-float-slow" aria-hidden="true"></div>
+        <div class="absolute bottom-32 left-[14%] w-8 h-8 bg-sky/30 rounded-full animate-float" aria-hidden="true"></div>
 
-          <h1
-            class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[1.1] tracking-tight mb-8"
-          >
-            I fix <span class="wavy-underline">inconsistent</span> UI systems so
-            teams can ship
-            <span class="relative inline-block">
-              faster
-              <svg
-                class="absolute -bottom-2 left-0 w-full"
-                viewBox="0 0 200 12"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M2 8 Q 50 2 100 8 Q 150 14 198 6"
-                  stroke="#6C4AB6"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  opacity="0.5"
-                />
-              </svg> </span
-            >.
-          </h1>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+          <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div class="lg:col-span-7">
+              <div class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-lemon/60">
+                <iconify-icon icon="ph:hand-waving-duotone" width="20" class="text-sunset"></iconify-icon>
+                UX Engineer &amp; Design Systems Consultant
+              </div>
 
-          <p
-            class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto mb-12 font-body leading-relaxed"
-          >
-            Most teams don't have a tooling problem. They have a
-            <strong class="text-charcoal font-semibold"
-              >structure problem</strong
-            >. I've spent 20 years learning to tell the difference.
-          </p>
+              <h1 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-semibold text-navy leading-[1.05] tracking-tight mb-6">
+                I fix <span class="wavy-underline">inconsistent</span> UI systems so teams can ship faster.
+              </h1>
 
-          <div
-            class="flex flex-col sm:flex-row items-center justify-center gap-4"
-          >
-            <a
-              href="/scorecard/"
-              class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base"
-            >
-              <iconify-icon
-                icon="ph:clipboard-text-duotone"
-                width="20"
-              ></iconify-icon>
-              Score your design system
-            </a>
-            <a
-              href="https://calendly.com/josh-thebrileys/30min/"
-              class="inline-flex items-center gap-2 bg-navy text-white px-7 py-4 rounded-full hover:bg-navy/90 transition-all hover:shadow-lg hover:shadow-navy/20 font-heading font-semibold text-base"
-            >
-              <iconify-icon
-                icon="ph:calendar-check-duotone"
-                width="20"
-              ></iconify-icon>
-              Book an intro call
-            </a>
+              <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
+                Structure over tooling. Clarity over more.
+              </p>
+
+              <p class="text-lg text-charcoal/70 max-w-xl mb-10 font-body leading-relaxed">
+                Most teams don't have a tooling problem. They have a
+                <strong class="text-charcoal font-semibold">structure problem</strong>.
+                I've spent 20 years learning to tell the difference.
+              </p>
+
+              <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+                <a href="/scorecard/" class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base">
+                  <iconify-icon icon="ph:clipboard-text-duotone" width="20"></iconify-icon>
+                  Score your design system
+                </a>
+                <a href="https://calendly.com/josh-thebrileys/30min/" class="inline-flex items-center gap-2 bg-navy text-white px-7 py-4 rounded-full hover:bg-navy/90 transition-all hover:shadow-lg hover:shadow-navy/20 font-heading font-semibold text-base">
+                  <iconify-icon icon="ph:calendar-check-duotone" width="20"></iconify-icon>
+                  Book an intro call
+                </a>
+              </div>
+            </div>
+
+            <!-- Three service nodes illustration -->
+            <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
+              </div>
+
+              <!-- SVG connections -->
+              <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 440" fill="none">
+                <path d="M 130 120 C 170 180, 180 200, 200 220" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" class="animate-dash-flow" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
+                <path d="M 200 220 C 220 250, 250 280, 270 320" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" class="animate-dash-flow" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.5s" />
+              </svg>
+
+              <!-- Audit node -->
+              <div class="absolute top-[8%] left-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float" style="transform: rotate(-3deg)">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
+                    <iconify-icon icon="ph:binoculars-duotone" width="18" class="text-coral"></iconify-icon>
+                  </div>
+                  <span class="font-heading text-xs font-semibold text-navy">Audit</span>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="h-1.5 rounded-full bg-charcoal/10"></div>
+                  <div class="h-1.5 rounded-full bg-coral/40 w-3/5"></div>
+                </div>
+              </div>
+
+              <!-- Build node -->
+              <div class="absolute top-[38%] left-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay" style="transform: rotate(2deg)">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
+                    <iconify-icon icon="ph:hammer-duotone" width="18" class="text-plum"></iconify-icon>
+                  </div>
+                  <span class="font-heading text-xs font-semibold text-navy">Build</span>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="h-1.5 rounded-full bg-charcoal/10"></div>
+                  <div class="h-1.5 rounded-full bg-plum/40 w-4/5"></div>
+                </div>
+              </div>
+
+              <!-- Align node -->
+              <div class="absolute bottom-[12%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow" style="transform: rotate(-2deg)">
+                <div class="flex items-center gap-2 mb-2">
+                  <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
+                    <iconify-icon icon="ph:handshake-duotone" width="18" class="text-sky"></iconify-icon>
+                  </div>
+                  <span class="font-heading text-xs font-semibold text-navy">Align</span>
+                </div>
+                <div class="space-y-1.5">
+                  <div class="h-1.5 rounded-full bg-charcoal/10"></div>
+                  <div class="h-1.5 rounded-full bg-sky/40 w-2/3"></div>
+                </div>
+              </div>
+
+              <!-- floating token chip -->
+              <div class="absolute top-[22%] right-[8%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float" style="transform: rotate(4deg)">
+                <iconify-icon icon="ph:check-circle-duotone" width="14" class="text-sage"></iconify-icon>
+                <span class="font-heading text-[11px] font-semibold text-navy">Consistent</span>
+              </div>
+
+              <!-- floating a11y chip -->
+              <div class="absolute bottom-[32%] left-[4%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay" style="transform: rotate(-3deg)">
+                <iconify-icon icon="ph:shield-check-duotone" width="14" class="text-plum"></iconify-icon>
+                <span class="font-heading text-[11px] font-semibold text-navy">Accessible</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>

@@ -3,11 +3,11 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="../../favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href="/../favicon.svg" />
     <title>Berxi.com — Joshua Briley</title>
     <meta
       name="description"
-      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption."
+      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway. Covers stakeholder alignment, component library, documentation, and cross-team adoption."
     />
     <link
       rel="canonical"
@@ -21,7 +21,7 @@
     <meta property="og:title" content="Berxi.com — Joshua Briley" />
     <meta
       property="og:description"
-      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption."
+      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway. Covers stakeholder alignment, component library, documentation, and cross-team adoption."
     />
     <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
@@ -29,7 +29,7 @@
     <meta name="twitter:title" content="Berxi.com — Joshua Briley" />
     <meta
       name="twitter:description"
-      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption."
+      content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway. Covers stakeholder alignment, component library, documentation, and cross-team adoption."
     />
     <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
@@ -275,7 +275,7 @@
               >
                 Building a custom design system for a growing
                 <span class="wavy-underline">direct-to-consumer insurance</span>
-                platform — from stakeholder alignment through component library,
+                platform, from stakeholder alignment through component library,
                 documentation, and cross-team adoption.
               </p>
 
@@ -391,7 +391,7 @@
                 width="18"
                 class="text-plum"
               ></iconify-icon>
-              What the system unlocked</a
+              What the system changed</a
             >
           </div>
 
@@ -400,7 +400,7 @@
           >
             Berxi is a direct-to-consumer insurance platform built inside
             Berkshire Hathaway Specialty Insurance. The product was expanding
-            quickly, and the frontend was expanding with it — but not in a
+            quickly, and the frontend was expanding with it, but not in a
             coordinated way. Engineers were making design decisions
             independently across the codebase. Marketing wanted campaign
             flexibility they couldn't get. Engineering was burning cycles on
@@ -453,7 +453,7 @@
             <p>
               Before writing any components, the work was alignment. Getting
               product, design, marketing, and engineering to agree on a single
-              source of truth — so the system we built would actually be the
+              source of truth so the system we built would actually be the
               system the platform used.
             </p>
           </div>
@@ -528,8 +528,8 @@
             class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
           >
             <p>
-              Tailwind gave us a utility-first model — expressive but
-              constrained — and Vue's component model cleanly separated
+              Tailwind gave us a utility-first model, expressive but
+              constrained, and Vue's component model cleanly separated
               accessibility behavior from styling. On top of that, I built a
               token system in two layers so brand changes could propagate
               automatically without rewriting components.
@@ -550,7 +550,7 @@
                   Primitive tokens
                 </h3>
                 <p class="text-charcoal/70">
-                  The raw palette — colors, spacing steps, type sizes. No
+                  The raw palette: colors, spacing steps, type sizes. No
                   meaning attached, just values. This is what brand owns.
                 </p>
               </div>
@@ -568,7 +568,7 @@
                   Semantic tokens
                 </h3>
                 <p class="text-charcoal/70">
-                  Role-based values — interactive element color, label-to-input
+                  Role-based values: interactive element color, label-to-input
                   spacing, body copy size. Components only ever referenced
                   these, never the primitives directly.
                 </p>
@@ -589,7 +589,7 @@
                 <p class="text-charcoal/70">
                   A brand update changes a primitive. Every semantic token
                   resolves to the new value. Every component using that semantic
-                  updates automatically — nothing to hunt down.
+                  updates automatically. Nothing to hunt down.
                 </p>
               </div>
             </li>
@@ -688,13 +688,13 @@
             <p>
               Accessibility requirements were built into each component from the
               start: keyboard navigation, ARIA attributes, focus management in
-              overlays, color contrast against the token palette. Not a
-              checklist feature teams ran afterward — a property the components
-              already had.
+              overlays, color contrast against the token palette. These were
+              properties the components already had, not a checklist feature
+              teams ran afterward.
             </p>
             <p>
               This matters more as a system grows. An accessibility gap in a
-              shared component isn't one gap — it's the same gap across every
+              shared component isn't one gap. It's the same gap across every
               feature that uses the component. Building accessibility in at the
               system level meant every feature team shipped accessible UI
               <em>without having to implement it.</em>
@@ -774,7 +774,7 @@
               <h2
                 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
               >
-                What the system unlocked
+                What the system changed
               </h2>
             </div>
           </div>
@@ -787,8 +787,8 @@
               prompted the project stopped showing up. Marketing could run
               campaigns and build landing-page variations without waiting on
               engineering. Brand updates propagated automatically. Late-cycle
-              visual inconsistency — the kind that used to get caught in review
-              and ship anyway — stopped appearing, because the components no
+              visual inconsistency, the kind that used to get caught in review
+              and ship anyway, stopped appearing, because the components no
               longer let you drift.
             </p>
             <p>
@@ -832,7 +832,7 @@
               </h3>
               <p class="text-charcoal/70 text-sm">
                 Change a primitive and every component using that semantic token
-                follows — no manual sweep required.
+                follows. No manual sweep required.
               </p>
             </div>
             <div
@@ -848,7 +848,7 @@
                 Faster onboarding
               </h3>
               <p class="text-charcoal/70 text-sm">
-                New engineers learn the system by reading it — because the
+                New engineers learn the system by reading it, because the
                 documented component API is the system.
               </p>
             </div>
@@ -887,7 +887,7 @@
               <h2
                 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5"
               >
-                Component Library Starter — ready in 2–3 weeks.
+                Component Library Starter, ready in 2–3 weeks.
               </h2>
               <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
                 A production-ready foundation: tokens, core components,
@@ -898,7 +898,7 @@
                 class="flex flex-col sm:flex-row items-center justify-center gap-4"
               >
                 <a
-                  href="../scorecard.html"
+                  href="/scorecard/"
                   class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold"
                 >
                   <iconify-icon
@@ -959,7 +959,7 @@
             <p class="text-sm mt-1">
               Available for UX engineering work.
               <a
-                href="../contact.html"
+                href="/contact/"
                 class="text-coral hover:text-coral/80 hover:underline transition-colors"
                 >Get in touch</a
               >.
@@ -1015,14 +1015,14 @@
               </li>
               <li>
                 <a
-                  href="../about/"
+                  href="/about/"
                   class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
                 <a
-                  href="../blog/"
+                  href="/blog/"
                   class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
@@ -1038,28 +1038,28 @@
             <ul class="space-y-2 text-sm">
               <li>
                 <a
-                  href="../contact.html"
+                  href="/contact/"
                   class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
                 <a
-                  href="../scorecard.html"
+                  href="/scorecard/"
                   class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
               <li>
                 <a
-                  href="../testimonials.html"
+                  href="/testimonials/"
                   class="hover:text-white hover:underline transition-colors"
                   >Kind Words</a
                 >
               </li>
               <li>
                 <a
-                  href="../faqs/"
+                  href="/faqs/"
                   class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
