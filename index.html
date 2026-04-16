@@ -9,7 +9,18 @@
       name="description"
       content="I fix inconsistent UI systems so teams can ship faster and with fewer mistakes. 20 years of experience in design systems, accessibility, and front-end architecture."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/" />
+    <meta property="og:title" content="Joshua Briley — UX Engineer &amp; Design Systems Consultant" />
+    <meta property="og:description" content="I fix inconsistent UI systems so teams can ship faster and with fewer mistakes. 20 years of experience in design systems, accessibility, and front-end architecture." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Joshua Briley — UX Engineer &amp; Design Systems Consultant" />
+    <meta name="twitter:description" content="I fix inconsistent UI systems so teams can ship faster and with fewer mistakes. 20 years of experience in design systems, accessibility, and front-end architecture." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,8 +29,8 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <!-- ====== SKIP LINK ====== -->
@@ -54,9 +65,7 @@
           <a href="/services" class="hover:text-coral transition-colors"
             >Services</a
           >
-          <a
-            href="/projects/"
-            class="hover:text-coral transition-colors"
+          <a href="/projects/" class="hover:text-coral transition-colors"
             >Projects</a
           >
         </nav>
@@ -65,22 +74,23 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <!-- Mobile menu dropdown -->
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
         <a href="/services" class="hover:text-coral transition-colors py-2"
           >Services</a
         >
-        <a
-          href="/projects/"
-          class="hover:text-coral transition-colors py-2"
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
           >Projects</a
         >
       </div>
@@ -678,7 +688,7 @@
                 style="transform: rotate(-2deg)"
               >
                 <img
-                  src="https://joshuabriley.com/images/josh-biz-cazsh.jpg"
+                  src="/images/josh-biz-cazsh.jpg"
                   alt="Joshua Briley, UX Engineer"
                   class="w-full h-full object-cover"
                   loading="lazy"
@@ -824,7 +834,7 @@
               </p>
               <footer class="flex items-center gap-4">
                 <img
-                  src="https:/joshubriley.com/images/nicholas-dos-santos.jpeg"
+                  src="/images/nicholas-dos-santos.jpeg"
                   alt=""
                   class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
                   loading="lazy"
@@ -859,7 +869,7 @@
               </p>
               <footer class="flex items-center gap-4">
                 <img
-                  src="https:/joshubriley.com/images/fred-johanns.jpeg"
+                  src="/images/fred-johanns.jpeg"
                   alt=""
                   class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm"
                   loading="lazy"
@@ -1053,12 +1063,16 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Home</a
                 >
               </li>
               <li>
-                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
@@ -1070,7 +1084,9 @@
                 >
               </li>
               <li>
-                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
@@ -1112,7 +1128,9 @@
                 >
               </li>
               <li>
-                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

@@ -9,7 +9,18 @@
       name="description"
       content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/blog/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/blog/" />
+    <meta property="og:title" content="Blog — Joshua Briley | UX Engineering, in Practice" />
+    <meta property="og:description" content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog — Joshua Briley | UX Engineering, in Practice" />
+    <meta name="twitter:description" content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,23 +29,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      .blob-shape-alt {
-                    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-                  }
-      @keyframes wiggle {
-                    0%,
-                    100% {
-                      transform: rotate(-2deg);
-                    }
-                    50% {
-                      transform: rotate(2deg);
-                    }
-                  }
-      .animate-wiggle {
-                    animation: wiggle 4s ease-in-out infinite;
-                  }
       .card-hover:hover {
                     transform: translateY(-6px) rotate(0deg) !important;
                     box-shadow:
@@ -78,31 +73,6 @@
                     position: relative;
                     z-index: 1;
                   }
-      .paper-note {
-                    position: relative;
-                    background: #fff;
-                    padding: 1.5rem 1.75rem;
-                    border-radius: 6px;
-                    box-shadow: 0 12px 28px -14px rgba(0, 0, 0, 0.18);
-                  }
-      .paper-note::before,
-                  .paper-note::after {
-                    content: '';
-                    position: absolute;
-                    width: 56px;
-                    height: 18px;
-                    background: rgba(253, 230, 138, 0.85);
-                    top: -9px;
-                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.1);
-                  }
-      .paper-note::before {
-                    left: 12%;
-                    transform: rotate(-4deg);
-                  }
-      .paper-note::after {
-                    right: 12%;
-                    transform: rotate(3deg);
-                  }
       .filter-pill {
                     display: inline-flex;
                     align-items: center;
@@ -139,6 +109,7 @@
                   }
     </style>
       <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -180,12 +151,15 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>

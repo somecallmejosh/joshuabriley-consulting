@@ -9,7 +9,18 @@
       name="description"
       content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/contact/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/contact/" />
+    <meta property="og:title" content="Contact — Joshua Briley" />
+    <meta property="og:description" content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact — Joshua Briley" />
+    <meta name="twitter:description" content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +29,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
     <style>
       .field-input {
                     width: 100%;
@@ -101,6 +111,7 @@
                   }
     </style>
       <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -142,12 +153,15 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>

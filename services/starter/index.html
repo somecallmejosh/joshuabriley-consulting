@@ -11,7 +11,18 @@
       name="description"
       content="A component library starter that gives your team a consistent, accessible, scalable foundation — 20 foundational components, token architecture, WCAG 2.1 AA, and Storybook docs."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/services/starter/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/services/starter/" />
+    <meta property="og:title" content="Component Library Starter — Joshua Briley | Design Systems Consulting" />
+    <meta property="og:description" content="A component library starter that gives your team a consistent, accessible, scalable foundation — 20 foundational components, token architecture, WCAG 2.1 AA, and Storybook docs." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Component Library Starter — Joshua Briley | Design Systems Consulting" />
+    <meta name="twitter:description" content="A component library starter that gives your team a consistent, accessible, scalable foundation — 20 foundational components, token architecture, WCAG 2.1 AA, and Storybook docs." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -20,55 +31,41 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
     <style>
       @keyframes stack-bob {
-                    0%,
-                    100% {
-                      transform: translateY(0px) rotate(var(--r, 0deg));
-                    }
-                    50% {
-                      transform: translateY(-6px) rotate(var(--r, 0deg));
-                    }
-                  }
-      @keyframes pulse-ring {
-                    0%,
-                    100% {
-                      transform: scale(1);
-                      opacity: 0.35;
-                    }
-                    50% {
-                      transform: scale(1.08);
-                      opacity: 0.55;
-                    }
-                  }
+        0%,
+        100% {
+          transform: translateY(0px) rotate(var(--r, 0deg));
+        }
+        50% {
+          transform: translateY(-6px) rotate(var(--r, 0deg));
+        }
+      }
       .animate-stack-bob {
-                    animation: stack-bob 5s ease-in-out infinite;
-                  }
-      .animate-pulse-ring {
-                    animation: pulse-ring 4s ease-in-out infinite;
-                  }
+        animation: stack-bob 5s ease-in-out infinite;
+      }
       .dot-paper {
-                    background-image: radial-gradient(
-                      rgba(108, 74, 182, 0.18) 1.2px,
-                      transparent 1.2px
-                    );
-                    background-size: 24px 24px;
-                  }
+        background-image: radial-gradient(
+          rgba(108, 74, 182, 0.18) 1.2px,
+          transparent 1.2px
+        );
+        background-size: 24px 24px;
+      }
       .chip {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.4rem;
-                    padding: 0.35rem 0.7rem;
-                    border-radius: 9999px;
-                    font-family: 'Space Grotesk', system-ui, sans-serif;
-                    font-size: 0.72rem;
-                    font-weight: 600;
-                    letter-spacing: 0.01em;
-                    white-space: nowrap;
-                  }
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        padding: 0.35rem 0.7rem;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 0.72rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        white-space: nowrap;
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -113,12 +110,15 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
@@ -204,10 +204,8 @@
               <h1
                 class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-semibold text-navy leading-[1.05] tracking-tight mb-6"
               >
-                A component system
-                <span class="block">
-                  your team can <span class="wavy-underline">trust</span>.
-                </span>
+                A component system your team can
+                <span class="wavy-underline">trust</span>.
               </h1>
 
               <p
@@ -1394,25 +1392,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="../about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="../blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -1447,7 +1457,9 @@
                 >
               </li>
               <li>
-                <a href="../faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

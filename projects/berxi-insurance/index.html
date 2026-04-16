@@ -9,7 +9,18 @@
       name="description"
       content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/projects/berxi-insurance/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/projects/berxi-insurance/" />
+    <meta property="og:title" content="Berxi.com — Joshua Briley" />
+    <meta property="og:description" content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Berxi.com — Joshua Briley" />
+    <meta name="twitter:description" content="Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway — from stakeholder alignment through component library, documentation, and cross-team adoption." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -18,7 +29,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
     <style>
       .policy-card {
                     background: #fff;
@@ -43,56 +53,6 @@
                     background: rgba(253, 230, 138, 0.88);
                     box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
                     z-index: 5;
-                  }
-      .marker-label {
-                    font-family: 'Style Script', cursive;
-                    color: #6c4ab6;
-                    line-height: 1;
-                  }
-      .corkboard {
-                    background-color: #fffbf5;
-                    background-image:
-                      radial-gradient(
-                        circle at 20% 30%,
-                        rgba(232, 87, 61, 0.05) 0,
-                        transparent 40%
-                      ),
-                      radial-gradient(
-                        circle at 80% 70%,
-                        rgba(108, 74, 182, 0.05) 0,
-                        transparent 40%
-                      );
-                  }
-      .step-num {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 54px;
-                    height: 54px;
-                    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-                    background: linear-gradient(135deg, #ff8e53, #e8573d);
-                    color: white;
-                    font-family: 'Fraunces', serif;
-                    font-size: 1.6rem;
-                    font-weight: 700;
-                    box-shadow: 0 8px 18px -8px rgba(232, 87, 61, 0.55);
-                    flex-shrink: 0;
-                  }
-      .pull-quote {
-                    font-family: 'Fraunces', serif;
-                    font-style: italic;
-                  }
-      .ingredient-chip {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 8px;
-                    background: #fff;
-                    border: 1.5px dashed rgba(45, 43, 85, 0.18);
-                    padding: 8px 14px;
-                    border-radius: 9999px;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 0.88rem;
-                    color: #2d2b55;
                   }
       .token-chip {
                     display: inline-flex;
@@ -135,6 +95,7 @@
                   }
     </style>
       <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -179,12 +140,15 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>

@@ -12,7 +12,18 @@
       name="description"
       content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process."
     />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="canonical" href="https://joshuabriley.com/scorecard/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/scorecard/" />
+    <meta property="og:title" content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
+    <meta property="og:description" content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process." />
+    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
+    <meta name="twitter:description" content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process." />
+    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -21,38 +32,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
-    <script src="/scripts/tailwind-config.js"></script>
     <style>
-      .blob-shape-alt {
-                    border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
-                  }
-      @keyframes float {
-                    0%,
-                    100% {
-                      transform: translateY(0) rotate(0);
-                    }
-                    50% {
-                      transform: translateY(-12px) rotate(2deg);
-                    }
-                  }
-      @keyframes float-slow {
-                    0%,
-                    100% {
-                      transform: translateY(0);
-                    }
-                    50% {
-                      transform: translateY(-8px);
-                    }
-                  }
-      @keyframes wiggle {
-                    0%,
-                    100% {
-                      transform: rotate(-2deg);
-                    }
-                    50% {
-                      transform: rotate(2deg);
-                    }
-                  }
       @keyframes stamp-in {
                     0% {
                       opacity: 0;
@@ -66,9 +46,6 @@
                       opacity: 1;
                       transform: scale(1) rotate(-6deg);
                     }
-                  }
-      .animate-wiggle {
-                    animation: wiggle 4s ease-in-out infinite;
                   }
       .report-paper {
                     position: relative;
@@ -373,6 +350,7 @@
                   }
     </style>
       <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -413,12 +391,15 @@
           type="button"
           class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
           aria-label="Toggle navigation menu"
-          onclick="document.body.classList.toggle('nav-open')"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
         >
           <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
         </button>
       </div>
       <div
+        id="mobile-menu"
         class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
       >
         <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
