@@ -118,6 +118,7 @@
     </style>
     <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
+    <script defer src="/scripts/contact-form.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
     <a
@@ -373,11 +374,17 @@
               </div>
 
               <form
-                action="https://formspree.io/f/your-id"
+                id="contact-form"
                 method="POST"
                 class="space-y-6"
                 novalidate
               >
+                <div
+                  id="form-alert"
+                  class="hidden rounded-2xl border px-5 py-4 text-sm leading-relaxed"
+                  role="alert"
+                  aria-live="polite"
+                ></div>
                 <div class="grid sm:grid-cols-2 gap-5">
                   <div>
                     <label for="first-name" class="field-label"
@@ -494,13 +501,20 @@
                   </p>
                   <button
                     type="submit"
-                    class="inline-flex items-center justify-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
+                    class="inline-flex items-center justify-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:shadow-none"
                   >
                     <iconify-icon
                       icon="ph:paper-plane-tilt-duotone"
                       width="20"
+                      data-submit-icon
                     ></iconify-icon>
-                    Send message
+                    <iconify-icon
+                      icon="ph:circle-notch-duotone"
+                      width="20"
+                      class="hidden animate-spin"
+                      data-submit-spinner
+                    ></iconify-icon>
+                    <span data-submit-label>Send message</span>
                   </button>
                 </div>
               </form>
