@@ -13,13 +13,19 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/contact/" />
     <meta property="og:title" content="Contact — Joshua Briley" />
-    <meta property="og:description" content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:description"
+      content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Contact — Joshua Briley" />
-    <meta name="twitter:description" content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:description"
+      content="Get in touch about design system audits, component library work, or Figma-to-code handoffs. Response within one business day."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,86 +37,86 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       .field-input {
-                    width: 100%;
-                    background: #fffbf5;
-                    border: 1.5px solid rgba(46, 46, 48, 0.12);
-                    border-radius: 14px;
-                    padding: 14px 16px;
-                    font-family: 'DM Sans', system-ui, sans-serif;
-                    font-size: 1rem;
-                    color: #2e2e30;
-                    transition:
-                      border-color 0.2s ease,
-                      box-shadow 0.2s ease,
-                      transform 0.2s ease;
-                  }
+        width: 100%;
+        background: #fffbf5;
+        border: 1.5px solid rgba(46, 46, 48, 0.12);
+        border-radius: 14px;
+        padding: 14px 16px;
+        font-family: 'DM Sans', system-ui, sans-serif;
+        font-size: 1rem;
+        color: #2e2e30;
+        transition:
+          border-color 0.2s ease,
+          box-shadow 0.2s ease,
+          transform 0.2s ease;
+      }
       .field-input::placeholder {
-                    color: rgba(46, 46, 48, 0.4);
-                  }
+        color: rgba(46, 46, 48, 0.4);
+      }
       .field-input:hover {
-                    border-color: rgba(108, 74, 182, 0.35);
-                  }
+        border-color: rgba(108, 74, 182, 0.35);
+      }
       .field-input:focus {
-                    outline: none;
-                    border-color: #6c4ab6;
-                    box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.12);
-                  }
+        outline: none;
+        border-color: #6c4ab6;
+        box-shadow: 0 0 0 4px rgba(108, 74, 182, 0.12);
+      }
       .field-label {
-                    display: block;
-                    font-family: 'Space Grotesk', system-ui, sans-serif;
-                    font-weight: 500;
-                    font-size: 0.9rem;
-                    color: #2d2b55;
-                    margin-bottom: 8px;
-                  }
+        display: block;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 500;
+        font-size: 0.9rem;
+        color: #2d2b55;
+        margin-bottom: 8px;
+      }
       .field-label .req {
-                    color: #e8573d;
-                    margin-left: 2px;
-                  }
+        color: #e8573d;
+        margin-left: 2px;
+      }
       .select-wrap {
-                    display: inline-grid;
-                    grid-template-columns: 1fr auto;
-                    width: 100%;
-                  }
+        display: inline-grid;
+        grid-template-columns: 1fr auto;
+        width: 100%;
+      }
       .select-wrap select {
-                    appearance: none;
-                    -webkit-appearance: none;
-                    grid-column: 1 / -1;
-                    grid-row: 1;
-                    padding-right: 44px;
-                    cursor: pointer;
-                  }
+        appearance: none;
+        -webkit-appearance: none;
+        grid-column: 1 / -1;
+        grid-row: 1;
+        padding-right: 44px;
+        cursor: pointer;
+      }
       .select-wrap svg {
-                    grid-column: 2;
-                    grid-row: 1;
-                    align-self: center;
-                    justify-self: center;
-                    margin-right: 16px;
-                    pointer-events: none;
-                    color: #6c4ab6;
-                  }
+        grid-column: 2;
+        grid-row: 1;
+        align-self: center;
+        justify-self: center;
+        margin-right: 16px;
+        pointer-events: none;
+        color: #6c4ab6;
+      }
       .paper-card {
-                    background: #ffffff;
-                    background-image: linear-gradient(
-                      180deg,
-                      transparent 0,
-                      transparent calc(100% - 1px),
-                      rgba(108, 74, 182, 0.06) calc(100% - 1px)
-                    );
-                    background-size: 100% 48px;
-                  }
+        background: #ffffff;
+        background-image: linear-gradient(
+          180deg,
+          transparent 0,
+          transparent calc(100% - 1px),
+          rgba(108, 74, 182, 0.06) calc(100% - 1px)
+        );
+        background-size: 100% 48px;
+      }
       .dotted-line {
-                    background-image: radial-gradient(
-                      circle,
-                      rgba(108, 74, 182, 0.4) 1.5px,
-                      transparent 1.5px
-                    );
-                    background-size: 10px 10px;
-                    background-repeat: repeat-y;
-                    background-position: center top;
-                  }
+        background-image: radial-gradient(
+          circle,
+          rgba(108, 74, 182, 0.4) 1.5px,
+          transparent 1.5px
+        );
+        background-size: 10px 10px;
+        background-repeat: repeat-y;
+        background-position: center top;
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -834,25 +840,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -866,12 +884,16 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
-                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
@@ -883,7 +905,9 @@
                 >
               </li>
               <li>
-                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

@@ -14,14 +14,26 @@
     <link rel="canonical" href="https://joshuabriley.com/testimonials/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/testimonials/" />
-    <meta property="og:title" content="Testimonials — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta property="og:description" content="Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:title"
+      content="Testimonials — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      property="og:description"
+      content="Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Testimonials — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta name="twitter:description" content="Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:title"
+      content="Testimonials — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      name="twitter:description"
+      content="Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,212 +45,212 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       .pinboard {
-                    column-count: 1;
-                    column-gap: 1.75rem;
-                  }
+        column-count: 1;
+        column-gap: 1.75rem;
+      }
       @media (min-width: 640px) {
-                    .pinboard {
-                      column-count: 2;
-                    }
-                  }
+        .pinboard {
+          column-count: 2;
+        }
+      }
       @media (min-width: 1024px) {
-                    .pinboard {
-                      column-count: 3;
-                    }
-                  }
+        .pinboard {
+          column-count: 3;
+        }
+      }
       .pin-item {
-                    break-inside: avoid;
-                    margin-bottom: 1.75rem;
-                    display: block;
-                  }
+        break-inside: avoid;
+        margin-bottom: 1.75rem;
+        display: block;
+      }
       .card-base {
-                    position: relative;
-                    padding: 1.75rem 1.75rem 1.5rem;
-                    transition:
-                      transform 0.35s ease,
-                      box-shadow 0.35s ease;
-                  }
+        position: relative;
+        padding: 1.75rem 1.75rem 1.5rem;
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
       .card-base:hover {
-                    transform: rotate(0deg) translateY(-4px) !important;
-                    box-shadow:
-                      0 24px 50px -18px rgba(45, 43, 85, 0.28),
-                      0 0 0 1px rgba(108, 74, 182, 0.08);
-                    z-index: 2;
-                  }
+        transform: rotate(0deg) translateY(-4px) !important;
+        box-shadow:
+          0 24px 50px -18px rgba(45, 43, 85, 0.28),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+        z-index: 2;
+      }
       .card-polaroid {
-                    background: #fff;
-                    padding: 1.25rem 1.25rem 1.5rem;
-                    box-shadow: 0 18px 38px -18px rgba(45, 43, 85, 0.28);
-                    border-radius: 4px;
-                  }
+        background: #fff;
+        padding: 1.25rem 1.25rem 1.5rem;
+        box-shadow: 0 18px 38px -18px rgba(45, 43, 85, 0.28);
+        border-radius: 4px;
+      }
       .card-polaroid .avatar-slab {
-                    aspect-ratio: 5 / 2;
-                    border-radius: 2px;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin-bottom: 1rem;
-                  }
+        aspect-ratio: 5 / 2;
+        border-radius: 2px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1rem;
+      }
       .card-sticky {
-                    background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
-                    border-radius: 3px 3px 18px 3px;
-                    box-shadow:
-                      0 2px 0 rgba(0, 0, 0, 0.04),
-                      0 18px 30px -18px rgba(180, 120, 20, 0.35);
-                  }
+        background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+        border-radius: 3px 3px 18px 3px;
+        box-shadow:
+          0 2px 0 rgba(0, 0, 0, 0.04),
+          0 18px 30px -18px rgba(180, 120, 20, 0.35);
+      }
       .card-sticky.variant-peach {
-                    background: linear-gradient(180deg, #ffe8d6 0%, #ffd4b0 100%);
-                    box-shadow:
-                      0 2px 0 rgba(0, 0, 0, 0.04),
-                      0 18px 30px -18px rgba(200, 100, 50, 0.3);
-                  }
+        background: linear-gradient(180deg, #ffe8d6 0%, #ffd4b0 100%);
+        box-shadow:
+          0 2px 0 rgba(0, 0, 0, 0.04),
+          0 18px 30px -18px rgba(200, 100, 50, 0.3);
+      }
       .card-index {
-                    background: #fff;
-                    border-radius: 6px;
-                    box-shadow: 0 16px 34px -18px rgba(45, 43, 85, 0.22);
-                    background-image: linear-gradient(
-                      to bottom,
-                      transparent 0,
-                      transparent 2.9rem,
-                      rgba(232, 87, 61, 0.25) 2.9rem,
-                      rgba(232, 87, 61, 0.25) calc(2.9rem + 1px),
-                      transparent calc(2.9rem + 1px)
-                    );
-                    border-left: 3px double rgba(232, 87, 61, 0.35);
-                  }
+        background: #fff;
+        border-radius: 6px;
+        box-shadow: 0 16px 34px -18px rgba(45, 43, 85, 0.22);
+        background-image: linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 2.9rem,
+          rgba(232, 87, 61, 0.25) 2.9rem,
+          rgba(232, 87, 61, 0.25) calc(2.9rem + 1px),
+          transparent calc(2.9rem + 1px)
+        );
+        border-left: 3px double rgba(232, 87, 61, 0.35);
+      }
       .card-plum {
-                    background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
-                    color: #fff;
-                    border-radius: 14px;
-                    box-shadow: 0 22px 44px -22px rgba(45, 43, 85, 0.55);
-                  }
+        background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
+        color: #fff;
+        border-radius: 14px;
+        box-shadow: 0 22px 44px -22px rgba(45, 43, 85, 0.55);
+      }
       .tape {
-                    position: absolute;
-                    top: -12px;
-                    width: 74px;
-                    height: 22px;
-                    background: rgba(253, 230, 138, 0.9);
-                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
-                  }
+        position: absolute;
+        top: -12px;
+        width: 74px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.9);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
+      }
       .tape.left {
-                    left: 14%;
-                    transform: rotate(-5deg);
-                  }
+        left: 14%;
+        transform: rotate(-5deg);
+      }
       .tape.right {
-                    right: 14%;
-                    transform: rotate(4deg);
-                  }
+        right: 14%;
+        transform: rotate(4deg);
+      }
       .tape.center {
-                    left: 50%;
-                    transform: translateX(-50%) rotate(-2deg);
-                    background: rgba(125, 211, 252, 0.55);
-                  }
+        left: 50%;
+        transform: translateX(-50%) rotate(-2deg);
+        background: rgba(125, 211, 252, 0.55);
+      }
       .tape.coral {
-                    background: rgba(232, 87, 61, 0.45);
-                  }
+        background: rgba(232, 87, 61, 0.45);
+      }
       .pin {
-                    position: absolute;
-                    top: -10px;
-                    left: 50%;
-                    transform: translateX(-50%);
-                    width: 18px;
-                    height: 18px;
-                    border-radius: 50%;
-                    background: radial-gradient(
-                      circle at 35% 30%,
-                      #ff8e53,
-                      #e8573d 55%,
-                      #9a2f1a
-                    );
-                    box-shadow:
-                      0 2px 4px rgba(0, 0, 0, 0.3),
-                      inset -2px -2px 4px rgba(0, 0, 0, 0.25),
-                      inset 2px 2px 3px rgba(255, 255, 255, 0.4);
-                  }
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle at 35% 30%,
+          #ff8e53,
+          #e8573d 55%,
+          #9a2f1a
+        );
+        box-shadow:
+          0 2px 4px rgba(0, 0, 0, 0.3),
+          inset -2px -2px 4px rgba(0, 0, 0, 0.25),
+          inset 2px 2px 3px rgba(255, 255, 255, 0.4);
+      }
       .pin.plum {
-                    background: radial-gradient(
-                      circle at 35% 30%,
-                      #9b7ed9,
-                      #6c4ab6 55%,
-                      #3a2478
-                    );
-                  }
+        background: radial-gradient(
+          circle at 35% 30%,
+          #9b7ed9,
+          #6c4ab6 55%,
+          #3a2478
+        );
+      }
       .pin.sage {
-                    background: radial-gradient(
-                      circle at 35% 30%,
-                      #a8d4a6,
-                      #7bb47a 55%,
-                      #3e6e3d
-                    );
-                  }
+        background: radial-gradient(
+          circle at 35% 30%,
+          #a8d4a6,
+          #7bb47a 55%,
+          #3e6e3d
+        );
+      }
       .avatar {
-                    width: 44px;
-                    height: 44px;
-                    border-radius: 9999px;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-weight: 600;
-                    font-size: 0.95rem;
-                    color: #fff;
-                    flex-shrink: 0;
-                    box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.3);
-                  }
+        width: 44px;
+        height: 44px;
+        border-radius: 9999px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Space Grotesk', sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        color: #fff;
+        flex-shrink: 0;
+        box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.3);
+      }
       .avatar-lg {
-                    width: 72px;
-                    height: 72px;
-                    font-size: 1.4rem;
-                  }
+        width: 72px;
+        height: 72px;
+        font-size: 1.4rem;
+      }
       .avatar.coral {
-                    background: linear-gradient(135deg, #ff8e53, #e8573d);
-                  }
+        background: linear-gradient(135deg, #ff8e53, #e8573d);
+      }
       .avatar.plum {
-                    background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
-                  }
+        background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
+      }
       .avatar.sage {
-                    background: linear-gradient(135deg, #a8d4a6, #7bb47a);
-                  }
+        background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+      }
       .avatar.sky {
-                    background: linear-gradient(135deg, #8ccff0, #5dade2);
-                  }
+        background: linear-gradient(135deg, #8ccff0, #5dade2);
+      }
       .avatar.navy {
-                    background: linear-gradient(135deg, #4a4784, #2d2b55);
-                  }
+        background: linear-gradient(135deg, #4a4784, #2d2b55);
+      }
       .rot-1 {
-                    transform: rotate(-1.6deg);
-                  }
+        transform: rotate(-1.6deg);
+      }
       .rot-2 {
-                    transform: rotate(1.2deg);
-                  }
+        transform: rotate(1.2deg);
+      }
       .rot-3 {
-                    transform: rotate(-0.8deg);
-                  }
+        transform: rotate(-0.8deg);
+      }
       .rot-4 {
-                    transform: rotate(2deg);
-                  }
+        transform: rotate(2deg);
+      }
       .rot-5 {
-                    transform: rotate(-2.2deg);
-                  }
+        transform: rotate(-2.2deg);
+      }
       .quote-mark {
-                    font-family: 'Fraunces', serif;
-                    font-size: 4.5rem;
-                    line-height: 0.6;
-                    color: rgba(232, 87, 61, 0.22);
-                    position: absolute;
-                    top: 1rem;
-                    right: 1.25rem;
-                    pointer-events: none;
-                  }
+        font-family: 'Fraunces', serif;
+        font-size: 4.5rem;
+        line-height: 0.6;
+        color: rgba(232, 87, 61, 0.22);
+        position: absolute;
+        top: 1rem;
+        right: 1.25rem;
+        pointer-events: none;
+      }
       .hero-stack {
-                    position: relative;
-                  }
+        position: relative;
+      }
       .hero-stack > div {
-                    position: absolute;
-                    inset: 0;
-                  }
+        position: absolute;
+        inset: 0;
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -1142,25 +1154,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -1174,12 +1198,16 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
-                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
@@ -1191,7 +1219,9 @@
                 >
               </li>
               <li>
-                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

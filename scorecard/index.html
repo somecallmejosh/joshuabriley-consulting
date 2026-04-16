@@ -15,14 +15,26 @@
     <link rel="canonical" href="https://joshuabriley.com/scorecard/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/scorecard/" />
-    <meta property="og:title" content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta property="og:description" content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:title"
+      content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      property="og:description"
+      content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta name="twitter:description" content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:title"
+      content="Design System Scorecard — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      name="twitter:description"
+      content="An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -34,322 +46,322 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       @keyframes stamp-in {
-                    0% {
-                      opacity: 0;
-                      transform: scale(1.6) rotate(-18deg);
-                    }
-                    60% {
-                      opacity: 1;
-                      transform: scale(0.92) rotate(-8deg);
-                    }
-                    100% {
-                      opacity: 1;
-                      transform: scale(1) rotate(-6deg);
-                    }
-                  }
+        0% {
+          opacity: 0;
+          transform: scale(1.6) rotate(-18deg);
+        }
+        60% {
+          opacity: 1;
+          transform: scale(0.92) rotate(-8deg);
+        }
+        100% {
+          opacity: 1;
+          transform: scale(1) rotate(-6deg);
+        }
+      }
       .report-paper {
-                    position: relative;
-                    background: #fff;
-                    border-radius: 6px;
-                    padding: 2rem 2rem 2.25rem;
-                    box-shadow:
-                      0 30px 60px -25px rgba(45, 43, 85, 0.35),
-                      0 0 0 1px rgba(108, 74, 182, 0.06);
-                    background-image: repeating-linear-gradient(
-                      to bottom,
-                      transparent 0,
-                      transparent 31px,
-                      rgba(93, 173, 226, 0.18) 31px,
-                      rgba(93, 173, 226, 0.18) 32px
-                    );
-                  }
+        position: relative;
+        background: #fff;
+        border-radius: 6px;
+        padding: 2rem 2rem 2.25rem;
+        box-shadow:
+          0 30px 60px -25px rgba(45, 43, 85, 0.35),
+          0 0 0 1px rgba(108, 74, 182, 0.06);
+        background-image: repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 31px,
+          rgba(93, 173, 226, 0.18) 31px,
+          rgba(93, 173, 226, 0.18) 32px
+        );
+      }
       .report-paper::before {
-                    content: '';
-                    position: absolute;
-                    top: 0;
-                    bottom: 0;
-                    left: 52px;
-                    width: 2px;
-                    background: rgba(232, 87, 61, 0.4);
-                  }
+        content: '';
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 52px;
+        width: 2px;
+        background: rgba(232, 87, 61, 0.4);
+      }
       .tape {
-                    position: absolute;
-                    width: 82px;
-                    height: 24px;
-                    background: rgba(253, 230, 138, 0.85);
-                    box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
-                  }
+        position: absolute;
+        width: 82px;
+        height: 24px;
+        background: rgba(253, 230, 138, 0.85);
+        box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
+      }
       .tape.tl {
-                    top: -12px;
-                    left: 8%;
-                    transform: rotate(-6deg);
-                  }
+        top: -12px;
+        left: 8%;
+        transform: rotate(-6deg);
+      }
       .tape.tr {
-                    top: -12px;
-                    right: 8%;
-                    transform: rotate(5deg);
-                    background: rgba(125, 211, 252, 0.7);
-                  }
+        top: -12px;
+        right: 8%;
+        transform: rotate(5deg);
+        background: rgba(125, 211, 252, 0.7);
+      }
       .subject-card {
-                    position: relative;
-                    background: #fff;
-                    border-radius: 14px;
-                    box-shadow:
-                      0 18px 40px -22px rgba(45, 43, 85, 0.28),
-                      0 0 0 1px rgba(108, 74, 182, 0.06);
-                    transition:
-                      transform 0.35s ease,
-                      box-shadow 0.35s ease;
-                  }
+        position: relative;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow:
+          0 18px 40px -22px rgba(45, 43, 85, 0.28),
+          0 0 0 1px rgba(108, 74, 182, 0.06);
+        transition:
+          transform 0.35s ease,
+          box-shadow 0.35s ease;
+      }
       .subject-card:hover {
-                    transform: translateY(-3px);
-                    box-shadow:
-                      0 24px 50px -20px rgba(45, 43, 85, 0.35),
-                      0 0 0 1px rgba(232, 87, 61, 0.18);
-                  }
+        transform: translateY(-3px);
+        box-shadow:
+          0 24px 50px -20px rgba(45, 43, 85, 0.35),
+          0 0 0 1px rgba(232, 87, 61, 0.18);
+      }
       .subject-tab {
-                    position: absolute;
-                    top: -14px;
-                    left: 2rem;
-                    padding: 0.45rem 1.1rem;
-                    border-radius: 999px;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 0.72rem;
-                    font-weight: 700;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                    color: #fff;
-                    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
-                    transform: rotate(-2deg);
-                  }
+        position: absolute;
+        top: -14px;
+        left: 2rem;
+        padding: 0.45rem 1.1rem;
+        border-radius: 999px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #fff;
+        box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
+        transform: rotate(-2deg);
+      }
       .subject-tab.coral {
-                    background: linear-gradient(135deg, #ff8e53, #e8573d);
-                  }
+        background: linear-gradient(135deg, #ff8e53, #e8573d);
+      }
       .subject-tab.plum {
-                    background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
-                  }
+        background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
+      }
       .subject-tab.sage {
-                    background: linear-gradient(135deg, #a8d4a6, #7bb47a);
-                  }
+        background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+      }
       .subject-tab.sky {
-                    background: linear-gradient(135deg, #8ccff0, #5dade2);
-                  }
+        background: linear-gradient(135deg, #8ccff0, #5dade2);
+      }
       .subject-tab.sunset {
-                    background: linear-gradient(135deg, #fdba74, #ff8e53);
-                  }
+        background: linear-gradient(135deg, #fdba74, #ff8e53);
+      }
       .grade-stamp {
-                    position: absolute;
-                    top: 1.25rem;
-                    right: 1.25rem;
-                    width: 68px;
-                    height: 68px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-family: 'Fraunces', serif;
-                    font-weight: 900;
-                    font-size: 1.75rem;
-                    color: #fff;
-                    background: radial-gradient(
-                      circle at 30% 25%,
-                      #9b7ed9,
-                      #6c4ab6 55%,
-                      #3a2478
-                    );
-                    box-shadow:
-                      0 8px 20px -8px rgba(108, 74, 182, 0.5),
-                      inset -3px -3px 6px rgba(0, 0, 0, 0.25),
-                      inset 3px 3px 5px rgba(255, 255, 255, 0.25);
-                    transform: rotate(-8deg);
-                    border: 2px dashed rgba(255, 255, 255, 0.35);
-                  }
+        position: absolute;
+        top: 1.25rem;
+        right: 1.25rem;
+        width: 68px;
+        height: 68px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fraunces', serif;
+        font-weight: 900;
+        font-size: 1.75rem;
+        color: #fff;
+        background: radial-gradient(
+          circle at 30% 25%,
+          #9b7ed9,
+          #6c4ab6 55%,
+          #3a2478
+        );
+        box-shadow:
+          0 8px 20px -8px rgba(108, 74, 182, 0.5),
+          inset -3px -3px 6px rgba(0, 0, 0, 0.25),
+          inset 3px 3px 5px rgba(255, 255, 255, 0.25);
+        transform: rotate(-8deg);
+        border: 2px dashed rgba(255, 255, 255, 0.35);
+      }
       .grade-stamp[data-grade] {
-                    animation: stamp-in 0.5s ease-out;
-                  }
+        animation: stamp-in 0.5s ease-out;
+      }
       .q-row {
-                    display: grid;
-                    grid-template-columns: 1fr auto;
-                    align-items: center;
-                    gap: 1rem;
-                    padding: 1rem 0;
-                    border-top: 1px dashed rgba(108, 74, 182, 0.18);
-                  }
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem 0;
+        border-top: 1px dashed rgba(108, 74, 182, 0.18);
+      }
       .q-row:first-of-type {
-                    border-top: none;
-                  }
+        border-top: none;
+      }
       .q-text {
-                    font-family: 'DM Sans', sans-serif;
-                    color: #2e2e30;
-                    line-height: 1.55;
-                  }
+        font-family: 'DM Sans', sans-serif;
+        color: #2e2e30;
+        line-height: 1.55;
+      }
       .q-num {
-                    display: inline-block;
-                    font-family: 'Fraunces', serif;
-                    font-style: italic;
-                    color: rgba(108, 74, 182, 0.65);
-                    font-weight: 600;
-                    margin-right: 0.4rem;
-                  }
+        display: inline-block;
+        font-family: 'Fraunces', serif;
+        font-style: italic;
+        color: rgba(108, 74, 182, 0.65);
+        font-weight: 600;
+        margin-right: 0.4rem;
+      }
       .choice-group {
-                    display: inline-flex;
-                    background: #fffbf5;
-                    border-radius: 9999px;
-                    padding: 4px;
-                    border: 1.5px solid rgba(108, 74, 182, 0.18);
-                    box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.05);
-                  }
+        display: inline-flex;
+        background: #fffbf5;
+        border-radius: 9999px;
+        padding: 4px;
+        border: 1.5px solid rgba(108, 74, 182, 0.18);
+        box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.05);
+      }
       .choice {
-                    position: relative;
-                    padding: 0.5rem 1rem;
-                    border-radius: 9999px;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 0.78rem;
-                    font-weight: 600;
-                    color: #6b6b73;
-                    cursor: pointer;
-                    user-select: none;
-                    transition: all 0.2s ease;
-                    border: 1.5px solid transparent;
-                  }
+        position: relative;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #6b6b73;
+        cursor: pointer;
+        user-select: none;
+        transition: all 0.2s ease;
+        border: 1.5px solid transparent;
+      }
       .choice:hover {
-                    color: #2d2b55;
-                    background: rgba(253, 230, 138, 0.35);
-                  }
+        color: #2d2b55;
+        background: rgba(253, 230, 138, 0.35);
+      }
       .choice input {
-                    position: absolute;
-                    opacity: 0;
-                    pointer-events: none;
-                  }
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
       .choice.is-on {
-                    color: #fff;
-                    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
-                    transform: translateY(-1px);
-                  }
+        color: #fff;
+        box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+        transform: translateY(-1px);
+      }
       .choice[data-v='0'].is-on {
-                    background: linear-gradient(135deg, #ff9f87, #e8573d);
-                  }
+        background: linear-gradient(135deg, #ff9f87, #e8573d);
+      }
       .choice[data-v='1'].is-on {
-                    background: linear-gradient(135deg, #fdba74, #ff8e53);
-                    color: #2d2b55;
-                  }
+        background: linear-gradient(135deg, #fdba74, #ff8e53);
+        color: #2d2b55;
+      }
       .choice[data-v='2'].is-on {
-                    background: linear-gradient(135deg, #a8d4a6, #7bb47a);
-                  }
+        background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+      }
       .choice:focus-within {
-                    outline: 2px dashed #6c4ab6;
-                    outline-offset: 3px;
-                  }
+        outline: 2px dashed #6c4ab6;
+        outline-offset: 3px;
+      }
       .meter-track {
-                    position: relative;
-                    height: 14px;
-                    background: #fef3c7;
-                    border-radius: 999px;
-                    border: 1.5px solid rgba(108, 74, 182, 0.18);
-                    overflow: hidden;
-                    box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.08);
-                  }
+        position: relative;
+        height: 14px;
+        background: #fef3c7;
+        border-radius: 999px;
+        border: 1.5px solid rgba(108, 74, 182, 0.18);
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.08);
+      }
       .meter-fill {
-                    height: 100%;
-                    width: 0%;
-                    background: linear-gradient(90deg, #ff8e53, #e8573d 40%, #6c4ab6);
-                    border-radius: 999px;
-                    transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-                  }
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, #ff8e53, #e8573d 40%, #6c4ab6);
+        border-radius: 999px;
+        transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+      }
       .score-float {
-                    position: fixed;
-                    right: 1.25rem;
-                    bottom: 1.25rem;
-                    z-index: 45;
-                    background: #fff;
-                    border-radius: 18px;
-                    padding: 0.9rem 1.1rem;
-                    box-shadow:
-                      0 18px 40px -12px rgba(45, 43, 85, 0.35),
-                      0 0 0 1px rgba(108, 74, 182, 0.08);
-                    display: flex;
-                    align-items: center;
-                    gap: 0.75rem;
-                    transform: rotate(-2deg);
-                    font-family: 'Space Grotesk', sans-serif;
-                  }
+        position: fixed;
+        right: 1.25rem;
+        bottom: 1.25rem;
+        z-index: 45;
+        background: #fff;
+        border-radius: 18px;
+        padding: 0.9rem 1.1rem;
+        box-shadow:
+          0 18px 40px -12px rgba(45, 43, 85, 0.35),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        transform: rotate(-2deg);
+        font-family: 'Space Grotesk', sans-serif;
+      }
       .score-float::before {
-                    content: '';
-                    position: absolute;
-                    top: -10px;
-                    left: 50%;
-                    transform: translateX(-50%) rotate(-3deg);
-                    width: 52px;
-                    height: 16px;
-                    background: rgba(253, 230, 138, 0.9);
-                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
-                  }
+        content: '';
+        position: absolute;
+        top: -10px;
+        left: 50%;
+        transform: translateX(-50%) rotate(-3deg);
+        width: 52px;
+        height: 16px;
+        background: rgba(253, 230, 138, 0.9);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
+      }
       .score-bubble {
-                    width: 52px;
-                    height: 52px;
-                    border-radius: 50%;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    font-family: 'Fraunces', serif;
-                    font-weight: 800;
-                    font-size: 1.1rem;
-                    color: #fff;
-                    background: radial-gradient(
-                      circle at 30% 25%,
-                      #ff8e53,
-                      #e8573d 55%,
-                      #9a2f1a
-                    );
-                    box-shadow:
-                      inset -3px -3px 5px rgba(0, 0, 0, 0.2),
-                      inset 2px 2px 4px rgba(255, 255, 255, 0.3);
-                  }
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Fraunces', serif;
+        font-weight: 800;
+        font-size: 1.1rem;
+        color: #fff;
+        background: radial-gradient(
+          circle at 30% 25%,
+          #ff8e53,
+          #e8573d 55%,
+          #9a2f1a
+        );
+        box-shadow:
+          inset -3px -3px 5px rgba(0, 0, 0, 0.2),
+          inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+      }
       .pencil {
-                    position: absolute;
-                    font-size: 3rem;
-                    color: #6c4ab6;
-                    transform: rotate(-22deg);
-                  }
+        position: absolute;
+        font-size: 3rem;
+        color: #6c4ab6;
+        transform: rotate(-22deg);
+      }
       .reveal-card {
-                    position: relative;
-                    border-radius: 20px;
-                    padding: 2.5rem 2rem;
-                    background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
-                    color: #fff;
-                    box-shadow: 0 30px 70px -25px rgba(45, 43, 85, 0.55);
-                    overflow: hidden;
-                  }
+        position: relative;
+        border-radius: 20px;
+        padding: 2.5rem 2rem;
+        background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
+        color: #fff;
+        box-shadow: 0 30px 70px -25px rgba(45, 43, 85, 0.55);
+        overflow: hidden;
+      }
       .reveal-card::before {
-                    content: '';
-                    position: absolute;
-                    top: -40px;
-                    right: -40px;
-                    width: 180px;
-                    height: 180px;
-                    background: radial-gradient(
-                      circle,
-                      rgba(253, 230, 138, 0.25),
-                      transparent 65%
-                    );
-                  }
+        content: '';
+        position: absolute;
+        top: -40px;
+        right: -40px;
+        width: 180px;
+        height: 180px;
+        background: radial-gradient(
+          circle,
+          rgba(253, 230, 138, 0.25),
+          transparent 65%
+        );
+      }
       @media (max-width: 640px) {
-                    .q-row {
-                      grid-template-columns: 1fr;
-                    }
-                    .choice-group {
-                      flex-wrap: wrap;
-                    }
-                    .grade-stamp {
-                      width: 56px;
-                      height: 56px;
-                      font-size: 1.35rem;
-                      top: 0.9rem;
-                      right: 0.9rem;
-                    }
-                  }
+        .q-row {
+          grid-template-columns: 1fr;
+        }
+        .choice-group {
+          flex-wrap: wrap;
+        }
+        .grade-stamp {
+          width: 56px;
+          height: 56px;
+          font-size: 1.35rem;
+          top: 0.9rem;
+          right: 0.9rem;
+        }
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -1110,25 +1122,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -1142,12 +1166,16 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
-                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
@@ -1159,7 +1187,9 @@
                 >
               </li>
               <li>
-                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

@@ -9,17 +9,29 @@
       name="description"
       content="Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision."
     />
-    <link rel="canonical" href="https://joshuabriley.com/projects/rudiment-ui/" />
+    <link
+      rel="canonical"
+      href="https://joshuabriley.com/projects/rudiment-ui/"
+    />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://joshuabriley.com/projects/rudiment-ui/" />
+    <meta
+      property="og:url"
+      content="https://joshuabriley.com/projects/rudiment-ui/"
+    />
     <meta property="og:title" content="Rudiment UI — Joshua Briley" />
-    <meta property="og:description" content="Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:description"
+      content="Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Rudiment UI — Joshua Briley" />
-    <meta name="twitter:description" content="Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:description"
+      content="Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,55 +43,55 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       .tape {
-                    position: absolute;
-                    width: 90px;
-                    height: 22px;
-                    background: rgba(253, 230, 138, 0.88);
-                    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
-                    z-index: 5;
-                  }
+        position: absolute;
+        width: 90px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.88);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
       .token-tier {
-                    background: #fff;
-                    border-radius: 18px;
-                    padding: 1.25rem 1.5rem;
-                    border: 1.5px dashed rgba(108, 74, 182, 0.25);
-                    box-shadow: 0 10px 24px -18px rgba(45, 43, 85, 0.35);
-                    position: relative;
-                  }
+        background: #fff;
+        border-radius: 18px;
+        padding: 1.25rem 1.5rem;
+        border: 1.5px dashed rgba(108, 74, 182, 0.25);
+        box-shadow: 0 10px 24px -18px rgba(45, 43, 85, 0.35);
+        position: relative;
+      }
       .token-tier code {
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 0.82rem;
-                    background: rgba(108, 74, 182, 0.08);
-                    color: #2d2b55;
-                    padding: 2px 8px;
-                    border-radius: 6px;
-                  }
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.82rem;
+        background: rgba(108, 74, 182, 0.08);
+        color: #2d2b55;
+        padding: 2px 8px;
+        border-radius: 6px;
+      }
       .chapter-card {
-                    background: #fff;
-                    border-radius: 14px;
-                    padding: 0.9rem 1rem;
-                    border: 1px solid rgba(45, 43, 85, 0.08);
-                    box-shadow: 0 6px 14px -10px rgba(45, 43, 85, 0.25);
-                    display: flex;
-                    align-items: center;
-                    gap: 0.75rem;
-                  }
+        background: #fff;
+        border-radius: 14px;
+        padding: 0.9rem 1rem;
+        border: 1px solid rgba(45, 43, 85, 0.08);
+        box-shadow: 0 6px 14px -10px rgba(45, 43, 85, 0.25);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
       .chapter-num {
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    width: 32px;
-                    height: 32px;
-                    border-radius: 9999px;
-                    background: linear-gradient(135deg, #6c4ab6, #2d2b55);
-                    color: #fde68a;
-                    font-family: 'Fraunces', serif;
-                    font-weight: 700;
-                    font-size: 0.9rem;
-                    flex-shrink: 0;
-                  }
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        border-radius: 9999px;
+        background: linear-gradient(135deg, #6c4ab6, #2d2b55);
+        color: #fde68a;
+        font-family: 'Fraunces', serif;
+        font-weight: 700;
+        font-size: 0.9rem;
+        flex-shrink: 0;
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -1039,25 +1051,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="../about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="../blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -1092,7 +1116,9 @@
                 >
               </li>
               <li>
-                <a href="../faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

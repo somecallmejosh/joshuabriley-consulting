@@ -14,14 +14,26 @@
     <link rel="canonical" href="https://joshuabriley.com/faqs/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/faqs/" />
-    <meta property="og:title" content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta property="og:description" content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:title"
+      content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      property="og:description"
+      content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant" />
-    <meta name="twitter:description" content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:title"
+      content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      name="twitter:description"
+      content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -33,146 +45,146 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       .bubble {
-                    position: relative;
-                    background: #ffffff;
-                    border: 1.5px solid rgba(45, 43, 85, 0.08);
-                    border-radius: 22px;
-                    padding: 1rem 1.25rem;
-                    box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
-                  }
+        position: relative;
+        background: #ffffff;
+        border: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-radius: 22px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
+      }
       .bubble::after {
-                    content: '';
-                    position: absolute;
-                    width: 18px;
-                    height: 18px;
-                    background: #ffffff;
-                    border-right: 1.5px solid rgba(45, 43, 85, 0.08);
-                    border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
-                    bottom: -10px;
-                    left: 28px;
-                    transform: rotate(45deg);
-                    border-bottom-right-radius: 4px;
-                  }
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: #ffffff;
+        border-right: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
+        bottom: -10px;
+        left: 28px;
+        transform: rotate(45deg);
+        border-bottom-right-radius: 4px;
+      }
       .bubble-right::after {
-                    left: auto;
-                    right: 28px;
-                  }
+        left: auto;
+        right: 28px;
+      }
       .faq-card {
-                    background: #ffffff;
-                    border: 1.5px solid rgba(45, 43, 85, 0.08);
-                    border-radius: 18px;
-                    box-shadow: 0 14px 32px -22px rgba(45, 43, 85, 0.22);
-                    transition:
-                      transform 0.25s ease,
-                      box-shadow 0.25s ease,
-                      border-color 0.25s ease;
-                  }
+        background: #ffffff;
+        border: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 14px 32px -22px rgba(45, 43, 85, 0.22);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
       .faq-card:hover {
-                    transform: translateY(-2px);
-                    box-shadow: 0 22px 42px -22px rgba(45, 43, 85, 0.28);
-                    border-color: rgba(108, 74, 182, 0.2);
-                  }
+        transform: translateY(-2px);
+        box-shadow: 0 22px 42px -22px rgba(45, 43, 85, 0.28);
+        border-color: rgba(108, 74, 182, 0.2);
+      }
       .faq-card[open] {
-                    border-color: rgba(232, 87, 61, 0.35);
-                    box-shadow: 0 24px 48px -22px rgba(232, 87, 61, 0.25);
-                  }
+        border-color: rgba(232, 87, 61, 0.35);
+        box-shadow: 0 24px 48px -22px rgba(232, 87, 61, 0.25);
+      }
       .faq-card > summary {
-                    list-style: none;
-                    cursor: pointer;
-                    padding: 1.25rem 1.5rem;
-                    display: flex;
-                    align-items: flex-start;
-                    gap: 1rem;
-                    font-family: 'Fraunces', Georgia, serif;
-                    font-weight: 500;
-                    font-size: 1.125rem;
-                    color: #2d2b55;
-                    line-height: 1.35;
-                  }
+        list-style: none;
+        cursor: pointer;
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 500;
+        font-size: 1.125rem;
+        color: #2d2b55;
+        line-height: 1.35;
+      }
       .faq-card > summary::-webkit-details-marker {
-                    display: none;
-                  }
+        display: none;
+      }
       .faq-card .q-icon {
-                    flex-shrink: 0;
-                    width: 36px;
-                    height: 36px;
-                    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-                    display: inline-flex;
-                    align-items: center;
-                    justify-content: center;
-                    color: #ffffff;
-                    font-family: 'Space Grotesk', system-ui, sans-serif;
-                    font-weight: 600;
-                    font-size: 0.95rem;
-                    box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
-                  }
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
+      }
       .faq-card .chevron {
-                    margin-left: auto;
-                    flex-shrink: 0;
-                    color: #6c4ab6;
-                    transition: transform 0.3s ease;
-                  }
+        margin-left: auto;
+        flex-shrink: 0;
+        color: #6c4ab6;
+        transition: transform 0.3s ease;
+      }
       .faq-card[open] .chevron {
-                    transform: rotate(180deg);
-                  }
+        transform: rotate(180deg);
+      }
       .faq-card .answer {
-                    padding: 0 1.5rem 1.5rem 4.25rem;
-                    color: rgba(46, 46, 48, 0.8);
-                    font-size: 1rem;
-                    line-height: 1.7;
-                  }
+        padding: 0 1.5rem 1.5rem 4.25rem;
+        color: rgba(46, 46, 48, 0.8);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
       .faq-card .answer::before {
-                    content: '';
-                    display: block;
-                    height: 1px;
-                    background: linear-gradient(
-                      to right,
-                      rgba(232, 87, 61, 0.3),
-                      rgba(108, 74, 182, 0.1),
-                      transparent
-                    );
-                    margin-bottom: 1rem;
-                  }
+        content: '';
+        display: block;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          rgba(232, 87, 61, 0.3),
+          rgba(108, 74, 182, 0.1),
+          transparent
+        );
+        margin-bottom: 1rem;
+      }
       .tab-label {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 0.6rem;
-                    padding: 0.5rem 1.15rem;
-                    border-radius: 9999px;
-                    font-family: 'Space Grotesk', system-ui, sans-serif;
-                    font-weight: 600;
-                    font-size: 0.78rem;
-                    letter-spacing: 0.08em;
-                    text-transform: uppercase;
-                  }
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 1.15rem;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
       .jump-link {
-                    display: flex;
-                    align-items: center;
-                    gap: 0.65rem;
-                    padding: 0.65rem 0.9rem;
-                    border-radius: 12px;
-                    font-family: 'Space Grotesk', system-ui, sans-serif;
-                    font-size: 0.875rem;
-                    font-weight: 500;
-                    color: rgba(46, 46, 48, 0.72);
-                    transition:
-                      background 0.2s ease,
-                      color 0.2s ease,
-                      transform 0.2s ease;
-                  }
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 12px;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(46, 46, 48, 0.72);
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          transform 0.2s ease;
+      }
       .jump-link:hover {
-                    background: rgba(232, 87, 61, 0.08);
-                    color: #e8573d;
-                    transform: translateX(2px);
-                  }
+        background: rgba(232, 87, 61, 0.08);
+        color: #e8573d;
+        transform: translateX(2px);
+      }
       .jump-link .dot {
-                    width: 10px;
-                    height: 10px;
-                    border-radius: 9999px;
-                    flex-shrink: 0;
-                  }
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -988,25 +1000,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="/about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="/blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -1020,12 +1044,16 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/contact/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Contact</a
                 >
               </li>
               <li>
-                <a href="/scorecard/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Free Scorecard</a
                 >
               </li>
@@ -1037,7 +1065,9 @@
                 >
               </li>
               <li>
-                <a href="/faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>

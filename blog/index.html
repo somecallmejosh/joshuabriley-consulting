@@ -12,14 +12,26 @@
     <link rel="canonical" href="https://joshuabriley.com/blog/" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/blog/" />
-    <meta property="og:title" content="Blog — Joshua Briley | UX Engineering, in Practice" />
-    <meta property="og:description" content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture." />
-    <meta property="og:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      property="og:title"
+      content="Blog — Joshua Briley | UX Engineering, in Practice"
+    />
+    <meta
+      property="og:description"
+      content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Blog — Joshua Briley | UX Engineering, in Practice" />
-    <meta name="twitter:description" content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture." />
-    <meta name="twitter:image" content="https://joshuabriley.com/images/og-image.png" />
+    <meta
+      name="twitter:title"
+      content="Blog — Joshua Briley | UX Engineering, in Practice"
+    />
+    <meta
+      name="twitter:description"
+      content="Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
     <link rel="stylesheet" href="/styles/tailwind.css" />
     <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -31,84 +43,84 @@
     <link rel="stylesheet" href="/styles/global.css" />
     <style>
       .card-hover:hover {
-                    transform: translateY(-6px) rotate(0deg) !important;
-                    box-shadow:
-                      0 24px 44px -14px rgba(45, 43, 85, 0.18),
-                      0 0 0 1px rgba(108, 74, 182, 0.08);
-                  }
+        transform: translateY(-6px) rotate(0deg) !important;
+        box-shadow:
+          0 24px 44px -14px rgba(45, 43, 85, 0.18),
+          0 0 0 1px rgba(108, 74, 182, 0.08);
+      }
       .notebook-card {
-                    position: relative;
-                    background: #fff;
-                    border-radius: 14px;
-                    box-shadow:
-                      0 30px 60px -28px rgba(45, 43, 85, 0.3),
-                      0 0 0 1px rgba(108, 74, 182, 0.06);
-                  }
+        position: relative;
+        background: #fff;
+        border-radius: 14px;
+        box-shadow:
+          0 30px 60px -28px rgba(45, 43, 85, 0.3),
+          0 0 0 1px rgba(108, 74, 182, 0.06);
+      }
       .notebook-card::before {
-                    content: '';
-                    position: absolute;
-                    left: 42px;
-                    top: 24px;
-                    bottom: 24px;
-                    width: 1px;
-                    background: rgba(232, 87, 61, 0.35);
-                  }
+        content: '';
+        position: absolute;
+        left: 42px;
+        top: 24px;
+        bottom: 24px;
+        width: 1px;
+        background: rgba(232, 87, 61, 0.35);
+      }
       .notebook-card::after {
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    top: 24px;
-                    bottom: 24px;
-                    background-image: repeating-linear-gradient(
-                      to bottom,
-                      transparent 0,
-                      transparent 31px,
-                      rgba(93, 173, 226, 0.22) 32px
-                    );
-                    pointer-events: none;
-                    border-radius: 14px;
-                  }
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 24px;
+        bottom: 24px;
+        background-image: repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 31px,
+          rgba(93, 173, 226, 0.22) 32px
+        );
+        pointer-events: none;
+        border-radius: 14px;
+      }
       .notebook-inner {
-                    position: relative;
-                    z-index: 1;
-                  }
+        position: relative;
+        z-index: 1;
+      }
       .filter-pill {
-                    display: inline-flex;
-                    align-items: center;
-                    gap: 6px;
-                    padding: 8px 16px;
-                    border-radius: 9999px;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 0.85rem;
-                    font-weight: 500;
-                    background: #fff;
-                    border: 1.5px solid rgba(45, 43, 85, 0.1);
-                    color: #2d2b55;
-                    transition: all 0.2s ease;
-                    cursor: pointer;
-                  }
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', sans-serif;
+        font-size: 0.85rem;
+        font-weight: 500;
+        background: #fff;
+        border: 1.5px solid rgba(45, 43, 85, 0.1);
+        color: #2d2b55;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
       .filter-pill:hover {
-                    border-color: #e8573d;
-                    color: #e8573d;
-                    transform: translateY(-2px);
-                  }
+        border-color: #e8573d;
+        color: #e8573d;
+        transform: translateY(-2px);
+      }
       .filter-pill.active {
-                    background: #2d2b55;
-                    color: #fff;
-                    border-color: #2d2b55;
-                  }
+        background: #2d2b55;
+        color: #fff;
+        border-color: #2d2b55;
+      }
       .post-card:nth-child(3n) {
-                    transform: rotate(-0.6deg);
-                  }
+        transform: rotate(-0.6deg);
+      }
       .post-card:nth-child(3n + 1) {
-                    transform: rotate(0.4deg);
-                  }
+        transform: rotate(0.4deg);
+      }
       .post-card:nth-child(3n + 2) {
-                    transform: rotate(-0.2deg);
-                  }
+        transform: rotate(-0.2deg);
+      }
     </style>
-      <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/nav-active.js"></script>
     <script defer src="/scripts/mobile-menu.js"></script>
   </head>
   <body class="bg-cream text-charcoal antialiased">
@@ -903,25 +915,37 @@
             </h3>
             <ul class="space-y-2 text-sm">
               <li>
-                <a href="/" class="hover:text-white hover:underline transition-colors">Home</a>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
               </li>
               <li>
-                <a href="/services/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/services/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Services</a
                 >
               </li>
               <li>
-                <a href="/projects/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Projects</a
                 >
               </li>
               <li>
-                <a href="../about/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../about/"
+                  class="hover:text-white hover:underline transition-colors"
                   >About</a
                 >
               </li>
               <li>
-                <a href="../blog/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../blog/"
+                  class="hover:text-white hover:underline transition-colors"
                   >Blog</a
                 >
               </li>
@@ -956,7 +980,9 @@
                 >
               </li>
               <li>
-                <a href="../faqs/" class="hover:text-white hover:underline transition-colors"
+                <a
+                  href="../faqs/"
+                  class="hover:text-white hover:underline transition-colors"
                   >FAQs</a
                 >
               </li>
