@@ -402,6 +402,42 @@ header .mobile-menu a[aria-current='page']::before {
   background: rgba(253, 230, 138, 0.85);
   box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.2);
 }
+.project-logo-tag {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.75rem;
+  padding: 0.25rem 1.5rem 1.25rem;
+  border-bottom: 1.5px dashed rgba(45, 43, 85, 0.18);
+  max-width: 320px;
+  min-height: 52px;
+}
+.project-logo-tag img {
+  max-height: 44px;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+}
+.project-logo-tag--wordmark {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  font-size: 1.9rem;
+  line-height: 1;
+  color: #1b2040;
+}
+.project-logo-tag--wordmark .dot {
+  color: #e8573d;
+}
+@media (min-width: 768px) {
+  .project-logo-tag img {
+    max-height: 52px;
+  }
+  .project-logo-tag--wordmark {
+    font-size: 2.25rem;
+  }
+}
 .tape.tl {
   top: -12px;
   left: 8%;
@@ -511,6 +547,139 @@ header .mobile-menu a[aria-current='page']::before {
 }
 
 /* ─── Reduced motion ─────────────────────────────────────────────────────── */
+
+/* ====== Pinboard / post-it testimonial primitives ====== */
+.card-base {
+  position: relative;
+  padding: 1.75rem 1.75rem 1.5rem;
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+}
+.card-base:hover {
+  transform: rotate(0deg) translateY(-4px) !important;
+  box-shadow:
+    0 24px 50px -18px rgba(45, 43, 85, 0.28),
+    0 0 0 1px rgba(108, 74, 182, 0.08);
+  z-index: 2;
+}
+.card-sticky {
+  background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
+  border-radius: 3px 3px 18px 3px;
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.04),
+    0 18px 30px -18px rgba(180, 120, 20, 0.35);
+}
+.card-sticky.variant-peach {
+  background: linear-gradient(180deg, #ffe8d6 0%, #ffd4b0 100%);
+  box-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.04),
+    0 18px 30px -18px rgba(200, 100, 50, 0.3);
+}
+.card-polaroid {
+  background: #fff;
+  padding: 1.25rem 1.25rem 1.5rem;
+  box-shadow: 0 18px 38px -18px rgba(45, 43, 85, 0.28);
+  border-radius: 4px;
+}
+.card-polaroid .avatar-slab {
+  aspect-ratio: 5 / 2;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  overflow: hidden;
+}
+.tape.left {
+  top: -12px;
+  left: 14%;
+  transform: rotate(-5deg);
+}
+.tape.right {
+  top: -12px;
+  right: 14%;
+  transform: rotate(4deg);
+}
+.tape.center {
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  background: rgba(125, 211, 252, 0.55);
+}
+.tape.coral {
+  background: rgba(232, 87, 61, 0.45);
+}
+.pin {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 30%,
+    #ff8e53,
+    #e8573d 55%,
+    #9a2f1a
+  );
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.25),
+    inset 2px 2px 3px rgba(255, 255, 255, 0.4);
+}
+.pin.plum {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #9b7ed9,
+    #6c4ab6 55%,
+    #3a2478
+  );
+}
+.pin.sage {
+  background: radial-gradient(
+    circle at 35% 30%,
+    #a8d4a6,
+    #7bb47a 55%,
+    #3e6e3d
+  );
+}
+.avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 4px 10px -4px rgba(0, 0, 0, 0.3);
+  object-fit: cover;
+}
+.avatar-lg {
+  width: 88px;
+  height: 88px;
+  font-size: 1.6rem;
+}
+.rot-1 {
+  transform: rotate(-1.6deg);
+}
+.rot-2 {
+  transform: rotate(1.2deg);
+}
+.rot-3 {
+  transform: rotate(-0.8deg);
+}
+.rot-4 {
+  transform: rotate(2deg);
+}
+.rot-5 {
+  transform: rotate(-2.2deg);
+}
 
 @media (prefers-reduced-motion: reduce) {
   html {

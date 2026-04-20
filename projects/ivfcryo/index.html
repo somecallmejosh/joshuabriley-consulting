@@ -34,7 +34,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&family=Caveat:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/styles/global.css" />
@@ -175,6 +175,10 @@
             </div>
 
             <div class="relative text-center">
+              <div class="project-logo-tag">
+                <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" />
+              </div>
+
               <div
                 class="inline-flex items-center gap-2 bg-plum/10 text-plum px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-plum/20 uppercase tracking-wider"
               >
@@ -758,6 +762,71 @@
               </p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
+      <section class="py-16 md:py-20 relative">
+        <div
+          class="absolute top-12 left-6 w-20 h-20 bg-sky/30 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-10 right-8 w-14 h-14 bg-plum/25 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div class="text-center mb-10">
+            <p class="marker-label text-2xl md:text-3xl text-coral mb-1">
+              signed off &mdash;
+            </p>
+            <h2
+              class="font-display text-2xl md:text-3xl text-navy font-semibold"
+            >
+              What Don said
+            </h2>
+          </div>
+
+          <figure class="card-base card-sticky rot-1 max-w-2xl mx-auto p-8 md:p-12">
+            <span class="pin plum" aria-hidden="true"></span>
+
+            <iconify-icon
+              icon="ph:quotes-duotone"
+              width="36"
+              class="text-plum/60 mb-3"
+            ></iconify-icon>
+
+            <blockquote
+              class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7"
+            >
+              What Josh did at IVFCRYO wasn't a typical build. He insisted we
+              put a blind user in the room from week one, and that decision
+              changed the product. We didn't pass an accessibility audit at
+              the end &mdash; we shipped a tool that was accessible because
+              it was built that way.
+            </blockquote>
+
+            <figcaption
+              class="flex items-center gap-4 pt-5 border-t border-navy/15"
+            >
+              <img
+                src="/images/don-fish.png"
+                alt="Don Fish"
+                class="avatar avatar-lg"
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <p class="font-heading font-semibold text-navy text-base">
+                  Don Fish
+                </p>
+                <p class="text-sm text-navy/70">
+                  CEO &middot; IVFCRYO
+                </p>
+              </div>
+            </figcaption>
+          </figure>
         </div>
       </section>
 

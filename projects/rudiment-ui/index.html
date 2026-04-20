@@ -217,6 +217,13 @@
 
             <div class="relative text-center">
               <div
+                class="project-logo-tag project-logo-tag--wordmark"
+                aria-label="Rudiment UI"
+              >
+                <span>rudiment<span class="dot">.ui</span></span>
+              </div>
+
+              <div
                 class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
               >
                 <iconify-icon
@@ -259,9 +266,15 @@
                 class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
               >
                 An open-source React component library paired with a
-                <span class="wavy-underline">13-chapter guide</span> that
-                explains <em>why</em> each architectural decision is made, and
-                what happens later if you make a different one.
+                <a
+                  href="https://rudiment-guide.netlify.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="wavy-underline text-plum hover:text-coral transition-colors"
+                  >13-chapter guide</a
+                >
+                that explains <em>why</em> each architectural decision is made,
+                and what happens later if you make a different one.
               </p>
 
               <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
@@ -309,6 +322,43 @@
                     </dd>
                   </div>
                 </dl>
+              </div>
+
+              <div
+                class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3"
+              >
+                <a
+                  href="https://rudiment-guide.netlify.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 bg-plum text-white px-6 py-3 rounded-full hover:bg-plum/90 transition-all hover:shadow-lg hover:shadow-plum/30 font-heading text-sm font-semibold"
+                >
+                  <iconify-icon
+                    icon="ph:book-open-text-duotone"
+                    width="18"
+                  ></iconify-icon>
+                  Read the guide
+                  <iconify-icon
+                    icon="ph:arrow-up-right-bold"
+                    width="14"
+                  ></iconify-icon>
+                </a>
+                <a
+                  href="https://rudiment-ui.netlify.app/"
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center gap-2 bg-white text-navy px-6 py-3 rounded-full hover:bg-lemon/40 transition-all hover:shadow-lg hover:shadow-plum/10 font-heading text-sm font-semibold border border-plum/25"
+                >
+                  <iconify-icon
+                    icon="ph:squares-four-duotone"
+                    width="18"
+                  ></iconify-icon>
+                  Browse the Storybook
+                  <iconify-icon
+                    icon="ph:arrow-up-right-bold"
+                    width="14"
+                  ></iconify-icon>
+                </a>
               </div>
             </div>
           </article>
@@ -376,6 +426,16 @@
                 class="text-plum"
               ></iconify-icon>
               The thirteen chapters</a
+            >
+            <a
+              href="#explore"
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+              ><iconify-icon
+                icon="ph:cube-duotone"
+                width="18"
+                class="text-coral"
+              ></iconify-icon>
+              See it served — guide &amp; Storybook</a
             >
           </div>
 
@@ -814,12 +874,24 @@
                 >React Aria integration</span
               >
             </div>
-            <div class="chapter-card">
-              <span class="chapter-num">10</span
-              ><span class="font-heading text-sm text-navy"
-                >Storybook documentation</span
+            <a
+              href="https://rudiment-ui.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="chapter-card hover:border-coral/60 hover:shadow-md transition-all group"
+            >
+              <span class="chapter-num">10</span>
+              <span
+                class="font-heading text-sm text-navy flex items-center gap-1.5 flex-1"
               >
-            </div>
+                Storybook documentation
+                <iconify-icon
+                  icon="ph:arrow-up-right-bold"
+                  width="12"
+                  class="text-coral opacity-0 group-hover:opacity-100 transition-opacity"
+                ></iconify-icon>
+              </span>
+            </a>
             <div class="chapter-card">
               <span class="chapter-num">11</span
               ><span class="font-heading text-sm text-navy"
@@ -914,6 +986,241 @@
               extend it.
             </blockquote>
           </figure>
+        </div>
+      </section>
+
+      <section id="explore" class="py-16 md:py-20 relative scroll-mt-24">
+        <div
+          class="absolute top-24 left-[4%] w-16 h-16 bg-sky/30 blob-shape animate-float"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-10 right-[6%] w-20 h-20 bg-sage/30 rounded-full animate-float-slow"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div class="flex items-start gap-6 mb-8">
+            <span class="step-num" aria-hidden="true">05</span>
+            <div>
+              <p
+                class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1"
+              >
+                Step five
+              </p>
+              <h2
+                class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+              >
+                See it served — both halves, live
+              </h2>
+            </div>
+          </div>
+
+          <div
+            class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body mb-10"
+          >
+            <p>
+              Rudiment ships as two deployed sites, and you can open both right
+              now. The
+              <span class="wavy-underline">guide</span> walks through the
+              architectural decisions and trade-offs, chapter by chapter. The
+              <span class="wavy-underline">Storybook</span> is the working
+              library those decisions produced — every primitive, every
+              component, every variant, in your browser.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-7">
+            <a
+              href="https://rudiment-guide.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="block bg-white rounded-3xl p-7 md:p-8 border border-plum/15 shadow-sm hover:shadow-lg hover:shadow-plum/15 hover:-translate-y-0.5 transition-all relative group"
+              style="transform: rotate(-0.5deg)"
+            >
+              <span
+                class="tape"
+                style="top: -14px; left: 14%; transform: rotate(-4deg)"
+                aria-hidden="true"
+              ></span>
+              <span
+                class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 right-6"
+                style="transform: rotate(2deg)"
+              >
+                <iconify-icon
+                  icon="ph:book-open-text-duotone"
+                  width="14"
+                  class="mr-1"
+                ></iconify-icon>
+                13 chapters
+              </span>
+
+              <div class="mt-5 flex items-start gap-4">
+                <div
+                  class="flex-shrink-0 w-12 h-12 rounded-2xl bg-plum/10 flex items-center justify-center"
+                >
+                  <iconify-icon
+                    icon="ph:compass-duotone"
+                    width="26"
+                    class="text-plum"
+                  ></iconify-icon>
+                </div>
+                <div class="min-w-0">
+                  <h3
+                    class="font-display text-xl md:text-2xl text-navy font-semibold mb-1"
+                  >
+                    The Rudiment Guide
+                  </h3>
+                  <p class="font-heading text-xs text-plum/70 font-mono">
+                    rudiment-guide.netlify.app
+                  </p>
+                </div>
+              </div>
+
+              <p class="mt-5 text-charcoal/75 leading-relaxed font-body">
+                A sequenced, decision-by-decision walkthrough — from an empty
+                directory to a published, token-driven, accessible React library.
+                Every choice is shown alongside the alternatives it closed off.
+              </p>
+
+              <ul class="mt-5 space-y-2 font-body text-sm text-charcoal/80">
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-plum flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  Architecture, tokens, primitives, components, tests, publishing
+                </li>
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-plum flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  Companion GitHub repo with a complete working implementation
+                </li>
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-plum flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  The <em>why</em> behind each decision, not just the
+                  <em>what</em>
+                </li>
+              </ul>
+
+              <div
+                class="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-plum group-hover:text-coral transition-colors"
+              >
+                Open the guide
+                <iconify-icon
+                  icon="ph:arrow-up-right-bold"
+                  width="14"
+                  class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                ></iconify-icon>
+              </div>
+            </a>
+
+            <a
+              href="https://rudiment-ui.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="block bg-white rounded-3xl p-7 md:p-8 border border-coral/20 shadow-sm hover:shadow-lg hover:shadow-coral/20 hover:-translate-y-0.5 transition-all relative group"
+              style="transform: rotate(0.4deg)"
+            >
+              <span
+                class="tape"
+                style="top: -14px; right: 14%; transform: rotate(5deg)"
+                aria-hidden="true"
+              ></span>
+              <span
+                class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-6"
+                style="transform: rotate(-2deg)"
+              >
+                <iconify-icon
+                  icon="ph:squares-four-duotone"
+                  width="14"
+                  class="mr-1"
+                ></iconify-icon>
+                Live library
+              </span>
+
+              <div class="mt-5 flex items-start gap-4">
+                <div
+                  class="flex-shrink-0 w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center"
+                >
+                  <iconify-icon
+                    icon="ph:cube-duotone"
+                    width="26"
+                    class="text-coral"
+                  ></iconify-icon>
+                </div>
+                <div class="min-w-0">
+                  <h3
+                    class="font-display text-xl md:text-2xl text-navy font-semibold mb-1"
+                  >
+                    The Storybook
+                  </h3>
+                  <p class="font-heading text-xs text-coral/80 font-mono">
+                    rudiment-ui.netlify.app
+                  </p>
+                </div>
+              </div>
+
+              <p class="mt-5 text-charcoal/75 leading-relaxed font-body">
+                The deployed component library as an interactive reference —
+                layout primitives, form controls, overlays, and every variant
+                the guide produces, with controls and docs on each story.
+              </p>
+
+              <ul class="mt-5 space-y-2 font-body text-sm text-charcoal/80">
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-coral flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  Live components built on React Aria &amp; Tailwind CSS 4
+                </li>
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-coral flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  Token-driven theming visible across every story
+                </li>
+                <li class="flex items-start gap-2">
+                  <iconify-icon
+                    icon="ph:check-circle-duotone"
+                    width="18"
+                    class="text-coral flex-shrink-0 mt-0.5"
+                  ></iconify-icon>
+                  a11y &amp; interaction addons wired in out of the box
+                </li>
+              </ul>
+
+              <div
+                class="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-coral group-hover:text-plum transition-colors"
+              >
+                Browse the Storybook
+                <iconify-icon
+                  icon="ph:arrow-up-right-bold"
+                  width="14"
+                  class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform"
+                ></iconify-icon>
+              </div>
+            </a>
+          </div>
+
+          <p
+            class="mt-10 text-center text-sm text-charcoal/60 font-body italic"
+          >
+            Read a chapter, then open the matching story — the guide and the
+            library are meant to be used side by side.
+          </p>
         </div>
       </section>
 
