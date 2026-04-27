@@ -1,0 +1,43 @@
+---
+import { cx } from '~/lib/cx';
+
+/** Decorative washi tape for cards. Always aria-hidden. */
+
+type Position = 'tl' | 'tr' | 'left' | 'right' | 'center';
+type Tone = 'lemon' | 'peach' | 'sky' | 'coral';
+
+interface Props {
+  position?: Position;
+  tone?: Tone;
+  class?: string;
+}
+
+const { position = 'tl', tone = 'lemon', class: className } = Astro.props;
+
+const tones: Record<Tone, string> = {
+  lemon: '',          // default lemon background lives in .tape
+  peach: 'bg-peach/85',
+  sky: '',            // .tape.tr already provides sky; keep param for explicitness
+  coral: 'coral',
+};
+
+const positionClass: Record<Position, string> = {
+  tl: 'tl',
+  tr: 'tr',
+  left: 'left',
+  right: 'right',
+  center: 'center',
+};
+---
+
+<span
+  aria-hidden="true"
+  class={cx(
+    'tape',
+    positionClass[position],
+    tone === 'coral' && 'coral',
+    tone === 'peach' && 'bg-peach/85',
+    className,
+  )}
+>
+</span>

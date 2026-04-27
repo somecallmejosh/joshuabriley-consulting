@@ -1,0 +1,57 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Small copy-to-clipboard button. Shows a temporary "Copied!" message via
+ * aria-live. Used in the component-inventory showcase to copy class strings.
+ */
+
+interface Props {
+  /** The exact text to copy. */
+  text: string;
+  /** Visible label. Defaults to the text itself when not provided. */
+  label?: string;
+  class?: string;
+}
+
+const { text, label, class: className } = Astro.props;
+const visibleLabel = label ?? text;
+---
+
+<button
+  type="button"
+  data-copy-button
+  data-copy-text={text}
+  class={cx(
+    'inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-charcoal/5 hover:bg-charcoal/10 font-mono text-xs text-charcoal/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral',
+    className,
+  )}
+  aria-label={`Copy ${visibleLabel}`}
+>
+  <Icon name="ph:copy" size={14} />
+  <span data-copy-label>{visibleLabel}</span>
+  <span data-copy-status class="sr-only" aria-live="polite"></span>
+</button>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('[data-copy-button]').forEach((btn) => {
+    btn.addEventListener('click', async () => {
+      const text = btn.dataset.copyText ?? '';
+      const status = btn.querySelector<HTMLElement>('[data-copy-status]');
+      const labelEl = btn.querySelector<HTMLElement>('[data-copy-label]');
+      const originalLabel = labelEl?.textContent ?? '';
+      try {
+        await navigator.clipboard.writeText(text);
+        if (status) status.textContent = 'Copied to clipboard';
+        if (labelEl) labelEl.textContent = 'Copied!';
+        setTimeout(() => {
+          if (labelEl) labelEl.textContent = originalLabel;
+          if (status) status.textContent = '';
+        }, 1500);
+      } catch {
+        if (status) status.textContent = 'Copy failed — please copy manually.';
+      }
+    });
+  });
+</script>

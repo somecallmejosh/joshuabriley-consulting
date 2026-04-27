@@ -1,0 +1,53 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Form-level alert. Success uses role="status" (polite), error uses
+ * role="alert" (assertive). The element is `tabindex="-1"` so client code
+ * can `focus()` it after submission to announce to screen readers and
+ * scroll into view.
+ */
+
+interface Props {
+  variant: 'success' | 'error';
+  /** Hidden by default; flip to false to render initially shown. */
+  hidden?: boolean;
+  id?: string;
+  class?: string;
+}
+
+const { variant, hidden = true, id, class: className } = Astro.props;
+
+const styles: Record<typeof variant, { surface: string; icon: string; iconColor: string }> = {
+  success: {
+    surface: 'bg-sage/10 border-sage-deep text-navy',
+    icon: 'ph:check-circle-duotone',
+    iconColor: 'text-sage-deep',
+  },
+  error: {
+    surface: 'bg-coral/10 border-plum text-navy',
+    icon: 'ph:warning-circle-duotone',
+    iconColor: 'text-plum',
+  },
+};
+
+const role = variant === 'error' ? 'alert' : 'status';
+---
+
+<div
+  id={id}
+  role={role}
+  aria-live={variant === 'error' ? 'assertive' : 'polite'}
+  tabindex="-1"
+  hidden={hidden}
+  data-form-alert={variant}
+  class={cx(
+    'rounded-2xl border px-5 py-4 text-sm leading-relaxed font-body flex items-start gap-3 focus:outline-none [&[hidden]]:hidden',
+    styles[variant].surface,
+    className,
+  )}
+>
+  <Icon name={styles[variant].icon} size={20} class={`mt-0.5 flex-shrink-0 ${styles[variant].iconColor}`} />
+  <div><slot /></div>
+</div>

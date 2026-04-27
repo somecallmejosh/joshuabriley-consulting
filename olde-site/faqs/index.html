@@ -1,0 +1,1074 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>
+      FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant
+    </title>
+    <meta
+      name="description"
+      content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
+    />
+    <link rel="canonical" href="https://joshuabriley.com/faqs/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://joshuabriley.com/faqs/" />
+    <meta
+      property="og:title"
+      content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      property="og:description"
+      content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="FAQs — Joshua Briley | UX Engineer &amp; Design Systems Consultant"
+    />
+    <meta
+      name="twitter:description"
+      content="Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <style>
+      .bubble {
+        position: relative;
+        background: #ffffff;
+        border: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-radius: 22px;
+        padding: 1rem 1.25rem;
+        box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
+      }
+      .bubble::after {
+        content: '';
+        position: absolute;
+        width: 18px;
+        height: 18px;
+        background: #ffffff;
+        border-right: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
+        bottom: -10px;
+        left: 28px;
+        transform: rotate(45deg);
+        border-bottom-right-radius: 4px;
+      }
+      .bubble-right::after {
+        left: auto;
+        right: 28px;
+      }
+      .faq-card {
+        background: #ffffff;
+        border: 1.5px solid rgba(45, 43, 85, 0.08);
+        border-radius: 18px;
+        box-shadow: 0 14px 32px -22px rgba(45, 43, 85, 0.22);
+        transition:
+          transform 0.25s ease,
+          box-shadow 0.25s ease,
+          border-color 0.25s ease;
+      }
+      .faq-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 22px 42px -22px rgba(45, 43, 85, 0.28);
+        border-color: rgba(108, 74, 182, 0.2);
+      }
+      .faq-card[open] {
+        border-color: rgba(232, 87, 61, 0.35);
+        box-shadow: 0 24px 48px -22px rgba(232, 87, 61, 0.25);
+      }
+      .faq-card > summary {
+        list-style: none;
+        cursor: pointer;
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        align-items: flex-start;
+        gap: 1rem;
+        font-family: 'Fraunces', Georgia, serif;
+        font-weight: 500;
+        font-size: 1.125rem;
+        color: #2d2b55;
+        line-height: 1.35;
+      }
+      .faq-card > summary::-webkit-details-marker {
+        display: none;
+      }
+      .faq-card .q-icon {
+        flex-shrink: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        color: #ffffff;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.95rem;
+        box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
+      }
+      .faq-card .chevron {
+        margin-left: auto;
+        flex-shrink: 0;
+        color: #6c4ab6;
+        transition: transform 0.3s ease;
+      }
+      .faq-card[open] .chevron {
+        transform: rotate(180deg);
+      }
+      .faq-card .answer {
+        padding: 0 1.5rem 1.5rem 4.25rem;
+        color: rgba(46, 46, 48, 0.8);
+        font-size: 1rem;
+        line-height: 1.7;
+      }
+      .faq-card .answer::before {
+        content: '';
+        display: block;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          rgba(232, 87, 61, 0.3),
+          rgba(108, 74, 182, 0.1),
+          transparent
+        );
+        margin-bottom: 1rem;
+      }
+      .tab-label {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.6rem;
+        padding: 0.5rem 1.15rem;
+        border-radius: 9999px;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-weight: 600;
+        font-size: 0.78rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+      .jump-link {
+        display: flex;
+        align-items: center;
+        gap: 0.65rem;
+        padding: 0.65rem 0.9rem;
+        border-radius: 12px;
+        font-family: 'Space Grotesk', system-ui, sans-serif;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: rgba(46, 46, 48, 0.72);
+        transition:
+          background 0.2s ease,
+          color 0.2s ease,
+          transform 0.2s ease;
+      }
+      .jump-link:hover {
+        background: rgba(232, 87, 61, 0.08);
+        color: #e8573d;
+        transform: translateX(2px);
+      }
+      .jump-link .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 9999px;
+        flex-shrink: 0;
+      }
+    </style>
+    <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
+    <script defer src="/scripts/scroll-reveal.js"></script>
+  </head>
+  <body class="bg-cream text-charcoal antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- ====== HEADER / NAV ====== -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="/" class="inline-flex items-center gap-2.5 group">
+          <span
+            class="logo-monogram group-hover:scale-105 transition-transform"
+            aria-hidden="true"
+            >jb</span
+          >
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a href="/services" class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a href="/projects/" class="hover:text-coral transition-colors"
+            >Projects</a
+          >
+        </nav>
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
+          aria-label="Toggle navigation menu"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
+        </button>
+      </div>
+      <div
+        id="mobile-menu"
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a href="/services" class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ====== HERO — speech-bubble conversation ====== -->
+      <section class="relative overflow-hidden pt-20 md:pt-28 pb-16 md:pb-20">
+        <!-- Floating decorations -->
+        <div
+          class="absolute top-16 right-[8%] w-20 h-20 bg-lemon/60 blob-shape animate-float opacity-70"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-44 left-[6%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-10 right-[14%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-24 left-[18%] w-8 h-8 bg-coral/25 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+        <svg
+          class="absolute top-20 left-1/2 -translate-x-1/2 w-44 opacity-40"
+          viewBox="0 0 200 40"
+          fill="none"
+          aria-hidden="true"
+        >
+          <path
+            d="M5 30 Q 50 5 100 25 T 195 15"
+            stroke="#6C4AB6"
+            stroke-width="2.5"
+            stroke-linecap="round"
+            stroke-dasharray="1 7"
+          />
+        </svg>
+
+        <div class="max-w-5xl mx-auto px-6 relative z-10 text-center">
+          <div
+            class="inline-flex items-center gap-2 bg-lemon/40 text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-lemon/60"
+          >
+            <iconify-icon
+              icon="ph:chats-circle-duotone"
+              width="20"
+              class="text-sunset"
+            ></iconify-icon>
+            Frequently asked, happily answered
+          </div>
+
+          <h1
+            class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+          >
+            Let's clear
+            <span class="relative inline-block">
+              the air
+              <svg
+                class="absolute -bottom-2 left-0 w-full"
+                viewBox="0 0 200 12"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M2 8 Q 50 2 100 8 Q 150 14 198 6"
+                  stroke="#6C4AB6"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.55"
+                />
+              </svg> </span
+            >.
+          </h1>
+          <p
+            class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-14"
+          >
+            These questions come from clients and colleagues I've worked with
+            over the years. If yours isn't here,
+            <a
+              href="/contact/"
+              class="text-coral font-semibold hover:text-coral/80 wavy-underline"
+              >just ask</a
+            >.
+          </p>
+
+          <!-- Floating conversation bubbles -->
+          <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
+            <div
+              class="bubble"
+              style="transform: rotate(-1.2deg)"
+              aria-hidden="true"
+            >
+              <div
+                class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-plum mb-1"
+              >
+                <iconify-icon
+                  icon="ph:user-circle-duotone"
+                  width="18"
+                ></iconify-icon>
+                Client
+              </div>
+              <p class="font-display text-navy text-lg leading-snug">
+                "How long does a typical engagement take?"
+              </p>
+            </div>
+            <div
+              class="bubble bubble-right bg-peach/60"
+              style="transform: rotate(1deg); background: #fff6ec"
+              aria-hidden="true"
+            >
+              <div
+                class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-coral mb-1 justify-end"
+              >
+                Joshua
+                <iconify-icon
+                  icon="ph:sparkle-duotone"
+                  width="18"
+                ></iconify-icon>
+              </div>
+              <p class="font-display text-navy text-lg leading-snug text-right">
+                "Usually 2–3 weeks for the starter. I'll walk you through it
+                below."
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-6xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== FAQ BODY — sticky jump list + categorized cards ====== -->
+      <section class="py-16 md:py-24">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+            <!-- Sticky jump list -->
+            <aside class="lg:col-span-4 xl:col-span-3">
+              <div class="lg:sticky lg:top-28">
+                <p
+                  class="font-heading text-xs uppercase tracking-[0.15em] text-charcoal/50 mb-4 pl-2"
+                >
+                  Jump to
+                </p>
+                <nav class="flex flex-col gap-1">
+                  <a href="#services-fit" class="jump-link">
+                    <span class="dot bg-coral"></span>
+                    Services &amp; Fit
+                  </a>
+                  <a href="#process-timeline" class="jump-link">
+                    <span class="dot bg-plum"></span>
+                    Process &amp; Timeline
+                  </a>
+                  <a href="#deliverables" class="jump-link">
+                    <span class="dot bg-sage"></span>
+                    Deliverables
+                  </a>
+                  <a href="#logistics" class="jump-link">
+                    <span class="dot bg-sky"></span>
+                    Logistics
+                  </a>
+                </nav>
+
+                <div
+                  class="mt-8 bg-white rounded-2xl border border-charcoal/5 p-5 shadow-[0_14px_32px_-22px_rgba(45,43,85,0.22)] hidden lg:block"
+                >
+                  <div class="flex items-center gap-2 mb-2">
+                    <iconify-icon
+                      icon="ph:lightbulb-duotone"
+                      width="22"
+                      class="text-sunset"
+                    ></iconify-icon>
+                    <span
+                      class="font-heading text-xs uppercase tracking-wider text-navy font-semibold"
+                      >Tip</span
+                    >
+                  </div>
+                  <p class="text-sm text-charcoal/75 leading-relaxed">
+                    Click any question to expand its answer. Still stuck?
+                    <a
+                      href="/contact/"
+                      class="text-coral font-semibold hover:text-coral/80"
+                      >Send me a note</a
+                    >.
+                  </p>
+                </div>
+              </div>
+            </aside>
+
+            <!-- FAQ sections -->
+            <div class="lg:col-span-8 xl:col-span-9 space-y-16">
+              <!-- ============ SERVICES & FIT ============ -->
+              <section id="services-fit" class="scroll-mt-28">
+                <div class="flex items-center gap-4 mb-6">
+                  <span
+                    class="tab-label bg-coral/15 text-coral border border-coral/25"
+                  >
+                    <iconify-icon
+                      icon="ph:compass-duotone"
+                      width="16"
+                    ></iconify-icon>
+                    01 · Services &amp; Fit
+                  </span>
+                </div>
+                <h2
+                  class="font-display text-3xl md:text-4xl font-semibold text-navy mb-8 leading-tight"
+                >
+                  Is this the right kind of help?
+                </h2>
+
+                <div class="space-y-4">
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span>What frameworks do you work with?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Primarily React/Next.js and Vue.js/Nuxt.js. The audit
+                      engagement is framework-agnostic, covering consistency,
+                      accessibility, token structure, and documentation
+                      regardless of what your team is using.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span
+                        >How do I know whether to start with the audit or go
+                        straight to a component library build?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      If you have an existing system, start with the audit. It
+                      identifies what needs to be fixed or rebuilt before any
+                      building begins. If you're starting from scratch, the
+                      Component Library Starter is the right fit. If you're not
+                      sure which applies to you, the intro call will make it
+                      clear.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span>What if we don't have a design system yet?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      The Component Library Starter is built for that. You don't
+                      need anything in place before we begin, just a clear
+                      picture of the product you're building for. We align on
+                      tokens, components, and approach during the kickoff call.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span
+                        >Can I start with the audit and move to a component
+                        library build afterward?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Yes, and that's the most common path. The audit identifies
+                      exactly what needs to be built or rebuilt, which makes the
+                      component library engagement more focused and efficient.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span>What if my needs don't fit your services?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Get in touch and describe what you're working with. If
+                      it's something I can help with, I'll put together a custom
+                      proposal. If it isn't, I'll tell you that too.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #e8573d">Q</span>
+                      <span
+                        >Are you available for ongoing work beyond these
+                        engagements?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      On a limited basis, yes. If you complete one of these
+                      engagements and want continued support (extending the
+                      system, reviewing new components, maintaining
+                      accessibility), we can discuss a monthly retainer.
+                    </div>
+                  </details>
+                </div>
+              </section>
+
+              <!-- ============ PROCESS & TIMELINE ============ -->
+              <section id="process-timeline" class="scroll-mt-28">
+                <div class="flex items-center gap-4 mb-6">
+                  <span
+                    class="tab-label bg-plum/15 text-plum border border-plum/25"
+                  >
+                    <iconify-icon
+                      icon="ph:calendar-duotone"
+                      width="16"
+                    ></iconify-icon>
+                    02 · Process &amp; Timeline
+                  </span>
+                </div>
+                <h2
+                  class="font-display text-3xl md:text-4xl font-semibold text-navy mb-8 leading-tight"
+                >
+                  What the engagement looks like.
+                </h2>
+
+                <div class="space-y-4">
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #6c4ab6">Q</span>
+                      <span>What does the intro call cover?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      The intro call is 30 minutes. We cover who owns the system
+                      and who uses it day to day, when it was last actively
+                      maintained, whether there is an existing component
+                      inventory or changelog, what prompted you to reach out,
+                      and which parts of the product are highest priority if
+                      scope needs to be narrowed. By the end, we'll both have a
+                      clear sense of whether the engagement is a good fit.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #6c4ab6">Q</span>
+                      <span>What do I need to prepare before we start?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      For an audit, nothing special. Share your Storybook, Figma
+                      file, or codebase and that's enough to get started. For a
+                      component library build, we align on tokens, styling
+                      approach, and product requirements during a kickoff call.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #6c4ab6">Q</span>
+                      <span>How long does a typical engagement take?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      The audit timeline depends on the size and complexity of
+                      your system. The starter component library build typically
+                      takes 2–3 weeks. More advanced component libraries take
+                      longer, depending on the requirements. Exact timelines are
+                      confirmed during the intro call.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #6c4ab6">Q</span>
+                      <span
+                        >How involved does our team need to be during the
+                        engagement?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      A single point of contact is all I need. I'll occasionally
+                      have questions about existing implementation decisions or
+                      other project details and will reach out by email. A
+                      response within one business day keeps things moving.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #6c4ab6">Q</span>
+                      <span
+                        >What happens if the scope changes mid-engagement?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Scope changes happen. When they do, we'll discuss the
+                      impact on timeline and cost before any additional work
+                      begins. Nothing changes without your agreement first.
+                    </div>
+                  </details>
+                </div>
+              </section>
+
+              <!-- ============ DELIVERABLES ============ -->
+              <section id="deliverables" class="scroll-mt-28">
+                <div class="flex items-center gap-4 mb-6">
+                  <span
+                    class="tab-label bg-sage/20 text-sage border border-sage/30"
+                    style="color: #4f7e4f"
+                  >
+                    <iconify-icon
+                      icon="ph:package-duotone"
+                      width="16"
+                    ></iconify-icon>
+                    03 · Deliverables
+                  </span>
+                </div>
+                <h2
+                  class="font-display text-3xl md:text-4xl font-semibold text-navy mb-8 leading-tight"
+                >
+                  What you get at the end.
+                </h2>
+
+                <div class="space-y-4">
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #7bb47a">Q</span>
+                      <span>How many revision rounds are included?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      The component library starter includes one round of
+                      revisions. The audit includes a debrief call where we walk
+                      through findings together before you act on anything.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #7bb47a">Q</span>
+                      <span
+                        >Do you provide a walkthrough after the engagement
+                        ends?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Yes. Both engagements include a structured walkthrough.
+                      For the audit, we walk through the findings together in a
+                      debrief call so your team knows exactly what to prioritize
+                      and why. For the component library build, I deliver the
+                      library to your repo and walk your team through it so you
+                      can start using it immediately.
+                    </div>
+                  </details>
+                </div>
+              </section>
+
+              <!-- ============ LOGISTICS ============ -->
+              <section id="logistics" class="scroll-mt-28">
+                <div class="flex items-center gap-4 mb-6">
+                  <span
+                    class="tab-label bg-sky/15 border border-sky/30"
+                    style="color: #2d7ba8"
+                  >
+                    <iconify-icon
+                      icon="ph:gear-duotone"
+                      width="16"
+                    ></iconify-icon>
+                    04 · Logistics
+                  </span>
+                </div>
+                <h2
+                  class="font-display text-3xl md:text-4xl font-semibold text-navy mb-8 leading-tight"
+                >
+                  The practical stuff.
+                </h2>
+
+                <div class="space-y-4">
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #5dade2">Q</span>
+                      <span>Do you work with teams outside the US?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Yes. All engagements are fully remote and async-friendly.
+                      Time zone differences haven't been a problem.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #5dade2">Q</span>
+                      <span>How does payment work?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      50% upfront to reserve your spot, 50% on delivery. Payment
+                      is via invoice.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #5dade2">Q</span>
+                      <span>Do you offer priority or expedited delivery?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Yes. If your team needs an engagement scheduled and
+                      completed faster, priority delivery is available for an
+                      additional fee. Get in touch to check current
+                      availability.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #5dade2">Q</span>
+                      <span>Do you sign NDAs?</span>
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      Yes. If your team requires a non-disclosure agreement
+                      before sharing access to your codebase or design files,
+                      that's not a problem.
+                    </div>
+                  </details>
+
+                  <details class="faq-card group">
+                    <summary>
+                      <span class="q-icon" style="background: #5dade2">Q</span>
+                      <span
+                        >Who owns the code at the end of the engagement?</span
+                      >
+                      <iconify-icon
+                        icon="ph:caret-down-bold"
+                        width="20"
+                        class="chevron"
+                      ></iconify-icon>
+                    </summary>
+                    <div class="answer">
+                      You do. All delivered code is yours. There are no
+                      licensing restrictions on what I build for you.
+                    </div>
+                  </details>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== STILL HAVE QUESTIONS CTA ====== -->
+      <section class="relative overflow-hidden py-20 md:py-28">
+        <div
+          class="absolute top-10 left-[10%] w-14 h-14 bg-lemon/60 blob-shape animate-float opacity-80"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-12 right-[12%] w-16 h-16 bg-sage/40 blob-shape-alt animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-1/2 right-[8%] w-10 h-10 bg-sky/30 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-4xl mx-auto px-6 relative z-10">
+          <div
+            class="relative bg-gradient-to-br from-navy via-navy to-plum text-white rounded-[36px] px-8 py-14 md:px-16 md:py-20 text-center shadow-[0_40px_80px_-30px_rgba(45,43,85,0.55)]"
+          >
+            <div
+              class="absolute -top-6 -left-6 w-14 h-14 bg-lemon blob-shape hidden md:block"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute -bottom-8 -right-4 w-16 h-16 bg-coral blob-shape-alt hidden md:block"
+              aria-hidden="true"
+            ></div>
+
+            <div
+              class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full mb-6 font-heading text-xs uppercase tracking-wider"
+            >
+              <iconify-icon
+                icon="ph:envelope-duotone"
+                width="18"
+              ></iconify-icon>
+              Still curious?
+            </div>
+            <h2
+              class="font-display text-3xl md:text-5xl font-semibold leading-tight mb-6"
+            >
+              Didn't find your question?
+              <span class="text-lemon">Ask it directly.</span>
+            </h2>
+            <p
+              class="text-white/75 text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            >
+              The fastest way to find out whether this is the right fit is a
+              30-minute intro call. No pressure, no sales pitch.
+            </p>
+            <div
+              class="flex flex-col sm:flex-row items-center justify-center gap-4"
+            >
+              <a
+                href="/contact/"
+                class="inline-flex items-center gap-2 bg-coral hover:bg-coral/90 text-white font-semibold px-7 py-4 rounded-full transition-colors shadow-lg"
+              >
+                <iconify-icon
+                  icon="ph:calendar-check-duotone"
+                  width="20"
+                ></iconify-icon>
+                Book the intro call
+              </a>
+              <a
+                href="/scorecard/"
+                class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 border border-white/25 text-white font-semibold px-7 py-4 rounded-full transition-colors"
+              >
+                <iconify-icon
+                  icon="ph:clipboard-text-duotone"
+                  width="20"
+                ></iconify-icon>
+                Grab the free scorecard
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8 mb-10">
+          <div class="md:col-span-2">
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
+            </a>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="/contact/"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
+            <div class="flex items-center gap-4 mt-5">
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/services"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/testimonials/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

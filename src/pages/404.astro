@@ -1,0 +1,161 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import MissingTokenGame from '~/components/islands/MissingTokenGame.astro';
+
+const description =
+  "The page you're looking for wandered off. Let's get you back on track.";
+
+const detours = [
+  { href: '/services', icon: 'ph:hammer-duotone', iconClass: 'text-coral', iconBg: 'bg-coral/10', title: 'Services', body: 'Audits, starters, and workflow work.', tilt: '-rotate-[0.6deg]' },
+  { href: '/projects/', icon: 'ph:briefcase-duotone', iconClass: 'text-plum', iconBg: 'bg-plum/10', title: 'Projects', body: 'A peek at recent client work.', tilt: 'rotate-[0.5deg]' },
+  { href: '/scorecard/', icon: 'ph:clipboard-text-duotone', iconClass: 'text-sunset', iconBg: 'bg-sunset/10', title: 'Free Scorecard', body: 'Score your design system in minutes.', tilt: '-rotate-[0.4deg]' },
+  { href: '/about/', icon: 'ph:user-duotone', iconClass: 'text-sky', iconBg: 'bg-sky/10', title: 'About', body: '20 years of opinions on UI systems.', tilt: 'rotate-[0.7deg]' },
+  { href: '/blog/', icon: 'ph:notebook-duotone', iconClass: 'text-sage', iconBg: 'bg-sage/20', title: 'Blog', body: 'Notes from the design-system trenches.', tilt: '-rotate-[0.3deg]' },
+  { href: '/contact/', icon: 'ph:chat-circle-duotone', iconClass: 'text-sunset', iconBg: 'bg-lemon/40', title: 'Contact', body: 'Say hi or report this broken link.', tilt: 'rotate-[0.4deg]' },
+];
+---
+
+<BaseLayout title="Page not found — Joshua Briley" description={description} noindex>
+  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
+    <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
+    <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
+
+    <Blob tone="plum" size="lg" animate="float" opacity="opacity-20" class="absolute top-20 right-[8%] w-20 h-20" />
+    <div class="absolute top-40 left-[7%] w-12 h-12 bg-lemon/70 rounded-full animate-float-delay" aria-hidden="true"></div>
+    <Blob tone="sage" size="md" animate="float-slow" opacity="opacity-30" class="absolute bottom-24 right-[14%] w-14 h-14" />
+    <div class="absolute bottom-32 left-[12%] w-10 h-10 bg-sky/30 rounded-full animate-float" aria-hidden="true"></div>
+
+    <Container class="relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-7">
+          <Badge tone="peach" icon="ph:compass-duotone" class="mb-8">
+            Error 404 &middot; Page not found
+          </Badge>
+
+          <Heading level={1} visual="display-xl" balance class="mb-6">
+            You've wandered <WavyUnderline>off the map</WavyUnderline>.
+          </Heading>
+
+          <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
+            This page took an unplanned detour.
+          </p>
+
+          <Text size="lg" tone="muted" class="max-w-xl mb-10">
+            Maybe it was renamed. Maybe it's a typo. Maybe it drifted out of the system and nobody wrote it down &mdash;
+            <strong class="text-charcoal font-semibold">happens to the best of us</strong>.
+          </Text>
+
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Button href="/" variant="primary" size="lg" iconLeft="ph:house-duotone">
+              Back to homepage
+            </Button>
+            <Button href="#detours" variant="ghost" size="lg" iconLeft="ph:arrow-down-duotone">
+              Try a detour
+            </Button>
+          </div>
+
+          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/60">
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="ph:warning-duotone" size={18} class="text-plum" />
+              Broken link?
+            </span>
+            <span class="w-1 h-1 rounded-full bg-charcoal/30" aria-hidden="true"></span>
+            <a href="/contact/" class="inline-flex items-center gap-1.5 hover:text-coral transition-colors">
+              <Icon name="ph:paper-plane-tilt-duotone" size={18} class="text-plum" />
+              Let me know
+            </a>
+          </div>
+        </div>
+
+        {/* lost-compass visual */}
+        <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/30 animate-spin-slow"></div>
+          </div>
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"></div>
+          </div>
+
+          <div class="absolute top-0 -left-4 -rotate-6 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-coral"></div>
+            <span class="font-heading text-xs font-semibold text-navy">/wandered-off</span>
+          </div>
+          <div class="absolute top-0 -right-4 rotate-6 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-sunset"></div>
+            <span class="font-heading text-xs font-semibold text-navy">/typo-maybe</span>
+          </div>
+          <div class="absolute bottom-2 -left-4 rotate-3 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-sage"></div>
+            <span class="font-heading text-xs font-semibold text-navy">/renamed-2023</span>
+          </div>
+          <div class="absolute bottom-2 -right-4 -rotate-3 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+            <div class="w-2 h-2 rounded-full bg-plum"></div>
+            <span class="font-heading text-xs font-semibold text-navy">/oops-404</span>
+          </div>
+
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="relative animate-float-slow">
+              <div class="w-48 h-48 rounded-full bg-gradient-to-br from-white/90 to-peach/70 border-[10px] border-navy shadow-2xl backdrop-blur-[1px] flex items-center justify-center">
+                <Icon name="ph:compass-duotone" size={84} class="text-coral" />
+              </div>
+              <div class="absolute -top-4 -right-6 bg-lemon text-navy px-3 py-1.5 rounded-full font-heading font-semibold text-xs shadow-md border border-lemon/70 rotate-[8deg]">
+                <Icon name="ph:map-pin-duotone" size={14} class="mr-1 text-sunset" />
+                You are here
+              </div>
+              <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 font-display text-4xl font-bold whitespace-nowrap -rotate-3">
+                <span class="text-navy">4</span><span class="text-coral">0</span><span class="text-plum">4</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <SquiggleDivider />
+
+  <Section tone="cream" padding="tight">
+    <Container width="default">
+      <MissingTokenGame />
+    </Container>
+  </Section>
+
+  <SquiggleDivider />
+
+  <Section id="detours" tone="cream" padding="default">
+    <Container width="wide">
+      <div class="text-center mb-14">
+        <Badge tone="sage" icon="ph:signpost-duotone" sticker class="mb-6">
+          Try one of these instead
+        </Badge>
+        <Heading level={2} visual="h2" align="center">Popular places to land</Heading>
+      </div>
+
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {detours.map((d) => (
+          <a
+            href={d.href}
+            class={`card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm ${d.tilt}`}
+          >
+            <div class={`w-12 h-12 ${d.iconBg} rounded-xl flex items-center justify-center mb-4`}>
+              <Icon name={d.icon} size={24} class={d.iconClass} />
+            </div>
+            <p class="font-heading font-medium text-navy mb-1">{d.title}</p>
+            <Text size="sm" tone="muted">{d.body}</Text>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>

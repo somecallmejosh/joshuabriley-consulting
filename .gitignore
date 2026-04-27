@@ -1,2 +1,6 @@
-plans/
+node_modules
+dist
+.astro
+.netlify
 .DS_Store
+*.log

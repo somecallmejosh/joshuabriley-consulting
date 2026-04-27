@@ -1,0 +1,57 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Initials avatar. Renders a gradient disk with the supplied initials.
+ * The initials are decorative (we expose the full `name` via aria-label),
+ * so screen readers announce the person, not the letters.
+ */
+
+type Gradient = 'coralSunset' | 'plumSky' | 'sageLemon';
+
+interface Props {
+  initials: string;
+  /** Full name announced to assistive tech. */
+  name: string;
+  gradient?: Gradient;
+  size?: 'sm' | 'md' | 'lg';
+  /** When true, render as a decorative element (no aria-label/role). */
+  decorative?: boolean;
+  class?: string;
+}
+
+const {
+  initials,
+  name,
+  gradient = 'coralSunset',
+  size = 'md',
+  decorative = false,
+  class: className,
+} = Astro.props;
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  sm: 'w-10 h-10 text-sm',
+  md: 'avatar',
+  lg: 'avatar avatar-lg',
+};
+
+const gradients: Record<Gradient, string> = {
+  coralSunset: 'bg-gradient-to-br from-coral to-sunset',
+  plumSky: 'bg-gradient-to-br from-plum to-sky',
+  sageLemon: 'bg-gradient-to-br from-sage to-lemon',
+};
+---
+
+<span
+  class={cx(
+    'inline-flex items-center justify-center rounded-full font-heading font-semibold text-white shadow',
+    sizes[size],
+    gradients[gradient],
+    className,
+  )}
+  role={decorative ? undefined : 'img'}
+  aria-label={decorative ? undefined : name}
+  aria-hidden={decorative ? 'true' : undefined}
+>
+  <span aria-hidden="true">{initials}</span>
+</span>

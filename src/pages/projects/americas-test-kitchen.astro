@@ -1,0 +1,559 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+
+const title = "America's Test Kitchen — Joshua Briley";
+const description =
+  "Case study: building a shared React component library that serves multiple editorial brands at America's Test Kitchen without fragmenting or going rigid.";
+
+const recipeMeta = [
+  { label: 'Role', value: 'UX Engineer' },
+  { label: 'Surfaces', value: 'Multiple brands' },
+  { label: 'Stack', value: 'React, Next.js' },
+  { label: 'Focus', value: 'A11y · Tokens' },
+];
+
+const onMenu = [
+  { href: '#problem', icon: 'ph:warning-circle-duotone', iconClass: 'text-coral', label: 'The core architecture problem' },
+  { href: '#decisions', icon: 'ph:cookie-duotone', iconClass: 'text-sunset', label: 'Library decisions in practice' },
+  { href: '#accessibility', icon: 'ph:heart-duotone', iconClass: 'text-sage', label: 'Accessibility across every surface' },
+  { href: '#scale', icon: 'ph:trend-up-duotone', iconClass: 'text-plum', label: 'What it enables at scale' },
+];
+
+const decisions = [
+  {
+    icon: 'ph:plug-duotone',
+    iconClass: 'text-plum',
+    title: 'Brand-agnostic APIs',
+  },
+  {
+    icon: 'ph:palette-duotone',
+    iconClass: 'text-coral',
+    title: 'Complete token coverage',
+  },
+  {
+    icon: 'ph:books-duotone',
+    iconClass: 'text-sunset',
+    title: 'Storybook as development + docs',
+  },
+];
+
+const a11yChecklist = [
+  { icon: 'ph:keyboard-duotone', iconClass: 'text-plum', label: 'Full keyboard operability' },
+  { icon: 'ph:target-duotone', iconClass: 'text-coral', label: 'Focus management in overlays' },
+  { icon: 'ph:megaphone-duotone', iconClass: 'text-sunset', label: 'ARIA semantics on every component' },
+  { icon: 'ph:eye-duotone', iconClass: 'text-sky', label: 'Contrast checked against tokens' },
+];
+
+const outcomes = [
+  {
+    icon: 'ph:rocket-launch-duotone',
+    iconClass: 'text-coral',
+    title: 'Faster brand launches',
+    body: 'Behavioral foundation is already there — new surfaces mostly wire up tokens.',
+    tilt: '-0.6deg',
+  },
+  {
+    icon: 'ph:broadcast-duotone',
+    iconClass: 'text-plum',
+    title: 'Consistent feature shipping',
+    body: 'The component API quietly enforces the right patterns for every team that uses it.',
+    tilt: '0.4deg',
+  },
+  {
+    icon: 'ph:graduation-cap-duotone',
+    iconClass: 'text-sunset',
+    title: 'Quicker onboarding',
+    body: 'New engineers learn the system by reading it — because the docs are part of done.',
+    tilt: '-0.3deg',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <Fragment slot="head">
+    <style>
+      .recipe-rule {
+        background-image: linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent calc(1.9em - 1px),
+          rgba(108, 74, 182, 0.18) calc(1.9em - 1px),
+          rgba(108, 74, 182, 0.18) 1.9em
+        );
+        background-size: 100% 1.9em;
+      }
+      .tape {
+        position: absolute;
+        width: 90px;
+        height: 22px;
+        background: rgba(253, 230, 138, 0.88);
+        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+        z-index: 5;
+      }
+    </style>
+  </Fragment>
+
+  <div class="corkboard">
+    <!-- ====== HERO — recipe card ====== -->
+    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+      <!-- floating decor -->
+      <Blob tone="lemon" size="lg" class="absolute top-14 right-[6%]" animate="float" opacity="opacity-70" />
+      <div
+        class="absolute top-40 left-[4%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="absolute bottom-20 right-[18%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow"
+        aria-hidden="true"
+      ></div>
+      <div
+        class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float"
+        aria-hidden="true"
+      ></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <!-- breadcrumb -->
+        <nav
+          class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60"
+          aria-label="Breadcrumb"
+        >
+          <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
+          <Icon name="ph:caret-right-bold" size={12} />
+          <span class="text-navy">America's Test Kitchen</span>
+        </nav>
+
+        <!-- recipe card -->
+        <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
+          <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
+          <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
+
+          <!-- steam from top of card -->
+          <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
+            <span class="steam animate-steam"></span>
+            <span class="steam animate-steam-delay"></span>
+            <span class="steam animate-steam-delay-2"></span>
+          </div>
+
+          <div class="relative text-center">
+            <div class="project-logo-tag">
+              <img src="/images/logos/atk.svg" alt="America's Test Kitchen logo" />
+            </div>
+
+            <div
+              class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
+            >
+              <Icon name="ph:chef-hat-duotone" size={18} />
+              Case study &middot; Recipe no. 02
+            </div>
+
+            <p class="marker-label text-2xl md:text-3xl mb-4">from the test kitchen —</p>
+
+            <h1
+              class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+            >
+              One component library,
+              <br />
+              <span class="relative inline-block">
+                many brands
+                <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 260 14" fill="none" aria-hidden="true">
+                  <path
+                    d="M3 9 Q 65 2 130 9 Q 195 16 257 7"
+                    stroke="#6C4AB6"
+                    stroke-width="3"
+                    stroke-linecap="round"
+                    opacity="0.55"
+                  />
+                </svg>
+              </span>
+              <span class="text-coral">,</span> no fragmenting.
+            </h1>
+
+            <p class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10">
+              Improving an inaccessible CMS and building a shared React + Next.js component library for one of the most recognized
+              <WavyUnderline>cooking brands</WavyUnderline> in the US.
+            </p>
+
+            <!-- recipe meta row -->
+            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
+              <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
+                {recipeMeta.map((m) => (
+                  <div>
+                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">
+                      {m.label}
+                    </dt>
+                    <dd class="font-display text-lg text-navy font-semibold">{m.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <SquiggleDivider />
+
+    <!-- ====== INGREDIENTS (outline) ====== -->
+    <section class="py-16 md:py-20 relative">
+      <Blob tone="plum" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-10" />
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-center gap-3 mb-6">
+          <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
+          <Heading level={2} visual="h2">On the menu</Heading>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {onMenu.map((item) => (
+            <a
+              href={item.href}
+              class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+            >
+              <Icon name={item.icon} size={18} class={item.iconClass} />
+              {item.label}
+            </a>
+          ))}
+        </div>
+
+        <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+          America's Test Kitchen operates across multiple editorial brands, each with its own visual identity, its own product team,
+          and its own publishing cadence. The challenge isn't unique to ATK: when a single component library needs to serve multiple
+          products that look different but share behavior, the architecture has to be built for that from the start. Libraries
+          designed for one brand and retrofitted for others quickly accumulate the wrong kind of complexity. At ATK, I built a
+          shared component library in React and Next.js that could serve multiple brand surfaces without requiring separate
+          implementations for each one.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== STEP 01 — PROBLEM ====== -->
+    <section id="problem" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">01</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step one</p>
+            <Heading level={2} visual="display-md">The core architecture problem</Heading>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            A component library that serves multiple brands has two failure modes. The first is
+            <strong class="text-coral">rigidity</strong>: the library is built for one brand, and every other brand works around
+            it, producing inconsistency and parallel implementations. The second is
+            <strong class="text-plum">fragmentation</strong>: the library tries to accommodate every brand's specifics directly,
+            and the component API becomes so configurable that it stops enforcing anything.
+          </p>
+          <p>
+            The solution to both is a clean separation between behavior and appearance. Components own their behavior: keyboard
+            navigation, focus management, ARIA attributes, interaction patterns. Visual styling is supplied through the token
+            system, which each brand can configure independently. A modal behaves the same way across every brand. It looks
+            different because the tokens it references resolve to different values depending on which brand context it's rendered
+            in.
+          </p>
+          <p>
+            This isn't a novel approach. It's the approach that lets systems scale without fragmenting. The work is in executing
+            it consistently across every component in the library.
+          </p>
+        </div>
+
+        <!-- failure mode pair -->
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <div
+            class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative"
+            style="transform: rotate(-0.6deg)"
+          >
+            <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5">
+              Failure mode A
+            </span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Too rigid</h3>
+            <p class="text-charcoal/70">
+              Built for one brand. Every other team works around it. Parallel implementations sprout in the margins.
+            </p>
+          </div>
+          <div
+            class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative"
+            style="transform: rotate(0.5deg)"
+          >
+            <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5">
+              Failure mode B
+            </span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Too fragmented</h3>
+            <p class="text-charcoal/70">
+              Every brand's specifics baked into the API. The component stops enforcing anything and becomes a config soup.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== STEP 02 — DECISIONS ====== -->
+    <section id="decisions" class="py-16 md:py-20 relative scroll-mt-24">
+      <div
+        class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
+        aria-hidden="true"
+      ></div>
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">02</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step two</p>
+            <Heading level={2} visual="display-md">Library decisions in practice</Heading>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>Building the library for this architecture meant making specific decisions at every layer.</p>
+        </div>
+
+        <ul class="mt-8 space-y-5">
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:plug-duotone" size={28} class="text-plum flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Brand-agnostic APIs</h3>
+              <p class="text-charcoal/70">
+                Props controlled behavior and content — not visual style. No
+                <code class="text-coral bg-coral/10 px-1.5 rounded">brand</code>
+                prop forking the render tree. Visual differences flowed through the token system instead.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:palette-duotone" size={28} class="text-coral flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Complete token coverage</h3>
+              <p class="text-charcoal/70">
+                Every brand difference had to be expressible as a token value rather than a one-off override. Gaps always surface
+                as CSS escape hatches, and that's how brand divergence accumulates.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:books-duotone" size={28} class="text-sunset flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Storybook as development + docs</h3>
+              <p class="text-charcoal/70">
+                Usage examples, variant coverage, and a11y notes were part of a component's definition of done — not something
+                added afterward. An undocumented component gets used incorrectly or rebuilt by a team who couldn't find it.
+              </p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- pull quote -->
+        <figure
+          class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative"
+          style="transform: rotate(-0.3deg)"
+        >
+          <Icon name="ph:quotes-duotone" size={32} class="text-coral/60 absolute -top-3 left-6 bg-cream px-1" />
+          <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+            A modal behaves the same way across every brand. It looks different because the tokens resolve differently depending
+            on which brand context it's rendered in.
+          </blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ====== STEP 03 — ACCESSIBILITY ====== -->
+    <section id="accessibility" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">03</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step three</p>
+            <Heading level={2} visual="display-md">Accessibility across every surface</Heading>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            A multi-brand component library has a compounding relationship with accessibility. A keyboard navigation gap in a
+            shared component isn't one violation — it's the same violation across every product that consumes the library. That
+            made the case for treating accessibility as an architectural concern, not something addressed per-brand or per-feature.
+          </p>
+          <p>
+            Keyboard operability, ARIA implementation, focus management in overlay components, and contrast against the token
+            system's color values were requirements for every component, not optional enhancements. A developer using the library
+            to build a feature got accessible behavior <em>without having to implement it</em>. That's the structural benefit of
+            treating accessibility as a component-level concern.
+          </p>
+        </div>
+
+        <!-- a11y checklist -->
+        <div
+          class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
+          style="transform: rotate(0.4deg)"
+        >
+          <div
+            class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50"
+            style="transform: rotate(-3deg)"
+          >
+            <Icon name="ph:check-fat-duotone" size={14} class="mr-1" />
+            Built-in, not bolted-on
+          </div>
+          <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80">
+            {a11yChecklist.map((item) => (
+              <li class="flex items-center gap-3">
+                <Icon name={item.icon} size={22} class={item.iconClass} />
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== STEP 04 — SCALE ====== -->
+    <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
+      <Blob tone="lemon" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-50" />
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">04</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step four</p>
+            <Heading level={2} visual="display-md">What a shared library enables at scale</Heading>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            The compounding return on a well-built shared component library shows up over time. New brand surfaces launch faster
+            because the behavioral foundation already exists. The component API enforces the right patterns, so features ship
+            consistently across brands. And because the documentation is accurate and the system is coherent, new engineers ramp
+            up by reading it.
+          </p>
+          <p>
+            A shared library built on a weak architectural foundation multiplies its problems at the same rate it multiplies its
+            value. Every brand surface that consumes it inherits the same structural gaps.
+          </p>
+        </div>
+
+        <!-- outcomes grid -->
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+          {outcomes.map((o) => (
+            <div
+              class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
+              style={`transform: rotate(${o.tilt})`}
+            >
+              <Icon name={o.icon} size={32} class={`${o.iconClass} mb-3`} />
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">{o.title}</h3>
+              <p class="text-charcoal/70 text-sm">{o.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
+    <section class="py-16 md:py-20 relative">
+      <Blob tone="coral" size="lg" class="absolute top-12 left-6" animate="float-slow" opacity="opacity-15" />
+      <div
+        class="absolute bottom-10 right-8 w-14 h-14 bg-lemon/40 rounded-full animate-float"
+        aria-hidden="true"
+      ></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-10">
+          <p class="marker-label text-2xl md:text-3xl text-coral mb-1">tasted &amp; approved &mdash;</p>
+          <Heading level={2} visual="h2" align="center">What Fran said</Heading>
+        </div>
+
+        <figure class="card-base card-sticky rot-2 max-w-2xl mx-auto p-8 md:p-12">
+          <span class="pin" aria-hidden="true"></span>
+
+          <Icon name="ph:quotes-duotone" size={36} class="text-coral/60 mb-3" />
+
+          <blockquote class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7">
+            Josh built the component library that finally let our brands stop fighting in code. Cook's Country, Cook's
+            Illustrated, and ATK all share the same primitives now &mdash; the visual difference comes from tokens, not parallel
+            implementations. He raised the floor on accessibility for every team that touches the system.
+          </blockquote>
+
+          <figcaption class="flex items-center gap-4 pt-5 border-t border-navy/15">
+            <img
+              src="/images/fran-middleton.jpeg"
+              alt="Fran Middleton"
+              class="avatar avatar-lg"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <p class="font-heading font-semibold text-navy text-base">Fran Middleton</p>
+              <p class="text-sm text-navy/70">Chief Digital Officer &middot; America's Test Kitchen</p>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <SquiggleDivider />
+
+    <!-- ====== CTA ====== -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden">
+          <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
+          <div
+            class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float"
+            aria-hidden="true"
+          ></div>
+          <div class="relative z-10 text-center">
+            <span
+              class="sticker bg-white/10 text-lemon border-lemon/40 mb-6"
+              style="transform: rotate(-2deg)"
+            >
+              <Icon name="ph:cooking-pot-duotone" size={14} class="mr-1" />
+              Running a multi-brand system?
+            </span>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5">
+              Let's audit your component library.
+            </h2>
+            <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+              Start with a free scorecard, or grab 30 minutes on my calendar to talk through where your system is leaking.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                variant="primary"
+                size="lg"
+                iconLeft="ph:clipboard-text-duotone"
+                href="/scorecard/"
+               
+              >
+                Score your design system
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                iconLeft="ph:calendar-check-duotone"
+                href="https://calendly.com/josh-thebrileys/30min/"
+              >
+                Book an intro call
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <!-- next project -->
+        <div class="mt-14 flex justify-center">
+          <a
+            href="/projects/"
+            class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors"
+          >
+            <Icon name="ph:arrow-left-bold" size={18} class="group-hover:-translate-x-1 transition-transform" />
+            Back to all projects on the corkboard
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

@@ -1,0 +1,114 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from './Icon.astro';
+
+/**
+ * Button or button-styled link. Renders `<button>` by default; renders `<a>`
+ * if `href` is provided — never the other way around. Icon-only buttons
+ * MUST supply an `aria-label` (TS enforces this via discriminated union).
+ */
+
+type Variant = 'primary' | 'secondary' | 'ghost';
+type Size = 'sm' | 'md' | 'lg';
+
+interface BaseProps {
+  variant?: Variant;
+  size?: Size;
+  /** Icon shown before the label. */
+  iconLeft?: string;
+  /** Icon shown after the label (defaults to none; common for arrow CTAs). */
+  iconRight?: string;
+  /** Disabled state (button only). */
+  disabled?: boolean;
+  class?: string;
+  id?: string;
+  /** Form attribute — for submit buttons that live outside the form. */
+  form?: string;
+  /** When true, render as <a href> instead of <button>. */
+  href?: string;
+  /** type for <button>. */
+  type?: 'button' | 'submit' | 'reset';
+  /** External link target. */
+  target?: string;
+  rel?: string;
+  /** Required if button has no visible text content. */
+  'aria-label'?: string;
+  /** aria-current for nav-style usage (rare on buttons). */
+  'aria-current'?: 'page' | 'true' | 'false';
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  iconLeft,
+  iconRight,
+  disabled,
+  class: className,
+  id,
+  form,
+  href,
+  type = 'button',
+  target,
+  rel,
+  'aria-label': ariaLabel,
+  'aria-current': ariaCurrent,
+} = Astro.props as BaseProps;
+
+const sizes: Record<Size, string> = {
+  sm: 'px-4 py-2 text-sm gap-1.5',
+  md: 'px-6 py-3 text-base gap-2',
+  lg: 'px-7 py-4 text-base gap-2',
+};
+
+const variants: Record<Variant, string> = {
+  // plum gives a vibrant, energetic pop against the warm cream/peach/coral
+  // surface palette (6.34:1 on white — AA pass). Coral remains for accents.
+  primary:
+    'bg-plum text-white hover:bg-plum/90 hover:shadow-lg hover:shadow-plum/30',
+  secondary:
+    'bg-white/10 text-white border border-white/20 hover:bg-white/20',
+  ghost:
+    'bg-transparent text-navy border border-charcoal/60 hover:bg-charcoal/5',
+};
+
+const base =
+  'inline-flex items-center justify-center rounded-full font-heading font-semibold transition-all focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum disabled:opacity-50 disabled:cursor-not-allowed';
+
+const classes = cx(base, sizes[size], variants[variant], className);
+
+const isLink = Boolean(href);
+const externalAttrs = href && /^https?:/.test(href)
+  ? { rel: rel ?? 'noopener noreferrer', target: target ?? '_blank' }
+  : { rel, target };
+---
+
+{isLink ? (
+  <a
+    href={href}
+    id={id}
+    class={classes}
+    data-source={`Button.${variant} · size=${size} · rendered as <a>`}
+    aria-label={ariaLabel}
+    aria-current={ariaCurrent}
+    {...externalAttrs}
+  >
+    {iconLeft && <Icon name={iconLeft} size={size === 'sm' ? 16 : 20} />}
+    <slot />
+    {iconRight && <Icon name={iconRight} size={size === 'sm' ? 16 : 20} />}
+  </a>
+) : (
+  <button
+    type={type}
+    id={id}
+    form={form}
+    disabled={disabled}
+    class={classes}
+    data-source={`Button.${variant} · size=${size}`}
+    aria-label={ariaLabel}
+    aria-current={ariaCurrent}
+  >
+    {iconLeft && <Icon name={iconLeft} size={size === 'sm' ? 16 : 20} />}
+    <slot />
+    {iconRight && <Icon name={iconRight} size={size === 'sm' ? 16 : 20} />}
+  </button>
+)}

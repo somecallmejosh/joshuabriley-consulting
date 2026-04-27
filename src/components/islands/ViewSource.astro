@@ -1,0 +1,183 @@
+---
+/**
+ * "View source" hover chip — Alt/Option + hover on any element with a
+ * `data-source` attribute reveals a floating chip showing the component
+ * name and the design tokens it uses.
+ *
+ * Opt-in by design: only elements explicitly tagged with `data-source`
+ * participate, so the page stays calm and the chip is honest about what
+ * it shows.
+ *
+ * data-source format (string):
+ *   "ComponentName · tokens: --tok-a, --tok-b · note"
+ * The leading segment before the first " · " becomes the bold name.
+ */
+---
+
+<div
+  id="vs-chip"
+  class="vs-chip"
+  role="status"
+  aria-live="polite"
+  aria-hidden="true"
+  hidden
+>
+  <div class="vs-chip-head">
+    <span class="vs-chip-mark" aria-hidden="true">{`< />`}</span>
+    <span class="vs-chip-title" data-vs-title>Component</span>
+  </div>
+  <div class="vs-chip-meta" data-vs-meta>—</div>
+  <div class="vs-chip-foot" aria-hidden="true">
+    <kbd>Alt</kbd>
+    <span>+ hover to inspect</span>
+  </div>
+</div>
+
+<script>
+  const chip = document.getElementById('vs-chip')!;
+  const titleEl = chip.querySelector<HTMLElement>('[data-vs-title]')!;
+  const metaEl = chip.querySelector<HTMLElement>('[data-vs-meta]')!;
+
+  let altDown = false;
+  let currentTarget: HTMLElement | null = null;
+
+  function setAlt(active: boolean) {
+    altDown = active;
+    document.documentElement.classList.toggle('vs-armed', active);
+    if (!active) hide();
+  }
+
+  function show(el: HTMLElement, x: number, y: number) {
+    const raw = el.dataset.source ?? '';
+    const [titleRaw, ...rest] = raw.split(' · ');
+    titleEl.textContent = titleRaw.trim();
+    metaEl.textContent = rest.join(' · ').trim() || '—';
+
+    chip.removeAttribute('hidden');
+    chip.setAttribute('aria-hidden', 'false');
+    requestAnimationFrame(() => chip.classList.add('is-on'));
+    position(x, y);
+    el.classList.add('vs-target');
+    if (currentTarget && currentTarget !== el) {
+      currentTarget.classList.remove('vs-target');
+    }
+    currentTarget = el;
+  }
+
+  function hide() {
+    chip.classList.remove('is-on');
+    chip.setAttribute('aria-hidden', 'true');
+    window.setTimeout(() => chip.setAttribute('hidden', ''), 160);
+    if (currentTarget) currentTarget.classList.remove('vs-target');
+    currentTarget = null;
+  }
+
+  function position(x: number, y: number) {
+    // Anchor near cursor with edge padding.
+    const pad = 14;
+    const w = chip.offsetWidth || 240;
+    const h = chip.offsetHeight || 80;
+    let left = x + 18;
+    let top = y + 18;
+    if (left + w + pad > window.innerWidth) left = x - w - 18;
+    if (top + h + pad > window.innerHeight) top = y - h - 18;
+    chip.style.transform = `translate(${Math.max(pad, left)}px, ${Math.max(pad, top)}px)`;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if ((e.key === 'Alt' || e.altKey) && !altDown) setAlt(true);
+  });
+  document.addEventListener('keyup', (e) => {
+    if (e.key === 'Alt') setAlt(false);
+  });
+  // Lose Alt when window loses focus
+  window.addEventListener('blur', () => setAlt(false));
+
+  document.addEventListener('mousemove', (e) => {
+    if (!altDown && !e.altKey) {
+      if (altDown) setAlt(false);
+      return;
+    }
+    if (e.altKey && !altDown) setAlt(true);
+
+    const target = (e.target as HTMLElement | null)?.closest<HTMLElement>('[data-source]');
+    if (!target) {
+      if (currentTarget) hide();
+      return;
+    }
+    show(target, e.clientX, e.clientY);
+  });
+</script>
+
+<style is:global>
+  .vs-chip {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 65;
+    pointer-events: none;
+    width: max-content;
+    max-width: 18rem;
+    background: #2d2b55;
+    color: #fffdf9;
+    border-radius: 10px;
+    padding: 0.55rem 0.75rem 0.6rem;
+    box-shadow:
+      0 18px 40px -12px rgba(45, 43, 85, 0.5),
+      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    line-height: 1.45;
+    opacity: 0;
+    transition: opacity 0.15s ease;
+  }
+  .vs-chip.is-on { opacity: 1; }
+
+  .vs-chip-head {
+    display: flex; align-items: center; gap: 0.4rem;
+    margin-bottom: 0.15rem;
+  }
+  .vs-chip-mark {
+    color: #ff8e53;
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+  .vs-chip-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.78rem;
+    letter-spacing: 0.02em;
+  }
+  .vs-chip-meta {
+    color: rgba(255, 253, 249, 0.78);
+    word-break: break-word;
+  }
+  .vs-chip-foot {
+    margin-top: 0.4rem;
+    padding-top: 0.4rem;
+    border-top: 1px dashed rgba(255, 255, 255, 0.18);
+    color: rgba(255, 253, 249, 0.6);
+    font-size: 0.65rem;
+    display: flex; align-items: center; gap: 0.4rem;
+  }
+  .vs-chip kbd {
+    background: rgba(255, 142, 83, 0.22);
+    border: 1px solid rgba(255, 142, 83, 0.4);
+    color: #ffd9c2;
+    font-size: 0.62rem;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: inherit;
+  }
+
+  /* Cursor + outline cues when Alt is armed */
+  html.vs-armed [data-source] { cursor: help; }
+  html.vs-armed [data-source]:hover,
+  html.vs-armed .vs-target {
+    outline: 1px dashed rgba(232, 87, 61, 0.7);
+    outline-offset: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .vs-chip { transition: opacity 0.001s; }
+  }
+</style>

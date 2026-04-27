@@ -1,0 +1,31 @@
+---
+import Container from '~/components/layout/Container.astro';
+import Logo from '~/components/primitives/Logo.astro';
+import Link from '~/components/primitives/Link.astro';
+import MobileNav from '~/components/chrome/MobileNav.astro';
+import { PRIMARY_NAV } from '~/lib/nav';
+import { cx } from '~/lib/cx';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<header
+  class={cx(
+    'sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5',
+    className,
+  )}
+>
+  <Container as="div" class="flex items-center justify-between py-4 relative">
+    <Logo href="/" variant="lockup" size="md" />
+    <nav class="hidden md:flex items-center gap-8" aria-label="Primary">
+      {PRIMARY_NAV.map((link) => (
+        <Link href={link.href} variant="nav">{link.label}</Link>
+      ))}
+    </nav>
+    <MobileNav links={PRIMARY_NAV} />
+  </Container>
+</header>

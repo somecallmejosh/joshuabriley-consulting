@@ -1,0 +1,66 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Submit button with built-in loading state. Toggle the loading state by
+ * setting `data-loading="true"` on the button (or using the helper
+ * exported from `~/lib/form-state`); the styles handle the rest. Sets
+ * aria-busy when loading so AT announce the wait.
+ */
+
+interface Props {
+  label: string;
+  loadingLabel?: string;
+  iconLeft?: string;
+  iconRight?: string;
+  size?: 'md' | 'lg';
+  class?: string;
+  id?: string;
+  form?: string;
+}
+
+const {
+  label,
+  loadingLabel = 'Sending…',
+  iconLeft,
+  iconRight = 'ph:arrow-right',
+  size = 'lg',
+  class: className,
+  id,
+  form,
+} = Astro.props;
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  md: 'px-6 py-3 text-base gap-2',
+  lg: 'px-7 py-4 text-base gap-2',
+};
+---
+
+<button
+  type="submit"
+  id={id}
+  form={form}
+  data-submit
+  class={cx(
+    'group inline-flex items-center justify-center rounded-full bg-plum text-white font-heading font-semibold transition-all hover:bg-plum/90 hover:shadow-lg hover:shadow-plum/30 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum disabled:opacity-50 disabled:cursor-not-allowed aria-busy:cursor-wait',
+    sizes[size],
+    className,
+  )}
+>
+  {iconLeft && (
+    <span data-submit-icon class="group-aria-busy:hidden">
+      <Icon name={iconLeft} size={20} />
+    </span>
+  )}
+  <span data-submit-label>{label}</span>
+  <span data-submit-spinner class="hidden group-aria-busy:inline-flex">
+    <Icon name="ph:circle-notch" size={20} class="animate-spin" />
+  </span>
+  <span data-submit-loading-label class="hidden group-aria-busy:inline">{loadingLabel}</span>
+  {iconRight && !iconLeft && (
+    <span data-submit-icon class="group-aria-busy:hidden">
+      <Icon name={iconRight} size={20} />
+    </span>
+  )}
+</button>

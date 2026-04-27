@@ -1,0 +1,62 @@
+---
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Hero pattern. Slots:
+ *   - eyebrow: <Badge> or text intro
+ *   - title:   <Heading level={1} ... />
+ *   - lead:    <Text size="xl" tone="muted" />
+ *   - actions: row of <Button>s
+ *   - media:   image or visual on the right (md+)
+ *   - decorations: absolutely-positioned <Blob>s
+ */
+
+interface Props {
+  tone?: 'cream' | 'navy' | 'white';
+  align?: 'center' | 'left';
+  /** Show media slot side-by-side at md+. */
+  split?: boolean;
+  class?: string;
+}
+
+const { tone = 'cream', align = 'center', split = false, class: className } = Astro.props;
+const hasMedia = Astro.slots.has('media');
+---
+
+<Section tone={tone} padding="loose" decorated class={cx('relative', className)}>
+  <slot name="decorations" />
+  <Container width={split ? 'wide' : 'default'}>
+    <div
+      class={cx(
+        'relative',
+        split && hasMedia && 'flex flex-col md:flex-row items-center gap-12 md:gap-16',
+      )}
+    >
+      <div class={cx(split && hasMedia ? 'flex-1' : 'mx-auto', align === 'center' && !split && 'text-center')}>
+        {Astro.slots.has('eyebrow') && (
+          <div class={cx('mb-6 inline-block', align === 'center' && !split && 'mx-auto')}>
+            <slot name="eyebrow" />
+          </div>
+        )}
+        <slot name="title" />
+        {Astro.slots.has('lead') && (
+          <div class={cx('mt-6', align === 'center' && !split && 'max-w-2xl mx-auto')}>
+            <slot name="lead" />
+          </div>
+        )}
+        {Astro.slots.has('actions') && (
+          <div class={cx('mt-8 flex flex-wrap gap-3', align === 'center' && !split && 'justify-center')}>
+            <slot name="actions" />
+          </div>
+        )}
+      </div>
+      {split && hasMedia && (
+        <div class="flex-1">
+          <slot name="media" />
+        </div>
+      )}
+    </div>
+  </Container>
+</Section>

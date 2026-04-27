@@ -1,0 +1,1082 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+
+const title = 'VMSpark — Joshua Briley';
+const description =
+  'Case study: redesigning the VMSpark admin shell — a multi-tenant VMS-to-ATS pipeline — to read as a 2026-caliber product without touching the pipeline underneath. Covers inventory, direction selection, phased rollout, and brand alignment.';
+
+interface Finding {
+  count: string;
+  title: string;
+  body: string; // raw HTML
+}
+
+const findings: Finding[] = [
+  {
+    count: '8+',
+    title: 'Button styles competing for attention',
+    body:
+      'Primary, secondary, danger, and ghost variants — each implemented two or three different ways. Some leaned on Bootstrap utility classes, others on per-view custom CSS, a few were inline-styled anchors pretending to be buttons. A <em>Save</em> on one screen didn’t match a <em>Save</em> two clicks away.',
+  },
+  {
+    count: '10+',
+    title: 'Form element styles, all at once',
+    body:
+      'Plain Rails helpers sat next to Bootstrap <code class="text-plum">form-control</code> inputs, Select2 widgets, and hand-rolled dropdowns. Border radius, padding, focus rings, and disabled treatments all diverged. The same concept — <em>pick one from a list</em> — rendered five different ways across the app.',
+  },
+  {
+    count: '5',
+    title: 'Form-rendering patterns, coexisting',
+    body:
+      '<code class="text-plum">form_with(model:)</code>, legacy <code class="text-plum">form_for</code>, <code class="text-plum">form_with(url:)</code>, bare <code class="text-plum">&lt;form&gt;</code> + HTMX, and HTMX-only with <code class="text-plum">hx-include</code>.',
+  },
+  {
+    count: '6+',
+    title: 'Tables with no shared convention',
+    body:
+      'Row striping in some, not in others. Headers styled four ways: dark fill, light fill, borderless, and all-caps. Pagination rendered with Kaminari on one screen and a bespoke HTMX block on the next. Density jumped from compressed to roomy between adjacent views with no underlying logic.',
+  },
+  {
+    count: '4+',
+    title: 'Labeling strategies, all coexisting',
+    body:
+      'Sentence case, Title Case, ALL CAPS, and placeholder-as-label all appeared across the app. Required indicators were sometimes asterisks, sometimes parenthetical <em>(required)</em>, sometimes absent. The same field concept carried different names on different screens (<em>Bill Rate</em>, <em>Rate</em>, <em>Pay Rate</em>).',
+  },
+  {
+    count: '~40',
+    title: 'Views bypassing the token system',
+    body:
+      'A semantic color-token system already existed in <code class="text-plum">_color_tokens.scss</code>, but dozens of views bypassed it with inline styles, hardcoded hex literals, and raw colors in view-level <code class="text-plum">&lt;style&gt;</code> blocks.',
+  },
+  {
+    count: '☠',
+    title: 'Dead code in production',
+    body:
+      'A zero-byte <code class="text-plum">_empty.html.erb</code>, an <code class="text-plum">X</code>-prefixed dead index file (101 lines), an <code class="text-plum">ASDKAJSHDJHASD</code> debug string committed to production, and a sticky table header with hardcoded <code class="text-plum">background-color: red</code> from an abandoned debug session.',
+  },
+];
+
+interface SprawlImg {
+  src: string;
+  alt: string;
+  rotate: string;
+  tape: string;
+  caption: string; // raw HTML
+}
+
+const sprawlImages: SprawlImg[] = [
+  {
+    src: '/images/projects/vmspark/before-manual-jobs.png',
+    alt: 'VMSpark Manual Jobs screen. Three buttons sit side by side in the top bar: a filled orange Add New, an outlined Edit Selected, and an outlined Copy Selected. Search inputs appear above the table with labels placed below each field.',
+    rotate: '-0.6deg',
+    tape: 'top: -14px; left: 18%; transform: rotate(-4deg)',
+    caption:
+      '<strong class="text-navy font-semibold">Manual Jobs.</strong> Three buttons in one row, three different treatments. Labels sit below inputs.',
+  },
+  {
+    src: '/images/projects/vmspark/before-ats-professions.png',
+    alt: 'VMSpark ATS Professions screen. Five search inputs use their label text as placeholders inside the fields. A Sync with ATS outlined button sits at the top right.',
+    rotate: '0.4deg',
+    tape: 'top: -14px; right: 15%; transform: rotate(5deg)',
+    caption:
+      '<strong class="text-navy font-semibold">ATS Professions.</strong> Labels are now placeholders inside the inputs. Different page, different rule.',
+  },
+  {
+    src: '/images/projects/vmspark/before-announcements.png',
+    alt: 'VMSpark Announcements screen. Each row ends with a dark gray pencil edit icon next to a solid red trash icon. A filled orange New Announcement button sits in the top right.',
+    rotate: '-0.3deg',
+    tape: 'top: -14px; left: 22%; transform: rotate(-3deg)',
+    caption:
+      '<strong class="text-navy font-semibold">Announcements.</strong> Yet another icon-button pattern — dark gray paired with solid red, nothing like the blue outlines elsewhere.',
+  },
+  {
+    src: '/images/projects/vmspark/before-openai-usage.png',
+    alt: 'VMSpark OpenAI Usage dashboard. A data table with a solid dark-navy header bar, right-aligned numeric columns, and underlined orange account names.',
+    rotate: '0.6deg',
+    tape: 'top: -14px; right: 20%; transform: rotate(4deg)',
+    caption:
+      '<strong class="text-navy font-semibold">OpenAI Usage.</strong> A solid dark-navy table header. Every other table in the app uses a light gray one.',
+  },
+];
+
+const outcomeStats = [
+  {
+    icon: 'ph:shield-check-duotone',
+    iconClass: 'text-sage',
+    title: 'Zero pipeline regressions',
+    body: 'No regressions reported against the ingest or fan-out paths after cutover.',
+    rotate: '-0.6deg',
+  },
+  {
+    icon: 'ph:users-duotone',
+    iconClass: 'text-sunset',
+    title: 'Consumer confidence',
+    body: 'Operators use a tool that looks like one product, not ten. The UI stopped fighting them at every screen.',
+    rotate: '0.4deg',
+  },
+  {
+    icon: 'ph:presentation-chart-duotone',
+    iconClass: 'text-plum',
+    title: 'Investor confidence',
+    body: 'Demos open with the product, not with caveats about the surface it lives on.',
+    rotate: '-0.3deg',
+  },
+  {
+    icon: 'ph:gauge-duotone',
+    iconClass: 'text-coral',
+    title: 'No new JS on hot paths',
+    body: 'Palette and inspector load on demand. First paint got lighter, not heavier.',
+    rotate: '0.3deg',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <!-- ====== HERO ====== -->
+  <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+    <div
+      class="absolute top-14 right-[6%] w-20 h-20 bg-coral/30 blob-shape animate-float opacity-70"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute top-40 left-[4%] w-12 h-12 bg-plum/20 rounded-full animate-float-delay"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute bottom-20 right-[18%] w-14 h-14 bg-lemon/60 blob-shape animate-float-slow"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute bottom-24 left-[10%] w-9 h-9 bg-sunset/20 rounded-full animate-float"
+      aria-hidden="true"
+    ></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <nav
+        class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60"
+        aria-label="Breadcrumb"
+      >
+        <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
+        <Icon name="ph:caret-right-bold" size={12} />
+        <span class="text-navy">VMSpark</span>
+      </nav>
+
+      <article class="shell-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
+        <span
+          class="tape"
+          style="top: -14px; left: 10%; transform: rotate(-6deg)"
+          aria-hidden="true"
+        ></span>
+        <span
+          class="tape"
+          style="top: -14px; right: 10%; transform: rotate(5deg)"
+          aria-hidden="true"
+        ></span>
+
+        <div
+          class="absolute top-8 right-8 hidden md:block text-coral paper-stamp"
+          aria-hidden="true"
+        >
+          Shipped&nbsp;·&nbsp;In&nbsp;production
+        </div>
+
+        <div class="relative text-center">
+          <div class="project-logo-tag">
+            <img src="/images/logos/vmspark.svg" alt="VMSpark logo" />
+          </div>
+
+          <div
+            class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
+          >
+            <Icon name="ph:browsers-duotone" size={18} />
+            Case study &middot; File no. 05
+          </div>
+
+          <p class="marker-label text-2xl md:text-3xl mb-4">from the workbench —</p>
+
+          <h1
+            class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+          >
+            A Rails shell,
+            <br />
+            <span class="relative inline-block">
+              rebuilt for 2026
+              <svg
+                class="absolute -bottom-3 left-0 w-full"
+                viewBox="0 0 520 14"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path
+                  d="M3 9 Q 130 2 260 9 Q 390 16 517 7"
+                  stroke="#E8573D"
+                  stroke-width="3"
+                  stroke-linecap="round"
+                  opacity="0.55"
+                />
+              </svg>
+            </span>
+            <span class="text-coral">.</span>
+          </h1>
+
+          <p
+            class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
+          >
+            A shell redesign for <WavyUnderline>VMSpark</WavyUnderline> — the multi-tenant
+            pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+
+            ATS providers — raising the visual caliber of the admin app without touching the
+            pipeline underneath.
+          </p>
+
+          <div class="border-t border-dashed border-coral/25 pt-6 mt-2">
+            <dl
+              class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center"
+            >
+              <div>
+                <dt
+                  class="font-heading text-[0.7rem] uppercase tracking-widest text-coral/70 mb-1"
+                >
+                  Role
+                </dt>
+                <dd class="font-display text-lg text-navy font-semibold">Design + Eng</dd>
+              </div>
+              <div>
+                <dt
+                  class="font-heading text-[0.7rem] uppercase tracking-widest text-coral/70 mb-1"
+                >
+                  Client
+                </dt>
+                <dd class="font-display text-lg text-navy font-semibold">VMSpark</dd>
+              </div>
+              <div>
+                <dt
+                  class="font-heading text-[0.7rem] uppercase tracking-widest text-coral/70 mb-1"
+                >
+                  Stack
+                </dt>
+                <dd class="font-display text-lg text-navy font-semibold">
+                  Rails &middot; Hotwire
+                </dd>
+              </div>
+              <div>
+                <dt
+                  class="font-heading text-[0.7rem] uppercase tracking-widest text-coral/70 mb-1"
+                >
+                  Focus
+                </dt>
+                <dd class="font-display text-lg text-navy font-semibold">
+                  Shell &middot; Tokens
+                </dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+  <!-- ====== THE BRIEF ====== -->
+  <section class="py-16 md:py-20 relative">
+    <Blob tone="plum" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-10" />
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="flex items-center gap-3 mb-6">
+        <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
+        <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">On the docket</h2>
+      </div>
+      <div class="flex flex-wrap gap-3">
+        <a
+          href="#inventory"
+          class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+        >
+          <Icon name="ph:magnifying-glass-duotone" size={18} class="text-coral" />
+          Inventory before invention
+        </a>
+        <a
+          href="#directions"
+          class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+        >
+          <Icon name="ph:signpost-duotone" size={18} class="text-sunset" />
+          Three directions, one chosen
+        </a>
+        <a
+          href="#rollout"
+          class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+        >
+          <Icon name="ph:stack-duotone" size={18} class="text-plum" />
+          Phased rollout
+        </a>
+        <a
+          href="#outcome"
+          class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
+        >
+          <Icon name="ph:trend-up-duotone" size={18} class="text-sage" />
+          Outcome
+        </a>
+      </div>
+
+      <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+        VMSpark normalizes thousands of VMS job listings a day, runs them through an
+        account-specific rule engine, and fans them out to whichever ATS the customer has
+        contracted with. The product works. The shell it lived in did not look like it.
+        Leadership was scheduling investor demos, and the admin app — the surface those
+        conversations lived inside — felt like a Rails scaffold from 2018. Operators noticed
+        it daily. Investors noticed it in the first thirty seconds of a demo.
+      </p>
+      <p class="mt-5 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+        The brief I gave myself:
+        <strong class="text-coral font-semibold"
+          >make the shell read as a modern, enterprise-grade product that matches the
+          sophistication of the pipeline underneath</strong
+        >
+        — without touching the pipeline, the rule engine, or anything an operator had muscle
+        memory for.
+      </p>
+    </div>
+  </section>
+
+  <!-- ====== STEP 01 — INVENTORY ====== -->
+  <section id="inventory" class="py-16 md:py-20 relative scroll-mt-24">
+    <div class="max-w-4xl mx-auto px-6">
+      <div class="flex items-start gap-6 mb-8">
+        <span class="step-num" aria-hidden="true">01</span>
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-coral/70 mb-1">
+            Step one
+          </p>
+          <h2
+            class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+          >
+            Inventory before invention
+          </h2>
+        </div>
+      </div>
+
+      <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+        <p>
+          Before writing a line of new CSS, I cataloged what was there. The result was a
+          <strong class="text-navy font-semibold">~700-line design inventory</strong>
+          covering every one of the 350 ERB templates — roughly 11,800 lines — across the app.
+        </p>
+        <p>
+          The audit wasn't a complaint list. It was the map that told me which problems were
+          cosmetic (fixable during the redesign), which were structural (needed architectural
+          decisions), and which were out of scope (pipeline-adjacent, don't touch). Most of
+          what I found was UI sprawl: the same interaction rendered a dozen different ways
+          across the app, each screen a small argument against the one before it.
+        </p>
+      </div>
+
+      <!-- findings ledger -->
+      <div
+        class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
+        style="transform: rotate(-0.3deg)"
+      >
+        <div
+          class="absolute -top-4 left-8 sticker bg-coral/10 text-coral border-coral/40"
+          style="transform: rotate(-3deg)"
+        >
+          <Icon name="ph:notepad-duotone" size={14} class="mr-1" />
+          A few of the findings
+        </div>
+
+        <div class="mt-4">
+          {findings.map((f) => (
+            <div class="finding-row">
+              <span class="finding-count" aria-hidden="true">{f.count}</span>
+              <div>
+                <h3 class="font-display text-lg text-navy font-semibold mb-1">{f.title}</h3>
+                <p class="text-charcoal/70 text-base" set:html={f.body} />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <!-- UI sprawl gallery -->
+      <div class="mt-16">
+        <div class="flex items-start gap-3 mb-3">
+          <Icon name="ph:images-duotone" size={26} class="text-plum mt-1 flex-shrink-0" />
+          <h3
+            class="font-display text-xl md:text-2xl text-navy font-semibold leading-tight"
+          >
+            What the sprawl actually looked like
+          </h3>
+        </div>
+        <p class="text-charcoal/75 leading-relaxed font-body mb-10 max-w-2xl">
+          Four screens pulled from the same app, on the same day. Each one makes its own
+          decisions about buttons, inputs, labels, and tables — and none of them agree with
+          the others.
+        </p>
+
+        <div class="grid md:grid-cols-2 gap-10 md:gap-12">
+          {sprawlImages.map((img) => (
+            <figure class="relative" style={`transform: rotate(${img.rotate})`}>
+              <span class="tape" style={img.tape} aria-hidden="true"></span>
+              <div
+                class="bg-white rounded-xl overflow-hidden border border-charcoal/10 shadow-md"
+              >
+                <img
+                  src={img.src}
+                  alt={img.alt}
+                  class="w-full h-auto block"
+                  loading="lazy"
+                />
+              </div>
+              <figcaption
+                class="mt-4 text-sm text-charcoal/70 font-body leading-relaxed"
+                set:html={img.caption}
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-12 space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+        <p>
+          With the inventory in hand, I could fix the UI sprawl at the root rather than one
+          screen at a time. Buttons collapsed to a single set of component classes. Form
+          inputs, selects, and labels moved onto shared primitives with consistent padding,
+          focus states, and required-field treatment. Tables standardized on one header
+          style, one pagination component, one density rule. Each fix cascaded across dozens
+          of views because the semantic token layer was already in place — I just needed the
+          views to route through it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STEP 02 — DIRECTIONS ====== -->
+  <section id="directions" class="py-16 md:py-20 relative scroll-mt-24">
+    <div
+      class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
+      aria-hidden="true"
+    ></div>
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="flex items-start gap-6 mb-8">
+        <span class="step-num" aria-hidden="true">02</span>
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-coral/70 mb-1">
+            Step two
+          </p>
+          <h2
+            class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+          >
+            Three directions, one chosen
+          </h2>
+        </div>
+      </div>
+
+      <div class="max-w-3xl space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+        <p>
+          Rather than design in a vacuum, I spec'd three mutually exclusive directions with
+          honest tradeoffs. Writing the options down — with their reasons and risks — is what
+          lets the choice get overturned on evidence later, not preference.
+        </p>
+      </div>
+
+      <div class="mt-10 grid md:grid-cols-3 gap-6 items-stretch">
+        <!-- A — Command Shell -->
+        <div class="direction-card" style="transform: rotate(-0.8deg)">
+          <div
+            class="inline-flex items-center gap-2 text-plum font-heading text-xs font-semibold uppercase tracking-wider mb-2"
+          >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-plum/10"
+              >A</span
+            >
+            Command Shell
+          </div>
+          <p class="text-sm text-charcoal/50 font-body mb-3">
+            Dense &middot; Keyboard-first
+          </p>
+          <p class="text-charcoal/70 text-base leading-relaxed">
+            56 px icon rail, tight 13/14 px type, hairline borders,
+            <code class="font-mono text-plum text-sm">⌘K</code> palette as the centerpiece,
+            orange reserved for exactly one thing per screen.
+          </p>
+          <p class="mt-4 text-sm font-heading text-plum/80">
+            <Icon name="ph:target-duotone" size={14} class="mr-1 align-middle" />
+            Signals &ldquo;scales to power users.&rdquo;
+          </p>
+        </div>
+
+        <!-- B — Two-Tier Platform (CHOSEN) -->
+        <div class="direction-card direction-card--chosen" style="transform: rotate(0.3deg)">
+          <div
+            class="absolute -top-3 right-5 text-coral paper-stamp"
+            aria-label="Chosen direction"
+          >
+            Chosen
+          </div>
+          <div
+            class="inline-flex items-center gap-2 text-coral font-heading text-xs font-semibold uppercase tracking-wider mb-2"
+          >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-coral/15"
+              >B</span
+            >
+            Two-Tier Platform
+          </div>
+          <p class="text-sm text-charcoal/50 font-body mb-3">Enterprise-familiar</p>
+          <p class="text-charcoal/75 text-base leading-relaxed">
+            48 px product rail plus 260 px project nav — the real two-tier pattern.
+            App-switcher waffle, breadcrumbed page headers, right-side inspector panel. Brand
+            orange on active rail state, soft navy-tinted elevation.
+          </p>
+          <p class="mt-4 text-sm font-heading text-coral">
+            <Icon name="ph:users-three-duotone" size={14} class="mr-1 align-middle" />
+            Every enterprise buyer has used this pattern before.
+          </p>
+        </div>
+
+        <!-- C — Modern Workspace -->
+        <div class="direction-card" style="transform: rotate(-0.2deg)">
+          <div
+            class="inline-flex items-center gap-2 text-sky font-heading text-xs font-semibold uppercase tracking-wider mb-2"
+          >
+            <span
+              class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-sky/15"
+              >C</span
+            >
+            Modern Workspace
+          </div>
+          <p class="text-sm text-charcoal/50 font-body mb-3">
+            Spacious &middot; Document-forward
+          </p>
+          <p class="text-charcoal/70 text-base leading-relaxed">
+            270 px soft sidebar, no persistent top bar,
+            <code class="font-mono text-plum text-sm">⌘K</code> by shortcut only, generous
+            spacing.
+          </p>
+          <p class="mt-4 text-sm font-heading text-sky/80">
+            <Icon name="ph:warning-duotone" size={14} class="mr-1 align-middle" />
+            Risk: reads as lightweight for a dense ops tool.
+          </p>
+        </div>
+      </div>
+
+      <div
+        class="mt-10 max-w-3xl space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+      >
+        <p>
+          I chose B. Not because it was the prettiest (C was), and not because it was the
+          most sophisticated (A was). I chose it because the product's audience was
+          multi-tenant operators, and the lowest-risk path to both user and investor trust
+          was the pattern those operators had already used at every previous job.
+        </p>
+        <p>
+          I also <strong class="text-navy font-semibold">dropped</strong> a feature I'd
+          originally scoped in: a global "Create" button. Most creates in this product are
+          feed-driven, not user-initiated. Adding one would have been copying a convention
+          without earning it.
+        </p>
+      </div>
+
+      <!-- pull quote -->
+      <figure
+        class="mt-12 bg-coral/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative max-w-3xl"
+        style="transform: rotate(-0.3deg)"
+      >
+        <Icon
+          name="ph:quotes-duotone"
+          size={32}
+          class="text-coral/60 absolute -top-3 left-6 bg-cream px-1"
+        />
+        <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+          Pattern familiarity compounds trust faster than novelty does.
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ====== STEP 03 — ROLLOUT ====== -->
+  <section id="rollout" class="py-16 md:py-20 relative scroll-mt-24">
+    <div
+      class="absolute top-10 right-6 w-20 h-20 bg-lemon/50 blob-shape animate-float-slow"
+      aria-hidden="true"
+    ></div>
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="flex items-start gap-6 mb-8">
+        <span class="step-num" aria-hidden="true">03</span>
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-coral/70 mb-1">
+            Step three
+          </p>
+          <h2
+            class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+          >
+            Phased rollout
+          </h2>
+        </div>
+      </div>
+
+      <div class="max-w-3xl space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+        <p>
+          Each phase was
+          <strong class="text-navy font-semibold">shippable on its own</strong>, behind no
+          flags, with the previous phase's work still intact if I needed to roll back.
+        </p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 gap-8">
+        <!-- Phase 1 -->
+        <div class="phase-card" style="transform: rotate(-0.4deg)">
+          <span class="phase-num">Phase 1 &middot; Baseline</span>
+          <div class="mt-3 mb-3 flex items-center gap-2">
+            <Icon name="ph:ruler-duotone" size={26} class="text-coral" />
+            <h3 class="font-display text-xl text-navy font-semibold leading-tight">
+              Visual baseline
+            </h3>
+          </div>
+          <p class="text-charcoal/70 leading-relaxed font-body">
+            Built a <code class="font-mono text-plum text-sm">_page_header</code> partial and
+            <code class="font-mono text-plum text-sm">page_header</code> helper with
+            meta/tabs/actions slots, backfilled ~30 pages silently by having the legacy
+            partial delegate to the new helper. Added an environment/account badge in the
+            top bar — an explicit multi-tenant signal at a glance.
+          </p>
+        </div>
+
+        <!-- Phase 2 -->
+        <div class="phase-card" style="transform: rotate(0.4deg)">
+          <span class="phase-num">Phase 2 &middot; The shell</span>
+          <div class="mt-3 mb-3 flex items-center gap-2">
+            <Icon name="ph:sidebar-duotone" size={26} class="text-plum" />
+            <h3 class="font-display text-xl text-navy font-semibold leading-tight">
+              Two-tier shell
+            </h3>
+          </div>
+          <p class="text-charcoal/70 leading-relaxed font-body">
+            Replaced a single always-expanded 300 px sidebar with a 56 px product rail + 280
+            px contextual panel keyed off
+            <code class="font-mono text-plum text-sm">controller_name</code> via a
+            <code class="font-mono text-plum text-sm">SidebarHelper</code> mapping.
+            Crucially:
+            <strong class="text-navy font-semibold">server-rendered active state</strong>
+            — no client JS decides which section is open on first paint.
+          </p>
+        </div>
+
+        <!-- Phase 3 -->
+        <div class="phase-card" style="transform: rotate(-0.2deg)">
+          <span class="phase-num">Phase 3 &middot; ⌘K</span>
+          <div class="mt-3 mb-3 flex items-center gap-2">
+            <Icon name="ph:magnifying-glass-duotone" size={26} class="text-sunset" />
+            <h3 class="font-display text-xl text-navy font-semibold leading-tight">
+              Command palette
+            </h3>
+          </div>
+          <p class="text-charcoal/70 leading-relaxed font-body">
+            A read-only
+            <code class="font-mono text-plum text-sm">CommandSearchController#index</code>
+            scoped to <code class="font-mono text-plum text-sm">current_account</code>,
+            grouped (Custom Rules, Rate Plans, Facilities, Accounts, Jump-to), debounced at
+            150 ms, rendered via a native
+            <code class="font-mono text-plum text-sm">&lt;dialog&gt;</code> with HTMX.
+            Deliberate constraint: the palette
+            <strong class="text-navy font-semibold">does not replace per-page search</strong>.
+            It's additive.
+          </p>
+        </div>
+
+        <!-- Phase 4 -->
+        <div class="phase-card" style="transform: rotate(0.3deg)">
+          <span class="phase-num">Phase 4 &middot; Polish</span>
+          <div class="mt-3 mb-3 flex items-center gap-2">
+            <Icon name="ph:sparkle-duotone" size={26} class="text-sage" />
+            <h3 class="font-display text-xl text-navy font-semibold leading-tight">
+              Density, shortcuts, inspector
+            </h3>
+          </div>
+          <ul class="space-y-2 text-charcoal/70 leading-relaxed font-body">
+            <li class="flex items-start gap-2">
+              <Icon
+                name="ph:check-circle-duotone"
+                size={18}
+                class="text-sage mt-0.5 flex-shrink-0"
+              />
+              <span
+                >Density toggle persisted on the user record, read pre-paint from
+                <code class="font-mono text-plum text-sm">&lt;head&gt;</code> to avoid
+                FOUC.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <Icon
+                name="ph:check-circle-duotone"
+                size={18}
+                class="text-sage mt-0.5 flex-shrink-0"
+              />
+              <span
+                >Shortcut overlay (<code class="font-mono text-plum text-sm">?</code>) gated
+                to skip when a form field has focus.</span
+              >
+            </li>
+            <li class="flex items-start gap-2">
+              <Icon
+                name="ph:check-circle-duotone"
+                size={18}
+                class="text-sage mt-0.5 flex-shrink-0"
+              />
+              <span>Inspector slide-over built with HTMX to match the rest of the app.</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <Icon
+                name="ph:check-circle-duotone"
+                size={18}
+                class="text-sage mt-0.5 flex-shrink-0"
+              />
+              <span
+                >Skeleton loader primitive honoring
+                <code class="font-mono text-plum text-sm">prefers-reduced-motion</code>.</span
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====== STEP 04 — OUTCOME ====== -->
+  <section id="outcome" class="py-16 md:py-20 relative scroll-mt-24">
+    <div
+      class="absolute bottom-20 left-6 w-16 h-16 bg-plum/15 rounded-full animate-float"
+      aria-hidden="true"
+    ></div>
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="flex items-start gap-6 mb-8">
+        <span class="step-num" aria-hidden="true">04</span>
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-coral/70 mb-1">
+            Step four
+          </p>
+          <h2
+            class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
+          >
+            Outcome
+          </h2>
+        </div>
+      </div>
+
+      <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+        <p>
+          The app now reads as the same caliber product it always was. The pipeline, the
+          rule engine, the ATS integrations, the account scoping — none of that changed. A
+          user who logged in the day of the cutover saw their data, their filters, their
+          scroll position, and their workflows intact. They just saw them inside a shell
+          that looks like it belongs in 2026.
+        </p>
+        <p>
+          That shift paid off on both sides of the business. Operators who spent every
+          working day inside the tool stopped mentally filtering out visual noise — buttons,
+          forms, tables, and labels finally behaved the same from screen to screen, which
+          made the product feel deliberate and trustworthy rather than patched together.
+          Leadership stopped apologizing for the admin UI in investor demos. The audit is
+          what made that possible:
+          <strong class="text-navy font-semibold"
+            >a map of every inconsistency first, a disciplined fix second, confidence on
+            both sides of the table third.</strong
+          >
+        </p>
+      </div>
+
+      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {outcomeStats.map((s) => (
+          <div
+            class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
+            style={`transform: rotate(${s.rotate})`}
+          >
+            <Icon name={s.icon} size={32} class={`${s.iconClass} mb-3`} />
+            <h3 class="font-display text-lg text-navy font-semibold mb-1">{s.title}</h3>
+            <p class="text-charcoal/70 text-sm leading-relaxed">{s.body}</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- brand alignment callout -->
+      <div
+        class="mt-12 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
+        style="transform: rotate(0.2deg)"
+      >
+        <div
+          class="absolute -top-4 left-8 sticker bg-plum/10 text-plum border-plum/40"
+          style="transform: rotate(-3deg)"
+        >
+          <Icon name="ph:link-duotone" size={14} class="mr-1" />
+          A detail worth calling out
+        </div>
+        <h3
+          class="font-display text-xl md:text-2xl text-navy font-semibold mt-4 mb-3 leading-snug"
+        >
+          Aligning the app with the marketing site
+        </h3>
+        <p class="text-charcoal/70 text-base leading-relaxed font-body">
+          Partway through Phase 2 I pulled the marketing site's
+          <code class="font-mono text-plum text-sm">:root</code> custom properties — five
+          brand colors, pinned — and re-pointed the app's semantic token layer at them. The
+          semantic layer didn't change shape; I re-pointed five values and added three new
+          tokens. Every existing consumer got the new look for free. Two non-obvious
+          behaviors made it across intentionally: primary button hover swaps orange to steel
+          blue rather than darkening, and link hover goes near-black instead of lighter —
+          both inherited from the marketing brand.
+        </p>
+      </div>
+
+      <!-- closing pull quote -->
+      <figure
+        class="mt-14 bg-navy text-white rounded-3xl p-8 md:p-12 relative overflow-hidden"
+        style="transform: rotate(-0.3deg)"
+      >
+        <div
+          class="absolute -top-10 -right-10 w-36 h-36 bg-coral/25 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <Icon name="ph:quotes-duotone" size={36} class="text-lemon/70 mb-3 relative z-10" />
+        <blockquote
+          class="pull-quote text-2xl md:text-3xl leading-snug relative z-10"
+        >
+          The shell is the surface operators use every day and the one investors see in a
+          demo. The audit is what let me rebuild it without breaking the product underneath.
+        </blockquote>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
+  <section class="py-16 md:py-20 relative">
+    <div
+      class="absolute top-12 left-6 w-20 h-20 bg-coral/15 blob-shape animate-float-slow"
+      aria-hidden="true"
+    ></div>
+    <div
+      class="absolute bottom-10 right-8 w-14 h-14 bg-sunset/30 rounded-full animate-float"
+      aria-hidden="true"
+    ></div>
+
+    <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="text-center mb-10">
+        <p class="marker-label text-2xl md:text-3xl text-coral mb-1">
+          from the desk of &mdash;
+        </p>
+        <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">
+          What Jon said
+        </h2>
+      </div>
+
+      <figure class="card-base card-sticky variant-peach rot-3 max-w-2xl mx-auto p-8 md:p-12">
+        <span class="tape center" aria-hidden="true"></span>
+
+        <Icon name="ph:quotes-duotone" size={36} class="text-coral/70 mb-3" />
+
+        <blockquote
+          class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7"
+        >
+          Josh inventoried 350 ERB templates before he wrote a line of new CSS, then turned
+          that audit into a phased rollout we could ship behind no flags. The shell finally
+          reads like the enterprise product the pipeline always was &mdash; and operators
+          didn't lose a single piece of muscle memory in the move.
+        </blockquote>
+
+        <figcaption class="flex items-center gap-4 pt-5 border-t border-coral/25">
+          <img
+            src="/images/jon-sturm.jpeg"
+            alt="Jon Sturm"
+            class="avatar avatar-lg"
+            loading="lazy"
+            decoding="async"
+          />
+          <div>
+            <p class="font-heading font-semibold text-navy text-base">Jon Sturm</p>
+            <p class="text-sm text-navy/70">
+              Director of Product &amp; Customer Success &middot; VMSpark
+            </p>
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+  <!-- ====== CTA ====== -->
+  <section class="py-20 md:py-28">
+    <div class="max-w-4xl mx-auto px-6">
+      <div
+        class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden"
+      >
+        <div
+          class="absolute -top-10 -right-10 w-40 h-40 bg-coral/30 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+        <div class="relative z-10 text-center">
+          <span
+            class="sticker bg-white/10 text-lemon border-lemon/40 mb-6"
+            style="transform: rotate(-2deg)"
+          >
+            <Icon name="ph:browsers-duotone" size={14} class="mr-1" />
+            Got a shell that looks older than the product?
+          </span>
+          <h2
+            class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5"
+          >
+            Start with an audit. End with a shell that earns the product.
+          </h2>
+          <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+            A 2-week UI audit gives you the map. The redesign comes after, not before. Start
+            with a free scorecard, or grab 30 minutes.
+          </p>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button
+              variant="primary"
+              size="lg"
+              iconLeft="ph:clipboard-text-duotone"
+              href="/scorecard/"
+             
+            >
+              Score your design system
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              iconLeft="ph:calendar-check-duotone"
+              href="https://calendly.com/josh-thebrileys/30min/"
+            >
+              Book an intro call
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14 flex justify-center">
+        <a
+          href="/projects/"
+          class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors"
+        >
+          <Icon
+            name="ph:arrow-left-bold"
+            size={18}
+            class="group-hover:-translate-x-1 transition-transform"
+          />
+          Back to all projects on the corkboard
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .shell-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow:
+      0 30px 60px -28px rgba(45, 43, 85, 0.28),
+      0 4px 10px rgba(45, 43, 85, 0.06);
+    position: relative;
+  }
+  .shell-card::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1.5px dashed rgba(232, 87, 61, 0.25);
+    border-radius: 12px;
+    pointer-events: none;
+  }
+  .tape {
+    position: absolute;
+    width: 90px;
+    height: 22px;
+    background: rgba(253, 230, 138, 0.88);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+  }
+  .paper-stamp {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 2px solid currentColor;
+    border-radius: 6px;
+    display: inline-block;
+    transform: rotate(-4deg);
+    opacity: 0.85;
+  }
+  .finding-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 14px 0;
+    border-bottom: 1px dashed rgba(108, 74, 182, 0.18);
+  }
+  .finding-row:last-child {
+    border-bottom: 0;
+  }
+  .finding-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    height: 44px;
+    padding: 0 10px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #ff8e53, #e8573d);
+    color: #fff;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    flex-shrink: 0;
+  }
+  .direction-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    box-shadow: 0 12px 28px -20px rgba(45, 43, 85, 0.3);
+    position: relative;
+    height: 100%;
+  }
+  .direction-card--chosen {
+    border-color: rgba(232, 87, 61, 0.4);
+    box-shadow:
+      0 20px 40px -20px rgba(232, 87, 61, 0.3),
+      0 0 0 2px rgba(232, 87, 61, 0.12);
+  }
+  .phase-card {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.5rem 1.75rem 1.75rem;
+    border: 1px solid rgba(45, 43, 85, 0.06);
+    box-shadow: 0 12px 28px -20px rgba(45, 43, 85, 0.25);
+    position: relative;
+  }
+  .phase-num {
+    position: absolute;
+    top: -14px;
+    left: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    border-radius: 9999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    background: #fffbf5;
+    color: #6c4ab6;
+    border: 1.5px dashed rgba(108, 74, 182, 0.4);
+  }
+</style>

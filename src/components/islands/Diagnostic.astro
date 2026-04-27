@@ -1,0 +1,625 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import Button from '~/components/primitives/Button.astro';
+
+/**
+ * Live before/after diagnostic. Visitors pick a demo screen, click
+ * "Show issues" and dashed overlay boxes reveal the inconsistencies a
+ * design-system audit would surface (mismatched radius, off-grid spacing,
+ * contrast failures, drifted color).
+ *
+ * Mocks are hand-painted in HTML/CSS per demo so toggling "fixed" can swap
+ * specific values via data-state, not by re-rendering pixels. Honest about
+ * being a prototype — no real screenshot scraping.
+ */
+
+const demos = [
+  { id: 'pricing',  label: 'Pricing page' },
+  { id: 'hero',     label: 'Marketing hero' },
+] as const;
+---
+
+<section class="dx" data-dx-root data-active="pricing" aria-labelledby="dx-title">
+  <header class="dx-head">
+    <span class="font-hand text-coral text-xl rotate-[-2deg] inline-block leading-none mb-1">
+      take a look
+    </span>
+    <h3 id="dx-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+      What an audit actually finds.
+    </h3>
+    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+      Pick a screen. Toggle &ldquo;show issues&rdquo;. The dashed boxes are the inconsistencies a quick pass would flag &mdash; the kind that quietly cost your team sprint velocity.
+    </p>
+  </header>
+
+  <div class="dx-controls">
+    <div class="dx-tabs" role="tablist" aria-label="Demo screens">
+      {demos.map((d, i) => (
+        <button
+          type="button"
+          class="dx-tab"
+          role="tab"
+          id={`dx-tab-${d.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          aria-controls={`dx-panel-${d.id}`}
+          data-dx-tab={d.id}
+        >
+          {d.label}
+        </button>
+      ))}
+    </div>
+
+    <label class="dx-toggle">
+      <input type="checkbox" data-dx-show-issues checked />
+      <span class="dx-toggle-track"><span class="dx-toggle-thumb" aria-hidden="true"></span></span>
+      <span class="dx-toggle-label">Show issues</span>
+    </label>
+  </div>
+
+  <!-- ============ PRICING DEMO ============ -->
+  <div
+    class="dx-panel"
+    id="dx-panel-pricing"
+    role="tabpanel"
+    aria-labelledby="dx-tab-pricing"
+    data-dx-panel="pricing"
+    data-dx-state="issues"
+  >
+    <div class="dx-stage">
+      <div class="dx-frame">
+        <div class="dx-chrome">
+          <span class="dx-chrome-dots"><i></i><i></i><i></i></span>
+          <span class="dx-chrome-url">your-app.com/pricing</span>
+        </div>
+
+        <div class="dx-pricing">
+          <article class="dx-price-card" data-dx-fix="radius-1">
+            <p class="dx-price-tier">Starter</p>
+            <p class="dx-price-num">$19<span>/mo</span></p>
+            <ul>
+              <li>Up to 3 projects</li>
+              <li>Email support</li>
+              <li>Basic analytics</li>
+            </ul>
+            <button type="button" class="dx-price-cta" tabindex="-1" aria-hidden="true">Get started</button>
+          </article>
+
+          <article class="dx-price-card dx-price-card--featured" data-dx-fix="badge-color">
+            <span class="dx-price-badge">Most popular</span>
+            <p class="dx-price-tier">Team</p>
+            <p class="dx-price-num">$49<span>/mo</span></p>
+            <ul>
+              <li>Up to 25 projects</li>
+              <li>Priority support</li>
+              <li class="dx-price-spacing-bug" data-dx-fix="spacing">Advanced analytics</li>
+            </ul>
+            <button type="button" class="dx-price-cta" tabindex="-1" aria-hidden="true">Get started</button>
+          </article>
+
+          <article class="dx-price-card dx-price-card--bad-radius" data-dx-fix="radius-2">
+            <p class="dx-price-tier">Business</p>
+            <p class="dx-price-num">$99<span>/mo</span></p>
+            <ul>
+              <li>Unlimited projects</li>
+              <li>Dedicated CSM</li>
+              <li>SSO &amp; audit logs</li>
+            </ul>
+            <button type="button" class="dx-price-cta" tabindex="-1" aria-hidden="true">Contact sales</button>
+          </article>
+        </div>
+
+        <!-- overlay annotations -->
+        <div class="dx-overlay" aria-hidden="true">
+          <div class="dx-mark dx-mark--radius-card" data-mark="01">
+            <span class="dx-mark-num">01</span>
+          </div>
+          <div class="dx-mark dx-mark--badge" data-mark="02">
+            <span class="dx-mark-num">02</span>
+          </div>
+          <div class="dx-mark dx-mark--spacing" data-mark="03">
+            <span class="dx-mark-num">03</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="dx-issues" aria-label="Issues found">
+        <p class="dx-issues-count">
+          <span data-dx-count>3</span> issues found
+        </p>
+        <ol>
+          <li>
+            <span class="dx-issues-num">01</span>
+            <div>
+              <p class="dx-issues-title">Mismatched radius</p>
+              <p class="dx-issues-body">Card 3 uses <code>4px</code>; the others use <code>16px</code>. One token, three values.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dx-issues-num">02</span>
+            <div>
+              <p class="dx-issues-title">Drifted brand color</p>
+              <p class="dx-issues-body">Badge orange is <code>#F08A5D</code> &mdash; a one-off, not the system&rsquo;s <code>#E8573D</code>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dx-issues-num">03</span>
+            <div>
+              <p class="dx-issues-title">Off-grid spacing</p>
+              <p class="dx-issues-body">Bullet uses <code>18px</code> margin. The system uses an 8px grid (<code>16</code> or <code>24</code>).</p>
+            </div>
+          </li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ============ HERO DEMO ============ -->
+  <div
+    class="dx-panel"
+    id="dx-panel-hero"
+    role="tabpanel"
+    aria-labelledby="dx-tab-hero"
+    data-dx-panel="hero"
+    data-dx-state="issues"
+    hidden
+  >
+    <div class="dx-stage">
+      <div class="dx-frame">
+        <div class="dx-chrome">
+          <span class="dx-chrome-dots"><i></i><i></i><i></i></span>
+          <span class="dx-chrome-url">your-app.com/</span>
+        </div>
+
+        <div class="dx-hero">
+          <h4 class="dx-hero-title" data-dx-fix="type-scale">
+            Build faster with our flexible platform.
+          </h4>
+          <p class="dx-hero-body">
+            Everything your team needs to ship — minus the overhead.
+          </p>
+          <p class="dx-hero-help" data-dx-fix="contrast">
+            Cancel anytime. Try it free for 14 days. No credit card.
+          </p>
+          <div class="dx-hero-actions">
+            <button class="dx-hero-cta" type="button" tabindex="-1" aria-hidden="true" data-dx-fix="btn-radius">
+              Get started
+            </button>
+            <button class="dx-hero-cta dx-hero-cta--ghost" type="button" tabindex="-1" aria-hidden="true">
+              See pricing
+            </button>
+          </div>
+        </div>
+
+        <div class="dx-overlay" aria-hidden="true">
+          <div class="dx-mark dx-mark--type" data-mark="01">
+            <span class="dx-mark-num">01</span>
+          </div>
+          <div class="dx-mark dx-mark--btn" data-mark="02">
+            <span class="dx-mark-num">02</span>
+          </div>
+          <div class="dx-mark dx-mark--contrast" data-mark="03">
+            <span class="dx-mark-num">03</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="dx-issues" aria-label="Issues found">
+        <p class="dx-issues-count">
+          <span>3</span> issues found
+        </p>
+        <ol>
+          <li>
+            <span class="dx-issues-num">01</span>
+            <div>
+              <p class="dx-issues-title">Off-scale type size</p>
+              <p class="dx-issues-body">Headline is <code>38px</code>. The scale jumps <code>32 / 36 / 48</code>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dx-issues-num">02</span>
+            <div>
+              <p class="dx-issues-title">Mismatched button radius</p>
+              <p class="dx-issues-body">CTA uses <code>6px</code>. The button token is <code>14px</code>.</p>
+            </div>
+          </li>
+          <li>
+            <span class="dx-issues-num">03</span>
+            <div>
+              <p class="dx-issues-title">Contrast fails AA</p>
+              <p class="dx-issues-body">Help text contrast is <code>3.2:1</code>. AA needs <code>4.5:1</code>.</p>
+            </div>
+          </li>
+        </ol>
+      </aside>
+    </div>
+  </div>
+
+  <p class="dx-foot-note">
+    Want this on <em>your</em> screens? An audit produces a 30-page version with priorities and a fix plan.
+    <a href="/services/" class="dx-foot-link">See the audit &rarr;</a>
+  </p>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-dx-root]');
+  if (root) {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dx-tab]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-dx-panel]'));
+    const toggle = root.querySelector<HTMLInputElement>('[data-dx-show-issues]')!;
+
+    function activate(id: string) {
+      root!.dataset.active = id;
+      tabs.forEach((t) => {
+        const on = t.dataset.dxTab === id;
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+      });
+      panels.forEach((p) => {
+        p.hidden = p.dataset.dxPanel !== id;
+      });
+    }
+
+    tabs.forEach((t) => {
+      t.addEventListener('click', () => activate(t.dataset.dxTab!));
+    });
+
+    toggle.addEventListener('change', () => {
+      const state = toggle.checked ? 'issues' : 'fixed';
+      panels.forEach((p) => (p.dataset.dxState = state));
+    });
+  }
+</script>
+
+<style>
+  .dx {
+    background: #fff;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 22px 50px -28px rgba(45, 43, 85, 0.3),
+      0 0 0 1px rgba(108, 74, 182, 0.05);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .dx-head { margin-bottom: 1.25rem; }
+
+  .dx-controls {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    margin-bottom: 1.25rem;
+  }
+  .dx-tabs {
+    display: inline-flex;
+    background: #fffbf5;
+    border: 1.5px solid rgba(108, 74, 182, 0.18);
+    border-radius: 999px;
+    padding: 4px;
+  }
+  .dx-tab {
+    border: 0; background: transparent;
+    padding: 0.4rem 0.95rem;
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    color: #6b6b73;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .dx-tab[aria-selected='true'] {
+    background: #2d2b55;
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
+  }
+  .dx-tab:focus-visible { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+
+  .dx-toggle {
+    display: inline-flex; align-items: center; gap: 0.6rem;
+    cursor: pointer;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.8rem;
+    color: #2d2b55;
+  }
+  .dx-toggle input { position: absolute; opacity: 0; pointer-events: none; }
+  .dx-toggle-track {
+    width: 38px; height: 22px;
+    background: rgba(108, 74, 182, 0.2);
+    border-radius: 999px;
+    position: relative;
+    transition: background 0.2s ease;
+  }
+  .dx-toggle-thumb {
+    position: absolute;
+    top: 2px; left: 2px;
+    width: 18px; height: 18px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(45, 43, 85, 0.25);
+    transition: transform 0.2s ease;
+  }
+  .dx-toggle input:checked + .dx-toggle-track { background: #e8573d; }
+  .dx-toggle input:checked + .dx-toggle-track .dx-toggle-thumb { transform: translateX(16px); }
+  .dx-toggle input:focus-visible + .dx-toggle-track { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+
+  /* ============ stage ============ */
+  .dx-stage {
+    display: grid; gap: 1.5rem;
+  }
+  @media (min-width: 880px) {
+    .dx-stage { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+  }
+  .dx-frame {
+    position: relative;
+    background: linear-gradient(180deg, #f7f5ff 0%, #fffbf5 100%);
+    border: 1px solid rgba(45, 43, 85, 0.1);
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px -18px rgba(45, 43, 85, 0.3);
+  }
+  .dx-chrome {
+    display: flex; align-items: center; gap: 0.6rem;
+    background: #2d2b55;
+    color: rgba(255, 255, 255, 0.7);
+    padding: 0.5rem 0.8rem;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+  }
+  .dx-chrome-dots { display: inline-flex; gap: 4px; }
+  .dx-chrome-dots i {
+    width: 9px; height: 9px; border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+  }
+  .dx-chrome-dots i:nth-child(1) { background: #ff8e53; }
+  .dx-chrome-dots i:nth-child(2) { background: #fde68a; }
+  .dx-chrome-dots i:nth-child(3) { background: #7bb47a; }
+  .dx-chrome-url { letter-spacing: 0.04em; }
+
+  /* ============ pricing demo ============ */
+  .dx-pricing {
+    display: grid; gap: 0.75rem;
+    padding: 1rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 560px) { .dx-pricing { grid-template-columns: repeat(3, 1fr); } }
+  .dx-price-card {
+    background: #fff;
+    border: 1px solid rgba(45, 43, 85, 0.1);
+    border-radius: 16px;
+    padding: 0.9rem;
+    position: relative;
+  }
+  /* "broken" — radius drift */
+  .dx-price-card--bad-radius { border-radius: 4px; }
+  /* "broken" — drifted color */
+  .dx-price-card--featured .dx-price-badge {
+    background: #f08a5d;
+  }
+  .dx-price-tier {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6c4ab6;
+    margin: 0 0 0.2rem;
+  }
+  .dx-price-num {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    color: #2d2b55;
+    font-size: 1.6rem;
+    margin: 0 0 0.6rem;
+  }
+  .dx-price-num span { font-size: 0.78rem; color: rgba(45, 43, 85, 0.5); font-weight: 400; }
+  .dx-price-card ul {
+    list-style: none; padding: 0; margin: 0 0 0.9rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(46, 46, 48, 0.8);
+    display: grid; gap: 0.35rem;
+  }
+  /* "broken" — off-grid */
+  .dx-price-spacing-bug { margin-top: 18px !important; }
+  .dx-price-cta {
+    width: 100%;
+    background: #6c4ab6;
+    color: #fff;
+    border: 0;
+    border-radius: 10px;
+    padding: 0.45rem 0.7rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+  }
+  .dx-price-badge {
+    position: absolute;
+    top: -10px; left: 50%;
+    transform: translateX(-50%);
+    background: #e8573d;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 3px 9px;
+    border-radius: 999px;
+  }
+
+  /* ============ hero demo ============ */
+  .dx-hero { padding: 2rem 1.25rem 1.5rem; }
+  .dx-hero-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 38px; /* off-scale */
+    color: #2d2b55;
+    line-height: 1.1;
+    margin: 0 0 0.5rem;
+    max-width: 28ch;
+  }
+  .dx-hero-body {
+    font-family: 'DM Sans', sans-serif;
+    color: rgba(46, 46, 48, 0.85);
+    font-size: 0.95rem;
+    margin: 0 0 0.8rem;
+    max-width: 36ch;
+  }
+  .dx-hero-help {
+    color: #b8a8d6; /* fails AA on cream */
+    font-size: 0.78rem;
+    margin: 0 0 1rem;
+  }
+  .dx-hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+  .dx-hero-cta {
+    background: #e8573d;
+    color: #fff;
+    border: 0;
+    border-radius: 6px; /* off — system is 14px */
+    padding: 0.55rem 1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+  }
+  .dx-hero-cta--ghost {
+    background: transparent;
+    color: #2d2b55;
+    border: 1.5px solid rgba(45, 43, 85, 0.3);
+  }
+
+  /* ============ overlay marks ============ */
+  .dx-overlay { position: absolute; inset: 0; pointer-events: none; }
+  .dx-mark {
+    position: absolute;
+    border: 2px dashed #e8573d;
+    background: rgba(232, 87, 61, 0.08);
+    border-radius: 6px;
+    transition: opacity 0.2s ease;
+  }
+  .dx-mark-num {
+    position: absolute;
+    top: -10px; left: -10px;
+    width: 22px; height: 22px;
+    background: #e8573d;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    box-shadow: 0 4px 8px -2px rgba(232, 87, 61, 0.5);
+  }
+
+  /* Pricing-demo mark positions (relative to the .dx-frame) */
+  /* Card 3 (radius drift): rightmost card of 3-col grid */
+  .dx-mark--radius-card { top: 50px; right: 11px; bottom: 14px; width: calc(33.333% - 24px); }
+  /* Badge: top-center of middle card */
+  .dx-mark--badge { top: 36px; left: 50%; transform: translateX(-50%); width: 110px; height: 22px; }
+  /* Spacing bug: middle card, 3rd bullet */
+  .dx-mark--spacing { top: 132px; left: 35%; width: 30%; height: 22px; }
+
+  /* Hero demo mark positions */
+  .dx-mark--type { top: 56px; left: 18px; width: 70%; height: 56px; }
+  .dx-mark--btn  { top: 200px; left: 18px; width: 110px; height: 36px; }
+  .dx-mark--contrast { top: 142px; left: 18px; width: 65%; height: 24px; }
+
+  /* "fixed" state — hide marks, restore correct values */
+  [data-dx-state='fixed'] .dx-mark { display: none; }
+  [data-dx-state='fixed'] .dx-price-card--bad-radius { border-radius: 16px; }
+  [data-dx-state='fixed'] .dx-price-card--featured .dx-price-badge { background: #e8573d; }
+  [data-dx-state='fixed'] .dx-price-spacing-bug { margin-top: 16px !important; }
+  [data-dx-state='fixed'] .dx-hero-title { font-size: 36px; }
+  [data-dx-state='fixed'] .dx-hero-cta { border-radius: 14px; }
+  [data-dx-state='fixed'] .dx-hero-help { color: #6c4ab6; }
+
+  /* ============ issues panel ============ */
+  .dx-issues {
+    background: #fffbf5;
+    border: 1px solid rgba(232, 87, 61, 0.2);
+    border-radius: 14px;
+    padding: 1.1rem 1.2rem;
+  }
+  .dx-issues-count {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #e8573d;
+    margin: 0 0 0.6rem;
+  }
+  .dx-issues-count span {
+    background: #e8573d;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    margin-right: 0.2rem;
+  }
+  .dx-issues ol {
+    list-style: none; padding: 0; margin: 0;
+    display: grid; gap: 0.7rem;
+  }
+  .dx-issues li {
+    display: flex; gap: 0.7rem;
+    padding: 0.55rem 0.7rem;
+    background: #fff;
+    border: 1px solid rgba(232, 87, 61, 0.15);
+    border-radius: 10px;
+  }
+  .dx-issues-num {
+    width: 22px; height: 22px;
+    background: #e8573d;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    flex: 0 0 auto;
+  }
+  .dx-issues-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: #2d2b55;
+    margin: 0 0 0.15rem;
+  }
+  .dx-issues-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.78rem;
+    color: rgba(46, 46, 48, 0.78);
+    margin: 0;
+    line-height: 1.4;
+  }
+  .dx-issues code {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    background: rgba(108, 74, 182, 0.1);
+    color: #6c4ab6;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .dx-foot-note {
+    margin-top: 1.25rem;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: rgba(45, 43, 85, 0.7);
+  }
+  .dx-foot-link {
+    color: #e8573d;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    margin-left: 0.4rem;
+  }
+  .dx-foot-link:hover { color: #c64a32; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .dx-tab,
+    .dx-toggle-track,
+    .dx-toggle-thumb,
+    .dx-mark { transition: none; }
+  }
+</style>

@@ -1,0 +1,52 @@
+---
+import Container from '~/components/layout/Container.astro';
+import Logo from '~/components/primitives/Logo.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import { FOOTER_NAV } from '~/lib/nav';
+import { cx } from '~/lib/cx';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+const year = new Date().getFullYear();
+---
+
+<footer class={cx('bg-navy text-white/70 py-12', className)}>
+  <Container>
+    <div class="grid md:grid-cols-4 gap-10">
+      <div class="md:col-span-2">
+        <Logo variant="wordmark" tone="inverse" size="md" />
+        <p class="mt-4 text-sm text-white/60 max-w-sm">
+          UX engineer & design systems consultant — helping teams ship consistent, accessible interfaces.
+        </p>
+      </div>
+      {FOOTER_NAV.map((col) => (
+        <nav aria-label={col.heading}>
+          <h2 class="font-heading text-sm font-semibold uppercase tracking-widest text-white mb-3">{col.heading}</h2>
+          <ul class="flex flex-col gap-2">
+            {col.links.map((link) => (
+              <li>
+                <a href={link.href} class="text-sm text-white/70 hover:text-lemon transition-colors">{link.label}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))}
+    </div>
+    <div class="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-white/50">
+      <p>© {year} Joshua Briley. All rights reserved.</p>
+      <a
+        href="https://www.linkedin.com/in/joshuabriley"
+        rel="noopener noreferrer"
+        target="_blank"
+        class="inline-flex items-center gap-1.5 hover:text-lemon transition-colors"
+        aria-label="LinkedIn profile"
+      >
+        <Icon name="ph:linkedin-logo-duotone" size={20} label="LinkedIn" />
+        LinkedIn
+      </a>
+    </div>
+  </Container>
+</footer>

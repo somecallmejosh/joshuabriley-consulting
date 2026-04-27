@@ -1,0 +1,67 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from './Icon.astro';
+
+/**
+ * Inline / arrow / nav link. The `nav` variant auto-detects the active page
+ * via Astro.url.pathname and emits `aria-current="page"`, replacing the
+ * runtime `nav-active.js` script with build-time matching.
+ */
+
+type Variant = 'inline' | 'arrow' | 'nav' | 'unstyled';
+
+interface Props {
+  href: string;
+  variant?: Variant;
+  /** Override active matching for the `nav` variant. */
+  current?: boolean;
+  /** Icon shown after the label (default for `arrow` is ph:arrow-right). */
+  iconRight?: string;
+  class?: string;
+  rel?: string;
+  target?: string;
+}
+
+const {
+  href,
+  variant = 'inline',
+  current,
+  iconRight,
+  class: className,
+  rel,
+  target,
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
+const linkPath = href.replace(/\/+$/, '') || '/';
+const isActive = current ?? (variant === 'nav' && (linkPath === pathname));
+
+// Inline text links use plum for AA contrast on cream/white. The arrow
+// variant keeps plum because the icon + visible underline-on-hover give it
+// non-text contrast; pair with a heading-weight font.
+const variants: Record<Variant, string> = {
+  inline: 'text-plum underline underline-offset-4 hover:text-coral',
+  arrow:
+    'inline-flex items-center gap-1.5 font-heading font-semibold text-plum text-sm hover:gap-3 transition-all',
+  nav:
+    'font-heading text-sm font-medium text-navy/80 hover:text-plum transition-colors',
+  unstyled: '',
+};
+
+const isExternal = /^https?:/.test(href);
+const externalAttrs = isExternal
+  ? { rel: rel ?? 'noopener noreferrer', target: target ?? '_blank' }
+  : { rel, target };
+
+const finalIconRight = variant === 'arrow' ? (iconRight ?? 'ph:arrow-right') : iconRight;
+---
+
+<a
+  href={href}
+  class={cx(variants[variant], className)}
+  aria-current={isActive ? 'page' : undefined}
+  {...externalAttrs}
+>
+  <slot />
+  {finalIconRight && <Icon name={finalIconRight} size={16} />}
+</a>

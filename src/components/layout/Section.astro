@@ -1,0 +1,45 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  tone?: 'cream' | 'navy' | 'white';
+  padding?: 'tight' | 'default' | 'loose';
+  id?: string;
+  class?: string;
+  /** Apply `relative overflow-hidden` so absolutely-positioned blobs clip safely. */
+  decorated?: boolean;
+}
+
+const {
+  tone = 'cream',
+  padding = 'default',
+  id,
+  class: className,
+  decorated = false,
+} = Astro.props;
+
+const tones: Record<NonNullable<Props['tone']>, string> = {
+  cream: 'bg-cream text-navy',
+  navy: 'bg-navy text-white',
+  white: 'bg-white text-navy',
+};
+
+const paddings: Record<NonNullable<Props['padding']>, string> = {
+  tight: 'py-12 md:py-16',
+  default: 'py-20 md:py-24',
+  loose: 'py-24 md:py-32',
+};
+---
+
+<section
+  id={id}
+  data-source={`Section · tone=${tone} · padding=${padding}${decorated ? ' · decorated' : ''}`}
+  class={cx(
+    tones[tone],
+    paddings[padding],
+    decorated && 'relative overflow-hidden',
+    className,
+  )}
+>
+  <slot />
+</section>

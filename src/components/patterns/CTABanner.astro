@@ -1,0 +1,36 @@
+---
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Navy CTA section used at the bottom of most pages. Slot in <Button> calls.
+ */
+
+interface Props {
+  title: string;
+  lead?: string;
+  align?: 'center' | 'left';
+  class?: string;
+}
+
+const { title, lead, align = 'center', class: className } = Astro.props;
+---
+
+<Section tone="navy" padding="default" decorated class={className}>
+  <Container width="narrow">
+    <div class={cx(align === 'center' && 'text-center')}>
+      <Heading level={2} visual="display-md" tone="white" align={align} balance>{title}</Heading>
+      {lead && (
+        <Text size="xl" tone="whiteMuted" align={align} class={cx('mt-4', align === 'center' && 'max-w-xl mx-auto')}>
+          {lead}
+        </Text>
+      )}
+      <div class={cx('mt-8 flex flex-wrap gap-3', align === 'center' && 'justify-center')}>
+        <slot />
+      </div>
+    </div>
+  </Container>
+</Section>

@@ -1,0 +1,84 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Brand logo — wordmark, monogram, or full lockup.
+ *
+ * The wordmark is rendered as accessible text ("Joshua Briley") with a coral
+ * accent on the surname; the monogram is decorative (aria-hidden) since it
+ * duplicates the wordmark when both appear in the lockup.
+ */
+
+interface Props {
+  variant?: 'lockup' | 'wordmark' | 'monogram';
+  size?: 'sm' | 'md' | 'lg';
+  /** Color treatment — cream surfaces vs. navy surfaces. */
+  tone?: 'default' | 'inverse';
+  /** href makes the logo a link (typically "/"). */
+  href?: string;
+  /** Override the announced name for the wordmark variant. */
+  label?: string;
+  class?: string;
+}
+
+const {
+  variant = 'lockup',
+  size = 'md',
+  tone = 'default',
+  href,
+  label = 'joshua Briley',
+  class: className,
+} = Astro.props;
+
+const monogramSize: Record<NonNullable<Props['size']>, string> = {
+  sm: 'logo-monogram logo-monogram-sm',
+  md: 'logo-monogram',
+  lg: 'logo-monogram logo-monogram-lg',
+};
+
+const wordmarkSize: Record<NonNullable<Props['size']>, string> = {
+  sm: 'text-2xl',
+  md: 'text-3xl',
+  lg: 'text-4xl md:text-5xl',
+};
+
+const wordmarkTone: Record<NonNullable<Props['tone']>, string> = {
+  default: 'text-navy',
+  inverse: 'text-white',
+};
+
+// Split label into first/last for the coral surname accent.
+const parts = label.trim().split(/\s+/);
+const firstName = parts.slice(0, -1).join(' ');
+const lastName = parts.length > 1 ? parts[parts.length - 1] : '';
+
+const Tag = href ? 'a' : 'span';
+---
+
+<Tag
+  href={href}
+  aria-label={label}
+  class={cx('inline-flex items-center gap-2.5 group', className)}
+>
+  {variant !== 'wordmark' && (
+    <span
+      class={cx(
+        monogramSize[size],
+        'transition-transform group-hover:scale-105',
+      )}
+    >
+      jb
+    </span>
+  )}
+  {variant !== 'monogram' && (
+    <span
+      class={cx(
+        'font-logo leading-none',
+        wordmarkSize[size],
+        wordmarkTone[tone],
+      )}
+    >
+      {firstName}{lastName && <span class="text-coral">{lastName}</span>}
+    </span>
+  )}
+</Tag>

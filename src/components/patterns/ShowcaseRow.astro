@@ -1,0 +1,36 @@
+---
+import { cx } from '~/lib/cx';
+import CopyButton from '~/components/islands/CopyButton.astro';
+
+/**
+ * Live example + copyable snippet. Used throughout the component-inventory
+ * page to show each variant alongside its usage code.
+ */
+
+interface Props {
+  title: string;
+  description?: string;
+  snippet?: string;
+  /** When true, the example renders on a navy background (for white-text components). */
+  dark?: boolean;
+  class?: string;
+}
+
+const { title, description, snippet, dark = false, class: className } = Astro.props;
+---
+
+<article class={cx('rounded-2xl border border-charcoal/10 overflow-hidden bg-white', className)}>
+  <header class="px-5 py-4 border-b border-charcoal/10 flex items-start justify-between gap-4 flex-wrap">
+    <div>
+      <h3 class="font-heading text-base font-semibold text-navy">{title}</h3>
+      {description && <p class="text-sm text-charcoal/70 mt-1 max-w-prose">{description}</p>}
+    </div>
+    {snippet && <CopyButton text={snippet} label="Copy snippet" />}
+  </header>
+  <div class={cx('p-6 md:p-8 flex flex-wrap items-center gap-4', dark && 'bg-navy text-white')}>
+    <slot />
+  </div>
+  {snippet && (
+    <pre class="px-5 py-4 bg-charcoal/[0.03] border-t border-charcoal/10 text-xs text-charcoal/80 font-mono overflow-x-auto"><code>{snippet}</code></pre>
+  )}
+</article>

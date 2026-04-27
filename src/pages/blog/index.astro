@@ -1,0 +1,288 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+
+const description =
+  'Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture.';
+
+const all = await getCollection('posts', ({ data }) => !data.draft);
+const sorted = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
+const others = sorted.filter((p) => p !== featured);
+
+const allCategories = Array.from(new Set(sorted.map((p) => p.data.category))).sort();
+
+const stickerToneClass: Record<string, string> = {
+  coral: 'bg-white/90 text-coral border-coral/40',
+  plum: 'bg-white/90 text-plum border-plum/40',
+  sage: 'bg-white/90 text-sage-deep border-sage/50',
+  sky: 'bg-white/90 text-sky-deep border-sky/50',
+  sunset: 'bg-white/90 text-sunset-deep border-sunset/40',
+  lemon: 'bg-white/90 text-navy border-lemon/60',
+};
+---
+
+<BaseLayout title="Blog — Joshua Briley | UX Engineering, in Practice" description={description}>
+  <!-- HERO -->
+  <Section padding="default" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-14 right-[8%]" animate="float" />
+    <Blob tone="sage" size="sm" class="absolute top-40 left-[5%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" class="absolute bottom-4 right-[14%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="coral" size="sm" class="absolute bottom-16 left-[10%] rounded-full" animate="float" opacity="opacity-30" />
+
+    <Container class="relative z-10">
+      <div class="text-center mb-10">
+        <div class="mb-6 inline-block">
+          <Badge tone="coral" icon="ph:notebook-duotone">The Field Notes</Badge>
+        </div>
+        <Heading level={1} visual="display-xl" align="center" balance class="mb-5">
+          UX engineering, <WavyUnderline>in practice</WavyUnderline>
+        </Heading>
+        <Text size="xl" tone="muted" align="center" class="max-w-2xl mx-auto">
+          Practical takes, honest opinions, and the occasional fictional UX engineer.
+          Written from 20 years of shipping systems that teams actually use.
+        </Text>
+      </div>
+
+      {featured && (
+        <div class="relative max-w-5xl mx-auto">
+          <div class="hidden md:block absolute -top-6 -left-6 bg-lemon px-4 py-2 rounded-sm shadow-lg font-heading text-xs font-semibold text-navy rotate-[-6deg] z-20" aria-hidden="true">
+            <Icon name="ph:star-four-duotone" class="text-coral align-[-2px]" size={14} />
+            Latest
+          </div>
+          <div class="hidden md:block absolute -top-3 right-8 w-16 h-5 bg-coral/30 rotate-[4deg] rounded-sm z-20" aria-hidden="true"></div>
+
+          <article class="notebook-card p-8 md:p-12">
+            <div class="notebook-inner md:pl-10">
+              <div class="flex flex-wrap items-center gap-3 mb-4">
+                {featured.data.tags.map((tag, i) => (
+                  <Badge tone={['coral', 'plum', 'sage'][i % 3] as 'coral' | 'plum' | 'sage'} sticker={i > 0}>{tag}</Badge>
+                ))}
+              </div>
+              <Heading level={2} visual="display-md" class="mb-4">
+                <a href={`/blog/${featured.id}/`} class="hover:text-coral transition-colors">{featured.data.title}</a>
+              </Heading>
+              <Text size="lg" tone="muted" class="mb-6 max-w-2xl">
+                {featured.data.description}
+              </Text>
+              <div class="flex flex-wrap items-center gap-6">
+                <Button variant="primary" size="sm" iconRight="ph:arrow-right-bold" href={`/blog/${featured.id}/`}>
+                  Read the essay
+                </Button>
+                <div class="flex items-center gap-2 text-sm text-charcoal/60 font-heading">
+                  <Icon name="ph:clock-duotone" size={18} />
+                  {featured.data.readMinutes} min read
+                </div>
+              </div>
+            </div>
+          </article>
+        </div>
+      )}
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-5xl mx-auto" aria-hidden="true"></div>
+
+  <!-- LISTING -->
+  <Section padding="default" decorated>
+    <Blob tone="plum" size="sm" class="absolute top-10 right-[6%]" animate="float-slow" opacity="opacity-20" />
+    <Blob tone="lemon" size="sm" class="absolute bottom-20 left-[4%] rounded-full" animate="float-delay" />
+
+    <Container class="relative z-10">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
+        <div>
+          <p class="font-heading text-sm uppercase tracking-wider text-coral mb-2">The archive</p>
+          <Heading level={2} visual="display-md">
+            More from the <WavyUnderline>notebook</WavyUnderline>
+          </Heading>
+        </div>
+        <Text tone="muted" class="max-w-sm">
+          Essays and field notes on design systems, accessibility, and the practical side of shipping UI at scale.
+        </Text>
+      </div>
+
+      <!-- Filter pills (visual only — matches legacy behavior) -->
+      <div class="flex flex-wrap gap-3 mb-12" role="list" aria-label="Filter posts by category">
+        <button type="button" class="filter-pill active">
+          <Icon name="ph:sparkle-duotone" size={16} />
+          All posts
+        </button>
+        {allCategories.map((cat) => (
+          <button type="button" class="filter-pill">{cat}</button>
+        ))}
+      </div>
+
+      <!-- Grid -->
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {others.map((post) => (
+          <article class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5">
+            <a href={`/blog/${post.id}/`} class="block group">
+              <div class={`h-40 bg-gradient-to-br ${post.data.gradient} flex items-center justify-center relative`}>
+                <Icon name={post.data.icon} class="text-navy/70" size={72} />
+                <span class={`absolute top-3 right-3 sticker ${stickerToneClass[post.data.sticker]}`}>
+                  {post.data.category}
+                </span>
+              </div>
+              <div class="p-6">
+                <p class="font-heading text-xs uppercase tracking-wider text-plum mb-3">{post.data.category}</p>
+                <Heading level={3} visual="h2" class="mb-3 group-hover:text-coral transition-colors">
+                  {post.data.title}
+                </Heading>
+                <Text size="sm" tone="muted" class="mb-4">
+                  {post.data.description}
+                </Text>
+                <div class="flex items-center gap-2 text-coral font-heading text-sm font-semibold">
+                  Read essay
+                  <Icon name="ph:arrow-right-bold" size={14} />
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+
+        <!-- "More coming" placeholder -->
+        <div class="post-card relative flex items-center justify-center p-8">
+          <div class="paper-note text-center max-w-xs">
+            <Icon name="ph:pencil-line-duotone" class="text-coral mb-3" size={36} />
+            <p class="font-display text-xl text-navy mb-2 leading-snug">More essays in the margins.</p>
+            <Text size="sm" tone="muted">
+              New field notes land roughly every other week. Subscribe below so they find you.
+            </Text>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- NEWSLETTER CTA -->
+  <Section padding="default">
+    <Container width="narrow">
+      <div class="relative bg-navy text-white rounded-3xl p-10 md:p-16 overflow-hidden">
+        <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
+        <Blob tone="plum" size="lg" shape="alt" class="absolute -bottom-12 -left-8" animate="float" opacity="opacity-50" />
+        <Blob tone="lemon" size="sm" class="absolute top-10 left-1/2 rounded-full" animate="float-delay" />
+
+        <div class="relative z-10 text-center">
+          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-lemon px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium">
+            <Icon name="ph:envelope-simple-duotone" size={18} />
+            Field Notes, delivered
+          </div>
+          <Heading level={2} visual="display-md" tone="white" align="center" class="mb-5">
+            Get new essays in your <WavyUnderline>inbox</WavyUnderline>
+          </Heading>
+          <Text size="lg" tone="whiteMuted" align="center" class="max-w-xl mx-auto mb-8">
+            One honest essay at a time. No spam, no funnels — just the stuff I'd send a friend running into the same design system problems you are.
+          </Text>
+          <form class="flex flex-col sm:flex-row items-stretch gap-3 max-w-md mx-auto" onsubmit="event.preventDefault()">
+            <label class="sr-only" for="newsletter-email">Email address</label>
+            <input
+              id="newsletter-email"
+              type="email"
+              required
+              placeholder="you@workmail.com"
+              class="flex-1 px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 font-body focus:outline-none focus:border-coral focus:bg-white/15 transition-colors"
+            />
+            <Button variant="primary" size="sm" iconRight="ph:paper-plane-tilt-duotone" type="submit">
+              Subscribe
+            </Button>
+          </form>
+          <p class="text-xs text-white/50 mt-4 font-body">Unsubscribe any time. I'll respect the inbox.</p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  .notebook-card {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow:
+      0 30px 60px -28px rgba(45, 43, 85, 0.3),
+      0 0 0 1px rgba(108, 74, 182, 0.06);
+  }
+  .notebook-card::before {
+    content: '';
+    position: absolute;
+    left: 42px;
+    top: 24px;
+    bottom: 24px;
+    width: 1px;
+    background: rgba(232, 87, 61, 0.35);
+  }
+  .notebook-card::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 24px;
+    bottom: 24px;
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 31px,
+      rgba(93, 173, 226, 0.22) 32px
+    );
+    pointer-events: none;
+    border-radius: 14px;
+  }
+  .notebook-inner {
+    position: relative;
+    z-index: 1;
+  }
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 16px;
+    border-radius: 9999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    background: #fff;
+    border: 1.5px solid rgba(45, 43, 85, 0.1);
+    color: #2d2b55;
+    transition: all 0.2s ease;
+    cursor: pointer;
+  }
+  .filter-pill:hover {
+    border-color: #e8573d;
+    color: #e8573d;
+    transform: translateY(-2px);
+  }
+  .filter-pill.active {
+    background: #2d2b55;
+    color: #fff;
+    border-color: #2d2b55;
+  }
+  .post-card:nth-child(3n) {
+    transform: rotate(-0.6deg);
+  }
+  .post-card:nth-child(3n + 1) {
+    transform: rotate(0.4deg);
+  }
+  .post-card:nth-child(3n + 2) {
+    transform: rotate(-0.2deg);
+  }
+</style>
+
+<script>
+  // Visual-only filter pill toggle (matches legacy behavior; doesn't actually filter posts).
+  document.querySelectorAll<HTMLButtonElement>('.filter-pill').forEach((pill) => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach((p) => p.classList.remove('active'));
+      pill.classList.add('active');
+    });
+  });
+</script>

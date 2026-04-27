@@ -1,0 +1,142 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import TestimonialPinboard from '~/components/patterns/TestimonialPinboard.astro';
+import TestimonialCard from '~/components/patterns/TestimonialCard.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+
+const description =
+  "Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work.";
+
+const all = await getCollection('testimonials');
+const sorted = all.sort((a, b) => a.data.order - b.data.order);
+---
+
+<BaseLayout title="Testimonials — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+  <!-- HERO -->
+  <Section padding="loose" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
+    <Blob tone="sage" size="sm" class="absolute top-40 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" shape="alt" class="absolute bottom-8 right-[16%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="coral" size="sm" class="absolute bottom-20 left-[14%] rounded-full" animate="float" opacity="opacity-30" />
+
+    <Container width="default" class="relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-7 text-center lg:text-left">
+          <div class="mb-6 inline-block">
+            <Badge tone="lemon" icon="ph:chat-teardrop-dots-duotone">Kind words from people I've worked with</Badge>
+          </div>
+          <Heading level={1} visual="display-xl" balance class="mb-6">
+            A pinboard of <WavyUnderline>kind words</WavyUnderline>.
+          </Heading>
+          <Text size="xl" tone="muted" class="mb-8 max-w-2xl mx-auto lg:mx-0">
+            These come from clients and colleagues I've had the pleasure of working with. Their words reflect what I care about most —
+            <strong class="text-charcoal font-semibold">collaboration, accessibility, and work that holds up over time.</strong>
+          </Text>
+
+          <div class="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-8">
+            <Badge tone="coral" sticker>18 voices</Badge>
+            <Badge tone="plum" sticker>20 years</Badge>
+            <Badge tone="sage" sticker>Apple · HubSpot · BHSI</Badge>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-3">
+            <Button variant="primary" iconLeft="ph:arrow-down-duotone" href="#wall">
+              Read the wall
+            </Button>
+            <Button variant="ghost" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+              Book an intro call
+            </Button>
+          </div>
+        </div>
+
+        <!-- Stacked hero cards -->
+        <div class="lg:col-span-5 flex justify-center" aria-hidden="true">
+          <div class="relative w-full max-w-sm h-80">
+            <div class="card-base card-sticky variant-peach absolute top-2 -right-4 w-64 rot-4 animate-float-slow">
+              <span class="pin plum"></span>
+              <p class="font-hand text-2xl text-navy leading-tight">"the gold standard for building UIs…"</p>
+              <p class="font-heading text-xs text-navy/70 mt-3">— Adam C., Evidation</p>
+            </div>
+            <div class="card-base card-index absolute top-14 left-0 w-72 rot-5 animate-float">
+              <span class="tape left"></span>
+              <p class="font-display italic text-navy text-lg leading-snug mt-2">
+                "truly builds for everyone — technically rigorous and deeply human."
+              </p>
+              <p class="font-heading text-xs text-charcoal/60 mt-3">— Ryan D., BHSI</p>
+            </div>
+            <div class="card-base card-polaroid absolute bottom-0 right-2 w-64 rot-2 animate-float-delay">
+              <span class="tape right coral"></span>
+              <div class="avatar-slab bg-gradient-to-br from-plum/30 via-coral/20 to-lemon/40">
+                <Icon name="ph:quotes-duotone" size={48} class="text-plum/70" />
+              </div>
+              <p class="font-hand text-2xl text-navy text-center">"ahead of schedule, every time."</p>
+              <p class="font-heading text-xs text-charcoal/60 mt-1 text-center">— Ethan B., Domino Data Lab</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-6xl mx-auto px-6" aria-hidden="true"></div>
+
+  <!-- THE WALL -->
+  <Section id="wall" padding="default" decorated>
+    <Blob tone="plum" size="md" class="absolute top-10 right-[4%]" animate="float-slow" opacity="opacity-20" />
+    <Blob tone="lemon" size="sm" class="absolute bottom-10 left-[4%] rounded-full" animate="float" />
+
+    <Container class="relative z-10">
+      <div class="text-center mb-14 max-w-2xl mx-auto">
+        <span class="font-hand text-3xl text-coral inline-block rotate-[-2deg]">the wall</span>
+        <Heading level={2} visual="display-md" align="center" class="mt-2 mb-5">
+          Notes from collaborators
+        </Heading>
+        <Text tone="muted" align="center">
+          A working wall of quotes, lightly shuffled — hover any card to straighten it out.
+        </Text>
+      </div>
+
+      <TestimonialPinboard>
+        {sorted.map((t) => (
+          <TestimonialCard
+            name={t.data.name}
+            role={t.data.role}
+            company={t.data.company}
+            quote={t.data.quote}
+            initials={t.data.initials}
+            avatarTone={t.data.avatarTone}
+            variant={t.data.variant}
+            tilt={t.data.tilt}
+            tape={t.data.tape}
+            pin={t.data.pin}
+            slabGradient={t.data.slabGradient}
+            featured={t.data.featured}
+          />
+        ))}
+      </TestimonialPinboard>
+    </Container>
+  </Section>
+
+  <!-- CTA -->
+  <CTABanner
+    title="Add your name to the wall?"
+    lead="Start with the free 10-minute scorecard, or grab an intro call. I'll tell you honestly whether I can help — and if not, I probably know who can."
+  >
+    <Button variant="primary" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
+      Score your design system
+    </Button>
+    <Button variant="secondary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+      Book an intro call
+    </Button>
+  </CTABanner>
+</BaseLayout>

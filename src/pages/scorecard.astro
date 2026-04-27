@@ -1,0 +1,228 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import ScorecardEngine from '~/components/islands/ScorecardEngine.astro';
+
+const description =
+  'An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process.';
+
+const howSteps = [
+  { n: 1, tone: 'coral', tilt: '-1deg', title: 'Answer honestly', body: 'For each prompt, pick **No**, **Partial**, or **Yes**. Nobody&rsquo;s grading *you*.' },
+  { n: 2, tone: 'plum', tilt: '1deg', title: 'Watch the score', body: 'Subject grades appear live. The floating badge tracks your running total as you go.' },
+  { n: 3, tone: 'sage', tilt: '-0.5deg', title: 'Read the report', body: 'Finish every row and a written report card appears with what to tackle first, and what to leave alone.' },
+];
+
+const stepBgMap: Record<string, string> = {
+  coral: 'bg-coral',
+  plum: 'bg-plum',
+  sage: 'bg-sage',
+};
+---
+
+<BaseLayout
+  title="Design System Scorecard — Joshua Briley | UX Engineer & Design Systems Consultant"
+  description={description}
+>
+  <!-- HERO -->
+  <Section padding="default" decorated>
+    <Blob tone="lemon" size="lg" class="absolute top-16 right-[6%]" animate="float" />
+    <Blob tone="sage" size="sm" class="absolute top-40 left-[4%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sky" size="md" class="absolute bottom-12 right-[14%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="coral" size="sm" class="absolute bottom-24 left-[10%] rounded-full" animate="float" opacity="opacity-30" />
+    <iconify-icon
+      icon="ph:pencil-duotone"
+      class="pencil top-[22%] left-[6%] animate-wiggle"
+      aria-hidden="true"
+    ></iconify-icon>
+    <iconify-icon
+      icon="ph:star-four-duotone"
+      class="absolute top-[15%] right-[12%] text-3xl text-coral animate-wiggle"
+      aria-hidden="true"
+    ></iconify-icon>
+
+    <Container class="relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-6">
+          <div class="mb-5 inline-block">
+            <Badge tone="peach" icon="ph:graduation-cap-duotone">Design System Self-Assessment</Badge>
+          </div>
+          <Heading level={1} visual="display-xl" balance class="mb-6">
+            Grade your design <WavyUnderline>system</WavyUnderline>
+            <span class="font-hand text-coral text-4xl md:text-5xl block mt-3 rotate-[-2deg]">
+              …like a report card.
+            </span>
+          </Heading>
+          <Text size="xl" tone="muted" class="max-w-xl mb-8">
+            Ten minutes, five subjects, thirty-two questions. An honest snapshot of where your system shines and where it&rsquo;s quietly burning your team out.
+          </Text>
+          <div class="flex flex-wrap items-center gap-3 mb-8">
+            <Badge tone="sage" icon="ph:timer-duotone">~10 minutes</Badge>
+            <Badge tone="sky" icon="ph:lock-open-duotone">No signup</Badge>
+            <Badge tone="plum" icon="ph:eye-slash-duotone">Stays on your device</Badge>
+          </div>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <Button variant="primary" iconLeft="ph:pencil-simple-line-duotone" href="#scorecard">
+              Start scoring
+            </Button>
+            <Button variant="ghost" iconLeft="ph:question-duotone" href="#how">
+              How it works
+            </Button>
+          </div>
+        </div>
+
+        <div class="lg:col-span-6 relative">
+          <div class="relative max-w-md mx-auto lg:ml-auto">
+            <div class="absolute -inset-8 bg-plum/12 blob-shape-alt animate-float-slow" aria-hidden="true"></div>
+            <div class="report-paper rotate-[-1.5deg] relative z-10">
+              <span class="tape tl" aria-hidden="true"></span>
+              <span class="tape tr" aria-hidden="true"></span>
+              <div class="pl-12">
+                <p class="font-hand text-plum text-2xl leading-none mb-1">Briley &amp; Co. Academy</p>
+                <h2 class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight mb-1">
+                  Design System Report Card
+                </h2>
+                <p class="font-body text-xs text-charcoal/60 mb-5">
+                  Term: ongoing · Student: <span class="font-semibold text-coral">your team</span>
+                </p>
+                <ul class="space-y-2.5 font-heading text-sm">
+                  <li class="flex items-center justify-between">
+                    <span class="text-charcoal/80">01 · Component Consistency</span>
+                    <span class="font-display font-bold text-plum">—</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span class="text-charcoal/80">02 · Accessibility</span>
+                    <span class="font-display font-bold text-plum">—</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span class="text-charcoal/80">03 · Token Architecture</span>
+                    <span class="font-display font-bold text-plum">—</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span class="text-charcoal/80">04 · Documentation</span>
+                    <span class="font-display font-bold text-plum">—</span>
+                  </li>
+                  <li class="flex items-center justify-between">
+                    <span class="text-charcoal/80">05 · Handoff Process</span>
+                    <span class="font-display font-bold text-plum">—</span>
+                  </li>
+                </ul>
+                <div class="mt-5 pt-4 border-t-2 border-dashed border-coral/30 flex items-end justify-between">
+                  <div>
+                    <p class="font-hand text-plum text-lg leading-none">Final grade</p>
+                    <p class="font-display text-3xl font-bold text-navy">—/64</p>
+                  </div>
+                  <p class="font-hand text-coral text-xl rotate-[-4deg]">let&rsquo;s find out!</p>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -top-6 -right-4 w-16 h-16 bg-sunset rounded-full flex items-center justify-center text-white shadow-xl animate-wiggle z-20" aria-hidden="true">
+              <Icon name="ph:star-duotone" size={32} />
+            </div>
+            <div class="absolute -bottom-3 -left-4 bg-white rounded-full px-4 py-2 shadow-lg border border-charcoal/5 rotate-[-4deg] z-20 flex items-center gap-2">
+              <Icon name="ph:check-circle-duotone" size={18} class="text-sage" />
+              <span class="font-hand text-navy text-lg leading-none">no wrong answers</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-5xl mx-auto mb-10"></div>
+
+  <!-- HOW IT WORKS -->
+  <Section id="how" padding="tight">
+    <Container width="default">
+      <div class="text-center mb-12">
+        <span class="font-hand text-coral text-2xl block mb-2 rotate-[-2deg]">the rules of the game</span>
+        <Heading level={2} visual="display-md" align="center">How it works</Heading>
+      </div>
+      <div class="grid md:grid-cols-3 gap-6">
+        {howSteps.map((step) => (
+          <div class={`relative bg-white rounded-2xl p-7 shadow-lg border border-charcoal/5`} style={`transform: rotate(${step.tilt})`}>
+            <div class={`absolute -top-5 -left-3 w-12 h-12 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-display font-bold text-xl shadow-lg`}>
+              {step.n}
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-navy mt-3 mb-2">{step.title}</h3>
+            <p class="text-sm text-charcoal/75 leading-relaxed" set:html={step.body.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')} />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-12 bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 shadow-sm max-w-3xl mx-auto">
+        <p class="font-hand text-plum text-xl mb-4 text-center">teacher&rsquo;s grading key</p>
+        <div class="grid sm:grid-cols-3 gap-4">
+          <div class="flex items-start gap-3 bg-coral/5 rounded-xl p-4 border border-coral/15">
+            <div class="w-10 h-10 rounded-full bg-coral/90 text-white flex items-center justify-center flex-shrink-0 font-display font-bold">0</div>
+            <div>
+              <p class="font-heading font-semibold text-navy">No</p>
+              <p class="text-xs text-charcoal/70">Not addressed yet.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-sunset/5 rounded-xl p-4 border border-sunset/25">
+            <div class="w-10 h-10 rounded-full bg-sunset text-white flex items-center justify-center flex-shrink-0 font-display font-bold">1</div>
+            <div>
+              <p class="font-heading font-semibold text-navy">Partial</p>
+              <p class="text-xs text-charcoal/70">Partially in place.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 bg-sage/5 rounded-xl p-4 border border-sage/25">
+            <div class="w-10 h-10 rounded-full bg-sage text-white flex items-center justify-center flex-shrink-0 font-display font-bold">2</div>
+            <div>
+              <p class="font-heading font-semibold text-navy">Yes</p>
+              <p class="text-xs text-charcoal/70">Working well.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- SCORECARD -->
+  <Section id="scorecard" padding="tight">
+    <Container width="narrow">
+      <ScorecardEngine />
+    </Container>
+  </Section>
+
+  <!-- CTA -->
+  <Section padding="default" decorated>
+    <Blob tone="coral" size="md" class="absolute top-0 left-8" animate="float" opacity="opacity-30" />
+    <Blob tone="sky" size="sm" class="absolute top-4 right-12 rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="lemon" size="md" shape="alt" class="absolute bottom-0 right-4" animate="float-slow" />
+
+    <Container width="narrow" class="text-center relative z-10">
+      <Heading level={2} visual="display-md" align="center" balance class="mb-6">
+        Want a second pair of eyes on your <WavyUnderline>score</WavyUnderline>?
+      </Heading>
+      <Text size="lg" tone="muted" align="center" class="max-w-2xl mx-auto mb-10">
+        Screenshot the report, send it over, and we&rsquo;ll spend 30 minutes on what to tackle first. I&rsquo;ll tell you honestly whether I can help, and if not, I probably know who can.
+      </Text>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/" class="!bg-navy hover:!bg-navy/90">
+          Book an intro call
+        </Button>
+        <Button variant="primary" iconLeft="ph:toolbox-duotone" href="/services/">
+          How I help
+        </Button>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  .pencil {
+    position: absolute;
+    font-size: 3rem;
+    color: #6c4ab6;
+    transform: rotate(-22deg);
+  }
+</style>

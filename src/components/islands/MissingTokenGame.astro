@@ -1,0 +1,583 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import Button from '~/components/primitives/Button.astro';
+
+/**
+ * "Find the missing token" — a tiny three-round puzzle for the 404 page.
+ * Each round shows a broken card next to a reference and three token chips.
+ * Pick the token that snaps the broken card to match the reference.
+ *
+ * State lives entirely in the DOM (data-attributes + CSS custom properties),
+ * no framework. Skips animations under prefers-reduced-motion.
+ */
+
+interface Choice {
+  token: string;
+  /** CSS value applied when this token is chosen. */
+  value: string;
+  /** Label hint, optional. */
+  hint?: string;
+}
+
+interface Round {
+  id: string;
+  /** Which CSS var on the broken card the round drives. */
+  cssVar: '--mtg-radius' | '--mtg-pad' | '--mtg-color';
+  prompt: string;
+  initial: string;
+  reference: string;
+  correctIndex: 0 | 1 | 2;
+  /** Display the broken card with these custom-property defaults. */
+  base: { radius: string; pad: string; color: string };
+  choices: [Choice, Choice, Choice];
+}
+
+const rounds: Round[] = [
+  {
+    id: 'r1',
+    cssVar: '--mtg-radius',
+    prompt: 'Radius is wrong. Which token matches the system?',
+    initial: '2px',
+    reference: '14px',
+    correctIndex: 1,
+    base: { radius: '2px', pad: '1.25rem', color: '#6c4ab6' },
+    choices: [
+      { token: '--radius-sharp', value: '2px',  hint: 'sharp' },
+      { token: '--radius-md',    value: '14px', hint: 'medium' },
+      { token: '--radius-pill',  value: '999px', hint: 'pill' },
+    ],
+  },
+  {
+    id: 'r2',
+    cssVar: '--mtg-color',
+    prompt: 'Primary color drifted. Which token does the system use?',
+    initial: '#9aa0a6',
+    reference: '#6c4ab6',
+    correctIndex: 1,
+    base: { radius: '14px', pad: '1.25rem', color: '#9aa0a6' },
+    choices: [
+      { token: '--color-charcoal-30', value: '#9aa0a6', hint: 'gray' },
+      { token: '--color-plum',        value: '#6c4ab6', hint: 'plum' },
+      { token: '--color-coral',       value: '#e8573d', hint: 'coral' },
+    ],
+  },
+  {
+    id: 'r3',
+    cssVar: '--mtg-pad',
+    prompt: 'Spacing collapsed. Which token restores the breathing room?',
+    initial: '0.25rem',
+    reference: '1.25rem',
+    correctIndex: 1,
+    base: { radius: '14px', pad: '0.25rem', color: '#6c4ab6' },
+    choices: [
+      { token: '--space-1', value: '0.25rem', hint: 'cramped' },
+      { token: '--space-5', value: '1.25rem', hint: 'roomy' },
+      { token: '--space-10', value: '2.5rem', hint: 'huge' },
+    ],
+  },
+];
+
+const totalRounds = rounds.length;
+---
+
+<section
+  class="mtg"
+  data-mtg-root
+  data-round="0"
+  data-rounds={totalRounds}
+  data-score="0"
+  aria-labelledby="mtg-title"
+>
+  <header class="mtg-head">
+    <span class="font-hand text-coral text-xl rotate-[-2deg] inline-block leading-none mb-1">
+      while you&rsquo;re here…
+    </span>
+    <h2 id="mtg-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+      Find the missing token.
+    </h2>
+    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+      Three rounds. The broken card is missing one token. Pick the value that snaps it back into the system.
+    </p>
+  </header>
+
+  <div class="mtg-progress" aria-hidden="true">
+    {rounds.map((_, i) => (
+      <span class="mtg-pip" data-mtg-pip={i}></span>
+    ))}
+    <span class="mtg-progress-label">
+      Round <span data-mtg-round-num>1</span> of {totalRounds}
+    </span>
+  </div>
+
+  {rounds.map((r, i) => (
+    <article
+      class="mtg-round"
+      data-mtg-round={r.id}
+      data-mtg-index={i}
+      hidden={i !== 0}
+      style={`--mtg-radius: ${r.base.radius}; --mtg-pad: ${r.base.pad}; --mtg-color: ${r.base.color};`}
+    >
+      <p class="mtg-prompt">
+        <span class="mtg-q-num">Q{i + 1}.</span>
+        {r.prompt}
+      </p>
+
+      <div class="mtg-stage">
+        <!-- broken -->
+        <div class="mtg-card mtg-card--broken" data-mtg-broken>
+          <span class="mtg-card-tag">broken</span>
+          <h3 class="mtg-card-title">Untitled card</h3>
+          <p class="mtg-card-body">A small UI element that&rsquo;s drifted from the system.</p>
+          <button class="mtg-card-btn" type="button" tabindex="-1" aria-hidden="true">View detail</button>
+        </div>
+
+        <!-- reference -->
+        <div
+          class="mtg-card mtg-card--ref"
+          aria-label="Reference: how this card should look"
+          style={`--mtg-radius: ${r.cssVar === '--mtg-radius' ? r.reference : r.base.radius};
+                  --mtg-pad: ${r.cssVar === '--mtg-pad' ? r.reference : r.base.pad};
+                  --mtg-color: ${r.cssVar === '--mtg-color' ? r.reference : r.base.color};`}
+        >
+          <span class="mtg-card-tag mtg-card-tag--ok">system</span>
+          <h3 class="mtg-card-title">Untitled card</h3>
+          <p class="mtg-card-body">A small UI element that follows the system.</p>
+          <button class="mtg-card-btn" type="button" tabindex="-1" aria-hidden="true">View detail</button>
+        </div>
+      </div>
+
+      <div class="mtg-choices" role="radiogroup" aria-label="Token choices">
+        {r.choices.map((c, idx) => (
+          <button
+            type="button"
+            class="mtg-chip"
+            data-mtg-choice
+            data-mtg-correct={idx === r.correctIndex ? 'true' : 'false'}
+            data-mtg-css-var={r.cssVar}
+            data-mtg-css-value={c.value}
+          >
+            <span class="mtg-chip-token">{c.token}</span>
+            {c.hint && <span class="mtg-chip-hint">{c.hint}</span>}
+          </button>
+        ))}
+      </div>
+
+      <footer class="mtg-footer">
+        <p class="mtg-feedback" data-mtg-feedback aria-live="polite">
+          Click a token to apply it.
+        </p>
+        <button
+          type="button"
+          class="mtg-next"
+          data-mtg-next
+          hidden
+        >
+          {i + 1 === totalRounds ? 'See result' : 'Next round'}
+          <iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>
+        </button>
+      </footer>
+    </article>
+  ))}
+
+  <article class="mtg-result" data-mtg-result hidden aria-live="polite">
+    <div class="mtg-result-stamp">
+      <iconify-icon icon="ph:trophy-duotone" aria-hidden="true"></iconify-icon>
+    </div>
+    <h3 class="mtg-result-title">
+      <span data-mtg-result-headline>Token Sleuth</span>
+    </h3>
+    <p class="mtg-result-body">
+      <span data-mtg-result-body>You found every missing token. The system thanks you.</span>
+    </p>
+    <p class="mtg-score">
+      <span data-mtg-final-score>0</span> / {totalRounds} on the first try
+    </p>
+    <div class="mtg-result-actions">
+      <Button href="/" variant="primary" iconLeft="ph:house-duotone">Back home</Button>
+      <Button variant="ghost" iconLeft="ph:arrow-counter-clockwise-duotone" data-mtg-restart>
+        Play again
+      </Button>
+    </div>
+  </article>
+</section>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-mtg-root]');
+  if (root) {
+    const rounds = Array.from(root.querySelectorAll<HTMLElement>('[data-mtg-round]'));
+    const result = root.querySelector<HTMLElement>('[data-mtg-result]')!;
+    const total = rounds.length;
+    const pips = root.querySelectorAll<HTMLElement>('[data-mtg-pip]');
+    const roundNumEl = root.querySelector<HTMLElement>('[data-mtg-round-num]')!;
+    const finalScoreEl = root.querySelector<HTMLElement>('[data-mtg-final-score]')!;
+    const headlineEl = root.querySelector<HTMLElement>('[data-mtg-result-headline]')!;
+    const bodyEl = root.querySelector<HTMLElement>('[data-mtg-result-body]')!;
+
+    let current = 0;
+    let score = 0;
+    let roundClean = true; // user got it right with no wrong attempts
+
+    function showRound(idx: number) {
+      rounds.forEach((r, i) => {
+        r.hidden = i !== idx;
+      });
+      pips.forEach((p, i) => {
+        p.classList.toggle('is-on', i === idx);
+        p.classList.toggle('is-done', i < idx);
+      });
+      roundNumEl.textContent = String(idx + 1);
+    }
+
+    function endGame() {
+      result.hidden = false;
+      finalScoreEl.textContent = String(score);
+      let headline: string;
+      let body: string;
+      if (score === total) {
+        headline = 'Token Sleuth';
+        body = 'A clean sweep. The system thanks you.';
+      } else if (score >= 1) {
+        headline = 'Apprentice tinkerer';
+        body = 'Close enough — every system needs people willing to dig in.';
+      } else {
+        headline = 'Honest beginner';
+        body = 'Tokens take a minute. Want to see how a real system organizes them?';
+      }
+      headlineEl.textContent = headline;
+      bodyEl.textContent = body;
+      pips.forEach((p) => p.classList.add('is-done'));
+      result.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+        block: 'center',
+      });
+    }
+
+    function nextRound() {
+      if (current + 1 >= total) {
+        endGame();
+        return;
+      }
+      current += 1;
+      roundClean = true;
+      showRound(current);
+    }
+
+    root.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      const choice = t.closest<HTMLButtonElement>('[data-mtg-choice]');
+      if (choice) {
+        const round = choice.closest<HTMLElement>('[data-mtg-round]')!;
+        if (round.dataset.solved === 'true') return;
+
+        const cssVar = choice.dataset.mtgCssVar!;
+        const value = choice.dataset.mtgCssValue!;
+        const correct = choice.dataset.mtgCorrect === 'true';
+        const broken = round.querySelector<HTMLElement>('[data-mtg-broken]')!;
+        const feedback = round.querySelector<HTMLElement>('[data-mtg-feedback]')!;
+        const next = round.querySelector<HTMLElement>('[data-mtg-next]')!;
+
+        // Apply to broken card
+        broken.style.setProperty(cssVar, value);
+
+        // Visual chip state
+        round.querySelectorAll<HTMLElement>('[data-mtg-choice]').forEach((c) => {
+          c.classList.remove('is-on', 'is-wrong');
+        });
+        choice.classList.add(correct ? 'is-on' : 'is-wrong');
+
+        if (correct) {
+          if (roundClean) score += 1;
+          round.dataset.solved = 'true';
+          feedback.textContent = 'Snap. That&rsquo;s the one.';
+          feedback.dataset.state = 'ok';
+          next.hidden = false;
+          broken.classList.add('is-fixed');
+        } else {
+          roundClean = false;
+          feedback.textContent = 'Not quite. Try a different token.';
+          feedback.dataset.state = 'no';
+          broken.classList.add('mtg-shake');
+          window.setTimeout(() => broken.classList.remove('mtg-shake'), 360);
+        }
+        return;
+      }
+
+      if (t.closest('[data-mtg-next]')) {
+        nextRound();
+        return;
+      }
+      if (t.closest('[data-mtg-restart]')) {
+        // reset everything
+        current = 0;
+        score = 0;
+        roundClean = true;
+        rounds.forEach((r) => {
+          delete r.dataset.solved;
+          const fb = r.querySelector<HTMLElement>('[data-mtg-feedback]')!;
+          fb.textContent = 'Click a token to apply it.';
+          delete fb.dataset.state;
+          r.querySelector<HTMLElement>('[data-mtg-next]')!.hidden = true;
+          r.querySelectorAll<HTMLElement>('[data-mtg-choice]').forEach((c) => {
+            c.classList.remove('is-on', 'is-wrong');
+          });
+          const broken = r.querySelector<HTMLElement>('[data-mtg-broken]')!;
+          broken.classList.remove('is-fixed');
+          // Reset CSS vars to round defaults (re-read style attribute)
+          broken.removeAttribute('style');
+        });
+        result.hidden = true;
+        showRound(0);
+      }
+    });
+
+    showRound(0);
+  }
+</script>
+
+<style>
+  .mtg {
+    --mtg-radius: 14px;
+    --mtg-pad: 1.25rem;
+    --mtg-color: #6c4ab6;
+    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 22px 48px -26px rgba(45, 43, 85, 0.3),
+      0 0 0 1px rgba(108, 74, 182, 0.05);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  .mtg-head { margin-bottom: 1.25rem; }
+
+  .mtg-progress {
+    position: relative;
+    display: flex; align-items: center; gap: 0.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .mtg-pip {
+    width: 28px; height: 6px;
+    border-radius: 999px;
+    background: rgba(108, 74, 182, 0.15);
+    transition: background 0.2s ease, transform 0.2s ease;
+  }
+  .mtg-pip.is-on   { background: #6c4ab6; transform: scaleX(1.2); transform-origin: left; }
+  .mtg-pip.is-done { background: #7bb47a; }
+  .mtg-progress-label {
+    margin-left: auto;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(45, 43, 85, 0.55);
+    font-weight: 600;
+  }
+
+  .mtg-prompt {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: #2d2b55;
+    font-size: 1.15rem;
+    line-height: 1.35;
+    margin: 0 0 1rem;
+  }
+  .mtg-q-num {
+    font-style: italic;
+    color: #6c4ab6;
+    margin-right: 0.4rem;
+  }
+
+  .mtg-stage {
+    display: grid; gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (min-width: 640px) {
+    .mtg-stage { grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  }
+
+  .mtg-card {
+    --mtg-radius: 14px;
+    --mtg-pad: 1.25rem;
+    --mtg-color: #6c4ab6;
+    position: relative;
+    background: #fff;
+    border: 1px solid rgba(45, 43, 85, 0.1);
+    border-radius: var(--mtg-radius);
+    padding: var(--mtg-pad);
+    transition: border-radius 0.3s ease, padding 0.3s ease;
+  }
+  .mtg-card-tag {
+    position: absolute;
+    top: -10px;
+    left: 12px;
+    background: #e8573d;
+    color: #fff;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 2px 8px;
+    border-radius: 999px;
+  }
+  .mtg-card-tag--ok { background: #7bb47a; }
+  .mtg-card-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 1rem;
+    color: #2d2b55;
+    margin: 0 0 0.3rem;
+  }
+  .mtg-card-body {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: rgba(46, 46, 48, 0.75);
+    margin: 0 0 0.7rem;
+    line-height: 1.45;
+  }
+  .mtg-card-btn {
+    background: var(--mtg-color);
+    color: #fff;
+    border: 0;
+    border-radius: var(--mtg-radius);
+    padding: 0.4rem 0.8rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: default;
+    transition: background 0.3s ease, border-radius 0.3s ease;
+  }
+  .mtg-card.is-fixed { box-shadow: 0 0 0 3px rgba(123, 180, 122, 0.4); }
+
+  @keyframes mtg-shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-6px); }
+    40% { transform: translateX(5px); }
+    60% { transform: translateX(-3px); }
+    80% { transform: translateX(2px); }
+  }
+  .mtg-card.mtg-shake { animation: mtg-shake 0.36s ease; }
+
+  .mtg-choices {
+    display: grid; gap: 0.5rem;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 480px) {
+    .mtg-choices { grid-template-columns: repeat(3, 1fr); }
+  }
+  .mtg-chip {
+    display: flex; flex-direction: column; gap: 0.15rem;
+    padding: 0.7rem 0.9rem;
+    background: #fffbf5;
+    border: 1.5px solid rgba(108, 74, 182, 0.2);
+    border-radius: 12px;
+    color: #2d2b55;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    text-align: left;
+  }
+  .mtg-chip:hover { border-color: rgba(108, 74, 182, 0.55); transform: translateY(-1px); }
+  .mtg-chip:focus-visible { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+  .mtg-chip-token {
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .mtg-chip-hint {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.68rem;
+    color: rgba(45, 43, 85, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .mtg-chip.is-on {
+    background: rgba(123, 180, 122, 0.18);
+    border-color: #7bb47a;
+    box-shadow: 0 0 0 3px rgba(123, 180, 122, 0.18);
+  }
+  .mtg-chip.is-wrong {
+    background: rgba(232, 87, 61, 0.1);
+    border-color: rgba(232, 87, 61, 0.7);
+  }
+
+  .mtg-footer {
+    margin-top: 1rem;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .mtg-feedback {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: rgba(45, 43, 85, 0.65);
+    margin: 0;
+  }
+  .mtg-feedback[data-state='ok'] { color: #3e6e3d; }
+  .mtg-feedback[data-state='no'] { color: #e8573d; }
+  .mtg-next {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    background: #6c4ab6;
+    color: #fff;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.55rem 1.1rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.15s ease;
+  }
+  .mtg-next:hover { background: #5b3d99; transform: translateX(2px); }
+  .mtg-next:focus-visible { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+
+  /* result */
+  .mtg-result {
+    margin-top: 1.5rem;
+    padding: 1.75rem;
+    background: linear-gradient(135deg, rgba(108, 74, 182, 0.08), rgba(232, 87, 61, 0.06));
+    border: 1.5px solid rgba(108, 74, 182, 0.25);
+    border-radius: 18px;
+    text-align: center;
+  }
+  .mtg-result-stamp {
+    width: 64px; height: 64px;
+    margin: 0 auto 0.75rem;
+    border-radius: 50%;
+    background: #fde68a;
+    color: #6c4ab6;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 32px;
+    box-shadow: 0 8px 18px -8px rgba(108, 74, 182, 0.4);
+  }
+  .mtg-result-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    color: #2d2b55;
+    margin: 0 0 0.4rem;
+  }
+  .mtg-result-body {
+    color: rgba(46, 46, 48, 0.8);
+    margin: 0 0 0.5rem;
+  }
+  .mtg-score {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.85rem;
+    color: rgba(45, 43, 85, 0.65);
+    margin: 0 0 1rem;
+  }
+  .mtg-result-actions {
+    display: inline-flex; flex-wrap: wrap; gap: 0.7rem; justify-content: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mtg-card,
+    .mtg-card-btn,
+    .mtg-pip,
+    .mtg-chip,
+    .mtg-next { transition: none; }
+    .mtg-card.mtg-shake { animation: none; }
+  }
+</style>

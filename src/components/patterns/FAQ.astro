@@ -1,0 +1,16 @@
+---
+import { cx } from '~/lib/cx';
+
+/** Wrapper for a list of <FAQItem>s — keeps the rounded card group together. */
+
+interface Props {
+  class?: string;
+  as?: 'div' | 'section';
+}
+
+const { class: className, as: Tag = 'div' } = Astro.props as Props;
+---
+
+<Tag class={cx('flex flex-col gap-3', className)}>
+  <slot />
+</Tag>

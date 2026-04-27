@@ -1,0 +1,119 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Single card primitive that replaces the ~20 visually-distinct card patterns
+ * in the inventory through composition. Variants control the chrome (paper /
+ * polaroid / sticky / reveal / outline); slots control the content.
+ *
+ * Slots:
+ *   - default: card body
+ *   - media:   visual block above the body (image, gradient header, etc.)
+ *   - header:  inline header row (icon + title)
+ *   - footer:  attribution / actions
+ *   - corner:  decorative anchor for tape / pin / quote-mark / number badge
+ */
+
+type Variant = 'paper' | 'polaroid' | 'sticky' | 'reveal' | 'outline';
+type Tone = 'default' | 'lemon' | 'peach' | 'plum' | 'sage' | 'navy';
+type Tilt = -2 | -1 | 0 | 1 | 2;
+
+interface Props {
+  variant?: Variant;
+  tone?: Tone;
+  tilt?: Tilt;
+  /** Wrapper element. Use "li" inside <ul> grids. */
+  as?: 'div' | 'article' | 'li' | 'section';
+  /** Disable hover lift (e.g. for static showcases). */
+  hover?: boolean;
+  /** Padding scale. */
+  padding?: 'tight' | 'default' | 'loose' | 'none';
+  class?: string;
+  id?: string;
+}
+
+const {
+  variant = 'paper',
+  tone = 'default',
+  tilt = 0,
+  as: Tag = 'div',
+  hover = true,
+  padding = 'default',
+  class: className,
+  id,
+} = Astro.props;
+
+const variantClasses: Record<Variant, string> = {
+  paper:
+    'bg-white rounded-2xl border border-charcoal/5 shadow-sm',
+  polaroid:
+    'card-polaroid', // padded white + bottom-heavy shadow per global.css
+  sticky:
+    'card-base card-sticky',
+  reveal:
+    'reveal-card',
+  outline:
+    'bg-transparent border-2 border-charcoal/60 rounded-2xl',
+};
+
+const stickyTones: Record<Tone, string> = {
+  default: '',
+  lemon: '',
+  peach: 'variant-peach',
+  plum: '',
+  sage: '',
+  navy: '',
+};
+
+const paddings: Record<NonNullable<Props['padding']>, string> = {
+  none: '',
+  tight: 'p-4',
+  default: 'p-6 md:p-8',
+  loose: 'p-8 md:p-10',
+};
+
+const tilts: Record<Tilt, string> = {
+  [-2]: '-rotate-2',
+  [-1]: '-rotate-1',
+  0: '',
+  1: 'rotate-1',
+  2: 'rotate-2',
+};
+
+// `card-base` and `card-polaroid` already supply their own padding; let those
+// variants opt out unless explicitly overridden.
+const skipPadding = variant === 'polaroid' || variant === 'sticky';
+const paddingClass = skipPadding ? '' : paddings[padding];
+---
+
+<Tag
+  id={id}
+  data-source={`Card.${variant} · tone=${tone} · padding=${padding} · tilt=${tilt}`}
+  class={cx(
+    'relative',
+    variantClasses[variant],
+    variant === 'sticky' && stickyTones[tone],
+    paddingClass,
+    tilts[tilt],
+    hover && 'card-hover',
+    className,
+  )}
+>
+  <slot name="corner" />
+  {Astro.slots.has('media') && (
+    <div class="card-media overflow-hidden rounded-t-2xl">
+      <slot name="media" />
+    </div>
+  )}
+  {Astro.slots.has('header') && (
+    <header class="card-header">
+      <slot name="header" />
+    </header>
+  )}
+  <slot />
+  {Astro.slots.has('footer') && (
+    <footer class="card-footer mt-4">
+      <slot name="footer" />
+    </footer>
+  )}
+</Tag>

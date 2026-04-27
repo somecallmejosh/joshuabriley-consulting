@@ -1,0 +1,19 @@
+---
+import { cx } from '~/lib/cx';
+
+/** Decorative pin head used on testimonial / project cards. Always aria-hidden. */
+
+type Tone = 'coral' | 'plum' | 'sage';
+
+interface Props {
+  tone?: Tone;
+  class?: string;
+}
+
+const { tone = 'coral', class: className } = Astro.props;
+---
+
+<span
+  aria-hidden="true"
+  class={cx('pin', tone !== 'coral' && tone, className)}
+></span>

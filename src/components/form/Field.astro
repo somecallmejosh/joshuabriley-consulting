@@ -1,0 +1,79 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from '~/components/primitives/Icon.astro';
+
+/**
+ * Form field wrapper. Auto-wires label[for], input id, aria-describedby
+ * (hint + error), aria-invalid, and aria-required. The default slot receives
+ * `{ id, describedBy, invalid, required }` so input components can attach
+ * the right attributes.
+ *
+ * Usage:
+ *   <Field label="Email" name="email" required hint="We never share it.">
+ *     {(slotProps) => <Input type="email" {...slotProps} />}
+ *   </Field>
+ *
+ * Astro doesn't pass slot args directly, so we use a `<slot>` with named
+ * data attributes carried via context. Inputs read these attributes from a
+ * surrounding wrapper to remain composable.
+ */
+
+interface Props {
+  label: string;
+  name: string;
+  /** Stable id; auto-generated if omitted. */
+  id?: string;
+  required?: boolean;
+  hint?: string;
+  error?: string;
+  /** Visually hide the label (still announced). */
+  hideLabel?: boolean;
+  class?: string;
+}
+
+const {
+  label,
+  name,
+  id = `field-${name}`,
+  required = false,
+  hint,
+  error,
+  hideLabel = false,
+  class: className,
+} = Astro.props;
+
+const hintId = hint ? `${id}-hint` : undefined;
+const errorId = error ? `${id}-error` : undefined;
+const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
+---
+
+<div
+  class={cx('flex flex-col gap-1.5', className)}
+  data-field
+  data-field-id={id}
+  data-field-name={name}
+  data-field-required={required ? 'true' : undefined}
+  data-field-described-by={describedBy}
+  data-field-invalid={error ? 'true' : undefined}
+>
+  <label
+    for={id}
+    class={cx(
+      'font-heading text-sm font-medium text-navy',
+      hideLabel && 'sr-only',
+    )}
+  >
+    {label}
+    {required && <span aria-hidden="true" class="text-coral ml-0.5">*</span>}
+  </label>
+  <slot />
+  {hint && (
+    <p id={hintId} class="text-xs text-charcoal/70 leading-relaxed">{hint}</p>
+  )}
+  {error && (
+    <p id={errorId} class="flex items-center gap-1.5 text-xs text-plum leading-relaxed" role="alert">
+      <Icon name="ph:warning-circle-duotone" size={14} />
+      {error}
+    </p>
+  )}
+</div>

@@ -1,0 +1,202 @@
+---
+import '~/styles/global.css';
+import SkipLink from '~/components/chrome/SkipLink.astro';
+import Header from '~/components/chrome/Header.astro';
+import Footer from '~/components/chrome/Footer.astro';
+import InspectorMode from '~/components/islands/InspectorMode.astro';
+import ViewSource from '~/components/islands/ViewSource.astro';
+
+interface ArticleMeta {
+  publishedTime: Date | string;
+  modifiedTime?: Date | string;
+  author?: string;
+  section?: string;
+  tags?: string[];
+}
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Path used for canonical + og:url. */
+  pathname?: string;
+  /** Disable rendering header/footer (e.g. for the inventory showcase landing). */
+  bare?: boolean;
+  /** Absolute or root-relative path to the social share image. */
+  image?: string;
+  /** Open Graph type. Defaults to 'website' (or 'article' if `article` is provided). */
+  ogType?: 'website' | 'article' | 'profile';
+  /** Article metadata — when set, ogType defaults to 'article' and Article JSON-LD is emitted. */
+  article?: ArticleMeta;
+  /** Custom JSON-LD object(s) to emit. Replaces the auto-derived schema. */
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
+  /** When true, set robots = noindex,nofollow. */
+  noindex?: boolean;
+}
+
+const SITE_NAME = 'Joshua Briley';
+const SITE_URL = (Astro.site ?? new URL('https://joshuabriley.com')).toString().replace(/\/$/, '');
+const DEFAULT_OG_IMAGE = '/images/og-image.png';
+const TWITTER_HANDLE = '@joshuabriley';
+
+const {
+  title,
+  description = 'UX engineer & design systems consultant — Joshua Briley.',
+  pathname = Astro.url.pathname,
+  bare = false,
+  image = DEFAULT_OG_IMAGE,
+  ogType,
+  article,
+  jsonLd,
+  noindex = false,
+} = Astro.props;
+
+const canonical = new URL(pathname, SITE_URL + '/').toString();
+const absoluteImage = new URL(image, SITE_URL + '/').toString();
+const resolvedOgType = ogType ?? (article ? 'article' : 'website');
+const isHome = pathname === '/' || pathname === '';
+
+const toIso = (d: Date | string) => (d instanceof Date ? d.toISOString() : new Date(d).toISOString());
+
+const personSchema = {
+  '@type': 'Person',
+  '@id': `${SITE_URL}/#person`,
+  name: 'Joshua Briley',
+  url: SITE_URL + '/',
+  image: new URL('/images/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
+  jobTitle: 'UX Engineer & Design Systems Consultant',
+  description: 'UX engineer and design systems consultant helping product teams ship consistent, accessible UI.',
+  sameAs: [
+    'https://github.com/somecallmejosh',
+    'https://www.linkedin.com/in/joshuabriley/',
+  ],
+};
+
+const websiteSchema = {
+  '@type': 'WebSite',
+  '@id': `${SITE_URL}/#website`,
+  url: SITE_URL + '/',
+  name: SITE_NAME,
+  description: 'UX engineering & design systems consulting by Joshua Briley.',
+  publisher: { '@id': `${SITE_URL}/#person` },
+  inLanguage: 'en-US',
+};
+
+let derivedSchema: Record<string, unknown>[];
+if (jsonLd) {
+  derivedSchema = Array.isArray(jsonLd) ? jsonLd : [jsonLd];
+} else if (article) {
+  derivedSchema = [
+    {
+      '@type': 'Article',
+      headline: title,
+      description,
+      image: [absoluteImage],
+      datePublished: toIso(article.publishedTime),
+      ...(article.modifiedTime && { dateModified: toIso(article.modifiedTime) }),
+      author: { '@id': `${SITE_URL}/#person`, name: article.author ?? 'Joshua Briley' },
+      publisher: { '@id': `${SITE_URL}/#person` },
+      mainEntityOfPage: { '@type': 'WebPage', '@id': canonical },
+      ...(article.section && { articleSection: article.section }),
+      ...(article.tags && article.tags.length > 0 && { keywords: article.tags.join(', ') }),
+    },
+    personSchema,
+    websiteSchema,
+  ];
+} else if (isHome) {
+  derivedSchema = [personSchema, websiteSchema];
+} else {
+  derivedSchema = [
+    {
+      '@type': 'WebPage',
+      '@id': canonical,
+      url: canonical,
+      name: title,
+      description,
+      isPartOf: { '@id': `${SITE_URL}/#website` },
+      about: { '@id': `${SITE_URL}/#person` },
+      inLanguage: 'en-US',
+      primaryImageOfPage: absoluteImage,
+    },
+    personSchema,
+    websiteSchema,
+  ];
+}
+
+const jsonLdGraph = {
+  '@context': 'https://schema.org',
+  '@graph': derivedSchema,
+};
+---
+
+<!doctype html>
+<html lang="en" class="bg-cream">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+
+    {/* Open Graph */}
+    <meta property="og:type" content={resolvedOgType} />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={absoluteImage} />
+    <meta property="og:image:alt" content={`${title} — ${SITE_NAME}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    {article && (
+      <>
+        <meta property="article:published_time" content={toIso(article.publishedTime)} />
+        {article.modifiedTime && <meta property="article:modified_time" content={toIso(article.modifiedTime)} />}
+        <meta property="article:author" content={article.author ?? 'Joshua Briley'} />
+        {article.section && <meta property="article:section" content={article.section} />}
+        {article.tags?.map((tag) => <meta property="article:tag" content={tag} />)}
+      </>
+    )}
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content={TWITTER_HANDLE} />
+    <meta name="twitter:creator" content={TWITTER_HANDLE} />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={absoluteImage} />
+    <meta name="twitter:image:alt" content={`${title} — ${SITE_NAME}`} />
+
+    {/* JSON-LD */}
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLdGraph)} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:wght@300;400;500;600;700;800;900&family=JetBrains+Mono&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+    />
+
+    <script
+      is:inline
+      src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"
+      defer></script>
+
+    <slot name="head" />
+  </head>
+  <body class="bg-cream text-navy font-body antialiased">
+    <SkipLink />
+    {!bare && <Header />}
+    <main id="main">
+      <slot />
+    </main>
+    {!bare && <Footer />}
+    <InspectorMode />
+    <ViewSource />
+    <script>
+      import '~/scripts/scroll-reveal';
+    </script>
+  </body>
+</html>

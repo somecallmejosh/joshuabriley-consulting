@@ -1,0 +1,19 @@
+---
+import Grid from '~/components/layout/Grid.astro';
+
+/** Pre-configured grid for card layouts. Keeps card-grid call sites tidy. */
+
+interface Props {
+  cols?: 1 | 2 | 3 | 4;
+  gap?: 'sm' | 'md' | 'lg';
+  /** Use <ul>/<li> when the grid items are a list (e.g. testimonials). */
+  list?: boolean;
+  class?: string;
+}
+
+const { cols = 3, gap = 'md', list = false, class: className } = Astro.props;
+---
+
+<Grid cols={cols} gap={gap} as={list ? 'ul' : 'div'} class={className}>
+  <slot />
+</Grid>

@@ -1,0 +1,13 @@
+---
+import { cx } from '~/lib/cx';
+
+/** Inline wrapper that applies the coral wavy underline. */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<span class={cx('wavy-underline', className)}><slot /></span>

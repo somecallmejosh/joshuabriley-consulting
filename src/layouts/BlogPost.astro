@@ -1,0 +1,301 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  category: string;
+  categoryIcon?: string;
+  date: Date;
+  readMinutes: number;
+  pathname?: string;
+}
+
+const {
+  title,
+  description,
+  category,
+  categoryIcon = 'ph:notebook-duotone',
+  date,
+  readMinutes,
+  pathname,
+} = Astro.props;
+
+const formattedDate = date.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+const isoDate = date.toISOString().slice(0, 10);
+---
+
+<BaseLayout
+  title={`${title} · Joshua Briley`}
+  description={description}
+  pathname={pathname}
+  article={{
+    publishedTime: date,
+    section: category,
+    author: 'Joshua Briley',
+  }}
+>
+  <!-- HERO -->
+  <Section padding="default" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-16 right-[6%]" animate="float" />
+    <Blob tone="sage" size="sm" class="absolute top-44 left-[4%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" class="absolute bottom-10 right-[18%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="peach" size="sm" class="absolute bottom-24 left-[10%]" animate="float" />
+
+    <Container width="narrow" class="relative z-10">
+      <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
+        <a href="/blog/" class="hover:text-coral transition-colors">Blog</a>
+        <Icon name="ph:caret-right-bold" size={12} />
+        <span class="text-navy">{category}</span>
+      </nav>
+
+      <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.35deg)">
+        <div class="relative text-center">
+          <div class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider">
+            <Icon name={categoryIcon} size={18} />
+            {category}
+          </div>
+
+          <Heading level={1} visual="display-lg" balance class="mb-6">
+            <WavyUnderline>{title}</WavyUnderline>
+          </Heading>
+
+          <Text size="xl" tone="muted" align="center" class="max-w-2xl mx-auto mb-10">
+            {description}
+          </Text>
+
+          <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-charcoal/60 font-heading">
+            <span class="inline-flex items-center gap-2">
+              <span class="logo-monogram logo-monogram-sm" aria-hidden="true">jb</span>
+              Joshua Briley
+            </span>
+            <span aria-hidden="true">•</span>
+            <time datetime={isoDate}>{formattedDate}</time>
+            <span aria-hidden="true">•</span>
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="ph:clock-duotone" size={16} />
+              {readMinutes} min read
+            </span>
+          </div>
+        </div>
+      </article>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-4xl mx-auto px-6" aria-hidden="true"></div>
+
+  <!-- ARTICLE BODY -->
+  <Section padding="default">
+    <Container width="narrow">
+      <article class="prose-whimsy">
+        <slot />
+      </article>
+
+      <!-- Author card -->
+      <div class="mt-16 recipe-card p-6 md:p-8 flex flex-col sm:flex-row items-start gap-5" style="transform: rotate(0.2deg)">
+        <span class="logo-monogram" style="width: 58px; height: 58px; font-size: 1.6rem" aria-hidden="true">jb</span>
+        <div class="flex-1 relative">
+          <p class="font-heading text-xs uppercase tracking-wider text-plum mb-1">Written by</p>
+          <h3 class="font-display text-2xl font-semibold text-navy leading-tight mb-2">Joshua Briley</h3>
+          <Text size="sm" tone="muted" class="mb-4">
+            UX software engineer and consultant. I help product teams turn drifting UIs into design systems people actually use — and can defend in a budget meeting.
+          </Text>
+          <div class="flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="sm" iconLeft="ph:paper-plane-tilt-duotone" href="/contact/">
+              Work with me
+            </Button>
+            <Button variant="ghost" size="sm" iconLeft="ph:books-duotone" href="/blog/">
+              More essays
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style is:global>
+  /* Whimsy prose styling — ported verbatim from the legacy blog post template. */
+  .prose-whimsy {
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: #2e2e30;
+    font-size: 1.125rem;
+    line-height: 1.75;
+  }
+  .prose-whimsy > * + * {
+    margin-top: 1.35em;
+  }
+  .prose-whimsy p {
+    color: rgba(46, 46, 48, 0.85);
+  }
+  .prose-whimsy .lede {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.4rem;
+    line-height: 1.55;
+    color: #2d2b55;
+    font-weight: 400;
+    font-style: italic;
+  }
+  .prose-whimsy .lede::first-letter {
+    font-family: 'Fraunces', Georgia, serif;
+    font-weight: 600;
+    font-style: normal;
+    float: left;
+    font-size: 4.2rem;
+    line-height: 0.85;
+    padding: 0.35rem 0.75rem 0 0;
+    color: #e8573d;
+  }
+  .prose-whimsy h2 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 2rem;
+    line-height: 1.15;
+    font-weight: 600;
+    color: #2d2b55;
+    margin-top: 3rem;
+    letter-spacing: -0.01em;
+  }
+  .prose-whimsy h2 .num {
+    display: inline-block;
+    font-family: 'Style Script', cursive;
+    color: #e8573d;
+    font-size: 1.4em;
+    margin-right: 0.4rem;
+    font-weight: 400;
+  }
+  .prose-whimsy h3 {
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.4rem;
+    line-height: 1.25;
+    font-weight: 600;
+    color: #2d2b55;
+    margin-top: 2.25rem;
+  }
+  .prose-whimsy a {
+    color: #e8573d;
+    text-decoration: underline;
+    text-decoration-color: rgba(232, 87, 61, 0.4);
+    text-underline-offset: 4px;
+  }
+  .prose-whimsy a:hover {
+    text-decoration-color: #e8573d;
+  }
+  .prose-whimsy strong {
+    color: #2d2b55;
+    font-weight: 600;
+  }
+  .prose-whimsy ul {
+    padding-left: 0;
+    list-style: none;
+  }
+  .prose-whimsy ul li {
+    position: relative;
+    padding-left: 1.75rem;
+    margin-top: 0.5rem;
+  }
+  .prose-whimsy ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 0.7rem;
+    height: 0.7rem;
+    background: #e8573d;
+    border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  }
+  .prose-whimsy blockquote {
+    margin: 2.5rem 0;
+    padding: 1.75rem 2rem;
+    border-left: 4px solid #e8573d;
+    background: linear-gradient(135deg, rgba(253, 230, 138, 0.35), rgba(255, 232, 214, 0.45));
+    border-radius: 0 14px 14px 0;
+    font-family: 'Fraunces', Georgia, serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    line-height: 1.45;
+    color: #2d2b55;
+  }
+  .prose-whimsy blockquote p {
+    color: #2d2b55;
+  }
+  .pullquote {
+    position: relative;
+    margin: 3rem auto;
+    max-width: 40rem;
+    text-align: center;
+    font-family: 'Fraunces', Georgia, serif;
+    font-size: 1.9rem;
+    line-height: 1.2;
+    color: #2d2b55;
+    font-weight: 500;
+    padding: 2rem 1rem;
+  }
+  .pullquote::before,
+  .pullquote::after {
+    content: '';
+    display: block;
+    margin: 1.25rem auto;
+    width: 60px;
+    height: 6px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 6' preserveAspectRatio='none'%3E%3Cpath d='M0 3 Q 15 0 30 3 Q 45 6 60 3' stroke='%23E8573D' fill='none' stroke-width='2'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+  }
+  .cost-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.75rem;
+    border: 1.5px solid rgba(45, 43, 85, 0.08);
+    box-shadow: 0 12px 30px -18px rgba(45, 43, 85, 0.2);
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .cost-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 40px -20px rgba(45, 43, 85, 0.28);
+  }
+  .cost-card .icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+    margin-bottom: 1rem;
+    color: #fff;
+  }
+  .callout {
+    margin: 2.75rem 0;
+    padding: 1.75rem 2rem;
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px dashed rgba(108, 74, 182, 0.35);
+    position: relative;
+  }
+  .callout::before {
+    content: 'P.S.';
+    position: absolute;
+    top: -14px;
+    left: 24px;
+    background: #fde68a;
+    color: #2d2b55;
+    font-family: 'Style Script', cursive;
+    font-size: 1.3rem;
+    padding: 0 0.6rem;
+    border-radius: 999px;
+    line-height: 1.4;
+  }
+</style>

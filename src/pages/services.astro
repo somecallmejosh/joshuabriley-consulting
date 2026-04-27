@@ -1,0 +1,395 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
+import CardGrid from '~/components/patterns/CardGrid.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
+import TokenPlayground from '~/components/islands/TokenPlayground.astro';
+import ServiceFitQuiz from '~/components/islands/ServiceFitQuiz.astro';
+import Diagnostic from '~/components/islands/Diagnostic.astro';
+
+const description =
+  'Design system audits, component library foundations, and design-to-code workflows that make shipping faster and reduce friction between design and engineering.';
+
+const problems = [
+  { icon: 'ph:repeat-duotone', tone: 'coral', tilt: -1 as const, body: 'Designers and engineers keep solving the same problems every single sprint.' },
+  { icon: 'ph:git-branch-duotone', tone: 'plum', tilt: 1 as const, body: 'No shared source of truth, so features get restarted mid-build.' },
+  { icon: 'ph:wheelchair-duotone', tone: 'sunset', tilt: 0 as const, body: 'Accessibility debt is quietly stacking up into real legal risk.' },
+  { icon: 'ph:users-three-duotone', tone: 'sage', tilt: 1 as const, body: 'A system exists, but no one uses it consistently.' },
+  { icon: 'ph:copy-duotone', tone: 'sky', tilt: 0 as const, span: true, body: "Documentation doesn't match reality, so teams fork components instead of extending them." },
+];
+
+const problemToneMap: Record<string, { iconClass: string; iconBg: string }> = {
+  coral: { iconClass: 'text-coral', iconBg: 'bg-coral/10' },
+  plum: { iconClass: 'text-plum', iconBg: 'bg-plum/10' },
+  sunset: { iconClass: 'text-sunset', iconBg: 'bg-sunset/10' },
+  sage: { iconClass: 'text-sage', iconBg: 'bg-sage/20' },
+  sky: { iconClass: 'text-sky', iconBg: 'bg-sky/10' },
+};
+
+const services = [
+  {
+    icon: 'ph:binoculars-duotone',
+    accent: 'coral',
+    eyebrow: 'Start here',
+    title: 'Design System Audit',
+    body: "A structured look at what's working, what's broken, and where the friction really lives. Before anything gets built or rebuilt, we need a map.",
+    bullets: ['Component & token inventory', 'Accessibility & consistency review', 'Prioritized action plan you can run'],
+    cta: 'Start with an audit',
+    href: 'audit',
+    tilt: -1 as const,
+    offset: '',
+  },
+  {
+    icon: 'ph:hammer-duotone',
+    accent: 'plum',
+    eyebrow: 'Build the foundation',
+    title: 'Component Library Starter',
+    body: "A solid foundation your team can grow with. Designed for longevity, not a quick patch you'll rip out in six months.",
+    bullets: ['Accessible, composable core components', 'Design tokens & theming architecture', "Docs your team will actually read"],
+    cta: 'Learn about the starter',
+    href: 'starter',
+    tilt: 1 as const,
+    offset: 'lg:-translate-y-4',
+  },
+  {
+    icon: 'ph:handshake-duotone',
+    accent: 'sky',
+    eyebrow: 'Fix the handoff',
+    title: 'Design-to-Code Workflow',
+    body: "The friction between design and engineering isn't a people problem, it's a process problem. I fix the process.",
+    bullets: ['Figma ↔ code parity that holds up', "Handoff rituals that don't waste sprints", 'Shared language across design & eng'],
+    cta: 'Learn about the workflow',
+    href: 'workflow',
+    tilt: 0 as const,
+    offset: '',
+  },
+];
+
+const accentMap: Record<string, { text: string; bg: string }> = {
+  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  plum: { text: 'text-plum', bg: 'bg-plum/10' },
+  sky: { text: 'text-sky', bg: 'bg-sky/10' },
+};
+
+const process = [
+  { n: 1, tone: 'coral' as const, title: 'Intro call', body: '30 minutes. You tell me what\'s hurting, I ask the questions no one else has asked. We figure out if we\'re a fit. No pressure either way.' },
+  { n: 2, tone: 'plum' as const, title: 'Audit & scope', body: 'I dig into your system, your code, and the way your team actually works. You get a clear map of what\'s broken and a scoped plan to fix it.' },
+  { n: 3, tone: 'sunset' as const, title: 'Build & embed', body: 'Whether it\'s a component library, workflow fixes, or both, I work alongside your team, not in a silo. Everything I build, your team owns.' },
+  { n: 4, tone: 'sage' as const, title: 'Handoff & support', body: 'Your team runs with it. I stay close for questions, edge cases, and the occasional "wait, how should we do this?" moment.' },
+];
+---
+
+<BaseLayout title="Services — Joshua Briley | Design Systems Consulting" description={description}>
+  {/* HERO */}
+  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
+    <Blob tone="plum" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
+    <Blob tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
+    <Blob tone="sage" size="sm" class="absolute bottom-10 right-[18%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" class="absolute bottom-20 left-[14%] rounded-full" animate="float" opacity="opacity-40" />
+
+    <Container class="relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-7">
+          <div class="mb-8 inline-block">
+            <Badge tone="peach" icon="ph:sparkle-duotone">Services &amp; Engagements</Badge>
+          </div>
+          <Heading level={1} visual="display-xl" class="mb-6">
+            Your design system should <WavyUnderline>make shipping faster</WavyUnderline>.
+          </Heading>
+          <Text size="lg" tone="muted" class="max-w-xl mb-10">
+            Right now, it's probably making it <strong class="text-charcoal font-semibold">slower</strong>.
+            Creating rework, accessibility risk, and friction between design and engineering. Let's fix that.
+          </Text>
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Button variant="primary" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+              Book an intro call
+            </Button>
+            <Button variant="ghost" size="lg" iconLeft="ph:arrow-down-duotone" href="#services">
+              See the services
+            </Button>
+          </div>
+        </div>
+
+        {/* Three engagements illustration */}
+        <div class="lg:col-span-5 relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-[22rem] h-[22rem] rounded-full border-2 border-dashed border-coral/25 animate-spin-slow"></div>
+          </div>
+
+          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 460" fill="none">
+            <path d="M 110 110 C 160 170, 200 200, 230 230" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
+            <path d="M 230 230 C 200 280, 170 320, 130 360" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.5s" />
+          </svg>
+
+          {/* Audit card */}
+          <div class="absolute top-[6%] left-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float -rotate-3">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-coral/15 flex items-center justify-center">
+                  <Icon name="ph:binoculars-duotone" size={20} class="text-coral" />
+                </div>
+                <span class="font-heading text-xs font-semibold text-navy">Audit</span>
+              </div>
+              <span class="font-hand text-coral/70 text-sm">01</span>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-1.5 rounded-full bg-charcoal/10"></div>
+              <div class="h-1.5 rounded-full bg-coral/40 w-3/5"></div>
+              <div class="h-1.5 rounded-full bg-charcoal/10 w-4/5"></div>
+            </div>
+          </div>
+
+          {/* Starter card */}
+          <div class="absolute top-[40%] right-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float-delay rotate-3">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-plum/15 flex items-center justify-center">
+                  <Icon name="ph:rocket-launch-duotone" size={20} class="text-plum" />
+                </div>
+                <span class="font-heading text-xs font-semibold text-navy">Starter</span>
+              </div>
+              <span class="font-hand text-plum/70 text-sm">02</span>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-1.5 rounded-full bg-charcoal/10 w-5/6"></div>
+              <div class="h-1.5 rounded-full bg-plum/40 w-4/5"></div>
+              <div class="h-1.5 rounded-full bg-charcoal/10 w-2/3"></div>
+            </div>
+          </div>
+
+          {/* Workflow card */}
+          <div class="absolute bottom-[8%] left-[10%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float-slow -rotate-2">
+            <div class="flex items-center justify-between mb-3">
+              <div class="flex items-center gap-2">
+                <div class="w-8 h-8 rounded-lg bg-sky/15 flex items-center justify-center">
+                  <Icon name="ph:flow-arrow-duotone" size={20} class="text-sky" />
+                </div>
+                <span class="font-heading text-xs font-semibold text-navy">Workflow</span>
+              </div>
+              <span class="font-hand text-sky/70 text-sm">03</span>
+            </div>
+            <div class="space-y-1.5">
+              <div class="h-1.5 rounded-full bg-charcoal/10 w-11/12"></div>
+              <div class="h-1.5 rounded-full bg-sky/40 w-2/3"></div>
+              <div class="h-1.5 rounded-full bg-charcoal/10 w-3/4"></div>
+            </div>
+          </div>
+
+          {/* floating chips */}
+          <div class="absolute top-[28%] right-[4%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float rotate-3">
+            <Icon name="ph:check-circle-duotone" size={14} class="text-sage" />
+            <span class="font-heading text-[11px] font-semibold text-navy">Ship faster</span>
+          </div>
+
+          <div class="absolute bottom-[34%] right-[28%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay -rotate-3">
+            <Icon name="ph:wheelchair-duotone" size={14} class="text-sunset" />
+            <span class="font-heading text-[11px] font-semibold text-navy">Accessible</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <SquiggleDivider />
+
+  <!-- FAMILIAR PROBLEMS -->
+  <Section padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Does any of this feel familiar?"
+        eyebrowIcon="ph:lightbulb-duotone"
+        eyebrowTone="plum"
+        title="The patterns I see over and over"
+        lead="If two or three of these describe your team, you're probably leaving a lot of sprint velocity on the table."
+        class="mb-14"
+      />
+
+      <CardGrid cols={2} gap="md">
+        {problems.map((p) => {
+          const t = problemToneMap[p.tone];
+          return (
+            <Card variant="paper" tilt={p.tilt} class={p.span ? 'sm:col-span-2 flex gap-4' : 'flex gap-4'}>
+              <div class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                <Icon name={p.icon} size={24} class={t.iconClass} />
+              </div>
+              <p class="font-heading font-medium text-navy self-center">{p.body}</p>
+            </Card>
+          );
+        })}
+      </CardGrid>
+    </Container>
+  </Section>
+
+  <!-- SERVICE-FIT QUIZ -->
+  <Section id="fit" padding="default">
+    <Container width="default">
+      <SectionHeader
+        eyebrow="Quick gut-check"
+        eyebrowIcon="ph:compass-tool-duotone"
+        eyebrowTone="coral"
+        title="Which engagement fits?"
+        lead="A 60-second quiz that points you at the right starting point — without the calendar invite."
+        class="mb-10"
+      />
+      <ServiceFitQuiz />
+    </Container>
+  </Section>
+
+  <!-- SERVICES -->
+  <Section id="services" padding="default" class="bg-charcoal/[0.03]">
+    <Container>
+      <div class="max-w-3xl mx-auto text-center mb-16">
+        <div class="mb-6 inline-block">
+          <Badge tone="coral" icon="ph:toolbox-duotone">How I can help</Badge>
+        </div>
+        <Heading level={2} visual="display-md" align="center" class="mb-4">
+          Three ways to <WavyUnderline>work together</WavyUnderline>
+        </Heading>
+        <Text size="lg" tone="muted" align="center">
+          Every engagement starts with an audit. I won't build anything until I know what's actually broken.
+        </Text>
+      </div>
+
+      <div class="grid lg:grid-cols-3 gap-6">
+        {services.map((s) => {
+          const a = accentMap[s.accent];
+          return (
+            <Card variant="paper" tilt={s.tilt} padding="loose" class={`relative overflow-hidden ${s.offset}`}>
+              <div class={`absolute -top-8 -right-8 w-32 h-32 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
+              <div class="relative">
+                <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
+                  <Icon name={s.icon} size={28} class={a.text} />
+                </div>
+                <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider mb-2`}>
+                  {s.eyebrow}
+                </span>
+                <Heading level={3} visual="h2" class="mb-3">{s.title}</Heading>
+                <Text tone="muted" class="mb-5">{s.body}</Text>
+                <ul class="space-y-2.5 mb-6 text-sm font-body text-charcoal/80">
+                  {s.bullets.map((b) => (
+                    <li class="flex gap-2.5">
+                      <Icon name="ph:check-circle-duotone" size={18} class={`${a.text} flex-shrink-0 mt-0.5`} />
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+                <a href={s.href} class={`inline-flex items-center gap-2 ${a.text} font-heading font-semibold hover:gap-3 transition-all`}>
+                  {s.cta}
+                  <Icon name="ph:arrow-right-bold" size={18} />
+                </a>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+
+      <p class="text-center text-sm text-charcoal/60 font-body mt-12">
+        <Icon name="ph:info-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
+        I only take on a limited number of engagements at a time so every client gets genuine attention.
+      </p>
+    </Container>
+  </Section>
+
+  <!-- PROCESS -->
+  <Section padding="default">
+    <Container width="narrow">
+      <SectionHeader
+        eyebrow="How engagements run"
+        eyebrowIcon="ph:path-duotone"
+        eyebrowTone="sage"
+        title="A simple, honest process"
+        lead="No mystery, no theater, no month-long discovery deck."
+        class="mb-16"
+      />
+
+      <ol class="space-y-6 list-none p-0">
+        {process.map((step) => (
+          <li class="flex gap-5 items-start">
+            <CardNumber n={step.n} tone={step.tone} size="lg" inline announce />
+            <Card variant="paper" tilt={0} class="flex-1">
+              <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
+              <Text tone="muted">{step.body}</Text>
+            </Card>
+          </li>
+        ))}
+      </ol>
+    </Container>
+  </Section>
+
+  <!-- LIVE DIAGNOSTIC -->
+  <Section id="diagnostic" padding="default">
+    <Container width="default">
+      <SectionHeader
+        eyebrow="The problem, in pictures"
+        eyebrowIcon="ph:magnifying-glass-duotone"
+        eyebrowTone="coral"
+        title="What an audit actually finds"
+        lead="The kind of small, quiet inconsistencies that compound into rework. Toggle &ldquo;show issues&rdquo; to see what a quick pass surfaces."
+        class="mb-10"
+      />
+      <Diagnostic />
+    </Container>
+  </Section>
+
+  <!-- TOKEN PLAYGROUND -->
+  <Section id="playground" padding="default">
+    <Container width="default">
+      <SectionHeader
+        eyebrow="See it in motion"
+        eyebrowIcon="ph:sliders-horizontal-duotone"
+        eyebrowTone="plum"
+        title="What a design token actually does"
+        lead="Drag a slider, change the whole card. That&rsquo;s the leverage a real system gives a team — every component pulls from the same vocabulary."
+        class="mb-10"
+      />
+      <TokenPlayground />
+    </Container>
+  </Section>
+
+  <!-- SCORECARD CTA -->
+  <Section padding="tight">
+    <Container>
+      <div class="relative bg-gradient-to-br from-lemon/40 via-peach to-coral/10 rounded-3xl p-8 md:p-12 border border-coral/20 overflow-hidden">
+        <Blob tone="plum" size="xl" class="absolute -top-8 -right-8" animate="float-slow" opacity="opacity-20" />
+        <Blob tone="coral" size="md" class="absolute bottom-4 left-8 rounded-full" animate="float-delay" opacity="opacity-30" />
+
+        <div class="relative flex flex-col md:flex-row items-start md:items-center gap-8">
+          <div class="w-20 h-20 bg-white rounded-2xl flex items-center justify-center flex-shrink-0 shadow-md" style="transform: rotate(-3deg)">
+            <Icon name="ph:clipboard-text-duotone" size={40} class="text-coral" />
+          </div>
+          <div class="flex-1">
+            <Heading level={2} visual="h2" class="mb-2">Not sure where to start?</Heading>
+            <Text tone="muted">
+              Take the free Design System Scorecard. Ten minutes. No fluff. You'll know exactly where your system stands.
+            </Text>
+          </div>
+          <Button variant="primary" iconRight="ph:arrow-right-bold" href="/scorecard/" class="!bg-navy hover:!bg-navy/90 whitespace-nowrap">
+            Get the scorecard
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- FINAL CTA -->
+  <CTABanner title="Let's fix your system." lead="Book a 30-minute intro call. We'll talk about what's breaking down and whether an engagement would actually help.">
+    <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+      Book an intro call
+    </Button>
+    <Button variant="secondary" iconLeft="ph:envelope-duotone" href="/contact/">
+      Or send a note
+    </Button>
+  </CTABanner>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+import { cx } from '~/lib/cx';
+
+/** Color/token swatch used in the inventory foundations section. */
+
+interface Props {
+  /** Tailwind class for the swatch surface. */
+  surface: string;
+  name: string;
+  hex: string;
+  textOn?: 'navy' | 'white';
+  class?: string;
+}
+
+const { surface, name, hex, textOn = 'navy', class: className } = Astro.props;
+---
+
+<div class={cx('rounded-2xl overflow-hidden border border-charcoal/10 shadow-sm', className)}>
+  <div class={cx('h-20', surface)}></div>
+  <div class="px-4 py-3 bg-white">
+    <p class="font-heading text-sm font-medium text-navy">{name}</p>
+    <p class="font-mono text-xs text-charcoal/70 mt-0.5">{hex}</p>
+  </div>
+</div>

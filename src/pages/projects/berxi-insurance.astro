@@ -1,0 +1,524 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+
+const title = 'Berxi.com — Joshua Briley';
+const description =
+  'Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway. Covers stakeholder alignment, component library, documentation, and cross-team adoption.';
+
+const meta = [
+  { role: 'Role', value: 'UX Engineer' },
+  { role: 'Client', value: 'Berxi / BHSI' },
+  { role: 'Stack', value: 'Vue · Tailwind' },
+  { role: 'Focus', value: 'Tokens · A11y' },
+];
+
+const docket = [
+  { href: '#problem', icon: 'ph:warning-circle-duotone', iconClass: 'text-coral', label: 'The drift problem' },
+  { href: '#tokens', icon: 'ph:stack-duotone', iconClass: 'text-sunset', label: 'Two-tier token architecture' },
+  { href: '#accessibility', icon: 'ph:heart-duotone', iconClass: 'text-sage', label: 'Accessibility as a system property' },
+  { href: '#scale', icon: 'ph:trend-up-duotone', iconClass: 'text-plum', label: 'What the system changed' },
+];
+
+const a11yPoints = [
+  { icon: 'ph:keyboard-duotone', iconClass: 'text-plum', label: 'Full keyboard operability' },
+  { icon: 'ph:target-duotone', iconClass: 'text-coral', label: 'Focus management in overlays' },
+  { icon: 'ph:megaphone-duotone', iconClass: 'text-sunset', label: 'ARIA semantics on every component' },
+  { icon: 'ph:eye-duotone', iconClass: 'text-sky', label: 'Contrast checked against tokens' },
+];
+
+const outcomes = [
+  {
+    icon: 'ph:megaphone-duotone',
+    iconClass: 'text-coral',
+    title: 'Marketing unblocked',
+    body: 'Campaigns and landing pages shipped without an engineering dependency in the critical path.',
+    tilt: '-0.6deg',
+  },
+  {
+    icon: 'ph:broadcast-duotone',
+    iconClass: 'text-plum',
+    title: 'Brand updates propagate',
+    body: 'Change a primitive and every component using that semantic token follows. No manual sweep required.',
+    tilt: '0.4deg',
+  },
+  {
+    icon: 'ph:graduation-cap-duotone',
+    iconClass: 'text-sunset',
+    title: 'Faster onboarding',
+    body: 'New engineers learn the system by reading it, because the documented component API is the system.',
+    tilt: '-0.3deg',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="corkboard">
+    <!-- ====== HERO — policy card ====== -->
+    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+      <div class="absolute top-14 right-[6%] w-20 h-20 bg-sky/40 blob-shape animate-float opacity-70" aria-hidden="true"></div>
+      <div class="absolute top-40 left-[4%] w-12 h-12 bg-plum/20 rounded-full animate-float-delay" aria-hidden="true"></div>
+      <div class="absolute bottom-20 right-[18%] w-14 h-14 bg-lemon/60 blob-shape animate-float-slow" aria-hidden="true"></div>
+      <div class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
+          <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
+          <Icon name="ph:caret-right-bold" size={12} />
+          <span class="text-navy">Berxi.com</span>
+        </nav>
+
+        <article class="policy-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
+          <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
+          <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
+
+          <div class="absolute top-8 right-8 hidden md:block text-sage paper-stamp" aria-hidden="true">
+            Policy&nbsp;·&nbsp;Approved
+          </div>
+
+          <div class="relative text-center">
+            <div class="project-logo-tag">
+              <img src="/images/logos/berxi.svg" alt="Berxi logo" />
+            </div>
+
+            <div class="inline-flex items-center gap-2 bg-plum/10 text-plum px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-plum/20 uppercase tracking-wider">
+              <Icon name="ph:shield-check-duotone" size={18} />
+              Case study &middot; File no. 03
+            </div>
+
+            <p class="marker-label text-2xl md:text-3xl mb-4">from the drafting table —</p>
+
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6">
+              One design system,
+              <br />
+              <WavyUnderline>covering the whole platform</WavyUnderline>
+              <span class="text-coral">.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10">
+              Building a custom design system for a growing
+              <span class="wavy-underline">direct-to-consumer insurance</span>
+              platform, from stakeholder alignment through component library, documentation, and cross-team adoption.
+            </p>
+
+            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
+              <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
+                {meta.map((m) => (
+                  <div>
+                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">{m.role}</dt>
+                    <dd class="font-display text-lg text-navy font-semibold" set:html={m.value.replace(/·/g, '&middot;')}></dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+    <!-- ====== OUTLINE ====== -->
+    <section class="py-16 md:py-20 relative">
+      <div class="absolute top-10 right-6 w-24 h-24 bg-plum/10 blob-shape animate-float-slow" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-center gap-3 mb-6">
+          <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
+          <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">On the docket</h2>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {docket.map((d) => (
+            <a href={d.href} class="ingredient-chip hover:border-coral hover:text-coral transition-colors">
+              <Icon name={d.icon} size={18} class={d.iconClass} />
+              {d.label}
+            </a>
+          ))}
+        </div>
+
+        <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+          Berxi is a direct-to-consumer insurance platform built inside Berkshire Hathaway Specialty Insurance. The product was
+          expanding quickly, and the frontend was expanding with it, but not in a coordinated way. Engineers were making design
+          decisions independently across the codebase. Marketing wanted campaign flexibility they couldn't get. Engineering was
+          burning cycles on visual work that should have been standardized. The job was to pull all of that together into a
+          design system that the platform could actually grow on.
+        </p>
+      </div>
+    </section>
+
+    <!-- ====== STEP 01 — PROBLEM ====== -->
+    <section id="problem" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">01</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step one</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">The drift problem</h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Color values, spacing, and typography were defined locally inside individual components. Every new feature made
+            another quiet decision about how things should look. With no shared token architecture, those decisions never rolled
+            back up into a system — they just accumulated as subtle differences between pages.
+          </p>
+          <p>
+            The consequences showed up on two sides. Marketing couldn't run campaigns or build landing-page variations quickly
+            because the existing surface wasn't flexible enough to extend without engineering. And engineers kept rebuilding
+            visual primitives slightly differently each time, which is how a growing codebase starts paying a
+            <strong class="text-coral">drift tax</strong> on every new feature.
+          </p>
+          <p>
+            Before writing any components, the work was alignment. Getting product, design, marketing, and engineering to agree
+            on a single source of truth so the system we built would actually be the system the platform used.
+          </p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative" style="transform: rotate(-0.6deg)">
+            <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5">Symptom A</span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Local decisions, global drift</h3>
+            <p class="text-charcoal/70">
+              Color, spacing, and type defined inside components. Every new feature quietly disagreed with the last one.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative" style="transform: rotate(0.5deg)">
+            <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5">Symptom B</span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Marketing blocked on engineering</h3>
+            <p class="text-charcoal/70">
+              Campaigns and landing-page variations needed developer time that engineering didn't have to give.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== STEP 02 — TOKENS ====== -->
+    <section id="tokens" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float" aria-hidden="true"></div>
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">02</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step two</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">A two-tier token architecture</h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Tailwind gave us a utility-first model, expressive but constrained, and Vue's component model cleanly separated
+            accessibility behavior from styling. On top of that, I built a token system in two layers so brand changes could
+            propagate automatically without rewriting components.
+          </p>
+        </div>
+
+        <ul class="mt-8 space-y-5">
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:palette-duotone" size={28} class="text-coral flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Primitive tokens</h3>
+              <p class="text-charcoal/70">
+                The raw palette: colors, spacing steps, type sizes. No meaning attached, just values. This is what brand owns.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:tag-duotone" size={28} class="text-plum flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Semantic tokens</h3>
+              <p class="text-charcoal/70">
+                Role-based values: interactive element color, label-to-input spacing, body copy size. Components only ever
+                referenced these, never the primitives directly.
+              </p>
+            </div>
+          </li>
+          <li class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm">
+            <Icon name="ph:arrows-clockwise-duotone" size={28} class="text-sunset flex-shrink-0 mt-1" />
+            <div>
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">Automatic propagation</h3>
+              <p class="text-charcoal/70">
+                A brand update changes a primitive. Every semantic token resolves to the new value. Every component using that
+                semantic updates automatically. Nothing to hunt down.
+              </p>
+            </div>
+          </li>
+        </ul>
+
+        <!-- token stack visual -->
+        <div class="mt-12 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative" style="transform: rotate(-0.3deg)">
+          <div class="absolute -top-4 left-8 sticker bg-plum/10 text-plum border-plum/40" style="transform: rotate(-3deg)">
+            <Icon name="ph:stack-duotone" size={14} class="mr-1" />
+            How a token resolves
+          </div>
+          <div class="mt-4 flex flex-wrap items-center gap-3 font-body">
+            <span class="token-chip">
+              <span class="token-swatch" style="background: #2d2b55"></span>
+              <code class="text-plum">color.navy.700</code>
+            </span>
+            <span class="token-arrow">→ resolves to →</span>
+            <span class="token-chip">
+              <Icon name="ph:cursor-click-duotone" size={16} class="text-coral" />
+              <code class="text-plum">color.interactive.primary</code>
+            </span>
+            <span class="token-arrow">→ consumed by →</span>
+            <span class="token-chip">
+              <Icon name="ph:squares-four-duotone" size={16} class="text-sunset" />
+              <code class="text-plum">&lt;Button variant="primary" /&gt;</code>
+            </span>
+          </div>
+          <p class="mt-5 text-sm text-charcoal/60 font-body">
+            Components never reach for primitives. They ask for a role. The system decides what that role looks like today.
+          </p>
+        </div>
+
+        <!-- pull quote -->
+        <figure class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative" style="transform: rotate(-0.3deg)">
+          <Icon name="ph:quotes-duotone" size={32} class="text-coral/60 absolute -top-3 left-6 bg-cream px-1" />
+          <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+            The clearest signal that a design system is working is that it stops generating the friction that prompted building it.
+          </blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ====== STEP 03 — ACCESSIBILITY ====== -->
+    <section id="accessibility" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">03</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step three</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">Accessibility as a system property</h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Accessibility requirements were built into each component from the start: keyboard navigation, ARIA attributes,
+            focus management in overlays, color contrast against the token palette. These were properties the components
+            already had, not a checklist feature teams ran afterward.
+          </p>
+          <p>
+            This matters more as a system grows. An accessibility gap in a shared component isn't one gap. It's the same gap
+            across every feature that uses the component. Building accessibility in at the system level meant every feature
+            team shipped accessible UI <em>without having to implement it.</em>
+          </p>
+        </div>
+
+        <div class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative" style="transform: rotate(0.4deg)">
+          <div class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50" style="transform: rotate(-3deg)">
+            <Icon name="ph:check-fat-duotone" size={14} class="mr-1" />
+            Built-in, not bolted-on
+          </div>
+          <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80">
+            {a11yPoints.map((p) => (
+              <li class="flex items-center gap-3">
+                <Icon name={p.icon} size={22} class={p.iconClass} />
+                {p.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== STEP 04 — SCALE ====== -->
+    <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="absolute top-10 right-6 w-20 h-20 bg-lemon/50 blob-shape animate-float-slow" aria-hidden="true"></div>
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">04</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step four</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">What the system changed</h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Once the system was in place, the friction that had originally prompted the project stopped showing up. Marketing
+            could run campaigns and build landing-page variations without waiting on engineering. Brand updates propagated
+            automatically. Late-cycle visual inconsistency, the kind that used to get caught in review and ship anyway, stopped
+            appearing, because the components no longer let you drift.
+          </p>
+          <p>
+            New engineers came up to speed faster because the library's API was consistent and documented, and because you
+            could learn the system by reading it. The component library stopped being a source of ongoing debate and became
+            part of the platform's quiet infrastructure.
+          </p>
+        </div>
+
+        <div class="mt-12 grid md:grid-cols-3 gap-6">
+          {outcomes.map((o) => (
+            <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm" style={`transform: rotate(${o.tilt})`}>
+              <Icon name={o.icon} size={32} class={`${o.iconClass} mb-3`} />
+              <h3 class="font-display text-lg text-navy font-semibold mb-1">{o.title}</h3>
+              <p class="text-charcoal/70 text-sm">{o.body}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
+    <section class="py-16 md:py-20 relative">
+      <div class="absolute top-12 left-6 w-20 h-20 bg-plum/15 blob-shape animate-float-slow" aria-hidden="true"></div>
+      <div class="absolute bottom-10 right-8 w-14 h-14 bg-sky/40 rounded-full animate-float" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="text-center mb-10">
+          <p class="marker-label text-2xl md:text-3xl text-coral mb-1">signed &amp; filed &mdash;</p>
+          <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">What Adam said</h2>
+        </div>
+
+        <figure class="card-base card-sticky variant-peach rot-5 max-w-2xl mx-auto p-8 md:p-12">
+          <span class="tape left" aria-hidden="true"></span>
+          <span class="tape right coral" aria-hidden="true"></span>
+
+          <Icon name="ph:quotes-duotone" size={36} class="text-coral/70 mb-3" />
+
+          <blockquote class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7">
+            Josh joined when our frontend was making the same decision in a hundred different places. He brought stakeholders
+            into one room, set the token architecture, and shipped a design system the platform actually uses. Marketing got
+            the campaign flexibility they'd been asking for, and engineering stopped reinventing the same components.
+          </blockquote>
+
+          <figcaption class="flex items-center gap-4 pt-5 border-t border-coral/25">
+            <img
+              src="/images/adam-yasan.jpeg"
+              alt="Adam Yasan"
+              class="avatar avatar-lg"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <p class="font-heading font-semibold text-navy text-base">Adam Yasan</p>
+              <p class="text-sm text-navy/70">Managing Director &middot; Berxi</p>
+            </div>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+    <!-- ====== CTA ====== -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden">
+          <div class="absolute -top-10 -right-10 w-40 h-40 bg-coral/30 blob-shape animate-float-slow" aria-hidden="true"></div>
+          <div class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float" aria-hidden="true"></div>
+          <div class="relative z-10 text-center">
+            <span class="sticker bg-white/10 text-lemon border-lemon/40 mb-6" style="transform: rotate(-2deg)">
+              <Icon name="ph:shield-check-duotone" size={14} class="mr-1" />
+              Starting a design system from scratch?
+            </span>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5">
+              Component Library Starter, ready in 2–3 weeks.
+            </h2>
+            <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+              A production-ready foundation: tokens, core components, accessibility baked in, and documentation your team can
+              actually find. Start with a free scorecard, or grab 30 minutes.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                variant="primary"
+                size="lg"
+                iconLeft="ph:clipboard-text-duotone"
+                href="/scorecard/"
+               
+              >
+                Score your design system
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                iconLeft="ph:calendar-check-duotone"
+                href="https://calendly.com/josh-thebrileys/30min/"
+              >
+                Book an intro call
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-14 flex justify-center">
+          <a href="/projects/" class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors">
+            <Icon name="ph:arrow-left-bold" size={18} class="group-hover:-translate-x-1 transition-transform" />
+            Back to all projects on the corkboard
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .policy-card {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow:
+      0 30px 60px -28px rgba(45, 43, 85, 0.28),
+      0 4px 10px rgba(45, 43, 85, 0.06);
+    position: relative;
+  }
+  .policy-card::before {
+    content: '';
+    position: absolute;
+    inset: 10px;
+    border: 1.5px dashed rgba(108, 74, 182, 0.25);
+    border-radius: 12px;
+    pointer-events: none;
+  }
+  .tape {
+    position: absolute;
+    width: 90px;
+    height: 22px;
+    background: rgba(253, 230, 138, 0.88);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+  }
+  .token-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    color: #2d2b55;
+    box-shadow: 0 2px 6px -2px rgba(45, 43, 85, 0.12);
+    border: 1px solid rgba(108, 74, 182, 0.15);
+  }
+  .token-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.08);
+  }
+  .token-arrow {
+    font-family: 'Fraunces', serif;
+    color: #6c4ab6;
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .paper-stamp {
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 2px solid currentColor;
+    border-radius: 6px;
+    display: inline-block;
+    transform: rotate(-4deg);
+    opacity: 0.85;
+  }
+</style>

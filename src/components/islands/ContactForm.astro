@@ -1,0 +1,65 @@
+---
+import Field from '~/components/form/Field.astro';
+import Input from '~/components/form/Input.astro';
+import Textarea from '~/components/form/Textarea.astro';
+import Select from '~/components/form/Select.astro';
+import FormAlert from '~/components/form/FormAlert.astro';
+import SubmitButton from '~/components/form/SubmitButton.astro';
+
+const services = [
+  { value: 'design-system-audit', label: 'Design system audit' },
+  { value: 'component-library', label: 'Component library' },
+  { value: 'accessibility-review', label: 'Accessibility review' },
+  { value: 'fractional-engagement', label: 'Fractional engagement' },
+  { value: 'something-else', label: 'Something else' },
+];
+---
+
+<form
+  id="contact-form"
+  novalidate
+  class="flex flex-col gap-5"
+  data-portal-id="245615253"
+  data-form-guid="e7cbc2bc-27f0-4a84-b8c4-79e4d3657b39"
+  data-fallback-email="josh@thebrileys.com"
+>
+  <FormAlert variant="success" id="form-alert-success">
+    <p class="font-heading font-semibold text-navy">Thanks — your message is on its way.</p>
+    <p class="mt-1 text-charcoal/75">I’ll reply within one business day, usually sooner.</p>
+  </FormAlert>
+  <FormAlert variant="error" id="form-alert-error">
+    <p class="font-heading font-semibold text-navy">We couldn’t send your message.</p>
+    <p class="mt-1 text-charcoal/75"><span id="form-alert-error-reason"></span></p>
+  </FormAlert>
+
+  <div class="grid sm:grid-cols-2 gap-5">
+    <Field label="First name" name="first-name" required>
+      <Input name="first-name" autocomplete="given-name" required />
+    </Field>
+    <Field label="Last name" name="last-name" required>
+      <Input name="last-name" autocomplete="family-name" required />
+    </Field>
+  </div>
+
+  <Field label="Email" name="email" required hint="I'll only use this to reply.">
+    <Input name="email" type="email" autocomplete="email" inputmode="email" required />
+  </Field>
+
+  <Field label="Phone (optional)" name="phone">
+    <Input name="phone" type="tel" autocomplete="tel" inputmode="tel" />
+  </Field>
+
+  <Field label="What can I help with?" name="service" required>
+    <Select name="service" options={services} placeholder="Pick one" required />
+  </Field>
+
+  <Field label="Project notes" name="message" required hint="A few sentences is plenty.">
+    <Textarea name="message" rows={5} required />
+  </Field>
+
+  <SubmitButton label="Send message" loadingLabel="Sending…" />
+</form>
+
+<script>
+  import '~/scripts/contact-form';
+</script>

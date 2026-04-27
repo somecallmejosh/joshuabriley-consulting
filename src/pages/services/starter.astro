@@ -1,0 +1,609 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import Card from '~/components/card/Card.astro';
+import CardGrid from '~/components/patterns/CardGrid.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
+import TestimonialCard from '~/components/patterns/TestimonialCard.astro';
+
+const description =
+  'A component library starter that gives your team a consistent, accessible, scalable foundation — 20 foundational components, token architecture, WCAG 2.1 AA, and Storybook docs.';
+
+const audience = [
+  {
+    icon: 'ph:rocket-launch-duotone',
+    tone: 'coral',
+    tilt: -1 as const,
+    body: "You're starting from scratch and want it done right the first time.",
+  },
+  {
+    icon: 'ph:warning-octagon-duotone',
+    tone: 'plum',
+    tilt: 1 as const,
+    body: 'Your current library feels inconsistent, fragile, or hard to maintain.',
+  },
+  {
+    icon: 'ph:arrows-counter-clockwise-duotone',
+    tone: 'sunset',
+    tilt: 0 as const,
+    body: 'Your team rebuilds the same components instead of reusing them.',
+  },
+  {
+    icon: 'ph:wheelchair-duotone',
+    tone: 'sage',
+    tilt: 1 as const,
+    body: "Accessibility isn't baked in — it's something you keep meaning to get to.",
+  },
+];
+
+const audienceToneMap: Record<string, { iconClass: string; iconBg: string }> = {
+  coral: { iconClass: 'text-coral', iconBg: 'bg-coral/10' },
+  plum: { iconClass: 'text-plum', iconBg: 'bg-plum/10' },
+  sunset: { iconClass: 'text-sunset', iconBg: 'bg-sunset/10' },
+  sage: { iconClass: 'text-sage', iconBg: 'bg-sage/20' },
+};
+
+const deliverables = [
+  {
+    icon: 'ph:cube-duotone',
+    accent: 'coral',
+    tilt: -1 as const,
+    title: '20 foundational components',
+    body: 'Buttons, inputs, modals, cards, navigation, alerts, badges — the real working building blocks of a product UI.',
+  },
+  {
+    icon: 'ph:palette-duotone',
+    accent: 'plum',
+    tilt: 1 as const,
+    title: 'Token architecture',
+    body: 'Color, spacing, typography, and border radius tokens structured so they scale instead of drift.',
+  },
+  {
+    icon: 'ph:wheelchair-duotone',
+    accent: 'sunset',
+    tilt: 0 as const,
+    title: 'WCAG 2.1 AA, built in',
+    body: "Accessibility isn't a pass at the end — it's integrated into every component from the start.",
+  },
+  {
+    icon: 'ph:book-open-duotone',
+    accent: 'sage',
+    tilt: 1 as const,
+    title: 'Storybook documentation',
+    body: 'Every component with examples, variants, and usage guidance your team can actually read and trust.',
+  },
+  {
+    icon: 'ph:arrows-out-duotone',
+    accent: 'sky',
+    tilt: -1 as const,
+    title: 'Built to scale',
+    body: 'Clear naming, composable patterns, and structural decisions your team can extend without forking.',
+  },
+];
+
+const accentMap: Record<string, { text: string; bg: string }> = {
+  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  plum: { text: 'text-plum', bg: 'bg-plum/10' },
+  sunset: { text: 'text-sunset', bg: 'bg-sunset/10' },
+  sage: { text: 'text-sage', bg: 'bg-sage/20' },
+  sky: { text: 'text-sky', bg: 'bg-sky/15' },
+};
+
+const components = [
+  {
+    icon: 'ph:cursor-click-duotone',
+    accent: 'coral',
+    title: 'Buttons & actions',
+    body: 'Primary, secondary, ghost, destructive, icon — with sizes, states, and focus handling that stay consistent everywhere.',
+  },
+  {
+    icon: 'ph:text-aa-duotone',
+    accent: 'plum',
+    title: 'Inputs & form controls',
+    body: 'Text, select, checkbox, radio, toggle — with proper labels, errors, helper text, and accessible validation patterns.',
+  },
+  {
+    icon: 'ph:squares-four-duotone',
+    accent: 'sunset',
+    title: 'Cards, surfaces & modals',
+    body: 'Containers that compose cleanly — with consistent spacing, elevation, and focus management in dialogs.',
+  },
+  {
+    icon: 'ph:compass-duotone',
+    accent: 'sage',
+    title: 'Navigation patterns',
+    body: 'Tabs, breadcrumbs, menus, links — with keyboard behavior and ARIA already handled.',
+  },
+  {
+    icon: 'ph:bell-duotone',
+    accent: 'sky',
+    title: 'Alerts, badges & feedback',
+    body: 'The small-but-constant pieces — status messaging, notifications, labels — done with intent, not afterthoughts.',
+  },
+];
+
+const process = [
+  {
+    n: '01',
+    tone: 'coral',
+    title: 'Kickoff',
+    body: 'We align on tokens, styling direction, and the product needs the system has to serve. No guessing later — we set the anchors now.',
+  },
+  {
+    n: '02',
+    tone: 'plum',
+    title: 'Build (2–3 weeks)',
+    body: 'I build in the open — components, tokens, Storybook, all of it. You see progress as it happens, not in one big reveal at the end.',
+  },
+  {
+    n: '03',
+    tone: 'sunset',
+    title: 'Review & revise',
+    body: 'You try it on. We collect feedback, integrate revisions, and make sure what ships is something your team genuinely wants to use.',
+  },
+  {
+    n: '04',
+    tone: 'sage',
+    title: 'Handoff & walkthrough',
+    body: 'Repository delivery with a live walk-through for your team — architecture, conventions, and how to extend it without breaking it.',
+  },
+];
+
+const stepBgMap: Record<string, string> = {
+  coral: 'bg-coral shadow-coral/20',
+  plum: 'bg-plum shadow-plum/20',
+  sunset: 'bg-sunset shadow-sunset/20',
+  sage: 'bg-sage shadow-sage/20',
+};
+
+const related = [
+  {
+    icon: 'ph:magnifying-glass-duotone',
+    accent: 'plum',
+    tilt: -1 as const,
+    title: 'Design System Audit',
+    body: "Already have a system that's drifting? Start with an honest, prioritized look at what's actually broken.",
+    cta: 'Explore the audit',
+    href: '/services/audit/',
+  },
+  {
+    icon: 'ph:arrows-left-right-duotone',
+    accent: 'sunset',
+    tilt: 1 as const,
+    title: 'Design-to-Code Workflow',
+    body: "Got components but the handoff between design and dev is leaking? Let's tighten the loop.",
+    cta: 'Explore the workflow',
+    href: '/services/workflow/',
+  },
+];
+---
+
+<BaseLayout
+  title="Component Library Starter — Joshua Briley | Design Systems Consulting"
+  description={description}
+>
+  {/* HERO */}
+  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
+    <Blob tone="sunset" size="md" class="absolute top-24 right-[6%]" animate="float" opacity="opacity-30" />
+    <Blob tone="sky" size="sm" class="absolute top-48 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sage" size="sm" class="absolute bottom-20 right-[18%]" animate="float-slow" opacity="opacity-30" />
+    <Blob tone="lemon" size="sm" class="absolute bottom-40 left-[14%] rounded-full" animate="float" opacity="opacity-70" />
+
+    <Container class="relative z-10">
+      {/* breadcrumb */}
+      <nav class="flex items-center gap-2 text-sm font-heading text-charcoal/60 mb-10" aria-label="Breadcrumb">
+        <a href="/services/" class="hover:text-coral transition-colors inline-flex items-center gap-1.5">
+          <Icon name="ph:arrow-left-duotone" size={16} />
+          All services
+        </a>
+        <span aria-hidden="true">/</span>
+        <span class="text-charcoal/80">Component Library Starter</span>
+      </nav>
+
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+        <div class="lg:col-span-7">
+          <div class="mb-8 inline-block">
+            <Badge tone="peach" icon="ph:stack-duotone">Build from a trusted foundation</Badge>
+          </div>
+
+          <Heading level={1} visual="display-xl" class="mb-6">
+            A component system your team can <WavyUnderline>trust</WavyUnderline>.
+          </Heading>
+
+          <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
+            Consistent, accessible, and ready to scale &mdash; from day one.
+          </p>
+
+          <Text size="lg" tone="muted" class="max-w-xl mb-10">
+            Most teams don't struggle because they lack components. They struggle because their components
+            <strong class="text-charcoal font-semibold"> weren't designed as a system</strong>. Let's fix that at the foundation.
+          </Text>
+
+          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <Button variant="primary" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+              Book an intro call
+            </Button>
+            <Button variant="ghost" size="lg" iconLeft="ph:arrow-down-duotone" href="#deliverables">
+              See what you get
+            </Button>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-10 text-sm font-heading text-charcoal/60">
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="ph:clock-duotone" size={18} class="text-plum" />
+              2&ndash;3 week build
+            </span>
+            <span class="w-1 h-1 rounded-full bg-charcoal/30" aria-hidden="true"></span>
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="ph:cube-duotone" size={18} class="text-plum" />
+              20 foundational components
+            </span>
+            <span class="w-1 h-1 rounded-full bg-charcoal/30" aria-hidden="true"></span>
+            <span class="inline-flex items-center gap-1.5">
+              <Icon name="ph:currency-dollar-duotone" size={18} class="text-plum" />
+              Starting at $3,500
+            </span>
+          </div>
+        </div>
+
+        {/* stacked-blocks visual */}
+        <div class="lg:col-span-5 relative h-[400px] md:h-[480px] hidden lg:block" aria-hidden="true">
+          <div class="absolute inset-0 flex items-center justify-center">
+            <div class="w-72 h-72 rounded-full bg-plum/10 animate-pulse-ring"></div>
+          </div>
+
+          {/* card component (anchor, top-left) */}
+          <div class="absolute top-[6%] left-[2%] w-[56%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float" style="transform: rotate(-3deg)">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-flex items-center gap-1.5 bg-sage/20 text-sage-deep border border-sage/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
+                <Icon name="ph:check-circle-duotone" size={14} />
+                Card
+              </span>
+              <Icon name="ph:dots-three-bold" size={18} class="text-charcoal/40" />
+            </div>
+            <div class="h-2 bg-charcoal/10 rounded-full mb-2 w-4/5"></div>
+            <div class="h-2 bg-charcoal/10 rounded-full w-3/5"></div>
+          </div>
+
+          {/* badge component (top-right) */}
+          <div class="absolute top-[2%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float" style="transform: rotate(6deg)">
+            <div class="flex items-center gap-1.5">
+              <span class="inline-flex items-center gap-1 bg-lemon text-navy rounded-full px-2 py-0.5 font-heading text-[0.65rem] font-bold">
+                NEW
+              </span>
+              <span class="inline-flex items-center gap-1.5 bg-plum/10 text-plum border border-plum/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">Badge</span>
+            </div>
+          </div>
+
+          {/* button component (mid-right) */}
+          <div class="absolute top-[38%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3.5 animate-float-slow" style="transform: rotate(4deg)">
+            <div class="flex items-center gap-2">
+              <span class="inline-flex items-center gap-1.5 bg-coral text-white rounded-full px-3 py-1.5">
+                <Icon name="ph:sparkle-duotone" size={14} />
+                <span class="font-heading text-[0.72rem] font-semibold">Primary</span>
+              </span>
+              <span class="inline-flex items-center gap-1.5 bg-coral/10 text-coral border border-coral/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">Button</span>
+            </div>
+          </div>
+
+          {/* input component (mid-left) */}
+          <div class="absolute top-[46%] left-[6%] w-[48%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float-delay" style="transform: rotate(-2deg)">
+            <div class="flex items-center gap-2 mb-2.5">
+              <span class="inline-flex items-center gap-1.5 bg-sky/20 text-navy border border-sky/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
+                <Icon name="ph:text-aa-duotone" size={14} />
+                Input
+              </span>
+            </div>
+            <div class="h-8 bg-cream rounded-lg border border-plum/30 flex items-center px-2.5">
+              <span class="w-0.5 h-4 bg-plum/60"></span>
+            </div>
+          </div>
+
+          {/* foundation token row (anchored bottom-right) */}
+          <div class="absolute bottom-[4%] right-[4%] w-[64%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4" style="transform: rotate(2deg)">
+            <div class="flex items-center gap-2 mb-2.5">
+              <Icon name="ph:palette-duotone" size={16} class="text-plum" />
+              <span class="font-heading text-[0.7rem] font-semibold text-navy/70 uppercase tracking-wider">Tokens</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="w-5 h-5 rounded-md bg-coral"></span>
+              <span class="w-5 h-5 rounded-md bg-sunset"></span>
+              <span class="w-5 h-5 rounded-md bg-plum"></span>
+              <span class="w-5 h-5 rounded-md bg-sage"></span>
+              <span class="w-5 h-5 rounded-md bg-sky"></span>
+              <span class="w-5 h-5 rounded-md bg-lemon"></span>
+              <span class="w-5 h-5 rounded-md bg-navy"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <SquiggleDivider />
+
+  {/* THIS IS FOR YOU IF */}
+  <Section padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="This is for you if…"
+        eyebrowIcon="ph:hand-waving-duotone"
+        eyebrowTone="plum"
+        title="You need a real foundation"
+        lead="Whether you're starting fresh or replacing something fragile, these are the teams this is built for."
+        class="mb-14"
+      />
+
+      <CardGrid cols={2} gap="md">
+        {audience.map((p) => {
+          const t = audienceToneMap[p.tone];
+          return (
+            <Card variant="paper" tilt={p.tilt} class="flex gap-4">
+              <div class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                <Icon name={p.icon} size={24} class={t.iconClass} />
+              </div>
+              <p class="font-heading font-medium text-navy self-center">{p.body}</p>
+            </Card>
+          );
+        })}
+      </CardGrid>
+    </Container>
+  </Section>
+
+  {/* PHILOSOPHY CALLOUT */}
+  <Section padding="tight" class="bg-charcoal/[0.03]">
+    <Container width="narrow">
+      <div class="relative bg-white rounded-3xl p-10 md:p-14 border border-charcoal/5 shadow-sm overflow-hidden" style="transform: rotate(-0.3deg)">
+        <Blob tone="sunset" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
+        <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
+
+        <div class="relative">
+          <Icon name="ph:quotes-duotone" size={48} class="text-coral/60 mb-4" />
+          <p class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6">
+            A component library isn't a pile of components. It's a <span class="italic">system</span> &mdash; with shared decisions, shared names, and shared guarantees.
+          </p>
+          <p class="font-display text-xl md:text-2xl text-coral leading-snug italic">
+            That's what we build here.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* DELIVERABLES */}
+  <Section id="deliverables" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="What you walk away with"
+        eyebrowIcon="ph:gift-duotone"
+        eyebrowTone="coral"
+        title="A foundation that's ready to build on"
+        lead="Real components, real tokens, real docs — shipped as a clean starting point your team can own."
+        class="mb-16"
+      />
+
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {deliverables.map((d) => {
+          const a = accentMap[d.accent];
+          return (
+            <Card variant="paper" tilt={d.tilt} padding="loose" class="relative overflow-hidden">
+              <div class={`absolute -top-6 -right-6 w-24 h-24 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
+              <div class="relative">
+                <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
+                  <Icon name={d.icon} size={28} class={a.text} />
+                </div>
+                <Heading level={3} visual="h3" class="mb-2">{d.title}</Heading>
+                <Text size="sm" tone="muted">{d.body}</Text>
+              </div>
+            </Card>
+          );
+        })}
+
+        {/* Featured (navy) — bonus item */}
+        <div class="card-hover bg-gradient-to-br from-navy to-plum text-white rounded-2xl p-8 md:p-10 border border-navy/10 shadow-sm relative overflow-hidden rotate-1">
+          <div class="absolute -top-6 -right-6 w-24 h-24 bg-coral/20 rounded-full" aria-hidden="true"></div>
+          <div class="relative">
+            <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-5">
+              <Icon name="ph:arrows-clockwise-duotone" size={28} class="text-lemon" />
+            </div>
+            <Heading level={3} visual="h3" tone="white" class="mb-2">One revision round included</Heading>
+            <p class="text-white/75 font-body leading-relaxed text-sm">
+              Once it's in your hands, we refine together. You shouldn't inherit a system you don't agree with.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* WHAT'S INCLUDED — the 20 components */}
+  <Section padding="default" class="bg-charcoal/[0.03]">
+    <Container width="narrow">
+      <SectionHeader
+        eyebrow="The 20 components"
+        eyebrowIcon="ph:package-duotone"
+        eyebrowTone="sunset"
+        title="Everything a product UI leans on"
+        lead={'Not "hello world" components. The ones you reach for every day — designed to work together.'}
+        class="mb-14"
+      />
+
+      <div class="bg-white rounded-3xl border border-charcoal/5 shadow-sm overflow-hidden">
+        <ul class="divide-y divide-charcoal/5">
+          {components.map((c) => {
+            const a = accentMap[c.accent];
+            return (
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div class={`w-12 h-12 ${a.bg} rounded-xl flex items-center justify-center flex-shrink-0`}>
+                  <Icon name={c.icon} size={24} class={a.text} />
+                </div>
+                <div>
+                  <Heading level={3} visual="h4" class="mb-1 text-lg">{c.title}</Heading>
+                  <Text size="sm" tone="muted">{c.body}</Text>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </Container>
+  </Section>
+
+  {/* PROCESS */}
+  <Section padding="default">
+    <Container width="narrow">
+      <SectionHeader
+        eyebrow="How it works"
+        eyebrowIcon="ph:path-duotone"
+        eyebrowTone="sage"
+        title="Four phases, full visibility"
+        class="mb-14"
+      />
+
+      <div class="space-y-6">
+        {process.map((step) => (
+          <div class="flex gap-5">
+            <div class={`w-14 h-14 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg`}>
+              {step.n}
+            </div>
+            <Card variant="paper" tilt={0} class="flex-1">
+              <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
+              <Text tone="muted">{step.body}</Text>
+            </Card>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  {/* PRICING */}
+  <Section padding="tight" class="bg-charcoal/[0.03]">
+    <Container width="narrow">
+      <div class="relative bg-gradient-to-br from-navy via-navy to-plum rounded-3xl p-10 md:p-14 overflow-hidden">
+        <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-20" />
+        <Blob tone="lemon" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
+        <Blob tone="sage" size="sm" class="absolute top-8 left-1/2 rounded-full" animate="float" opacity="opacity-20" />
+
+        <div class="relative text-center">
+          <span class="inline-flex items-center gap-2 bg-white/10 text-white/90 border border-white/15 px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium">
+            <Icon name="ph:tag-duotone" size={18} class="text-lemon" />
+            Flat-scope engagement
+          </span>
+          <Heading level={2} visual="h2" tone="white" align="center" class="mb-4">
+            Component Library Starter
+          </Heading>
+          <div class="flex items-baseline justify-center gap-2 mb-6">
+            <span class="text-white/60 font-heading text-lg">Starting at</span>
+            <span class="font-display text-white text-5xl md:text-6xl font-semibold">$3,500</span>
+          </div>
+          <p class="text-white/70 font-body max-w-xl mx-auto mb-8 leading-relaxed">
+            Final scope depends on product needs and styling complexity &mdash; we'll sort it out on the intro call. No retainers, no surprises.
+          </p>
+          <Button variant="primary" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+            Book an intro call
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* TESTIMONIALS */}
+  <Section padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Kind words"
+        eyebrowIcon="ph:heart-duotone"
+        eyebrowTone="lemon"
+        title="From folks who've worked with me"
+        class="mb-14"
+      />
+
+      <div class="grid md:grid-cols-2 gap-6">
+        <TestimonialCard
+          name="Nicholas Dos Santos"
+          role="Engineer"
+          company="America's Test Kitchen"
+          quote="Josh's accessibility expertise and front-end development discipline are in a class of their own. He builds systems that hold up — and teams learn from working with him."
+          initials="ND"
+          avatarTone="plum"
+          variant="polaroid"
+          tilt="rot-1"
+          slabGradient="from-plum/30 via-coral/20 to-lemon/40"
+        />
+        <TestimonialCard
+          name="Welling LaGrone"
+          role="Consultant"
+          company="Triverus Consulting"
+          quote="Josh brings a rare combination of craft and rigor. The foundation he puts down is the kind you can build on for years without regretting it."
+          initials="WL"
+          avatarTone="coral"
+          variant="polaroid"
+          tilt="rot-2"
+          slabGradient="from-sunset/30 via-plum/20 to-lemon/40"
+        />
+      </div>
+    </Container>
+  </Section>
+
+  {/* RELATED SERVICES */}
+  <Section padding="default" class="bg-charcoal/[0.03]">
+    <Container width="narrow">
+      <SectionHeader
+        eyebrow="Not quite right?"
+        eyebrowIcon="ph:compass-tool-duotone"
+        eyebrowTone="sky"
+        title="Start somewhere else"
+        lead="A starter isn't always the right first move. Here's where else people begin."
+        class="mb-12"
+      />
+
+      <div class="grid md:grid-cols-2 gap-6">
+        {related.map((r) => {
+          const a = accentMap[r.accent];
+          return (
+            <a href={r.href} class="block">
+              <Card variant="paper" tilt={r.tilt} padding="loose" class="group">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center flex-shrink-0`}>
+                    <Icon name={r.icon} size={28} class={a.text} />
+                  </div>
+                  <div>
+                    <Heading level={3} visual="h3" class="mb-1 group-hover:text-coral transition-colors">{r.title}</Heading>
+                    <Text size="sm" tone="muted">{r.body}</Text>
+                  </div>
+                </div>
+                <span class="inline-flex items-center gap-1.5 text-coral font-heading font-semibold text-sm">
+                  {r.cta}
+                  <Icon name="ph:arrow-right-bold" size={16} />
+                </span>
+              </Card>
+            </a>
+          );
+        })}
+      </div>
+    </Container>
+  </Section>
+
+  {/* FINAL CTA */}
+  <CTABanner
+    title="Let's build the foundation."
+    lead="Book a 30-minute intro call. Tell me what you're building (or rebuilding) and I'll tell you whether a starter is the right move — honestly."
+  >
+    <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+      Book an intro call
+    </Button>
+    <Button variant="secondary" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
+      Take the free scorecard
+    </Button>
+  </CTABanner>
+</BaseLayout>

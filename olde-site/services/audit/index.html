@@ -1,0 +1,1271 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/../favicon.svg" />
+    <title>
+      Design System Audit — Joshua Briley | Design Systems Consulting
+    </title>
+    <meta
+      name="description"
+      content="A structured design system audit that finds what's actually broken — component inconsistency, accessibility risk, token drift, and documentation gaps — with a prioritized roadmap your team can run."
+    />
+    <link rel="canonical" href="https://joshuabriley.com/services/audit/" />
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://joshuabriley.com/services/audit/"
+    />
+    <meta
+      property="og:title"
+      content="Design System Audit — Joshua Briley | Design Systems Consulting"
+    />
+    <meta
+      property="og:description"
+      content="A structured design system audit that finds what's actually broken — component inconsistency, accessibility risk, token drift, and documentation gaps — with a prioritized roadmap your team can run."
+    />
+    <meta property="og:image" content="/images/og-image.png" />
+    <meta property="og:site_name" content="Joshua Briley" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="Design System Audit — Joshua Briley | Design Systems Consulting"
+    />
+    <meta
+      name="twitter:description"
+      content="A structured design system audit that finds what's actually broken — component inconsistency, accessibility risk, token drift, and documentation gaps — with a prioritized roadmap your team can run."
+    />
+    <meta name="twitter:image" content="/images/og-image.png" />
+    <link rel="stylesheet" href="/styles/tailwind.css" />
+    <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=DM+Sans:ital,opsz,wght@0,9..40,300..800;1,9..40,300..800&family=Space+Grotesk:wght@400;500;600;700&family=Style+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles/global.css" />
+    <script defer src="/scripts/nav-active.js"></script>
+    <script defer src="/scripts/mobile-menu.js"></script>
+    <script defer src="/scripts/scroll-reveal.js"></script>
+  </head>
+  <body class="bg-cream text-charcoal antialiased">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:bg-plum focus:text-white focus:px-4 focus:py-2 focus:rounded-lg focus:outline-none"
+    >
+      Skip to main content
+    </a>
+
+    <!-- ====== HEADER / NAV ====== -->
+    <header
+      class="sticky top-0 z-40 bg-cream/90 backdrop-blur-md border-b border-charcoal/5"
+    >
+      <div
+        class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between"
+      >
+        <a href="/" class="inline-flex items-center gap-2.5 group">
+          <span
+            class="logo-monogram group-hover:scale-105 transition-transform"
+            aria-hidden="true"
+            >jb</span
+          >
+          <span class="font-logo text-2xl text-navy"
+            >joshua<span class="text-coral">Briley</span></span
+          >
+        </a>
+        <nav
+          class="hidden md:flex items-center gap-8 font-heading text-sm font-medium"
+        >
+          <a href="/" class="hover:text-coral transition-colors">Home</a>
+          <a
+            href="/services/"
+            aria-current="page"
+            class="hover:text-coral transition-colors"
+            >Services</a
+          >
+          <a href="/projects/" class="hover:text-coral transition-colors"
+            >Projects</a
+          >
+        </nav>
+        <button
+          type="button"
+          class="md:hidden p-2 rounded-lg hover:bg-charcoal/5 transition-colors"
+          aria-label="Toggle navigation menu"
+          id="mobile-menu-toggle"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <iconify-icon icon="ph:list-bold" width="24"></iconify-icon>
+        </button>
+      </div>
+      <div
+        id="mobile-menu"
+        class="mobile-menu hidden flex-col gap-4 px-6 pb-6 md:hidden font-heading text-sm font-medium"
+      >
+        <a href="/" class="hover:text-coral transition-colors py-2">Home</a>
+        <a
+          href="/services/"
+          aria-current="page"
+          class="hover:text-coral transition-colors py-2"
+          >Services</a
+        >
+        <a href="/projects/" class="hover:text-coral transition-colors py-2"
+          >Projects</a
+        >
+      </div>
+    </header>
+
+    <main id="main">
+      <!-- ====== HERO (unique: magnifying-glass / inspection theme) ====== -->
+      <section class="relative overflow-hidden pt-16 md:pt-24 pb-24 md:pb-32">
+        <!-- grid paper backdrop -->
+        <div
+          class="absolute inset-0 grid-paper opacity-60"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent"
+          aria-hidden="true"
+        ></div>
+
+        <!-- floating shapes -->
+        <div
+          class="absolute top-20 right-[8%] w-20 h-20 bg-plum/20 blob-shape animate-float"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-40 left-[7%] w-12 h-12 bg-lemon/70 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-24 right-[14%] w-14 h-14 bg-sage/30 blob-shape animate-float-slow"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-32 left-[12%] w-10 h-10 bg-sky/30 rounded-full animate-float"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+          <!-- breadcrumb -->
+          <nav
+            class="flex items-center gap-2 text-sm font-heading text-charcoal/60 mb-10"
+            aria-label="Breadcrumb"
+          >
+            <a
+              href="/services/"
+              class="hover:text-coral transition-colors inline-flex items-center gap-1.5"
+            >
+              <iconify-icon
+                icon="ph:arrow-left-duotone"
+                width="16"
+              ></iconify-icon>
+              All services
+            </a>
+            <span aria-hidden="true">/</span>
+            <span class="text-charcoal/80">Design System Audit</span>
+          </nav>
+
+          <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            <div class="lg:col-span-7">
+              <div
+                class="inline-flex items-center gap-2 bg-peach text-navy px-4 py-2 rounded-full mb-8 font-heading text-sm font-medium border border-coral/30"
+              >
+                <iconify-icon
+                  icon="ph:magnifying-glass-duotone"
+                  width="20"
+                  class="text-coral"
+                ></iconify-icon>
+                Start here
+              </div>
+
+              <h1
+                class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-[5rem] font-semibold text-navy leading-[1.05] tracking-tight mb-6"
+              >
+                Design System <span class="wavy-underline">Audit</span>.
+              </h1>
+
+              <p
+                class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug"
+              >
+                Find what's actually broken in your design system.
+              </p>
+
+              <p
+                class="text-lg text-charcoal/70 max-w-xl mb-10 font-body leading-relaxed"
+              >
+                If your components feel inconsistent, your system is hard to
+                maintain, or your team is solving the same problems differently
+                every sprint &mdash;
+                <strong class="text-charcoal font-semibold"
+                  >this is where to start</strong
+                >.
+              </p>
+
+              <div
+                class="flex flex-col sm:flex-row items-start sm:items-center gap-4"
+              >
+                <a
+                  href="https://calendly.com/josh-thebrileys/30min/"
+                  class="inline-flex items-center gap-2 bg-coral text-white px-7 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/20 font-heading font-semibold text-base"
+                >
+                  <iconify-icon
+                    icon="ph:calendar-check-duotone"
+                    width="20"
+                  ></iconify-icon>
+                  Book an intro call
+                </a>
+                <a
+                  href="#deliverables"
+                  class="inline-flex items-center gap-2 bg-white text-navy px-7 py-4 rounded-full border border-charcoal/10 hover:border-plum/30 hover:shadow-lg transition-all font-heading font-semibold text-base"
+                >
+                  <iconify-icon
+                    icon="ph:arrow-down-duotone"
+                    width="20"
+                    class="text-plum"
+                  ></iconify-icon>
+                  See what you get
+                </a>
+              </div>
+
+              <div
+                class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/60"
+              >
+                <span class="inline-flex items-center gap-1.5">
+                  <iconify-icon
+                    icon="ph:clock-duotone"
+                    width="18"
+                    class="text-plum"
+                  ></iconify-icon>
+                  ~2 week turnaround
+                </span>
+                <span
+                  class="w-1 h-1 rounded-full bg-charcoal/30"
+                  aria-hidden="true"
+                ></span>
+                <span class="inline-flex items-center gap-1.5">
+                  <iconify-icon
+                    icon="ph:currency-dollar-duotone"
+                    width="18"
+                    class="text-plum"
+                  ></iconify-icon>
+                  Starting at $2,000
+                </span>
+              </div>
+            </div>
+
+            <!-- magnifying-glass visual -->
+            <div
+              class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block"
+              aria-hidden="true"
+            >
+              <!-- decorative rings -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div
+                  class="w-72 h-72 rounded-full border-2 border-dashed border-plum/30 animate-spin-slow"
+                ></div>
+              </div>
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div
+                  class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"
+                ></div>
+              </div>
+
+              <!-- mock component swatches behind lens -->
+              <div
+                class="absolute top-[18%] left-[12%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2"
+                style="transform: rotate(-6deg)"
+              >
+                <div class="w-2 h-2 rounded-full bg-coral"></div>
+                <span class="font-heading text-xs font-semibold text-navy"
+                  >Button / Primary</span
+                >
+              </div>
+              <div
+                class="absolute top-[8%] right-[6%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2"
+                style="transform: rotate(4deg)"
+              >
+                <div class="w-2 h-2 rounded-full bg-sage"></div>
+                <span class="font-heading text-xs font-semibold text-navy"
+                  >Token: spacing-md</span
+                >
+              </div>
+              <div
+                class="absolute bottom-[14%] left-[4%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2"
+                style="transform: rotate(3deg)"
+              >
+                <div class="w-2 h-2 rounded-full bg-sunset"></div>
+                <span class="font-heading text-xs font-semibold text-navy"
+                  >Input / Error</span
+                >
+              </div>
+              <div
+                class="absolute bottom-[8%] right-[10%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2"
+                style="transform: rotate(-5deg)"
+              >
+                <div class="w-2 h-2 rounded-full bg-plum"></div>
+                <span class="font-heading text-xs font-semibold text-navy"
+                  >Card / Elevated</span
+                >
+              </div>
+
+              <!-- magnifying glass -->
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="relative animate-float-slow">
+                  <div
+                    class="w-48 h-48 rounded-full bg-gradient-to-br from-white/80 to-peach/60 border-[10px] border-navy shadow-2xl backdrop-blur-[1px] flex items-center justify-center"
+                  >
+                    <iconify-icon
+                      icon="ph:magnifying-glass-duotone"
+                      width="72"
+                      class="text-coral"
+                    ></iconify-icon>
+                  </div>
+                  <div
+                    class="absolute -bottom-10 -right-10 w-24 h-6 bg-navy rounded-full shadow-xl"
+                    style="transform: rotate(45deg)"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+      <!-- ====== THIS IS FOR YOU IF ====== -->
+      <section class="py-20 md:py-24">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="max-w-3xl mx-auto text-center mb-14">
+            <span
+              class="sticker bg-plum/10 text-plum border-plum/30 mb-6 inline-flex"
+              style="transform: rotate(-2deg)"
+            >
+              <iconify-icon
+                icon="ph:hand-waving-duotone"
+                width="16"
+                class="mr-1.5"
+              ></iconify-icon>
+              This is for you if&hellip;
+            </span>
+            <h2
+              class="font-display text-3xl md:text-4xl font-semibold text-navy mb-4"
+            >
+              You're stuck in the <span class="wavy-underline">same loops</span>
+            </h2>
+            <p class="text-charcoal/70 font-body leading-relaxed">
+              Not every team needs an audit. But if one of these sounds
+              painfully familiar, it's probably time for an honest look.
+            </p>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-5">
+            <div
+              class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex gap-4"
+              style="transform: rotate(-0.6deg)"
+            >
+              <div
+                class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <iconify-icon
+                  icon="ph:puzzle-piece-duotone"
+                  width="24"
+                  class="text-coral"
+                ></iconify-icon>
+              </div>
+              <p class="font-heading font-medium text-navy self-center">
+                Your component library has become inconsistent or hard to trust.
+              </p>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex gap-4"
+              style="transform: rotate(0.5deg)"
+            >
+              <div
+                class="w-12 h-12 bg-plum/10 rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <iconify-icon
+                  icon="ph:users-duotone"
+                  width="24"
+                  class="text-plum"
+                ></iconify-icon>
+              </div>
+              <p class="font-heading font-medium text-navy self-center">
+                Designers and developers are solving the same UI problems
+                differently.
+              </p>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex gap-4"
+              style="transform: rotate(-0.3deg)"
+            >
+              <div
+                class="w-12 h-12 bg-sunset/10 rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <iconify-icon
+                  icon="ph:wheelchair-duotone"
+                  width="24"
+                  class="text-sunset"
+                ></iconify-icon>
+              </div>
+              <p class="font-heading font-medium text-navy self-center">
+                Accessibility issues keep surfacing late &mdash; in QA, in
+                audits, in production.
+              </p>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex gap-4"
+              style="transform: rotate(0.7deg)"
+            >
+              <div
+                class="w-12 h-12 bg-sage/20 rounded-xl flex items-center justify-center flex-shrink-0"
+              >
+                <iconify-icon
+                  icon="ph:warning-duotone"
+                  width="24"
+                  class="text-sage"
+                ></iconify-icon>
+              </div>
+              <p class="font-heading font-medium text-navy self-center">
+                Your system exists, but it isn't working the way it should.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== PHILOSOPHY CALLOUT ====== -->
+      <section class="py-16 md:py-20 bg-charcoal/[0.03]">
+        <div class="max-w-4xl mx-auto px-6">
+          <div
+            class="relative bg-white rounded-3xl p-10 md:p-14 border border-charcoal/5 shadow-sm overflow-hidden"
+            style="transform: rotate(-0.3deg)"
+          >
+            <div
+              class="absolute -top-10 -right-10 w-40 h-40 bg-lemon/40 blob-shape animate-float-slow"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/10 rounded-full animate-float-delay"
+              aria-hidden="true"
+            ></div>
+
+            <div class="relative">
+              <iconify-icon
+                icon="ph:quotes-duotone"
+                width="48"
+                class="text-coral/60 mb-4"
+              ></iconify-icon>
+              <p
+                class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6"
+              >
+                Most teams try to fix their system by adding
+                <span class="italic">more</span>. More components. More
+                documentation. More rules.
+              </p>
+              <p
+                class="font-display text-xl md:text-2xl text-coral leading-snug italic"
+              >
+                That usually makes things worse.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== DELIVERABLES ====== -->
+      <section id="deliverables" class="py-20 md:py-28">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="max-w-3xl mx-auto text-center mb-16">
+            <span
+              class="sticker bg-coral/10 text-coral border-coral/30 mb-6 inline-flex"
+              style="transform: rotate(-1.5deg)"
+            >
+              <iconify-icon
+                icon="ph:gift-duotone"
+                width="16"
+                class="mr-1.5"
+              ></iconify-icon>
+              What you walk away with
+            </span>
+            <h2
+              class="font-display text-3xl md:text-5xl font-semibold text-navy mb-4"
+            >
+              A clear view of what's
+              <span class="wavy-underline">actually</span> going on
+            </h2>
+            <p class="text-charcoal/70 font-body leading-relaxed text-lg">
+              No vague "here are some ideas" deck. You get a structured, honest,
+              prioritized plan.
+            </p>
+          </div>
+
+          <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div
+              class="card-hover bg-white rounded-3xl p-7 border border-charcoal/5 shadow-sm relative overflow-hidden"
+              style="transform: rotate(-0.5deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-coral/5 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-coral/10 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:eye-duotone"
+                    width="28"
+                    class="text-coral"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Where it's inconsistent &mdash; and why
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed text-sm">
+                  A clear view of what's drifting visually, structurally, and in
+                  code &mdash; plus the reasons it keeps happening.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-3xl p-7 border border-charcoal/5 shadow-sm relative overflow-hidden"
+              style="transform: rotate(0.4deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-plum/5 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-plum/10 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:wheelchair-duotone"
+                    width="28"
+                    class="text-plum"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Accessibility risk, component-by-component
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed text-sm">
+                  A WCAG 2.1 AA breakdown that tells you exactly where your risk
+                  lives &mdash; not just a score.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-3xl p-7 border border-charcoal/5 shadow-sm relative overflow-hidden"
+              style="transform: rotate(-0.3deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-sunset/10 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-sunset/10 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:list-numbers-duotone"
+                    width="28"
+                    class="text-sunset"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  A prioritized list of issues
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed text-sm">
+                  Not everything is equally broken. You'll know what to fix
+                  first, what to defer, and what to ignore.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-3xl p-7 border border-charcoal/5 shadow-sm relative overflow-hidden"
+              style="transform: rotate(0.6deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-sage/10 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-sage/20 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:wrench-duotone"
+                    width="28"
+                    class="text-sage"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Specific recommendations for each fix
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed text-sm">
+                  "Refactor your button API" isn't advice. I give you the actual
+                  approach, tradeoffs, and what "done" looks like.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-hover bg-white rounded-3xl p-7 border border-charcoal/5 shadow-sm relative overflow-hidden"
+              style="transform: rotate(-0.4deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-sky/10 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-sky/15 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:map-trifold-duotone"
+                    width="28"
+                    class="text-sky"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  A roadmap your team can actually follow
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed text-sm">
+                  Sequenced, scoped, and honest about effort. Something you can
+                  run without me if you want to.
+                </p>
+              </div>
+            </div>
+
+            <div
+              class="card-hover bg-gradient-to-br from-navy to-plum text-white rounded-3xl p-7 border border-navy/10 shadow-sm relative overflow-hidden"
+              style="transform: rotate(0.3deg)"
+            >
+              <div
+                class="absolute -top-6 -right-6 w-24 h-24 bg-coral/20 rounded-full"
+                aria-hidden="true"
+              ></div>
+              <div class="relative">
+                <div
+                  class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-5"
+                >
+                  <iconify-icon
+                    icon="ph:chats-circle-duotone"
+                    width="28"
+                    class="text-lemon"
+                  ></iconify-icon>
+                </div>
+                <h3 class="font-display text-xl font-semibold mb-2">
+                  A debrief with your team
+                </h3>
+                <p class="text-white/75 font-body leading-relaxed text-sm">
+                  A live walk-through so findings don't just land in a doc and
+                  die. Your team asks questions; I push back on mine.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== WHAT'S INCLUDED ====== -->
+      <section class="py-20 md:py-24 bg-charcoal/[0.03]">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="max-w-3xl mx-auto text-center mb-14">
+            <span
+              class="sticker bg-sunset/10 text-sunset border-sunset/40 mb-6 inline-flex"
+              style="transform: rotate(-1deg)"
+            >
+              <iconify-icon
+                icon="ph:package-duotone"
+                width="16"
+                class="mr-1.5"
+              ></iconify-icon>
+              Inside the audit
+            </span>
+            <h2
+              class="font-display text-3xl md:text-4xl font-semibold text-navy mb-4"
+            >
+              The full scope
+            </h2>
+            <p class="text-charcoal/70 font-body leading-relaxed">
+              Five focused tracks across your system, your code, and your
+              documentation.
+            </p>
+          </div>
+
+          <div
+            class="bg-white rounded-3xl border border-charcoal/5 shadow-sm overflow-hidden"
+          >
+            <ul class="divide-y divide-charcoal/5">
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div
+                  class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center flex-shrink-0"
+                >
+                  <iconify-icon
+                    icon="ph:squares-four-duotone"
+                    width="24"
+                    class="text-coral"
+                  ></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-navy mb-1">
+                    Component consistency analysis
+                  </h3>
+                  <p class="text-charcoal/70 font-body text-sm leading-relaxed">
+                    Visual <em>and</em> code-level. Where components diverge
+                    from the spec, each other, and themselves.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div
+                  class="w-12 h-12 bg-plum/10 rounded-xl flex items-center justify-center flex-shrink-0"
+                >
+                  <iconify-icon
+                    icon="ph:shield-check-duotone"
+                    width="24"
+                    class="text-plum"
+                  ></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-navy mb-1">
+                    Accessibility risk assessment
+                  </h3>
+                  <p class="text-charcoal/70 font-body text-sm leading-relaxed">
+                    WCAG 2.1 AA scored at the component level, with the real
+                    risks called out in plain language.
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div
+                  class="w-12 h-12 bg-sunset/10 rounded-xl flex items-center justify-center flex-shrink-0"
+                >
+                  <iconify-icon
+                    icon="ph:palette-duotone"
+                    width="24"
+                    class="text-sunset"
+                  ></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-navy mb-1">
+                    Design token structure &amp; naming review
+                  </h3>
+                  <p class="text-charcoal/70 font-body text-sm leading-relaxed">
+                    Are your tokens doing the work they should? Do the names
+                    tell the truth? Where are the leaks?
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div
+                  class="w-12 h-12 bg-sage/20 rounded-xl flex items-center justify-center flex-shrink-0"
+                >
+                  <iconify-icon
+                    icon="ph:book-open-duotone"
+                    width="24"
+                    class="text-sage"
+                  ></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-navy mb-1">
+                    Documentation quality &amp; coverage
+                  </h3>
+                  <p class="text-charcoal/70 font-body text-sm leading-relaxed">
+                    Does your documentation match the code people actually ship?
+                    Where are the gaps driving forks?
+                  </p>
+                </div>
+              </li>
+              <li class="flex items-start gap-5 p-6 md:p-7">
+                <div
+                  class="w-12 h-12 bg-sky/15 rounded-xl flex items-center justify-center flex-shrink-0"
+                >
+                  <iconify-icon
+                    icon="ph:flag-duotone"
+                    width="24"
+                    class="text-sky"
+                  ></iconify-icon>
+                </div>
+                <div>
+                  <h3 class="font-display text-lg font-semibold text-navy mb-1">
+                    Prioritized remediation roadmap
+                  </h3>
+                  <p class="text-charcoal/70 font-body text-sm leading-relaxed">
+                    Ranked, sequenced, and sized. The thing your team can point
+                    to when someone asks "what's next?"
+                  </p>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== PROCESS ====== -->
+      <section class="py-20 md:py-28">
+        <div class="max-w-5xl mx-auto px-6">
+          <div class="max-w-3xl mx-auto text-center mb-14">
+            <span
+              class="sticker bg-sage/15 text-sage border-sage/40 mb-6 inline-flex"
+              style="transform: rotate(-1.5deg)"
+            >
+              <iconify-icon
+                icon="ph:path-duotone"
+                width="16"
+                class="mr-1.5"
+              ></iconify-icon>
+              How it works
+            </span>
+            <h2
+              class="font-display text-3xl md:text-5xl font-semibold text-navy mb-4"
+            >
+              Four steps, <span class="wavy-underline">no surprises</span>
+            </h2>
+          </div>
+
+          <div class="space-y-6">
+            <div class="flex gap-5">
+              <div
+                class="w-14 h-14 rounded-full bg-coral text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg shadow-coral/20"
+              >
+                01
+              </div>
+              <div
+                class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex-1"
+                style="transform: rotate(-0.3deg)"
+              >
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Share access
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed">
+                  Storybook, Figma, repo &mdash; whatever represents the actual
+                  state of your system. We start by looking at the real thing,
+                  not what you wish existed.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-5">
+              <div
+                class="w-14 h-14 rounded-full bg-plum text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg shadow-plum/20"
+              >
+                02
+              </div>
+              <div
+                class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex-1"
+                style="transform: rotate(0.4deg)"
+              >
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Audit review
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed">
+                  I work through consistency, accessibility, tokens, and
+                  documentation &mdash; one track at a time, with notes and
+                  evidence as I go.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-5">
+              <div
+                class="w-14 h-14 rounded-full bg-sunset text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg shadow-sunset/20"
+              >
+                03
+              </div>
+              <div
+                class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex-1"
+                style="transform: rotate(-0.2deg)"
+              >
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Structured report
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed">
+                  You get a ranked set of findings with recommendations,
+                  tradeoffs, and a roadmap &mdash; written for humans, not for a
+                  pitch deck.
+                </p>
+              </div>
+            </div>
+
+            <div class="flex gap-5">
+              <div
+                class="w-14 h-14 rounded-full bg-sage text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg shadow-sage/20"
+              >
+                04
+              </div>
+              <div
+                class="card-hover bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm flex-1"
+                style="transform: rotate(0.3deg)"
+              >
+                <h3 class="font-display text-xl font-semibold text-navy mb-2">
+                  Debrief walk-through
+                </h3>
+                <p class="text-charcoal/70 font-body leading-relaxed">
+                  We meet, I walk your team through it, answer questions, and
+                  make sure the recommendations actually land somewhere they'll
+                  get used.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== PRICING ====== -->
+      <section class="py-16 md:py-20 bg-charcoal/[0.03]">
+        <div class="max-w-4xl mx-auto px-6">
+          <div
+            class="relative bg-gradient-to-br from-navy via-navy to-plum rounded-3xl p-10 md:p-14 overflow-hidden"
+          >
+            <div
+              class="absolute -top-10 -right-10 w-48 h-48 bg-coral/20 blob-shape animate-float-slow"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute -bottom-8 -left-8 w-32 h-32 bg-lemon/15 rounded-full animate-float-delay"
+              aria-hidden="true"
+            ></div>
+            <div
+              class="absolute top-8 left-1/2 w-10 h-10 bg-sage/20 rounded-full animate-float"
+              aria-hidden="true"
+            ></div>
+
+            <div class="relative text-center">
+              <span
+                class="inline-flex items-center gap-2 bg-white/10 text-white/90 border border-white/15 px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium"
+              >
+                <iconify-icon
+                  icon="ph:tag-duotone"
+                  width="18"
+                  class="text-lemon"
+                ></iconify-icon>
+                Flat-scope engagement
+              </span>
+              <h2
+                class="font-display text-white text-2xl md:text-3xl font-semibold mb-4"
+              >
+                Design System Audit
+              </h2>
+              <div class="flex items-baseline justify-center gap-2 mb-6">
+                <span class="text-white/60 font-heading text-lg"
+                  >Starting at</span
+                >
+                <span
+                  class="font-display text-white text-5xl md:text-6xl font-semibold"
+                  >$2,000</span
+                >
+              </div>
+              <p
+                class="text-white/70 font-body max-w-xl mx-auto mb-8 leading-relaxed"
+              >
+                Final scope depends on system size and surface area &mdash;
+                we'll sort that out on the intro call. No retainers, no
+                surprises.
+              </p>
+              <a
+                href="https://calendly.com/josh-thebrileys/30min/"
+                class="inline-flex items-center gap-2 bg-coral text-white px-8 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold text-base"
+              >
+                <iconify-icon
+                  icon="ph:calendar-check-duotone"
+                  width="20"
+                ></iconify-icon>
+                Book an intro call
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== TESTIMONIALS ====== -->
+      <section class="py-20 md:py-24">
+        <div class="max-w-6xl mx-auto px-6">
+          <div class="max-w-3xl mx-auto text-center mb-14">
+            <span
+              class="sticker bg-lemon/50 text-navy border-coral/30 mb-6 inline-flex"
+              style="transform: rotate(-1deg)"
+            >
+              <iconify-icon
+                icon="ph:heart-duotone"
+                width="16"
+                class="mr-1.5 text-coral"
+              ></iconify-icon>
+              Kind words
+            </span>
+            <h2
+              class="font-display text-3xl md:text-4xl font-semibold text-navy mb-4"
+            >
+              From folks who've worked with me
+            </h2>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <figure
+              class="card-hover bg-white rounded-3xl p-8 border border-charcoal/5 shadow-sm"
+              style="transform: rotate(-0.5deg)"
+            >
+              <iconify-icon
+                icon="ph:quotes-duotone"
+                width="36"
+                class="text-coral/50 mb-3"
+              ></iconify-icon>
+              <blockquote
+                class="font-display text-lg md:text-xl text-navy leading-relaxed mb-6"
+              >
+                Josh has an unusual ability to hold the big picture and the
+                details at the same time. He brings clarity to messy systems and
+                the kind of structure that actually holds up under delivery
+                pressure.
+              </blockquote>
+              <figcaption class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-br from-plum to-coral flex items-center justify-center text-white font-heading font-semibold"
+                >
+                  RC
+                </div>
+                <div>
+                  <div class="font-heading font-semibold text-navy">
+                    Rebecca Cachia, PMP
+                  </div>
+                  <div class="font-body text-sm text-charcoal/60">
+                    Publicis Sapient
+                  </div>
+                </div>
+              </figcaption>
+            </figure>
+
+            <figure
+              class="card-hover bg-white rounded-3xl p-8 border border-charcoal/5 shadow-sm"
+              style="transform: rotate(0.5deg)"
+            >
+              <iconify-icon
+                icon="ph:quotes-duotone"
+                width="36"
+                class="text-plum/50 mb-3"
+              ></iconify-icon>
+              <blockquote
+                class="font-display text-lg md:text-xl text-navy leading-relaxed mb-6"
+              >
+                Josh sees the real problem quickly and knows how to articulate
+                it in a way that gets teams moving. That's rare &mdash; and
+                genuinely valuable.
+              </blockquote>
+              <figcaption class="flex items-center gap-3">
+                <div
+                  class="w-12 h-12 rounded-full bg-gradient-to-br from-sunset to-plum flex items-center justify-center text-white font-heading font-semibold"
+                >
+                  DD
+                </div>
+                <div>
+                  <div class="font-heading font-semibold text-navy">
+                    Drew DiPasquale
+                  </div>
+                  <div class="font-body text-sm text-charcoal/60">
+                    Principal Researcher, HubSpot
+                  </div>
+                </div>
+              </figcaption>
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <!-- ====== FINAL CTA ====== -->
+      <section class="py-20 md:py-28 bg-navy relative overflow-hidden">
+        <div
+          class="absolute top-16 right-[15%] w-20 h-20 bg-plum/30 blob-shape animate-float"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute bottom-12 left-[12%] w-12 h-12 bg-coral/20 rounded-full animate-float-delay"
+          aria-hidden="true"
+        ></div>
+        <div
+          class="absolute top-1/2 left-[8%] w-8 h-8 bg-lemon/30 rounded-full animate-float-slow"
+          aria-hidden="true"
+        ></div>
+
+        <div class="max-w-3xl mx-auto px-6 text-center relative z-10">
+          <h2
+            class="font-display text-3xl md:text-5xl font-semibold text-white mb-6 leading-tight"
+          >
+            Let's find what's
+            <span class="text-coral italic">actually</span> broken.
+          </h2>
+          <p
+            class="text-white/70 text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
+          >
+            Book a 30-minute intro call. Tell me what's frustrating about your
+            system and I'll tell you whether an audit is the right next step
+            &mdash; honestly.
+          </p>
+          <div
+            class="flex flex-col sm:flex-row items-center justify-center gap-4"
+          >
+            <a
+              href="https://calendly.com/josh-thebrileys/30min/"
+              class="inline-flex items-center gap-2 bg-coral text-white px-8 py-4 rounded-full hover:bg-coral/90 transition-all hover:shadow-lg hover:shadow-coral/30 font-heading font-semibold text-base"
+            >
+              <iconify-icon
+                icon="ph:calendar-check-duotone"
+                width="20"
+              ></iconify-icon>
+              Book an intro call
+            </a>
+            <a
+              href="/scorecard/"
+              class="inline-flex items-center gap-2 bg-white/10 text-white px-8 py-4 rounded-full hover:bg-white/20 transition-all border border-white/20 font-heading font-semibold text-base"
+            >
+              <iconify-icon
+                icon="ph:clipboard-text-duotone"
+                width="20"
+              ></iconify-icon>
+              Take the free scorecard
+            </a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- ====== FOOTER ====== -->
+    <footer class="bg-navy text-white/60 py-12">
+      <div class="max-w-6xl mx-auto px-6">
+        <div class="grid md:grid-cols-4 gap-8 mb-10">
+          <div class="md:col-span-2">
+            <a href="/" class="inline-flex items-center gap-2.5 group">
+              <span
+                class="logo-monogram logo-monogram-sm group-hover:scale-105 transition-transform"
+                aria-hidden="true"
+                >jb</span
+              >
+              <span class="font-logo text-xl text-white"
+                >joshua<span class="text-coral">Briley</span></span
+              >
+            </a>
+            <p class="text-sm mt-3">
+              &copy;2026 Briley Creative &middot; Joshua Briley, DBA
+            </p>
+            <p class="text-sm mt-1">
+              Available for UX engineering work.
+              <a
+                href="/contact/"
+                class="text-coral hover:text-coral/80 hover:underline transition-colors"
+                >Get in touch</a
+              >.
+            </p>
+            <div class="flex items-center gap-4 mt-5">
+              <a
+                href="https://www.linkedin.com/in/joshuabriley/"
+                class="hover:text-white transition-colors"
+                aria-label="LinkedIn profile"
+                ><iconify-icon
+                  icon="ph:linkedin-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+              <a
+                href="https://x.com/joshuabriley"
+                class="hover:text-white transition-colors"
+                aria-label="X (formerly Twitter) profile"
+                ><iconify-icon
+                  icon="ph:x-logo-duotone"
+                  width="26"
+                ></iconify-icon
+              ></a>
+            </div>
+          </div>
+          <div>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              Site
+            </h3>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/services/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Services</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/projects/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Projects</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/about/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3
+              class="font-heading font-semibold text-white mb-3 text-sm uppercase tracking-wide"
+            >
+              More
+            </h3>
+            <ul class="space-y-2 text-sm">
+              <li>
+                <a
+                  href="/contact/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Contact</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/scorecard/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Free Scorecard</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/testimonials/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >Kind Words</a
+                >
+              </li>
+              <li>
+                <a
+                  href="/faqs/"
+                  class="hover:text-white hover:underline transition-colors"
+                  >FAQs</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

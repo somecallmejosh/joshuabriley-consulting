@@ -1,0 +1,264 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Avatar from '~/components/primitives/Avatar.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import Card from '~/components/card/Card.astro';
+import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
+import ContactForm from '~/components/islands/ContactForm.astro';
+
+const description =
+  "Get in touch about a design system audit, component library, accessibility review, or design-to-code workflow. I reply within one business day.";
+
+const steps = [
+  { n: 1, tone: 'coral', tilt: '-4deg', title: 'You send a message', body: "Takes about two minutes. Tell me the rough shape of what you're dealing with." },
+  { n: 2, tone: 'plum', tilt: '3deg', title: 'I reply within one business day', body: 'Usually the same day. No templates, no autoresponders.' },
+  { n: 3, tone: 'sky', tilt: '-2deg', title: 'Free 30-minute consult', body: "We talk through what's actually happening. Zero obligation to go further." },
+  { n: 4, tone: 'sage', tilt: '4deg', title: "A simple proposal — if we're a fit", body: "Clear scope, clear price. If we're not a fit, I'll point you to someone who is." },
+];
+
+const stepBgMap: Record<string, string> = {
+  coral: 'bg-coral',
+  plum: 'bg-plum',
+  sky: 'bg-sky',
+  sage: 'bg-sage',
+};
+
+const featuredQuotes = [
+  {
+    quote: "Josh's ability to foresee challenges and simplify implementation was invaluable. He creates seamless designs ensuring performance and accessibility.",
+    name: 'Rebecca Cachia, PMP',
+    role: 'Web Product & Project Manager',
+    company: 'Publicis Sapient',
+    initials: 'RC',
+    avatarTone: 'plum' as const,
+    tilt: -1 as const,
+    quoteTone: 'text-coral/30',
+  },
+  {
+    quote: 'Josh delivered assignments as planned, and his work quality allowed him bandwidth for additional responsibilities.',
+    name: 'Gabriel Bressi',
+    role: 'QA Lead',
+    company: 'Kopius, Inc.',
+    initials: 'GB',
+    avatarTone: 'sage' as const,
+    tilt: 1 as const,
+    quoteTone: 'text-plum/30',
+  },
+];
+---
+
+<BaseLayout title="Contact — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+  <!-- HERO -->
+  <Section padding="default" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
+    <Blob tone="plum" size="sm" class="absolute top-24 left-[10%] rounded-full" animate="float-delay" opacity="opacity-30" />
+    <Blob tone="sage" size="sm" class="absolute bottom-8 right-[18%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="coral" size="sm" class="absolute bottom-12 left-[6%] rounded-full" animate="float" opacity="opacity-30" />
+
+    <Container width="default" class="relative z-10">
+      <div class="grid md:grid-cols-[1.3fr_1fr] gap-10 items-center">
+        <div>
+          <div class="mb-6 inline-flex items-center gap-2 bg-sage/15 text-sage-deep border border-sage/40 rounded-full px-3 py-1.5 font-heading text-sm font-medium" style="transform: rotate(-1.5deg)">
+            <span class="w-2 h-2 rounded-full bg-sage animate-pulse" aria-hidden="true"></span>
+            Currently accepting new engagements
+          </div>
+          <Heading level={1} visual="display-lg" balance class="mb-6 max-w-[18ch]">
+            Let's <WavyUnderline>talk</WavyUnderline> about what's breaking.
+          </Heading>
+          <Text size="xl" tone="muted" class="max-w-[52ch]">
+            Fill out the form if you need help with
+            <strong class="text-charcoal font-semibold">component library debt</strong>, an
+            <strong class="text-charcoal font-semibold">accessibility audit</strong>, or a
+            <strong class="text-charcoal font-semibold">Figma-to-code handoff</strong>.
+            I'll get back to you within one business day.
+          </Text>
+
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-heading text-sm text-charcoal/70">
+            <span class="inline-flex items-center gap-2">
+              <Icon name="ph:clock-duotone" size={18} class="text-coral" />
+              ~2 minutes
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <Icon name="ph:lock-key-duotone" size={18} class="text-plum" />
+              No spam, ever
+            </span>
+            <span class="inline-flex items-center gap-2">
+              <Icon name="ph:chat-circle-dots-duotone" size={18} class="text-sky" />
+              Free 30-min call
+            </span>
+          </div>
+        </div>
+
+        <!-- Postcard illustration -->
+        <div class="hidden md:block relative" aria-hidden="true">
+          <div class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative" style="transform: rotate(3deg)">
+            <div class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"></div>
+            <div class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10">
+              <Icon name="ph:envelope-open-duotone" size={22} class="text-coral" />
+              <span class="font-heading text-xs text-charcoal/50">FROM: you</span>
+            </div>
+            <div class="pt-4 space-y-2">
+              <div class="h-2 bg-charcoal/10 rounded-full w-11/12"></div>
+              <div class="h-2 bg-charcoal/10 rounded-full w-10/12"></div>
+              <div class="h-2 bg-charcoal/10 rounded-full w-9/12"></div>
+              <div class="h-2 bg-coral/30 rounded-full w-7/12"></div>
+            </div>
+            <div class="mt-5 flex items-center gap-2">
+              <div class="logo-monogram logo-monogram-sm" aria-hidden="true">jb</div>
+              <span class="font-logo text-lg text-navy">reply soon</span>
+            </div>
+          </div>
+          <div class="absolute -bottom-4 -right-2 w-16 h-16 bg-plum/15 rounded-2xl flex items-center justify-center" style="transform: rotate(-8deg)">
+            <Icon name="ph:paper-plane-tilt-duotone" size={32} class="text-plum" />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+  <!-- FORM SECTION -->
+  <Section padding="default" decorated>
+    <Blob tone="sunset" size="lg" class="absolute top-20 right-[5%]" animate="float-slow" opacity="opacity-10" />
+    <Blob tone="sky" size="md" class="absolute bottom-40 left-[4%] rounded-full" animate="float-delay" opacity="opacity-20" />
+
+    <Container class="relative z-10">
+      <div class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start">
+        <!-- Form card -->
+        <div class="bg-white rounded-3xl p-8 md:p-12 border border-charcoal/5 shadow-sm relative" style="transform: rotate(-0.4deg)">
+          <div class="absolute -top-4 -right-4 w-16 h-16 bg-lemon/70 blob-shape flex items-center justify-center" aria-hidden="true">
+            <Icon name="ph:pencil-line-duotone" size={26} class="text-navy" />
+          </div>
+
+          <div class="mb-8">
+            <div class="mb-4 inline-block">
+              <Badge tone="coral" sticker icon="ph:hand-waving-duotone">Say hi</Badge>
+            </div>
+            <Heading level={2} visual="display-md" balance class="max-w-[22ch]">
+              Tell me about your project.
+            </Heading>
+          </div>
+
+          <ContactForm />
+        </div>
+
+        <!-- "What happens next" sidebar -->
+        <aside class="lg:sticky lg:top-28">
+          <div class="mb-5 inline-block">
+            <Badge tone="plum" sticker icon="ph:compass-duotone">What happens next</Badge>
+          </div>
+          <Heading level={2} visual="h1" balance class="mb-8 max-w-[22ch]">
+            A simple, no-pressure path forward.
+          </Heading>
+
+          <ol role="list" class="space-y-5">
+            {steps.map((step, i) => (
+              <li class="flex gap-4">
+                <div class="flex flex-col items-center">
+                  <div
+                    class={`w-11 h-11 rounded-2xl ${stepBgMap[step.tone]} text-white font-heading font-semibold flex items-center justify-center shrink-0`}
+                    style={`transform: rotate(${step.tilt})`}
+                  >
+                    {step.n}
+                  </div>
+                  {i < steps.length - 1 && (
+                    <div class="w-px flex-1 dotted-line mt-2" aria-hidden="true"></div>
+                  )}
+                </div>
+                <div class={i < steps.length - 1 ? 'pb-2' : ''}>
+                  <p class="font-heading font-semibold text-navy mb-1">{step.title}</p>
+                  <Text size="sm" tone="muted">{step.body}</Text>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+
+  <!-- TESTIMONIALS -->
+  <Section padding="default">
+    <Container>
+      <div class="text-center mb-14">
+        <div class="mb-5 inline-block">
+          <Badge tone="lemon" sticker icon="ph:heart-duotone">Kind words</Badge>
+        </div>
+        <Heading level={2} visual="display-md" align="center" balance class="mx-auto max-w-[30ch]">
+          What folks say after we work together.
+        </Heading>
+      </div>
+
+      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+        {featuredQuotes.map((q) => (
+          <Card variant="paper" tilt={q.tilt} padding="loose" as="article">
+            <CardQuoteMark size={40} class={q.quoteTone} />
+            <blockquote>
+              <p class="font-display text-xl text-navy leading-snug mb-6 max-w-[42ch]">
+                {q.quote}
+              </p>
+            </blockquote>
+            <div class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10">
+              <Avatar
+                initials={q.initials}
+                name={q.name}
+                gradient={q.avatarTone === 'plum' ? 'plumSky' : 'sageLemon'}
+                size="md"
+              />
+              <div>
+                <p class="font-heading font-semibold text-navy">{q.name}</p>
+                <p class="text-sm text-charcoal/60">{q.role}, {q.company}</p>
+              </div>
+            </div>
+          </Card>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ALT CONTACT CTA -->
+  <Section padding="tight">
+    <Container width="narrow">
+      <div class="bg-gradient-to-br from-peach/60 to-lemon/30 rounded-3xl p-10 md:p-12 text-center relative overflow-hidden border border-sunset/10">
+        <Blob tone="coral" size="xl" class="absolute -top-6 -right-6" opacity="opacity-20" />
+        <Blob tone="plum" size="xl" class="absolute -bottom-6 -left-6 rounded-full" opacity="opacity-10" />
+        <div class="relative z-10">
+          <Icon name="ph:coffee-duotone" size={44} class="text-coral mb-3" />
+          <Heading level={2} visual="h1" align="center" balance class="mx-auto max-w-[28ch] mb-3">
+            Prefer to skip the form?
+          </Heading>
+          <Text tone="muted" align="center" class="mx-auto max-w-[52ch] mb-7">
+            Grab a spot on my calendar directly, or say hi on LinkedIn. I read everything.
+          </Text>
+          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Button variant="primary" size="sm" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/" class="!bg-navy hover:!bg-navy/90">
+              Book a 30-min call
+            </Button>
+            <Button variant="ghost" size="sm" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+              Connect on LinkedIn
+            </Button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  .dotted-line {
+    background-image: linear-gradient(to bottom, rgba(45, 43, 85, 0.25) 50%, transparent 50%);
+    background-size: 1px 8px;
+    background-repeat: repeat-y;
+  }
+</style>

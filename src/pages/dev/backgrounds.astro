@@ -1,0 +1,83 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
+
+const options = [
+  {
+    label: 'Cream (current)',
+    hex: '#FFFBF5',
+    note: 'Warm, friendly. Neutralizes purple’s coolness — Mailchimp territory.',
+    bg: '#FFFBF5',
+  },
+  {
+    label: 'Cream — lighter',
+    hex: '#FFFDF9',
+    note: 'Same warmth, two shades closer to white. Cleaner without losing the cream feel.',
+    bg: '#FFFDF9',
+  },
+  {
+    label: 'Cream — lightest',
+    hex: '#FFFEFB',
+    note: 'Whisper of warmth. Reads as white at a glance, warm side-by-side with pure white.',
+    bg: '#FFFEFB',
+  },
+  {
+    label: 'Pure white (reference)',
+    hex: '#FFFFFF',
+    note: 'For comparison. Cool, clinical — plum buttons feel more SaaS than friendly.',
+    bg: '#FFFFFF',
+  },
+];
+---
+
+<BaseLayout title="Background comparison — dev" bare>
+  <div class="bg-navy text-cream py-4 sticky top-0 z-50 text-center text-sm">
+    Scroll to compare. Buttons stay plum (<code>#6C4AB6</code>) across all swatches.
+  </div>
+
+  {options.map((opt) => (
+    <section style={`background:${opt.bg}`} class="py-20 border-b border-charcoal/10">
+      <Container>
+        <div class="flex items-baseline gap-4 mb-10">
+          <Heading level={2} visual="h2" class="text-navy">{opt.label}</Heading>
+          <code class="font-mono text-sm text-charcoal/60">{opt.hex}</code>
+        </div>
+        <Text size="lg" tone="muted" class="mb-10 max-w-2xl">{opt.note}</Text>
+
+        <div class="grid md:grid-cols-2 gap-10 items-start">
+          <div>
+            <Heading level={3} visual="display-md" class="mb-4 text-navy">
+              Design systems that actually ship.
+            </Heading>
+            <Text size="lg" class="mb-6 text-charcoal/80 max-w-md">
+              A pragmatic audit, a clear plan, and the components your team will reach for first.
+            </Text>
+            <div class="flex gap-3">
+              <Button variant="primary">Book an audit</Button>
+              <Button variant="secondary">See the work</Button>
+            </div>
+          </div>
+
+          <Card variant="paper" tilt={-1} class="max-w-sm">
+            <CardNumber n={1} slot="corner" />
+            <Icon name="ph:binoculars-duotone" size={36} class="text-coral mb-4" />
+            <Heading level={3} visual="h3" class="mb-2">Service card</Heading>
+            <Text size="sm" tone="muted" class="mb-4">
+              Numbered chrome via &lt;CardNumber&gt;.
+            </Text>
+            <ul class="space-y-1.5 text-xs text-charcoal/70">
+              <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Coverage map</li>
+              <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Token plan</li>
+            </ul>
+          </Card>
+        </div>
+      </Container>
+    </section>
+  ))}
+</BaseLayout>

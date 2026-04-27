@@ -1,0 +1,14 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class={cx('squiggle-divider max-w-4xl mx-auto', className)}
+></div>

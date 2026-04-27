@@ -1,0 +1,476 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Grid from '~/components/layout/Grid.astro';
+import Hero from '~/components/patterns/Hero.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
+import CardGrid from '~/components/patterns/CardGrid.astro';
+import FAQ from '~/components/patterns/FAQ.astro';
+import FAQItem from '~/components/patterns/FAQItem.astro';
+import ShowcaseSwatch from '~/components/patterns/ShowcaseSwatch.astro';
+import ShowcaseRow from '~/components/patterns/ShowcaseRow.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Logo from '~/components/primitives/Logo.astro';
+import Button from '~/components/primitives/Button.astro';
+import Link from '~/components/primitives/Link.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Avatar from '~/components/primitives/Avatar.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import Tape from '~/components/decorative/Tape.astro';
+import Pin from '~/components/decorative/Pin.astro';
+import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
+import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
+import Field from '~/components/form/Field.astro';
+import Input from '~/components/form/Input.astro';
+import Textarea from '~/components/form/Textarea.astro';
+import Select from '~/components/form/Select.astro';
+import ChoiceGroup from '~/components/form/ChoiceGroup.astro';
+import Choice from '~/components/form/Choice.astro';
+import FormAlert from '~/components/form/FormAlert.astro';
+import SubmitButton from '~/components/form/SubmitButton.astro';
+
+const colors = [
+  { name: 'cream',    hex: '#FFFDF9', surface: 'bg-cream' },
+  { name: 'peach',    hex: '#FFE8D6', surface: 'bg-peach' },
+  { name: 'lemon',    hex: '#FDE68A', surface: 'bg-lemon' },
+  { name: 'coral',    hex: '#E8573D', surface: 'bg-coral' },
+  { name: 'sunset',   hex: '#FF8E53', surface: 'bg-sunset' },
+  { name: 'plum',     hex: '#6C4AB6', surface: 'bg-plum' },
+  { name: 'navy',     hex: '#2D2B55', surface: 'bg-navy' },
+  { name: 'charcoal', hex: '#2E2E30', surface: 'bg-charcoal' },
+  { name: 'sage',     hex: '#7BB47A', surface: 'bg-sage' },
+  { name: 'sky',      hex: '#5DADE2', surface: 'bg-sky' },
+];
+
+const sections = [
+  { id: 'foundations', label: 'Foundations',   icon: 'ph:palette-duotone' },
+  { id: 'atoms',       label: 'Atoms',         icon: 'ph:cards-three-duotone' },
+  { id: 'decorative',  label: 'Decorative',    icon: 'ph:sparkle-duotone' },
+  { id: 'cards',       label: 'Cards',         icon: 'ph:stack-duotone' },
+  { id: 'patterns',    label: 'Patterns',      icon: 'ph:columns-duotone' },
+  { id: 'forms',       label: 'Forms',         icon: 'ph:clipboard-text-duotone' },
+];
+---
+
+<BaseLayout title="Component inventory — Joshua Briley">
+  <Hero tone="cream" align="center">
+    <Blob slot="decorations" tone="lemon" size="lg" class="absolute top-12 right-[8%]" />
+    <Blob slot="decorations" tone="plum" size="md" shape="alt" class="absolute bottom-12 left-[6%]" animate="float-slow" />
+
+    <Badge slot="eyebrow" tone="plum" icon="ph:stack-duotone">Component inventory</Badge>
+    <Heading slot="title" level={1} visual="display-lg" align="center" balance>
+      The system, <WavyUnderline>composable</WavyUnderline> from primitives.
+    </Heading>
+    <Text slot="lead" size="xl" tone="muted">
+      Every pattern below is built from a small set of accessibility-first primitives. One <code class="font-mono text-base">&lt;Card&gt;</code> handles every card variant on the site; one <code class="font-mono text-base">&lt;Field&gt;</code> wires every label, hint, and error.
+    </Text>
+  </Hero>
+
+  <Section padding="tight" tone="white">
+    <Container>
+      <nav aria-label="Inventory sections" class="flex flex-wrap items-center justify-center gap-2">
+        {sections.map((s) => (
+          <a
+            href={`#${s.id}`}
+            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-cream border border-charcoal/60 text-sm font-heading font-medium text-navy hover:bg-coral/10 hover:border-plum transition-colors"
+          >
+            <Icon name={s.icon} size={16} class="text-coral" />
+            {s.label}
+          </a>
+        ))}
+      </nav>
+    </Container>
+  </Section>
+
+  <!-- ─── FOUNDATIONS ─────────────────────────────────────────────────────── -->
+  <Section id="foundations" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Foundations"
+        eyebrowIcon="ph:palette-duotone"
+        eyebrowTone="coral"
+        title="Tokens that drive the system."
+        lead="Colors, typography, and spacing — the constrained set that keeps every component predictable."
+      />
+
+      <div class="mt-12">
+        <Heading level={3} visual="h3" class="mb-5">Color palette</Heading>
+        <Grid cols={4} gap="md">
+          {colors.map((c) => (
+            <ShowcaseSwatch surface={c.surface} name={c.name} hex={c.hex} />
+          ))}
+        </Grid>
+      </div>
+
+      <SquiggleDivider class="my-16" />
+
+      <div>
+        <Heading level={3} visual="h3" class="mb-5">Typography</Heading>
+        <div class="space-y-6">
+          <div>
+            <Badge tone="plum" size="sm">font-display · Fraunces</Badge>
+            <p class="font-display text-5xl font-semibold text-navy mt-3">A serif with personality.</p>
+          </div>
+          <div>
+            <Badge tone="coral" size="sm">font-heading · Space Grotesk</Badge>
+            <p class="font-heading text-2xl font-medium text-navy mt-3">UI labels, buttons, captions.</p>
+          </div>
+          <div>
+            <Badge tone="sage" size="sm">font-body · DM Sans</Badge>
+            <p class="font-body text-lg text-charcoal/80 mt-3">Body copy and lead paragraphs sit here. Comfortable line length, relaxed leading.</p>
+          </div>
+          <div>
+            <Badge tone="navy" size="sm">font-logo · Style Script</Badge>
+            <p class="font-logo text-4xl text-navy mt-3">Joshua <span class="text-coral">Briley</span></p>
+          </div>
+          <div>
+            <Badge tone="sky" size="sm">font-mono · JetBrains Mono</Badge>
+            <p class="font-mono text-sm text-charcoal/80 mt-3">const inventory = await build();</p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ─── ATOMS ───────────────────────────────────────────────────────────── -->
+  <Section id="atoms" tone="cream" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Atoms"
+        eyebrowIcon="ph:cards-three-duotone"
+        title="The smallest reusable pieces."
+        lead="Every primitive enforces accessibility through its API: required labels, semantic defaults, decoupled visual sizing."
+      />
+
+      <div class="mt-12 grid gap-6">
+        <ShowcaseRow
+          title="Heading"
+          description="Semantic level (h1–h6) and visual size are independent props, so visual hierarchy never breaks the document outline."
+          snippet={`<Heading level={2} visual="display-md">A serif heading.</Heading>`}
+        >
+          <Heading level={2} visual="display-md">A serif heading.</Heading>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Text"
+          description="Body / lead paragraph primitive with size, tone, and weight controls."
+          snippet={`<Text size="xl" tone="muted">Lead paragraphs sit here.</Text>`}
+        >
+          <Text size="xl" tone="muted">Lead paragraphs sit here, comfortable and unhurried.</Text>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Logo"
+          description="Variant prop swaps wordmark / monogram / lockup. The monogram is decorative; the wordmark carries the accessible name."
+          snippet={`<Logo variant="lockup" href="/" />`}
+        >
+          <Logo variant="lockup" />
+          <Logo variant="monogram" />
+          <Logo variant="wordmark" />
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Button"
+          description="Renders <button> by default; renders <a> when href is supplied. Variants: primary, secondary (on dark), ghost."
+          snippet={`<Button variant="primary" iconRight="ph:arrow-right">Take the scorecard</Button>`}
+        >
+          <Button variant="primary" iconRight="ph:arrow-right">Take the scorecard</Button>
+          <Button variant="ghost">Learn more</Button>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Button (secondary)"
+          description="Secondary variant is designed for navy surfaces."
+          snippet={`<Button variant="secondary" href="/contact/">Book a call</Button>`}
+          dark
+        >
+          <Button variant="primary" iconRight="ph:arrow-right" href="/scorecard/">Take the scorecard</Button>
+          <Button variant="secondary" href="/contact/">Book a call</Button>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Link"
+          description='Inline (default), arrow, nav (auto-detects active page), or unstyled.'
+          snippet={`<Link href="/services/" variant="arrow">How audits help</Link>`}
+        >
+          <Link href="/services/" variant="arrow">How audits help</Link>
+          <Link href="/contact/" variant="inline">Get in touch</Link>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Badge / sticker"
+          description="Tone-constrained pill for eyebrows and category tags. Pass `sticker` for the dashed-border variant."
+          snippet={`<Badge tone="plum" icon="ph:package-duotone">Component library</Badge>`}
+        >
+          <Badge tone="plum" icon="ph:package-duotone">Component library</Badge>
+          <Badge tone="coral" icon="ph:sparkle-duotone">New</Badge>
+          <Badge tone="sage" icon="ph:check-circle-duotone">Shipped</Badge>
+          <Badge tone="lemon" sticker icon="ph:hand-waving-duotone">Eyebrow</Badge>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Avatar"
+          description="Initials avatar with three preset gradients. Initials are decorative; the full name is exposed via aria-label."
+          snippet={`<Avatar initials="JB" name="Joshua Briley" gradient="coralSunset" />`}
+        >
+          <Avatar initials="JB" name="Joshua Briley" gradient="coralSunset" />
+          <Avatar initials="MR" name="Maya Rao" gradient="plumSky" size="lg" />
+          <Avatar initials="PN" name="Priya Nair" gradient="sageLemon" size="sm" />
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Icon"
+          description='Decorative by default (aria-hidden). Pass `label` to expose meaningful icons to assistive tech.'
+          snippet={`<Icon name="ph:check-circle-duotone" size={24} class="text-sage" />`}
+        >
+          <Icon name="ph:check-circle-duotone" size={32} class="text-sage" />
+          <Icon name="ph:warning-duotone" size={32} class="text-coral" />
+          <Icon name="ph:sparkle-duotone" size={32} class="text-plum" />
+          <Icon name="ph:cards-three-duotone" size={32} class="text-sunset" />
+        </ShowcaseRow>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ─── DECORATIVE ──────────────────────────────────────────────────────── -->
+  <Section id="decorative" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Decorative"
+        eyebrowIcon="ph:sparkle-duotone"
+        eyebrowTone="sunset"
+        title="Personality, not noise."
+        lead="Every decorative element auto-marks itself aria-hidden so assistive tech ignores it."
+      />
+
+      <div class="mt-12 grid gap-6">
+        <ShowcaseRow
+          title="Blob"
+          description="Floating organic shape. Tones, sizes, and animations are constrained to safe defaults."
+          snippet={`<Blob tone="lemon" size="lg" animate="float" />`}
+        >
+          <div class="relative h-32 w-full">
+            <Blob tone="lemon" size="lg" class="absolute top-2 left-8" />
+            <Blob tone="coral" size="md" class="absolute top-4 left-40" animate="float-slow" />
+            <Blob tone="plum" size="md" shape="alt" class="absolute top-6 left-72" animate="float-delay" />
+            <Blob tone="sage" size="sm" class="absolute top-10 left-[26rem]" animate="wiggle" />
+          </div>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Wavy underline"
+          description="Inline emphasis on a key word in headings."
+          snippet={`<WavyUnderline>actually ship</WavyUnderline>`}
+        >
+          <p class="font-display text-3xl text-navy">Designs that <WavyUnderline>actually ship</WavyUnderline>.</p>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Squiggle divider"
+          description="Hand-drawn coral divider between sections."
+          snippet={`<SquiggleDivider />`}
+        >
+          <div class="w-full"><SquiggleDivider /></div>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Tape & pin"
+          description="Used inside cards for a tactile, scrapbook feel."
+          snippet={`<Card variant="polaroid"><Pin slot="corner" />…</Card>`}
+        >
+          <div class="relative bg-white rounded-md w-32 h-20 shadow-md">
+            <Tape position="left" />
+            <Tape position="right" tone="peach" />
+          </div>
+          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
+            <Pin />
+          </div>
+          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
+            <Pin tone="plum" />
+          </div>
+          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
+            <Pin tone="sage" />
+          </div>
+        </ShowcaseRow>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ─── CARDS ───────────────────────────────────────────────────────────── -->
+  <Section id="cards" tone="cream" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Cards"
+        eyebrowIcon="ph:stack-duotone"
+        eyebrowTone="plum"
+        title="One Card primitive. Every card variant."
+        lead="Variants supply the chrome (paper, polaroid, sticky, reveal, outline). Slots and atoms supply the content. We never write a TestimonialCard or ServiceCard component."
+      />
+
+      <CardGrid cols={3} class="mt-12">
+        <Card variant="paper" tilt={-1}>
+          <CardNumber n={1} slot="corner" />
+          <Icon name="ph:binoculars-duotone" size={36} class="text-coral mb-4" />
+          <Heading level={3} visual="h3" class="mb-2">Service card</Heading>
+          <Text size="sm" tone="muted" class="mb-3">Numbered chrome via &lt;CardNumber&gt;.</Text>
+          <ul class="space-y-1.5 text-xs text-charcoal/70">
+            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Coverage map</li>
+            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Token plan</li>
+          </ul>
+        </Card>
+
+        <Card variant="paper" tilt={-1}>
+          <CardQuoteMark slot="corner" />
+          <blockquote class="text-charcoal/70 text-sm leading-relaxed italic mb-4">
+            “Josh transformed our scattered components into a system the whole team trusts.”
+          </blockquote>
+          <div slot="footer" class="flex items-center gap-3">
+            <Avatar initials="MR" name="Maya Rao" gradient="plumSky" size="sm" />
+            <div>
+              <p class="font-heading text-sm font-semibold text-navy">Maya Rao</p>
+              <p class="text-xs text-charcoal/70">Director of Design, Acme</p>
+            </div>
+          </div>
+        </Card>
+
+        <Card variant="sticky" tone="peach" tilt={2} hover={false}>
+          <Pin slot="corner" />
+          <p class="font-display italic text-lg text-navy">“Best engagement we've had with a consultant in years.”</p>
+          <p class="font-heading text-xs uppercase tracking-widest text-navy mt-3">— Priya N., VP Engineering</p>
+        </Card>
+
+        <Card variant="polaroid" tilt={-2} class="max-w-xs">
+          <Pin slot="corner" />
+          <div slot="media" class="avatar-slab bg-gradient-to-br from-plum/30 to-sky/30">
+            <Icon name="ph:cards-three-duotone" size={48} class="text-plum/70" />
+          </div>
+          <Badge tone="plum" sticker icon="ph:package-duotone">Component library</Badge>
+          <Heading level={3} visual="h4" class="mt-3 leading-tight">VMSpark consolidation</Heading>
+        </Card>
+
+        <Card variant="reveal" hover={false}>
+          <Heading level={3} visual="h3" tone="white" class="mb-3">Want a head start?</Heading>
+          <Text tone="whiteMuted" size="sm" class="mb-6">Score your design system in five minutes.</Text>
+          <Button variant="primary" iconRight="ph:arrow-right" href="/scorecard/">Take the scorecard</Button>
+        </Card>
+
+        <Card variant="outline" tilt={1}>
+          <Badge tone="sage" class="mb-4" icon="ph:sparkle-duotone">New</Badge>
+          <Heading level={3} visual="h3">Quarterly retainer</Heading>
+          <Text size="sm" tone="muted" class="mt-2">Steady support for teams who want a hand on the rudder.</Text>
+        </Card>
+      </CardGrid>
+    </Container>
+  </Section>
+
+  <!-- ─── PATTERNS ────────────────────────────────────────────────────────── -->
+  <Section id="patterns" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Patterns"
+        eyebrowIcon="ph:columns-duotone"
+        eyebrowTone="navy"
+        title="Compositions used across pages."
+        lead="Hero, SectionHeader, FAQ, CardGrid, CTABanner — every page composes from this small set."
+      />
+
+      <div class="mt-12 grid gap-6">
+        <ShowcaseRow
+          title="FAQ"
+          description="Native <details> + <summary>. Zero JS, fully keyboard-accessible, animates on toggle via CSS."
+        >
+          <div class="w-full">
+            <FAQ>
+              <FAQItem question="What does an audit actually deliver?" open>
+                A coverage map of your components, a token consolidation plan, and a prioritized punch list.
+              </FAQItem>
+              <FAQItem question="How long does engagement usually run?">
+                Audits are typically 2–3 weeks; library work runs 6–12 weeks depending on scope.
+              </FAQItem>
+              <FAQItem question="Do you work with our existing stack?">
+                Yes — Astro, Next, Remix, plain HTML, and design tools like Figma. The system is the system.
+              </FAQItem>
+            </FAQ>
+          </div>
+        </ShowcaseRow>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ─── FORMS ───────────────────────────────────────────────────────────── -->
+  <Section id="forms" tone="cream" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Forms"
+        eyebrowIcon="ph:clipboard-text-duotone"
+        eyebrowTone="sage"
+        title="Accessibility wired in by default."
+        lead="<Field> auto-generates ids and connects label, hint, error, aria-describedby, aria-invalid, and aria-required. You can't create a mislabeled input through this API."
+      />
+
+      <Grid cols={2} gap="lg" class="mt-12">
+        <div class="bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 flex flex-col gap-5">
+          <Heading level={3} visual="h4">Field examples</Heading>
+
+          <Field label="Full name" name="demo-name" required>
+            <Input name="demo-name" autocomplete="name" required />
+          </Field>
+
+          <Field label="Email" name="demo-email" required hint="I'll only use this to reply.">
+            <Input name="demo-email" type="email" autocomplete="email" required />
+          </Field>
+
+          <Field label="What can I help with?" name="demo-service">
+            <Select name="demo-service" placeholder="Pick one" options={[
+              { value: 'audit', label: 'Design system audit' },
+              { value: 'library', label: 'Component library' },
+              { value: 'a11y', label: 'Accessibility review' },
+            ]} />
+          </Field>
+
+          <Field label="Project notes" name="demo-message" hint="A few sentences is plenty.">
+            <Textarea name="demo-message" rows={4} />
+          </Field>
+
+          <Field label="Phone" name="demo-phone" error="The phone number looks invalid.">
+            <Input name="demo-phone" type="tel" invalid value="abc" />
+          </Field>
+
+          <SubmitButton label="Send message" />
+        </div>
+
+        <div class="flex flex-col gap-5">
+          <ShowcaseRow title="ChoiceGroup" description="Fieldset + legend with radio pills.">
+            <div class="w-full">
+              <ChoiceGroup legend="How healthy is your design system?" name="demo-rating" required>
+                <Choice name="demo-rating" value="strong" label="Strong" />
+                <Choice name="demo-rating" value="ok" label="Functional" checked />
+                <Choice name="demo-rating" value="weak" label="Needs work" />
+              </ChoiceGroup>
+            </div>
+          </ShowcaseRow>
+
+          <ShowcaseRow title="FormAlert (success)" description='role="status", focusable for AT announcement.'>
+            <FormAlert variant="success" hidden={false} class="w-full">
+              <p class="font-heading font-semibold text-navy">Thanks — your message is on its way.</p>
+              <p class="mt-1 text-charcoal/75">I'll reply within one business day, usually sooner.</p>
+            </FormAlert>
+          </ShowcaseRow>
+
+          <ShowcaseRow title="FormAlert (error)" description='role="alert", red coral surface.'>
+            <FormAlert variant="error" hidden={false} class="w-full">
+              <p class="font-heading font-semibold text-navy">We couldn't send your message.</p>
+              <p class="mt-1 text-charcoal/75">Please check the highlighted fields.</p>
+            </FormAlert>
+          </ShowcaseRow>
+        </div>
+      </Grid>
+    </Container>
+  </Section>
+</BaseLayout>

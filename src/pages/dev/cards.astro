@@ -1,0 +1,128 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Grid from '~/components/layout/Grid.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Avatar from '~/components/primitives/Avatar.astro';
+import Button from '~/components/primitives/Button.astro';
+import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
+import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
+import Pin from '~/components/decorative/Pin.astro';
+import Tape from '~/components/decorative/Tape.astro';
+---
+
+<BaseLayout title="Card variants — dev showcase" bare>
+  <Section padding="loose">
+    <Container>
+      <Heading level={1} visual="display-lg" class="mb-8">Card composition showcase</Heading>
+      <Text size="lg" tone="muted" class="mb-12">
+        Every named card from the inventory, rebuilt as compositions of <code class="font-mono text-sm">&lt;Card&gt;</code> + atoms.
+      </Text>
+
+      <Grid cols={3} gap="lg">
+        <!-- Service card (numbered) -->
+        <Card variant="paper" tilt={-1}>
+          <CardNumber n={1} slot="corner" />
+          <Icon name="ph:binoculars-duotone" size={36} class="text-coral mb-4" />
+          <Heading level={3} visual="h3" class="mb-2">Design system audit</Heading>
+          <Text size="sm" tone="muted" class="mb-4">
+            A clear-eyed read on what your tokens, components, and docs are actually doing.
+          </Text>
+          <ul class="space-y-1.5 text-xs text-charcoal/70">
+            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Component coverage map</li>
+            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Token consolidation plan</li>
+          </ul>
+        </Card>
+
+        <!-- Testimonial card -->
+        <Card variant="paper" tilt={-1}>
+          <CardQuoteMark slot="corner" />
+          <blockquote class="text-charcoal/70 text-sm leading-relaxed italic mb-4">
+            “Josh transformed our scattered components into a system the whole team trusts.”
+          </blockquote>
+          <div slot="footer" class="flex items-center gap-3">
+            <Avatar initials="MR" name="Maya Rao" gradient="plumSky" size="sm" />
+            <div>
+              <Text size="sm" weight="semibold" class="!font-heading">Maya Rao</Text>
+              <Text size="xs" tone="muted">Director of Design, Acme</Text>
+            </div>
+          </div>
+        </Card>
+
+        <!-- Sticky-note testimonial -->
+        <Card variant="sticky" tone="peach" tilt={2} hover={false}>
+          <Pin slot="corner" />
+          <Text size="lg" class="font-display italic">“Best engagement we've had with a consultant in years.”</Text>
+          <Text size="xs" tone="muted" class="mt-3 uppercase tracking-widest">— Priya N., VP Engineering</Text>
+        </Card>
+
+        <!-- Polaroid project card -->
+        <Card variant="polaroid" tilt={-2} class="max-w-xs">
+          <Pin slot="corner" />
+          <div slot="media" class="avatar-slab bg-gradient-to-br from-plum/30 to-sky/30">
+            <Icon name="ph:cards-three-duotone" size={48} class="text-plum/70" />
+          </div>
+          <Badge tone="plum" sticker icon="ph:package-duotone">Component library</Badge>
+          <Heading level={3} visual="h4" class="mt-3 leading-tight">VMSpark consolidation</Heading>
+        </Card>
+
+        <!-- Reveal (dark) card -->
+        <Card variant="reveal" hover={false}>
+          <Heading level={3} visual="h3" tone="white" class="mb-3">Want a head start?</Heading>
+          <Text tone="whiteMuted" class="mb-6">
+            Score your design system in five minutes — get a letter grade and a punch list.
+          </Text>
+          <Button variant="primary" iconRight="ph:arrow-right" href="/scorecard">Take the scorecard</Button>
+        </Card>
+
+        <!-- Outline card -->
+        <Card variant="outline" tilt={1}>
+          <Badge tone="sage" class="mb-4" icon="ph:sparkle-duotone">New</Badge>
+          <Heading level={3} visual="h3">Quarterly retainer</Heading>
+          <Text size="sm" tone="muted" class="mt-2">
+            Steady support for teams who want a hand on the rudder.
+          </Text>
+        </Card>
+
+        <!-- Quick-link card -->
+        <Card variant="paper" tilt={0} class="text-center max-w-xs">
+          <Icon name="ph:cursor-click-duotone" size={32} class="text-coral mx-auto mb-3" />
+          <Text weight="medium" class="font-heading mb-1">Need a quick fix?</Text>
+          <Text size="sm" tone="coral">Spot audits →</Text>
+        </Card>
+
+        <!-- Blog card -->
+        <Card variant="paper" padding="none" class="max-w-xs">
+          <div slot="media" class="h-40 bg-gradient-to-br from-peach via-lemon/70 to-coral/30 flex items-center justify-center">
+            <Icon name="ph:image-duotone" size={48} class="text-coral/70" />
+          </div>
+          <div class="p-6">
+            <Text size="xs" weight="medium" tone="navy" class="!font-heading uppercase tracking-widest text-plum mb-2">
+              Field notes
+            </Text>
+            <Heading level={3} visual="h4" class="mb-2">When to ship a token rename</Heading>
+            <Text size="sm" tone="muted">
+              The five signals that say it's time to bite the migration bullet.
+            </Text>
+          </div>
+        </Card>
+
+        <!-- Problem statement card -->
+        <Card variant="paper" tilt={-1}>
+          <div class="w-12 h-12 rounded-xl bg-coral/10 flex items-center justify-center mb-4">
+            <Icon name="ph:puzzle-piece-duotone" size={24} class="text-coral" />
+          </div>
+          <Text weight="semibold" class="!font-heading mb-1">Components drift across teams.</Text>
+          <Text size="sm" tone="muted">
+            Three buttons, four card paddings, no source of truth.
+          </Text>
+        </Card>
+      </Grid>
+    </Container>
+  </Section>
+</BaseLayout>

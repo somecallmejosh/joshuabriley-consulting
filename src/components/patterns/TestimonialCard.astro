@@ -1,0 +1,204 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * One testimonial entry. Variant controls the card chrome (polaroid / sticky /
+ * index card / plum letterhead). Renders a quote, attribution, and an
+ * initials avatar. Decorative pin/tape are passed through.
+ *
+ * Used inside <TestimonialPinboard>; wraps with `.pin-item` for column-safe
+ * layout.
+ */
+
+type Variant = 'polaroid' | 'sticky' | 'index' | 'plum';
+type Tilt = 'rot-1' | 'rot-2' | 'rot-3' | 'rot-4' | 'rot-5';
+type Tape = 'left' | 'right' | 'center' | 'left-coral' | 'right-coral';
+type Pin = 'coral' | 'plum' | 'sage';
+type AvatarTone = 'coral' | 'plum' | 'sage' | 'sky' | 'navy';
+
+interface Props {
+  name: string;
+  role: string;
+  company: string;
+  quote: string;
+  initials: string;
+  avatarTone: AvatarTone;
+  variant: Variant;
+  tilt: Tilt;
+  tape?: Tape;
+  pin?: Pin;
+  /** For polaroid variant: gradient classes for the avatar slab. */
+  slabGradient?: string;
+  /** Plum letterhead featured cards: bigger quote + leading icon. */
+  featured?: boolean;
+}
+
+const {
+  name,
+  role,
+  company,
+  quote,
+  initials,
+  avatarTone,
+  variant,
+  tilt,
+  tape,
+  pin,
+  slabGradient = 'from-coral/25 via-sunset/20 to-lemon/40',
+  featured = false,
+} = Astro.props;
+
+const variantClass: Record<Variant, string> = {
+  polaroid: 'card-polaroid',
+  sticky: 'card-sticky',
+  index: 'card-index',
+  plum: 'card-plum',
+};
+
+const tapeMap: Record<Tape, string> = {
+  left: 'tape left',
+  right: 'tape right',
+  center: 'tape center',
+  'left-coral': 'tape left coral',
+  'right-coral': 'tape right coral',
+};
+
+const pinClass = pin ? (pin === 'coral' ? 'pin' : `pin ${pin}`) : '';
+---
+
+<article class="pin-item">
+  <div class={cx('card-base', variantClass[variant], tilt)}>
+    {pin && <span class={pinClass} aria-hidden="true" />}
+    {tape && <span class={tapeMap[tape]} aria-hidden="true" />}
+
+    {variant === 'polaroid' && (
+      <div class={cx('avatar-slab bg-gradient-to-br', slabGradient)}>
+        <span
+          class={cx('avatar avatar-lg', avatarTone)}
+          role="img"
+          aria-label={name}
+        >
+          <span aria-hidden="true">{initials}</span>
+        </span>
+      </div>
+    )}
+
+    {variant === 'plum' && (
+      <Icon
+        name={featured ? 'ph:quotes-duotone' : 'ph:star-duotone'}
+        size={featured ? 36 : 32}
+        class="text-lemon/70 mb-3"
+      />
+    )}
+
+    {variant === 'index' && !pin && (
+      <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+    )}
+
+    {variant === 'sticky' ? (
+      <p class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-5">
+        &ldquo;{quote}&rdquo;
+      </p>
+    ) : variant === 'plum' ? (
+      <p class={cx('font-display italic text-white leading-snug mb-5', featured ? 'text-xl' : 'text-lg')}>
+        &ldquo;{quote}&rdquo;
+      </p>
+    ) : variant === 'index' ? (
+      <p class="font-display italic text-navy text-lg leading-snug pt-2 mb-4 pr-6">
+        &ldquo;{quote}&rdquo;
+      </p>
+    ) : (
+      <p class="font-display italic text-navy text-lg leading-snug mb-4">
+        &ldquo;{quote}&rdquo;
+      </p>
+    )}
+
+    {variant === 'polaroid' ? (
+      <div class="border-t border-charcoal/10 pt-3">
+        <p class="font-heading font-semibold text-navy text-sm">{name}</p>
+        <p class="text-xs text-charcoal/60">{role} · {company}</p>
+      </div>
+    ) : (
+      <div
+        class={cx(
+          'flex items-center gap-3 pt-3 border-t',
+          variant === 'plum' ? 'border-white/15 pt-4' : variant === 'sticky' ? 'border-navy/15' : 'border-charcoal/10',
+        )}
+      >
+        <span
+          class={cx('avatar', avatarTone)}
+          role="img"
+          aria-label={name}
+        >
+          <span aria-hidden="true">{initials}</span>
+        </span>
+        <div>
+          <p class={cx('font-heading font-semibold text-sm', variant === 'plum' ? 'text-white' : 'text-navy')}>
+            {name}
+          </p>
+          <p class={cx('text-xs', variant === 'plum' ? 'text-white/60' : variant === 'sticky' ? 'text-navy/70' : 'text-charcoal/60')}>
+            {role} · {company}
+          </p>
+        </div>
+      </div>
+    )}
+  </div>
+</article>
+
+<style>
+  .pin-item {
+    break-inside: avoid;
+    margin-bottom: 1.75rem;
+    display: block;
+  }
+  .quote-mark {
+    font-family: 'Fraunces', serif;
+    font-size: 4.5rem;
+    line-height: 0.6;
+    color: rgba(232, 87, 61, 0.22);
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    pointer-events: none;
+  }
+  /* Variant chrome shared with the legacy testimonials page. */
+  .card-index {
+    background: #fff;
+    border-radius: 6px;
+    box-shadow: 0 16px 34px -18px rgba(45, 43, 85, 0.22);
+    background-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent 2.9rem,
+      rgba(232, 87, 61, 0.25) 2.9rem,
+      rgba(232, 87, 61, 0.25) calc(2.9rem + 1px),
+      transparent calc(2.9rem + 1px)
+    );
+    border-left: 3px double rgba(232, 87, 61, 0.35);
+    padding: 1.75rem 1.75rem 1.5rem;
+  }
+  .card-plum {
+    background: linear-gradient(165deg, #2d2b55 0%, #3b3478 100%);
+    color: #fff;
+    border-radius: 14px;
+    box-shadow: 0 22px 44px -22px rgba(45, 43, 85, 0.55);
+    padding: 1.75rem 1.75rem 1.5rem;
+  }
+  /* Avatar tone classes that match legacy gradients. */
+  :global(.avatar.coral) {
+    background: linear-gradient(135deg, #ff8e53, #e8573d);
+  }
+  :global(.avatar.plum) {
+    background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
+  }
+  :global(.avatar.sage) {
+    background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+  }
+  :global(.avatar.sky) {
+    background: linear-gradient(135deg, #8ccff0, #5dade2);
+  }
+  :global(.avatar.navy) {
+    background: linear-gradient(135deg, #4a4784, #2d2b55);
+  }
+</style>

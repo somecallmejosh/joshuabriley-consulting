@@ -1,0 +1,35 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Icon wrapper around the `iconify-icon` web component (Phosphor set).
+ *
+ * A11y contract: if `label` is provided, the icon is exposed to AT with
+ * role="img" and aria-label. If absent, it is hidden from AT — assume
+ * decorative use. Never render an unlabeled meaningful icon.
+ */
+
+interface Props {
+  /** Iconify name, e.g. "ph:arrow-right" or "ph:check-circle-duotone". */
+  name: string;
+  /** Pixel size for width/height. Defaults to 24. */
+  size?: number;
+  /** Accessible label. If omitted, icon is treated as decorative. */
+  label?: string;
+  /** Tailwind text-* color class controlling stroke/fill. */
+  class?: string;
+}
+
+const { name, size = 24, label, class: className } = Astro.props;
+const decorative = !label;
+---
+
+<iconify-icon
+  icon={name}
+  width={size}
+  height={size}
+  class={cx('inline-block align-middle leading-none', className)}
+  role={decorative ? undefined : 'img'}
+  aria-hidden={decorative ? 'true' : undefined}
+  aria-label={label}
+></iconify-icon>

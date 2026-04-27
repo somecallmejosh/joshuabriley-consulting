@@ -1,0 +1,565 @@
+---
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+
+/**
+ * Interactive design-token playground. Visitors tweak radius, spacing,
+ * hue, and density via sliders/chips and a sample component card responds
+ * live. Demonstrates what a design system *actually does* in <60 seconds.
+ *
+ * All control state lives on a single wrapper as CSS custom properties.
+ */
+
+const palettes = [
+  { id: 'plum',   label: 'Plum',   hex: '#6C4AB6' },
+  { id: 'coral',  label: 'Coral',  hex: '#E8573D' },
+  { id: 'sky',    label: 'Sky',    hex: '#1B6FA1' },
+  { id: 'sage',   label: 'Sage',   hex: '#3E6E3D' },
+  { id: 'sunset', label: 'Sunset', hex: '#A24818' },
+] as const;
+
+const densities = [
+  { id: 'compact',    label: 'Compact'    },
+  { id: 'default',    label: 'Default'    },
+  { id: 'comfortable',label: 'Comfortable'},
+] as const;
+---
+
+<section
+  class="tp-root"
+  data-token-playground
+  data-density="default"
+  style={`--tp-radius: 14px; --tp-spacing: 1; --tp-primary: ${palettes[0].hex};`}
+  aria-labelledby="tp-title"
+>
+  <div class="tp-grid">
+    <!-- ============ CONTROLS ============ -->
+    <div class="tp-controls">
+      <div class="mb-5">
+        <span class="font-hand text-coral text-xl rotate-[-2deg] inline-block leading-none mb-1">
+          drag the knobs
+        </span>
+        <h3 id="tp-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+          A design token, made visible.
+        </h3>
+        <p class="text-sm text-charcoal/70 mt-2 leading-relaxed">
+          One source of truth, many components in sync. Move a slider — the card on the right reacts. That&rsquo;s a design system in miniature.
+        </p>
+      </div>
+
+      <div class="tp-field">
+        <div class="tp-label-row">
+          <label for="tp-radius" class="tp-label">Border radius</label>
+          <output id="tp-radius-out" for="tp-radius" class="tp-output">14px</output>
+        </div>
+        <input
+          id="tp-radius"
+          type="range"
+          min="0"
+          max="32"
+          step="1"
+          value="14"
+          data-tp-control="radius"
+          aria-describedby="tp-radius-out"
+        />
+      </div>
+
+      <div class="tp-field">
+        <div class="tp-label-row">
+          <label for="tp-spacing" class="tp-label">Spacing scale</label>
+          <output id="tp-spacing-out" for="tp-spacing" class="tp-output">1.00&times;</output>
+        </div>
+        <input
+          id="tp-spacing"
+          type="range"
+          min="0.75"
+          max="1.5"
+          step="0.05"
+          value="1"
+          data-tp-control="spacing"
+          aria-describedby="tp-spacing-out"
+        />
+      </div>
+
+      <div class="tp-field">
+        <span class="tp-label" id="tp-palette-label">Primary color</span>
+        <div class="tp-chip-row" role="radiogroup" aria-labelledby="tp-palette-label">
+          {palettes.map((p, i) => (
+            <label
+              class="tp-chip"
+              data-tp-chip="palette"
+              data-value={p.hex}
+              style={`--chip: ${p.hex};`}
+            >
+              <input
+                type="radio"
+                name="tp-palette"
+                value={p.hex}
+                checked={i === 0}
+                data-tp-control="palette"
+              />
+              <span class="tp-chip-dot" aria-hidden="true"></span>
+              <span class="tp-chip-label">{p.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div class="tp-field">
+        <span class="tp-label" id="tp-density-label">Density</span>
+        <div class="tp-chip-row" role="radiogroup" aria-labelledby="tp-density-label">
+          {densities.map((d, i) => (
+            <label class="tp-chip tp-chip--text" data-tp-chip="density" data-value={d.id}>
+              <input
+                type="radio"
+                name="tp-density"
+                value={d.id}
+                checked={i === 1}
+                data-tp-control="density"
+              />
+              <span class="tp-chip-label">{d.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-2 flex items-center gap-3">
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          iconLeft="ph:arrow-counter-clockwise-duotone"
+          id="tp-reset"
+          class="!bg-white !border-charcoal/15 hover:!bg-white hover:!border-coral/40"
+        >
+          Reset tokens
+        </Button>
+        <p class="text-xs text-charcoal/60 font-body italic">
+          No JavaScript per component. Just CSS variables.
+        </p>
+      </div>
+    </div>
+
+    <!-- ============ PREVIEW ============ -->
+    <div class="tp-preview">
+      <div class="tp-preview-frame" aria-hidden="false">
+        <div class="tp-preview-rule">
+          <span>preview</span>
+          <span class="tp-preview-dots">
+            <i></i><i></i><i></i>
+          </span>
+        </div>
+
+        <article class="tp-card">
+          <header class="tp-card-head">
+            <span class="tp-badge">
+              <Icon name="ph:sparkle-duotone" size={14} />
+              <span>New release</span>
+            </span>
+            <span class="tp-meta">v2.4 · today</span>
+          </header>
+          <h4 class="tp-card-title">Button &amp; Card components updated</h4>
+          <p class="tp-card-body">
+            Radius and spacing tokens now drive both. Change one number, two components agree.
+          </p>
+          <div class="tp-card-tags">
+            <span class="tp-tag">tokens</span>
+            <span class="tp-tag">a11y</span>
+            <span class="tp-tag">v2</span>
+          </div>
+          <div class="tp-card-actions">
+            <button type="button" class="tp-btn tp-btn--primary">
+              <span>View changelog</span>
+              <iconify-icon icon="ph:arrow-right-bold" aria-hidden="true"></iconify-icon>
+            </button>
+            <button type="button" class="tp-btn tp-btn--ghost">Dismiss</button>
+          </div>
+        </article>
+
+        <!-- mini stat row to show shared tokens -->
+        <div class="tp-stats">
+          <div class="tp-stat">
+            <span class="tp-stat-num">1</span>
+            <span class="tp-stat-label">token</span>
+          </div>
+          <div class="tp-stat">
+            <span class="tp-stat-num">7</span>
+            <span class="tp-stat-label">elements</span>
+          </div>
+          <div class="tp-stat">
+            <span class="tp-stat-num">0</span>
+            <span class="tp-stat-label">overrides</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="tp-foot-note" aria-live="polite" data-tp-callout>
+        Try setting radius to <strong>0</strong> for a brutalist feel, or <strong>28+</strong> for friendly &amp; rounded.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Control = 'radius' | 'spacing' | 'palette' | 'density';
+
+  const root = document.querySelector<HTMLElement>('[data-token-playground]');
+  if (root) {
+    const radiusOut  = root.querySelector<HTMLOutputElement>('#tp-radius-out')!;
+    const spacingOut = root.querySelector<HTMLOutputElement>('#tp-spacing-out')!;
+    const callout    = root.querySelector<HTMLElement>('[data-tp-callout]')!;
+
+    const defaults = {
+      radius: '14',
+      spacing: '1',
+      palette: '#6C4AB6',
+      density: 'default',
+    };
+
+    function syncChipState(name: 'palette' | 'density', value: string) {
+      root!.querySelectorAll<HTMLElement>(`[data-tp-chip="${name}"]`).forEach((chip) => {
+        chip.classList.toggle('is-on', chip.dataset.value === value);
+      });
+    }
+
+    function apply(control: Control, value: string) {
+      switch (control) {
+        case 'radius':
+          root!.style.setProperty('--tp-radius', `${value}px`);
+          radiusOut.textContent = `${value}px`;
+          break;
+        case 'spacing':
+          root!.style.setProperty('--tp-spacing', value);
+          spacingOut.textContent = `${parseFloat(value).toFixed(2)}×`;
+          break;
+        case 'palette':
+          root!.style.setProperty('--tp-primary', value);
+          syncChipState('palette', value);
+          break;
+        case 'density':
+          root!.dataset.density = value;
+          syncChipState('density', value);
+          break;
+      }
+      updateCallout();
+    }
+
+    function updateCallout() {
+      const r = parseInt(getComputedStyle(root!).getPropertyValue('--tp-radius'), 10);
+      const s = parseFloat(getComputedStyle(root!).getPropertyValue('--tp-spacing'));
+      let msg = 'Try setting radius to <strong>0</strong> for a brutalist feel, or <strong>28+</strong> for friendly &amp; rounded.';
+      if (r <= 2)        msg = 'Brutalist energy. Sharp, technical, unmistakable.';
+      else if (r >= 26)  msg = 'All friendliness, all softness. Pillowy.';
+      else if (s >= 1.4) msg = 'Roomy spacing. Reads calmer; takes more vertical real estate.';
+      else if (s <= 0.8) msg = 'Compressed. Dense interfaces — power-user dashboards live here.';
+      callout.innerHTML = msg;
+    }
+
+    root.addEventListener('input', (e) => {
+      const t = e.target as HTMLInputElement;
+      const ctrl = t.dataset.tpControl as Control | undefined;
+      if (!ctrl) return;
+      apply(ctrl, t.value);
+    });
+
+    root.querySelector('#tp-reset')?.addEventListener('click', () => {
+      (root.querySelector<HTMLInputElement>('#tp-radius')!).value = defaults.radius;
+      (root.querySelector<HTMLInputElement>('#tp-spacing')!).value = defaults.spacing;
+      (root.querySelectorAll<HTMLInputElement>('input[name="tp-palette"]')).forEach(
+        (r) => (r.checked = r.value === defaults.palette),
+      );
+      (root.querySelectorAll<HTMLInputElement>('input[name="tp-density"]')).forEach(
+        (r) => (r.checked = r.value === defaults.density),
+      );
+      apply('radius', defaults.radius);
+      apply('spacing', defaults.spacing);
+      apply('palette', defaults.palette);
+      apply('density', defaults.density);
+    });
+
+    // Initial paint (sync chip states)
+    syncChipState('palette', defaults.palette);
+    syncChipState('density', defaults.density);
+  }
+</script>
+
+<style>
+  .tp-root {
+    --tp-radius: 14px;
+    --tp-spacing: 1;
+    --tp-primary: #6c4ab6;
+    /* density base — modulated by [data-density] below */
+    --tp-pad: calc(1.25rem * var(--tp-spacing));
+    --tp-gap: calc(0.75rem * var(--tp-spacing));
+    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 24px 50px -28px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(108, 74, 182, 0.04);
+    padding: clamp(1.25rem, 2.4vw, 2.5rem);
+  }
+  .tp-root[data-density='compact']     { --tp-pad: calc(0.85rem * var(--tp-spacing)); --tp-gap: calc(0.5rem * var(--tp-spacing)); }
+  .tp-root[data-density='comfortable'] { --tp-pad: calc(1.75rem * var(--tp-spacing)); --tp-gap: calc(1.1rem * var(--tp-spacing)); }
+
+  .tp-grid {
+    display: grid;
+    gap: 2rem;
+  }
+  @media (min-width: 880px) {
+    .tp-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2.5rem; align-items: start; }
+  }
+
+  /* ========== controls ========== */
+  .tp-field { margin-bottom: 1.4rem; }
+  .tp-label-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.45rem;
+  }
+  .tp-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #6c4ab6;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .tp-output {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: #2d2b55;
+    background: rgba(108, 74, 182, 0.08);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .tp-root input[type='range'] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, var(--tp-primary), rgba(108, 74, 182, 0.18));
+    outline: none;
+    cursor: pointer;
+  }
+  .tp-root input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid var(--tp-primary);
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3);
+    cursor: grab;
+    transition: transform 0.15s ease;
+  }
+  .tp-root input[type='range']::-webkit-slider-thumb:active { transform: scale(1.1); cursor: grabbing; }
+  .tp-root input[type='range']::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid var(--tp-primary);
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3);
+    cursor: grab;
+  }
+  .tp-root input[type='range']:focus-visible {
+    outline: 2px dashed var(--tp-primary);
+    outline-offset: 6px;
+  }
+
+  .tp-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tp-chip {
+    --chip: #6c4ab6;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: #fffbf5;
+    border: 1.5px solid rgba(108, 74, 182, 0.18);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2d2b55;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .tp-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .tp-chip:hover { border-color: rgba(108, 74, 182, 0.45); }
+  .tp-chip:focus-within { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+  .tp-chip.is-on {
+    background: var(--chip, #6c4ab6);
+    border-color: var(--chip, #6c4ab6);
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+  }
+  .tp-chip-dot {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--chip);
+    box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4);
+  }
+  .tp-chip.is-on .tp-chip-dot { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
+  .tp-chip--text { /* no dot variant */ }
+
+  /* ========== preview ========== */
+  .tp-preview-frame {
+    background: #fff;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: calc(var(--tp-radius) + 6px);
+    padding: var(--tp-pad);
+    box-shadow:
+      0 18px 40px -24px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(108, 74, 182, 0.05);
+  }
+  .tp-preview-rule {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: rgba(45, 43, 85, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-bottom: 1px dashed rgba(108, 74, 182, 0.2);
+    padding-bottom: 0.65rem;
+    margin-bottom: var(--tp-pad);
+  }
+  .tp-preview-dots { display: inline-flex; gap: 4px; }
+  .tp-preview-dots i {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(108, 74, 182, 0.25);
+    display: inline-block;
+  }
+  .tp-preview-dots i:nth-child(1) { background: #ff8e53; }
+  .tp-preview-dots i:nth-child(2) { background: #fde68a; }
+  .tp-preview-dots i:nth-child(3) { background: #7bb47a; }
+
+  .tp-card {
+    background: #fffdf9;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: var(--tp-radius);
+    padding: var(--tp-pad);
+    transition: border-radius 0.25s ease, padding 0.25s ease, gap 0.25s ease;
+  }
+  .tp-card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: var(--tp-gap);
+  }
+  .tp-badge {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    background: color-mix(in srgb, var(--tp-primary) 12%, transparent);
+    color: var(--tp-primary);
+    padding: 0.2rem 0.6rem;
+    border-radius: calc(var(--tp-radius) * 0.6 + 4px);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+  }
+  .tp-meta {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: rgba(45, 43, 85, 0.5);
+  }
+  .tp-card-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    color: #2d2b55;
+    font-size: 1.25rem;
+    line-height: 1.25;
+    margin-bottom: calc(var(--tp-gap) * 0.5);
+  }
+  .tp-card-body {
+    font-family: 'DM Sans', sans-serif;
+    color: #2e2e30b3;
+    font-size: 0.92rem;
+    line-height: 1.55;
+    margin-bottom: var(--tp-gap);
+  }
+  .tp-card-tags {
+    display: flex; gap: calc(var(--tp-gap) * 0.5);
+    flex-wrap: wrap;
+    margin-bottom: var(--tp-gap);
+  }
+  .tp-tag {
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-size: 0.7rem;
+    padding: 0.2rem 0.55rem;
+    border-radius: calc(var(--tp-radius) * 0.5 + 2px);
+    background: rgba(108, 74, 182, 0.08);
+    color: var(--tp-primary);
+  }
+  .tp-card-actions {
+    display: flex;
+    gap: calc(var(--tp-gap) * 0.7);
+    flex-wrap: wrap;
+  }
+  .tp-btn {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: calc(var(--tp-pad) * 0.45) calc(var(--tp-pad) * 0.85);
+    border-radius: var(--tp-radius);
+    border: 1.5px solid transparent;
+    cursor: pointer;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease;
+  }
+  .tp-btn:focus-visible { outline: 2px dashed var(--tp-primary); outline-offset: 3px; }
+  .tp-btn--primary {
+    background: var(--tp-primary);
+    color: #fff;
+    box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--tp-primary) 70%, transparent);
+  }
+  .tp-btn--primary:hover { transform: translateY(-1px); }
+  .tp-btn--ghost {
+    background: transparent;
+    color: #2d2b55;
+    border-color: rgba(45, 43, 85, 0.2);
+  }
+  .tp-btn--ghost:hover { background: rgba(108, 74, 182, 0.06); }
+
+  .tp-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--tp-gap);
+    margin-top: var(--tp-pad);
+  }
+  .tp-stat {
+    background: #fffbf5;
+    border: 1px solid rgba(108, 74, 182, 0.12);
+    border-radius: var(--tp-radius);
+    padding: calc(var(--tp-pad) * 0.6);
+    text-align: center;
+  }
+  .tp-stat-num {
+    display: block;
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.7rem;
+    color: var(--tp-primary);
+    line-height: 1;
+  }
+  .tp-stat-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(45, 43, 85, 0.55);
+  }
+
+  .tp-foot-note {
+    margin-top: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: #6c4ab6;
+    text-align: center;
+    min-height: 1.5em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tp-card,
+    .tp-btn,
+    .tp-root input[type='range']::-webkit-slider-thumb { transition: none; }
+  }
+</style>

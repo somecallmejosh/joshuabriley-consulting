@@ -1,0 +1,21 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  width?: 'narrow' | 'default' | 'wide';
+  as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer' | 'nav';
+  class?: string;
+}
+
+const { width = 'default', as: Tag = 'div', class: className } = Astro.props;
+
+const widths: Record<NonNullable<Props['width']>, string> = {
+  narrow: 'max-w-3xl',
+  default: 'max-w-6xl',
+  wide: 'max-w-7xl',
+};
+---
+
+<Tag class={cx(widths[width], 'mx-auto px-6', className)}>
+  <slot />
+</Tag>

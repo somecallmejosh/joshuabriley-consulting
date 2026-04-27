@@ -1,0 +1,726 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+
+const description =
+  'Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision.';
+
+const menu = [
+  { href: '#problem', icon: 'ph:warning-circle-duotone', iconClass: 'text-coral', label: 'Why most libraries quietly fall apart' },
+  { href: '#tokens', icon: 'ph:stack-duotone', iconClass: 'text-sunset', label: 'A three-tier token system' },
+  { href: '#accessibility', icon: 'ph:heart-duotone', iconClass: 'text-sage', label: 'Accessibility as a contract' },
+  { href: '#chapters', icon: 'ph:book-open-duotone', iconClass: 'text-plum', label: 'The thirteen chapters' },
+  { href: '#explore', icon: 'ph:cube-duotone', iconClass: 'text-coral', label: 'See it served — guide & Storybook' },
+];
+
+const tokenTiers = [
+  {
+    icon: 'ph:paint-bucket-duotone',
+    iconClass: 'text-sunset',
+    title: 'Global tokens · raw palette',
+    desc: 'Unopinionated primitives. No meaning, just values.',
+    code: 'color.blue.500 = #3B82F6',
+    tilt: '-0.3deg',
+  },
+  {
+    icon: 'ph:tag-duotone',
+    iconClass: 'text-coral',
+    title: 'Semantic tokens · assigned meaning',
+    desc: 'Aliases that encode intent. A rebrand touches this layer, not every component.',
+    code: 'color.brand.primary → color.blue.500',
+    tilt: '0.4deg',
+  },
+  {
+    icon: 'ph:puzzle-piece-duotone',
+    iconClass: 'text-plum',
+    title: 'Component tokens · scoped values',
+    desc: 'Narrow enough to tune one component without side effects elsewhere.',
+    code: 'button.background.default → color.brand.primary',
+    tilt: '-0.2deg',
+  },
+];
+
+const a11yList = [
+  { icon: 'ph:keyboard-duotone', iconClass: 'text-plum', text: 'Full keyboard operability via React Aria' },
+  { icon: 'ph:target-duotone', iconClass: 'text-coral', text: 'Focus traps & restoration in overlays' },
+  { icon: 'ph:megaphone-duotone', iconClass: 'text-sunset', text: 'ARIA semantics on every component' },
+  { icon: 'ph:magnifying-glass-duotone', iconClass: 'text-sky', text: 'vitest-axe guards every test run' },
+  { icon: 'ph:squares-four-duotone', iconClass: 'text-sage', text: 'Eight intrinsic layout primitives' },
+  { icon: 'ph:eye-duotone', iconClass: 'text-coral', text: 'Contrast verified against token values' },
+];
+
+const chapters = [
+  { num: '01', title: 'Architectural decisions (no code)' },
+  { num: '02', title: 'Token system design' },
+  { num: '03', title: 'Styling strategy' },
+  { num: '04', title: 'Accessibility primitives' },
+  { num: '05', title: 'Layout primitives' },
+  { num: '06', title: 'Component patterns' },
+  { num: '07', title: 'Design tokens in DTCG format' },
+  { num: '08', title: 'Style Dictionary configuration' },
+  { num: '09', title: 'React Aria integration' },
+  { num: '11', title: 'Testing accessibility contracts' },
+  { num: '12', title: 'Build & packaging workflow' },
+];
+
+const guideChecks = [
+  'Architecture, tokens, primitives, components, tests, publishing',
+  'Companion GitHub repo with a complete working implementation',
+];
+
+const storybookChecks = [
+  'Live components built on React Aria & Tailwind CSS 4',
+  'Token-driven theming visible across every story',
+  'a11y & interaction addons wired in out of the box',
+];
+---
+
+<BaseLayout title="Rudiment UI — Joshua Briley" description={description}>
+  <div class="corkboard">
+    <!-- HERO -->
+    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
+      <div class="absolute top-14 right-[6%] w-20 h-20 bg-lemon/60 blob-shape animate-float opacity-70" aria-hidden="true"></div>
+      <div class="absolute top-40 left-[4%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay" aria-hidden="true"></div>
+      <div class="absolute bottom-20 right-[18%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow" aria-hidden="true"></div>
+      <div class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
+          <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
+          <Icon name="ph:caret-right-bold" size={12} />
+          <span class="text-navy">Rudiment UI</span>
+        </nav>
+
+        <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
+          <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
+          <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
+
+          <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
+            <span class="steam animate-steam"></span>
+            <span class="steam animate-steam-delay"></span>
+            <span class="steam animate-steam-delay-2"></span>
+          </div>
+
+          <div class="relative text-center">
+            <div class="project-logo-tag project-logo-tag--wordmark" aria-label="Rudiment UI">
+              <span>rudiment<span class="dot">.ui</span></span>
+            </div>
+
+            <div class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider">
+              <Icon name="ph:chef-hat-duotone" size={18} />
+              Case study &middot; Recipe no. 03
+            </div>
+
+            <p class="marker-label text-2xl md:text-3xl mb-4">
+              from scratch, from first principles —
+            </p>
+
+            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6">
+              A component library,
+              <br />
+              <span class="relative inline-block">
+                built to be understood
+                <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 420 14" fill="none" aria-hidden="true">
+                  <path d="M3 9 Q 105 2 210 9 Q 315 16 417 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
+                </svg>
+              </span>
+              <span class="text-coral">.</span>
+            </h1>
+
+            <p class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10">
+              An open-source React component library paired with a
+              <a href="https://rudiment-guide.netlify.app/" target="_blank" rel="noopener" class="wavy-underline text-plum hover:text-coral transition-colors">13-chapter guide</a>
+              that explains <em>why</em> each architectural decision is made,
+              and what happens later if you make a different one.
+            </p>
+
+            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
+              <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
+                <div>
+                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">Role</dt>
+                  <dd class="font-display text-lg text-navy font-semibold">Author &middot; Engineer</dd>
+                </div>
+                <div>
+                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">Format</dt>
+                  <dd class="font-display text-lg text-navy font-semibold">Library + Guide</dd>
+                </div>
+                <div>
+                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">Stack</dt>
+                  <dd class="font-display text-lg text-navy font-semibold">React 19, TS, Vite</dd>
+                </div>
+                <div>
+                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">Focus</dt>
+                  <dd class="font-display text-lg text-navy font-semibold">Tokens &middot; A11y</dd>
+                </div>
+              </dl>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+              <a
+                href="https://rudiment-guide.netlify.app/"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 bg-plum text-white px-6 py-3 rounded-full hover:bg-plum/90 transition-all hover:shadow-lg hover:shadow-plum/30 font-heading text-sm font-semibold"
+              >
+                <Icon name="ph:book-open-text-duotone" size={18} />
+                Read the guide
+                <Icon name="ph:arrow-up-right-bold" size={14} />
+              </a>
+              <a
+                href="https://rudiment-ui.netlify.app/"
+                target="_blank"
+                rel="noopener"
+                class="inline-flex items-center gap-2 bg-white text-navy px-6 py-3 rounded-full hover:bg-lemon/40 transition-all hover:shadow-lg hover:shadow-plum/10 font-heading text-sm font-semibold border border-plum/25"
+              >
+                <Icon name="ph:squares-four-duotone" size={18} />
+                Browse the Storybook
+                <Icon name="ph:arrow-up-right-bold" size={14} />
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <SquiggleDivider />
+
+    <!-- ON THE MENU -->
+    <section class="py-16 md:py-20 relative">
+      <div class="absolute top-10 right-6 w-24 h-24 bg-plum/10 blob-shape animate-float-slow" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-center gap-3 mb-6">
+          <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
+          <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">On the menu</h2>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          {menu.map((item) => (
+            <a href={item.href} class="ingredient-chip hover:border-coral hover:text-coral transition-colors">
+              <Icon name={item.icon} size={18} class={item.iconClass} />
+              {item.label}
+            </a>
+          ))}
+        </div>
+
+        <p class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body">
+          Rudiment UI is a personal reference project, not a client
+          deliverable — and that's the point. It exists because most of the
+          component libraries I've been brought in to fix share the same root
+          cause: architectural decisions that nobody wrote down, made in the
+          wrong order, and now cost a quarter to untangle. Rudiment UI is the
+          library I wish every team had started with, built deliberately,
+          chapter by chapter, with the reasoning left in.
+        </p>
+      </div>
+    </section>
+
+    <!-- PROBLEM -->
+    <section id="problem" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">01</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step one</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
+              Why most libraries quietly fall apart
+            </h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Component libraries rarely fail loudly. They accumulate a thousand
+            small compromises until the thing that once felt like a system
+            feels like a
+            <strong class="text-coral">patchwork</strong>. A missing semantic
+            token layer turns a rebrand into hundreds of manual renames. An
+            undecided styling strategy turns a refactor into a full rewrite.
+            Accessibility bolted on after launch always costs more than
+            accessibility designed in from day one.
+          </p>
+          <p>
+            Most of these mistakes aren't expensive because they were hard to
+            avoid. They're expensive because they were
+            <strong class="text-plum">made implicitly</strong>: in a stand-up,
+            in a PR comment, in a hurried corner of someone's sprint. Rudiment
+            UI starts from the opposite assumption: the structural decisions
+            come first, with no code, and every choice gets written down
+            alongside its consequences.
+          </p>
+          <p>
+            That's what the guide is. Chapter 1 contains no code at all. It's
+            the conversation a team should have had
+            <em>before</em> picking a CSS strategy.
+          </p>
+        </div>
+
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <div class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative" style="transform: rotate(-0.6deg)">
+            <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5">The usual story</span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Drift, then debt</h3>
+            <p class="text-charcoal/70">
+              Tokens get added per-component. Styles leak into overrides.
+              Documentation falls behind. The system stops being a system.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative" style="transform: rotate(0.5deg)">
+            <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5">Rudiment's bet</span>
+            <h3 class="font-display text-xl text-navy font-semibold mt-4 mb-2">Sequence on purpose</h3>
+            <p class="text-charcoal/70">
+              Token architecture shapes components. Components shape tests.
+              Tests shape what the docs have to explain. Get the order right
+              and the rest stops fighting you.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TOKENS -->
+    <section id="tokens" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float" aria-hidden="true"></div>
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">02</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step two</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
+              A three-tier token system
+            </h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            Most token systems collapse because they try to do two jobs in one
+            layer: hold raw values <em>and</em> express design intent.
+            Rudiment separates those jobs across three tiers, each referencing
+            the one beneath it. A brand change touches one file. A component
+            tweak doesn't cascade into the rest of the library.
+          </p>
+        </div>
+
+        <div class="mt-10 space-y-4">
+          {tokenTiers.map((tier) => (
+            <div class="token-tier" style={`transform: rotate(${tier.tilt})`}>
+              <div class="flex items-start gap-4">
+                <Icon name={tier.icon} size={28} class={`${tier.iconClass} flex-shrink-0 mt-1`} />
+                <div>
+                  <h3 class="font-display text-lg text-navy font-semibold mb-1">{tier.title}</h3>
+                  <p class="text-charcoal/70 mb-2">{tier.desc}</p>
+                  <code>{tier.code}</code>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <figure class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative" style="transform: rotate(-0.3deg)">
+          <Icon name="ph:quotes-duotone" size={32} class="text-coral/60 absolute -top-3 left-6 bg-cream px-1" />
+          <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+            Building a component library is as much an exercise in sequencing
+            decisions as it is in writing components.
+          </blockquote>
+        </figure>
+
+        <p class="mt-8 text-charcoal/80 text-lg leading-relaxed font-body">
+          Token files use the Design Tokens Community Group format, flow
+          through Style Dictionary v4, and land in Tailwind CSS 4 via
+          <code class="text-coral bg-coral/10 px-1.5 rounded">@theme inline</code>. Updating a single value propagates through every dependent
+          component — no hunt-and-replace, no orphans.
+        </p>
+      </div>
+    </section>
+
+    <!-- ACCESSIBILITY -->
+    <section id="accessibility" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">03</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step three</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
+              Accessibility as a contract, not a checklist
+            </h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body">
+          <p>
+            A single interactive component can carry an enormous accessibility
+            surface. A modal alone needs focus trapping, scroll locking,
+            escape-key handling, focus restoration, and
+            <code class="text-coral bg-coral/10 px-1.5 rounded">aria-modal</code>
+            management. Rudiment doesn't rebuild that for every component. It
+            leans on React Aria, maintained by Adobe's design system team, to
+            carry the behavior layer.
+          </p>
+          <p>
+            React Aria owns keyboard navigation, focus management, ARIA
+            semantics, pointer normalization, and i18n. Tailwind CSS 4 handles
+            the visuals. The two layers stay cleanly separated — which is what
+            lets the library re-skin without touching any behavior.
+          </p>
+          <p>
+            Tests then lock in that separation. Layout primitives are verified
+            against the tokens and classes they emit. UI components are
+            verified against their
+            <em>accessibility contract</em>: keyboard activation, disabled and
+            error states, focus behavior, loading-state ARIA, and zero
+            axe-core violations. Tests query by role and text, never by class
+            name, so refactors don't silently break coverage.
+          </p>
+        </div>
+
+        <div class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative" style="transform: rotate(0.4deg)">
+          <div class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50" style="transform: rotate(-3deg)">
+            <Icon name="ph:check-fat-duotone" size={14} class="mr-1" />
+            Built-in, not bolted-on
+          </div>
+          <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80">
+            {a11yList.map((item) => (
+              <li class="flex items-center gap-3">
+                <Icon name={item.icon} size={22} class={item.iconClass} />
+                {item.text}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHAPTERS -->
+    <section id="chapters" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="absolute top-10 right-6 w-20 h-20 bg-lemon/50 blob-shape animate-float-slow" aria-hidden="true"></div>
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">04</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step four</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
+              Thirteen chapters, in order
+            </h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body mb-10">
+          <p>
+            The guide is sequenced deliberately. You can't make sensible
+            component decisions until the token layer is settled. You can't
+            write useful tests until the component API is stable. You can't
+            publish confidently until the build workflow guarantees every tier
+            stays in sync. Each chapter earns the next one.
+          </p>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-3">
+          {chapters.slice(0, 9).map((c) => (
+            <div class="chapter-card">
+              <span class="chapter-num">{c.num}</span>
+              <span class="font-heading text-sm text-navy">{c.title}</span>
+            </div>
+          ))}
+          <a
+            href="https://rudiment-ui.netlify.app/"
+            target="_blank"
+            rel="noopener"
+            class="chapter-card hover:border-coral/60 hover:shadow-md transition-all group"
+          >
+            <span class="chapter-num">10</span>
+            <span class="font-heading text-sm text-navy flex items-center gap-1.5 flex-1">
+              Storybook documentation
+              <Icon name="ph:arrow-up-right-bold" size={12} class="text-coral opacity-0 group-hover:opacity-100 transition-opacity" />
+            </span>
+          </a>
+          {chapters.slice(9).map((c) => (
+            <div class="chapter-card">
+              <span class="chapter-num">{c.num}</span>
+              <span class="font-heading text-sm text-navy">{c.title}</span>
+            </div>
+          ))}
+          <div class="chapter-card sm:col-span-2">
+            <span class="chapter-num">13</span>
+            <span class="font-heading text-sm text-navy">Publishing to npm</span>
+          </div>
+        </div>
+
+        <h3 class="font-display text-2xl text-navy font-semibold mt-16 mb-6">
+          What reading the guide leaves you with
+        </h3>
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm" style="transform: rotate(-0.6deg)">
+            <Icon name="ph:compass-duotone" size={32} class="text-coral mb-3" />
+            <h3 class="font-display text-lg text-navy font-semibold mb-1">Judgment, not a template</h3>
+            <p class="text-charcoal/70 text-sm">
+              Every decision is explained alongside the alternatives it closes
+              off — so you can extend the system instead of copying it.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm" style="transform: rotate(0.4deg)">
+            <Icon name="ph:stack-duotone" size={32} class="text-plum mb-3" />
+            <h3 class="font-display text-lg text-navy font-semibold mb-1">A working reference</h3>
+            <p class="text-charcoal/70 text-sm">
+              An end-to-end library you can run, read, and pull pieces from —
+              tokens, primitives, tests, publishing pipeline.
+            </p>
+          </div>
+          <div class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm" style="transform: rotate(-0.3deg)">
+            <Icon name="ph:shield-check-duotone" size={32} class="text-sunset mb-3" />
+            <h3 class="font-display text-lg text-navy font-semibold mb-1">Debt you don't pay later</h3>
+            <p class="text-charcoal/70 text-sm">
+              The expensive mistakes — shallow tokens, retrofitted a11y,
+              drifting docs — get made visible before they compound.
+            </p>
+          </div>
+        </div>
+
+        <figure class="mt-14 bg-plum/5 border-l-4 border-plum rounded-r-2xl p-6 md:p-8 relative" style="transform: rotate(0.3deg)">
+          <Icon name="ph:quotes-duotone" size={32} class="text-plum/60 absolute -top-3 left-6 bg-cream px-1" />
+          <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
+            A repository without explanation gives you a working system.
+            Explaining the trade-offs at each step gives you the judgment to
+            extend it.
+          </blockquote>
+        </figure>
+      </div>
+    </section>
+
+    <!-- EXPLORE -->
+    <section id="explore" class="py-16 md:py-20 relative scroll-mt-24">
+      <div class="absolute top-24 left-[4%] w-16 h-16 bg-sky/30 blob-shape animate-float" aria-hidden="true"></div>
+      <div class="absolute bottom-10 right-[6%] w-20 h-20 bg-sage/30 rounded-full animate-float-slow" aria-hidden="true"></div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
+        <div class="flex items-start gap-6 mb-8">
+          <span class="step-num" aria-hidden="true">05</span>
+          <div>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step five</p>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">
+              See it served — both halves, live
+            </h2>
+          </div>
+        </div>
+
+        <div class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body mb-10">
+          <p>
+            Rudiment ships as two deployed sites, and you can open both right
+            now. The
+            <span class="wavy-underline">guide</span> walks through the
+            architectural decisions and trade-offs, chapter by chapter. The
+            <span class="wavy-underline">Storybook</span> is the working
+            library those decisions produced — every primitive, every
+            component, every variant, in your browser.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-7">
+          <a
+            href="https://rudiment-guide.netlify.app/"
+            target="_blank"
+            rel="noopener"
+            class="block bg-white rounded-3xl p-7 md:p-8 border border-plum/15 shadow-sm hover:shadow-lg hover:shadow-plum/15 hover:-translate-y-0.5 transition-all relative group"
+            style="transform: rotate(-0.5deg)"
+          >
+            <span class="tape" style="top: -14px; left: 14%; transform: rotate(-4deg)" aria-hidden="true"></span>
+            <span class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 right-6" style="transform: rotate(2deg)">
+              <Icon name="ph:book-open-text-duotone" size={14} class="mr-1" />
+              13 chapters
+            </span>
+
+            <div class="mt-5 flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-plum/10 flex items-center justify-center">
+                <Icon name="ph:compass-duotone" size={26} class="text-plum" />
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-display text-xl md:text-2xl text-navy font-semibold mb-1">The Rudiment Guide</h3>
+                <p class="font-heading text-xs text-plum/70 font-mono">rudiment-guide.netlify.app</p>
+              </div>
+            </div>
+
+            <p class="mt-5 text-charcoal/75 leading-relaxed font-body">
+              A sequenced, decision-by-decision walkthrough — from an empty
+              directory to a published, token-driven, accessible React library.
+              Every choice is shown alongside the alternatives it closed off.
+            </p>
+
+            <ul class="mt-5 space-y-2 font-body text-sm text-charcoal/80">
+              {guideChecks.map((c) => (
+                <li class="flex items-start gap-2">
+                  <Icon name="ph:check-circle-duotone" size={18} class="text-plum flex-shrink-0 mt-0.5" />
+                  {c}
+                </li>
+              ))}
+              <li class="flex items-start gap-2">
+                <Icon name="ph:check-circle-duotone" size={18} class="text-plum flex-shrink-0 mt-0.5" />
+                The <em>why</em> behind each decision, not just the <em>what</em>
+              </li>
+            </ul>
+
+            <div class="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-plum group-hover:text-coral transition-colors">
+              Open the guide
+              <Icon name="ph:arrow-up-right-bold" size={14} class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </a>
+
+          <a
+            href="https://rudiment-ui.netlify.app/"
+            target="_blank"
+            rel="noopener"
+            class="block bg-white rounded-3xl p-7 md:p-8 border border-coral/20 shadow-sm hover:shadow-lg hover:shadow-coral/20 hover:-translate-y-0.5 transition-all relative group"
+            style="transform: rotate(0.4deg)"
+          >
+            <span class="tape" style="top: -14px; right: 14%; transform: rotate(5deg)" aria-hidden="true"></span>
+            <span class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-6" style="transform: rotate(-2deg)">
+              <Icon name="ph:squares-four-duotone" size={14} class="mr-1" />
+              Live library
+            </span>
+
+            <div class="mt-5 flex items-start gap-4">
+              <div class="flex-shrink-0 w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center">
+                <Icon name="ph:cube-duotone" size={26} class="text-coral" />
+              </div>
+              <div class="min-w-0">
+                <h3 class="font-display text-xl md:text-2xl text-navy font-semibold mb-1">The Storybook</h3>
+                <p class="font-heading text-xs text-coral/80 font-mono">rudiment-ui.netlify.app</p>
+              </div>
+            </div>
+
+            <p class="mt-5 text-charcoal/75 leading-relaxed font-body">
+              The deployed component library as an interactive reference —
+              layout primitives, form controls, overlays, and every variant
+              the guide produces, with controls and docs on each story.
+            </p>
+
+            <ul class="mt-5 space-y-2 font-body text-sm text-charcoal/80">
+              {storybookChecks.map((c) => (
+                <li class="flex items-start gap-2">
+                  <Icon name="ph:check-circle-duotone" size={18} class="text-coral flex-shrink-0 mt-0.5" />
+                  {c}
+                </li>
+              ))}
+            </ul>
+
+            <div class="mt-6 inline-flex items-center gap-2 font-heading text-sm font-semibold text-coral group-hover:text-plum transition-colors">
+              Browse the Storybook
+              <Icon name="ph:arrow-up-right-bold" size={14} class="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+            </div>
+          </a>
+        </div>
+
+        <p class="mt-10 text-center text-sm text-charcoal/60 font-body italic">
+          Read a chapter, then open the matching story — the guide and the
+          library are meant to be used side by side.
+        </p>
+      </div>
+    </section>
+
+    <SquiggleDivider />
+
+    <!-- CTA -->
+    <section class="py-20 md:py-28">
+      <div class="max-w-4xl mx-auto px-6">
+        <div class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden">
+          <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
+          <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float" opacity="opacity-40" />
+          <div class="relative z-10 text-center">
+            <span class="sticker bg-white/10 text-lemon border-lemon/40 mb-6" style="transform: rotate(-2deg)">
+              <Icon name="ph:cooking-pot-duotone" size={14} class="mr-1" />
+              Starting (or rescuing) a component library?
+            </span>
+            <h2 class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5">
+              Let's build it on a foundation that holds.
+            </h2>
+            <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
+              Score your current system in 10 minutes, or grab 30 on my
+              calendar to talk through where things are drifting.
+            </p>
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button
+                variant="primary"
+                size="lg"
+                iconLeft="ph:clipboard-text-duotone"
+                href="/scorecard/"
+               
+              >
+                Score your design system
+              </Button>
+              <Button
+                variant="secondary"
+                size="lg"
+                iconLeft="ph:calendar-check-duotone"
+                href="https://calendly.com/josh-thebrileys/30min/"
+              >
+                Book an intro call
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-14 flex justify-center">
+          <a href="/projects/" class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors">
+            <Icon name="ph:arrow-left-bold" size={18} class="group-hover:-translate-x-1 transition-transform" />
+            Back to all projects on the corkboard
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<style>
+  .tape {
+    position: absolute;
+    width: 90px;
+    height: 22px;
+    background: rgba(253, 230, 138, 0.88);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
+    z-index: 5;
+  }
+  .token-tier {
+    background: #fff;
+    border-radius: 18px;
+    padding: 1.25rem 1.5rem;
+    border: 1.5px dashed rgba(108, 74, 182, 0.25);
+    box-shadow: 0 10px 24px -18px rgba(45, 43, 85, 0.35);
+    position: relative;
+  }
+  .token-tier code {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.82rem;
+    background: rgba(108, 74, 182, 0.08);
+    color: #2d2b55;
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .chapter-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 0.9rem 1rem;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    box-shadow: 0 6px 14px -10px rgba(45, 43, 85, 0.25);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .chapter-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 9999px;
+    background: linear-gradient(135deg, #6c4ab6, #2d2b55);
+    color: #fde68a;
+    font-family: 'Fraunces', serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from './Icon.astro';
+import type { Tone } from '~/lib/tones';
+
+/**
+ * Sticker / category pill — eyebrow above headings, content tags, etc.
+ * Uses the muted tone surface + bordered look from the design system.
+ */
+
+interface Props {
+  tone?: Tone;
+  /** Optional icon name (Phosphor). */
+  icon?: string;
+  /** Use the dashed-border "sticker" treatment from global.css. */
+  sticker?: boolean;
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { tone = 'plum', icon, sticker = false, size = 'md', class: className } = Astro.props;
+
+// Text colors use the `-deep` variants on their own /10 surface to clear AA;
+// surface tints below /20 are too pale for the original tone to pass 4.5:1.
+const surfaceByTone: Record<Tone, { bg: string; text: string; border: string }> = {
+  coral:  { bg: 'bg-coral/10',  text: 'text-plum',  border: 'border-coral/40' },
+  plum:   { bg: 'bg-plum/10',   text: 'text-plum',        border: 'border-plum/40' },
+  sage:   { bg: 'bg-sage/10',   text: 'text-sage-deep',   border: 'border-sage/50' },
+  sunset: { bg: 'bg-sunset/10', text: 'text-sunset-deep', border: 'border-sunset/40' },
+  navy:   { bg: 'bg-navy/10',   text: 'text-navy',        border: 'border-navy/30' },
+  sky:    { bg: 'bg-sky/10',    text: 'text-navy',        border: 'border-sky/40' },
+  lemon:  { bg: 'bg-lemon/40',  text: 'text-navy',        border: 'border-lemon/60' },
+  peach:  { bg: 'bg-peach/60',  text: 'text-navy',        border: 'border-peach' },
+  cream:  { bg: 'bg-cream',     text: 'text-navy',        border: 'border-charcoal/60' },
+};
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  sm: 'px-3 py-1 text-xs gap-1',
+  md: 'px-4 py-2 text-sm gap-1.5',
+};
+
+const styles = surfaceByTone[tone];
+---
+
+<span
+  class={cx(
+    'inline-flex items-center rounded-full border font-heading font-medium',
+    styles.bg,
+    styles.text,
+    styles.border,
+    sizes[size],
+    sticker && 'border-dashed -rotate-1',
+    className,
+  )}
+>
+  {icon && <Icon name={icon} size={size === 'sm' ? 14 : 16} />}
+  <slot />
+</span>

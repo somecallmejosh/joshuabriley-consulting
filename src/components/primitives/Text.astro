@@ -1,0 +1,66 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  size?: 'xs' | 'sm' | 'base' | 'lg' | 'xl';
+  tone?: 'navy' | 'muted' | 'white' | 'whiteMuted' | 'coral';
+  weight?: 'normal' | 'medium' | 'semibold';
+  align?: 'left' | 'center';
+  as?: 'p' | 'span' | 'div';
+  leading?: 'tight' | 'snug' | 'normal' | 'relaxed';
+  class?: string;
+}
+
+const {
+  size = 'base',
+  tone = 'navy',
+  weight = 'normal',
+  align = 'left',
+  leading = 'relaxed',
+  as: Tag = 'p',
+  class: className,
+} = Astro.props;
+
+const sizes: Record<NonNullable<Props['size']>, string> = {
+  xs: 'text-xs',
+  sm: 'text-sm',
+  base: 'text-base',
+  lg: 'text-lg',
+  xl: 'text-lg md:text-xl',
+};
+
+const tones: Record<NonNullable<Props['tone']>, string> = {
+  navy: 'text-navy',
+  muted: 'text-charcoal/70',
+  white: 'text-white',
+  whiteMuted: 'text-white/70',
+  coral: 'text-plum',
+};
+
+const weights: Record<NonNullable<Props['weight']>, string> = {
+  normal: 'font-normal',
+  medium: 'font-medium',
+  semibold: 'font-semibold',
+};
+
+const leadings: Record<NonNullable<Props['leading']>, string> = {
+  tight: 'leading-tight',
+  snug: 'leading-snug',
+  normal: 'leading-normal',
+  relaxed: 'leading-relaxed',
+};
+---
+
+<Tag
+  class={cx(
+    'font-body',
+    sizes[size],
+    tones[tone],
+    weights[weight],
+    leadings[leading],
+    align === 'center' && 'text-center',
+    className,
+  )}
+>
+  <slot />
+</Tag>

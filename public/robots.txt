@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /dev/
+Disallow: /component-inventory
+Disallow: /scorecard/results
+
+Sitemap: https://joshuabriley.com/sitemap-index.xml

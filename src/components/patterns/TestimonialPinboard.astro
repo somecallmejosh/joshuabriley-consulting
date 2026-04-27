@@ -1,0 +1,35 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Masonry-style wall of testimonial cards. CSS column layout — children must
+ * use `break-inside-avoid` (provided by the .pin-item class).
+ */
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class={cx('pinboard', className)}>
+  <slot />
+</div>
+
+<style>
+  .pinboard {
+    column-count: 1;
+    column-gap: 1.75rem;
+  }
+  @media (min-width: 640px) {
+    .pinboard {
+      column-count: 2;
+    }
+  }
+  @media (min-width: 1024px) {
+    .pinboard {
+      column-count: 3;
+    }
+  }
+</style>

@@ -1,0 +1,246 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import FAQ from '~/components/patterns/FAQ.astro';
+import FAQItem from '~/components/patterns/FAQItem.astro';
+
+const description =
+  "Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics.";
+
+const allFaqs = await getCollection('faqs');
+const sorted = allFaqs.sort((a, b) => a.data.order - b.data.order);
+
+const categories = [
+  { id: 'services-fit', n: '01', label: 'Services & Fit', tone: 'coral', icon: 'ph:compass-duotone', dot: 'bg-coral', heading: 'Is this the right kind of help?' },
+  { id: 'process-timeline', n: '02', label: 'Process & Timeline', tone: 'plum', icon: 'ph:calendar-duotone', dot: 'bg-plum', heading: 'What the engagement looks like.' },
+  { id: 'deliverables', n: '03', label: 'Deliverables', tone: 'sage', icon: 'ph:package-duotone', dot: 'bg-sage', heading: 'What you get at the end.' },
+  { id: 'logistics', n: '04', label: 'Logistics', tone: 'sky', icon: 'ph:gear-duotone', dot: 'bg-sky', heading: 'The practical stuff.' },
+] as const;
+
+const tabToneMap: Record<string, string> = {
+  coral: 'bg-coral/15 text-coral border-coral/25',
+  plum: 'bg-plum/15 text-plum border-plum/25',
+  sage: 'bg-sage/20 text-sage-deep border-sage/30',
+  sky: 'bg-sky/15 text-sky-deep border-sky/30',
+};
+
+// Pre-render answer bodies (markdown) for each FAQ.
+const rendered = await Promise.all(
+  sorted.map(async (entry) => {
+    const { Content } = await render(entry);
+    return { entry, Content };
+  }),
+);
+const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category === cat);
+---
+
+<BaseLayout title="FAQs — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+  <!-- HERO -->
+  <Section padding="loose" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
+    <Blob tone="sage" size="sm" class="absolute top-44 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" class="absolute bottom-10 right-[14%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="coral" size="sm" class="absolute bottom-24 left-[18%] rounded-full" animate="float" opacity="opacity-30" />
+
+    <Container width="default" class="relative z-10 text-center">
+      <div class="mb-8 inline-block">
+        <Badge tone="lemon" icon="ph:chats-circle-duotone">Frequently asked, happily answered</Badge>
+      </div>
+      <Heading level={1} visual="display-xl" align="center" balance class="mb-6">
+        Let's clear <WavyUnderline>the air</WavyUnderline>.
+      </Heading>
+      <Text size="xl" tone="muted" align="center" class="mb-14 max-w-2xl mx-auto">
+        These questions come from clients and colleagues I've worked with over the years.
+        If yours isn't here, <a href="/contact/" class="text-plum underline underline-offset-4 hover:text-coral font-semibold">just ask</a>.
+      </Text>
+
+      <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
+        <div class="bubble" style="transform: rotate(-1.2deg)" aria-hidden="true">
+          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-plum mb-1">
+            <Icon name="ph:user-circle-duotone" size={18} />
+            Client
+          </div>
+          <p class="font-display text-navy text-lg leading-snug">
+            "How long does a typical engagement take?"
+          </p>
+        </div>
+        <div class="bubble bubble-right" style="transform: rotate(1deg); background: #fff6ec" aria-hidden="true">
+          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-coral mb-1 justify-end">
+            Joshua
+            <Icon name="ph:sparkle-duotone" size={18} />
+          </div>
+          <p class="font-display text-navy text-lg leading-snug text-right">
+            "Usually 2–3 weeks for the starter. I'll walk you through it below."
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <div class="squiggle-divider max-w-6xl mx-auto" aria-hidden="true"></div>
+
+  <!-- BODY -->
+  <Section padding="default">
+    <Container>
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
+        <!-- Sticky jump list -->
+        <aside class="lg:col-span-4 xl:col-span-3">
+          <div class="lg:sticky lg:top-28">
+            <p class="font-heading text-xs uppercase tracking-[0.15em] text-charcoal/50 mb-4 pl-2">Jump to</p>
+            <nav class="flex flex-col gap-1" aria-label="FAQ sections">
+              {categories.map((c) => (
+                <a href={`#${c.id}`} class="jump-link">
+                  <span class={`dot ${c.dot}`} aria-hidden="true"></span>
+                  {c.label}
+                </a>
+              ))}
+            </nav>
+
+            <div class="mt-8 bg-white rounded-2xl border border-charcoal/5 p-5 shadow-[0_14px_32px_-22px_rgba(45,43,85,0.22)] hidden lg:block">
+              <div class="flex items-center gap-2 mb-2">
+                <Icon name="ph:lightbulb-duotone" size={22} class="text-sunset" />
+                <span class="font-heading text-xs uppercase tracking-wider text-navy font-semibold">Tip</span>
+              </div>
+              <Text size="sm" tone="muted">
+                Click any question to expand its answer. Still stuck?
+                <a href="/contact/" class="text-plum font-semibold hover:text-coral">Send me a note</a>.
+              </Text>
+            </div>
+          </div>
+        </aside>
+
+        <!-- FAQ sections -->
+        <div class="lg:col-span-8 xl:col-span-9 space-y-16">
+          {categories.map((c) => (
+            <section id={c.id} class="scroll-mt-28">
+              <div class="flex items-center gap-4 mb-6">
+                <span class={`tab-label ${tabToneMap[c.tone]} border`}>
+                  <Icon name={c.icon} size={16} />
+                  {c.n} · {c.label}
+                </span>
+              </div>
+              <Heading level={2} visual="display-md" class="mb-8">{c.heading}</Heading>
+              <FAQ>
+                {byCategory(c.id).map(({ entry, Content }) => (
+                  <FAQItem question={entry.data.question}>
+                    <Content />
+                  </FAQItem>
+                ))}
+              </FAQ>
+            </section>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- CTA -->
+  <Section padding="default" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-10 left-[10%]" animate="float" opacity="opacity-80" />
+    <Blob tone="sage" size="md" shape="alt" class="absolute bottom-12 right-[12%]" animate="float-slow" opacity="opacity-40" />
+    <Blob tone="sky" size="sm" class="absolute top-1/2 right-[8%] rounded-full" animate="float-delay" opacity="opacity-40" />
+
+    <Container width="narrow" class="relative z-10">
+      <div class="relative bg-gradient-to-br from-navy via-navy to-plum text-white rounded-[36px] px-8 py-14 md:px-16 md:py-20 text-center shadow-[0_40px_80px_-30px_rgba(45,43,85,0.55)]">
+        <div class="absolute -top-6 -left-6 w-14 h-14 bg-lemon blob-shape hidden md:block" aria-hidden="true"></div>
+        <div class="absolute -bottom-8 -right-4 w-16 h-16 bg-coral blob-shape-alt hidden md:block" aria-hidden="true"></div>
+
+        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full mb-6 font-heading text-xs uppercase tracking-wider">
+          <Icon name="ph:envelope-duotone" size={18} />
+          Still curious?
+        </div>
+        <Heading level={2} visual="display-md" tone="white" align="center" class="mb-6">
+          Didn't find your question? <span class="text-lemon">Ask it directly.</span>
+        </Heading>
+        <Text size="xl" tone="whiteMuted" align="center" class="max-w-2xl mx-auto mb-10">
+          The fastest way to find out whether this is the right fit is a 30-minute intro call. No pressure, no sales pitch.
+        </Text>
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+          <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="/contact/">
+            Book the intro call
+          </Button>
+          <Button variant="secondary" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
+            Grab the free scorecard
+          </Button>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<style>
+  .bubble {
+    position: relative;
+    background: #ffffff;
+    border: 1.5px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    padding: 1rem 1.25rem;
+    box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
+  }
+  .bubble::after {
+    content: '';
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    background: inherit;
+    border-right: 1.5px solid rgba(45, 43, 85, 0.08);
+    border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
+    bottom: -10px;
+    left: 28px;
+    transform: rotate(45deg);
+    border-bottom-right-radius: 4px;
+  }
+  .bubble-right::after {
+    left: auto;
+    right: 28px;
+  }
+  .tab-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.5rem 1.15rem;
+    border-radius: 9999px;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .jump-link {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    padding: 0.65rem 0.9rem;
+    border-radius: 12px;
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(46, 46, 48, 0.72);
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+  }
+  .jump-link:hover,
+  .jump-link:focus-visible {
+    background: rgba(232, 87, 61, 0.08);
+    color: #b53e25;
+    transform: translateX(2px);
+    outline: none;
+  }
+  .jump-link .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 9999px;
+    flex-shrink: 0;
+  }
+</style>

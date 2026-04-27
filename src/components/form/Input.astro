@@ -1,0 +1,55 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  /** Must match the parent <Field name>. */
+  name: string;
+  /** Override; defaults to `field-{name}` to match Field's auto id. */
+  id?: string;
+  type?: 'text' | 'email' | 'tel' | 'url' | 'number' | 'password' | 'search';
+  placeholder?: string;
+  value?: string;
+  required?: boolean;
+  /** Set by the consumer (Field) when an error is shown. */
+  invalid?: boolean;
+  /** Comma-joined ids of hint/error elements. */
+  describedBy?: string;
+  autocomplete?: string;
+  inputmode?: 'text' | 'numeric' | 'tel' | 'email' | 'url' | 'search';
+  class?: string;
+}
+
+const {
+  name,
+  id,
+  type = 'text',
+  placeholder,
+  value,
+  required = false,
+  invalid = false,
+  describedBy,
+  autocomplete,
+  inputmode,
+  class: className,
+} = Astro.props;
+
+const inputId = id ?? `field-${name}`;
+---
+
+<input
+  type={type}
+  id={inputId}
+  name={name}
+  value={value}
+  placeholder={placeholder}
+  required={required}
+  aria-required={required ? 'true' : undefined}
+  aria-invalid={invalid ? 'true' : undefined}
+  aria-describedby={describedBy}
+  autocomplete={autocomplete}
+  inputmode={inputmode}
+  class={cx(
+    'w-full bg-white border border-charcoal/60 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/70 focus:border-plum aria-[invalid=true]:border-plum',
+    className,
+  )}
+/>

@@ -1,0 +1,496 @@
+---
+import Button from '~/components/primitives/Button.astro';
+import { SECTIONS, TOTAL_ITEMS, TOTAL_MAX } from '~/lib/scorecard';
+
+/**
+ * Five subject cards with question rows, plus floating score badge and
+ * results card. Sections + question text are rendered server-side from the
+ * shared scorecard module; the inline script handles live scoring, reset,
+ * and URL `?r=` prefill.
+ */
+
+const subjectTabTone = ['coral', 'plum', 'sky', 'sage', 'sunset'] as const;
+
+const headlines: Record<string, { description: string }> = {
+  s1: { description: 'Are the pieces of your UI actually the same pieces, or are there six buttons wearing the same trench coat?' },
+  s2: { description: 'Not a feature, not a checklist. The subject that tells you whether your system is architecture or wallpaper.' },
+  s3: { description: 'The quiet plumbing underneath everything. Good tokens make redesigns a rename, not a rewrite.' },
+  s4: { description: 'The delivery, not the afterthought. If it isn’t documented, it doesn’t really exist for the next engineer.' },
+  s5: { description: 'The seam between design and code. When it’s working, nobody talks about it. When it isn’t, nobody talks about anything else.' },
+};
+
+const labels = [
+  { v: 0, label: 'No' },
+  { v: 1, label: 'Partial' },
+  { v: 2, label: 'Yes' },
+];
+---
+
+<div
+  class="bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 shadow-md mb-12"
+  data-scorecard-totals
+>
+  <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+    <div>
+      <p class="font-hand text-coral text-xl leading-none mb-1">total score so far</p>
+      <p class="font-display text-4xl md:text-5xl font-bold text-navy leading-none">
+        <span data-total-score>0</span><span class="text-charcoal/40">/{TOTAL_MAX}</span>
+      </p>
+    </div>
+    <div class="text-right">
+      <p class="font-heading text-xs uppercase tracking-widest text-plum font-semibold mb-1">
+        Questions answered
+      </p>
+      <p class="font-display text-2xl font-bold text-navy">
+        <span data-answered>0</span>/{TOTAL_ITEMS}
+      </p>
+    </div>
+  </div>
+  <div class="meter-track">
+    <div class="meter-fill" data-meter></div>
+  </div>
+</div>
+
+<form id="scorecardForm" class="space-y-16" onsubmit="return false">
+  {SECTIONS.map((section, idx) => (
+    <article
+      class="subject-card"
+      data-subject={section.id}
+      data-total={section.max}
+      data-count={section.items.length}
+    >
+      <span class={`subject-tab ${subjectTabTone[idx]}`}>
+        {String(idx + 1).padStart(2, '0')} · {section.title}
+      </span>
+      <div class="grade-stamp" data-grade-stamp>—</div>
+      <div class="p-7 md:p-10 pt-14 md:pt-16">
+        <div class="mb-6 max-w-md">
+          <h3 class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight mb-2">
+            {section.title}
+          </h3>
+          <p class="text-sm text-charcoal/70 leading-relaxed">
+            {headlines[section.id].description}
+          </p>
+        </div>
+        <div class="q-list">
+          {section.items.map((item, i) => (
+            <div class="q-row">
+              <p class="q-text">
+                <span class="q-num">{String(i + 1).padStart(2, '0')}.</span>
+                {item.label}
+              </p>
+              <div class="choice-group" role="radiogroup" aria-label={`Question ${i + 1}`}>
+                {labels.map(({ v, label }) => (
+                  <label class="choice" data-v={v}>
+                    <input
+                      type="radio"
+                      name={item.id}
+                      value={v}
+                      data-subject={section.id}
+                    />
+                    {label}
+                  </label>
+                ))}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </article>
+  ))}
+</form>
+
+<div class="mt-10 flex flex-col sm:flex-row items-center justify-between gap-4">
+  <Button
+    type="button"
+    id="resetBtn"
+    variant="ghost"
+    size="sm"
+    iconLeft="ph:eraser-duotone"
+    class="!bg-white !border-charcoal/15 hover:!bg-white hover:!border-coral/40"
+  >
+    Reset the card
+  </Button>
+  <p class="font-hand text-plum text-lg">scroll for your final report &rarr;</p>
+</div>
+
+<div class="mt-14">
+  <div class="reveal-card">
+    <div class="relative z-10">
+      <p class="font-hand text-lemon text-2xl leading-none mb-2">teacher's report</p>
+      <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
+        <span data-result-headline>Keep going — answer every question to unlock your report.</span>
+      </h3>
+      <div class="flex flex-wrap items-center gap-6 mb-6">
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-lemon/80 font-semibold mb-1">Final score</p>
+          <p class="font-display text-5xl md:text-6xl font-bold leading-none">
+            <span data-final-score>0</span><span class="text-white/50">/{TOTAL_MAX}</span>
+          </p>
+        </div>
+        <div>
+          <p class="font-heading text-xs uppercase tracking-widest text-lemon/80 font-semibold mb-1">Overall grade</p>
+          <p class="font-display text-5xl md:text-6xl font-bold leading-none" data-final-grade>—</p>
+        </div>
+      </div>
+      <p data-result-body class="text-white/80 leading-relaxed max-w-2xl font-body">
+        Pick a choice for every question and a personalized writeup will appear here with the two things I'd prioritize first.
+      </p>
+      <div data-result-actions class="mt-8 flex flex-col sm:flex-row gap-3" hidden>
+        <Button
+          id="results-link"
+          variant="primary"
+          size="md"
+          iconLeft="ph:chart-bar-duotone"
+          href="/scorecard/results/"
+        >
+          See your detailed results
+        </Button>
+        <Button
+          variant="secondary"
+          size="md"
+          iconLeft="ph:calendar-check-duotone"
+          href="https://calendly.com/josh-thebrileys/30min/"
+        >
+          Talk through your results
+        </Button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Floating score badge -->
+<div class="score-float" aria-hidden="true">
+  <div class="score-bubble" data-float-score>0</div>
+  <div class="leading-tight">
+    <p class="font-hand text-plum text-lg leading-none">so far…</p>
+    <p class="font-heading text-xs text-charcoal/60 uppercase tracking-wider">
+      <span data-float-answered>0</span> of {TOTAL_ITEMS} answered
+    </p>
+  </div>
+</div>
+
+<script>
+  import { letterGrade, TOTAL_ITEMS, TOTAL_MAX, VALID_PARAM_RE, SECTIONS } from '~/lib/scorecard';
+
+  const form = document.getElementById('scorecardForm') as HTMLFormElement | null;
+  if (form) {
+    const totalScoreEl = document.querySelector<HTMLElement>('[data-total-score]')!;
+    const answeredEl = document.querySelector<HTMLElement>('[data-answered]')!;
+    const meterEl = document.querySelector<HTMLElement>('[data-meter]')!;
+    const floatScoreEl = document.querySelector<HTMLElement>('[data-float-score]')!;
+    const floatAnsweredEl = document.querySelector<HTMLElement>('[data-float-answered]')!;
+    const finalScoreEl = document.querySelector<HTMLElement>('[data-final-score]')!;
+    const finalGradeEl = document.querySelector<HTMLElement>('[data-final-grade]')!;
+    const resultHeadline = document.querySelector<HTMLElement>('[data-result-headline]')!;
+    const resultBody = document.querySelector<HTMLElement>('[data-result-body]')!;
+    const resultActions = document.querySelector<HTMLElement>('[data-result-actions]')!;
+    const resultsLink = document.getElementById('results-link') as HTMLAnchorElement;
+
+    const subjectCards = Array.from(document.querySelectorAll<HTMLElement>('.subject-card'));
+
+    function encodeSelections(): string {
+      let encoded = '';
+      for (const section of SECTIONS) {
+        for (const item of section.items) {
+          const checked = form!.querySelector<HTMLInputElement>(`input[name="${item.id}"]:checked`);
+          encoded += checked ? checked.value : '0';
+        }
+      }
+      return encoded;
+    }
+
+    function updateScore() {
+      let total = 0;
+      let answered = 0;
+      const subjectTotals: Record<string, number> = {};
+
+      form!.querySelectorAll<HTMLInputElement>('input[type=radio]:checked').forEach((r) => {
+        const v = parseInt(r.value, 10);
+        total += v;
+        answered += 1;
+        const subject = r.dataset.subject!;
+        subjectTotals[subject] = (subjectTotals[subject] ?? 0) + v;
+      });
+
+      totalScoreEl.textContent = String(total);
+      answeredEl.textContent = String(answered);
+      floatScoreEl.textContent = String(total);
+      floatAnsweredEl.textContent = String(answered);
+      meterEl.style.width = `${(answered / TOTAL_ITEMS) * 100}%`;
+
+      subjectCards.forEach((card) => {
+        const subject = card.dataset.subject!;
+        const max = parseInt(card.dataset.total!, 10);
+        const totalQs = parseInt(card.dataset.count!, 10);
+        const score = subjectTotals[subject] ?? 0;
+        const stamp = card.querySelector<HTMLElement>('[data-grade-stamp]')!;
+        const answeredInSubject = form!.querySelectorAll(
+          `input[data-subject="${subject}"]:checked`,
+        ).length;
+
+        if (answeredInSubject === 0) {
+          stamp.textContent = '—';
+          stamp.removeAttribute('data-grade');
+          stamp.removeAttribute('data-state');
+          return;
+        }
+
+        if (answeredInSubject < totalQs) {
+          const progressText = `${answeredInSubject}/${totalQs}`;
+          if (stamp.textContent !== progressText) stamp.textContent = progressText;
+          stamp.removeAttribute('data-grade');
+          stamp.setAttribute('data-state', 'progress');
+          return;
+        }
+
+        stamp.removeAttribute('data-state');
+        const pct = (score / max) * 100;
+        const g = letterGrade(pct);
+        if (stamp.textContent !== g) {
+          stamp.textContent = g;
+          stamp.setAttribute('data-grade', g);
+          stamp.style.animation = 'none';
+          void stamp.offsetWidth;
+          stamp.style.animation = '';
+        }
+      });
+
+      finalScoreEl.textContent = String(total);
+
+      if (answered === TOTAL_ITEMS) {
+        const pct = (total / TOTAL_MAX) * 100;
+        finalGradeEl.textContent = letterGrade(pct);
+
+        const encoded = encodeSelections();
+        resultsLink.href = `/scorecard/results/?r=${encoded}`;
+        resultActions.hidden = false;
+
+        let headline: string;
+        let body: string;
+        if (pct >= 85) {
+          headline = 'Gold stars all around.';
+          body = 'Your system is doing its job. Click below for a detailed breakdown with your radar chart and personalized recommendation.';
+        } else if (pct >= 70) {
+          headline = 'Solid fundamentals, a few soft spots.';
+          body = 'The bones are good. Click below for a detailed breakdown showing exactly where to focus first.';
+        } else if (pct >= 55) {
+          headline = 'A system in the making, not quite trusted yet.';
+          body = 'The components exist but the system around them needs work. Click below for your radar chart and a prioritized recommendation.';
+        } else if (pct >= 40) {
+          headline = 'Quietly burning your team out.';
+          body = 'Every new feature costs more than the last one. Click below for a detailed breakdown with a specific recommendation on where to start.';
+        } else {
+          headline = "You’re building on sand, and that’s okay to name.";
+          body = "A low score isn’t a failing grade — it’s a starting map. Click below for your personalized report with exactly what to tackle first.";
+        }
+        resultHeadline.textContent = headline;
+        resultBody.textContent = body;
+      } else {
+        finalGradeEl.textContent = '—';
+        resultActions.hidden = true;
+        resultHeadline.textContent = 'Keep going. Answer every question to see your report.';
+        resultBody.textContent = `You're ${answered} of ${TOTAL_ITEMS} questions in. A personalized writeup appears here once you've scored every row.`;
+      }
+    }
+
+    form.addEventListener('change', (e) => {
+      const target = e.target as HTMLInputElement;
+      if (target.type !== 'radio') return;
+      form.querySelectorAll<HTMLInputElement>(`input[name="${target.name}"]`).forEach((input) => {
+        input.closest('.choice')?.classList.toggle('is-on', input.checked);
+      });
+      updateScore();
+    });
+
+    document.getElementById('resetBtn')?.addEventListener('click', () => {
+      form.reset();
+      form.querySelectorAll('.choice.is-on').forEach((el) => el.classList.remove('is-on'));
+      updateScore();
+      document.getElementById('scorecard')?.scrollIntoView({ behavior: 'smooth' });
+    });
+
+    // Pre-fill from URL ?r=...
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get('r');
+    if (r && VALID_PARAM_RE.test(r)) {
+      let idx = 0;
+      for (const section of SECTIONS) {
+        for (const item of section.items) {
+          const value = r[idx++];
+          const radio = form.querySelector<HTMLInputElement>(`input[name="${item.id}"][value="${value}"]`);
+          if (radio) {
+            radio.checked = true;
+            radio.closest('.choice')?.classList.add('is-on');
+          }
+        }
+      }
+    }
+
+    updateScore();
+  }
+</script>
+
+<style>
+  .subject-card {
+    position: relative;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow:
+      0 18px 40px -22px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(108, 74, 182, 0.06);
+    transition:
+      transform 0.35s ease,
+      box-shadow 0.35s ease;
+  }
+  .subject-card:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 24px 50px -20px rgba(45, 43, 85, 0.35),
+      0 0 0 1px rgba(232, 87, 61, 0.18);
+  }
+  .subject-tab {
+    position: absolute;
+    top: -14px;
+    left: 2rem;
+    padding: 0.45rem 1.1rem;
+    border-radius: 999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
+    transform: rotate(-2deg);
+  }
+  .subject-tab.coral { background: linear-gradient(135deg, #ff8e53, #e8573d); }
+  .subject-tab.plum { background: linear-gradient(135deg, #9b7ed9, #6c4ab6); }
+  .subject-tab.sage { background: linear-gradient(135deg, #a8d4a6, #7bb47a); }
+  .subject-tab.sky { background: linear-gradient(135deg, #8ccff0, #5dade2); }
+  .subject-tab.sunset { background: linear-gradient(135deg, #fdba74, #ff8e53); }
+
+  .q-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px dashed rgba(108, 74, 182, 0.18);
+  }
+  .q-row:first-of-type { border-top: none; }
+  .q-text {
+    font-family: 'DM Sans', sans-serif;
+    color: #2e2e30;
+    line-height: 1.55;
+  }
+  .q-num {
+    display: inline-block;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: rgba(108, 74, 182, 0.65);
+    font-weight: 600;
+    margin-right: 0.4rem;
+  }
+  .choice-group {
+    display: inline-flex;
+    background: #fffbf5;
+    border-radius: 9999px;
+    padding: 4px;
+    border: 1.5px solid rgba(108, 74, 182, 0.18);
+    box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.05);
+  }
+  .choice {
+    position: relative;
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #6b6b73;
+    cursor: pointer;
+    user-select: none;
+    transition: all 0.2s ease;
+    border: 1.5px solid transparent;
+  }
+  .choice:hover {
+    color: #2d2b55;
+    background: rgba(253, 230, 138, 0.35);
+  }
+  .choice input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .choice.is-on {
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+    transform: translateY(-1px);
+  }
+  .choice[data-v='0'].is-on { background: linear-gradient(135deg, #ff9f87, #e8573d); }
+  .choice[data-v='1'].is-on { background: linear-gradient(135deg, #fdba74, #ff8e53); color: #2d2b55; }
+  .choice[data-v='2'].is-on { background: linear-gradient(135deg, #a8d4a6, #7bb47a); }
+  .choice:focus-within {
+    outline: 2px dashed #6c4ab6;
+    outline-offset: 3px;
+  }
+
+  .score-float {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 45;
+    background: #fff;
+    border-radius: 18px;
+    padding: 0.9rem 1.1rem;
+    box-shadow:
+      0 18px 40px -12px rgba(45, 43, 85, 0.35),
+      0 0 0 1px rgba(108, 74, 182, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    transform: rotate(-2deg);
+    font-family: 'Space Grotesk', sans-serif;
+  }
+  .score-float::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-3deg);
+    width: 52px;
+    height: 16px;
+    background: rgba(253, 230, 138, 0.9);
+    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
+  }
+  .score-bubble {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-weight: 800;
+    font-size: 1.1rem;
+    color: #fff;
+    background: radial-gradient(circle at 30% 25%, #ff8e53, #e8573d 55%, #9a2f1a);
+    box-shadow:
+      inset -3px -3px 5px rgba(0, 0, 0, 0.2),
+      inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+  }
+
+  @media (max-width: 640px) {
+    .q-row { grid-template-columns: 1fr; }
+    .choice-group {
+      display: flex;
+      width: 100%;
+    }
+    .choice {
+      flex: 1;
+      text-align: center;
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+    }
+  }
+</style>

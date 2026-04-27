@@ -1,0 +1,44 @@
+---
+import { cx } from '~/lib/cx';
+
+interface Props {
+  name: string;
+  id?: string;
+  placeholder?: string;
+  value?: string;
+  rows?: number;
+  required?: boolean;
+  invalid?: boolean;
+  describedBy?: string;
+  class?: string;
+}
+
+const {
+  name,
+  id,
+  placeholder,
+  value,
+  rows = 5,
+  required = false,
+  invalid = false,
+  describedBy,
+  class: className,
+} = Astro.props;
+
+const fieldId = id ?? `field-${name}`;
+---
+
+<textarea
+  id={fieldId}
+  name={name}
+  rows={rows}
+  placeholder={placeholder}
+  required={required}
+  aria-required={required ? 'true' : undefined}
+  aria-invalid={invalid ? 'true' : undefined}
+  aria-describedby={describedBy}
+  class={cx(
+    'w-full bg-white border border-charcoal/60 rounded-lg px-4 py-3 font-body text-sm text-charcoal placeholder:text-charcoal/70 focus:border-plum resize-none aria-[invalid=true]:border-plum',
+    className,
+  )}
+>{value}</textarea>

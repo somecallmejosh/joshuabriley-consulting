@@ -1,0 +1,62 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Numbered badge for service / step cards. Decorative — the surrounding card
+ * already supplies semantic structure. Number is announced via aria-label so
+ * screen readers can still pick up ordering when relevant.
+ */
+
+type Tone = 'plum' | 'coral' | 'sky' | 'sage' | 'sunset' | 'navy';
+type Size = 'sm' | 'md' | 'lg';
+
+interface Props {
+  n: number;
+  tone?: Tone;
+  /** Render inline (flex child) instead of absolutely positioned over a card. */
+  inline?: boolean;
+  size?: Size;
+  /** Position via Tailwind absolute classes. Defaults to top-left tucked-out. */
+  class?: string;
+  /** When true, expose the number to AT (default: decorative). */
+  announce?: boolean;
+}
+
+const { n, tone = 'plum', inline = false, size = 'md', class: className, announce = false } = Astro.props;
+
+const tones: Record<Tone, string> = {
+  plum: 'bg-plum shadow-plum/20',
+  coral: 'bg-coral shadow-coral/20',
+  sky: 'bg-sky shadow-sky/20',
+  sage: 'bg-sage shadow-sage/20',
+  sunset: 'bg-sunset shadow-sunset/20',
+  navy: 'bg-navy shadow-navy/20',
+};
+
+const sizes: Record<Size, string> = {
+  sm: 'w-8 h-8 text-sm',
+  md: 'w-10 h-10 text-base',
+  lg: 'w-14 h-14 text-lg',
+};
+
+const positionClass = inline
+  ? 'flex-shrink-0 shadow-lg'
+  : 'absolute -top-4 -left-2 -rotate-6 shadow-md';
+
+const formatted = String(n).padStart(2, '0');
+---
+
+<span
+  class={cx(
+    'rounded-full text-white font-heading font-bold flex items-center justify-center',
+    sizes[size],
+    tones[tone],
+    positionClass,
+    className,
+  )}
+  aria-hidden={announce ? undefined : 'true'}
+  aria-label={announce ? `Step ${n}` : undefined}
+  role={announce ? 'img' : undefined}
+>
+  {formatted}
+</span>

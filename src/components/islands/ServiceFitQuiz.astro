@@ -1,0 +1,496 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import Button from '~/components/primitives/Button.astro';
+
+/**
+ * Five-question gut-check that recommends one of the three engagements.
+ * Each choice carries weights for audit / starter / workflow; the engagement
+ * with the highest score wins. State lives in the DOM (radios) so back/forward
+ * navigation just works.
+ */
+
+type Service = 'audit' | 'starter' | 'workflow';
+
+interface Choice {
+  label: string;
+  weights: Partial<Record<Service, number>>;
+}
+interface Question {
+  id: string;
+  prompt: string;
+  hint?: string;
+  choices: Choice[];
+}
+
+const questions: Question[] = [
+  {
+    id: 'q1',
+    prompt: 'Where does today’s pain actually live?',
+    hint: 'Pick the one that stings most.',
+    choices: [
+      { label: 'We genuinely don’t know what we have anymore.',                 weights: { audit: 3 } },
+      { label: 'We have things, but they’re a tangle nobody trusts.',           weights: { audit: 2, starter: 1 } },
+      { label: 'Design and engineering can’t agree on the source of truth.',   weights: { workflow: 3 } },
+    ],
+  },
+  {
+    id: 'q2',
+    prompt: 'What does your team work from today?',
+    choices: [
+      { label: 'Nothing systematic — every screen is bespoke.',                weights: { starter: 3 } },
+      { label: 'An old pattern library nobody really trusts.',                       weights: { audit: 2, starter: 1 } },
+      { label: 'A Figma library + a code library that don’t match.',           weights: { workflow: 3 } },
+    ],
+  },
+  {
+    id: 'q3',
+    prompt: 'How is a new component born?',
+    choices: [
+      { label: 'Designer mocks it. Engineer rebuilds it from scratch.',              weights: { workflow: 2, starter: 1 } },
+      { label: 'Copy-paste from the previous screen.',                               weights: { audit: 2, starter: 1 } },
+      { label: 'We extend the library — but it’s painful.',                weights: { audit: 1, workflow: 2 } },
+    ],
+  },
+  {
+    id: 'q4',
+    prompt: 'In 90 days, what does “win” look like?',
+    choices: [
+      { label: 'A clear map of what’s wrong, and a plan to fix it.',            weights: { audit: 3 } },
+      { label: 'A real, trusted component library we ship from.',                    weights: { starter: 3 } },
+      { label: 'Designers and devs in the same rhythm.',                             weights: { workflow: 3 } },
+    ],
+  },
+  {
+    id: 'q5',
+    prompt: 'Where’s your team’s energy going?',
+    choices: [
+      { label: 'Rebuilding the same UI over and over.',                              weights: { starter: 2, audit: 1 } },
+      { label: 'Translating designs into code, every sprint.',                       weights: { workflow: 3 } },
+      { label: 'Arguing about which version is the correct one.',                    weights: { audit: 2, workflow: 1 } },
+    ],
+  },
+];
+
+const services: Record<Service, {
+  title: string;
+  eyebrow: string;
+  body: string;
+  bullets: string[];
+  href: string;
+  icon: string;
+  accent: string;
+}> = {
+  audit: {
+    eyebrow: 'Start here',
+    title: 'Design System Audit',
+    body: 'You need a map before a hammer. We’ll find the friction, name it, and prioritize what’s worth fixing first.',
+    bullets: ['Component & token inventory', 'Accessibility & consistency review', 'Prioritized action plan'],
+    href: '/services/#services',
+    icon: 'ph:binoculars-duotone',
+    accent: 'coral',
+  },
+  starter: {
+    eyebrow: 'Build the foundation',
+    title: 'Component Library Starter',
+    body: 'You don’t need a redesign — you need a foundation. Accessible, composable, and built to grow with the team.',
+    bullets: ['Accessible composable core', 'Tokens & theming architecture', 'Docs your team will actually read'],
+    href: '/services/#services',
+    icon: 'ph:hammer-duotone',
+    accent: 'plum',
+  },
+  workflow: {
+    eyebrow: 'Fix the handoff',
+    title: 'Design-to-Code Workflow',
+    body: 'The friction between design and engineering isn’t a people problem — it’s a process problem. We’ll fix the process.',
+    bullets: ['Figma ↔ code parity that holds', 'Handoff rituals that don’t waste sprints', 'Shared language across teams'],
+    href: '/services/#services',
+    icon: 'ph:handshake-duotone',
+    accent: 'sky',
+  },
+};
+
+const totalQuestions = questions.length;
+---
+
+<div
+  class="sfq-root"
+  data-service-fit-quiz
+  data-questions={totalQuestions}
+  aria-labelledby="sfq-title"
+>
+  <header class="sfq-head">
+    <span class="font-hand text-coral text-xl rotate-[-2deg] inline-block leading-none mb-1">
+      sixty seconds
+    </span>
+    <h3 id="sfq-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+      Which engagement actually fits?
+    </h3>
+    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+      Five questions, no signup, no email. You&rsquo;ll get a single, specific recommendation — and an honest one if I&rsquo;m not the right call.
+    </p>
+  </header>
+
+  <div class="sfq-progress" role="progressbar" aria-valuemin="0" aria-valuemax={totalQuestions} aria-valuenow="0" data-sfq-progress>
+    <div class="sfq-progress-fill" data-sfq-progress-fill></div>
+    <span class="sfq-progress-label">
+      <span data-sfq-answered>0</span> of {totalQuestions} answered
+    </span>
+  </div>
+
+  <form class="sfq-form" data-sfq-form>
+    {questions.map((q, i) => (
+      <fieldset class="sfq-q" data-sfq-q={q.id}>
+        <legend class="sfq-q-legend">
+          <span class="sfq-q-num">Q{i + 1}</span>
+          <span class="sfq-q-prompt">{q.prompt}</span>
+        </legend>
+        {q.hint && <p class="sfq-q-hint">{q.hint}</p>}
+        <div class="sfq-choices" role="radiogroup" aria-label={q.prompt}>
+          {q.choices.map((c, idx) => (
+            <label class="sfq-choice">
+              <input
+                type="radio"
+                name={q.id}
+                value={idx}
+                data-weights={JSON.stringify(c.weights)}
+              />
+              <span class="sfq-choice-tick" aria-hidden="true">
+                <iconify-icon icon="ph:check-bold"></iconify-icon>
+              </span>
+              <span class="sfq-choice-label">{c.label}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
+    ))}
+  </form>
+
+  <!-- Result card -->
+  <div class="sfq-result" data-sfq-result hidden aria-live="polite">
+    {(Object.keys(services) as Service[]).map((key) => {
+      const s = services[key];
+      return (
+        <article class={`sfq-card sfq-card--${s.accent}`} data-sfq-card={key} hidden>
+          <div class="sfq-card-head">
+            <span class="sfq-card-eyebrow">{s.eyebrow} &middot; recommended for you</span>
+            <span class="sfq-card-icon">
+              <Icon name={s.icon} size={26} />
+            </span>
+          </div>
+          <h4 class="sfq-card-title">{s.title}</h4>
+          <p class="sfq-card-body">{s.body}</p>
+          <ul class="sfq-card-bullets">
+            {s.bullets.map((b) => (
+              <li>
+                <Icon name="ph:check-circle-duotone" size={16} />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="sfq-card-actions">
+            <Button variant="primary" iconRight="ph:arrow-right-bold" href={s.href}>
+              See the full {s.title.toLowerCase()}
+            </Button>
+            <Button variant="ghost" iconLeft="ph:arrow-counter-clockwise-duotone" data-sfq-restart>
+              Start over
+            </Button>
+          </div>
+          <p class="sfq-tiebreak" data-sfq-tiebreak hidden>
+            <Icon name="ph:info-duotone" size={14} />
+            <span>It was close — a quick call would help us pick between two paths.</span>
+          </p>
+        </article>
+      );
+    })}
+  </div>
+</div>
+
+<script>
+  type Service = 'audit' | 'starter' | 'workflow';
+
+  const root = document.querySelector<HTMLElement>('[data-service-fit-quiz]');
+  if (root) {
+    const form = root.querySelector<HTMLFormElement>('[data-sfq-form]')!;
+    const progressEl = root.querySelector<HTMLElement>('[data-sfq-progress]')!;
+    const fillEl = root.querySelector<HTMLElement>('[data-sfq-progress-fill]')!;
+    const answeredEl = root.querySelector<HTMLElement>('[data-sfq-answered]')!;
+    const resultWrap = root.querySelector<HTMLElement>('[data-sfq-result]')!;
+    const total = parseInt(root.dataset.questions || '0', 10);
+
+    function tally(): { winner: Service; close: boolean } {
+      const totals: Record<Service, number> = { audit: 0, starter: 0, workflow: 0 };
+      form.querySelectorAll<HTMLInputElement>('input[type=radio]:checked').forEach((r) => {
+        const w = JSON.parse(r.dataset.weights || '{}') as Partial<Record<Service, number>>;
+        for (const k of Object.keys(w) as Service[]) totals[k] += w[k] ?? 0;
+      });
+      const sorted = (Object.entries(totals) as [Service, number][])
+        .sort((a, b) => b[1] - a[1]);
+      const close = sorted[0][1] - sorted[1][1] <= 1;
+      return { winner: sorted[0][0], close };
+    }
+
+    function reveal(winner: Service, close: boolean) {
+      resultWrap.hidden = false;
+      root.querySelectorAll<HTMLElement>('[data-sfq-card]').forEach((card) => {
+        const isWinner = card.dataset.sfqCard === winner;
+        card.hidden = !isWinner;
+        if (isWinner) {
+          const tie = card.querySelector<HTMLElement>('[data-sfq-tiebreak]');
+          if (tie) tie.hidden = !close;
+        }
+      });
+      // smooth scroll, but only if not reduced motion
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      resultWrap.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+    }
+
+    function update() {
+      const answered = form.querySelectorAll<HTMLInputElement>('input[type=radio]:checked').length;
+      answeredEl.textContent = String(answered);
+      fillEl.style.width = `${(answered / total) * 100}%`;
+      progressEl.setAttribute('aria-valuenow', String(answered));
+
+      // Mark each fieldset as answered for visual progress
+      form.querySelectorAll<HTMLElement>('[data-sfq-q]').forEach((q) => {
+        const name = q.dataset.sfqQ!;
+        const isAnswered = !!form.querySelector(`input[name="${name}"]:checked`);
+        q.classList.toggle('is-answered', isAnswered);
+      });
+      // Sync visual state on chosen choice
+      form.querySelectorAll<HTMLInputElement>('input[type=radio]').forEach((r) => {
+        r.closest('.sfq-choice')?.classList.toggle('is-on', r.checked);
+      });
+
+      if (answered === total) {
+        const { winner, close } = tally();
+        reveal(winner, close);
+      } else {
+        resultWrap.hidden = true;
+      }
+    }
+
+    form.addEventListener('change', (e) => {
+      if ((e.target as HTMLInputElement).type === 'radio') update();
+    });
+
+    root.addEventListener('click', (e) => {
+      const t = e.target as HTMLElement;
+      if (t.closest('[data-sfq-restart]')) {
+        e.preventDefault();
+        form.reset();
+        update();
+        root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    });
+
+    update();
+  }
+</script>
+
+<style>
+  .sfq-root {
+    background: linear-gradient(180deg, #fffaf0 0%, #fff 100%);
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 18px 40px -22px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(108, 74, 182, 0.05);
+    padding: clamp(1.5rem, 3vw, 2.5rem);
+    max-width: 56rem;
+    margin: 0 auto;
+  }
+
+  .sfq-head { margin-bottom: 1.5rem; }
+
+  .sfq-progress {
+    position: relative;
+    height: 10px;
+    border-radius: 999px;
+    background: rgba(108, 74, 182, 0.1);
+    margin-bottom: 1.75rem;
+    overflow: hidden;
+  }
+  .sfq-progress-fill {
+    position: absolute; inset: 0;
+    width: 0%;
+    background: linear-gradient(90deg, #ff8e53, #6c4ab6);
+    border-radius: 999px;
+    transition: width 0.3s ease;
+  }
+  .sfq-progress-label {
+    position: absolute;
+    right: 0; top: -1.4rem;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(45, 43, 85, 0.55);
+  }
+
+  .sfq-form { display: grid; gap: 1.6rem; }
+
+  .sfq-q {
+    border: 1px solid rgba(108, 74, 182, 0.15);
+    border-radius: 16px;
+    padding: 1.2rem 1.3rem;
+    background: #fff;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  .sfq-q.is-answered {
+    border-color: rgba(123, 180, 122, 0.6);
+    box-shadow: 0 0 0 3px rgba(123, 180, 122, 0.12);
+  }
+  .sfq-q-legend {
+    display: flex; align-items: baseline; gap: 0.6rem;
+    margin-bottom: 0.45rem;
+  }
+  .sfq-q-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 700;
+    color: #6c4ab6;
+    font-size: 0.95rem;
+  }
+  .sfq-q-prompt {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    color: #2d2b55;
+    font-size: 1.1rem;
+    line-height: 1.3;
+  }
+  .sfq-q-hint {
+    font-family: 'Caveat', cursive;
+    color: #e8573d;
+    font-size: 1.05rem;
+    margin: 0 0 0.7rem;
+  }
+  .sfq-choices {
+    display: grid; gap: 0.5rem;
+  }
+  .sfq-choice {
+    position: relative;
+    display: flex; align-items: flex-start; gap: 0.7rem;
+    padding: 0.7rem 0.9rem;
+    background: #fffbf5;
+    border: 1.5px solid rgba(108, 74, 182, 0.14);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: 'DM Sans', system-ui, sans-serif;
+    color: #2e2e30;
+  }
+  .sfq-choice input {
+    position: absolute; opacity: 0; pointer-events: none;
+  }
+  .sfq-choice:hover { border-color: rgba(108, 74, 182, 0.4); background: rgba(253, 230, 138, 0.18); }
+  .sfq-choice:focus-within { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+  .sfq-choice.is-on {
+    background: linear-gradient(135deg, rgba(108, 74, 182, 0.1), rgba(232, 87, 61, 0.08));
+    border-color: #6c4ab6;
+    color: #2d2b55;
+    box-shadow: 0 6px 14px -8px rgba(108, 74, 182, 0.4);
+  }
+  .sfq-choice-tick {
+    flex: 0 0 auto;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 1.5px solid rgba(108, 74, 182, 0.3);
+    display: inline-flex; align-items: center; justify-content: center;
+    color: transparent;
+    transition: all 0.18s ease;
+    font-size: 12px;
+    line-height: 1;
+  }
+  .sfq-choice.is-on .sfq-choice-tick {
+    background: #6c4ab6;
+    border-color: #6c4ab6;
+    color: #fff;
+  }
+  .sfq-choice-label {
+    line-height: 1.45;
+    font-size: 0.95rem;
+    flex: 1;
+  }
+
+  /* ===== result ===== */
+  .sfq-result { margin-top: 2rem; }
+  .sfq-card {
+    --sfq-accent: #6c4ab6;
+    --sfq-accent-soft: rgba(108, 74, 182, 0.08);
+    position: relative;
+    background: linear-gradient(180deg, #fff, var(--sfq-accent-soft));
+    border: 1.5px solid var(--sfq-accent);
+    border-radius: 18px;
+    padding: 1.75rem 1.6rem;
+    box-shadow: 0 18px 40px -20px rgba(45, 43, 85, 0.3);
+  }
+  .sfq-card--coral { --sfq-accent: #e8573d; --sfq-accent-soft: rgba(232, 87, 61, 0.08); }
+  .sfq-card--plum  { --sfq-accent: #6c4ab6; --sfq-accent-soft: rgba(108, 74, 182, 0.08); }
+  .sfq-card--sky   { --sfq-accent: #1b6fa1; --sfq-accent-soft: rgba(27, 111, 161, 0.08); }
+
+  .sfq-card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  .sfq-card-eyebrow {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--sfq-accent);
+  }
+  .sfq-card-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    background: var(--sfq-accent-soft);
+    color: var(--sfq-accent);
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .sfq-card-title {
+    font-family: 'Fraunces', serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #2d2b55;
+    margin: 0 0 0.5rem;
+    line-height: 1.2;
+  }
+  .sfq-card-body {
+    font-family: 'DM Sans', sans-serif;
+    color: rgba(46, 46, 48, 0.85);
+    line-height: 1.55;
+    margin: 0 0 1rem;
+  }
+  .sfq-card-bullets {
+    list-style: none; padding: 0; margin: 0 0 1.25rem;
+    display: grid; gap: 0.4rem;
+  }
+  .sfq-card-bullets li {
+    display: flex; align-items: center; gap: 0.5rem;
+    font-size: 0.9rem; color: rgba(46, 46, 48, 0.85);
+  }
+  .sfq-card-bullets li :global(iconify-icon) { color: var(--sfq-accent); flex: 0 0 auto; }
+  .sfq-tiebreak :global(iconify-icon) { color: var(--sfq-accent); }
+  .sfq-card-actions {
+    display: flex; flex-wrap: wrap; gap: 0.7rem;
+  }
+  .sfq-tiebreak {
+    margin: 1rem 0 0;
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    font-size: 0.8rem;
+    color: rgba(45, 43, 85, 0.7);
+    background: rgba(253, 230, 138, 0.4);
+    border: 1px dashed rgba(108, 74, 182, 0.3);
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sfq-progress-fill,
+    .sfq-q,
+    .sfq-choice,
+    .sfq-choice-tick { transition: none; }
+  }
+</style>

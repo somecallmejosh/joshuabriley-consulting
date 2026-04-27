@@ -1,0 +1,74 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import Link from '~/components/primitives/Link.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * Mobile navigation toggle + drawer. Vanilla JS handles aria-expanded,
+ * focus management, Escape-to-close, and resize-close. Zero framework
+ * footprint; ships < 1 KB of JS.
+ */
+
+import type { NavLink } from '~/lib/nav';
+
+interface Props {
+  links: NavLink[];
+  class?: string;
+}
+
+const { links, class: className } = Astro.props as Props;
+---
+
+<button
+  id="mobile-menu-toggle"
+  type="button"
+  class={cx('md:hidden inline-flex items-center justify-center w-10 h-10 rounded-lg text-navy hover:bg-charcoal/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral', className)}
+  aria-label="Toggle navigation menu"
+  aria-expanded="false"
+  aria-controls="mobile-menu"
+>
+  <Icon name="ph:list-bold" size={24} />
+</button>
+
+<nav
+  id="mobile-menu"
+  class="mobile-menu hidden flex-col gap-4 absolute top-full left-0 right-0 bg-cream/95 backdrop-blur-md border-b border-charcoal/10 px-6 py-6 md:hidden"
+  aria-label="Mobile navigation"
+>
+  {links.map((link) => (
+    <Link href={link.href} variant="nav" class="block py-1">{link.label}</Link>
+  ))}
+</nav>
+
+<script>
+  const toggle = document.getElementById('mobile-menu-toggle');
+  const menu = document.getElementById('mobile-menu');
+  if (toggle && menu) {
+    const focusableSelector = 'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const isOpen = () => document.body.classList.contains('nav-open');
+    const open = () => {
+      document.body.classList.add('nav-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      const first = menu.querySelector<HTMLElement>(focusableSelector);
+      first?.focus();
+    };
+    const close = (restoreFocus = true) => {
+      document.body.classList.remove('nav-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      if (restoreFocus) toggle.focus();
+    };
+    toggle.addEventListener('click', () => (isOpen() ? close() : open()));
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && isOpen()) {
+        e.preventDefault();
+        close();
+      }
+    });
+    menu.addEventListener('click', (e) => {
+      if ((e.target as HTMLElement).closest('a')) close(false);
+    });
+    window.addEventListener('resize', () => {
+      if (window.matchMedia('(min-width: 768px)').matches && isOpen()) close(false);
+    });
+  }
+</script>

@@ -1,0 +1,20 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/** Decorative quote glyph, top-right of testimonial cards. Always aria-hidden. */
+
+interface Props {
+  class?: string;
+  size?: number;
+}
+
+const { class: className, size = 28 } = Astro.props;
+---
+
+<span
+  aria-hidden="true"
+  class={cx('absolute top-4 right-4 text-plum/30', className)}
+>
+  <Icon name="ph:quotes-duotone" size={size} />
+</span>

@@ -1,0 +1,70 @@
+---
+import { cx } from '~/lib/cx';
+
+/**
+ * Floating decorative blob used in hero sections. Always aria-hidden.
+ * Position is supplied via class (e.g. "absolute top-12 right-[10%]") since
+ * placement is page-specific.
+ */
+
+type Tone = 'coral' | 'plum' | 'sunset' | 'sage' | 'sky' | 'lemon' | 'peach';
+type Size = 'sm' | 'md' | 'lg' | 'xl';
+type Animate = 'float' | 'float-slow' | 'float-delay' | 'wiggle' | 'none';
+
+interface Props {
+  tone?: Tone;
+  size?: Size;
+  shape?: 'default' | 'alt';
+  animate?: Animate;
+  /** Tailwind opacity utility (e.g. "opacity-70"). */
+  opacity?: string;
+  class?: string;
+}
+
+const {
+  tone = 'lemon',
+  size = 'md',
+  shape = 'default',
+  animate = 'float',
+  opacity = 'opacity-70',
+  class: className,
+} = Astro.props;
+
+const tones: Record<Tone, string> = {
+  coral: 'bg-coral/60',
+  plum: 'bg-plum/60',
+  sunset: 'bg-sunset/60',
+  sage: 'bg-sage/60',
+  sky: 'bg-sky/60',
+  lemon: 'bg-lemon/60',
+  peach: 'bg-peach/60',
+};
+
+const sizes: Record<Size, string> = {
+  sm: 'w-12 h-12',
+  md: 'w-16 h-16',
+  lg: 'w-24 h-24',
+  xl: 'w-32 h-32',
+};
+
+const animations: Record<Animate, string> = {
+  float: 'animate-float',
+  'float-slow': 'animate-float-slow',
+  'float-delay': 'animate-float-delay',
+  wiggle: 'animate-wiggle',
+  none: '',
+};
+---
+
+<div
+  aria-hidden="true"
+  class={cx(
+    tones[tone],
+    sizes[size],
+    shape === 'alt' ? 'blob-shape-alt' : 'blob-shape',
+    animations[animate],
+    opacity,
+    className,
+  )}
+>
+</div>
