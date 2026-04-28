@@ -9,5 +9,6 @@
   "variant": "polaroid",
   "tilt": "rot-5",
   "tape": "center",
-  "slabGradient": "from-sage/25 via-lemon/40 to-sky/20"
+  "slabGradient": "from-sage/25 via-lemon/40 to-sky/20",
+  "image": "/images/jack-gillete.jpeg"
 }

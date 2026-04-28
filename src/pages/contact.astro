@@ -41,6 +41,7 @@ const featuredQuotes = [
     avatarTone: 'plum' as const,
     tilt: -1 as const,
     quoteTone: 'text-coral/30',
+    image: '/images/rebecca-cachia.jpeg',
   },
   {
     quote: 'Josh delivered assignments as planned, and his work quality allowed him bandwidth for additional responsibilities.',
@@ -51,6 +52,7 @@ const featuredQuotes = [
     avatarTone: 'sage' as const,
     tilt: 1 as const,
     quoteTone: 'text-plum/30',
+    image: '/images/gabriel-bressi.jpeg',
   },
 ];
 ---
@@ -215,6 +217,7 @@ const featuredQuotes = [
                 name={q.name}
                 gradient={q.avatarTone === 'plum' ? 'plumSky' : 'sageLemon'}
                 size="md"
+                image={q.image}
               />
               <div>
                 <p class="font-heading font-semibold text-navy">{q.name}</p>

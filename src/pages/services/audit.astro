@@ -201,6 +201,7 @@ const testimonials = [
     initials: 'RC',
     avatarTone: 'plum' as const,
     tilt: 'rot-1' as const,
+    image: '/images/rebecca-cachia.jpeg',
   },
   {
     name: 'Drew DiPasquale',
@@ -211,6 +212,7 @@ const testimonials = [
     initials: 'DD',
     avatarTone: 'sky' as const,
     tilt: 'rot-2' as const,
+    image: '/images/drew-dipasquale.jpeg',
   },
 ];
 ---
@@ -610,6 +612,7 @@ const testimonials = [
             avatarTone={t.avatarTone}
             variant="index"
             tilt={t.tilt}
+            image={t.image}
           />
         ))}
       </CardGrid>

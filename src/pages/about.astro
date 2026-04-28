@@ -89,31 +89,46 @@ const learning = [
     icon: 'ph:scroll-duotone',
     iconClass: 'text-coral',
     iconBg: 'bg-coral/20',
+    tilt: '-rotate-2',
     title: 'WAI-ARIA & APG',
+    sticker: 'dog-eared',
     body: 'Authoring practices for patterns that truly work for assistive tech.',
   },
   {
     icon: 'ph:palette-duotone',
     iconClass: 'text-lemon',
     iconBg: 'bg-plum/30',
+    tilt: 'rotate-1',
     title: 'Design Tokens CG',
+    sticker: 'highlighted',
     body: 'The emerging standard for portable, multi-platform design decisions.',
   },
   {
     icon: 'ph:atom-duotone',
     iconClass: 'text-sage',
     iconBg: 'bg-sage/25',
+    tilt: '-rotate-1',
     title: 'CSS Working Group',
+    sticker: 'fresh-ink',
     body: 'Container queries, anchor positioning, cascade layers — the good stuff.',
   },
   {
     icon: 'ph:github-logo-duotone',
     iconClass: 'text-sunset',
     iconBg: 'bg-sunset/25',
+    tilt: 'rotate-2',
     title: 'Rudiment UI',
+    sticker: 'open-source',
     body: 'My open-source sandbox for accessible component primitives.',
   },
 ];
+
+const stickerCopy: Record<string, string> = {
+  'dog-eared': 'currently dog-eared',
+  highlighted: 'highlighter-stained',
+  'fresh-ink': 'ink still wet',
+  'open-source': 'built in public',
+};
 ---
 
 <BaseLayout title="About — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
@@ -273,17 +288,25 @@ const learning = [
   <Section tone="navy" padding="default" decorated>
     <Blob tone="lemon" size="lg" class="absolute top-10 right-[8%]" animate="float-slow" opacity="opacity-10" />
     <Blob tone="coral" size="md" class="absolute bottom-10 left-[6%] rounded-full" animate="float-delay" opacity="opacity-30" />
+    <Blob tone="sage" size="sm" class="absolute top-1/2 left-[42%] rounded-full" animate="float" opacity="opacity-15" />
 
     <Container width="default" class="relative z-10">
       <Grid cols={2} gap="lg" class="items-center">
-        <div>
-          <div class="mb-6 inline-block">
-            <Badge tone="navy" icon="ph:sparkle-duotone" class="bg-white/10 text-lemon border-lemon/40">
+        <div class="relative">
+          <div class="mb-6 inline-block relative">
+            <Badge tone="lemon" icon="ph:sparkle-duotone" class="!bg-lemon !border-lemon">
               Always learning
             </Badge>
+            <span
+              class="absolute -top-3 -right-6 text-lemon/80 animate-wiggle"
+              aria-hidden="true"
+            >
+              <Icon name="ph:star-four-duotone" size={20} />
+            </span>
           </div>
           <Heading level={2} visual="display-md" tone="white" class="mb-6">
-            Twenty years in, still reading the <span class="text-lemon">spec drafts</span>.
+            Twenty years in, still reading the <span class="text-lemon">spec drafts</span>
+            <span class="inline-block text-coral animate-float-slow ml-1" aria-hidden="true">.</span>
           </Heading>
           <Text tone="whiteMuted" class="mb-4">
             I stay close to the sources: WAI-ARIA working drafts, the Design Tokens Community Group,
@@ -293,20 +316,40 @@ const learning = [
             I also maintain <strong class="text-lemon font-semibold">Rudiment UI</strong>,
             an open-source library where I sharpen ideas in public before they land in client work.
           </Text>
+
+          <p class="mt-8 font-heading text-xs uppercase tracking-[0.2em] text-white/40 flex items-center gap-2">
+            <Icon name="ph:arrow-bend-right-down-duotone" size={18} class="text-lemon/70" />
+            <span>currently on the nightstand</span>
+          </p>
         </div>
 
-        <ul class="space-y-4 list-none">
-          {learning.map((item) => (
-            <li class="flex items-start gap-4 bg-white/5 rounded-xl p-4 border border-white/10">
-              <div class={`w-10 h-10 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0`}>
-                <Icon name={item.icon} size={22} class={item.iconClass} />
+        <ul class="space-y-5 list-none relative pt-4">
+          {learning.map((item, i) => (
+            <li
+              class={`learning-card group relative flex items-start gap-4 bg-white/[0.06] backdrop-blur-sm rounded-xl p-5 pr-6 border border-white/10 transform ${item.tilt} transition-transform duration-300 ease-out hover:rotate-0 hover:-translate-y-1 hover:bg-white/[0.09] hover:border-lemon/30 hover:shadow-2xl hover:shadow-coral/10`}
+              style={`animation-delay: ${i * 120}ms`}
+            >
+              <div class={`w-11 h-11 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0 group-hover:rotate-6 transition-transform duration-300`}>
+                <Icon name={item.icon} size={24} class={item.iconClass} />
               </div>
-              <div>
-                <p class="font-heading font-semibold text-white">{item.title}</p>
-                <p class="text-sm text-white/60">{item.body}</p>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-baseline justify-between gap-2 mb-1">
+                  <p class="font-heading font-semibold text-white">{item.title}</p>
+                  <span class="font-heading text-[10px] uppercase tracking-wider text-lemon/60 italic whitespace-nowrap">
+                    {stickerCopy[item.sticker]}
+                  </span>
+                </div>
+                <p class="text-sm text-white/65 leading-relaxed">{item.body}</p>
               </div>
             </li>
           ))}
+
+          <span
+            class="absolute -right-3 -bottom-4 text-coral/60 rotate-12 hidden md:block"
+            aria-hidden="true"
+          >
+            <Icon name="ph:scribble-loop-duotone" size={56} />
+          </span>
         </ul>
       </Grid>
     </Container>

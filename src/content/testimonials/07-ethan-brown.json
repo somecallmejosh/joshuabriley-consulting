@@ -3,10 +3,11 @@
   "name": "Ethan Brown",
   "role": "Chief Architect",
   "company": "Domino Data Lab",
-  "quote": "Josh is a highly productive and well-organized front end designer… always ahead of schedule with the implementation of his responsibilities.",
+  "quote": "Josh is a highly productive and well-organized front end designer\u2026 always ahead of schedule with the implementation of his responsibilities.",
   "initials": "EB",
   "avatarTone": "sage",
   "variant": "index",
   "tilt": "rot-1",
-  "pin": "plum"
+  "pin": "plum",
+  "image": "/images/ethan-brown.jpeg"
 }

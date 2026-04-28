@@ -32,6 +32,8 @@ interface Props {
   slabGradient?: string;
   /** Plum letterhead featured cards: bigger quote + leading icon. */
   featured?: boolean;
+  /** Photo of the person being cited; falls back to initials when omitted. */
+  image?: string;
 }
 
 const {
@@ -47,6 +49,7 @@ const {
   pin,
   slabGradient = 'from-coral/25 via-sunset/20 to-lemon/40',
   featured = false,
+  image,
 } = Astro.props;
 
 const variantClass: Record<Variant, string> = {
@@ -74,13 +77,23 @@ const pinClass = pin ? (pin === 'coral' ? 'pin' : `pin ${pin}`) : '';
 
     {variant === 'polaroid' && (
       <div class={cx('avatar-slab bg-gradient-to-br', slabGradient)}>
-        <span
-          class={cx('avatar avatar-lg', avatarTone)}
-          role="img"
-          aria-label={name}
-        >
-          <span aria-hidden="true">{initials}</span>
-        </span>
+        {image ? (
+          <img
+            src={image}
+            alt={name}
+            class={cx('avatar avatar-lg', avatarTone)}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : (
+          <span
+            class={cx('avatar avatar-lg', avatarTone)}
+            role="img"
+            aria-label={name}
+          >
+            <span aria-hidden="true">{initials}</span>
+          </span>
+        )}
       </div>
     )}
 
@@ -126,13 +139,17 @@ const pinClass = pin ? (pin === 'coral' ? 'pin' : `pin ${pin}`) : '';
           variant === 'plum' ? 'border-white/15 pt-4' : variant === 'sticky' ? 'border-navy/15' : 'border-charcoal/10',
         )}
       >
-        <span
-          class={cx('avatar', avatarTone)}
-          role="img"
-          aria-label={name}
-        >
-          <span aria-hidden="true">{initials}</span>
-        </span>
+        {image ? (
+          <img src={image} alt={name} class="avatar" loading="lazy" decoding="async" />
+        ) : (
+          <span
+            class={cx('avatar', avatarTone)}
+            role="img"
+            aria-label={name}
+          >
+            <span aria-hidden="true">{initials}</span>
+          </span>
+        )}
         <div>
           <p class={cx('font-heading font-semibold text-sm', variant === 'plum' ? 'text-white' : 'text-navy')}>
             {name}

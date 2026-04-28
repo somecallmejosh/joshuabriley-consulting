@@ -23,6 +23,8 @@ const testimonials = defineCollection({
     tape: tape,
     /** For polaroid variant: gradient applied to the avatar slab. */
     slabGradient: z.string().optional(),
+    /** Path to the person's photo (used for the avatar / polaroid slab). */
+    image: z.string().optional(),
     /** Use white text and a quote glyph (plum variant featured cards). */
     featured: z.boolean().optional(),
   }),
