@@ -298,7 +298,7 @@ const demos = [
     border: 0; background: transparent;
     padding: 0.4rem 0.95rem;
     border-radius: 999px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.78rem;
     color: #6b6b73;
@@ -315,7 +315,7 @@ const demos = [
   .dx-toggle {
     display: inline-flex; align-items: center; gap: 0.6rem;
     cursor: pointer;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.8rem;
     color: #2d2b55;
@@ -361,7 +361,7 @@ const demos = [
     background: #2d2b55;
     color: rgba(255, 255, 255, 0.7);
     padding: 0.5rem 0.8rem;
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
     font-size: 0.7rem;
   }
   .dx-chrome-dots { display: inline-flex; gap: 4px; }
@@ -395,7 +395,7 @@ const demos = [
     background: #f08a5d;
   }
   .dx-price-tier {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.1em;
@@ -404,7 +404,7 @@ const demos = [
     margin: 0 0 0.2rem;
   }
   .dx-price-num {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-weight: 800;
     color: #2d2b55;
     font-size: 1.6rem;
@@ -413,7 +413,7 @@ const demos = [
   .dx-price-num span { font-size: 0.78rem; color: rgba(45, 43, 85, 0.5); font-weight: 400; }
   .dx-price-card ul {
     list-style: none; padding: 0; margin: 0 0 0.9rem;
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
     font-size: 0.78rem;
     color: rgba(46, 46, 48, 0.8);
     display: grid; gap: 0.35rem;
@@ -427,7 +427,7 @@ const demos = [
     border: 0;
     border-radius: 10px;
     padding: 0.45rem 0.7rem;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.78rem;
   }
@@ -437,7 +437,7 @@ const demos = [
     transform: translateX(-50%);
     background: #e8573d;
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -449,7 +449,7 @@ const demos = [
   /* ============ hero demo ============ */
   .dx-hero { padding: 2rem 1.25rem 1.5rem; }
   .dx-hero-title {
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-weight: 700;
     font-size: 38px; /* off-scale */
     color: #2d2b55;
@@ -458,7 +458,7 @@ const demos = [
     max-width: 28ch;
   }
   .dx-hero-body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
     color: rgba(46, 46, 48, 0.85);
     font-size: 0.95rem;
     margin: 0 0 0.8rem;
@@ -476,7 +476,7 @@ const demos = [
     border: 0;
     border-radius: 6px; /* off — system is 14px */
     padding: 0.55rem 1rem;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.85rem;
   }
@@ -501,7 +501,7 @@ const demos = [
     width: 22px; height: 22px;
     background: #e8573d;
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.68rem;
     font-weight: 700;
     border-radius: 50%;
@@ -540,7 +540,7 @@ const demos = [
   }
   .dx-issues-count {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: 'Fraunces', serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-weight: 700;
     font-size: 1.1rem;
     color: #e8573d;
@@ -549,7 +549,7 @@ const demos = [
   .dx-issues-count span {
     background: #e8573d;
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.75rem;
     padding: 2px 8px;
     border-radius: 999px;
@@ -570,7 +570,7 @@ const demos = [
     width: 22px; height: 22px;
     background: #e8573d;
     color: #fff;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.68rem;
     font-weight: 700;
     border-radius: 50%;
@@ -578,21 +578,21 @@ const demos = [
     flex: 0 0 auto;
   }
   .dx-issues-title {
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.85rem;
     color: #2d2b55;
     margin: 0 0 0.15rem;
   }
   .dx-issues-body {
-    font-family: 'DM Sans', sans-serif;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
     font-size: 0.78rem;
     color: rgba(46, 46, 48, 0.78);
     margin: 0;
     line-height: 1.4;
   }
   .dx-issues code {
-    font-family: 'JetBrains Mono', ui-monospace, monospace;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
     font-size: 0.72rem;
     background: rgba(108, 74, 182, 0.1);
     color: #6c4ab6;
@@ -609,7 +609,7 @@ const demos = [
   }
   .dx-foot-link {
     color: #e8573d;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.85rem;
     margin-left: 0.4rem;

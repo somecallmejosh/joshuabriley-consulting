@@ -129,7 +129,7 @@ const isoDate = date.toISOString().slice(0, 10);
 <style is:global>
   /* Whimsy prose styling — ported verbatim from the legacy blog post template. */
   .prose-whimsy {
-    font-family: 'DM Sans', system-ui, sans-serif;
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
     color: #2e2e30;
     font-size: 1.125rem;
     line-height: 1.75;
@@ -141,7 +141,7 @@ const isoDate = date.toISOString().slice(0, 10);
     color: rgba(46, 46, 48, 0.85);
   }
   .prose-whimsy .lede {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-size: 1.4rem;
     line-height: 1.55;
     color: #2d2b55;
@@ -149,7 +149,7 @@ const isoDate = date.toISOString().slice(0, 10);
     font-style: italic;
   }
   .prose-whimsy .lede::first-letter {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-weight: 600;
     font-style: normal;
     float: left;
@@ -159,7 +159,7 @@ const isoDate = date.toISOString().slice(0, 10);
     color: #e8573d;
   }
   .prose-whimsy h2 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-size: 2rem;
     line-height: 1.15;
     font-weight: 600;
@@ -169,14 +169,14 @@ const isoDate = date.toISOString().slice(0, 10);
   }
   .prose-whimsy h2 .num {
     display: inline-block;
-    font-family: 'Style Script', cursive;
+    font-family: var(--font-style-script), cursive;
     color: #e8573d;
     font-size: 1.4em;
     margin-right: 0.4rem;
     font-weight: 400;
   }
   .prose-whimsy h3 {
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-size: 1.4rem;
     line-height: 1.25;
     font-weight: 600;
@@ -221,7 +221,7 @@ const isoDate = date.toISOString().slice(0, 10);
     border-left: 4px solid #e8573d;
     background: linear-gradient(135deg, rgba(253, 230, 138, 0.35), rgba(255, 232, 214, 0.45));
     border-radius: 0 14px 14px 0;
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-style: italic;
     font-size: 1.3rem;
     line-height: 1.45;
@@ -235,7 +235,7 @@ const isoDate = date.toISOString().slice(0, 10);
     margin: 3rem auto;
     max-width: 40rem;
     text-align: center;
-    font-family: 'Fraunces', Georgia, serif;
+    font-family: var(--font-fraunces), Georgia, serif;
     font-size: 1.9rem;
     line-height: 1.2;
     color: #2d2b55;
@@ -292,7 +292,7 @@ const isoDate = date.toISOString().slice(0, 10);
     left: 24px;
     background: #fde68a;
     color: #2d2b55;
-    font-family: 'Style Script', cursive;
+    font-family: var(--font-style-script), cursive;
     font-size: 1.3rem;
     padding: 0 0.6rem;
     border-radius: 999px;

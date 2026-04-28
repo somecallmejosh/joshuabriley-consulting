@@ -4,12 +4,12 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        heading: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
-        body: ['"DM Sans"', 'system-ui', 'sans-serif'],
-        logo: ['"Style Script"', 'cursive'],
+        display: ['var(--font-fraunces)', 'Georgia', 'serif'],
+        heading: ['var(--font-space-grotesk)', 'system-ui', 'sans-serif'],
+        body: ['var(--font-dm-sans)', 'system-ui', 'sans-serif'],
+        logo: ['var(--font-style-script)', 'cursive'],
         hand: ['Caveat', 'cursive'],
-        mono: ['"JetBrains Mono"', 'ui-monospace', 'monospace'],
+        mono: ['var(--font-jetbrains-mono)', 'ui-monospace', 'monospace'],
       },
       colors: {
         cream: '#FFFDF9',

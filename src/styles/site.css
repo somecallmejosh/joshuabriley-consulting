@@ -2,7 +2,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'DM Sans', system-ui, sans-serif;
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
 }
 
 :focus {
@@ -147,7 +147,7 @@ header .mobile-menu a[aria-current='page']::before {
   border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
   background: linear-gradient(135deg, #6c4ab6, #e8573d);
   color: white;
-  font-family: 'Style Script', cursive;
+  font-family: var(--font-style-script), cursive;
   font-size: 1.1rem;
   line-height: 1;
   flex-shrink: 0;
@@ -243,7 +243,7 @@ header .mobile-menu a[aria-current='page']::before {
   pointer-events: none;
 }
 .marker-label {
-  font-family: 'Style Script', cursive;
+  font-family: var(--font-style-script), cursive;
   color: #6c4ab6;
   line-height: 1;
 }
@@ -270,14 +270,14 @@ header .mobile-menu a[aria-current='page']::before {
   border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
   background: linear-gradient(135deg, #ff8e53, #e8573d);
   color: white;
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-fraunces), Georgia, serif;
   font-size: 1.6rem;
   font-weight: 700;
   box-shadow: 0 8px 18px -8px rgba(232, 87, 61, 0.55);
   flex-shrink: 0;
 }
 .pull-quote {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-fraunces), Georgia, serif;
   font-style: italic;
 }
 .ingredient-chip {
@@ -288,7 +288,7 @@ header .mobile-menu a[aria-current='page']::before {
   border: 1.5px dashed rgba(45, 43, 85, 0.18);
   padding: 8px 14px;
   border-radius: 9999px;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: 0.88rem;
   color: #2d2b55;
 }
@@ -428,7 +428,7 @@ header .mobile-menu a[aria-current='page']::before {
   display: block;
 }
 .project-logo-tag--wordmark {
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
   letter-spacing: -0.02em;
   font-size: 1.9rem;
@@ -489,7 +489,7 @@ header .mobile-menu a[aria-current='page']::before {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Fraunces', serif;
+  font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 900;
   font-size: 1.75rem;
   color: #fff;
@@ -505,7 +505,7 @@ header .mobile-menu a[aria-current='page']::before {
   animation: stamp-in 0.5s ease-out;
 }
 .grade-stamp[data-state='progress'] {
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -640,7 +640,7 @@ header .mobile-menu a[aria-current='page']::before {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Space Grotesk', sans-serif;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
   font-weight: 600;
   font-size: 0.95rem;
   color: #fff;

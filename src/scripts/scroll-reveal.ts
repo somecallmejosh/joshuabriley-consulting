@@ -11,23 +11,30 @@ if (!prefersReduced && 'IntersectionObserver' in window) {
       const content = Array.from(section.children).find(
         (child) => child.getAttribute('aria-hidden') !== 'true',
       );
-      const target = content ?? section;
-      target.classList.add('scroll-reveal');
-      targets.add(target);
+      targets.add(content ?? section);
     });
 
     document.querySelectorAll('[data-reveal]').forEach((el) => {
-      el.classList.add('scroll-reveal');
       targets.add(el);
     });
 
     if (targets.size > 0) {
       const viewportH = window.innerHeight || document.documentElement.clientHeight;
+      const visibleOnLoad = new Set<Element>();
+
+      // Read phase: measure all rects before mutating classes so the browser
+      // does a single layout, not one forced reflow per element.
       targets.forEach((el) => {
         const rect = el.getBoundingClientRect();
         if (rect.top < viewportH * 0.92 && rect.bottom > 0) {
-          el.classList.add('is-visible');
+          visibleOnLoad.add(el);
         }
+      });
+
+      // Write phase: apply classes in one batch.
+      targets.forEach((el) => {
+        el.classList.add('scroll-reveal');
+        if (visibleOnLoad.has(el)) el.classList.add('is-visible');
       });
 
       const io = new IntersectionObserver(
