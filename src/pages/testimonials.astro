@@ -24,7 +24,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
 <BaseLayout title="Testimonials — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
   <!-- HERO -->
   <Section padding="loose" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
+    <Blob tone="lemon" size="md" class="absolute top-6 lg:top-16 right-[8%]" animate="float" />
     <Blob tone="sage" size="sm" class="absolute top-40 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
     <Blob tone="sky" size="sm" shape="alt" class="absolute bottom-8 right-[16%]" animate="float-slow" opacity="opacity-40" />
     <Blob tone="coral" size="sm" class="absolute bottom-20 left-[14%] rounded-full" animate="float" opacity="opacity-30" />
@@ -136,7 +136,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     <Button variant="primary" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
       Score your design system
     </Button>
-    <Button variant="secondary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+    <Button class="hover:underline" variant="text"  iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
       Book an intro call
     </Button>
   </CTABanner>

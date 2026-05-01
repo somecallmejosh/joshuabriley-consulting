@@ -2,7 +2,7 @@
 import { cx } from '~/lib/cx';
 
 interface Props {
-  tone?: 'cream' | 'navy' | 'white' | 'plum' | 'charcoal';
+  tone?: 'cream' | 'navy' | 'white' | 'plum' | 'charcoal' | 'peach';
   padding?: 'tight' | 'default' | 'loose';
   id?: string;
   class?: string;
@@ -24,6 +24,7 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
   white: 'bg-white text-navy',
   plum: 'bg-plum text-white',
   charcoal: 'bg-charcoal text-white',
+  peach: 'bg-peach/20 text-navy',
 };
 
 const paddings: Record<NonNullable<Props['padding']>, string> = {

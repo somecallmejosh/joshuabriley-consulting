@@ -36,10 +36,10 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
     <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
     <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
 
-    <div class="absolute top-24 right-[10%] w-16 h-16 bg-plum/20 blob-shape animate-float" aria-hidden="true"></div>
-    <div class="absolute top-40 left-[6%] w-10 h-10 bg-lemon/70 rounded-full animate-float-delay" aria-hidden="true"></div>
-    <div class="absolute bottom-20 right-[16%] w-12 h-12 bg-sage/30 blob-shape animate-float-slow" aria-hidden="true"></div>
-    <div class="absolute bottom-32 left-[14%] w-8 h-8 bg-sky/30 rounded-full animate-float" aria-hidden="true"></div>
+    <Blob tone="plum" size="md" animate="float" opacity="opacity-30" class="absolute top-24 right-[10%]" />
+    <Blob tone="lemon" size="sm" animate="float-delay" class="absolute top-40 left-[6%] w-10 h-10 rounded-full" />
+    <Blob tone="sage" size="sm" animate="float-slow" opacity="opacity-50" class="absolute bottom-20 right-[16%]" />
+    <Blob tone="sky" size="sm" animate="float" opacity="opacity-50" class="absolute bottom-32 left-[14%] w-8 h-8 rounded-full" />
 
     <Container class="relative z-10">
       <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -479,7 +479,7 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
     <Button variant="primary" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
       Book an intro call
     </Button>
-    <Button variant="secondary" size="lg" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
+    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
       Start with the scorecard
     </Button>
   </CTABanner>

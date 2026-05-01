@@ -20,15 +20,15 @@ interface Props {
 const { title, lead, align = 'center', class: className } = Astro.props;
 ---
 
-<Section tone="charcoal" padding="default" decorated class={className}>
+<Section tone="peach" padding="default" decorated class={className}>
   <span
-    class="absolute top-8 right-[14%] text-lemon/60 animate-wiggle hidden md:block"
+    class="absolute top-8 right-[14%] text-navy animate-wiggle hidden md:block"
     aria-hidden="true"
   >
     <Icon name="ph:star-four-duotone" size={22} />
   </span>
   <span
-    class="absolute bottom-8 left-[12%] text-coral/50 -rotate-12 hidden md:block"
+    class="absolute bottom-8 left-[12%] -rotate-12 hidden md:block text-plum animate-wiggle-slow"
     aria-hidden="true"
   >
     <Icon name="ph:scribble-loop-duotone" size={44} />
@@ -36,9 +36,9 @@ const { title, lead, align = 'center', class: className } = Astro.props;
 
   <Container width="narrow" class="relative z-10">
     <div class={cx(align === 'center' && 'text-center')}>
-      <Heading level={2} visual="display-md" tone="white" align={align} balance>{title}</Heading>
+      <Heading level={2} visual="display-md" tone="navy" align={align} balance>{title}</Heading>
       {lead && (
-        <Text size="xl" tone="whiteMuted" align={align} class={cx('mt-4', align === 'center' && 'max-w-xl mx-auto')}>
+        <Text size="xl" tone="navy" align={align} class={cx('mt-4', align === 'center' && 'max-w-xl mx-auto')}>
           {lead}
         </Text>
       )}

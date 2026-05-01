@@ -26,18 +26,18 @@ const {
   size = 'md',
   shape = 'default',
   animate = 'float',
-  opacity = 'opacity-70',
+  opacity = 'lg:opacity-70',
   class: className,
 } = Astro.props;
 
 const tones: Record<Tone, string> = {
-  coral: 'bg-coral/60',
-  plum: 'bg-plum/60',
-  sunset: 'bg-sunset/60',
-  sage: 'bg-sage/60',
-  sky: 'bg-sky/60',
-  lemon: 'bg-lemon/60',
-  peach: 'bg-peach/60',
+  coral: 'bg-coral/20 lg:bg-coral/60',
+  plum: 'bg-plum/20 lg:bg-plum/60',
+  sunset: 'bg-sunset/20 lg:bg-sunset/60',
+  sage: 'bg-sage/20 lg:bg-sage/60',
+  sky: 'bg-sky/20 lg:bg-sky/60',
+  lemon: 'bg-lemon/20 lg:bg-lemon/60',
+  peach: 'bg-peach/20 lg:bg-peach/60',
 };
 
 const sizes: Record<Size, string> = {

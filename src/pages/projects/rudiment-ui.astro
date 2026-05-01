@@ -86,10 +86,10 @@ const storybookChecks = [
   <div class="corkboard">
     <!-- HERO -->
     <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      <div class="absolute top-14 right-[6%] w-20 h-20 bg-lemon/60 blob-shape animate-float opacity-70" aria-hidden="true"></div>
-      <div class="absolute top-40 left-[4%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay" aria-hidden="true"></div>
-      <div class="absolute bottom-20 right-[18%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow" aria-hidden="true"></div>
-      <div class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float" aria-hidden="true"></div>
+      <Blob tone="lemon" size="md" animate="float" opacity="opacity-70" class="absolute top-14 right-[6%]" />
+      <Blob tone="sage" size="sm" animate="float-delay" class="absolute top-40 left-[4%] rounded-full" />
+      <Blob tone="sky" size="sm" animate="float-slow" class="absolute bottom-20 right-[18%]" />
+      <Blob tone="coral" size="sm" animate="float" class="absolute bottom-24 left-[10%] rounded-full" />
 
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
@@ -647,7 +647,7 @@ const storybookChecks = [
                 size="lg"
                 iconLeft="ph:clipboard-text-duotone"
                 href="/scorecard/"
-               
+
               >
                 Score your design system
               </Button>
