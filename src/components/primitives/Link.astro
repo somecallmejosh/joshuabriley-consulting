@@ -34,7 +34,14 @@ const {
 
 const pathname = Astro.url.pathname.replace(/\/+$/, '') || '/';
 const linkPath = href.replace(/\/+$/, '') || '/';
-const isActive = current ?? (variant === 'nav' && (linkPath === pathname));
+// A nav link is active for its own page and any descendant route (e.g. the
+// Tools link stays active on /tools/audit-findings/). Guard against '/'
+// matching everything.
+const isActive =
+  current ??
+  (variant === 'nav' &&
+    (linkPath === pathname ||
+      (linkPath !== '/' && pathname.startsWith(linkPath + '/'))));
 
 // Inline text links use plum for AA contrast on cream/white. The arrow
 // variant keeps plum because the icon + visible underline-on-hover give it

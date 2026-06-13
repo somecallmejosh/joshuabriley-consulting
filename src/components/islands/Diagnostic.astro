@@ -85,18 +85,18 @@ const demos = [
           </article>
 
           <article class="dx-price-card dx-price-card--featured" data-dx-fix="badge-color">
-            <span class="dx-price-badge">Most popular</span>
+            <span class="dx-price-badge" data-dx-mark="02">Most popular</span>
             <p class="dx-price-tier">Team</p>
             <p class="dx-price-num">$49<span>/mo</span></p>
             <ul>
               <li>Up to 25 projects</li>
               <li>Priority support</li>
-              <li class="dx-price-spacing-bug" data-dx-fix="spacing">Advanced analytics</li>
+              <li class="dx-price-spacing-bug" data-dx-fix="spacing" data-dx-mark="03">Advanced analytics</li>
             </ul>
             <button type="button" class="dx-price-cta" tabindex="-1" aria-hidden="true">Get started</button>
           </article>
 
-          <article class="dx-price-card dx-price-card--bad-radius" data-dx-fix="radius-2">
+          <article class="dx-price-card dx-price-card--bad-radius" data-dx-fix="radius-2" data-dx-mark="01">
             <p class="dx-price-tier">Business</p>
             <p class="dx-price-num">$99<span>/mo</span></p>
             <ul>
@@ -106,19 +106,6 @@ const demos = [
             </ul>
             <button type="button" class="dx-price-cta" tabindex="-1" aria-hidden="true">Contact sales</button>
           </article>
-        </div>
-
-        <!-- overlay annotations -->
-        <div class="dx-overlay" aria-hidden="true">
-          <div class="dx-mark dx-mark--radius-card" data-mark="01">
-            <span class="dx-mark-num">01</span>
-          </div>
-          <div class="dx-mark dx-mark--badge" data-mark="02">
-            <span class="dx-mark-num">02</span>
-          </div>
-          <div class="dx-mark dx-mark--spacing" data-mark="03">
-            <span class="dx-mark-num">03</span>
-          </div>
         </div>
       </div>
 
@@ -171,34 +158,22 @@ const demos = [
         </div>
 
         <div class="dx-hero">
-          <h4 class="dx-hero-title" data-dx-fix="type-scale">
+          <h4 class="dx-hero-title" data-dx-fix="type-scale" data-dx-mark="01">
             Build faster with our flexible platform.
           </h4>
           <p class="dx-hero-body">
             Everything your team needs to ship — minus the overhead.
           </p>
-          <p class="dx-hero-help" data-dx-fix="contrast">
+          <p class="dx-hero-help" data-dx-fix="contrast" data-dx-mark="03">
             Cancel anytime. Try it free for 14 days. No credit card.
           </p>
           <div class="dx-hero-actions">
-            <button class="dx-hero-cta" type="button" tabindex="-1" aria-hidden="true" data-dx-fix="btn-radius">
+            <button class="dx-hero-cta" type="button" tabindex="-1" aria-hidden="true" data-dx-fix="btn-radius" data-dx-mark="02">
               Get started
             </button>
             <button class="dx-hero-cta dx-hero-cta--ghost" type="button" tabindex="-1" aria-hidden="true">
               See pricing
             </button>
-          </div>
-        </div>
-
-        <div class="dx-overlay" aria-hidden="true">
-          <div class="dx-mark dx-mark--type" data-mark="01">
-            <span class="dx-mark-num">01</span>
-          </div>
-          <div class="dx-mark dx-mark--btn" data-mark="02">
-            <span class="dx-mark-num">02</span>
-          </div>
-          <div class="dx-mark dx-mark--contrast" data-mark="03">
-            <span class="dx-mark-num">03</span>
           </div>
         </div>
       </div>
@@ -486,16 +461,18 @@ const demos = [
     border: 1.5px solid rgba(45, 43, 85, 0.3);
   }
 
-  /* ============ overlay marks ============ */
-  .dx-overlay { position: absolute; inset: 0; pointer-events: none; }
-  .dx-mark {
-    position: absolute;
-    border: 2px dashed #e8573d;
-    background: rgba(232, 87, 61, 0.08);
-    border-radius: 6px;
-    transition: opacity 0.2s ease;
+  /* ============ issue marks (anchored to the real element) ============ */
+  /* Each call-out box wraps the actual element it flags via [data-dx-mark],
+     so it tracks the target regardless of rendered size — no magic numbers.
+     The badge absolutely positions itself, so it skips position:relative. */
+  [data-dx-mark]:not(.dx-price-badge) { position: relative; }
+
+  [data-dx-state='issues'] [data-dx-mark] {
+    outline: 2px dashed #e8573d;
+    outline-offset: 3px;
   }
-  .dx-mark-num {
+  [data-dx-state='issues'] [data-dx-mark]::after {
+    content: attr(data-dx-mark);
     position: absolute;
     top: -10px; left: -10px;
     width: 22px; height: 22px;
@@ -504,26 +481,14 @@ const demos = [
     font-family: var(--font-space-grotesk), system-ui, sans-serif;
     font-size: 0.68rem;
     font-weight: 700;
+    line-height: 1;
     border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 8px -2px rgba(232, 87, 61, 0.5);
+    pointer-events: none;
   }
 
-  /* Pricing-demo mark positions (relative to the .dx-frame) */
-  /* Card 3 (radius drift): rightmost card of 3-col grid */
-  .dx-mark--radius-card { top: 50px; right: 11px; bottom: 14px; width: calc(33.333% - 24px); }
-  /* Badge: top-center of middle card */
-  .dx-mark--badge { top: 36px; left: 50%; transform: translateX(-50%); width: 110px; height: 22px; }
-  /* Spacing bug: middle card, 3rd bullet */
-  .dx-mark--spacing { top: 132px; left: 35%; width: 30%; height: 22px; }
-
-  /* Hero demo mark positions */
-  .dx-mark--type { top: 56px; left: 18px; width: 70%; height: 56px; }
-  .dx-mark--btn  { top: 200px; left: 18px; width: 110px; height: 36px; }
-  .dx-mark--contrast { top: 142px; left: 18px; width: 65%; height: 24px; }
-
-  /* "fixed" state — hide marks, restore correct values */
-  [data-dx-state='fixed'] .dx-mark { display: none; }
+  /* "fixed" state — marks fall away with the issues state, restore correct values */
   [data-dx-state='fixed'] .dx-price-card--bad-radius { border-radius: 16px; }
   [data-dx-state='fixed'] .dx-price-card--featured .dx-price-badge { background: #e8573d; }
   [data-dx-state='fixed'] .dx-price-spacing-bug { margin-top: 16px !important; }

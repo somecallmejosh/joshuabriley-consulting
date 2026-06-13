@@ -1,0 +1,94 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Hero from '~/components/patterns/Hero.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+import Diagnostic from '~/components/islands/Diagnostic.astro';
+---
+
+<BaseLayout
+  title="What an audit actually finds — Tools — Joshua Briley"
+  description="A working sample of the design system audit deliverable: inspect a specimen of drifted UI, then read findings ranked by severity, each paired with a specific remediation."
+>
+  {/* ====== HERO ====== */}
+  <Hero tone="cream" align="left">
+    <Blob slot="decorations" tone="coral" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
+    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
+    <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" opacity="opacity-40" />
+
+    <Badge slot="eyebrow" tone="coral" icon="ph:magnifying-glass-duotone">Interactive demo &middot; Design System Audit</Badge>
+    <Heading slot="title" level={1} visual="display-xl">
+      What an audit <WavyUnderline>actually finds</WavyUnderline>.
+    </Heading>
+    <Text slot="lead" size="xl" tone="muted">
+      Every audit ends in a report: every finding ranked by severity, each with a specific, actionable
+      recommendation. This page is a working sample. Run the inspection on the specimen, then read the findings
+      the way you'd read the real report.
+    </Text>
+  </Hero>
+
+  <SquiggleDivider />
+
+  {/* ====== THE SPECIMEN / LIVE DIAGNOSTIC ====== */}
+  <Section padding="default">
+    <Container width="default">
+      <SectionHeader
+        eyebrow="The specimen"
+        eyebrowIcon="ph:flask-duotone"
+        eyebrowTone="coral"
+        title="This is what drift looks like up close"
+        lead="Each exhibit shipped to production. Toggle &ldquo;show issues&rdquo; to reveal the inconsistencies a quick audit pass would flag &mdash; the kind that quietly cost your team sprint velocity."
+        class="mb-10"
+      />
+      <Diagnostic />
+    </Container>
+  </Section>
+
+  {/* ====== THE REAL THING ====== */}
+  <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
+    <Container width="narrow">
+      <SectionHeader
+        eyebrow="The real thing"
+        eyebrowIcon="ph:file-text-duotone"
+        eyebrowTone="plum"
+        title="What you walk away with"
+        class="mb-8"
+      />
+      <Text size="lg" tone="muted" class="mb-6">
+        The Design System Audit reviews your library across all five dimensions in five business days. You receive
+        a PDF report with every finding ranked by severity and a specific remediation recommendation for each,
+        followed by a 60-minute debrief call to map what to fix first and why.
+      </Text>
+      <div class="inline-flex items-start gap-3 bg-white rounded-2xl border border-charcoal/10 px-5 py-4 shadow-sm">
+        <Icon name="ph:paper-plane-tilt-duotone" size={22} class="text-coral flex-shrink-0 mt-0.5" />
+        <p class="font-heading text-sm md:text-base text-navy">
+          Send a Storybook URL, Figma file, or GitHub repo. No specific format required.
+        </p>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ====== FINAL CTA ====== */}
+  <CTABanner
+    title="This is the checklist I build against."
+    lead="The audit exists as a service, but these five dimensions are also the standard my own work is held to — every system I ship gets reviewed against the same list. Questions about either, send a note."
+    align="left"
+  >
+    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
+    </Button>
+    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+      Try the scorecard
+    </Button>
+  </CTABanner>
+</BaseLayout>

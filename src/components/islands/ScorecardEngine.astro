@@ -142,7 +142,7 @@ const labels = [
           variant="primary"
           size="md"
           iconLeft="ph:chart-bar-duotone"
-          href="/scorecard/results/"
+          href="/tools/scorecard/results/"
         >
           See your detailed results
         </Button>
@@ -263,7 +263,7 @@ const labels = [
         finalGradeEl.textContent = letterGrade(pct);
 
         const encoded = encodeSelections();
-        resultsLink.href = `/scorecard/results/?r=${encoded}`;
+        resultsLink.href = `/tools/scorecard/results/?r=${encoded}`;
         resultActions.hidden = false;
 
         let headline: string;

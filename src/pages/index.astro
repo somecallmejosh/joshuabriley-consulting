@@ -2,25 +2,162 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
+import Grid from '~/components/layout/Grid.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import Pin from '~/components/decorative/Pin.astro';
+import Tape from '~/components/decorative/Tape.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
+import Link from '~/components/primitives/Link.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import CardGrid from '~/components/patterns/CardGrid.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
 import Card from '~/components/card/Card.astro';
 import CardNumber from '~/components/card/CardNumber.astro';
-import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
+
+const pillars = [
+  {
+    icon: 'ph:magnifying-glass-duotone',
+    accent: 'coral',
+    eyebrow: 'Clarify',
+    title: 'Clarify the experience',
+    body: 'I turn confusing flows, vague requirements, and inconsistent interface decisions into clearer product experiences — reviewing user journeys, identifying friction, simplifying interaction patterns, and helping teams make decisions that are easier for users to understand.',
+    tilt: -1 as const,
+  },
+  {
+    icon: 'ph:cube-duotone',
+    accent: 'plum',
+    eyebrow: 'Strengthen',
+    title: 'Strengthen the system',
+    body: 'I improve the reusable pieces that shape the product experience — component behavior, accessibility guidance, design tokens, documentation, usage rules, and the patterns teams rely on every day.',
+    tilt: 1 as const,
+  },
+  {
+    icon: 'ph:handshake-duotone',
+    accent: 'sky',
+    eyebrow: 'Bridge',
+    title: 'Bridge design & engineering',
+    body: "I reduce the translation loss between design intent and implementation. I work comfortably with designers, engineers, product owners, and stakeholders so interface decisions aren't only thoughtful — they're buildable, maintainable, and accessible.",
+    tilt: -1 as const,
+  },
+];
+
+const accentMap: Record<string, { text: string; bg: string; ring: string }> = {
+  coral: { text: 'text-coral', bg: 'bg-coral/10', ring: 'ring-coral/20' },
+  plum: { text: 'text-plum', bg: 'bg-plum/10', ring: 'ring-plum/20' },
+  sky: { text: 'text-sky', bg: 'bg-sky/10', ring: 'ring-sky/30' },
+};
+
+const questions = [
+  'Is this interaction clear to the user?',
+  'Does the interface behave the way people expect?',
+  'Can teams reuse this pattern without misusing it?',
+  'Are we solving the actual experience problem, or only making the screen look better?',
+  'Will this still make sense when another team has to build on it six months from now?',
+];
+
+const work = [
+  {
+    href: '/projects/',
+    label: 'Component systems',
+    labelTone: 'sage' as const,
+    labelIcon: 'ph:wheelchair-duotone',
+    marker: '01',
+    title: 'Accessible component systems',
+    summary:
+      'Reusable interface components built around semantic structure, keyboard support, focus management, responsive behavior, and practical usage guidance.',
+    cta: 'See the work',
+    tilt: '-1.8deg',
+    decoration: 'pin' as const,
+    pinTone: undefined,
+    collage: {
+      bgFrom: 'from-sage/30',
+      bgTo: 'to-lemon/30',
+      icon: 'ph:cube-transparent-duotone',
+      iconClass: 'text-sage',
+    },
+  },
+  {
+    href: '/projects/',
+    label: 'Design ↔ code',
+    labelTone: 'plum' as const,
+    labelIcon: 'ph:flow-arrow-duotone',
+    marker: '02',
+    title: 'Design-to-code alignment',
+    summary:
+      'Reducing friction between design tools, component libraries, documentation, and shipped product UI so design decisions survive implementation.',
+    cta: 'See the work',
+    tilt: '1.5deg',
+    decoration: 'tape-both' as const,
+    pinTone: undefined,
+    collage: {
+      bgFrom: 'from-plum/25',
+      bgTo: 'to-sky/30',
+      icon: 'ph:arrows-left-right-duotone',
+      iconClass: 'text-plum',
+    },
+  },
+  {
+    href: '/projects/',
+    label: 'Experience audits',
+    labelTone: 'coral' as const,
+    labelIcon: 'ph:binoculars-duotone',
+    marker: '03',
+    title: 'Experience audits & reviews',
+    summary:
+      'Reviewing product interfaces for clarity, accessibility, consistency, and usability — turning findings into practical recommendations teams can act on.',
+    cta: 'See the work',
+    tilt: '-1.2deg',
+    decoration: 'pin' as const,
+    pinTone: 'plum' as const,
+    collage: {
+      bgFrom: 'from-coral/25',
+      bgTo: 'to-sunset/30',
+      icon: 'ph:magnifying-glass-duotone',
+      iconClass: 'text-coral',
+    },
+  },
+];
+
+const toolsPreview = [
+  {
+    icon: 'ph:clipboard-text-duotone',
+    accent: 'coral',
+    title: 'Design System Scorecard',
+    body:
+      'Score your system across the five dimensions of a healthy design system in about ten minutes. Walk away with a clear picture of your biggest gaps.',
+    href: '/tools/scorecard/',
+    cta: 'Take the scorecard',
+  },
+  {
+    icon: 'ph:magnifying-glass-duotone',
+    accent: 'plum',
+    title: 'What an audit finds',
+    body:
+      'A working sample of the audit deliverable: inspect a specimen of drifted UI and read findings ranked by severity, each paired with its remediation.',
+    href: '/tools/audit-findings/',
+    cta: 'Open the demo',
+  },
+  {
+    icon: 'ph:sliders-horizontal-duotone',
+    accent: 'sky',
+    title: 'What a token does',
+    body:
+      'Change one primitive and watch it propagate through every component at once. The playground makes token indirection visible.',
+    href: '/tools/token-playground/',
+    cta: 'Open the demo',
+  },
+];
 ---
 
 <BaseLayout
-  title="Joshua Briley — UX Engineer & Design Systems Consultant"
-  description="I fix inconsistent UI systems so teams can ship faster and with fewer mistakes. 20 years of experience in design systems, accessibility, and front-end architecture."
+  title="Joshua Briley — UX Engineer & Experience Systems Designer"
+  description="I help teams create clearer, more accessible product experiences. UX engineering, design systems, accessibility, and front-end implementation — 20 years in."
 >
   <Fragment slot="head">
     <style>
@@ -44,35 +181,35 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
     <Container class="relative z-10">
       <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div class="lg:col-span-7">
-          <Badge tone="lemon" icon="ph:hand-waving-duotone" class="mb-8">
-            UX Engineer &amp; Design Systems Consultant
+          <Badge tone="lemon" icon="ph:sparkle-duotone" class="mb-8">
+            Structure over tooling
           </Badge>
 
           <Heading level={1} visual="display-xl" class="mb-6">
-            I fix <WavyUnderline>inconsistent</WavyUnderline> UI systems so teams can ship faster.
+            I fix inconsistent UI systems so teams can <WavyUnderline>ship faster</WavyUnderline>.
           </Heading>
 
-          <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
-            Structure over tooling. Clarity over more.
-          </p>
-
-          <Text size="lg" tone="muted" class="max-w-xl mb-10">
-            Most teams don't have a tooling problem. They have a
-            <strong class="text-charcoal font-semibold">structure problem</strong>.
-            I've spent 20 years learning to tell the difference.
+          <Text size="lg" tone="muted" class="max-w-xl mb-8">
+            Twenty years at the seam between design and engineering, building the component libraries, tokens, and documentation that make the right output the natural result of using the system. Structure over tooling. Clarity over more.
           </Text>
 
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <Button variant="primary" size="lg" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
-              Score your design system
+            <Button variant="primary" size="lg" iconLeft="ph:folder-open-duotone" href="/projects/">
+              View selected work
             </Button>
-            <Button variant="ghost" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
-              Book an intro call
+            <Button variant="ghost" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+              Connect on LinkedIn
             </Button>
           </div>
+
+          <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-charcoal/60 font-body">
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />20 yrs in production UI</li>
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />WCAG 2.2 built in, not bolted on</li>
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />1 open-source library, built in public</li>
+          </ul>
         </div>
 
-        {/* Three service nodes illustration */}
+        {/* Three-pillar illustration */}
         <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
@@ -86,9 +223,9 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
           <div class="absolute top-[8%] left-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
-                <Icon name="ph:binoculars-duotone" size={18} class="text-coral" />
+                <Icon name="ph:magnifying-glass-duotone" size={18} class="text-coral" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Audit</span>
+              <span class="font-heading text-xs font-semibold text-navy">Clarify</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -99,9 +236,9 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
           <div class="absolute top-[38%] left-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-2">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
-                <Icon name="ph:hammer-duotone" size={18} class="text-plum" />
+                <Icon name="ph:cube-duotone" size={18} class="text-plum" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Build</span>
+              <span class="font-heading text-xs font-semibold text-navy">Strengthen</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -114,7 +251,7 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
               <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
                 <Icon name="ph:handshake-duotone" size={18} class="text-sky" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Align</span>
+              <span class="font-heading text-xs font-semibold text-navy">Bridge</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -124,7 +261,7 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
 
           <div class="absolute top-[22%] right-[8%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float rotate-3">
             <Icon name="ph:check-circle-duotone" size={14} class="text-sage" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Consistent</span>
+            <span class="font-heading text-[11px] font-semibold text-navy">Usable</span>
           </div>
 
           <div class="absolute bottom-[32%] left-[4%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay -rotate-3">
@@ -138,240 +275,271 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
 
   <SquiggleDivider />
 
-  {/* ====== PAIN POINTS ====== */}
-  <Section id="problems" tone="cream" padding="default">
+  {/* ====== INTRO ====== */}
+  <Section tone="cream" padding="default">
     <Container>
-      <SectionHeader
-        eyebrow="Sound familiar?"
-        eyebrowIcon="ph:warning-duotone"
-        eyebrowTone="coral"
-        title="Signs your system isn't working"
-        class="mb-16"
-      />
+      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        <div class="lg:col-span-7">
+          <Badge tone="coral" icon="ph:compass-duotone" class="mb-6">Where the work happens</Badge>
+          <Heading level={2} visual="display-md" balance class="mb-6">
+            Good product experiences <WavyUnderline>do not happen</WavyUnderline> by accident.
+          </Heading>
+          <Text size="xl" tone="muted" class="max-w-2xl">
+            They depend on clear decisions, consistent patterns, accessible interactions, and a shared understanding between design and engineering.
+          </Text>
+        </div>
 
-      <CardGrid cols={3} gap="md">
-        <Card variant="paper" tilt={-1}>
-          <div class="w-12 h-12 bg-coral/10 rounded-xl flex items-center justify-center mb-4">
-            <Icon name="ph:puzzle-piece-duotone" size={24} class="text-coral" />
+        <div class="lg:col-span-5 lg:pt-2">
+          <Text size="lg" tone="muted" class="mb-8 max-w-xl">
+            I help teams make sense of messy interface problems. Sometimes that means improving a design system. Sometimes it means clarifying a workflow. Sometimes it means making sure a component isn't just reusable, but understandable, accessible, and useful in the hands of real product teams.
+          </Text>
+
+          <div class="inline-flex items-center gap-3 bg-white rounded-full border border-charcoal/10 px-5 py-2.5 shadow-sm">
+            <Icon name="ph:star-four-duotone" size={18} class="text-coral" />
+            <p class="font-heading text-sm md:text-base font-semibold text-navy">
+              Clarity over complexity. Structure in service of experience.
+            </p>
           </div>
-          <p class="font-heading font-medium text-navy">UI looks different across products or teams</p>
-        </Card>
-
-        <Card variant="paper" tilt={1}>
-          <div class="w-12 h-12 bg-plum/10 rounded-xl flex items-center justify-center mb-4">
-            <Icon name="ph:copy-duotone" size={24} class="text-plum" />
-          </div>
-          <p class="font-heading font-medium text-navy">Components are duplicated or hard to reuse</p>
-        </Card>
-
-        <Card variant="paper" tilt={-1}>
-          <div class="w-12 h-12 bg-sage/20 rounded-xl flex items-center justify-center mb-4">
-            <Icon name="ph:wheelchair-duotone" size={24} class="text-sage" />
-          </div>
-          <p class="font-heading font-medium text-navy">Accessibility keeps getting pushed off</p>
-        </Card>
-
-        <Card variant="paper" tilt={1}>
-          <div class="w-12 h-12 bg-sky/10 rounded-xl flex items-center justify-center mb-4">
-            <Icon name="ph:arrows-split-duotone" size={24} class="text-sky" />
-          </div>
-          <p class="font-heading font-medium text-navy">Designers and developers are out of sync</p>
-        </Card>
-
-        <Card variant="paper" tilt={0} class="sm:col-span-2 lg:col-span-2">
-          <div class="w-12 h-12 bg-sunset/10 rounded-xl flex items-center justify-center mb-4">
-            <Icon name="ph:repeat-duotone" size={24} class="text-sunset" />
-          </div>
-          <p class="font-heading font-medium text-navy">The same UI issues come up every sprint</p>
-        </Card>
-      </CardGrid>
-    </Container>
-  </Section>
-
-  {/* ====== THE REAL PROBLEM ====== */}
-  <Section tone="navy" padding="default" decorated>
-    <Blob tone="plum" size="lg" animate="float-slow" opacity="opacity-50" class="absolute top-8 left-[5%]" />
-    <Blob tone="coral" size="md" shape="alt" animate="float" opacity="opacity-30" class="absolute bottom-12 right-[8%] !rounded-full" />
-
-    <Container width="narrow" class="relative z-10">
-      <div class="text-center">
-        <Badge tone="lemon" icon="ph:lightbulb-duotone" class="mb-6 rotate-1 !bg-lemon !border-lemon">The real issue</Badge>
-        <Heading level={2} visual="display-md" tone="white" align="center" class="mb-6">
-          Most teams try to fix a broken system by <span class="text-lemon">adding more</span>.
-        </Heading>
-        <Text size="lg" tone="whiteMuted" align="center" class="max-w-2xl mx-auto mb-8">
-          More components. More documentation. More rules. That usually makes things worse. The real problem isn't what's missing. It's how everything <em>fits together</em>.
-        </Text>
-        <Text size="base" tone="whiteMuted" align="center" class="max-w-2xl mx-auto">
-          Without a clear structure, decisions get remade, components drift, and teams slow down.
-        </Text>
+        </div>
       </div>
     </Container>
   </Section>
 
-  {/* ====== SCORECARD CTA ====== */}
-  <Section tone="cream" padding="default">
-    <Container width="narrow">
-      <div class="bg-gradient-to-br from-peach/60 to-lemon/30 rounded-3xl p-10 md:p-14 text-center relative overflow-hidden border border-sunset/10">
-        <div class="absolute -top-4 -right-4 w-24 h-24 bg-coral/10 blob-shape" aria-hidden="true"></div>
-        <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-plum/5 rounded-full" aria-hidden="true"></div>
+  {/* ====== WHAT I DO ====== */}
+  <Section id="what-i-do" tone="white" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="What I do"
+        eyebrowIcon="ph:toolbox-duotone"
+        eyebrowTone="plum"
+        title="I help teams improve the systems behind the experience."
+        lead="Product teams often struggle in the space between an idea and a shipped interface. Designs look polished in Figma; the implementation drifts. Components exist; teams don't know how to use them. Accessibility gets discussed late. Small interface decisions pile up until the product feels harder to use than it should."
+        align="left"
+        class="mb-16 max-w-4xl"
+      />
 
-        <div class="relative z-10">
-          <Icon name="ph:magnifying-glass-duotone" size={48} class="text-coral mb-4" />
-          <Heading level={2} visual="display-md" align="center" class="mb-4">
-            Find out exactly what's broken.
+      <CardGrid cols={3} gap="lg">
+        {pillars.map((p) => {
+          const a = accentMap[p.accent];
+          return (
+            <Card variant="paper" tilt={p.tilt} padding="loose" class={`relative overflow-hidden ${a.ring}`}>
+              <div class={`absolute -top-10 -right-10 w-32 h-32 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
+              <div class="relative">
+                <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
+                  <Icon name={p.icon} size={28} class={a.text} />
+                </div>
+                <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider mb-2`}>
+                  {p.eyebrow}
+                </span>
+                <Heading level={3} visual="h2" class="mb-3 leading-tight">{p.title}</Heading>
+                <Text tone="muted">{p.body}</Text>
+              </div>
+            </Card>
+          );
+        })}
+      </CardGrid>
+    </Container>
+  </Section>
+
+  {/* ====== WHY THIS WORK MATTERS ====== */}
+  <Section tone="navy" padding="default" decorated>
+    <Blob tone="plum" size="lg" animate="float-slow" opacity="opacity-50" class="absolute top-8 left-[5%]" />
+    <Blob tone="coral" size="md" shape="alt" animate="float" opacity="opacity-30" class="absolute bottom-12 right-[8%] !rounded-full" />
+    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-40" class="absolute top-1/2 right-[14%]" />
+
+    <Container class="relative z-10">
+                <Badge tone="lemon" icon="ph:lightning-duotone" class="mb-6 rotate-1 !bg-lemon !border-lemon">
+            Why this work matters
+          </Badge>
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start lg:items-center">
+        <ul class="lg:col-span-6 grid sm:grid-cols-2 gap-4">
+          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
+            <Icon name="ph:text-aa-duotone" size={22} class="text-lemon flex-shrink-0 mt-0.5" />
+            <Text size="base" tone="whiteMuted">A button label can reduce confusion.</Text>
+          </li>
+          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
+            <Icon name="ph:textbox-duotone" size={22} class="text-coral flex-shrink-0 mt-0.5" />
+            <Text size="base" tone="whiteMuted">A form pattern can prevent errors.</Text>
+          </li>
+          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
+            <Icon name="ph:cursor-duotone" size={22} class="text-sky flex-shrink-0 mt-0.5" />
+            <Text size="base" tone="whiteMuted">A focus state can make a workflow usable.</Text>
+          </li>
+          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
+            <Icon name="ph:stack-duotone" size={22} class="text-sage flex-shrink-0 mt-0.5" />
+            <Text size="base" tone="whiteMuted">One system decision can save dozens of teams from re-solving the same problem.</Text>
+          </li>
+        </ul>
+        <div class="lg:col-span-6">
+
+          <Heading level={2} visual="display-md" tone="white" balance class="mb-6">
+            The interface is where <span class="text-lemon">strategy</span> becomes real.
           </Heading>
-          <Text size="lg" tone="muted" align="center" class="max-w-xl mx-auto mb-8">
-            The free Design System Scorecard gives you a clear picture of where your system is working and where it's creating risk.
+          <Text size="lg" tone="whiteMuted" class="mb-8">
+            A product can have a smart roadmap, strong research, and talented teams — but users only experience what makes it to the screen. That means small details matter.
           </Text>
-          <Button variant="primary" size="lg" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
-            Score your design system
+          <Text size="base" tone="whiteMuted" class="italic max-w-md border-l-2 border-lemon/60 pl-4">
+            Good UX isn't only about big ideas. It's also about the small, repeated choices that shape how a product feels over time. My work focuses on those choices.
+          </Text>
+        </div>
+
+
+      </div>
+    </Container>
+  </Section>
+
+  {/* ====== HOW I THINK ====== */}
+  <Section id="how-i-think" tone="cream" padding="default" decorated>
+    <Blob tone="peach" size="lg" animate="float-slow" opacity="opacity-40" class="absolute -top-8 right-[6%]" />
+    <Blob tone="sky" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-12 left-[8%] rounded-full" />
+
+    <Container class="relative z-10">
+      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+        <div class="lg:col-span-7">
+          <Badge tone="sage" icon="ph:brain-duotone" class="mb-6 -rotate-1">How I think</Badge>
+          <Heading level={2} visual="display-md" balance class="mb-6">
+            I care about the space between <WavyUnderline>people, patterns, and code</WavyUnderline>.
+          </Heading>
+          <div class="space-y-4 text-charcoal/75 text-base md:text-lg leading-relaxed">
+            <p>
+              I started as a designer who learned to code. Over time, that turned into 20 years of building interfaces, component libraries, and design systems for real product teams.
+            </p>
+            <p>
+              That background taught me something important: experience problems are rarely just design problems or engineering problems. They usually live in the handoff, the assumptions, the missing details, the unclear patterns — the places where teams <em class="text-charcoal font-medium not-italic">think</em> they agree but don't.
+            </p>
+            <p class="font-display italic text-navy text-xl">
+              I like working in that space.
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5">
+          <div class="bg-white/70 backdrop-blur rounded-3xl border border-charcoal/10 p-6 md:p-8 shadow-sm relative">
+            <span class="absolute -top-3 left-8 inline-flex items-center gap-1.5 bg-coral text-white text-xs font-heading font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-md -rotate-2">
+              <Icon name="ph:question-duotone" size={14} />
+              Questions I ask
+            </span>
+            <ol class="space-y-4 mt-3">
+              {questions.map((q, i) => (
+                <li class="flex gap-4 items-start">
+                  <span
+                    class="flex-shrink-0 w-9 h-9 rounded-full bg-cream border border-charcoal/15 flex items-center justify-center font-display font-semibold text-navy text-sm shadow-sm"
+                    aria-hidden="true"
+                  >
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                  <p class="font-display italic text-lg md:text-xl text-navy leading-snug pt-1">
+                    {q}
+                  </p>
+                </li>
+              ))}
+            </ol>
+            <p class="mt-8 pt-6 border-t border-charcoal/10 font-heading text-sm text-charcoal/70">
+              <Icon name="ph:sparkle-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
+              That's the work I want to keep doing.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+
+
+  {/* ====== WRITING ====== */}
+  <Section tone="peach" padding="default" decorated>
+    <Blob tone="lemon" size="md" animate="float" opacity="opacity-50" class="absolute top-10 right-[8%]" />
+    <Blob tone="coral" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-10 left-[10%] rounded-full" />
+
+    <Container width="wide" class="relative z-10">
+      <div class="grid md:grid-cols-12 gap-10 md:gap-12 items-center">
+        <div class="md:col-span-5">
+          <div class="relative max-w-sm mx-auto md:mx-0">
+            <div class="bg-white rounded-2xl p-6 shadow-xl border border-charcoal/5 -rotate-2">
+              <div class="flex items-center gap-2 mb-4">
+                <span class="w-2.5 h-2.5 rounded-full bg-coral"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-lemon"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-sage"></span>
+              </div>
+              <div class="space-y-3">
+                <p class="font-display text-lg font-semibold text-navy leading-snug">A shift to precision work</p>
+                <div class="h-1.5 rounded-full bg-charcoal/10"></div>
+                <div class="h-1.5 rounded-full bg-charcoal/10 w-4/5"></div>
+                <div class="h-1.5 rounded-full bg-coral/30 w-3/5"></div>
+                <div class="flex items-center gap-2 pt-2">
+                  <Badge tone="plum" size="sm">UX engineering</Badge>
+                </div>
+              </div>
+            </div>
+            <div class="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-lg border border-charcoal/5 rotate-3 w-44 hidden sm:block">
+              <p class="font-display text-sm font-semibold text-navy leading-snug">Accessibility debt</p>
+              <div class="h-1.5 rounded-full bg-charcoal/10 mt-2"></div>
+              <div class="h-1.5 rounded-full bg-sage/40 w-2/3 mt-1.5"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="md:col-span-7">
+          <Badge tone="navy" icon="ph:pen-nib-duotone" class="mb-6">Writing</Badge>
+          <Heading level={2} visual="display-md" balance class="mb-5">
+            Writing about UX engineering, accessibility, and design systems.
+          </Heading>
+          <Text size="lg" tone="muted" class="mb-4">
+            I write about the parts of front-end work that sit closest to the user: accessible components, design systems, interface patterns, AI-assisted development, and the changing role of front-end developers.
+          </Text>
+          <Text size="base" tone="muted" class="mb-8">
+            Practical, reflective, and grounded in real work. I'm interested in how teams make better decisions, not just which tools they choose.
+          </Text>
+          <Button variant="primary" iconRight="ph:arrow-right-bold" href="/blog/">
+            Read the blog
           </Button>
         </div>
       </div>
     </Container>
   </Section>
 
-  <SquiggleDivider />
-
-  {/* ====== ACCESSIBILITY ====== */}
-  <Section tone="cream" padding="default">
-    <Container width="wide">
-      <div class="max-w-5xl mx-auto flex flex-col md:flex-row items-center gap-12 md:gap-16">
-        <div class="flex-shrink-0 relative" aria-hidden="true">
-          <div class="w-48 h-48 md:w-56 md:h-56 bg-plum/10 rounded-3xl flex items-center justify-center animate-float-slow -rotate-3">
-            <Icon name="ph:shield-check-duotone" size={80} class="text-plum" />
-          </div>
-          <div class="absolute -bottom-4 -right-4 w-16 h-16 bg-sage/20 rounded-xl flex items-center justify-center rotate-6">
-            <Icon name="ph:code-duotone" size={28} class="text-sage" />
-          </div>
-        </div>
-        <div>
-          <Badge tone="plum" icon="ph:wheelchair-motion-duotone" class="mb-6 -rotate-1">
-            Built in, not bolted on
-          </Badge>
-          <Heading level={2} visual="display-md" class="mb-4">
-            Accessibility issues don't start in QA.
-          </Heading>
-          <Text size="lg" tone="muted">
-            They start in your components. Accessibility debt doesn't grow one bug at a time. It grows
-            <strong class="text-charcoal font-semibold">one component at a time</strong>. Fix the system, and you fix the source.
-          </Text>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-  {/* ====== HOW I HELP ====== */}
-  <Section id="how-i-help" tone="white" padding="default" class="bg-white/50">
+  {/* ====== TOOLS ====== */}
+  <Section id="tools" tone="cream" padding="default">
     <Container>
       <SectionHeader
-        eyebrow="Three steps"
-        eyebrowIcon="ph:rocket-duotone"
+        eyebrow="Free tools"
+        eyebrowIcon="ph:wrench-duotone"
         eyebrowTone="sage"
-        title="How I help"
-        class="mb-16"
+        title="Tools that show how I think."
+        lead="Three interactive pieces, free to use — and a quick way to see how I approach systems work. Each one is accessible by construction and token-driven."
+        align="left"
+        class="mb-16 max-w-3xl"
       />
 
       <CardGrid cols={3} gap="lg">
-        <Card variant="paper" tilt={-1} padding="loose">
-          <CardNumber slot="corner" n={1} tone="coral" announce />
-          <div class="mt-4 mb-5">
-            <Icon name="ph:binoculars-duotone" size={40} class="text-coral" />
-          </div>
-          <Heading level={3} visual="h3" class="mb-3">Audit</Heading>
-          <Text tone="muted" class="mb-5">
-            Before you build anything new, you need to understand what's actually broken. Get clarity on what's working, what's not, and where to focus.
-          </Text>
-          <ul class="space-y-2 text-sm text-charcoal/60">
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Inconsistent component library
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Teams solving same problems differently
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Late accessibility issues
-            </li>
-          </ul>
-          <div class="mt-6">
-            <a href="/services/audit/" class="inline-flex items-center gap-1.5 font-heading font-medium text-coral text-sm hover:gap-3 transition-all">
-              How audits help
-              <Icon name="ph:arrow-right" size={16} />
-            </a>
-          </div>
-        </Card>
-
-        <Card variant="paper" tilt={1} padding="loose">
-          <CardNumber slot="corner" n={2} tone="plum" announce />
-          <div class="mt-4 mb-5">
-            <Icon name="ph:hammer-duotone" size={40} class="text-plum" />
-          </div>
-          <Heading level={3} visual="h3" class="mb-3">Build</Heading>
-          <Text tone="muted" class="mb-5">
-            Stabilize and scale your UI system with a foundation built to last, not patched to survive. Components, tokens, and documentation done right.
-          </Text>
-          <ul class="space-y-2 text-sm text-charcoal/60">
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Accessible component library
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Design token architecture
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Accurate documentation
-            </li>
-          </ul>
-          <div class="mt-6">
-            <a href="/services/starter/" class="inline-flex items-center gap-1.5 font-heading font-medium text-plum text-sm hover:gap-3 transition-all">
-              How the build helps
-              <Icon name="ph:arrow-right" size={16} />
-            </a>
-          </div>
-        </Card>
-
-        <Card variant="paper" tilt={-1} padding="loose">
-          <CardNumber slot="corner" n={3} tone="sky" announce />
-          <div class="mt-4 mb-5">
-            <Icon name="ph:handshake-duotone" size={40} class="text-sky" />
-          </div>
-          <Heading level={3} visual="h3" class="mb-3">Align</Heading>
-          <Text tone="muted" class="mb-5">
-            Reduce handoff friction and rework. Fix the process once so your team stops losing time to it every sprint.
-          </Text>
-          <ul class="space-y-2 text-sm text-charcoal/60">
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Design-to-code workflow
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Shared language between teams
-            </li>
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage mt-0.5 flex-shrink-0" />
-              Less rework per sprint
-            </li>
-          </ul>
-          <div class="mt-6">
-            <a href="/services/workflow/" class="inline-flex items-center gap-1.5 font-heading font-medium text-sky text-sm hover:gap-3 transition-all">
-              How alignment helps
-              <Icon name="ph:arrow-right" size={16} />
-            </a>
-          </div>
-        </Card>
+        {toolsPreview.map((s, idx) => {
+          const a = accentMap[s.accent];
+          return (
+            <Card variant="paper" tilt={idx % 2 === 0 ? -1 : 1} padding="loose" class="flex flex-col">
+              <CardNumber slot="corner" n={idx + 1} tone={s.accent === 'sky' ? 'sky' : s.accent === 'plum' ? 'plum' : 'coral'} announce />
+              <div class="mt-4 mb-5">
+                <Icon name={s.icon} size={40} class={a.text} />
+              </div>
+              <Heading level={3} visual="h3" class="mb-3">{s.title}</Heading>
+              <Text tone="muted" class="mb-6 flex-1">{s.body}</Text>
+              <a href={s.href} class={`inline-flex items-center gap-1.5 font-heading font-semibold ${a.text} text-sm hover:gap-3 transition-all`}>
+                {s.cta}
+                <Icon name="ph:arrow-right-bold" size={16} />
+              </a>
+            </Card>
+          );
+        })}
       </CardGrid>
+
+      <p class="text-sm text-charcoal/60 font-body mt-12">
+        <Icon name="ph:info-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
+        Want the full set? <Link href="/tools/" variant="inline">Explore all the tools</Link>.
+      </p>
     </Container>
   </Section>
 
-  {/* ====== ABOUT ====== */}
-  <Section id="about" tone="cream" padding="default">
+  {/* ====== ABOUT PREVIEW ====== */}
+  <Section id="about" tone="cream" padding="default" class="bg-charcoal/[0.03]">
     <Container>
       <div class="flex flex-col md:flex-row items-start gap-12 md:gap-16">
         <div class="flex-shrink-0 relative mx-auto md:mx-0">
@@ -382,21 +550,25 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
             <Icon name="ph:coffee-duotone" size={16} class="mr-1 align-middle" />
             20 years in
           </div>
+          <div class="absolute -top-4 -left-4 bg-white border border-charcoal/10 px-3 py-1.5 rounded-full font-heading font-medium text-xs text-navy shadow-md -rotate-6 hidden md:flex items-center gap-1.5">
+            <Icon name="ph:check-circle-duotone" size={14} class="text-sage" />
+            Designer · Engineer
+          </div>
         </div>
 
         <div class="flex-1">
           <Badge tone="sky" icon="ph:user-duotone" class="mb-6 -rotate-1">
             The human behind the systems
           </Badge>
-          <Heading level={2} visual="display-md" class="mb-6">
-            About Joshua Briley
+          <Heading level={2} visual="display-md" balance class="mb-6">
+            Designer by origin. Engineer by practice. <WavyUnderline>Experience-focused</WavyUnderline> by choice.
           </Heading>
-          <div class="space-y-4 text-charcoal/70 text-base leading-relaxed">
+          <div class="space-y-4 text-charcoal/70 text-base md:text-lg leading-relaxed">
             <p>
-              I've been building user interfaces for 20 years. That's long enough to have strong opinions about what makes a component library actually work, what makes one fail quietly, and why the same problems keep appearing in design systems regardless of how much the tooling has changed.
+              I've spent my career working between design and engineering — building marketing sites, product interfaces, design systems, component libraries, and internal tools across a range of teams and industries.
             </p>
             <p>
-              I spent most of that time in the space where design and engineering meet, not fully in either camp but responsible to both.
+              The common thread is simple: I care about making interfaces clearer, more accessible, and easier for teams to use well. I'm not interested in complexity for its own sake — I'm interested in the kind of structure that helps people move through software with more confidence and less friction.
             </p>
           </div>
 
@@ -412,103 +584,24 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
           </div>
 
           <div class="mt-8">
-            <a href="/about/" class="inline-flex items-center gap-1.5 font-heading font-medium text-coral hover:gap-3 transition-all">
-              My full background
-              <Icon name="ph:arrow-right" size={16} />
-            </a>
+            <Link href="/about/" variant="arrow">More about me</Link>
           </div>
         </div>
       </div>
     </Container>
   </Section>
 
-  <SquiggleDivider />
-
-  {/* ====== TESTIMONIALS ====== */}
-  <Section id="testimonials" tone="cream" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Don't take my word for it"
-        eyebrowIcon="ph:chat-circle-text-duotone"
-        eyebrowTone="lemon"
-        title="Kind Words"
-        class="mb-16"
-      />
-
-      <CardGrid cols={2} gap="lg">
-        <Card as="article" variant="paper" tilt={-1} padding="loose">
-          <CardQuoteMark slot="corner" />
-          <blockquote>
-            <Text tone="muted" class="italic mb-6">
-              "Josh is an expert in accessibility and UI design, with deep knowledge of HTML, CSS, and Tailwind. His contributions significantly improved our website's accessibility standards and overall user experience."
-            </Text>
-            <footer class="flex items-center gap-4">
-              <img src="/images/nicholas-dos-santos.jpeg" alt="" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" loading="lazy" />
-              <div>
-                <cite class="font-heading font-semibold text-navy not-italic block">Nicholas Dos Santos</cite>
-                <span class="text-sm text-charcoal/50">Software Engineer · America's Test Kitchen</span>
-              </div>
-            </footer>
-          </blockquote>
-        </Card>
-
-        <Card as="article" variant="paper" tilt={1} padding="loose">
-          <CardQuoteMark slot="corner" class="text-coral/30" />
-          <blockquote>
-            <Text tone="muted" class="italic mb-6">
-              "Josh has a great eye for simple design — his websites are clean yet comprehensive. Beyond this, Josh is a self-starter in every sense of the term."
-            </Text>
-            <footer class="flex items-center gap-4">
-              <img src="/images/fred-johanns.jpeg" alt="" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-sm" loading="lazy" />
-              <div>
-                <cite class="font-heading font-semibold text-navy not-italic block">Fred Johanns III</cite>
-                <span class="text-sm text-charcoal/50">VP of Software Engineering · Chubb Insurance</span>
-              </div>
-            </footer>
-          </blockquote>
-        </Card>
-      </CardGrid>
-    </Container>
-  </Section>
-
   {/* ====== FINAL CTA ====== */}
   <CTABanner
-    title="Ready to fix your system?"
-    lead="Start with a free scorecard to see where things stand, or book a call to talk through what you're seeing."
+    title="Have an inconsistent UI system that's slowing you down?"
+    lead="Whether you're hiring for a design systems or UX engineering role, or want a second pair of eyes on a component library, send a note. I reply within one business day."
+    align="left"
   >
-    <Button variant="primary" size="lg" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
-      Book an intro call
+    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
     </Button>
-    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/scorecard/">
-      Start with the scorecard
+    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+      Connect on LinkedIn
     </Button>
   </CTABanner>
-
-  {/* ====== QUICK LINKS ====== */}
-  <Section tone="cream" padding="tight" class="bg-charcoal/[0.03]">
-    <Container>
-      <div class="max-w-5xl mx-auto">
-        <Heading level={2} visual="h4" align="center" class="mb-10">
-          Already know where things are breaking down?
-        </Heading>
-        <CardGrid cols={3} gap="md">
-          <a href="/services/audit/" class="card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center -rotate-1">
-            <Icon name="ph:binoculars-duotone" size={32} class="text-coral mb-3" />
-            <p class="font-heading font-medium text-navy mb-1">System feels inconsistent?</p>
-            <p class="text-sm text-coral font-medium group-hover:underline">Design System Audit</p>
-          </a>
-          <a href="/services/starter/" class="card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center rotate-1">
-            <Icon name="ph:hammer-duotone" size={32} class="text-plum mb-3" />
-            <p class="font-heading font-medium text-navy mb-1">Foundation is weak or patchy?</p>
-            <p class="text-sm text-plum font-medium group-hover:underline">Component Library Starter</p>
-          </a>
-          <a href="/services/workflow/" class="card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm text-center -rotate-1">
-            <Icon name="ph:handshake-duotone" size={32} class="text-sky mb-3" />
-            <p class="font-heading font-medium text-navy mb-1">Design and dev are out of sync?</p>
-            <p class="text-sm text-sky font-medium group-hover:underline">Design-to-Code Workflow</p>
-          </a>
-        </CardGrid>
-      </div>
-    </Container>
-  </Section>
 </BaseLayout>

@@ -1,5 +1,5 @@
 ---
-title: The Hidden Cost of Component Inconsistency
+title: The hidden cost of component inconsistency
 description: Fragmented UI components create distributed costs that rarely get tracked as a single problem. Here's how to see them — and make the case for the fix.
 date: 2026-04-04
 category: Design Systems
@@ -9,13 +9,17 @@ tags:
   - Developer Experience
 readMinutes: 7
 icon: ph:puzzle-piece-duotone
-gradient: from-peach via-lemon/70 to-coral/30
+gradient: from-lemon/30 via-peach/30 to-coral/30
 sticker: coral
 featured: true
 ---
 
 <p class="lede">
-  Every team I've worked with has a story that starts the same way: someone needed a button, the one in the design system didn't quite fit, so they made a new one. It was reasonable in the moment. It always is. Multiply that moment by two years and six squads, and you have a problem nobody signed up for — and nobody owns.
+  Every team I've worked with has a story that starts the same way: someone
+  needed a button, the one in the design system didn't quite fit, so they made a
+  new one. It was reasonable in the moment. It always is. Multiply that moment
+  by two years and six squads, and you have a problem nobody signed up for — and
+  nobody owns.
 </p>
 
 Component inconsistency is rarely catastrophic. It's a tax. A steady, distributed drag that shows up in a dozen places and belongs to none of them. Because it's never the headline on any single ticket, it's almost impossible to point at. But when you start looking for its fingerprints, they're everywhere.
@@ -33,48 +37,81 @@ Here's where I consistently find it hiding:
 <div class="mt-10 grid sm:grid-cols-2 gap-5 not-prose">
   <div class="cost-card" style="transform: rotate(-0.4deg)">
     <div class="icon-wrap" style="background: #e8573d">
-      <iconify-icon icon="ph:git-pull-request-duotone" width="24"></iconify-icon>
+      <iconify-icon
+        icon="ph:git-pull-request-duotone"
+        width="24"
+      ></iconify-icon>
     </div>
-    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">Review-cycle friction</h3>
-    <p class="text-charcoal/75 text-sm leading-relaxed">Reviewers pause to ask which version is the canonical one. It doesn't block the PR — it just makes every PR a little slower, forever.</p>
+    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
+      Review-cycle friction
+    </h3>
+    <p class="text-charcoal/75 text-sm leading-relaxed">
+      Reviewers pause to ask which version is the canonical one. It doesn't
+      block the PR — it just makes every PR a little slower, forever.
+    </p>
   </div>
   <div class="cost-card" style="transform: rotate(0.3deg)">
     <div class="icon-wrap" style="background: #6c4ab6">
       <iconify-icon icon="ph:wheelchair-duotone" width="24"></iconify-icon>
     </div>
-    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">Accessibility debt, multiplied</h3>
-    <p class="text-charcoal/75 text-sm leading-relaxed">A single fix stops being a single fix. You're now patching the same violation in four codebases — and hoping you found all four.</p>
+    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
+      Accessibility debt, multiplied
+    </h3>
+    <p class="text-charcoal/75 text-sm leading-relaxed">
+      A single fix stops being a single fix. You're now patching the same
+      violation in four codebases — and hoping you found all four.
+    </p>
   </div>
   <div class="cost-card" style="transform: rotate(0.4deg)">
     <div class="icon-wrap" style="background: #ff8e53">
       <iconify-icon icon="ph:pencil-ruler-duotone" width="24"></iconify-icon>
     </div>
-    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">Designer time drain</h3>
-    <p class="text-charcoal/75 text-sm leading-relaxed">"Is this spacing right?" "Is this the new card or the old card?" Tiny questions, answered a hundred times, across standups and threads.</p>
+    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
+      Designer time drain
+    </h3>
+    <p class="text-charcoal/75 text-sm leading-relaxed">
+      "Is this spacing right?" "Is this the new card or the old card?" Tiny
+      questions, answered a hundred times, across standups and threads.
+    </p>
   </div>
   <div class="cost-card" style="transform: rotate(-0.3deg)">
     <div class="icon-wrap" style="background: #5dade2">
       <iconify-icon icon="ph:user-plus-duotone" width="24"></iconify-icon>
     </div>
-    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">Onboarding that doesn't stick</h3>
-    <p class="text-charcoal/75 text-sm leading-relaxed">New engineers learn one area's patterns, then discover they don't transfer. So they do what anyone would: ask, or roll their own.</p>
+    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
+      Onboarding that doesn't stick
+    </h3>
+    <p class="text-charcoal/75 text-sm leading-relaxed">
+      New engineers learn one area's patterns, then discover they don't
+      transfer. So they do what anyone would: ask, or roll their own.
+    </p>
   </div>
   <div class="cost-card sm:col-span-2" style="transform: rotate(-0.1deg)">
     <div class="icon-wrap" style="background: #7bb47a">
       <iconify-icon icon="ph:trend-up-duotone" width="24"></iconify-icon>
     </div>
-    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">Upgrades that only reach half the house</h3>
-    <p class="text-charcoal/75 text-sm leading-relaxed">You ship a better focus state, a cleaner token, a faster render path — and it only lands for the teams already using the shared version. The holdouts stay frozen. Over time, the ROI case for investing in the system gets harder, not easier, because its reach is quietly shrinking.</p>
+    <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
+      Upgrades that only reach half the house
+    </h3>
+    <p class="text-charcoal/75 text-sm leading-relaxed">
+      You ship a better focus state, a cleaner token, a faster render path — and
+      it only lands for the teams already using the shared version. The holdouts
+      stay frozen. Over time, the ROI case for investing in the system gets
+      harder, not easier, because its reach is quietly shrinking.
+    </p>
   </div>
 </div>
 
 ## <span class="num">2.</span> Why leadership can't see it
 
-None of these costs are invisible. They're just *distributed*. Review friction shows up as velocity softness. Accessibility debt shows up as remediation sprints. Designer drain shows up as a vague sense that design "can't keep up." Onboarding shows up in exit interviews. Each of these has a plausible local explanation, and each local explanation points somewhere else.
+None of these costs are invisible. They're just _distributed_. Review friction shows up as velocity softness. Accessibility debt shows up as remediation sprints. Designer drain shows up as a vague sense that design "can't keep up." Onboarding shows up in exit interviews. Each of these has a plausible local explanation, and each local explanation points somewhere else.
 
-The organizational failure mode is that no one is summing the column. The tax exists; there's just no row on any spreadsheet labeled *component inconsistency*, so nothing ever gets charged to it directly.
+The organizational failure mode is that no one is summing the column. The tax exists; there's just no row on any spreadsheet labeled _component inconsistency_, so nothing ever gets charged to it directly.
 
-<p class="pullquote">Costs you can't name never get budgeted. Costs you can name become the next planning conversation.</p>
+<p class="pullquote">
+  Costs you can't name never get budgeted. Costs you can name become the next
+  planning conversation.
+</p>
 
 ## <span class="num">3.</span> Making the invisible countable
 
@@ -96,7 +133,11 @@ I promise two things will happen. First, the number will be larger than you expe
 
 <div class="callout not-prose">
   <p class="mt-1">
-    <strong>If you want a shortcut:</strong> I built the <a href="/scorecard/">Design System Scorecard</a> to do exactly this walk with you — inventory, divergence, and burden, in one afternoon instead of one quarter. It's free, and you can take the results straight into your next planning conversation.
+    <strong>If you want a shortcut:</strong> I built the{' '}
+    <a href="/tools/scorecard/">Design System Scorecard</a> to do exactly this walk
+    with you — inventory, divergence, and burden, in one afternoon instead of
+    one quarter. It's free, and you can take the results straight into your next
+    planning conversation.
   </p>
 </div>
 

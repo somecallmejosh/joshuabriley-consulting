@@ -10,6 +10,11 @@ const isDev = process.argv.includes('dev');
 export default defineConfig({
   site: 'https://joshuabriley.com',
   output: 'static',
+  // The scorecard moved under /tools/. Keep old links / SEO working.
+  redirects: {
+    '/scorecard': '/tools/scorecard',
+    '/scorecard/results': '/tools/scorecard/results',
+  },
   ...(isDev ? {} : { adapter: netlify() }),
   image: {
     service: passthroughImageService(),
@@ -77,7 +82,7 @@ export default defineConfig({
       filter: (page) =>
         !page.includes('/dev/') &&
         !page.includes('/component-inventory') &&
-        !page.includes('/scorecard/results'),
+        !page.includes('/tools/scorecard/results'),
     }),
   ],
   build: {

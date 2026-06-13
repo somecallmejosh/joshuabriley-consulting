@@ -696,3 +696,95 @@ header .mobile-menu a[aria-current='page']::before {
     scroll-behavior: auto !important;
   }
 }
+
+/* Blog markdown tables — recipe-card treatment */
+.prose-whimsy table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2.5rem 0;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: #2e2e30;
+  background: #fffdf9;
+  border: 1.5px solid rgba(232, 87, 61, 0.18);
+  border-radius: 18px;
+  overflow: hidden;
+  box-shadow: 0 18px 40px -28px rgba(45, 43, 85, 0.28);
+}
+.prose-whimsy table code {
+  font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+  font-size: 0.85em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 6px;
+  background: rgba(232, 87, 61, 0.08);
+  color: #2d2b55;
+}
+.prose-whimsy table th,
+.prose-whimsy table td {
+  text-align: left;
+  vertical-align: top;
+}
+.prose-whimsy table p,
+.prose-whimsy table ul,
+.prose-whimsy table ol {
+  margin: 0;
+}
+.prose-whimsy thead {
+  background: linear-gradient(135deg, #fde68a 0%, #ffe8d6 100%);
+}
+.prose-whimsy thead th {
+  font-family: var(--font-fraunces), Georgia, serif;
+  font-weight: 600;
+  font-style: italic;
+  color: #2d2b55;
+  font-size: 1.05rem;
+  padding: 1rem 1.25rem;
+  border-bottom: 2px dashed rgba(232, 87, 61, 0.45);
+}
+.prose-whimsy tbody td {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px dashed rgba(45, 43, 85, 0.12);
+}
+.prose-whimsy tbody tr:last-child td {
+  border-bottom: 0;
+}
+.prose-whimsy tbody tr:nth-child(even) {
+  background: rgba(255, 232, 214, 0.35);
+}
+.prose-whimsy tbody td:first-child {
+  font-weight: 600;
+  color: #2d2b55;
+  position: relative;
+  padding-left: 2rem;
+}
+.prose-whimsy tbody td:first-child::before {
+  content: '';
+  position: absolute;
+  left: 0.85rem;
+  top: 1.35rem;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: #e8573d;
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+}
+
+@media (max-width: 640px) {
+  .prose-whimsy table thead {
+    display: none;
+  }
+  .prose-whimsy table,
+  .prose-whimsy table tbody,
+  .prose-whimsy table tr,
+  .prose-whimsy table td {
+    display: block;
+    width: 100%;
+  }
+  .prose-whimsy table tr {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+  }
+  .prose-whimsy table td {
+    padding: 0.4rem 1rem !important;
+    border: 0 !important;
+  }
+}

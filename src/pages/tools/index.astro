@@ -1,0 +1,152 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import Blob from '~/components/decorative/Blob.astro';
+import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Badge from '~/components/primitives/Badge.astro';
+import Button from '~/components/primitives/Button.astro';
+import Hero from '~/components/patterns/Hero.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
+
+const accentMap: Record<string, { text: string; bg: string }> = {
+  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  plum: { text: 'text-plum', bg: 'bg-plum/10' },
+  sky: { text: 'text-sky', bg: 'bg-sky/10' },
+};
+
+const tools = [
+  {
+    accent: 'coral',
+    icon: 'ph:clipboard-text-duotone',
+    eyebrow: 'Self-assessment',
+    title: 'Design System Scorecard',
+    body: 'Score your own system across the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process. Walk away with a clear picture of your biggest gaps.',
+    tags: ['32 items', '64 points', '~10 minutes'],
+    href: '/tools/scorecard/',
+    cta: 'Open tool',
+    tilt: -1 as const,
+  },
+  {
+    accent: 'plum',
+    icon: 'ph:magnifying-glass-duotone',
+    eyebrow: 'Interactive demo',
+    title: 'What an audit actually finds',
+    body: 'A working sample of the audit deliverable. Inspect a specimen of drifted UI to see what gets flagged, then filter real-shaped findings ranked by severity, each paired with its remediation.',
+    tags: ['Annotated specimen', '8 sample findings', 'Filter by dimension'],
+    href: '/tools/audit-findings/',
+    cta: 'Open tool',
+    tilt: 1 as const,
+  },
+  {
+    accent: 'sky',
+    icon: 'ph:sliders-horizontal-duotone',
+    eyebrow: 'Interactive demo',
+    title: 'What a design token actually does',
+    body: 'Change one primitive and watch it propagate through every component at once. Brand, radius, and mode are all decisions in a token chain — this playground makes the indirection visible.',
+    tags: ['3-tier tokens', 'Live theming', 'Chain readout'],
+    href: '/tools/token-playground/',
+    cta: 'Open tool',
+    tilt: -1 as const,
+  },
+];
+---
+
+<BaseLayout
+  title="Tools — Joshua Briley"
+  description="Three free, interactive tools built with the same design system as the rest of this site: a design system scorecard, an audit-findings demo, and a token playground."
+>
+  {/* ====== HERO ====== */}
+  <Hero tone="cream" align="left">
+    <Blob slot="decorations" tone="plum" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
+    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
+    <Blob slot="decorations" tone="sage" size="sm" class="absolute bottom-10 right-[18%]" animate="float-slow" opacity="opacity-40" />
+    <Blob slot="decorations" tone="sky" size="sm" class="absolute bottom-20 left-[14%] rounded-full" animate="float" opacity="opacity-40" />
+
+    <Badge slot="eyebrow" tone="peach" icon="ph:wrench-duotone">Tools &middot; free &amp; interactive</Badge>
+    <Heading slot="title" level={1} visual="display-xl">
+      Tools that <WavyUnderline>show how I think</WavyUnderline>.
+    </Heading>
+    <Text slot="lead" size="xl" tone="muted">
+      Three interactive pieces, free to use, built with the same design system as the rest of this site.
+      They're useful on their own, and they double as work samples: every one is accessible by construction
+      and token-driven.
+    </Text>
+  </Hero>
+
+  <SquiggleDivider />
+
+  {/* ====== TOOL CARDS ====== */}
+  <Section padding="default">
+    <Container>
+      <div class="grid lg:grid-cols-3 gap-6">
+        {tools.map((t, idx) => {
+          const a = accentMap[t.accent];
+          return (
+            <Card variant="paper" tilt={t.tilt} padding="loose" class="flex flex-col">
+              <CardNumber slot="corner" n={idx + 1} tone={t.accent === 'sky' ? 'sky' : t.accent === 'plum' ? 'plum' : 'coral'} announce />
+              <div class="relative flex flex-col flex-1">
+                <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
+                  <Icon name={t.icon} size={28} class={a.text} />
+                </div>
+                <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider mb-2`}>
+                  {t.eyebrow}
+                </span>
+                <Heading level={2} visual="h2" class="mb-3 leading-tight">{t.title}</Heading>
+                <Text tone="muted" class="mb-5">{t.body}</Text>
+                <ul class="flex flex-wrap gap-2 mb-6 mt-auto">
+                  {t.tags.map((tag) => (
+                    <li class="font-heading text-xs font-medium text-charcoal/70 bg-charcoal/5 rounded-full px-3 py-1">{tag}</li>
+                  ))}
+                </ul>
+                <a href={t.href} class={`inline-flex items-center gap-1.5 font-heading font-semibold ${a.text} text-sm hover:gap-3 transition-all`}>
+                  {t.cta}
+                  <Icon name="ph:arrow-right-bold" size={16} />
+                </a>
+              </div>
+            </Card>
+          );
+        })}
+      </div>
+    </Container>
+  </Section>
+
+  {/* ====== WHY FREE ====== */}
+  <Section tone="cream" padding="default" decorated class="bg-charcoal/[0.03]">
+    <Blob tone="peach" size="lg" animate="float-slow" opacity="opacity-40" class="absolute -top-8 right-[6%]" />
+    <Container width="narrow" class="relative z-10">
+      <div class="flex flex-col items-start">
+        <Icon name="ph:quotes-duotone" size={48} class="text-coral/40 mb-4" />
+        <p class="font-display text-2xl md:text-3xl text-navy italic leading-snug mb-4">
+          The portfolio claim is the tool itself. If it says accessible, tab through it. If it says
+          token-driven, open dev tools.
+        </p>
+        <p class="font-heading text-sm text-charcoal/60 uppercase tracking-wider mb-8">— why these exist</p>
+        <Text size="lg" tone="muted" class="max-w-2xl">
+          The scorecard covers the same five dimensions I use when auditing real systems. If it surfaces gaps you
+          want a second opinion on, I still take a handful of engagements each year.
+        </Text>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ====== FINAL CTA ====== */}
+  <CTABanner
+    title="Want to talk about any of this?"
+    lead="Roles, systems, or the tools themselves — I read everything."
+    align="left"
+  >
+    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
+    </Button>
+    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+      Connect on LinkedIn
+    </Button>
+  </CTABanner>
+</BaseLayout>

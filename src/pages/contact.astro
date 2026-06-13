@@ -15,13 +15,13 @@ import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
 import ContactForm from '~/components/islands/ContactForm.astro';
 
 const description =
-  "Get in touch about a design system audit, component library, accessibility review, or design-to-code workflow. I reply within one business day.";
+  "Whether you're hiring for a design systems or UX engineering role, wrestling with component library debt, or want a second opinion on accessibility, send a note. I reply within one business day.";
 
 const steps = [
   { n: 1, tone: 'coral', tilt: '-4deg', title: 'You send a message', body: "Takes about two minutes. Tell me the rough shape of what you're dealing with." },
   { n: 2, tone: 'plum', tilt: '3deg', title: 'I reply within one business day', body: 'Usually the same day. No templates, no autoresponders.' },
   { n: 3, tone: 'sky', tilt: '-2deg', title: 'Free 30-minute consult', body: "We talk through what's actually happening. Zero obligation to go further." },
-  { n: 4, tone: 'sage', tilt: '4deg', title: "A simple proposal — if we're a fit", body: "Clear scope, clear price. If we're not a fit, I'll point you to someone who is." },
+  { n: 4, tone: 'sage', tilt: '4deg', title: "A clear next step, if we're a fit", body: "For roles, that's a real conversation. For project work, a simple proposal with clear scope and price. Either way, if we're not a fit, I'll point you to someone who is." },
 ];
 
 const stepBgMap: Record<string, string> = {
@@ -70,17 +70,18 @@ const featuredQuotes = [
         <div>
           <div class="mb-6 inline-flex items-center gap-2 bg-sage/15 text-sage-deep border border-sage/40 rounded-full px-3 py-1.5 font-heading text-sm font-medium" style="transform: rotate(-1.5deg)">
             <span class="w-2 h-2 rounded-full bg-sage animate-pulse" aria-hidden="true"></span>
-            Currently accepting new engagements
+            Open to roles &amp; new engagements
           </div>
           <Heading level={1} visual="display-lg" balance class="mb-6 max-w-[18ch]">
-            Let's <WavyUnderline>talk</WavyUnderline> about what's breaking.
+            Let's <WavyUnderline>talk</WavyUnderline> about the work.
           </Heading>
           <Text size="xl" tone="muted" class="max-w-[52ch]">
-            Fill out the form if you need help with
-            <strong class="text-charcoal font-semibold">component library debt</strong>, an
-            <strong class="text-charcoal font-semibold">accessibility audit</strong>, or a
-            <strong class="text-charcoal font-semibold">Figma-to-code handoff</strong>.
-            I'll get back to you within one business day.
+            Whether you're hiring for a
+            <strong class="text-charcoal font-semibold">design systems or UX engineering role</strong>,
+            wrestling with <strong class="text-charcoal font-semibold">component library debt</strong>, or
+            just want a second opinion on an
+            <strong class="text-charcoal font-semibold">accessibility question</strong>,
+            send a note. I'll get back to you within one business day.
           </Text>
 
           <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-heading text-sm text-charcoal/70">
