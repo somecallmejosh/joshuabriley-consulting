@@ -3,14 +3,14 @@ import Icon from '~/components/primitives/Icon.astro';
 import Button from '~/components/primitives/Button.astro';
 
 /**
- * Live before/after diagnostic. Visitors pick a demo screen, click
- * "Show issues" and dashed overlay boxes reveal the inconsistencies a
- * design-system audit would surface (mismatched radius, off-grid spacing,
- * contrast failures, drifted color).
+ * Live diagnostic. Visitors pick a demo screen whose mock is intentionally
+ * "broken" — the inconsistencies a design-system audit surfaces (mismatched
+ * radius, off-grid spacing, contrast failures, drifted color) are always
+ * rendered. The "Show issues" toggle only reveals or hides the dashed
+ * call-out marks anchored to each defect; it does not fix the mock.
  *
- * Mocks are hand-painted in HTML/CSS per demo so toggling "fixed" can swap
- * specific values via data-state, not by re-rendering pixels. Honest about
- * being a prototype — no real screenshot scraping.
+ * Mocks are hand-painted in HTML/CSS per demo. Honest about being a
+ * prototype — no real screenshot scraping.
  */
 
 const demos = [
@@ -85,7 +85,7 @@ const demos = [
           </article>
 
           <article class="dx-price-card dx-price-card--featured" data-dx-fix="badge-color">
-            <span class="dx-price-badge" data-dx-mark="02">Most popular</span>
+            <span class="dx-price-badge" data-dx-mark="02">Popular</span>
             <p class="dx-price-tier">Team</p>
             <p class="dx-price-num">$49<span>/mo</span></p>
             <ul>
@@ -488,13 +488,8 @@ const demos = [
     pointer-events: none;
   }
 
-  /* "fixed" state — marks fall away with the issues state, restore correct values */
-  [data-dx-state='fixed'] .dx-price-card--bad-radius { border-radius: 16px; }
-  [data-dx-state='fixed'] .dx-price-card--featured .dx-price-badge { background: #e8573d; }
-  [data-dx-state='fixed'] .dx-price-spacing-bug { margin-top: 16px !important; }
-  [data-dx-state='fixed'] .dx-hero-title { font-size: 36px; }
-  [data-dx-state='fixed'] .dx-hero-cta { border-radius: 14px; }
-  [data-dx-state='fixed'] .dx-hero-help { color: #6c4ab6; }
+  /* The defects (drifted radius, color, spacing, type, contrast) always
+     render — the toggle only reveals or hides the dashed call-out marks. */
 
   /* ============ issues panel ============ */
   .dx-issues {
