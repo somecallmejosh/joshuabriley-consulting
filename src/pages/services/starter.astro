@@ -160,10 +160,10 @@ const process = [
 ];
 
 const stepBgMap: Record<string, string> = {
-  coral: 'bg-coral shadow-coral/20',
+  coral: 'bg-[#C13A22] shadow-coral/20',
   plum: 'bg-plum shadow-plum/20',
-  sunset: 'bg-sunset shadow-sunset/20',
-  sage: 'bg-sage shadow-sage/20',
+  sunset: 'bg-sunset-deep shadow-sunset/20',
+  sage: 'bg-sage-deep shadow-sage/20',
 };
 
 const related = [
@@ -192,7 +192,7 @@ const related = [
   title="Component Library Starter — Joshua Briley | Design Systems Consulting"
   description={description}
 >
-  {/* HERO */}
+
   <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
     <Blob tone="sunset" size="md" class="absolute top-24 right-[6%]" animate="float" opacity="opacity-30" />
     <Blob tone="sky" size="sm" class="absolute top-48 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
@@ -200,8 +200,8 @@ const related = [
     <Blob tone="lemon" size="sm" class="absolute bottom-40 left-[14%] rounded-full" animate="float" opacity="opacity-70" />
 
     <Container class="relative z-10">
-      {/* breadcrumb */}
-      <nav class="flex items-center gap-2 text-sm font-heading text-charcoal/60 mb-10" aria-label="Breadcrumb">
+
+      <nav class="flex items-center gap-2 text-sm font-heading text-charcoal/70 mb-10" aria-label="Breadcrumb">
         <a href="/services/" class="hover:text-coral transition-colors inline-flex items-center gap-1.5">
           <Icon name="ph:arrow-left-duotone" size={16} />
           All services
@@ -238,7 +238,7 @@ const related = [
             </Button>
           </div>
 
-          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-10 text-sm font-heading text-charcoal/60">
+          <div class="flex flex-wrap items-center gap-x-4 gap-y-2 mt-10 text-sm font-heading text-charcoal/70">
             <span class="inline-flex items-center gap-1.5">
               <Icon name="ph:clock-duotone" size={18} class="text-plum" />
               2&ndash;3 week build
@@ -256,13 +256,13 @@ const related = [
           </div>
         </div>
 
-        {/* stacked-blocks visual */}
+
         <div class="lg:col-span-5 relative h-[400px] md:h-[480px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-72 h-72 rounded-full bg-plum/10 animate-pulse-ring"></div>
           </div>
 
-          {/* card component (anchor, top-left) */}
+
           <div class="absolute top-[6%] left-[2%] w-[56%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float" style="transform: rotate(-3deg)">
             <div class="flex items-center justify-between mb-3">
               <span class="inline-flex items-center gap-1.5 bg-sage/20 text-sage-deep border border-sage/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
@@ -275,7 +275,7 @@ const related = [
             <div class="h-2 bg-charcoal/10 rounded-full w-3/5"></div>
           </div>
 
-          {/* badge component (top-right) */}
+
           <div class="absolute top-[2%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float" style="transform: rotate(6deg)">
             <div class="flex items-center gap-1.5">
               <span class="inline-flex items-center gap-1 bg-lemon text-navy rounded-full px-2 py-0.5 font-heading text-[0.65rem] font-bold">
@@ -285,18 +285,18 @@ const related = [
             </div>
           </div>
 
-          {/* button component (mid-right) */}
+
           <div class="absolute top-[38%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3.5 animate-float-slow" style="transform: rotate(4deg)">
             <div class="flex items-center gap-2">
-              <span class="inline-flex items-center gap-1.5 bg-coral text-white rounded-full px-3 py-1.5">
+              <span class="inline-flex items-center gap-1.5 bg-[#C13A22] text-white rounded-full px-3 py-1.5">
                 <Icon name="ph:sparkle-duotone" size={14} />
                 <span class="font-heading text-[0.72rem] font-semibold">Primary</span>
               </span>
-              <span class="inline-flex items-center gap-1.5 bg-coral/10 text-coral border border-coral/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">Button</span>
+              <span class="inline-flex items-center gap-1.5 bg-coral/10 text-[#C13A22] border border-coral/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">Button</span>
             </div>
           </div>
 
-          {/* input component (mid-left) */}
+
           <div class="absolute top-[46%] left-[6%] w-[48%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float-delay" style="transform: rotate(-2deg)">
             <div class="flex items-center gap-2 mb-2.5">
               <span class="inline-flex items-center gap-1.5 bg-sky/20 text-navy border border-sky/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
@@ -309,7 +309,7 @@ const related = [
             </div>
           </div>
 
-          {/* foundation token row (anchored bottom-right) */}
+
           <div class="absolute bottom-[4%] right-[4%] w-[64%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4" style="transform: rotate(2deg)">
             <div class="flex items-center gap-2 mb-2.5">
               <Icon name="ph:palette-duotone" size={16} class="text-plum" />
@@ -332,7 +332,7 @@ const related = [
 
   <SquiggleDivider />
 
-  {/* THIS IS FOR YOU IF */}
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -360,7 +360,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* PHILOSOPHY CALLOUT */}
+
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <div class="relative bg-white rounded-3xl p-10 md:p-14 border border-charcoal/5 shadow-sm overflow-hidden" style="transform: rotate(-0.3deg)">
@@ -368,7 +368,7 @@ const related = [
         <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
 
         <div class="relative">
-          <Icon name="ph:quotes-duotone" size={48} class="text-coral/60 mb-4" />
+          <Icon name="ph:quotes-duotone" size={48} class="text-[#C13A22] mb-4" />
           <p class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6">
             A component library isn't a pile of components. It's a <span class="italic">system</span> &mdash; with shared decisions, shared names, and shared guarantees.
           </p>
@@ -380,7 +380,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* DELIVERABLES */}
+
   <Section id="deliverables" padding="default">
     <Container>
       <SectionHeader
@@ -409,7 +409,7 @@ const related = [
           );
         })}
 
-        {/* Featured (navy) — bonus item */}
+
         <div class="card-hover bg-gradient-to-br from-navy to-plum text-white rounded-2xl p-8 md:p-10 border border-navy/10 shadow-sm relative overflow-hidden rotate-1">
           <div class="absolute -top-6 -right-6 w-24 h-24 bg-coral/20 rounded-full" aria-hidden="true"></div>
           <div class="relative">
@@ -426,7 +426,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* WHAT'S INCLUDED — the 20 components */}
+
   <Section padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
@@ -459,7 +459,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* PROCESS */}
+
   <Section padding="default">
     <Container width="narrow">
       <SectionHeader
@@ -486,7 +486,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* PRICING */}
+
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <div class="relative bg-gradient-to-br from-navy via-navy to-plum rounded-3xl p-10 md:p-14 overflow-hidden">
@@ -517,7 +517,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* TESTIMONIALS */}
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -557,7 +557,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* RELATED SERVICES */}
+
   <Section padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
@@ -584,7 +584,7 @@ const related = [
                     <Text size="sm" tone="muted">{r.body}</Text>
                   </div>
                 </div>
-                <span class="inline-flex items-center gap-1.5 text-coral font-heading font-semibold text-sm">
+                <span class="inline-flex items-center gap-1.5 text-[#C13A22] font-heading font-semibold text-sm">
                   {r.cta}
                   <Icon name="ph:arrow-right-bold" size={16} />
                 </span>
@@ -596,7 +596,7 @@ const related = [
     </Container>
   </Section>
 
-  {/* FINAL CTA */}
+
   <CTABanner
     title="Let's build the foundation."
     lead="Book a 30-minute intro call. Tell me what you're building (or rebuilding) and I'll tell you whether a starter is the right move — honestly."

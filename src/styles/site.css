@@ -50,7 +50,7 @@ header nav a::after {
   transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 header nav a:hover {
-  color: #e8573d;
+  color: #c13a22; /* coral-deep — AA on cream */
 }
 header nav a:hover::before,
 header nav a[aria-current='page']::before {
@@ -61,7 +61,7 @@ header nav a[aria-current='page']::after {
   transform: scaleX(1);
 }
 header nav a[aria-current='page'] {
-  color: #e8573d;
+  color: #c13a22; /* coral-deep — AA on cream */
 }
 
 header .mobile-menu a {
@@ -83,7 +83,7 @@ header .mobile-menu a::before {
 }
 header .mobile-menu a:hover,
 header .mobile-menu a[aria-current='page'] {
-  color: #e8573d;
+  color: #c13a22; /* coral-deep — AA on cream */
 }
 header .mobile-menu a:hover::before,
 header .mobile-menu a[aria-current='page']::before {
@@ -145,7 +145,7 @@ header .mobile-menu a[aria-current='page']::before {
   width: 36px;
   height: 36px;
   border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-  background: linear-gradient(135deg, #6c4ab6, #e8573d);
+  background: linear-gradient(135deg, #6c4ab6, #c13a22);
   color: white;
   font-family: var(--font-style-script), cursive;
   font-size: 1.1rem;
@@ -268,7 +268,7 @@ header .mobile-menu a[aria-current='page']::before {
   width: 54px;
   height: 54px;
   border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
-  background: linear-gradient(135deg, #ff8e53, #e8573d);
+  background: linear-gradient(135deg, #a24818, #c13a22); /* deepened so white numerals clear AA */
   color: white;
   font-family: var(--font-fraunces), Georgia, serif;
   font-size: 1.6rem;

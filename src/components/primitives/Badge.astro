@@ -23,7 +23,7 @@ const { tone = 'plum', icon, sticker = false, size = 'md', class: className } = 
 // Text colors use the `-deep` variants on their own /10 surface to clear AA;
 // surface tints below /20 are too pale for the original tone to pass 4.5:1.
 const surfaceByTone: Record<Tone, { bg: string; text: string; border: string }> = {
-  coral:  { bg: 'bg-coral/10',  text: 'text-plum',  border: 'border-coral/40' },
+  coral:  { bg: 'bg-coral/10',  text: 'text-[#C13A22]', border: 'border-coral/40' },
   plum:   { bg: 'bg-plum/10',   text: 'text-plum',        border: 'border-plum/40' },
   sage:   { bg: 'bg-sage/10',   text: 'text-sage-deep',   border: 'border-sage/50' },
   sunset: { bg: 'bg-sunset/10', text: 'text-sunset-deep', border: 'border-sunset/40' },

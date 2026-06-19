@@ -33,7 +33,6 @@ const stickerToneClass: Record<string, string> = {
 ---
 
 <BaseLayout title="Blog — Joshua Briley | UX Engineering, in Practice" description={description}>
-  <!-- HERO -->
   <Section padding="default" decorated>
     <Blob tone="lemon" size="md" class="absolute top-14 right-[8%]" animate="float" />
     <Blob tone="sage" size="sm" class="absolute top-40 left-[5%] rounded-full" animate="float-delay" opacity="opacity-40" />
@@ -79,7 +78,7 @@ const stickerToneClass: Record<string, string> = {
                 <Button variant="primary" size="sm" iconRight="ph:arrow-right-bold" href={`/blog/${featured.id}/`}>
                   Read the essay
                 </Button>
-                <div class="flex items-center gap-2 text-sm text-charcoal/60 font-heading">
+                <div class="flex items-center gap-2 text-sm text-charcoal/70 font-heading">
                   <Icon name="ph:clock-duotone" size={18} />
                   {featured.data.readMinutes} min read
                 </div>
@@ -93,7 +92,6 @@ const stickerToneClass: Record<string, string> = {
 
   <div class="squiggle-divider max-w-5xl mx-auto" aria-hidden="true"></div>
 
-  <!-- LISTING -->
   <Section padding="default" decorated>
     <Blob tone="plum" size="sm" class="absolute top-10 right-[6%]" animate="float-slow" opacity="opacity-20" />
     <Blob tone="lemon" size="sm" class="absolute bottom-20 left-[4%] rounded-full" animate="float-delay" />
@@ -101,7 +99,7 @@ const stickerToneClass: Record<string, string> = {
     <Container class="relative z-10">
       <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10">
         <div>
-          <p class="font-heading text-sm uppercase tracking-wider text-coral mb-2">The archive</p>
+          <p class="font-heading text-sm uppercase tracking-wider text-[#C13A22] mb-2">The archive</p>
           <Heading level={2} visual="display-md">
             More from the <WavyUnderline>notebook</WavyUnderline>
           </Heading>
@@ -111,7 +109,6 @@ const stickerToneClass: Record<string, string> = {
         </Text>
       </div>
 
-      <!-- Filter pills (visual only — matches legacy behavior) -->
       <div class="flex flex-wrap gap-3 mb-12" role="list" aria-label="Filter posts by category">
         <button type="button" class="filter-pill active">
           <Icon name="ph:sparkle-duotone" size={16} />
@@ -122,7 +119,6 @@ const stickerToneClass: Record<string, string> = {
         ))}
       </div>
 
-      <!-- Grid -->
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
         {others.map((post) => (
           <article class="post-card card-hover bg-white rounded-2xl overflow-hidden border border-charcoal/5">
@@ -141,7 +137,7 @@ const stickerToneClass: Record<string, string> = {
                 <Text size="sm" tone="muted" class="mb-4">
                   {post.data.description}
                 </Text>
-                <div class="flex items-center gap-2 text-coral font-heading text-sm font-semibold">
+                <div class="flex items-center gap-2 text-[#C13A22] font-heading text-sm font-semibold">
                   Read essay
                   <Icon name="ph:arrow-right-bold" size={14} />
                 </div>
@@ -150,7 +146,6 @@ const stickerToneClass: Record<string, string> = {
           </article>
         ))}
 
-        <!-- "More coming" placeholder -->
         <div class="post-card relative flex items-center justify-center p-8">
           <div class="paper-note text-center max-w-xs">
             <Icon name="ph:pencil-line-duotone" class="text-coral mb-3" size={36} />
@@ -164,7 +159,6 @@ const stickerToneClass: Record<string, string> = {
     </Container>
   </Section>
 
-  <!-- NEWSLETTER CTA -->
   <Section padding="default">
     <Container width="narrow">
       <div class="relative bg-navy text-white rounded-3xl p-10 md:p-16 overflow-hidden">

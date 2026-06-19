@@ -56,7 +56,6 @@ const outcomes = [
 
 <BaseLayout title={title} description={description}>
   <div class="corkboard">
-    <!-- ====== HERO — policy card ====== -->
     <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
       <div class="absolute top-14 right-[6%] w-20 h-20 bg-sky/40 blob-shape animate-float opacity-70" aria-hidden="true"></div>
       <div class="absolute top-40 left-[4%] w-12 h-12 bg-plum/20 rounded-full animate-float-delay" aria-hidden="true"></div>
@@ -64,7 +63,7 @@ const outcomes = [
       <div class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float" aria-hidden="true"></div>
 
       <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
+        <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
           <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
           <Icon name="ph:caret-right-bold" size={12} />
           <span class="text-navy">Berxi.com</span>
@@ -74,7 +73,7 @@ const outcomes = [
           <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
           <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
 
-          <div class="absolute top-8 right-8 hidden md:block text-sage paper-stamp" aria-hidden="true">
+          <div class="absolute top-8 right-8 hidden md:block text-sage-deep paper-stamp" aria-hidden="true">
             Policy&nbsp;·&nbsp;Approved
           </div>
 
@@ -107,7 +106,7 @@ const outcomes = [
               <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
                 {meta.map((m) => (
                   <div>
-                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">{m.role}</dt>
+                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">{m.role}</dt>
                     <dd class="font-display text-lg text-navy font-semibold" set:html={m.value.replace(/·/g, '&middot;')}></dd>
                   </div>
                 ))}
@@ -120,7 +119,7 @@ const outcomes = [
 
     <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
 
-    <!-- ====== OUTLINE ====== -->
+
     <section class="py-16 md:py-20 relative">
       <div class="absolute top-10 right-6 w-24 h-24 bg-plum/10 blob-shape animate-float-slow" aria-hidden="true"></div>
 
@@ -148,13 +147,13 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 01 — PROBLEM ====== -->
+
     <section id="problem" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="max-w-4xl mx-auto px-6">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">01</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step one</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step one</p>
             <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">The drift problem</h2>
           </div>
         </div>
@@ -196,14 +195,14 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 02 — TOKENS ====== -->
+
     <section id="tokens" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float" aria-hidden="true"></div>
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">02</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step two</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step two</p>
             <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">A two-tier token architecture</h2>
           </div>
         </div>
@@ -248,7 +247,7 @@ const outcomes = [
           </li>
         </ul>
 
-        <!-- token stack visual -->
+
         <div class="mt-12 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative" style="transform: rotate(-0.3deg)">
           <div class="absolute -top-4 left-8 sticker bg-plum/10 text-plum border-plum/40" style="transform: rotate(-3deg)">
             <Icon name="ph:stack-duotone" size={14} class="mr-1" />
@@ -270,14 +269,14 @@ const outcomes = [
               <code class="text-plum">&lt;Button variant="primary" /&gt;</code>
             </span>
           </div>
-          <p class="mt-5 text-sm text-charcoal/60 font-body">
+          <p class="mt-5 text-sm text-charcoal/70 font-body">
             Components never reach for primitives. They ask for a role. The system decides what that role looks like today.
           </p>
         </div>
 
-        <!-- pull quote -->
+
         <figure class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative" style="transform: rotate(-0.3deg)">
-          <Icon name="ph:quotes-duotone" size={32} class="text-coral/60 absolute -top-3 left-6 bg-cream px-1" />
+          <Icon name="ph:quotes-duotone" size={32} class="text-[#C13A22] absolute -top-3 left-6 bg-cream px-1" />
           <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
             The clearest signal that a design system is working is that it stops generating the friction that prompted building it.
           </blockquote>
@@ -285,13 +284,13 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 03 — ACCESSIBILITY ====== -->
+
     <section id="accessibility" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="max-w-4xl mx-auto px-6">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">03</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step three</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step three</p>
             <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">Accessibility as a system property</h2>
           </div>
         </div>
@@ -326,14 +325,14 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 04 — SCALE ====== -->
+
     <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="absolute top-10 right-6 w-20 h-20 bg-lemon/50 blob-shape animate-float-slow" aria-hidden="true"></div>
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">04</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step four</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step four</p>
             <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">What the system changed</h2>
           </div>
         </div>
@@ -364,7 +363,7 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
+
     <section class="py-16 md:py-20 relative">
       <div class="absolute top-12 left-6 w-20 h-20 bg-plum/15 blob-shape animate-float-slow" aria-hidden="true"></div>
       <div class="absolute bottom-10 right-8 w-14 h-14 bg-sky/40 rounded-full animate-float" aria-hidden="true"></div>
@@ -379,7 +378,7 @@ const outcomes = [
           <span class="tape left" aria-hidden="true"></span>
           <span class="tape right coral" aria-hidden="true"></span>
 
-          <Icon name="ph:quotes-duotone" size={36} class="text-coral/70 mb-3" />
+          <Icon name="ph:quotes-duotone" size={36} class="text-[#C13A22] mb-3" />
 
           <blockquote class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7">
             Josh joined when our frontend was making the same decision in a hundred different places. He brought stakeholders
@@ -406,7 +405,7 @@ const outcomes = [
 
     <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
 
-    <!-- ====== CTA ====== -->
+
     <section class="py-20 md:py-28">
       <div class="max-w-4xl mx-auto px-6">
         <div class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden">
@@ -430,7 +429,7 @@ const outcomes = [
                 size="lg"
                 iconLeft="ph:clipboard-text-duotone"
                 href="/tools/scorecard/"
-               
+
               >
                 Score your design system
               </Button>
@@ -519,6 +518,6 @@ const outcomes = [
     border-radius: 6px;
     display: inline-block;
     transform: rotate(-4deg);
-    opacity: 0.85;
+    opacity: 0.95;
   }
 </style>

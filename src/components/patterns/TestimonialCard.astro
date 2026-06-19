@@ -130,7 +130,7 @@ const pinClass = pin ? (pin === 'coral' ? 'pin' : `pin ${pin}`) : '';
     {variant === 'polaroid' ? (
       <div class="border-t border-charcoal/10 pt-3">
         <p class="font-heading font-semibold text-navy text-sm">{name}</p>
-        <p class="text-xs text-charcoal/60">{role} · {company}</p>
+        <p class="text-xs text-charcoal/70">{role} · {company}</p>
       </div>
     ) : (
       <div
@@ -154,7 +154,7 @@ const pinClass = pin ? (pin === 'coral' ? 'pin' : `pin ${pin}`) : '';
           <p class={cx('font-heading font-semibold text-sm', variant === 'plum' ? 'text-white' : 'text-navy')}>
             {name}
           </p>
-          <p class={cx('text-xs', variant === 'plum' ? 'text-white/60' : variant === 'sticky' ? 'text-navy/70' : 'text-charcoal/60')}>
+          <p class={cx('text-xs', variant === 'plum' ? 'text-white/60' : variant === 'sticky' ? 'text-navy/70' : 'text-charcoal/70')}>
             {role} · {company}
           </p>
         </div>

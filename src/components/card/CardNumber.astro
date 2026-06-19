@@ -24,12 +24,15 @@ interface Props {
 
 const { n, tone = 'plum', inline = false, size = 'md', class: className, announce = false } = Astro.props;
 
+// Backgrounds use the -deep variants so white numerals clear AA (4.5:1);
+// the base tints leave white text below threshold. Shadows stay on the
+// base tone since they're decorative.
 const tones: Record<Tone, string> = {
   plum: 'bg-plum shadow-plum/20',
-  coral: 'bg-coral shadow-coral/20',
-  sky: 'bg-sky shadow-sky/20',
-  sage: 'bg-sage shadow-sage/20',
-  sunset: 'bg-sunset shadow-sunset/20',
+  coral: 'bg-[#C13A22] shadow-coral/20',
+  sky: 'bg-sky-deep shadow-sky/20',
+  sage: 'bg-sage-deep shadow-sage/20',
+  sunset: 'bg-sunset-deep shadow-sunset/20',
   navy: 'bg-navy shadow-navy/20',
 };
 

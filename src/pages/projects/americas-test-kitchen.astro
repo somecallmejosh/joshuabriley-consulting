@@ -104,9 +104,7 @@ const outcomes = [
   </Fragment>
 
   <div class="corkboard">
-    <!-- ====== HERO — recipe card ====== -->
     <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      <!-- floating decor -->
       <Blob tone="lemon" size="lg" class="absolute top-14 right-[6%]" animate="float" opacity="opacity-70" />
       <div
         class="absolute top-40 left-[4%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
@@ -122,9 +120,8 @@ const outcomes = [
       ></div>
 
       <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <!-- breadcrumb -->
         <nav
-          class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/60"
+          class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70"
           aria-label="Breadcrumb"
         >
           <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
@@ -132,12 +129,10 @@ const outcomes = [
           <span class="text-navy">America's Test Kitchen</span>
         </nav>
 
-        <!-- recipe card -->
         <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
           <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
           <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
 
-          <!-- steam from top of card -->
           <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
             <span class="steam animate-steam"></span>
             <span class="steam animate-steam-delay"></span>
@@ -150,7 +145,7 @@ const outcomes = [
             </div>
 
             <div
-              class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
+              class="inline-flex items-center gap-2 bg-coral/10 text-[#C13A22] px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
             >
               <Icon name="ph:chef-hat-duotone" size={18} />
               Case study &middot; Recipe no. 02
@@ -183,12 +178,11 @@ const outcomes = [
               <WavyUnderline>cooking brands</WavyUnderline> in the US.
             </p>
 
-            <!-- recipe meta row -->
             <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
               <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
                 {recipeMeta.map((m) => (
                   <div>
-                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum/70 mb-1">
+                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">
                       {m.label}
                     </dt>
                     <dd class="font-display text-lg text-navy font-semibold">{m.value}</dd>
@@ -203,7 +197,6 @@ const outcomes = [
 
     <SquiggleDivider />
 
-    <!-- ====== INGREDIENTS (outline) ====== -->
     <section class="py-16 md:py-20 relative">
       <Blob tone="plum" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-10" />
 
@@ -235,13 +228,12 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 01 — PROBLEM ====== -->
     <section id="problem" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="max-w-4xl mx-auto px-6">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">01</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step one</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step one</p>
             <Heading level={2} visual="display-md">The core architecture problem</Heading>
           </div>
         </div>
@@ -267,7 +259,6 @@ const outcomes = [
           </p>
         </div>
 
-        <!-- failure mode pair -->
         <div class="mt-10 grid md:grid-cols-2 gap-6">
           <div
             class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative"
@@ -297,7 +288,6 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 02 — DECISIONS ====== -->
     <section id="decisions" class="py-16 md:py-20 relative scroll-mt-24">
       <div
         class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
@@ -307,7 +297,7 @@ const outcomes = [
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">02</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step two</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step two</p>
             <Heading level={2} visual="display-md">Library decisions in practice</Heading>
           </div>
         </div>
@@ -323,7 +313,7 @@ const outcomes = [
               <h3 class="font-display text-lg text-navy font-semibold mb-1">Brand-agnostic APIs</h3>
               <p class="text-charcoal/70">
                 Props controlled behavior and content — not visual style. No
-                <code class="text-coral bg-coral/10 px-1.5 rounded">brand</code>
+                <code class="text-[#C13A22] bg-coral/10 px-1.5 rounded">brand</code>
                 prop forking the render tree. Visual differences flowed through the token system instead.
               </p>
             </div>
@@ -350,12 +340,11 @@ const outcomes = [
           </li>
         </ul>
 
-        <!-- pull quote -->
         <figure
           class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative"
           style="transform: rotate(-0.3deg)"
         >
-          <Icon name="ph:quotes-duotone" size={32} class="text-coral/60 absolute -top-3 left-6 bg-cream px-1" />
+          <Icon name="ph:quotes-duotone" size={32} class="text-[#C13A22] absolute -top-3 left-6 bg-cream px-1" />
           <blockquote class="pull-quote text-xl md:text-2xl text-navy leading-snug">
             A modal behaves the same way across every brand. It looks different because the tokens resolve differently depending
             on which brand context it's rendered in.
@@ -364,13 +353,12 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 03 — ACCESSIBILITY ====== -->
     <section id="accessibility" class="py-16 md:py-20 relative scroll-mt-24">
       <div class="max-w-4xl mx-auto px-6">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">03</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step three</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step three</p>
             <Heading level={2} visual="display-md">Accessibility across every surface</Heading>
           </div>
         </div>
@@ -389,7 +377,6 @@ const outcomes = [
           </p>
         </div>
 
-        <!-- a11y checklist -->
         <div
           class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
           style="transform: rotate(0.4deg)"
@@ -413,14 +400,13 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== STEP 04 — SCALE ====== -->
     <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
       <Blob tone="lemon" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-50" />
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="flex items-start gap-6 mb-8">
           <span class="step-num" aria-hidden="true">04</span>
           <div>
-            <p class="font-heading text-xs uppercase tracking-widest text-plum/70 mb-1">Step four</p>
+            <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step four</p>
             <Heading level={2} visual="display-md">What a shared library enables at scale</Heading>
           </div>
         </div>
@@ -438,7 +424,6 @@ const outcomes = [
           </p>
         </div>
 
-        <!-- outcomes grid -->
         <div class="mt-12 grid md:grid-cols-3 gap-6">
           {outcomes.map((o) => (
             <div
@@ -454,7 +439,6 @@ const outcomes = [
       </div>
     </section>
 
-    <!-- ====== PRAISE FROM THE HIRING MANAGER ====== -->
     <section class="py-16 md:py-20 relative">
       <Blob tone="coral" size="lg" class="absolute top-12 left-6" animate="float-slow" opacity="opacity-15" />
       <div
@@ -471,7 +455,7 @@ const outcomes = [
         <figure class="card-base card-sticky rot-2 max-w-2xl mx-auto p-8 md:p-12">
           <span class="pin" aria-hidden="true"></span>
 
-          <Icon name="ph:quotes-duotone" size={36} class="text-coral/60 mb-3" />
+          <Icon name="ph:quotes-duotone" size={36} class="text-[#C13A22] mb-3" />
 
           <blockquote class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7">
             Josh built the component library that finally let our brands stop fighting in code. Cook's Country, Cook's
@@ -498,7 +482,6 @@ const outcomes = [
 
     <SquiggleDivider />
 
-    <!-- ====== CTA ====== -->
     <section class="py-20 md:py-28">
       <div class="max-w-4xl mx-auto px-6">
         <div class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden">
@@ -527,7 +510,7 @@ const outcomes = [
                 size="lg"
                 iconLeft="ph:clipboard-text-duotone"
                 href="/tools/scorecard/"
-               
+
               >
                 Score your design system
               </Button>
@@ -543,7 +526,6 @@ const outcomes = [
           </div>
         </div>
 
-        <!-- next project -->
         <div class="mt-14 flex justify-center">
           <a
             href="/projects/"

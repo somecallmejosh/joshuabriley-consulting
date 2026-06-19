@@ -78,9 +78,9 @@ const services = [
 ];
 
 const accentMap: Record<string, { text: string; bg: string }> = {
-  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10' },
   plum: { text: 'text-plum', bg: 'bg-plum/10' },
-  sky: { text: 'text-sky', bg: 'bg-sky/10' },
+  sky: { text: 'text-sky-deep', bg: 'bg-sky/10' },
 };
 
 const process = [
@@ -142,7 +142,7 @@ const process = [
                 </div>
                 <span class="font-heading text-xs font-semibold text-navy">Audit</span>
               </div>
-              <span class="font-hand text-coral/70 text-sm">01</span>
+              <span class="font-hand text-[#C13A22] text-sm">01</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -160,7 +160,7 @@ const process = [
                 </div>
                 <span class="font-heading text-xs font-semibold text-navy">Starter</span>
               </div>
-              <span class="font-hand text-plum/70 text-sm">02</span>
+              <span class="font-hand text-plum text-sm">02</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10 w-5/6"></div>
@@ -178,7 +178,7 @@ const process = [
                 </div>
                 <span class="font-heading text-xs font-semibold text-navy">Workflow</span>
               </div>
-              <span class="font-hand text-sky/70 text-sm">03</span>
+              <span class="font-hand text-sky-deep text-sm">03</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10 w-11/12"></div>
@@ -204,7 +204,7 @@ const process = [
 
   <SquiggleDivider />
 
-  <!-- FAMILIAR PROBLEMS -->
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -232,7 +232,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- SERVICE-FIT QUIZ -->
+
   <Section id="fit" padding="default">
     <Container width="default">
       <SectionHeader
@@ -247,7 +247,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- SERVICES -->
+
   <Section id="services" padding="default" class="bg-charcoal/[0.03]">
     <Container>
       <div class="max-w-3xl mx-auto text-center mb-16">
@@ -295,14 +295,14 @@ const process = [
         })}
       </div>
 
-      <p class="text-center text-sm text-charcoal/60 font-body mt-12">
+      <p class="text-center text-sm text-charcoal/70 font-body mt-12">
         <Icon name="ph:info-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
         I only take on a limited number of engagements at a time so every client gets genuine attention.
       </p>
     </Container>
   </Section>
 
-  <!-- PROCESS -->
+
   <Section padding="default">
     <Container width="narrow">
       <SectionHeader
@@ -328,7 +328,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- LIVE DIAGNOSTIC -->
+
   <Section id="diagnostic" padding="default">
     <Container width="default">
       <SectionHeader
@@ -343,7 +343,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- TOKEN PLAYGROUND -->
+
   <Section id="playground" padding="default">
     <Container width="default">
       <SectionHeader
@@ -358,7 +358,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- SCORECARD CTA -->
+
   <Section padding="tight">
     <Container>
       <div class="relative bg-gradient-to-br from-lemon/40 via-peach to-coral/10 rounded-3xl p-8 md:p-12 border border-coral/20 overflow-hidden">
@@ -383,7 +383,7 @@ const process = [
     </Container>
   </Section>
 
-  <!-- FINAL CTA -->
+
   <CTABanner title="Let's fix your system." lead="Book a 30-minute intro call. We'll talk about what's breaking down and whether an engagement would actually help.">
     <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
       Book an intro call

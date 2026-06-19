@@ -27,7 +27,7 @@ const categories = [
 ] as const;
 
 const tabToneMap: Record<string, string> = {
-  coral: 'bg-coral/15 text-coral border-coral/25',
+  coral: 'bg-coral/10 text-[#C13A22] border-coral/25',
   plum: 'bg-plum/15 text-plum border-plum/25',
   sage: 'bg-sage/20 text-sage-deep border-sage/30',
   sky: 'bg-sky/15 text-sky-deep border-sky/30',
@@ -44,7 +44,7 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
 ---
 
 <BaseLayout title="FAQs — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
-  <!-- HERO -->
+
   <Section padding="loose" decorated>
     <Blob tone="lemon" size="md" class="absolute top-6 lg:top-16 right-[8%]" animate="float" />
     <Blob tone="sage" size="sm" class="absolute top-44 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
@@ -74,7 +74,7 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
           </p>
         </div>
         <div class="bubble bubble-right" style="transform: rotate(1deg); background: #fff6ec" aria-hidden="true">
-          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-coral mb-1 justify-end">
+          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-[#C13A22] mb-1 justify-end">
             Joshua
             <Icon name="ph:sparkle-duotone" size={18} />
           </div>
@@ -95,7 +95,7 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
         <!-- Sticky jump list -->
         <aside class="lg:col-span-4 xl:col-span-3">
           <div class="lg:sticky lg:top-28">
-            <p class="font-heading text-xs uppercase tracking-[0.15em] text-charcoal/50 mb-4 pl-2">Jump to</p>
+            <p class="font-heading text-xs uppercase tracking-[0.15em] text-charcoal/70 mb-4 pl-2">Jump to</p>
             <nav class="flex flex-col gap-1" aria-label="FAQ sections">
               {categories.map((c) => (
                 <a href={`#${c.id}`} class="jump-link">

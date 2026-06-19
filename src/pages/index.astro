@@ -48,9 +48,9 @@ const pillars = [
 ];
 
 const accentMap: Record<string, { text: string; bg: string; ring: string }> = {
-  coral: { text: 'text-coral', bg: 'bg-coral/10', ring: 'ring-coral/20' },
+  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10', ring: 'ring-coral/20' },
   plum: { text: 'text-plum', bg: 'bg-plum/10', ring: 'ring-plum/20' },
-  sky: { text: 'text-sky', bg: 'bg-sky/10', ring: 'ring-sky/30' },
+  sky: { text: 'text-sky-deep', bg: 'bg-sky/10', ring: 'ring-sky/30' },
 };
 
 const questions = [
@@ -167,7 +167,7 @@ const toolsPreview = [
     </style>
   </Fragment>
 
-  {/* ====== HERO ====== */}
+
   <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
     <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
     <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
@@ -202,14 +202,14 @@ const toolsPreview = [
             </Button>
           </div>
 
-          <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-charcoal/60 font-body">
+          <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-charcoal/70 font-body">
             <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />20 yrs in production UI</li>
             <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />WCAG 2.2 built in, not bolted on</li>
             <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />1 open-source library, built in public</li>
           </ul>
         </div>
 
-        {/* Three-pillar illustration */}
+
         <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
@@ -275,7 +275,7 @@ const toolsPreview = [
 
   <SquiggleDivider />
 
-  {/* ====== INTRO ====== */}
+
   <Section tone="cream" padding="default">
     <Container>
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
@@ -305,7 +305,7 @@ const toolsPreview = [
     </Container>
   </Section>
 
-  {/* ====== WHAT I DO ====== */}
+
   <Section id="what-i-do" tone="white" padding="default">
     <Container>
       <SectionHeader
@@ -341,7 +341,7 @@ const toolsPreview = [
     </Container>
   </Section>
 
-  {/* ====== WHY THIS WORK MATTERS ====== */}
+
   <Section tone="navy" padding="default" decorated>
     <Blob tone="plum" size="lg" animate="float-slow" opacity="opacity-50" class="absolute top-8 left-[5%]" />
     <Blob tone="coral" size="md" shape="alt" animate="float" opacity="opacity-30" class="absolute bottom-12 right-[8%] !rounded-full" />
@@ -388,7 +388,7 @@ const toolsPreview = [
     </Container>
   </Section>
 
-  {/* ====== HOW I THINK ====== */}
+
   <Section id="how-i-think" tone="cream" padding="default" decorated>
     <Blob tone="peach" size="lg" animate="float-slow" opacity="opacity-40" class="absolute -top-8 right-[6%]" />
     <Blob tone="sky" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-12 left-[8%] rounded-full" />
@@ -415,7 +415,7 @@ const toolsPreview = [
 
         <div class="lg:col-span-5">
           <div class="bg-white/70 backdrop-blur rounded-3xl border border-charcoal/10 p-6 md:p-8 shadow-sm relative">
-            <span class="absolute -top-3 left-8 inline-flex items-center gap-1.5 bg-coral text-white text-xs font-heading font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-md -rotate-2">
+            <span class="absolute -top-3 left-8 inline-flex items-center gap-1.5 bg-[#C13A22] text-white text-xs font-heading font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-md -rotate-2">
               <Icon name="ph:question-duotone" size={14} />
               Questions I ask
             </span>
@@ -446,7 +446,7 @@ const toolsPreview = [
 
 
 
-  {/* ====== WRITING ====== */}
+
   <Section tone="peach" padding="default" decorated>
     <Blob tone="lemon" size="md" animate="float" opacity="opacity-50" class="absolute top-10 right-[8%]" />
     <Blob tone="coral" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-10 left-[10%] rounded-full" />
@@ -498,7 +498,7 @@ const toolsPreview = [
     </Container>
   </Section>
 
-  {/* ====== TOOLS ====== */}
+
   <Section id="tools" tone="cream" padding="default">
     <Container>
       <SectionHeader
@@ -531,14 +531,14 @@ const toolsPreview = [
         })}
       </CardGrid>
 
-      <p class="text-sm text-charcoal/60 font-body mt-12">
+      <p class="text-sm text-charcoal/70 font-body mt-12">
         <Icon name="ph:info-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
         Want the full set? <Link href="/tools/" variant="inline">Explore all the tools</Link>.
       </p>
     </Container>
   </Section>
 
-  {/* ====== ABOUT PREVIEW ====== */}
+
   <Section id="about" tone="cream" padding="default" class="bg-charcoal/[0.03]">
     <Container>
       <div class="flex flex-col md:flex-row items-start gap-12 md:gap-16">
@@ -573,7 +573,7 @@ const toolsPreview = [
           </div>
 
           <div class="mt-8">
-            <p class="font-heading text-sm font-medium text-charcoal/50 uppercase tracking-wider mb-4">
+            <p class="font-heading text-sm font-medium text-charcoal/70 uppercase tracking-wider mb-4">
               Teams I've worked with
             </p>
             <div class="flex flex-wrap gap-3">
@@ -591,7 +591,7 @@ const toolsPreview = [
     </Container>
   </Section>
 
-  {/* ====== FINAL CTA ====== */}
+
   <CTABanner
     title="Have an inconsistent UI system that's slowing you down?"
     lead="Whether you're hiring for a design systems or UX engineering role, or want a second pair of eyes on a component library, send a note. I reply within one business day."

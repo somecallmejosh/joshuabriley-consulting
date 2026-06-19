@@ -15,6 +15,10 @@ export default {
         cream: '#FFFDF9',
         peach: '#FFE8D6',
         coral: '#E8573D',
+        // Deep coral (#C13A22, AA on white 5.39:1 / cream 5.31:1) is applied via the
+        // arbitrary value text-[#C13A22] / bg-[#C13A22], not a named token: under this
+        // project's per-route CSS splitting the named `coral-deep` utility failed to
+        // apply on some pages (sibling -deep tokens were unaffected). See site.css nav.
         sunset: '#FF8E53',
         'sunset-deep': '#A24818', // AA on white: 5.91:1
         plum: '#6C4AB6',

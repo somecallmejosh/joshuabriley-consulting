@@ -45,7 +45,10 @@ if (!prefersReduced && 'IntersectionObserver' in window) {
             io.unobserve(entry.target);
           });
         },
-        { rootMargin: '0px 0px -8% 0px', threshold: 0.05 },
+        // threshold:0 — fire as soon as any pixel crosses in. A nonzero ratio
+        // would never be reached on very tall blog bodies (viewportH / bodyH < it),
+        // leaving them stuck at opacity:0. rootMargin handles the reveal timing.
+        { rootMargin: '0px 0px -8% 0px', threshold: 0 },
       );
 
       targets.forEach((el) => io.observe(el));

@@ -9,6 +9,7 @@ import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
 import Hero from '~/components/patterns/Hero.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
@@ -20,7 +21,7 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
   description="An interactive demo of token architecture: change one primitive and watch it propagate through every component at once. Semantic tokens reference primitives, names describe intent."
 >
   {/* ====== HERO ====== */}
-  <Hero tone="cream" align="left">
+  <Hero tone="cream" align="left" split>
     <Blob slot="decorations" tone="sky" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
     <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
     <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" opacity="opacity-40" />
@@ -34,6 +35,72 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
       describe intent, not value. That's abstract until you move one. Change a decision below and watch it
       propagate through every component at once.
     </Text>
+
+    {/* One primitive value cascades down through a semantic token into three
+        components — all rendered in that same value. The whole page's thesis,
+        drawn: change the source, change everything downstream. Decorative. */}
+    <div slot="media" class="relative mx-auto h-[440px] w-full max-w-[420px] hidden lg:block" aria-hidden="true">
+      {/* Soft spinning ring for depth */}
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-2 border-dashed border-sky/20 animate-spin-slow"></div>
+
+      {/* Floating accent dots */}
+      <span class="absolute top-[6%] right-[8%] w-4 h-4 rounded-full bg-lemon animate-float-delay"></span>
+      <span class="absolute bottom-[10%] left-[4%] w-3 h-3 rounded-full bg-plum/60 animate-float-slow"></span>
+
+      {/* Animated flow lines: primitive → semantic → each component */}
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 440" fill="none">
+        <path d="M 200 110 C 200 138, 200 156, 200 182" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite" />
+        <path d="M 200 286 C 150 314, 104 326, 76 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.4s" />
+        <path d="M 200 286 L 200 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.6s" />
+        <path d="M 200 286 C 250 314, 296 326, 324 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.8s" />
+      </svg>
+
+      {/* Layer 1 — Primitive: the single raw value */}
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-2 animate-float">
+        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Primitive</span>
+        <div class="flex items-center gap-2.5">
+          <span class="w-8 h-8 rounded-lg shadow-inner" style="background:#E8573D"></span>
+          <span class="font-mono text-sm text-navy">#E8573D</span>
+        </div>
+      </div>
+
+      {/* Layer 2 — Semantic: intent that references the primitive */}
+      <div class="absolute top-[40%] left-1/2 -translate-x-1/2 w-52 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-1 animate-float-delay">
+        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Semantic</span>
+        <div class="flex items-center gap-2">
+          <code class="font-mono text-sm font-semibold text-coral">action.primary</code>
+        </div>
+        <div class="mt-1.5 flex items-center gap-1.5 text-charcoal/45">
+          <Icon name="ph:arrow-up-duotone" size={13} />
+          <span class="font-mono text-[11px]">references primitive</span>
+        </div>
+      </div>
+
+      {/* Layer 3 — Components: all rendered from the same value */}
+      <div class="absolute bottom-0 left-0 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 -rotate-3 animate-float-slow">
+        <div class="flex items-center gap-1.5 mb-2">
+          <Icon name="ph:cursor-click-duotone" size={15} class="text-charcoal/40" />
+          <span class="font-heading text-[10px] font-semibold text-navy">Button</span>
+        </div>
+        <span class="block rounded-lg px-2 py-1.5 text-center text-[11px] font-semibold text-white" style="background:#E8573D">Save</span>
+      </div>
+
+      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-1 animate-float">
+        <div class="flex items-center gap-1.5 mb-2">
+          <Icon name="ph:tag-duotone" size={15} class="text-charcoal/40" />
+          <span class="font-heading text-[10px] font-semibold text-navy">Badge</span>
+        </div>
+        <span class="block rounded-full px-2 py-1.5 text-center text-[11px] font-semibold bg-coral/15 text-[#C13A22]">New</span>
+      </div>
+
+      <div class="absolute bottom-0 right-0 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-3 animate-float-delay">
+        <div class="flex items-center gap-1.5 mb-2">
+          <Icon name="ph:text-aa-duotone" size={15} class="text-charcoal/40" />
+          <span class="font-heading text-[10px] font-semibold text-navy">Link</span>
+        </div>
+        <span class="block py-1.5 text-center text-[11px] font-semibold underline decoration-2 underline-offset-2 text-[#C13A22]">Read more</span>
+      </div>
+    </div>
   </Hero>
 
   <SquiggleDivider />
@@ -42,12 +109,13 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
   <Section padding="default">
     <Container width="default">
       <SectionHeader
+        align="left"
         eyebrow="The playground"
         eyebrowIcon="ph:sliders-horizontal-duotone"
         eyebrowTone="plum"
         title="One change, everywhere at once"
         lead="Drag a knob, change the whole card. That&rsquo;s the leverage a real system gives a team &mdash; every component pulls from the same vocabulary."
-        class="mb-10"
+        class="mb-10 max-w-[65ch]"
       />
       <TokenPlayground />
     </Container>
@@ -57,6 +125,7 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
   <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
+        align="left"
         eyebrow="The trick, explained"
         eyebrowIcon="ph:stack-duotone"
         eyebrowTone="sky"

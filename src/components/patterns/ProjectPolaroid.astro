@@ -48,10 +48,10 @@ const {
 } = Astro.props;
 
 const labelToneClass: Record<Tone, string> = {
-  coral: 'bg-coral/10 text-coral border-coral/30',
+  coral: 'bg-coral/10 text-[#C13A22] border-coral/30',
   plum: 'bg-plum/10 text-plum border-plum/30',
-  sage: 'bg-sage/20 text-sage border-sage/40',
-  sky: 'bg-sky/15 text-sky border-sky/40',
+  sage: 'bg-sage/20 text-sage-deep border-sage/40',
+  sky: 'bg-sky/15 text-sky-deep border-sky/40',
   navy: 'bg-navy/10 text-navy border-navy/30',
 };
 ---
@@ -87,7 +87,7 @@ const labelToneClass: Record<Tone, string> = {
       <p class="text-charcoal/70 text-base leading-relaxed mb-4">
         {summary}
       </p>
-      <span class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-coral">
+      <span class="inline-flex items-center gap-1.5 font-heading text-sm font-semibold text-[#C13A22]">
         {cta}
         <Icon name="ph:arrow-right-bold" size={16} class="group-hover:translate-x-1 transition-transform" />
       </span>
@@ -202,7 +202,7 @@ const labelToneClass: Record<Tone, string> = {
     font-size: 0.62rem;
     text-transform: uppercase;
     letter-spacing: 0.06em;
-    color: rgba(45, 43, 85, 0.6);
+    color: rgba(45, 43, 85, 0.8);
     font-weight: 500;
     margin-top: 2px;
   }

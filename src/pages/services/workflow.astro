@@ -192,10 +192,10 @@ const process = [
 ];
 
 const stepBgMap: Record<string, string> = {
-  coral: 'bg-coral shadow-coral/20',
+  coral: 'bg-[#C13A22] shadow-coral/20',
   plum: 'bg-plum shadow-plum/20',
-  sunset: 'bg-sunset shadow-sunset/20',
-  sage: 'bg-sage shadow-sage/20',
+  sunset: 'bg-sunset-deep shadow-sunset/20',
+  sage: 'bg-sage-deep shadow-sage/20',
 };
 ---
 
@@ -203,7 +203,7 @@ const stepBgMap: Record<string, string> = {
   title="Design-to-Code Workflow — Joshua Briley | Design Systems Consulting"
   description={description}
 >
-  {/* HERO */}
+
   <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
     <div class="absolute inset-0 dot-paper opacity-70" aria-hidden="true"></div>
     <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
@@ -215,8 +215,8 @@ const stepBgMap: Record<string, string> = {
     <Blob tone="lemon" size="sm" class="absolute bottom-36 left-[14%] rounded-full" animate="float" opacity="opacity-70" />
 
     <Container class="relative z-10">
-      {/* Breadcrumb */}
-      <nav class="flex items-center gap-2 text-sm font-heading text-charcoal/60 mb-10" aria-label="Breadcrumb">
+
+      <nav class="flex items-center gap-2 text-sm font-heading text-charcoal/70 mb-10" aria-label="Breadcrumb">
         <a href="/services/" class="hover:text-coral transition-colors inline-flex items-center gap-1.5">
           <Icon name="ph:arrow-left-duotone" size={16} />
           All services
@@ -253,7 +253,7 @@ const stepBgMap: Record<string, string> = {
             </Button>
           </div>
 
-          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/60">
+          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/70">
             <span class="inline-flex items-center gap-1.5">
               <Icon name="ph:clock-duotone" size={18} class="text-plum" />
               ~3 week engagement
@@ -266,7 +266,7 @@ const stepBgMap: Record<string, string> = {
           </div>
         </div>
 
-        {/* Handoff-bridge visual */}
+
         <div class="lg:col-span-5 relative h-[420px] md:h-[480px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
@@ -275,7 +275,7 @@ const stepBgMap: Record<string, string> = {
             <div class="w-60 h-60 rounded-full bg-sunset/10 animate-pulse-ring"></div>
           </div>
 
-          {/* Design node */}
+
           <div class="absolute top-[18%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float -rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
@@ -290,7 +290,7 @@ const stepBgMap: Record<string, string> = {
             </div>
           </div>
 
-          {/* Code node */}
+
           <div class="absolute bottom-[18%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float-delay rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-sunset/15 flex items-center justify-center">
@@ -300,12 +300,12 @@ const stepBgMap: Record<string, string> = {
             </div>
             <div class="font-mono text-[10px] text-charcoal/70 leading-relaxed">
               <div>&lt;Button</div>
-              <div class="pl-2 text-coral">variant="primary"</div>
+              <div class="pl-2 text-[#C13A22]">variant="primary"</div>
               <div>/&gt;</div>
             </div>
           </div>
 
-          {/* Flowing connection */}
+
           <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 480" fill="none">
             <path
               d="M 110 150 C 180 200, 220 280, 290 340"
@@ -318,19 +318,19 @@ const stepBgMap: Record<string, string> = {
             <circle cx="290" cy="340" r="5" fill="#E8573D" />
           </svg>
 
-          {/* Token chip */}
+
           <div class="absolute top-[44%] left-[38%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-slide-chip">
             <div class="w-2.5 h-2.5 rounded-full bg-coral"></div>
             <span class="font-heading text-[11px] font-semibold text-navy">token.color.primary</span>
           </div>
 
-          {/* Sticky note */}
+
           <div class="absolute top-[6%] right-[8%] bg-lemon/90 rounded-lg shadow-md p-2 w-24 animate-float-slow rotate-6">
             <div class="h-1 rounded bg-navy/30 mb-1"></div>
             <div class="h-1 rounded bg-navy/30 w-3/4"></div>
           </div>
 
-          {/* Spec check */}
+
           <div class="absolute bottom-[4%] left-[18%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-2.5 flex items-center gap-2 animate-float -rotate-2">
             <Icon name="ph:check-circle-duotone" size={18} class="text-sage" />
             <span class="font-heading text-[11px] font-semibold text-navy">Spec matches</span>
@@ -342,7 +342,7 @@ const stepBgMap: Record<string, string> = {
 
   <SquiggleDivider />
 
-  {/* THIS IS FOR YOU IF */}
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -370,7 +370,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* PHILOSOPHY CALLOUT */}
+
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <Card variant="paper" tilt={0} padding="loose" class="relative overflow-hidden -rotate-[0.3deg]">
@@ -378,7 +378,7 @@ const stepBgMap: Record<string, string> = {
         <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
 
         <div class="relative">
-          <Icon name="ph:quotes-duotone" size={48} class="text-coral/60 mb-4" />
+          <Icon name="ph:quotes-duotone" size={48} class="text-[#C13A22] mb-4" />
           <p class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6">
             More annotations. More specs. More comments.
             <span class="italic">That doesn't solve the problem.</span>
@@ -391,7 +391,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* DELIVERABLES */}
+
   <Section id="deliverables" padding="default">
     <Container>
       <div class="max-w-3xl mx-auto text-center mb-16">
@@ -423,7 +423,7 @@ const stepBgMap: Record<string, string> = {
           );
         })}
 
-        {/* Featured navy/plum card */}
+
         <div class="card-hover bg-gradient-to-br from-navy to-plum text-white rounded-3xl p-7 border border-navy/10 shadow-sm relative overflow-hidden rotate-1">
           <div class="absolute -top-6 -right-6 w-24 h-24 bg-coral/20 rounded-full" aria-hidden="true"></div>
           <div class="relative">
@@ -440,7 +440,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* WHAT'S INCLUDED */}
+
   <Section padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
@@ -473,7 +473,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* PROCESS */}
+
   <Section padding="default">
     <Container width="narrow">
       <SectionHeader
@@ -500,7 +500,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* PRICING */}
+
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <div class="relative bg-gradient-to-br from-navy via-navy to-plum rounded-3xl p-10 md:p-14 overflow-hidden">
@@ -531,7 +531,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* TESTIMONIALS */}
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -571,7 +571,7 @@ const stepBgMap: Record<string, string> = {
     </Container>
   </Section>
 
-  {/* FINAL CTA */}
+
   <CTABanner
     title="Give your team a handoff they can trust."
     lead="Book a 30-minute intro call. Tell me where your sprint keeps snagging — I'll tell you honestly whether a workflow engagement is the right next step."

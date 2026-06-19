@@ -16,9 +16,17 @@ import Card from '~/components/card/Card.astro';
 import CardNumber from '~/components/card/CardNumber.astro';
 
 const accentMap: Record<string, { text: string; bg: string }> = {
-  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10' },
   plum: { text: 'text-plum', bg: 'bg-plum/10' },
-  sky: { text: 'text-sky', bg: 'bg-sky/10' },
+  sky: { text: 'text-sky-deep', bg: 'bg-sky/10' },
+  sunset: { text: 'text-sunset-deep', bg: 'bg-sunset/10' },
+};
+
+const cardNumberTones: Record<string, 'coral' | 'plum' | 'sky' | 'sunset'> = {
+  coral: 'coral',
+  plum: 'plum',
+  sky: 'sky',
+  sunset: 'sunset',
 };
 
 const tools = [
@@ -55,42 +63,140 @@ const tools = [
     cta: 'Open tool',
     tilt: -1 as const,
   },
+  {
+    accent: 'sunset',
+    icon: 'ph:calculator-duotone',
+    eyebrow: 'The business case',
+    title: 'What inconsistency actually costs',
+    body: 'Drift never lands on one invoice, so it stays invisible. Set your team size, rate, and the rework you live with, and watch it add up to the annual figure — in hours and dollars — a structured system reclaims.',
+    tags: ['5 inputs', 'Live estimate', 'Shareable link'],
+    href: '/tools/roi-calculator/',
+    cta: 'Open tool',
+    tilt: 1 as const,
+  },
 ];
 ---
 
 <BaseLayout
   title="Tools — Joshua Briley"
-  description="Three free, interactive tools built with the same design system as the rest of this site: a design system scorecard, an audit-findings demo, and a token playground."
+  description="Four free, interactive tools built with the same design system as the rest of this site: a design system scorecard, an audit-findings demo, a token playground, and a UI-debt ROI calculator."
 >
-  {/* ====== HERO ====== */}
-  <Hero tone="cream" align="left">
-    <Blob slot="decorations" tone="plum" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
-    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
-    <Blob slot="decorations" tone="sage" size="sm" class="absolute bottom-10 right-[18%]" animate="float-slow" opacity="opacity-40" />
-    <Blob slot="decorations" tone="sky" size="sm" class="absolute bottom-20 left-[14%] rounded-full" animate="float" opacity="opacity-40" />
+
+  <Hero tone="cream" align="left" split>
+    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[8%] rounded-full" animate="float-delay" />
+    <Blob slot="decorations" tone="sage" size="sm" class="absolute bottom-10 right-[8%]" animate="float-slow" opacity="opacity-40" />
+    <Blob slot="decorations" tone="sky" size="sm" class="absolute bottom-24 left-[12%] rounded-full" animate="float" opacity="opacity-40" />
 
     <Badge slot="eyebrow" tone="peach" icon="ph:wrench-duotone">Tools &middot; free &amp; interactive</Badge>
     <Heading slot="title" level={1} visual="display-xl">
       Tools that <WavyUnderline>show how I think</WavyUnderline>.
     </Heading>
     <Text slot="lead" size="xl" tone="muted">
-      Three interactive pieces, free to use, built with the same design system as the rest of this site.
+      Four interactive pieces, free to use, built with the same design system as the rest of this site.
       They're useful on their own, and they double as work samples: every one is accessible by construction
       and token-driven.
     </Text>
+
+    <!-- One system in the middle; each tool reads it from orbit. The four cards
+         map 1:1 to the four tools below, in their accent colors. Decorative. -->
+    <div slot="media" class="relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/20 animate-spin-slow"></div>
+      </div>
+
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 460" fill="none">
+        <path d="M 200 230 C 150 190, 120 150, 96 116" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
+        <path d="M 200 230 C 256 196, 290 160, 312 124" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.4s" />
+        <path d="M 200 230 C 152 272, 120 308, 100 344" stroke="#5DADE2" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.8s" />
+        <path d="M 200 230 C 250 270, 286 306, 308 344" stroke="#FF8E53" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 1.2s" />
+      </svg>
+
+      <!-- Center: the system every tool plugs into -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-5 py-4 w-40 animate-float">
+        <div class="flex items-center gap-2 mb-2.5">
+          <div class="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center">
+            <Icon name="ph:stack-duotone" size={20} class="text-navy" />
+          </div>
+          <span class="font-heading text-sm font-bold text-navy leading-none">Your system</span>
+        </div>
+        <div class="flex gap-1.5">
+          <span class="w-5 h-5 rounded-md bg-coral/70"></span>
+          <span class="w-5 h-5 rounded-md bg-plum/70"></span>
+          <span class="w-5 h-5 rounded-md bg-sky/70"></span>
+          <span class="w-5 h-5 rounded-md bg-sunset/70"></span>
+        </div>
+      </div>
+
+      <!-- Scorecard (coral) -->
+      <div class="absolute top-[2%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
+            <Icon name="ph:clipboard-text-duotone" size={18} class="text-coral" />
+          </div>
+          <span class="font-heading text-xs font-semibold text-navy">Scorecard</span>
+        </div>
+        <div class="flex items-baseline gap-1">
+          <span class="font-display text-xl text-coral leading-none">48</span>
+          <span class="font-heading text-[11px] text-charcoal/50">/ 64</span>
+        </div>
+      </div>
+
+      <!-- Audit (plum) -->
+      <div class="absolute top-[4%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-3">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
+            <Icon name="ph:magnifying-glass-duotone" size={18} class="text-plum" />
+          </div>
+          <span class="font-heading text-xs font-semibold text-navy">Audit</span>
+        </div>
+        <div class="space-y-1.5">
+          <div class="h-1.5 rounded-full bg-plum/40 w-full"></div>
+          <div class="h-1.5 rounded-full bg-charcoal/10 w-3/5"></div>
+        </div>
+      </div>
+
+      <!-- Tokens (sky) -->
+      <div class="absolute bottom-[3%] left-[1%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow rotate-2">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
+            <Icon name="ph:sliders-horizontal-duotone" size={18} class="text-sky-deep" />
+          </div>
+          <span class="font-heading text-xs font-semibold text-navy">Tokens</span>
+        </div>
+        <div class="flex gap-1.5">
+          <span class="w-4 h-4 rounded-full bg-sky/70"></span>
+          <span class="w-4 h-4 rounded-full bg-plum/60"></span>
+          <span class="w-4 h-4 rounded-full bg-sunset/70"></span>
+        </div>
+      </div>
+
+      <!-- ROI (sunset) -->
+      <div class="absolute bottom-[2%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-2">
+        <div class="flex items-center gap-2 mb-2">
+          <div class="w-7 h-7 rounded-lg bg-sunset/15 flex items-center justify-center">
+            <Icon name="ph:calculator-duotone" size={18} class="text-sunset-deep" />
+          </div>
+          <span class="font-heading text-xs font-semibold text-navy">ROI</span>
+        </div>
+        <div class="flex items-baseline gap-0.5">
+          <span class="font-display text-lg text-sunset-deep leading-none">$</span>
+          <span class="font-display text-xl text-sunset-deep leading-none">214k</span>
+        </div>
+      </div>
+    </div>
   </Hero>
 
   <SquiggleDivider />
 
-  {/* ====== TOOL CARDS ====== */}
+
   <Section padding="default">
     <Container>
-      <div class="grid lg:grid-cols-3 gap-6">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-6">
         {tools.map((t, idx) => {
           const a = accentMap[t.accent];
           return (
             <Card variant="paper" tilt={t.tilt} padding="loose" class="flex flex-col">
-              <CardNumber slot="corner" n={idx + 1} tone={t.accent === 'sky' ? 'sky' : t.accent === 'plum' ? 'plum' : 'coral'} announce />
+              <CardNumber slot="corner" n={idx + 1} tone={cardNumberTones[t.accent] ?? 'coral'} announce />
               <div class="relative flex flex-col flex-1">
                 <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
                   <Icon name={t.icon} size={28} class={a.text} />
@@ -117,17 +223,17 @@ const tools = [
     </Container>
   </Section>
 
-  {/* ====== WHY FREE ====== */}
+
   <Section tone="cream" padding="default" decorated class="bg-charcoal/[0.03]">
     <Blob tone="peach" size="lg" animate="float-slow" opacity="opacity-40" class="absolute -top-8 right-[6%]" />
     <Container width="narrow" class="relative z-10">
       <div class="flex flex-col items-start">
-        <Icon name="ph:quotes-duotone" size={48} class="text-coral/40 mb-4" />
+        <Icon name="ph:quotes-duotone" size={48} class="text-[#C13A22] mb-4" />
         <p class="font-display text-2xl md:text-3xl text-navy italic leading-snug mb-4">
           The portfolio claim is the tool itself. If it says accessible, tab through it. If it says
           token-driven, open dev tools.
         </p>
-        <p class="font-heading text-sm text-charcoal/60 uppercase tracking-wider mb-8">— why these exist</p>
+        <p class="font-heading text-sm text-charcoal/70 uppercase tracking-wider mb-8">— why these exist</p>
         <Text size="lg" tone="muted" class="max-w-2xl">
           The scorecard covers the same five dimensions I use when auditing real systems. If it surfaces gaps you
           want a second opinion on, I still take a handful of engagements each year.
@@ -136,7 +242,7 @@ const tools = [
     </Container>
   </Section>
 
-  {/* ====== FINAL CTA ====== */}
+
   <CTABanner
     title="Want to talk about any of this?"
     lead="Roles, systems, or the tools themselves — I read everything."

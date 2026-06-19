@@ -1,0 +1,564 @@
+---
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import {
+  DEFAULTS,
+  BOUNDS,
+  INCONSISTENCY_LEVELS,
+  computeRoi,
+  formatCurrency,
+} from '~/lib/roi';
+
+/**
+ * Interactive ROI / UI-debt calculator. Visitors set their team shape and how
+ * much time drift costs them; a results panel shows the recoverable dollars and
+ * hours per year, live. State is plain DOM + a shareable URL param (?i=).
+ *
+ * Formulas live in ~/lib/roi.ts (single source of truth) and are imported by
+ * both this frontmatter (for the no-flash initial render) and the client script.
+ */
+
+const initial = computeRoi(DEFAULTS);
+---
+
+<section
+  class="rc-root"
+  data-roi-calculator
+  aria-labelledby="rc-title"
+>
+  <div class="rc-grid">
+    <!-- ============ CONTROLS ============ -->
+    <div class="rc-controls">
+      <div class="mb-5">
+        <span class="font-hand text-sunset text-xl rotate-[-2deg] inline-block leading-none mb-1">
+          your numbers
+        </span>
+        <h3 id="rc-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+          What inconsistency costs you.
+        </h3>
+        <p class="text-sm text-charcoal/70 mt-2 leading-relaxed">
+          Five inputs about your team and the drift you live with. The panel on the
+          right updates as you go &mdash; no email, nothing saved.
+        </p>
+      </div>
+
+      <div class="rc-field">
+        <div class="rc-label-row">
+          <label for="rc-team" class="rc-label">People building UI</label>
+          <output id="rc-team-out" for="rc-team" class="rc-output">{DEFAULTS.team}</output>
+        </div>
+        <input
+          id="rc-team"
+          type="range"
+          min={BOUNDS.team.min}
+          max={BOUNDS.team.max}
+          step="1"
+          value={DEFAULTS.team}
+          data-rc-control="team"
+          aria-describedby="rc-team-out rc-team-hint"
+        />
+        <p id="rc-team-hint" class="rc-hint">Designers and front-end engineers who touch UI.</p>
+      </div>
+
+      <div class="rc-field">
+        <div class="rc-label-row">
+          <label for="rc-surfaces" class="rc-label">Products / surfaces</label>
+          <output id="rc-surfaces-out" for="rc-surfaces" class="rc-output">{DEFAULTS.surfaces}</output>
+        </div>
+        <input
+          id="rc-surfaces"
+          type="range"
+          min={BOUNDS.surfaces.min}
+          max={BOUNDS.surfaces.max}
+          step="1"
+          value={DEFAULTS.surfaces}
+          data-rc-control="surfaces"
+          aria-describedby="rc-surfaces-out rc-surfaces-hint"
+        />
+        <p id="rc-surfaces-hint" class="rc-hint">Distinct apps or surfaces kept in sync.</p>
+      </div>
+
+      <div class="rc-field">
+        <div class="rc-label-row">
+          <label for="rc-rework" class="rc-label">Hours/week lost to UI rework</label>
+          <output id="rc-rework-out" for="rc-rework" class="rc-output">{DEFAULTS.reworkHours.toFixed(1)}</output>
+        </div>
+        <input
+          id="rc-rework"
+          type="range"
+          min={BOUNDS.reworkHours.min}
+          max={BOUNDS.reworkHours.max}
+          step="0.5"
+          value={DEFAULTS.reworkHours}
+          data-rc-control="reworkHours"
+          aria-describedby="rc-rework-out rc-rework-hint"
+        />
+        <p id="rc-rework-hint" class="rc-hint">Per person: redoing, reconciling, and chasing drift.</p>
+      </div>
+
+      <div class="rc-field">
+        <div class="rc-label-row">
+          <label for="rc-rate" class="rc-label">Blended hourly cost</label>
+          <output id="rc-rate-out" for="rc-rate" class="rc-output">{formatCurrency(DEFAULTS.rate)}</output>
+        </div>
+        <input
+          id="rc-rate"
+          type="range"
+          min={BOUNDS.rate.min}
+          max={BOUNDS.rate.max}
+          step="5"
+          value={DEFAULTS.rate}
+          data-rc-control="rate"
+          aria-describedby="rc-rate-out rc-rate-hint"
+        />
+        <p id="rc-rate-hint" class="rc-hint">Fully-loaded cost per hour, averaged across the team.</p>
+      </div>
+
+      <div class="rc-field">
+        <span class="rc-label" id="rc-level-label">How inconsistent today?</span>
+        <div class="rc-chip-row" role="radiogroup" aria-labelledby="rc-level-label">
+          {INCONSISTENCY_LEVELS.map((lvl) => (
+            <label class="rc-chip" data-rc-chip="inconsistency" data-value={lvl.id}>
+              <input
+                type="radio"
+                name="rc-inconsistency"
+                value={lvl.id}
+                checked={lvl.id === DEFAULTS.inconsistency}
+                data-rc-control="inconsistency"
+              />
+              <span class="rc-chip-label">{lvl.label}</span>
+            </label>
+          ))}
+        </div>
+        <p class="rc-hint" data-rc-level-hint>
+          {INCONSISTENCY_LEVELS.find((l) => l.id === DEFAULTS.inconsistency)?.hint}
+        </p>
+      </div>
+
+      <div class="mt-2 flex flex-wrap items-center gap-3">
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          iconLeft="ph:link-duotone"
+          id="rc-copy"
+          class="!bg-white !border-charcoal/15 hover:!bg-white hover:!border-sunset/40"
+        >
+          <span data-rc-copy-label>Copy shareable link</span>
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="sm"
+          iconLeft="ph:arrow-counter-clockwise-duotone"
+          id="rc-reset"
+          class="!bg-white !border-charcoal/15 hover:!bg-white hover:!border-sunset/40"
+        >
+          Reset
+        </Button>
+      </div>
+    </div>
+
+    <!-- ============ RESULTS ============ -->
+    <div class="rc-result">
+      <div class="rc-result-frame">
+        <div class="rc-result-rule">
+          <span>your annual UI debt</span>
+          <span class="rc-result-dots"><i></i><i></i><i></i></span>
+        </div>
+
+        <p class="rc-headline-label">Recoverable per year</p>
+        <p class="rc-headline" data-rc-headline aria-live="polite">{formatCurrency(initial.debtCostPerYear)}</p>
+        <p class="rc-headline-sub">
+          <span data-rc-hours>{initial.hoursSavedPerYear.toLocaleString('en-US')}</span> engineer/designer
+          hours/year, reclaimed by structure.
+        </p>
+
+        <!-- with / without comparison -->
+        <div class="rc-bars">
+          <div class="rc-bar-row">
+            <span class="rc-bar-label">Today's rework cost</span>
+            <span class="rc-bar-val" data-rc-without>{formatCurrency(initial.withoutSystem)}</span>
+          </div>
+          <div class="rc-track">
+            <div class="rc-track-fill rc-track-fill--today" style="width:100%"></div>
+          </div>
+
+          <div class="rc-bar-row mt-3">
+            <span class="rc-bar-label">With a structured system</span>
+            <span class="rc-bar-val" data-rc-with>{formatCurrency(initial.withSystem)}</span>
+          </div>
+          <div class="rc-track">
+            <div
+              class="rc-track-fill rc-track-fill--system"
+              data-rc-with-bar
+              style={`width:${Math.round((initial.withSystem / Math.max(1, initial.withoutSystem)) * 100)}%`}
+            ></div>
+          </div>
+        </div>
+
+        <div class="rc-reclaim" data-rc-reclaim>
+          A structured system is modelled to reclaim
+          <strong data-rc-pct>{Math.round(initial.velocityReclaimPct * 100)}%</strong>
+          of that rework time.
+        </div>
+      </div>
+
+      <p class="rc-foot-note" aria-live="polite" data-rc-callout>
+        Most teams are surprised it&rsquo;s a salary, not a rounding error.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import {
+    DEFAULTS,
+    INCONSISTENCY_LEVELS,
+    computeRoi,
+    encodeInputs,
+    decodeInputs,
+    formatCurrency,
+    type RoiInputs,
+    type InconsistencyLevel,
+  } from '~/lib/roi';
+
+  const root = document.querySelector<HTMLElement>('[data-roi-calculator]');
+  if (root) {
+    const $ = <T extends HTMLElement = HTMLElement>(sel: string) => root.querySelector<T>(sel)!;
+
+    const els = {
+      team: $<HTMLInputElement>('#rc-team'),
+      surfaces: $<HTMLInputElement>('#rc-surfaces'),
+      rework: $<HTMLInputElement>('#rc-rework'),
+      rate: $<HTMLInputElement>('#rc-rate'),
+      teamOut: $<HTMLOutputElement>('#rc-team-out'),
+      surfacesOut: $<HTMLOutputElement>('#rc-surfaces-out'),
+      reworkOut: $<HTMLOutputElement>('#rc-rework-out'),
+      rateOut: $<HTMLOutputElement>('#rc-rate-out'),
+      levelHint: $('[data-rc-level-hint]'),
+      headline: $('[data-rc-headline]'),
+      hours: $('[data-rc-hours]'),
+      without: $('[data-rc-without]'),
+      with: $('[data-rc-with]'),
+      withBar: $<HTMLElement>('[data-rc-with-bar]'),
+      pct: $('[data-rc-pct]'),
+      callout: $('[data-rc-callout]'),
+      copyBtn: $<HTMLButtonElement>('#rc-copy'),
+      copyLabel: $('[data-rc-copy-label]'),
+    };
+
+    function readInputs(): RoiInputs {
+      const checked = root!.querySelector<HTMLInputElement>('input[name="rc-inconsistency"]:checked');
+      return {
+        team: parseInt(els.team.value, 10),
+        surfaces: parseInt(els.surfaces.value, 10),
+        rate: parseInt(els.rate.value, 10),
+        reworkHours: parseFloat(els.rework.value),
+        inconsistency: (checked?.value as InconsistencyLevel) ?? DEFAULTS.inconsistency,
+      };
+    }
+
+    function calloutFor(annual: number): string {
+      if (annual <= 0) return 'No rework cost? Either you have rare discipline — or the estimate is too low.';
+      if (annual >= 500_000) return 'That is a senior hire or two, spent every year on avoidable rework.';
+      if (annual >= 150_000) return 'Most teams are surprised it&rsquo;s a salary, not a rounding error.';
+      if (annual >= 40_000) return 'Smaller, but it compounds — and it never shows up on one invoice.';
+      return 'Modest today. It rarely stays that way as surfaces multiply.';
+    }
+
+    function render() {
+      const inputs = readInputs();
+      const r = computeRoi(inputs);
+
+      els.teamOut.textContent = String(inputs.team);
+      els.surfacesOut.textContent = String(inputs.surfaces);
+      els.reworkOut.textContent = inputs.reworkHours.toFixed(1);
+      els.rateOut.textContent = formatCurrency(inputs.rate);
+      els.levelHint.textContent =
+        INCONSISTENCY_LEVELS.find((l) => l.id === inputs.inconsistency)?.hint ?? '';
+
+      els.headline.textContent = formatCurrency(r.debtCostPerYear);
+      els.hours.textContent = r.hoursSavedPerYear.toLocaleString('en-US');
+      els.without.textContent = formatCurrency(r.withoutSystem);
+      els.with.textContent = formatCurrency(r.withSystem);
+      els.withBar.style.width = `${Math.round((r.withSystem / Math.max(1, r.withoutSystem)) * 100)}%`;
+      els.pct.textContent = `${Math.round(r.velocityReclaimPct * 100)}%`;
+      els.callout.innerHTML = calloutFor(r.debtCostPerYear);
+
+      syncChips(inputs.inconsistency);
+    }
+
+    function syncChips(value: string) {
+      root!.querySelectorAll<HTMLElement>('[data-rc-chip="inconsistency"]').forEach((chip) => {
+        chip.classList.toggle('is-on', chip.dataset.value === value);
+      });
+    }
+
+    function applyInputs(inputs: RoiInputs) {
+      els.team.value = String(inputs.team);
+      els.surfaces.value = String(inputs.surfaces);
+      els.rate.value = String(inputs.rate);
+      els.rework.value = String(inputs.reworkHours);
+      root!.querySelectorAll<HTMLInputElement>('input[name="rc-inconsistency"]').forEach(
+        (radio) => (radio.checked = radio.value === inputs.inconsistency),
+      );
+      render();
+    }
+
+    root.addEventListener('input', (e) => {
+      if ((e.target as HTMLElement).dataset.rcControl) render();
+    });
+
+    els.copyBtn.addEventListener('click', async () => {
+      const param = encodeInputs(readInputs());
+      const url = `${location.origin}${location.pathname}?i=${param}`;
+      try {
+        await navigator.clipboard.writeText(url);
+        els.copyLabel.textContent = 'Link copied!';
+      } catch {
+        history.replaceState(null, '', `?i=${param}`);
+        els.copyLabel.textContent = 'Link in address bar';
+      }
+      setTimeout(() => (els.copyLabel.textContent = 'Copy shareable link'), 2200);
+    });
+
+    $('#rc-reset').addEventListener('click', () => {
+      applyInputs({ ...DEFAULTS });
+      history.replaceState(null, '', location.pathname);
+    });
+
+    // Hydrate from a shared URL, if present and valid.
+    const param = new URLSearchParams(location.search).get('i');
+    const decoded = param && decodeInputs(param);
+    if (decoded) applyInputs(decoded);
+    else render();
+  }
+</script>
+
+<style>
+  .rc-root {
+    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 24px 50px -28px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(162, 72, 24, 0.04);
+    padding: clamp(1.25rem, 2.4vw, 2.5rem);
+  }
+
+  .rc-grid { display: grid; gap: 2rem; }
+  @media (min-width: 880px) {
+    .rc-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 2.5rem; align-items: start; }
+  }
+
+  /* ========== controls ========== */
+  .rc-field { margin-bottom: 1.4rem; }
+  .rc-label-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.45rem;
+  }
+  .rc-label {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a24818;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .rc-output {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.78rem;
+    color: #2d2b55;
+    background: rgba(162, 72, 24, 0.08);
+    padding: 2px 8px;
+    border-radius: 6px;
+  }
+  .rc-hint {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 0.72rem;
+    color: rgba(45, 43, 85, 0.7);
+    margin-top: 0.4rem;
+    line-height: 1.4;
+  }
+
+  .rc-root input[type='range'] {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #a24818, rgba(162, 72, 24, 0.18));
+    outline: none;
+    cursor: pointer;
+  }
+  .rc-root input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid #a24818;
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3);
+    cursor: grab;
+    transition: transform 0.15s ease;
+  }
+  .rc-root input[type='range']::-webkit-slider-thumb:active { transform: scale(1.1); cursor: grabbing; }
+  .rc-root input[type='range']::-moz-range-thumb {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: #fff;
+    border: 2.5px solid #a24818;
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3);
+    cursor: grab;
+  }
+  .rc-root input[type='range']:focus-visible {
+    outline: 2px dashed #a24818;
+    outline-offset: 6px;
+  }
+
+  .rc-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .rc-chip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    background: #fffbf5;
+    border: 1.5px solid rgba(162, 72, 24, 0.18);
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #2d2b55;
+    cursor: pointer;
+    transition: all 0.18s ease;
+  }
+  .rc-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .rc-chip:hover { border-color: rgba(162, 72, 24, 0.45); }
+  .rc-chip:focus-within { outline: 2px dashed #a24818; outline-offset: 3px; }
+  .rc-chip.is-on {
+    background: #a24818;
+    border-color: #a24818;
+    color: #fff;
+    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+  }
+
+  /* ========== result ========== */
+  .rc-result-frame {
+    background: #fff;
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 18px;
+    padding: clamp(1.25rem, 2vw, 1.9rem);
+    box-shadow:
+      0 18px 40px -24px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(162, 72, 24, 0.05);
+  }
+  .rc-result-rule {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    color: rgba(45, 43, 85, 0.7);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    border-bottom: 1px dashed rgba(162, 72, 24, 0.2);
+    padding-bottom: 0.65rem;
+    margin-bottom: 1.25rem;
+  }
+  .rc-result-dots { display: inline-flex; gap: 4px; }
+  .rc-result-dots i {
+    width: 8px; height: 8px; border-radius: 50%;
+    display: inline-block;
+  }
+  .rc-result-dots i:nth-child(1) { background: #ff8e53; }
+  .rc-result-dots i:nth-child(2) { background: #fde68a; }
+  .rc-result-dots i:nth-child(3) { background: #7bb47a; }
+
+  .rc-headline-label {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: rgba(45, 43, 85, 0.7);
+    margin-bottom: 0.2rem;
+  }
+  .rc-headline {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 3.4rem);
+    color: #a24818;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+  .rc-headline-sub {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 0.9rem;
+    color: rgba(46, 46, 48, 0.7);
+    line-height: 1.5;
+    margin-top: 0.6rem;
+  }
+  .rc-headline-sub span {
+    font-weight: 700;
+    color: #2d2b55;
+  }
+
+  .rc-bars { margin-top: 1.6rem; }
+  .rc-bar-row {
+    display: flex; align-items: baseline; justify-content: space-between;
+    margin-bottom: 0.4rem;
+  }
+  .rc-bar-label {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: rgba(45, 43, 85, 0.7);
+  }
+  .rc-bar-val {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #2d2b55;
+  }
+  .rc-track {
+    height: 12px;
+    border-radius: 999px;
+    background: rgba(45, 43, 85, 0.07);
+    overflow: hidden;
+  }
+  .rc-track-fill {
+    height: 100%;
+    border-radius: 999px;
+    transition: width 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .rc-track-fill--today { background: linear-gradient(90deg, #e8573d, #ff8e53); }
+  .rc-track-fill--system { background: linear-gradient(90deg, #3e6e3d, #7bb47a); }
+
+  .rc-reclaim {
+    margin-top: 1.4rem;
+    padding: 0.85rem 1rem;
+    border-radius: 12px;
+    background: rgba(162, 72, 24, 0.06);
+    border: 1px solid rgba(162, 72, 24, 0.12);
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 0.85rem;
+    color: rgba(46, 46, 48, 0.78);
+    line-height: 1.5;
+  }
+  .rc-reclaim strong { color: #a24818; }
+
+  .rc-foot-note {
+    margin-top: 1rem;
+    font-family: 'Caveat', cursive;
+    font-size: 1.15rem;
+    color: #a24818;
+    text-align: center;
+    min-height: 1.5em;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .rc-track-fill,
+    .rc-root input[type='range']::-webkit-slider-thumb { transition: none; }
+  }
+</style>

@@ -184,10 +184,10 @@ const process = [
 ];
 
 const stepBgMap: Record<string, string> = {
-  coral: 'bg-coral shadow-coral/20',
+  coral: 'bg-[#C13A22] shadow-coral/20',
   plum: 'bg-plum shadow-plum/20',
-  sunset: 'bg-sunset shadow-sunset/20',
-  sage: 'bg-sage shadow-sage/20',
+  sunset: 'bg-sunset-deep shadow-sunset/20',
+  sage: 'bg-sage-deep shadow-sage/20',
 };
 
 // Testimonials
@@ -221,9 +221,9 @@ const testimonials = [
   title="Design System Audit — Joshua Briley | Design Systems Consulting"
   description={description}
 >
-  {/* HERO */}
+
   <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
-    {/* grid paper backdrop */}
+
     <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
     <div
       class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent"
@@ -234,16 +234,16 @@ const testimonials = [
       aria-hidden="true"
     ></div>
 
-    {/* floating shapes */}
+
     <Blob tone="plum" size="lg" class="absolute top-20 right-[8%]" opacity="opacity-30" animate="float" />
     <Blob tone="lemon" size="sm" class="absolute top-40 left-[7%] rounded-full" animate="float-delay" />
     <Blob tone="sage" size="sm" class="absolute bottom-24 right-[14%]" animate="float-slow" opacity="opacity-40" />
     <Blob tone="sky" size="sm" class="absolute bottom-32 left-[12%] rounded-full" animate="float" opacity="opacity-40" />
 
     <Container class="relative z-10">
-      {/* breadcrumb */}
+
       <nav
-        class="flex items-center gap-2 text-sm font-heading text-charcoal/60 mb-10"
+        class="flex items-center gap-2 text-sm font-heading text-charcoal/70 mb-10"
         aria-label="Breadcrumb"
       >
         <a
@@ -296,7 +296,7 @@ const testimonials = [
             </Button>
           </div>
 
-          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/60">
+          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/70">
             <span class="inline-flex items-center gap-1.5">
               <Icon name="ph:clock-duotone" size={18} class="text-plum" />
               ~2 week turnaround
@@ -309,12 +309,12 @@ const testimonials = [
           </div>
         </div>
 
-        {/* magnifying-glass visual */}
+
         <div
           class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block"
           aria-hidden="true"
         >
-          {/* decorative rings */}
+
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/30 animate-spin-slow"></div>
           </div>
@@ -322,7 +322,7 @@ const testimonials = [
             <div class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"></div>
           </div>
 
-          {/* mock component swatches behind lens */}
+
           <div
             class="absolute top-[18%] left-[12%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 -rotate-6"
           >
@@ -348,7 +348,7 @@ const testimonials = [
             <span class="font-heading text-xs font-semibold text-navy">Card / Elevated</span>
           </div>
 
-          {/* magnifying glass */}
+
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="relative animate-float-slow">
               <div
@@ -368,7 +368,7 @@ const testimonials = [
 
   <SquiggleDivider />
 
-  {/* THIS IS FOR YOU IF */}
+
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -398,7 +398,7 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* PHILOSOPHY CALLOUT */}
+
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <div
@@ -408,7 +408,7 @@ const testimonials = [
         <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
 
         <div class="relative">
-          <Icon name="ph:quotes-duotone" size={48} class="text-coral/60 mb-4" />
+          <Icon name="ph:quotes-duotone" size={48} class="text-[#C13A22] mb-4" />
           <p
             class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6"
           >
@@ -423,7 +423,7 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* DELIVERABLES */}
+
   <Section id="deliverables" padding="loose">
     <Container>
       <SectionHeader
@@ -482,7 +482,7 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* WHAT'S INCLUDED */}
+
   <Section padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
@@ -517,7 +517,7 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* PROCESS */}
+
   <Section padding="loose">
     <Container width="narrow">
       <SectionHeader
@@ -546,7 +546,6 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* PRICING */}
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <div
@@ -590,7 +589,6 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* TESTIMONIALS */}
   <Section padding="default">
     <Container>
       <SectionHeader
@@ -619,7 +617,6 @@ const testimonials = [
     </Container>
   </Section>
 
-  {/* FINAL CTA */}
   <CTABanner
     title="Let's find what's actually broken."
     lead="Book a 30-minute intro call. Tell me what's frustrating about your system and I'll tell you whether an audit is the right next step — honestly."

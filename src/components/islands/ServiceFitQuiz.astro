@@ -119,7 +119,7 @@ const totalQuestions = questions.length;
   aria-labelledby="sfq-title"
 >
   <header class="sfq-head">
-    <span class="font-hand text-coral text-xl rotate-[-2deg] inline-block leading-none mb-1">
+    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
       sixty seconds
     </span>
     <h3 id="sfq-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
@@ -130,7 +130,7 @@ const totalQuestions = questions.length;
     </p>
   </header>
 
-  <div class="sfq-progress" role="progressbar" aria-valuemin="0" aria-valuemax={totalQuestions} aria-valuenow="0" data-sfq-progress>
+  <div class="sfq-progress" role="progressbar" aria-label="Quiz progress" aria-valuemin="0" aria-valuemax={totalQuestions} aria-valuenow="0" data-sfq-progress>
     <div class="sfq-progress-fill" data-sfq-progress-fill></div>
     <span class="sfq-progress-label">
       <span data-sfq-answered>0</span> of {totalQuestions} answered
@@ -325,7 +325,7 @@ const totalQuestions = questions.length;
     font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    color: rgba(45, 43, 85, 0.55);
+    color: rgba(45, 43, 85, 0.8);
   }
 
   .sfq-form { display: grid; gap: 1.6rem; }
@@ -361,7 +361,7 @@ const totalQuestions = questions.length;
   }
   .sfq-q-hint {
     font-family: 'Caveat', cursive;
-    color: #e8573d;
+    color: #C13A22;
     font-size: 1.05rem;
     margin: 0 0 0.7rem;
   }

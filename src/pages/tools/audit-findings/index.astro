@@ -20,11 +20,11 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
   title="What an audit actually finds — Tools — Joshua Briley"
   description="A working sample of the design system audit deliverable: inspect a specimen of drifted UI, then read findings ranked by severity, each paired with a specific remediation."
 >
-  {/* ====== HERO ====== */}
-  <Hero tone="cream" align="left">
-    <Blob slot="decorations" tone="coral" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
-    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
-    <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" opacity="opacity-40" />
+
+  <Hero tone="cream" align="left" split>
+    <Blob slot="decorations" tone="coral" size="md" class="absolute top-16 left-[6%]" opacity="opacity-30" />
+    <Blob slot="decorations" tone="lemon" size="sm" class="absolute bottom-20 left-[3%] rounded-full" animate="float-delay" />
+    <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[6%]" animate="float-slow" opacity="opacity-40" />
 
     <Badge slot="eyebrow" tone="coral" icon="ph:magnifying-glass-duotone">Interactive demo &middot; Design System Audit</Badge>
     <Heading slot="title" level={1} visual="display-xl">
@@ -35,31 +35,107 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
       recommendation. This page is a working sample. Run the inspection on the specimen, then read the findings
       the way you'd read the real report.
     </Text>
+
+    {/* The audit, drawn: a UI specimen under the glass, findings flagged and ranked
+        by severity around it — the page's promise made visual. Decorative. */}
+    <div slot="media" class="relative w-full max-w-[440px] mx-auto h-[400px] xl:h-[460px] hidden lg:block" aria-hidden="true">
+      <!-- Rotating dashed inspection ring -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <div class="w-[340px] h-[340px] rounded-full border-2 border-dashed border-coral/15 animate-spin-slow"></div>
+      </div>
+
+      <!-- Dashed connectors: each finding traced back to the specimen -->
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 460" fill="none">
+        <path d="M 78 66 C 116 116, 152 162, 186 208" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 8; animation: dash-flow 1.6s linear infinite" />
+        <path d="M 332 224 C 300 226, 272 228, 250 230" stroke="#FF8E53" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.5s" />
+        <path d="M 96 410 C 132 356, 162 314, 190 274" stroke="#7BB47A" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 8; animation: dash-flow 1.6s linear infinite; animation-delay: 1s" />
+      </svg>
+
+      <!-- The specimen under audit: a component quietly drifting -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl border border-charcoal/5 p-5 w-52 animate-float">
+        <div class="flex items-center gap-1.5 mb-3">
+          <span class="w-2 h-2 rounded-full bg-coral/60"></span>
+          <span class="w-2 h-2 rounded-full bg-lemon"></span>
+          <span class="w-2 h-2 rounded-full bg-sage/70"></span>
+          <span class="ml-auto font-heading text-[10px] uppercase tracking-wider text-charcoal/40">Specimen</span>
+        </div>
+        <div class="h-2.5 rounded-full bg-navy/80 w-3/4 mb-2.5"></div>
+        <div class="h-2 rounded-full bg-charcoal/15 w-full mb-1.5"></div>
+        <div class="h-2 rounded-full bg-charcoal/15 w-5/6 mb-4"></div>
+        <!-- two buttons that don't agree: different radius, different color = drift -->
+        <div class="flex items-center gap-2">
+          <span class="h-7 px-3 rounded-lg bg-coral flex items-center">
+            <span class="h-1.5 w-8 rounded-full bg-white/80"></span>
+          </span>
+          <span class="h-7 px-3 rounded-full bg-plum/90 flex items-center">
+            <span class="h-1.5 w-6 rounded-full bg-white/70"></span>
+          </span>
+        </div>
+      </div>
+
+      <!-- The glass: hovering the specimen, magnifying a drifted swatch pair -->
+      <div class="absolute top-[52%] left-[54%] animate-float-delay">
+        <svg width="138" height="138" viewBox="0 0 138 138" fill="none">
+          <line x1="86" y1="86" x2="122" y2="122" stroke="#2D2B55" stroke-width="10" stroke-linecap="round" />
+          <circle cx="54" cy="54" r="46" fill="#FFFDF9" />
+          <rect x="28" y="40" width="22" height="22" rx="5" fill="#E8573D" />
+          <rect x="56" y="40" width="22" height="22" rx="11" fill="#FF8E53" />
+          <rect x="28" y="70" width="50" height="5" rx="2.5" fill="#2D2B55" fill-opacity="0.22" />
+          <rect x="28" y="80" width="34" height="5" rx="2.5" fill="#2D2B55" fill-opacity="0.22" />
+          <circle cx="54" cy="54" r="46" stroke="#2D2B55" stroke-width="5" />
+          <path d="M28 44 A38 38 0 0 1 46 24" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.7" />
+        </svg>
+      </div>
+
+      <!-- Findings, ranked by severity -->
+      <div class="absolute top-[1%] left-[0%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float -rotate-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-coral flex-shrink-0"></span>
+        <span class="space-y-1.5 block">
+          <span class="h-1.5 w-16 rounded-full bg-charcoal/70 block"></span>
+          <span class="h-1.5 w-10 rounded-full bg-charcoal/20 block"></span>
+        </span>
+        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#C13A22]">High</span>
+      </div>
+
+      <div class="absolute top-[44%] right-[0%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float-slow rotate-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-sunset flex-shrink-0"></span>
+        <span class="space-y-1.5 block">
+          <span class="h-1.5 w-14 rounded-full bg-charcoal/70 block"></span>
+          <span class="h-1.5 w-9 rounded-full bg-charcoal/20 block"></span>
+        </span>
+        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#A24818]">Med</span>
+      </div>
+
+      <div class="absolute bottom-[2%] left-[6%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float-delay -rotate-2">
+        <span class="w-2.5 h-2.5 rounded-full bg-sage flex-shrink-0"></span>
+        <span class="space-y-1.5 block">
+          <span class="h-1.5 w-12 rounded-full bg-charcoal/70 block"></span>
+          <span class="h-1.5 w-8 rounded-full bg-charcoal/20 block"></span>
+        </span>
+        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#3E6E3D]">Low</span>
+      </div>
+    </div>
   </Hero>
 
   <SquiggleDivider />
 
-  {/* ====== THE SPECIMEN / LIVE DIAGNOSTIC ====== */}
   <Section padding="default">
     <Container width="default">
       <SectionHeader
-        eyebrow="The specimen"
-        eyebrowIcon="ph:flask-duotone"
+        align="left"
         eyebrowTone="coral"
         title="This is what drift looks like up close"
         lead="Each exhibit shipped to production. Toggle &ldquo;show issues&rdquo; to reveal the inconsistencies a quick audit pass would flag &mdash; the kind that quietly cost your team sprint velocity."
-        class="mb-10"
+        class="mb-10 max-w-[65ch]"
       />
       <Diagnostic />
     </Container>
   </Section>
 
-  {/* ====== THE REAL THING ====== */}
   <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
     <Container width="narrow">
       <SectionHeader
-        eyebrow="The real thing"
-        eyebrowIcon="ph:file-text-duotone"
+        align="left"
         eyebrowTone="plum"
         title="What you walk away with"
         class="mb-8"
@@ -78,7 +154,6 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
     </Container>
   </Section>
 
-  {/* ====== FINAL CTA ====== */}
   <CTABanner
     title="This is the checklist I build against."
     lead="The audit exists as a service, but these five dimensions are also the standard my own work is held to — every system I ship gets reviewed against the same list. Questions about either, send a note."

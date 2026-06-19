@@ -40,7 +40,7 @@ const featuredQuotes = [
     initials: 'RC',
     avatarTone: 'plum' as const,
     tilt: -1 as const,
-    quoteTone: 'text-coral/30',
+    quoteTone: 'text-[#C13A22]',
     image: '/images/rebecca-cachia.jpeg',
   },
   {
@@ -51,14 +51,14 @@ const featuredQuotes = [
     initials: 'GB',
     avatarTone: 'sage' as const,
     tilt: 1 as const,
-    quoteTone: 'text-plum/30',
+    quoteTone: 'text-plum',
     image: '/images/gabriel-bressi.jpeg',
   },
 ];
 ---
 
 <BaseLayout title="Contact — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
-  <!-- HERO -->
+
   <Section padding="default" decorated>
     <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
     <Blob tone="plum" size="sm" class="absolute top-8 lg:top-24 left-[10%] rounded-full" animate="float-delay" opacity="opacity-30" />
@@ -100,13 +100,13 @@ const featuredQuotes = [
           </div>
         </div>
 
-        <!-- Postcard illustration -->
+
         <div class="hidden md:block relative" aria-hidden="true">
           <div class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative" style="transform: rotate(3deg)">
             <div class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"></div>
             <div class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10">
               <Icon name="ph:envelope-open-duotone" size={22} class="text-coral" />
-              <span class="font-heading text-xs text-charcoal/50">FROM: you</span>
+              <span class="font-heading text-xs text-charcoal/70">FROM: you</span>
             </div>
             <div class="pt-4 space-y-2">
               <div class="h-2 bg-charcoal/10 rounded-full w-11/12"></div>
@@ -129,14 +129,14 @@ const featuredQuotes = [
 
   <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
 
-  <!-- FORM SECTION -->
+
   <Section padding="default" decorated>
     <Blob tone="sunset" size="lg" class="absolute top-20 right-[5%]" animate="float-slow" opacity="opacity-10" />
     <Blob tone="sky" size="md" class="absolute bottom-40 left-[4%] rounded-full" animate="float-delay" opacity="opacity-20" />
 
     <Container class="relative z-10">
       <div class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start">
-        <!-- Form card -->
+
         <div class="bg-white rounded-3xl p-8 md:p-12 border border-charcoal/5 shadow-sm relative" style="transform: rotate(-0.4deg)">
           <div class="absolute -top-4 -right-4 w-16 h-16 bg-lemon/70 blob-shape flex items-center justify-center" aria-hidden="true">
             <Icon name="ph:pencil-line-duotone" size={26} class="text-navy" />
@@ -154,7 +154,7 @@ const featuredQuotes = [
           <ContactForm />
         </div>
 
-        <!-- "What happens next" sidebar -->
+
         <aside class="lg:sticky lg:top-28">
           <div class="mb-5 inline-block">
             <Badge tone="plum" sticker icon="ph:compass-duotone">What happens next</Badge>
@@ -191,7 +191,7 @@ const featuredQuotes = [
 
   <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
 
-  <!-- TESTIMONIALS -->
+
   <Section padding="default">
     <Container>
       <div class="text-center mb-14">
@@ -222,7 +222,7 @@ const featuredQuotes = [
               />
               <div>
                 <p class="font-heading font-semibold text-navy">{q.name}</p>
-                <p class="text-sm text-charcoal/60">{q.role}, {q.company}</p>
+                <p class="text-sm text-charcoal/70">{q.role}, {q.company}</p>
               </div>
             </div>
           </Card>
@@ -231,7 +231,7 @@ const featuredQuotes = [
     </Container>
   </Section>
 
-  <!-- ALT CONTACT CTA -->
+
   <Section padding="tight">
     <Container width="narrow">
       <div class="bg-gradient-to-br from-peach/60 to-lemon/30 rounded-3xl p-10 md:p-12 text-center relative overflow-hidden border border-sunset/10">
