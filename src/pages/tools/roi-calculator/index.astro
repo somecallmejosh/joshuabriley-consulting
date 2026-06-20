@@ -129,33 +129,33 @@ const refToneMap: Record<string, { chip: string; text: string }> = {
 
       {/* Three small, easy-to-ignore rework line items */}
       <div class="absolute top-[2%] left-0 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-3 animate-float">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-1.5">This sprint</span>
+        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">This sprint</span>
         <div class="flex items-center justify-between gap-2">
           <span class="font-heading text-xs font-semibold text-navy">Modal rebuilt</span>
-          <span class="font-mono text-xs font-bold text-coral">+3h</span>
+          <span class="font-mono text-xs font-bold text-[#C13A22]">+3h</span>
         </div>
       </div>
 
       <div class="absolute top-[19%] right-0 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-2 animate-float-delay">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-1.5">Code review</span>
+        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Code review</span>
         <div class="flex items-center justify-between gap-2">
           <span class="font-heading text-xs font-semibold text-navy">Color drift</span>
-          <span class="font-mono text-xs font-bold text-coral">+1h</span>
+          <span class="font-mono text-xs font-bold text-[#C13A22]">+1h</span>
         </div>
       </div>
 
       <div class="absolute top-[30%] left-1/2 -translate-x-1/2 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-1 animate-float-slow">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-1.5">Handoff</span>
+        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Handoff</span>
         <div class="flex items-center justify-between gap-2">
           <span class="font-heading text-xs font-semibold text-navy">Spacing one-off</span>
-          <span class="font-mono text-xs font-bold text-coral">+2h</span>
+          <span class="font-mono text-xs font-bold text-[#C13A22]">+2h</span>
         </div>
       </div>
 
       {/* The total: the same scraps, compounded across a team and a year */}
       <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-2xl border border-charcoal/5 px-5 py-4 rotate-1 animate-float">
         <div class="flex items-center justify-between border-b border-dashed border-sunset/25 pb-2 mb-3">
-          <span class="font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40">Drift &middot; one team &middot; one year</span>
+          <span class="font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70">Drift &middot; one team &middot; one year</span>
           <iconify-icon icon="ph:receipt-duotone" width="16" height="16" class="text-sunset"></iconify-icon>
         </div>
         <p class="font-display font-extrabold text-4xl text-[#a24818] leading-none tracking-tight">$140k</p>
@@ -248,14 +248,14 @@ const refToneMap: Record<string, { chip: string; text: string }> = {
                 <span class={`inline-flex items-center rounded-lg px-2.5 py-1 font-display font-extrabold text-xl leading-none ${t.chip} ${t.text}`}>
                   {r.stat}
                 </span>
-                <span class="font-heading text-[11px] font-semibold uppercase tracking-wider text-charcoal/45">
+                <span class="font-heading text-[11px] font-semibold uppercase tracking-wider text-charcoal/70">
                   {r.statLabel}
                 </span>
               </div>
               <p class="text-sm text-charcoal/75 leading-relaxed mb-4 flex-1">{r.body}</p>
               <div class="flex items-center justify-between gap-3 pt-3 border-t border-charcoal/8">
                 <span class="font-heading text-xs font-semibold text-navy">
-                  {r.source} <span class="text-charcoal/40 font-normal">&middot; {r.year}</span>
+                  {r.source} <span class="text-charcoal/70 font-normal">&middot; {r.year}</span>
                 </span>
                 <span class={`inline-flex items-center gap-1 text-xs font-semibold whitespace-nowrap ${t.text}`}>
                   Source

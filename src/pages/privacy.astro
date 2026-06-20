@@ -1,0 +1,113 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Link from '~/components/primitives/Link.astro';
+
+const updated = 'June 2026';
+---
+
+<BaseLayout
+  title="Privacy Policy — Joshua Briley"
+  description="What I collect when you contact me, how it's used, and how to ask for it to be removed."
+>
+  <Section tone="cream" padding="default" decorated>
+    <div class="absolute inset-0 grid-paper opacity-50" aria-hidden="true"></div>
+    <Container width="narrow" class="relative z-10">
+      <nav class="mb-8 flex items-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
+        <a href="/" class="hover:text-coral transition-colors">Home</a>
+        <Icon name="ph:caret-right-bold" size={12} />
+        <span class="text-navy">Privacy</span>
+      </nav>
+
+      <Heading level={1} visual="display-md" balance class="mb-4">Privacy policy</Heading>
+      <Text size="lg" tone="muted" class="mb-2 max-w-2xl">
+        Plain version: I only collect what you send me, I use it to reply, and I don't sell it. The
+        detail is below.
+      </Text>
+      <p class="font-heading text-sm text-charcoal/60">Last updated {updated}</p>
+
+      <div class="mt-10 space-y-10 max-w-2xl text-charcoal/75 text-base md:text-lg leading-relaxed">
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">What I collect</Heading>
+          <p>
+            When you fill out the contact form I receive what you choose to enter: your name, email
+            address, an optional phone number, the type of work you're interested in, and your
+            message. If you book a call, the scheduling step collects the details needed to set up
+            that meeting. I don't ask for anything I don't need to reply.
+          </p>
+          <p class="mt-3">
+            Like any website, the hosting platform records standard technical logs — IP address,
+            browser type, and the pages requested — used to keep the site running and secure.
+          </p>
+        </section>
+
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">Who processes it</Heading>
+          <p>A few third parties handle data on my behalf, each under their own privacy terms:</p>
+          <ul class="mt-3 space-y-2 list-none">
+            <li class="flex gap-3">
+              <Icon name="ph:dot-outline-fill" size={20} class="text-coral flex-shrink-0 mt-1" />
+              <span><strong class="text-navy font-medium">HubSpot</strong> receives contact-form
+              submissions and stores them so I can manage and respond to inquiries.</span>
+            </li>
+            <li class="flex gap-3">
+              <Icon name="ph:dot-outline-fill" size={20} class="text-plum flex-shrink-0 mt-1" />
+              <span><strong class="text-navy font-medium">Calendly</strong> powers the optional
+              "book a call" scheduling on the contact page.</span>
+            </li>
+            <li class="flex gap-3">
+              <Icon name="ph:dot-outline-fill" size={20} class="text-sky-deep flex-shrink-0 mt-1" />
+              <span><strong class="text-navy font-medium">Netlify</strong> hosts the site and keeps
+              the server logs described above.</span>
+            </li>
+          </ul>
+        </section>
+
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">How it's used</Heading>
+          <p>
+            I use your information for one thing: to read your message and reply about the work
+            you're asking about. I don't sell it, rent it, or share it for advertising. I won't add
+            you to a marketing list without you asking.
+          </p>
+        </section>
+
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">Cookies</Heading>
+          <p>
+            The site itself doesn't set tracking or advertising cookies. The embedded HubSpot form
+            and Calendly scheduler may set their own cookies when you interact with them; those are
+            governed by their respective policies.
+          </p>
+        </section>
+
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">Keeping and removing your data</Heading>
+          <p>
+            I keep contact-form messages for as long as they're useful to our correspondence. You can
+            ask me to show you what I have, correct it, or delete it at any time — just email
+            <Link href="mailto:josh@thebrileys.com" variant="inline">josh@thebrileys.com</Link> and
+            I'll take care of it.
+          </p>
+        </section>
+
+        <section>
+          <Heading level={2} visual="h2" class="mb-3">Changes</Heading>
+          <p>
+            If this policy changes, the "last updated" date above changes with it. Questions about
+            any of this are welcome at
+            <Link href="mailto:josh@thebrileys.com" variant="inline">josh@thebrileys.com</Link>.
+          </p>
+        </section>
+      </div>
+
+      <div class="mt-12">
+        <Link href="/" variant="arrow">Back to home</Link>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>

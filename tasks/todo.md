@@ -50,3 +50,47 @@ in `site.css` uses `#c13a22` directly.
 
 **Permanent coverage:** `tests/e2e/keyboard.spec.ts` now scans 12 representative pages with
 reduced-motion (was 2). Full suite: 25 e2e + 4 unit tests green; `npm run build` clean.
+
+---
+
+# Redesign pass (`/redesign-existing-projects`)
+
+Full-site audit (24 routes, 6 parallel read-only agents). Verdict: site already premium —
+distinctive type system, single accent family, tinted shadows, textures, Phosphor icons,
+focus rings, reduced-motion, custom 404, full meta/JSON-LD. Audit returned few genuine hits;
+fixed the agreed set rather than rewriting.
+
+## Applied
+
+- [x] **Button states** (`Button.astro`) — added `active:scale-[0.98] active:translate-y-px`
+  pressed feedback + `duration-200 ease-out` (was undurated `transition-all` → 150ms). Site-wide.
+- [x] **Staggered reveal** (`scroll-reveal.ts`) — new opt-in `[data-reveal-stagger]`: direct
+  children cascade 70ms apart; skips `aria-hidden`. Whole script still gated behind
+  `prefers-reduced-motion`, so reduced-motion users unaffected.
+- [x] **Homepage layout** (`index.astro`) — broke the two 3-equal-column rows: "What I do"
+  pillars → offset/staggered collage (`lg:mt-0/14/6` + stagger); "Tools" → featured-first
+  (Scorecard emphasized, col-span-7 + "Start here", other two stacked col-span-5). Dropped
+  `CardGrid`/`CardNumber` imports.
+- [x] **Housekeeping** — whole-degree floating-card rotations in `services.astro` +
+  `starter.astro` → Tailwind `rotate-*` classes (matches homepage-hero convention; the ~75
+  sub-degree scrapbook tilts are the site's deliberate inline convention — left as-is). Berxi
+  breadcrumb `Berxi.com` → `Berxi`. Footer + Privacy/Terms links → new `/privacy` + `/terms`
+  pages (real copy reflecting actual processors: HubSpot form, Calendly, Netlify).
+
+## Pre-existing bug found & fixed (out of original scope, in scope for "audit + fixes")
+
+The full e2e exposed **4 WCAG AA contrast failures already on `main`** (regressed since the
+earlier remediation, in untouched decorative/quote elements) — `text-charcoal/40·45·50`
+labels and `text-coral` on white in `tools/roi-calculator`, `tools/index`, `services/starter`.
+Fixed with the existing pattern (`/70`, `text-[#C13A22]`). Confirmed pre-existing by code
+inspection (failing elements were never touched by this pass).
+
+## Verified
+
+`npm run build` clean. Unit 4/4. **e2e 50/50** (the 4 AA tests now pass; were 46/4 on `main`).
+New `/privacy` + `/terms` axe-scanned → 0 violations. Homepage rework + legal pages
+screenshot-verified at reduced-motion. Diff: 9 files + 2 new pages, +88/−43.
+
+**Gotcha logged:** `astro preview` is unsupported under the Netlify SSR adapter — use
+`astro dev` on :4321 for Playwright (config reuses an existing server). A stale dev server
+left running silently serves an old in-memory SSR bundle; kill port 4321 before screenshots.

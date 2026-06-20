@@ -18,6 +18,22 @@ if (!prefersReduced && 'IntersectionObserver' in window) {
       targets.add(el);
     });
 
+    // Stagger groups: the direct children of a [data-reveal-stagger] container
+    // cascade in, each delayed a little more than the last, instead of the
+    // whole block mounting at once. Decorative (aria-hidden) children are
+    // skipped so they don't hold a slot in the cascade.
+    const STAGGER_STEP = 70; // ms between siblings
+    document.querySelectorAll<HTMLElement>('[data-reveal-stagger]').forEach((group) => {
+      let i = 0;
+      Array.from(group.children).forEach((child) => {
+        if (!(child instanceof HTMLElement)) return;
+        if (child.getAttribute('aria-hidden') === 'true') return;
+        child.style.transitionDelay = `${i * STAGGER_STEP}ms`;
+        targets.add(child);
+        i += 1;
+      });
+    });
+
     if (targets.size > 0) {
       const viewportH = window.innerHeight || document.documentElement.clientHeight;
       const visibleOnLoad = new Set<Element>();
