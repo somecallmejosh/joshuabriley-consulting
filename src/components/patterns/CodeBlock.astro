@@ -1,0 +1,59 @@
+---
+import { cx } from '~/lib/cx';
+import CopyButton from '~/components/islands/CopyButton.astro';
+
+/**
+ * Technical-proof register — a framed code window.
+ *
+ * The warm scrapbook components prove taste; this proves engineering. Use it to
+ * show a real component API, a type signature, or a config so visitors *see*
+ * React/TypeScript depth instead of reading the words "React, Next.js".
+ *
+ * Dependency-free: no syntax highlighter. The chrome (filename tab, language
+ * pill, copy) carries the premium feel; the code carries the credibility.
+ */
+
+interface Props {
+  /** The code. Passed as a prop (not a slot) so it can be copied verbatim. */
+  code: string;
+  /** Filename shown in the window tab, e.g. "Modal.tsx". */
+  filename?: string;
+  /** Language pill, e.g. "tsx", "ts", "bash". */
+  lang?: string;
+  /** Caption rendered under the window in muted text. */
+  caption?: string;
+  /** Show the copy-to-clipboard button (default true). */
+  copy?: boolean;
+  class?: string;
+}
+
+const { code, filename, lang, caption, copy = true, class: className } = Astro.props;
+const body = code.replace(/^\n+|\n+$/g, '');
+---
+
+<figure class={cx('not-prose', className)}>
+  <div class="rounded-2xl overflow-hidden border border-charcoal/15 bg-navy shadow-[0_18px_40px_-22px_rgba(45,43,85,0.6)]">
+    <div class="flex items-center gap-3 px-4 py-2.5 border-b border-white/10 bg-white/[0.04]">
+      <span class="flex gap-1.5" aria-hidden="true">
+        <span class="w-2.5 h-2.5 rounded-full bg-coral/80"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-lemon/80"></span>
+        <span class="w-2.5 h-2.5 rounded-full bg-sage/80"></span>
+      </span>
+      {filename && (
+        <span class="font-mono text-xs text-white/80 truncate">{filename}</span>
+      )}
+      <span class="ml-auto flex items-center gap-2">
+        {lang && (
+          <span class="font-mono text-[0.65rem] uppercase tracking-wider text-lemon/90 bg-white/[0.06] border border-white/10 rounded px-1.5 py-0.5">
+            {lang}
+          </span>
+        )}
+        {copy && <CopyButton text={body} label="Copy code" tone="onDark" />}
+      </span>
+    </div>
+    <pre class="px-4 py-4 md:px-5 md:py-5 overflow-x-auto text-[0.8rem] md:text-sm leading-relaxed font-mono text-[#E7E5F7]"><code>{body}</code></pre>
+  </div>
+  {caption && (
+    <figcaption class="mt-3 text-sm text-charcoal/70 font-body">{caption}</figcaption>
+  )}
+</figure>

@@ -10,6 +10,10 @@ import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import ProofPanel from '~/components/patterns/ProofPanel.astro';
+import BrandSwitcher from '~/components/islands/BrandSwitcher.astro';
 
 const title = "America's Test Kitchen — Joshua Briley";
 const description =
@@ -77,6 +81,33 @@ const outcomes = [
     tilt: '-0.3deg',
   },
 ];
+
+// --- Technical-proof register ---
+// Receipts drawn only from facts this case study already asserts. Stack/testing
+// chips reflect what's described in the narrative; extend them with the real
+// tooling list when you have it (TypeScript version, exact test stack, etc.).
+const proof = [
+  { label: 'Skills proven', tone: 'plum' as const, items: ['Design systems', 'Accessible component APIs', 'Multi-brand theming', 'Frontend architecture', 'Design-to-code', 'Documentation'] },
+  { label: 'Stack', tone: 'navy' as const, items: ['React', 'Next.js', 'TypeScript', 'Storybook', 'Design tokens', 'CSS variables'] },
+  { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
+  { label: 'Outcomes', tone: 'coral' as const, items: ['Faster brand launches', 'Consistent feature shipping', 'Quicker onboarding'] },
+];
+
+// Illustrates the architecture this study describes: one API, no `brand` prop,
+// appearance resolved from the active token context.
+const apiSnippet = `// Button.tsx — one API, every ATK brand.
+// No \`brand\` prop. Appearance resolves from the active token context.
+export function Button({ variant = 'primary', ...props }: ButtonProps) {
+  return (
+    <button
+      className={styles[variant]}   // classes read CSS-variable tokens
+      {...props}                    // behaviour + a11y pass straight through
+    />
+  );
+}
+
+// Cook's Country and Cook's Illustrated render the *same* Button.
+// It looks different only because its tokens resolve differently.`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -104,24 +135,12 @@ const outcomes = [
   </Fragment>
 
   <div class="corkboard">
-    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      <Blob tone="lemon" size="lg" class="absolute top-14 right-[6%]" animate="float" opacity="opacity-70" />
-      <div
-        class="absolute top-40 left-[4%] w-12 h-12 bg-sage/40 rounded-full animate-float-delay"
-        aria-hidden="true"
-      ></div>
-      <div
-        class="absolute bottom-20 right-[18%] w-14 h-14 bg-sky/30 blob-shape animate-float-slow"
-        aria-hidden="true"
-      ></div>
-      <div
-        class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float"
-        aria-hidden="true"
-      ></div>
+    <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+      <span class="hero-index" aria-hidden="true">02</span>
 
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
         <nav
-          class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70"
+          class="mb-12 flex items-center gap-2 font-heading text-sm text-charcoal/60"
           aria-label="Breadcrumb"
         >
           <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
@@ -129,69 +148,49 @@ const outcomes = [
           <span class="text-navy">America's Test Kitchen</span>
         </nav>
 
-        <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
-          <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
-          <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
-
-          <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
-            <span class="steam animate-steam"></span>
-            <span class="steam animate-steam-delay"></span>
-            <span class="steam animate-steam-delay-2"></span>
-          </div>
-
-          <div class="relative text-center">
-            <div class="project-logo-tag">
-              <img src="/images/logos/atk.svg" alt="America's Test Kitchen logo" />
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="mb-7 flex items-center gap-3">
+              <img src="/images/logos/atk.svg" alt="America's Test Kitchen logo" class="hero-logo-img" />
+              <span class="h-4 w-px bg-charcoal/20" aria-hidden="true"></span>
+              <span class="font-heading text-[0.7rem] uppercase tracking-[0.24em] text-plum/70">Case study no. 02</span>
             </div>
 
-            <div
-              class="inline-flex items-center gap-2 bg-coral/10 text-[#C13A22] px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
-            >
-              <Icon name="ph:chef-hat-duotone" size={18} />
-              Case study &middot; Recipe no. 02
-            </div>
+            <p class="marker-label text-2xl md:text-3xl mb-5">from the test kitchen —</p>
 
-            <p class="marker-label text-2xl md:text-3xl mb-4">from the test kitchen —</p>
-
-            <h1
-              class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
-            >
+            <h1 class="font-display font-semibold text-navy leading-[1.04] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 3.75rem);">
               One component library,
               <br />
               <span class="relative inline-block">
                 many brands
-                <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 260 14" fill="none" aria-hidden="true">
-                  <path
-                    d="M3 9 Q 65 2 130 9 Q 195 16 257 7"
-                    stroke="#6C4AB6"
-                    stroke-width="3"
-                    stroke-linecap="round"
-                    opacity="0.55"
-                  />
+                <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 260 14" fill="none" aria-hidden="true">
+                  <path d="M3 9 Q 65 2 130 9 Q 195 16 257 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
                 </svg>
-              </span>
-              <span class="text-coral">,</span> no fragmenting.
+              </span><span class="text-coral">,</span> no fragmenting.
             </h1>
 
-            <p class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10">
-              Improving an inaccessible CMS and building a shared React + Next.js component library for one of the most recognized
-              <WavyUnderline>cooking brands</WavyUnderline> in the US.
+            <p class="mt-8 text-lg md:text-xl text-charcoal/75 max-w-xl font-body leading-relaxed">
+              Improving an inaccessible CMS and building a shared React + Next.js component library for one of the most recognized cooking brands in the US.
             </p>
-
-            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
-              <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
-                {recipeMeta.map((m) => (
-                  <div>
-                    <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">
-                      {m.label}
-                    </dt>
-                    <dd class="font-display text-lg text-navy font-semibold">{m.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
           </div>
-        </article>
+
+          <aside class="hero-rail" aria-label="Project details">
+            <dl>
+              {recipeMeta.map((m) => (
+                <div>
+                  <dt>{m.label}</dt>
+                  <dd>{m.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-4 md:pb-8 relative" aria-label="Project receipts">
+      <div class="max-w-4xl mx-auto px-6">
+        <ProofPanel sections={proof} />
       </div>
     </section>
 
@@ -340,6 +339,28 @@ const outcomes = [
           </li>
         </ul>
 
+        <div class="mt-10">
+          <CodeBlock
+            filename="Button.tsx"
+            lang="tsx"
+            code={apiSnippet}
+            caption="The decision in code: one brand-agnostic API, styled entirely through tokens — no render-tree forking."
+          />
+        </div>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 mt-10">
+        <div class="flex items-start gap-3 mb-6">
+          <Icon name="ph:cursor-click-duotone" size={26} class="text-coral mt-1 flex-shrink-0" />
+          <p class="text-charcoal/75 leading-relaxed font-body max-w-2xl">
+            That is easier to believe when you can flip it yourself. Same card, same props &mdash;
+            switch the brand context and only the tokens it reads change.
+          </p>
+        </div>
+        <BrandSwitcher />
+      </div>
+
+      <div class="max-w-4xl mx-auto px-6 relative z-10">
         <figure
           class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative"
           style="transform: rotate(-0.3deg)"
@@ -422,6 +443,12 @@ const outcomes = [
             A shared library built on a weak architectural foundation multiplies its problems at the same rate it multiplies its
             value. Every brand surface that consumes it inherits the same structural gaps.
           </p>
+        </div>
+
+        <div class="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8 bg-white rounded-2xl p-7 md:p-9 border border-charcoal/5 shadow-sm">
+          <Metric value="3" label="brands, one library" caption="Cook's Country, Cook's Illustrated, ATK" tone="plum" />
+          <Metric value="0" label="brand-fork props" caption="divergence lives in tokens, not the API" tone="coral" />
+          <Metric value="1" label="shared a11y baseline" caption="raised once, inherited by every surface" tone="sage" />
         </div>
 
         <div class="mt-12 grid md:grid-cols-3 gap-6">

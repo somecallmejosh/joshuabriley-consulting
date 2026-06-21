@@ -8,6 +8,8 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import ProofPanel from '~/components/patterns/ProofPanel.astro';
+import TokenChain from '~/components/islands/TokenChain.astro';
 
 const description =
   'Case study: building Rudiment UI, an open-source React component library and 13-chapter guide that explains the why behind every architectural decision.';
@@ -80,112 +82,96 @@ const storybookChecks = [
   'Token-driven theming visible across every story',
   'a11y & interaction addons wired in out of the box',
 ];
+
+const proof = [
+  { label: 'Skills proven', tone: 'plum' as const, items: ['CRUD Development', 'Accessible component APIs', 'Frontend architecture', 'UI/UX Design', 'Style Guide Documentation', 'Theming'] },
+  { label: 'Stack', tone: 'navy' as const, items: ['React', 'React Aria', 'Storybook', 'Design tokens', 'Tailwind CSS 4'] },
+  { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
+  { label: 'Outcomes', tone: 'coral' as const, items: ['Personal project', 'Open source contribution', 'Community engagement'] },
+];
 ---
 
 <BaseLayout title="Rudiment UI — Joshua Briley" description={description}>
   <div class="corkboard">
 
-    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      <Blob tone="lemon" size="md" animate="float" opacity="opacity-70" class="absolute top-14 right-[6%]" />
-      <Blob tone="sage" size="sm" animate="float-delay" class="absolute top-40 left-[4%] rounded-full" />
-      <Blob tone="sky" size="sm" animate="float-slow" class="absolute bottom-20 right-[18%]" />
-      <Blob tone="coral" size="sm" animate="float" class="absolute bottom-24 left-[10%] rounded-full" />
+    <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+      <span class="hero-index" aria-hidden="true">01</span>
 
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+        <nav class="mb-12 flex items-center gap-2 font-heading text-sm text-charcoal/60" aria-label="Breadcrumb">
           <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
           <Icon name="ph:caret-right-bold" size={12} />
           <span class="text-navy">Rudiment UI</span>
         </nav>
 
-        <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
-          <span class="tape" style="top: -14px; left: 10%; transform: rotate(-6deg)" aria-hidden="true"></span>
-          <span class="tape" style="top: -14px; right: 10%; transform: rotate(5deg)" aria-hidden="true"></span>
-
-          <div class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3" aria-hidden="true">
-            <span class="steam animate-steam"></span>
-            <span class="steam animate-steam-delay"></span>
-            <span class="steam animate-steam-delay-2"></span>
-          </div>
-
-          <div class="relative text-center">
-            <div class="project-logo-tag project-logo-tag--wordmark" aria-label="Rudiment UI">
-              <span>rudiment<span class="dot">.ui</span></span>
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="mb-7 flex items-center gap-3">
+              <span class="hero-wordmark font-display text-navy">rudiment<span class="text-coral">.ui</span></span>
+              <span class="h-4 w-px bg-charcoal/20" aria-hidden="true"></span>
+              <span class="font-heading text-[0.7rem] uppercase tracking-[0.24em] text-plum/70">Case study no. 01</span>
             </div>
 
-            <div class="inline-flex items-center gap-2 bg-coral/10 text-[#C13A22] px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider">
-              <Icon name="ph:chef-hat-duotone" size={18} />
-              Case study &middot; Recipe no. 03
-            </div>
+            <p class="marker-label text-2xl md:text-3xl mb-5">from scratch, from first principles —</p>
 
-            <p class="marker-label text-2xl md:text-3xl mb-4">
-              from scratch, from first principles —
-            </p>
-
-            <h1 class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6">
+            <h1 class="font-display font-semibold text-navy leading-[1.04] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 3.75rem);">
               A component library,
               <br />
               <span class="relative inline-block">
                 built to be understood
-                <svg class="absolute -bottom-3 left-0 w-full" viewBox="0 0 420 14" fill="none" aria-hidden="true">
+                <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 420 14" fill="none" aria-hidden="true">
                   <path d="M3 9 Q 105 2 210 9 Q 315 16 417 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
                 </svg>
-              </span>
-              <span class="text-coral">.</span>
+              </span><span class="text-coral">.</span>
             </h1>
 
-            <p class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10">
+            <p class="mt-8 text-lg md:text-xl text-charcoal/75 max-w-xl font-body leading-relaxed">
               An open-source React component library paired with a
-              <a href="https://rudiment-guide.netlify.app/" target="_blank" rel="noopener" class="wavy-underline text-plum hover:text-coral transition-colors">13-chapter guide</a>
-              that explains <em>why</em> each architectural decision is made,
-              and what happens later if you make a different one.
+              <a href="https://rudiment-guide.netlify.app/" target="_blank" rel="noopener" class="hero-link">13-chapter guide</a>
+              that explains <em>why</em> each architectural decision is made — and what happens later if you make a different one.
             </p>
 
-            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
-              <dl class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center">
-                <div>
-                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">Role</dt>
-                  <dd class="font-display text-lg text-navy font-semibold">Author &middot; Engineer</dd>
-                </div>
-                <div>
-                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">Format</dt>
-                  <dd class="font-display text-lg text-navy font-semibold">Library + Guide</dd>
-                </div>
-                <div>
-                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">Stack</dt>
-                  <dd class="font-display text-lg text-navy font-semibold">React 19, TS, Vite</dd>
-                </div>
-                <div>
-                  <dt class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1">Focus</dt>
-                  <dd class="font-display text-lg text-navy font-semibold">Tokens &middot; A11y</dd>
-                </div>
-              </dl>
-            </div>
-
-            <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <a
-                href="https://rudiment-guide.netlify.app/"
-                target="_blank"
-                rel="noopener"
-                class="inline-flex items-center gap-2 bg-plum text-white px-6 py-3 rounded-full hover:bg-plum/90 transition-all hover:shadow-lg hover:shadow-plum/30 font-heading text-sm font-semibold"
-              >
+            <div class="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3">
+              <a href="https://rudiment-guide.netlify.app/" target="_blank" rel="noopener" class="hero-cta hero-cta--primary">
                 <Icon name="ph:book-open-text-duotone" size={18} />
                 Read the guide
-                <Icon name="ph:arrow-up-right-bold" size={14} />
+                <Icon name="ph:arrow-up-right-bold" size={13} class="hero-cta-arrow" />
               </a>
-              <a
-                href="https://rudiment-ui.netlify.app/"
-                target="_blank"
-                rel="noopener"
-                class="inline-flex items-center gap-2 bg-white text-navy px-6 py-3 rounded-full hover:bg-lemon/40 transition-all hover:shadow-lg hover:shadow-plum/10 font-heading text-sm font-semibold border border-plum/25"
-              >
+              <a href="https://rudiment-ui.netlify.app/" target="_blank" rel="noopener" class="hero-cta">
                 <Icon name="ph:squares-four-duotone" size={18} />
                 Browse the Storybook
-                <Icon name="ph:arrow-up-right-bold" size={14} />
+                <Icon name="ph:arrow-up-right-bold" size={13} class="hero-cta-arrow" />
               </a>
             </div>
           </div>
-        </article>
+
+          <aside class="hero-rail" aria-label="Project details">
+            <dl>
+              <div>
+                <dt>Role</dt>
+                <dd>Author &middot; Engineer</dd>
+              </div>
+              <div>
+                <dt>Format</dt>
+                <dd>Library + Guide</dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd>React 19, TS, Vite</dd>
+              </div>
+              <div>
+                <dt>Focus</dt>
+                <dd>Tokens &middot; A11y</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-4 md:pb-8 relative" aria-label="Project receipts">
+      <div class="max-w-4xl mx-auto px-6">
+        <ProofPanel sections={proof} />
       </div>
     </section>
 
@@ -336,6 +322,18 @@ const storybookChecks = [
           <code class="text-coral bg-coral/10 px-1.5 rounded">@theme inline</code>. Updating a single value propagates through every dependent
           component — no hunt-and-replace, no orphans.
         </p>
+      </div>
+
+      <div class="max-w-5xl mx-auto px-6 mt-12 md:mt-16">
+        <div class="flex items-start gap-3 mb-6">
+          <Icon name="ph:cursor-click-duotone" size={26} class="text-coral mt-1 flex-shrink-0" />
+          <p class="text-charcoal/75 leading-relaxed font-body max-w-2xl">
+            Three tiers is easy to nod along to and hard to feel. So trace one value through the
+            chain yourself: change the global token and watch the alias and the component token
+            resolve down to the button, in order.
+          </p>
+        </div>
+        <TokenChain />
       </div>
     </section>
 
@@ -683,6 +681,9 @@ const storybookChecks = [
     box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
     z-index: 5;
   }
+  /* Editorial hero styles (.hero-grid, .hero-index, .hero-rail, .hero-cta,
+     .hero-link, …) now live in src/styles/site.css, shared by every
+     /projects/* opener. */
   .token-tier {
     background: #fff;
     border-radius: 18px;

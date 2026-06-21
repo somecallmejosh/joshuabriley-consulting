@@ -311,6 +311,7 @@ const testimonials = [
 
 
         <div
+          data-au-illo
           class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block"
           aria-hidden="true"
         >
@@ -324,24 +325,28 @@ const testimonials = [
 
 
           <div
+            data-au-token
             class="absolute top-[18%] left-[12%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 -rotate-6"
           >
             <div class="w-2 h-2 rounded-full bg-coral"></div>
             <span class="font-heading text-xs font-semibold text-navy">Button / Primary</span>
           </div>
           <div
+            data-au-token
             class="absolute top-[8%] right-[6%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 rotate-3"
           >
             <div class="w-2 h-2 rounded-full bg-sage"></div>
             <span class="font-heading text-xs font-semibold text-navy">Token: spacing-md</span>
           </div>
           <div
+            data-au-token
             class="absolute bottom-[14%] left-[4%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 rotate-3"
           >
             <div class="w-2 h-2 rounded-full bg-sunset"></div>
             <span class="font-heading text-xs font-semibold text-navy">Input / Error</span>
           </div>
           <div
+            data-au-token
             class="absolute bottom-[8%] right-[10%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 -rotate-6"
           >
             <div class="w-2 h-2 rounded-full bg-plum"></div>
@@ -350,7 +355,7 @@ const testimonials = [
 
 
           <div class="absolute inset-0 flex items-center justify-center">
-            <div class="relative animate-float-slow">
+            <div data-au-glass class="relative">
               <div
                 class="w-48 h-48 rounded-full bg-gradient-to-br from-white/80 to-peach/60 border-[10px] border-navy shadow-2xl backdrop-blur-[1px] flex items-center justify-center"
               >
@@ -633,4 +638,64 @@ const testimonials = [
       Take the free scorecard
     </Button>
   </CTABanner>
+  {/* Hero illustration motion: the magnifying glass drifts over each token card in turn —
+      active coverage — and each card lights up as it's "reviewed". */}
+  <script>
+    import { gsap, reduceMotion } from '~/scripts/hero-motion';
+
+    const illo = document.querySelector<HTMLElement>('[data-au-illo]');
+    const glass = illo?.querySelector<HTMLElement>('[data-au-glass]');
+    const tokens = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-au-token]')) : [];
+
+    if (illo && glass && tokens.length) {
+      // center of an element expressed in the illustration's own coordinate box
+      const center = (el: Element) => {
+        const r = el.getBoundingClientRect();
+        const o = illo.getBoundingClientRect();
+        return { x: r.left + r.width / 2 - o.left, y: r.top + r.height / 2 - o.top };
+      };
+
+      let tl: gsap.core.Timeline | null = null;
+      const build = () => {
+        tl?.kill();
+        // glass is centered by its flex wrapper, so drive it with x/y offsets from illo center
+        gsap.set(glass, { x: 0, y: 0 });
+        gsap.set(tokens, { filter: 'brightness(1)', boxShadow: '0 0 0 0 rgba(0,0,0,0)' });
+
+        if (reduceMotion()) {
+          // park the glass at its centered rest position; cards stay static
+          return;
+        }
+
+        const o = illo.getBoundingClientRect();
+        const ic = { x: o.width / 2, y: o.height / 2 };
+
+        tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power1.inOut' } });
+        tokens.forEach((card) => {
+          const c = center(card);
+          tl!
+            .to(glass, { x: c.x - ic.x, y: c.y - ic.y, duration: 0.9 })
+            .to(
+              card,
+              {
+                filter: 'brightness(1.12)',
+                boxShadow: '0 0 0 3px rgba(225,58,34,0.35)',
+                duration: 0.28,
+                yoyo: true,
+                repeat: 1,
+              },
+              '>-0.1',
+            )
+            .to({}, { duration: 0.35 }); // brief hold while "reviewing"
+        });
+      };
+
+      build();
+      let raf = 0;
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(build);
+      });
+    }
+  </script>
 </BaseLayout>

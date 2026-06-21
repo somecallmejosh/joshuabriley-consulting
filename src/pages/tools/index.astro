@@ -99,20 +99,17 @@ const tools = [
 
     <!-- One system in the middle; each tool reads it from orbit. The four cards
          map 1:1 to the four tools below, in their accent colors. Decorative. -->
-    <div slot="media" class="relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
+    <div slot="media" data-ti-illo class="relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
       <div class="absolute inset-0 flex items-center justify-center">
         <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/20 animate-spin-slow"></div>
       </div>
 
-      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 460" fill="none">
-        <path d="M 200 230 C 150 190, 120 150, 96 116" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
-        <path d="M 200 230 C 256 196, 290 160, 312 124" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.4s" />
-        <path d="M 200 230 C 152 272, 120 308, 100 344" stroke="#5DADE2" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.8s" />
-        <path d="M 200 230 C 250 270, 286 306, 308 344" stroke="#FF8E53" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 1.2s" />
-      </svg>
+      {/* Connectors drawn by hero-motion.ts, anchored to the live tool-card positions;
+          an accent pulse travels outward from the hub to each tool. */}
+      <svg data-ti-conn class="absolute inset-0 w-full h-full"></svg>
 
       <!-- Center: the system every tool plugs into -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-5 py-4 w-40 animate-float">
+      <div data-ti-hub class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-5 py-4 w-40 animate-float">
         <div class="flex items-center gap-2 mb-2.5">
           <div class="w-8 h-8 rounded-lg bg-navy/10 flex items-center justify-center">
             <Icon name="ph:stack-duotone" size={20} class="text-navy" />
@@ -128,7 +125,7 @@ const tools = [
       </div>
 
       <!-- Scorecard (coral) -->
-      <div class="absolute top-[2%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
+      <div data-ti-tool data-ti-color="#E8573D" class="absolute top-[2%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
         <div class="flex items-center gap-2 mb-2">
           <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
             <Icon name="ph:clipboard-text-duotone" size={18} class="text-coral" />
@@ -142,7 +139,7 @@ const tools = [
       </div>
 
       <!-- Audit (plum) -->
-      <div class="absolute top-[4%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-3">
+      <div data-ti-tool data-ti-color="#6C4AB6" class="absolute top-[4%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-3">
         <div class="flex items-center gap-2 mb-2">
           <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
             <Icon name="ph:magnifying-glass-duotone" size={18} class="text-plum" />
@@ -156,7 +153,7 @@ const tools = [
       </div>
 
       <!-- Tokens (sky) -->
-      <div class="absolute bottom-[3%] left-[1%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow rotate-2">
+      <div data-ti-tool data-ti-color="#5DADE2" class="absolute bottom-[3%] left-[1%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow rotate-2">
         <div class="flex items-center gap-2 mb-2">
           <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
             <Icon name="ph:sliders-horizontal-duotone" size={18} class="text-sky-deep" />
@@ -171,7 +168,7 @@ const tools = [
       </div>
 
       <!-- ROI (sunset) -->
-      <div class="absolute bottom-[2%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-2">
+      <div data-ti-tool data-ti-color="#FF8E53" class="absolute bottom-[2%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-2">
         <div class="flex items-center gap-2 mb-2">
           <div class="w-7 h-7 rounded-lg bg-sunset/15 flex items-center justify-center">
             <Icon name="ph:calculator-duotone" size={18} class="text-sunset-deep" />
@@ -255,4 +252,50 @@ const tools = [
       Connect on LinkedIn
     </Button>
   </CTABanner>
+
+  {/* Hero illustration motion: each tool reads from the one system — an accent pulse
+      travels out from the hub to each tool card, in turn. */}
+  <script>
+    import { connect, gsap } from '~/scripts/hero-motion';
+
+    const illo = document.querySelector<HTMLElement>('[data-ti-illo]');
+    const svg = illo?.querySelector<SVGSVGElement>('[data-ti-conn]');
+    const hub = illo?.querySelector('[data-ti-hub]');
+    const tools = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-ti-tool]')) : [];
+
+    if (svg && hub && tools.length) {
+      const colors = tools.map((t) => t.dataset.tiColor || '#6C4AB6');
+      const c = connect(
+        svg,
+        tools.map((t, i) => ({
+          from: hub,
+          to: t,
+          color: colors[i],
+          curve: i % 2 ? 0.16 : -0.16,
+          opacity: 0.85,
+        })),
+      );
+
+      if (!c.reduce) {
+        const cycle = 2.6;
+        c.links.forEach((link, i) => {
+          link.addPulse({ duration: 1.4, delay: i * 0.4, repeatDelay: cycle - 1.4, size: 5, color: colors[i] });
+          // tool lights up as its pulse lands (filter only — cards already run CSS float)
+          gsap.fromTo(
+            tools[i],
+            { filter: 'brightness(1)' },
+            {
+              filter: 'brightness(1.06)',
+              duration: 0.22,
+              yoyo: true,
+              repeat: 1,
+              ease: 'power1.inOut',
+              delay: i * 0.4 + 1.25,
+              repeatDelay: cycle - 0.44,
+            },
+          );
+        });
+      }
+    }
+  </script>
 </BaseLayout>

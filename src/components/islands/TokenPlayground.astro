@@ -208,6 +208,48 @@ const densities = [
     const radiusOut  = root.querySelector<HTMLOutputElement>('#tp-radius-out')!;
     const spacingOut = root.querySelector<HTMLOutputElement>('#tp-spacing-out')!;
     const callout    = root.querySelector<HTMLElement>('[data-tp-callout]')!;
+    const previewFrame = root.querySelector<HTMLElement>('.tp-preview-frame')!;
+    const card = root.querySelector<HTMLElement>('.tp-card')!;
+    const radiusInput = root.querySelector<HTMLInputElement>('#tp-radius')!;
+    const spacingInput = root.querySelector<HTMLInputElement>('#tp-spacing')!;
+
+    const reduceMotion =
+      typeof matchMedia === 'function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // gate flourishes so the first paint is calm and flash-free
+    let primed = false;
+
+    /** Restart a one-shot animation class and clear it when done. */
+    function flash(el: HTMLElement, cls: string, ms: number) {
+      if (reduceMotion || !primed) return;
+      el.classList.remove(cls);
+      void el.offsetWidth;
+      el.classList.add(cls);
+      setTimeout(() => el.classList.remove(cls), ms);
+    }
+
+    /** Paint the filled portion of a range track up to the thumb. */
+    function fillTrack(input: HTMLInputElement) {
+      const min = parseFloat(input.min || '0');
+      const max = parseFloat(input.max || '100');
+      const pct = max > min ? ((parseFloat(input.value) - min) / (max - min)) * 100 : 0;
+      input.style.setProperty('--tp-fill', `${pct}%`);
+    }
+
+    let calloutHtml = callout.innerHTML;
+    function setCallout(html: string) {
+      if (html === calloutHtml) return;
+      calloutHtml = html;
+      if (reduceMotion || !primed) {
+        callout.innerHTML = html;
+        return;
+      }
+      callout.classList.add('is-swapping');
+      setTimeout(() => {
+        callout.innerHTML = html;
+        callout.classList.remove('is-swapping');
+      }, 130);
+    }
 
     const defaults = {
       radius: '14',
@@ -218,7 +260,14 @@ const densities = [
 
     function syncChipState(name: 'palette' | 'density', value: string) {
       root!.querySelectorAll<HTMLElement>(`[data-tp-chip="${name}"]`).forEach((chip) => {
-        chip.classList.toggle('is-on', chip.dataset.value === value);
+        const on = chip.dataset.value === value;
+        const was = chip.classList.contains('is-on');
+        chip.classList.toggle('is-on', on);
+        if (on && !was && primed && !reduceMotion) {
+          chip.classList.remove('tp-pop');
+          void chip.offsetWidth;
+          chip.classList.add('tp-pop');
+        }
       });
     }
 
@@ -241,6 +290,12 @@ const densities = [
           syncChipState('density', value);
           break;
       }
+      // Visual feedback for the change: a color burn for palette swaps,
+      // a ring pulse on the card for geometry/spacing changes.
+      if (control === 'palette') flash(previewFrame, 'tp-flash', 650);
+      else flash(card, 'tp-pulse', 520);
+      if (control === 'radius') fillTrack(radiusInput);
+      if (control === 'spacing') fillTrack(spacingInput);
       updateCallout();
     }
 
@@ -252,7 +307,7 @@ const densities = [
       else if (r >= 26)  msg = 'All friendliness, all softness. Pillowy.';
       else if (s >= 1.4) msg = 'Roomy spacing. Reads calmer; takes more vertical real estate.';
       else if (s <= 0.8) msg = 'Compressed. Dense interfaces — power-user dashboards live here.';
-      callout.innerHTML = msg;
+      setCallout(msg);
     }
 
     root.addEventListener('input', (e) => {
@@ -277,9 +332,47 @@ const densities = [
       apply('density', defaults.density);
     });
 
-    // Initial paint (sync chip states)
+    // Initial paint (sync chip states + track fills)
     syncChipState('palette', defaults.palette);
     syncChipState('density', defaults.density);
+    fillTrack(radiusInput);
+    fillTrack(spacingInput);
+
+    // Count the "shared token" stats up the first time they scroll into view.
+    const statNums = Array.from(root.querySelectorAll<HTMLElement>('.tp-stat-num'));
+    function countUpStats() {
+      statNums.forEach((el) => {
+        const to = parseInt(el.textContent || '0', 10);
+        if (to === 0) return;
+        const dur = 720;
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = Math.min(1, (now - start) / dur);
+          el.textContent = String(Math.round(to * (1 - Math.pow(1 - t, 3))));
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }
+    if (!reduceMotion && 'IntersectionObserver' in window) {
+      const statsEl = root.querySelector('.tp-stats');
+      if (statsEl) {
+        const io = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((en) => {
+              if (en.isIntersecting) {
+                countUpStats();
+                obs.disconnect();
+              }
+            });
+          },
+          { threshold: 0.4 },
+        );
+        io.observe(statsEl);
+      }
+    }
+
+    primed = true;
   }
 </script>
 
@@ -340,7 +433,13 @@ const densities = [
     appearance: none;
     height: 6px;
     border-radius: 999px;
-    background: linear-gradient(90deg, var(--tp-primary), rgba(108, 74, 182, 0.18));
+    /* filled portion tracks the thumb via --tp-fill (set in JS) */
+    background: linear-gradient(
+      90deg,
+      var(--tp-primary) 0%,
+      var(--tp-primary) var(--tp-fill, 50%),
+      rgba(108, 74, 182, 0.18) var(--tp-fill, 50%)
+    );
     outline: none;
     cursor: pointer;
   }
@@ -354,7 +453,11 @@ const densities = [
     cursor: grab;
     transition: transform 0.15s ease;
   }
-  .tp-root input[type='range']::-webkit-slider-thumb:active { transform: scale(1.1); cursor: grabbing; }
+  .tp-root input[type='range']::-webkit-slider-thumb:active {
+    transform: scale(1.14) rotate(-7deg);
+    cursor: grabbing;
+    box-shadow: 0 6px 16px -2px color-mix(in srgb, var(--tp-primary) 55%, transparent);
+  }
   .tp-root input[type='range']::-moz-range-thumb {
     width: 22px; height: 22px;
     border-radius: 50%;
@@ -362,6 +465,11 @@ const densities = [
     border: 2.5px solid var(--tp-primary);
     box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3);
     cursor: grab;
+    transition: transform 0.15s ease;
+  }
+  .tp-root input[type='range']::-moz-range-thumb:active {
+    transform: scale(1.14) rotate(-7deg);
+    cursor: grabbing;
   }
   .tp-root input[type='range']:focus-visible {
     outline: 2px dashed var(--tp-primary);
@@ -394,6 +502,12 @@ const densities = [
     border-color: var(--chip, #6c4ab6);
     color: #fff;
     box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+  }
+  .tp-chip.tp-pop { animation: tp-chip-pop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes tp-chip-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.1) rotate(-1.5deg); }
+    100% { transform: scale(1) rotate(0); }
   }
   .tp-chip-dot {
     width: 14px; height: 14px; border-radius: 50%;
@@ -440,6 +554,23 @@ const densities = [
     border-radius: var(--tp-radius);
     padding: var(--tp-pad);
     transition: border-radius 0.25s ease, padding 0.25s ease, gap 0.25s ease;
+  }
+  /* Ring pulse when a geometry/spacing token changes — the card "agrees" out loud. */
+  .tp-card.tp-pulse { animation: tp-card-pulse 0.5s ease-out; }
+  @keyframes tp-card-pulse {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tp-primary) 38%, transparent); }
+    100% { box-shadow: 0 0 0 13px color-mix(in srgb, var(--tp-primary) 0%, transparent); }
+  }
+  /* Color burn across every element bound to the primary token on palette swap. */
+  .tp-preview-frame.tp-flash .tp-badge,
+  .tp-preview-frame.tp-flash .tp-tag,
+  .tp-preview-frame.tp-flash .tp-stat-num,
+  .tp-preview-frame.tp-flash .tp-btn--primary {
+    animation: tp-color-flash 0.6s ease-out;
+  }
+  @keyframes tp-color-flash {
+    0% { filter: brightness(1.5) saturate(1.35); }
+    100% { filter: brightness(1) saturate(1); }
   }
   .tp-card-head {
     display: flex; align-items: center; justify-content: space-between;
@@ -555,11 +686,21 @@ const densities = [
     color: #6c4ab6;
     text-align: center;
     min-height: 1.5em;
+    transition: opacity 0.14s ease;
   }
+  .tp-foot-note.is-swapping { opacity: 0; }
 
   @media (prefers-reduced-motion: reduce) {
     .tp-card,
     .tp-btn,
+    .tp-chip,
+    .tp-foot-note,
     .tp-root input[type='range']::-webkit-slider-thumb { transition: none; }
+    .tp-chip.tp-pop,
+    .tp-card.tp-pulse,
+    .tp-preview-frame.tp-flash .tp-badge,
+    .tp-preview-frame.tp-flash .tp-tag,
+    .tp-preview-frame.tp-flash .tp-stat-num,
+    .tp-preview-frame.tp-flash .tp-btn--primary { animation: none; }
   }
 </style>

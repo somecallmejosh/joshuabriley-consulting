@@ -12,11 +12,18 @@ interface Props {
   text: string;
   /** Visible label. Defaults to the text itself when not provided. */
   label?: string;
+  /** Surface the button sits on. `onDark` for navy/code windows. */
+  tone?: 'light' | 'onDark';
   class?: string;
 }
 
-const { text, label, class: className } = Astro.props;
+const { text, label, tone = 'light', class: className } = Astro.props;
 const visibleLabel = label ?? text;
+
+const toneClass =
+  tone === 'onDark'
+    ? 'bg-white/10 hover:bg-white/20 text-white/85 focus-visible:outline-lemon'
+    : 'bg-charcoal/5 hover:bg-charcoal/10 text-charcoal/80 focus-visible:outline-coral';
 ---
 
 <button
@@ -24,7 +31,8 @@ const visibleLabel = label ?? text;
   data-copy-button
   data-copy-text={text}
   class={cx(
-    'inline-flex items-center gap-1.5 px-2 py-1 rounded-md bg-charcoal/5 hover:bg-charcoal/10 font-mono text-xs text-charcoal/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral',
+    'inline-flex items-center gap-1.5 px-2 py-1 rounded-md font-mono text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2',
+    toneClass,
     className,
   )}
   aria-label={`Copy ${visibleLabel}`}

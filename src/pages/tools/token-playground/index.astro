@@ -39,24 +39,16 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
     {/* One primitive value cascades down through a semantic token into three
         components — all rendered in that same value. The whole page's thesis,
         drawn: change the source, change everything downstream. Decorative. */}
-    <div slot="media" class="relative mx-auto h-[440px] w-full max-w-[420px] hidden lg:block" aria-hidden="true">
-      {/* Soft spinning ring for depth */}
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-2 border-dashed border-sky/20 animate-spin-slow"></div>
+    <div slot="media" data-tp-illo class="relative mx-auto h-[460px] w-full max-w-[420px] hidden lg:block" aria-hidden="true">
+      {/* Soft concentric depth, sized to sit behind the cascade (not across it) */}
+      <div class="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-dashed border-sky/15 animate-spin-slow"></div>
 
-      {/* Floating accent dots */}
-      <span class="absolute top-[6%] right-[8%] w-4 h-4 rounded-full bg-lemon animate-float-delay"></span>
-      <span class="absolute bottom-[10%] left-[4%] w-3 h-3 rounded-full bg-plum/60 animate-float-slow"></span>
-
-      {/* Animated flow lines: primitive → semantic → each component */}
-      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 440" fill="none">
-        <path d="M 200 110 C 200 138, 200 156, 200 182" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite" />
-        <path d="M 200 286 C 150 314, 104 326, 76 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.4s" />
-        <path d="M 200 286 L 200 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.6s" />
-        <path d="M 200 286 C 250 314, 296 326, 324 352" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 9 7; animation: dash-flow 1.6s linear infinite; animation-delay: 0.8s" />
-      </svg>
+      {/* Flow lines (primitive → semantic → each component) drawn by hero-motion.ts,
+          anchored to the live card positions so they actually touch. */}
+      <svg data-tp-conn class="absolute inset-0 w-full h-full"></svg>
 
       {/* Layer 1 — Primitive: the single raw value */}
-      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-44 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-2 animate-float">
+      <div data-tp-primitive class="absolute top-0 left-1/2 -translate-x-1/2 w-44 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-2 animate-float">
         <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Primitive</span>
         <div class="flex items-center gap-2.5">
           <span class="w-8 h-8 rounded-lg shadow-inner" style="background:#E8573D"></span>
@@ -65,7 +57,7 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
       </div>
 
       {/* Layer 2 — Semantic: intent that references the primitive */}
-      <div class="absolute top-[40%] left-1/2 -translate-x-1/2 w-52 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-1 animate-float-delay">
+      <div data-tp-semantic class="absolute top-[40%] left-1/2 -translate-x-1/2 w-52 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-1 animate-float-delay">
         <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Semantic</span>
         <div class="flex items-center gap-2">
           <code class="font-mono text-sm font-semibold text-coral">action.primary</code>
@@ -76,29 +68,32 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
         </div>
       </div>
 
-      {/* Layer 3 — Components: all rendered from the same value */}
-      <div class="absolute bottom-0 left-0 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 -rotate-3 animate-float-slow">
-        <div class="flex items-center gap-1.5 mb-2">
-          <Icon name="ph:cursor-click-duotone" size={15} class="text-charcoal/40" />
-          <span class="font-heading text-[10px] font-semibold text-navy">Button</span>
+      {/* Layer 3 — Components: one evenly-spaced row, all rendered from the same value.
+          A flex row (not absolute placement) keeps them from ever overlapping. */}
+      <div class="absolute inset-x-0 bottom-1 flex items-end justify-between gap-2.5">
+        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 -rotate-2 animate-float-slow">
+          <div class="flex items-center gap-1.5 mb-2">
+            <Icon name="ph:cursor-click-duotone" size={15} class="text-charcoal/40" />
+            <span class="font-heading text-[10px] font-semibold text-navy">Button</span>
+          </div>
+          <span data-tp-swatch class="block rounded-lg px-2 py-1.5 text-center text-[11px] font-semibold text-white" style="background:#E8573D">Save</span>
         </div>
-        <span class="block rounded-lg px-2 py-1.5 text-center text-[11px] font-semibold text-white" style="background:#E8573D">Save</span>
-      </div>
 
-      <div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-1 animate-float">
-        <div class="flex items-center gap-1.5 mb-2">
-          <Icon name="ph:tag-duotone" size={15} class="text-charcoal/40" />
-          <span class="font-heading text-[10px] font-semibold text-navy">Badge</span>
+        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float">
+          <div class="flex items-center gap-1.5 mb-2">
+            <Icon name="ph:tag-duotone" size={15} class="text-charcoal/40" />
+            <span class="font-heading text-[10px] font-semibold text-navy">Badge</span>
+          </div>
+          <span data-tp-swatch class="block rounded-full px-2 py-1.5 text-center text-[11px] font-semibold bg-coral/15 text-[#C13A22]">New</span>
         </div>
-        <span class="block rounded-full px-2 py-1.5 text-center text-[11px] font-semibold bg-coral/15 text-[#C13A22]">New</span>
-      </div>
 
-      <div class="absolute bottom-0 right-0 w-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-3 animate-float-delay">
-        <div class="flex items-center gap-1.5 mb-2">
-          <Icon name="ph:text-aa-duotone" size={15} class="text-charcoal/40" />
-          <span class="font-heading text-[10px] font-semibold text-navy">Link</span>
+        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-2 animate-float-delay">
+          <div class="flex items-center gap-1.5 mb-2">
+            <Icon name="ph:text-aa-duotone" size={15} class="text-charcoal/40" />
+            <span class="font-heading text-[10px] font-semibold text-navy">Link</span>
+          </div>
+          <span data-tp-swatch class="block py-1.5 text-center text-[11px] font-semibold underline decoration-2 underline-offset-2 text-[#C13A22]">Read more</span>
         </div>
-        <span class="block py-1.5 text-center text-[11px] font-semibold underline decoration-2 underline-offset-2 text-[#C13A22]">Read more</span>
       </div>
     </div>
   </Hero>
@@ -166,4 +161,62 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
       Get in touch
     </Button>
   </CTABanner>
+
+  {/* Hero illustration motion: the primitive's value cascades down through the semantic
+      token and repaints all three components in sequence. */}
+  <script>
+    import { connect, gsap } from '~/scripts/hero-motion';
+
+    const PRIMITIVE = '#E8573D';
+    const illo = document.querySelector<HTMLElement>('[data-tp-illo]');
+    const svg = illo?.querySelector<SVGSVGElement>('[data-tp-conn]');
+    const primitive = illo?.querySelector('[data-tp-primitive]');
+    const semantic = illo?.querySelector('[data-tp-semantic]');
+    const comps = illo ? Array.from(illo.querySelectorAll('[data-tp-comp]')) : [];
+    const swatches = illo
+      ? Array.from(illo.querySelectorAll<HTMLElement>('[data-tp-swatch]'))
+      : [];
+
+    if (svg && primitive && semantic && comps.length === 3) {
+      const c = connect(svg, [
+        { from: primitive, to: semantic, color: PRIMITIVE, curve: 0 },
+        { from: semantic, to: comps[0], color: PRIMITIVE, curve: 0.25 },
+        { from: semantic, to: comps[1], color: PRIMITIVE, curve: 0 },
+        { from: semantic, to: comps[2], color: PRIMITIVE, curve: -0.25 },
+      ]);
+
+      if (!c.reduce) {
+        const [toSemantic, ...toComps] = c.links;
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 1, defaults: { ease: 'power1.inOut' } });
+
+        // 1. value drops from the primitive into the semantic token
+        tl.add(toSemantic.addPulse({ paused: true, duration: 0.85, size: 6 }), 0);
+        tl.fromTo(
+          semantic,
+          { filter: 'brightness(1)' },
+          { filter: 'brightness(1.12)', duration: 0.2, yoyo: true, repeat: 1 },
+          0.85,
+        );
+
+        // 2. it fans out to all three components, each repainting as it lands.
+        //    Reactions use `filter` only — animating transform here would override the
+        //    cards' layout/centering and shove them into each other.
+        toComps.forEach((link, i) => {
+          tl.add(link.addPulse({ paused: true, duration: 0.8, size: 5 }), 1.0);
+          tl.fromTo(
+            swatches[i],
+            { filter: 'brightness(1.85) saturate(1.3)' },
+            { filter: 'brightness(1) saturate(1)', duration: 0.6 },
+            1.7,
+          );
+          tl.fromTo(
+            comps[i],
+            { filter: 'brightness(1)' },
+            { filter: 'brightness(1.06)', duration: 0.18, yoyo: true, repeat: 1, immediateRender: false },
+            1.7,
+          );
+        });
+      }
+    }
+  </script>
 </BaseLayout>

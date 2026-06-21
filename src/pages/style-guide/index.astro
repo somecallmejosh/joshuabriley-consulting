@@ -10,6 +10,11 @@ import FAQ from '~/components/patterns/FAQ.astro';
 import FAQItem from '~/components/patterns/FAQItem.astro';
 import ShowcaseSwatch from '~/components/patterns/ShowcaseSwatch.astro';
 import ShowcaseRow from '~/components/patterns/ShowcaseRow.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
+import WindowFrame from '~/components/patterns/WindowFrame.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import TechStack from '~/components/patterns/TechStack.astro';
+import ProofPanel from '~/components/patterns/ProofPanel.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
@@ -54,7 +59,36 @@ const sections = [
   { id: 'decorative',  label: 'Decorative',    icon: 'ph:sparkle-duotone' },
   { id: 'cards',       label: 'Cards',         icon: 'ph:stack-duotone' },
   { id: 'patterns',    label: 'Patterns',      icon: 'ph:columns-duotone' },
+  { id: 'technical',   label: 'Technical proof', icon: 'ph:terminal-window-duotone' },
   { id: 'forms',       label: 'Forms',         icon: 'ph:clipboard-text-duotone' },
+];
+
+const apiSnippet = `// Modal.tsx — behaviour is owned, appearance is tokenised.
+export function Modal({ open, onClose, title, children }: ModalProps) {
+  const ref = useFocusTrap(open);     // keyboard + focus management
+  useScrollLock(open);
+  return (
+    <Portal>
+      <div role="dialog" aria-modal="true" aria-label={title} ref={ref}>
+        {children}
+      </div>
+    </Portal>
+  );
+}
+// No \`brand\` prop. Every surface themes it through CSS variables.`;
+
+const testRun = `$ npm run test:a11y
+ ✓ Modal traps focus and restores it on close      (412 ms)
+ ✓ Menu is fully operable by keyboard only          (288 ms)
+ ✓ Tokens meet WCAG AA contrast across all brands    (96 ms)
+
+ 3 passed · 0 failed · 0 flaky`;
+
+const proofSections = [
+  { label: 'Skills proven', tone: 'plum' as const, items: ['Design systems', 'Accessible component APIs', 'Frontend architecture', 'Design-to-code'] },
+  { label: 'Stack', tone: 'navy' as const, items: ['TypeScript', 'React', 'Stencil', 'Storybook', 'Playwright', 'Figma Code Connect'] },
+  { label: 'Testing', tone: 'sage' as const, items: ['Playwright E2E', 'Jest unit', 'axe-core', 'Keyboard + SR review'] },
+  { label: 'Outcomes', tone: 'coral' as const, items: ['Multi-team adoption', 'Less duplicated UI', 'A11y raised system-wide'] },
 ];
 ---
 
@@ -398,6 +432,85 @@ const sections = [
               </FAQItem>
             </FAQ>
           </div>
+        </ShowcaseRow>
+      </div>
+    </Container>
+  </Section>
+
+
+  <Section id="technical" tone="navy" padding="default">
+    <Container>
+      <SectionHeader
+        eyebrow="Technical proof"
+        eyebrowIcon="ph:terminal-window-duotone"
+        eyebrowTone="sky"
+        tone="white"
+        title="The engineering register."
+        lead="A second voice, added — not a redesign. The warm components prove taste; these prove depth. They carry the receipts a staff-level reader scans for: real code, stacks, tested behaviour, and measured outcomes."
+      />
+
+      <div class="mt-12 grid gap-6">
+        <ShowcaseRow
+          title="Code window (CodeBlock)"
+          description="A framed, copyable code window. Shows a real component API or type signature so React/TypeScript depth is visible, not just asserted. Dependency-free — the chrome carries the polish."
+          snippet={`<CodeBlock filename="Modal.tsx" lang="tsx" code={apiSnippet} />`}
+        >
+          <CodeBlock filename="Modal.tsx" lang="tsx" code={apiSnippet} caption="Behaviour is owned by the component; appearance flows through tokens — the same architecture argument, now shown in code." class="w-full" />
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Browser frame (WindowFrame · browser)"
+          description="Chrome for a digital artifact — a Storybook story, live docs, or a component preview. Wraps any slot content."
+          snippet={`<WindowFrame variant="browser" title="storybook…/button--primary">…</WindowFrame>`}
+        >
+          <WindowFrame variant="browser" title="storybook.joshuabriley.com/?path=/story/button--primary" class="w-full">
+            <div class="p-10 bg-cream flex items-center justify-center">
+              <Button variant="primary" iconRight="ph:arrow-right">Primary button</Button>
+            </div>
+          </WindowFrame>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Terminal frame (WindowFrame · terminal)"
+          description="The same chrome, dark variant — for a test run, CI output, or a CLI. Proof that behaviour is tested, not just claimed."
+          snippet={`<WindowFrame variant="terminal" title="zsh — design-system">…</WindowFrame>`}
+        >
+          <WindowFrame variant="terminal" title="zsh — design-system" class="w-full">
+            <pre class="font-mono text-[0.8rem] leading-relaxed text-[#E7E5F7] overflow-x-auto"><code>{testRun}</code></pre>
+          </WindowFrame>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="Metric"
+          description="One measured outcome with a big figure. Supports before→after and a trend badge. Illustrative values shown — use only real, defensible numbers in production."
+          snippet={`<Metric value="1" before="6" label="button implementations" tone="sky" />`}
+        >
+          <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-6">
+            <Metric value="3" label="brands, one library" tone="plum" />
+            <Metric value="40%" label="duplicated UI removed" trend="down" tone="coral" />
+            <Metric value="100%" label="components keyboard-operable" tone="sage" />
+            <Metric before="6" value="1" label="button implementations" tone="sky" />
+          </div>
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="TechStack"
+          description="A labelled row of monospace keyword chips. Makes the stack scannable for recruiters who search for exact terms."
+          snippet={`<TechStack label="Stack" items={['TypeScript', 'React', 'Stencil', …]} />`}
+        >
+          <TechStack
+            label="Stack"
+            items={['TypeScript', 'React', 'Stencil', 'Storybook', 'Playwright', 'Gatsby', 'Vue / Nuxt', 'ViewComponent']}
+            class="w-full"
+          />
+        </ShowcaseRow>
+
+        <ShowcaseRow
+          title="ProofPanel"
+          description="The case-study 'receipts' block — skills proven, stack, testing, outcomes — in one scannable panel. Composes TechStack so chip styling stays single-sourced."
+          snippet={`<ProofPanel sections={[{ label: 'Stack', items: [...] }, …]} />`}
+        >
+          <ProofPanel sections={proofSections} class="w-full" />
         </ShowcaseRow>
       </div>
     </Container>

@@ -1,0 +1,54 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from '~/components/primitives/Icon.astro';
+import { toneStyles, type Tone } from '~/lib/tones';
+
+/**
+ * Technical-proof register — a labelled row of monospace keyword chips.
+ *
+ * Recruiters and hiring managers scan for exact terms ("Stencil", "Playwright",
+ * "TypeScript"). This makes them machine- and human-scannable instead of buried
+ * in prose. Monospace on purpose: it reads as "tooling", not marketing.
+ */
+
+export type StackItem = string | { label: string; icon?: string };
+
+interface Props {
+  items: StackItem[];
+  /** Optional eyebrow label, e.g. "Stack". */
+  label?: string;
+  /** Accent tone for the chip dot/border (default navy). */
+  tone?: Tone;
+  class?: string;
+}
+
+const { items, label, tone = 'navy', class: className } = Astro.props;
+const t = toneStyles[tone];
+
+const normalised = items.map((item) =>
+  typeof item === 'string' ? { label: item, icon: undefined } : item,
+);
+---
+
+<div class={cx(className)}>
+  {label && (
+    <p class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-2">{label}</p>
+  )}
+  <ul class="flex flex-wrap gap-2">
+    {normalised.map((item) => (
+      <li
+        class={cx(
+          'inline-flex items-center gap-1.5 rounded-md bg-white border font-mono text-xs text-navy px-2.5 py-1',
+          t.border,
+        )}
+      >
+        {item.icon ? (
+          <Icon name={item.icon} size={13} class={t.text} />
+        ) : (
+          <span class={cx('w-1.5 h-1.5 rounded-full', t.surface)} aria-hidden="true"></span>
+        )}
+        {item.label}
+      </li>
+    ))}
+  </ul>
+</div>

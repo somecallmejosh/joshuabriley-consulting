@@ -1,0 +1,53 @@
+---
+import { cx } from '~/lib/cx';
+import Icon from '~/components/primitives/Icon.astro';
+import { toneStyles, type Tone } from '~/lib/tones';
+
+/**
+ * Technical-proof register — a single measured outcome.
+ *
+ * Staff-level hiring scans for results, not adjectives. Use real, defensible
+ * numbers only: an adoption count, a removed-duplication figure, a measured
+ * before→after. A fabricated Lighthouse score is exactly what a hiring manager
+ * catches — leave it as a slot rather than invent it.
+ */
+
+interface Props {
+  /** The headline figure, e.g. "3", "−42%", "0". */
+  value: string;
+  /** What the figure measures, e.g. "brands, one library". */
+  label: string;
+  /** Optional context / source line under the label. */
+  caption?: string;
+  /** Optional "before" value, rendered struck through ahead of the arrow. */
+  before?: string;
+  /** Direction badge. Pairs an arrow + colour with the value. */
+  trend?: 'up' | 'down';
+  /** Accent tone for the figure (default plum). */
+  tone?: Tone;
+  class?: string;
+}
+
+const { value, label, caption, before, trend, tone = 'plum', class: className } = Astro.props;
+const t = toneStyles[tone];
+---
+
+<div class={cx('flex flex-col', className)}>
+  <div class="flex items-baseline gap-2">
+    {before && (
+      <span class="font-display text-2xl md:text-3xl text-charcoal/35 line-through decoration-coral/50">{before}</span>
+    )}
+    {before && <Icon name="ph:arrow-right-bold" size={18} class="text-charcoal/40 self-center" />}
+    <span class={cx('font-display font-semibold leading-none text-4xl md:text-5xl', t.text)}>{value}</span>
+    {trend && (
+      <Icon
+        name={trend === 'up' ? 'ph:trend-up-bold' : 'ph:trend-down-bold'}
+        size={22}
+        class={trend === 'up' ? 'text-sage-deep self-center' : 'text-[#C13A22] self-center'}
+        label={trend === 'up' ? 'Increased' : 'Decreased'}
+      />
+    )}
+  </div>
+  <p class="mt-2 font-heading text-sm font-semibold text-navy">{label}</p>
+  {caption && <p class="mt-1 text-xs text-charcoal/70 font-body leading-snug">{caption}</p>}
+</div>

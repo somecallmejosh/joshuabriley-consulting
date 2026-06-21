@@ -188,6 +188,44 @@ const labels = [
     const resultsLink = document.getElementById('results-link') as HTMLAnchorElement;
 
     const subjectCards = Array.from(document.querySelectorAll<HTMLElement>('.subject-card'));
+    const revealCard = document.querySelector<HTMLElement>('.reveal-card');
+
+    const reduceMotion =
+      typeof matchMedia === 'function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+    // `primed` keeps the first paint / URL-prefill calm; flourishes start after.
+    let primed = false;
+    let wasComplete = false;
+    const numRaf = new WeakMap<HTMLElement, number>();
+
+    /** Roll a number toward its new value (easeOutCubic). */
+    function countTo(el: HTMLElement, to: number) {
+      const from = parseInt(el.dataset.n ?? el.textContent ?? '0', 10) || 0;
+      el.dataset.n = String(to);
+      const prev = numRaf.get(el);
+      if (prev) cancelAnimationFrame(prev);
+      if (reduceMotion || !primed || from === to) {
+        el.textContent = String(to);
+        return;
+      }
+      const dur = 420;
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        el.textContent = String(Math.round(from + (to - from) * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) numRaf.set(el, requestAnimationFrame(step));
+      };
+      numRaf.set(el, requestAnimationFrame(step));
+    }
+
+    /** Replay a one-shot animation class. */
+    function bump(el: HTMLElement | null, cls: string, ms: number) {
+      if (reduceMotion || !primed || !el) return;
+      el.classList.remove(cls);
+      void el.offsetWidth;
+      el.classList.add(cls);
+      setTimeout(() => el.classList.remove(cls), ms);
+    }
 
     function encodeSelections(): string {
       let encoded = '';
@@ -213,11 +251,16 @@ const labels = [
         subjectTotals[subject] = (subjectTotals[subject] ?? 0) + v;
       });
 
-      totalScoreEl.textContent = String(total);
+      countTo(totalScoreEl, total);
       answeredEl.textContent = String(answered);
-      floatScoreEl.textContent = String(total);
+      countTo(floatScoreEl, total);
       floatAnsweredEl.textContent = String(answered);
-      meterEl.style.width = `${(answered / TOTAL_ITEMS) * 100}%`;
+      const nextWidth = `${(answered / TOTAL_ITEMS) * 100}%`;
+      if (meterEl.style.width !== nextWidth) {
+        meterEl.style.width = nextWidth;
+        bump(floatScoreEl, 'score-pop', 380);
+        bump(meterEl, 'meter-bump', 600);
+      }
 
       subjectCards.forEach((card) => {
         const subject = card.dataset.subject!;
@@ -253,10 +296,12 @@ const labels = [
           stamp.style.animation = 'none';
           void stamp.offsetWidth;
           stamp.style.animation = '';
+          // Celebrate a freshly-completed subject.
+          bump(card, 'subject-complete', 700);
         }
       });
 
-      finalScoreEl.textContent = String(total);
+      countTo(finalScoreEl, total);
 
       if (answered === TOTAL_ITEMS) {
         const pct = (total / TOTAL_MAX) * 100;
@@ -286,11 +331,20 @@ const labels = [
         }
         resultHeadline.textContent = headline;
         resultBody.textContent = body;
+
+        // Choreograph the unlock the first time the card fills.
+        if (!wasComplete && primed) {
+          bump(revealCard, 'just-unlocked', 1200);
+          bump(finalGradeEl, 'grade-pop', 650);
+          bump(resultActions, 'actions-in', 800);
+        }
+        wasComplete = true;
       } else {
         finalGradeEl.textContent = '—';
         resultActions.hidden = true;
         resultHeadline.textContent = 'Keep going. Answer every question to see your report.';
         resultBody.textContent = `You're ${answered} of ${TOTAL_ITEMS} questions in. A personalized writeup appears here once you've scored every row.`;
+        wasComplete = false;
       }
     }
 
@@ -298,7 +352,13 @@ const labels = [
       const target = e.target as HTMLInputElement;
       if (target.type !== 'radio') return;
       form.querySelectorAll<HTMLInputElement>(`input[name="${target.name}"]`).forEach((input) => {
-        input.closest('.choice')?.classList.toggle('is-on', input.checked);
+        const label = input.closest('.choice');
+        label?.classList.toggle('is-on', input.checked);
+        if (input.checked && label instanceof HTMLElement && !reduceMotion) {
+          label.classList.remove('choice-pop');
+          void label.offsetWidth;
+          label.classList.add('choice-pop');
+        }
       });
       updateScore();
     });
@@ -328,6 +388,7 @@ const labels = [
     }
 
     updateScore();
+    primed = true;
   }
 </script>
 
@@ -369,6 +430,14 @@ const labels = [
   .subject-tab.sage { background: linear-gradient(135deg, #a8d4a6, #7bb47a); }
   .subject-tab.sky { background: linear-gradient(135deg, #8ccff0, #5dade2); }
   .subject-tab.sunset { background: linear-gradient(135deg, #fdba74, #ff8e53); }
+
+  /* Card gives a little hop when its section earns a grade. */
+  .subject-card.subject-complete { animation: sc-card-celebrate 0.7s ease-out; }
+  @keyframes sc-card-celebrate {
+    0% { transform: translateY(0) scale(1); }
+    30% { transform: translateY(-5px) scale(1.014); }
+    100% { transform: translateY(0) scale(1); }
+  }
 
   .q-row {
     display: grid;
@@ -434,6 +503,13 @@ const labels = [
     outline: 2px dashed #6c4ab6;
     outline-offset: 3px;
   }
+  /* Springy settle when an answer is chosen. Lands on the is-on resting transform. */
+  .choice.choice-pop { animation: sc-choice-pop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes sc-choice-pop {
+    0% { transform: translateY(-1px) scale(0.9); }
+    55% { transform: translateY(-2px) scale(1.09); }
+    100% { transform: translateY(-1px) scale(1); }
+  }
 
   .score-float {
     position: fixed;
@@ -478,6 +554,71 @@ const labels = [
     box-shadow:
       inset -3px -3px 5px rgba(0, 0, 0, 0.2),
       inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+  }
+  .score-bubble.score-pop { animation: sc-bubble-pop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes sc-bubble-pop {
+    0% { transform: scale(1); }
+    45% { transform: scale(1.17); }
+    100% { transform: scale(1); }
+  }
+
+  /* Quick brightness lift on the progress meter each time it advances. */
+  [data-meter].meter-bump { animation: sc-meter-bump 0.6s ease-out; }
+  @keyframes sc-meter-bump {
+    0% { filter: brightness(1); }
+    30% { filter: brightness(1.32) saturate(1.1); }
+    100% { filter: brightness(1); }
+  }
+
+  /* ===== final report reveal choreography ===== */
+  .reveal-card { position: relative; }
+  .reveal-card.just-unlocked::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    pointer-events: none;
+    background: linear-gradient(
+      115deg,
+      transparent 30%,
+      rgba(253, 230, 138, 0.32) 50%,
+      transparent 70%
+    );
+    transform: translateX(-110%);
+    animation: sc-sheen 1s ease-out;
+  }
+  @keyframes sc-sheen { to { transform: translateX(110%); } }
+
+  [data-final-grade].grade-pop {
+    display: inline-block;
+    animation: sc-grade-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes sc-grade-pop {
+    0% { transform: scale(0.4) rotate(-14deg); opacity: 0; }
+    60% { transform: scale(1.14) rotate(5deg); opacity: 1; }
+    100% { transform: scale(1) rotate(0); opacity: 1; }
+  }
+
+  [data-result-actions].actions-in > * {
+    animation: sc-action-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  [data-result-actions].actions-in > *:nth-child(1) { animation-delay: 0.16s; }
+  [data-result-actions].actions-in > *:nth-child(2) { animation-delay: 0.3s; }
+  @keyframes sc-action-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .choice,
+    .subject-card { transition: none; }
+    .choice.choice-pop,
+    .score-bubble.score-pop,
+    [data-meter].meter-bump,
+    .subject-card.subject-complete,
+    .reveal-card.just-unlocked::after,
+    [data-final-grade].grade-pop,
+    [data-result-actions].actions-in > * { animation: none; }
   }
 
   @media (max-width: 640px) {

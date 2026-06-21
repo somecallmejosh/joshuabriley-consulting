@@ -4,10 +4,20 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
+import ProofPanel from '~/components/patterns/ProofPanel.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import StatusAnnouncer from '~/components/islands/StatusAnnouncer.astro';
 
 const title = 'IVFCRYO — Joshua Briley';
 const description: string =
   'Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one.';
+
+const proof = [
+  { label: 'Skills proven', tone: 'plum' as const, items: ['Headless CMS', 'Accessible component APIs', 'Frontend architecture', 'UI/UX Design', 'Documentation', 'Training', 'User testing'] },
+  { label: 'Stack', tone: 'navy' as const, items: ['Vue', 'Nuxt.js', 'TypeScript', 'Design tokens', 'TailwindCSS'] },
+  { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
+  { label: 'Outcomes', tone: 'coral' as const, items: ['75% fewer support calls', '55% decrease in shipping errors', 'Quicker customer onboarding'] },
+];
 ---
 
 <BaseLayout title={title} description={description}>
@@ -26,21 +36,12 @@ const description: string =
 
   <div class="corkboard">
 
-    <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-      <Blob tone="sky" size="lg" class="absolute top-14 right-[6%]" animate="float" opacity="opacity-70" />
-      <div
-        class="absolute top-40 left-[4%] w-12 h-12 bg-plum/30 rounded-full animate-float-delay"
-        aria-hidden="true"
-      ></div>
-      <Blob tone="lemon" size="md" class="absolute bottom-20 right-[18%] w-14 h-14" animate="float-slow" opacity="opacity-60" />
-      <div
-        class="absolute bottom-24 left-[10%] w-9 h-9 bg-coral/20 rounded-full animate-float"
-        aria-hidden="true"
-      ></div>
+    <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+      <span class="hero-index" aria-hidden="true">04</span>
 
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
         <nav
-          class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70"
+          class="mb-12 flex items-center gap-2 font-heading text-sm text-charcoal/60"
           aria-label="Breadcrumb"
         >
           <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
@@ -48,128 +49,60 @@ const description: string =
           <span class="text-navy">IVFCRYO</span>
         </nav>
 
-        <article
-          class="recipe-card p-8 md:p-14"
-          style="transform: rotate(-0.4deg)"
-        >
-          <span
-            class="tape"
-            style="top: -14px; left: 10%; transform: rotate(-6deg)"
-            aria-hidden="true"
-          ></span>
-          <span
-            class="tape"
-            style="top: -14px; right: 10%; transform: rotate(5deg)"
-            aria-hidden="true"
-          ></span>
-
-          <div
-            class="absolute -top-10 left-1/2 -translate-x-1/2 flex gap-3"
-            aria-hidden="true"
-          >
-            <span class="steam animate-steam"></span>
-            <span class="steam animate-steam-delay"></span>
-            <span class="steam animate-steam-delay-2"></span>
-          </div>
-
-          <div class="relative text-center">
-            <div class="project-logo-tag">
-              <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" />
+        <div class="hero-grid">
+          <div class="hero-main">
+            <div class="mb-7 flex items-center gap-3">
+              <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" class="hero-logo-img" />
+              <span class="h-4 w-px bg-charcoal/20" aria-hidden="true"></span>
+              <span class="font-heading text-[0.7rem] uppercase tracking-[0.24em] text-plum/70">Case study no. 04</span>
             </div>
 
-            <div
-              class="inline-flex items-center gap-2 bg-plum/10 text-plum px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-plum/20 uppercase tracking-wider"
-            >
-              <Icon name="ph:snowflake-duotone" size={18} />
-              Case study &middot; Recipe no. 03
-            </div>
+            <p class="marker-label text-2xl md:text-3xl mb-5">from the lab notebook —</p>
 
-            <p class="marker-label text-2xl md:text-3xl mb-4">
-              from the lab notebook —
-            </p>
-
-            <h1
-              class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
-            >
+            <h1 class="font-display font-semibold text-navy leading-[1.04] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 3.75rem);">
               What it looks like when
               <br />
               <span class="relative inline-block">
                 accessibility
-                <svg
-                  class="absolute -bottom-3 left-0 w-full"
-                  viewBox="0 0 260 14"
-                  fill="none"
-                  aria-hidden="true"
-                >
-                  <path
-                    d="M3 9 Q 65 2 130 9 Q 195 16 257 7"
-                    stroke="#6C4AB6"
-                    stroke-width="3"
-                    stroke-linecap="round"
-                    opacity="0.55"
-                  />
+                <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 260 14" fill="none" aria-hidden="true">
+                  <path d="M3 9 Q 65 2 130 9 Q 195 16 257 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
                 </svg>
               </span>
               is built in from the start.
             </h1>
 
-            <p
-              class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
-            >
-              A self-service shipping application for
-              <span class="wavy-underline">fertility specimen logistics</span>,
-              with real-time environmental tracking, multi-carrier labels,
-              and a legally blind collaborator in the room from day one.
+            <p class="mt-8 text-lg md:text-xl text-charcoal/75 max-w-xl font-body leading-relaxed">
+              A self-service shipping application for fertility specimen logistics, with real-time environmental tracking, multi-carrier labels, and a legally blind collaborator in the room from day one.
             </p>
-
-            <div class="border-t border-dashed border-plum/25 pt-6 mt-2">
-              <dl
-                class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center"
-              >
-                <div>
-                  <dt
-                    class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1"
-                  >
-                    Role
-                  </dt>
-                  <dd class="font-display text-lg text-navy font-semibold">
-                    UX Engineer
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1"
-                  >
-                    Domain
-                  </dt>
-                  <dd class="font-display text-lg text-navy font-semibold">
-                    Fertility logistics
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1"
-                  >
-                    Stack
-                  </dt>
-                  <dd class="font-display text-lg text-navy font-semibold">
-                    Web &middot; Sensors
-                  </dd>
-                </div>
-                <div>
-                  <dt
-                    class="font-heading text-[0.7rem] uppercase tracking-widest text-plum mb-1"
-                  >
-                    Focus
-                  </dt>
-                  <dd class="font-display text-lg text-navy font-semibold">
-                    A11y-first arch.
-                  </dd>
-                </div>
-              </dl>
-            </div>
           </div>
-        </article>
+
+          <aside class="hero-rail" aria-label="Project details">
+            <dl>
+              <div>
+                <dt>Role</dt>
+                <dd>UX Engineer</dd>
+              </div>
+              <div>
+                <dt>Domain</dt>
+                <dd>Fertility logistics</dd>
+              </div>
+              <div>
+                <dt>Stack</dt>
+                <dd>Web &middot; Sensors</dd>
+              </div>
+              <div>
+                <dt>Focus</dt>
+                <dd>A11y-first arch.</dd>
+              </div>
+            </dl>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="pb-4 md:pb-8 relative" aria-label="Project receipts">
+      <div class="max-w-4xl mx-auto px-6">
+        <ProofPanel sections={proof} />
       </div>
     </section>
 
@@ -502,6 +435,18 @@ const description: string =
           </ul>
         </div>
       </div>
+
+      <div class="max-w-5xl mx-auto px-6 mt-12 md:mt-16">
+        <div class="flex items-start gap-3 mb-6">
+          <Icon name="ph:cursor-click-duotone" size={26} class="text-coral mt-1 flex-shrink-0" />
+          <p class="text-charcoal/75 leading-relaxed font-body max-w-2xl">
+            &ldquo;Announced to assistive tech&rdquo; is the kind of phrase that washes over you in
+            prose. So watch it happen: advance the shipment and see the announcement a screen reader
+            would speak &mdash; the behavior the blind collaborator was testing against.
+          </p>
+        </div>
+        <StatusAnnouncer />
+      </div>
     </section>
 
 
@@ -543,6 +488,15 @@ const description: string =
             the product is no longer the ceiling of any one engineer's
             attention.
           </p>
+        </div>
+
+
+        <div
+          class="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 bg-white rounded-2xl p-7 md:p-8 border border-charcoal/5 shadow-sm"
+          style="transform: rotate(-0.2deg)"
+        >
+          <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" tone="sage" />
+          <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" tone="plum" />
         </div>
 
 

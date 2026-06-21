@@ -1,0 +1,336 @@
+---
+/**
+ * Three-tier token-resolution chain, made interactive. Pick a global value and
+ * watch it flow down through the semantic alias to the component token to a live
+ * sample — the exact "global -> semantic -> component" sequence Rudiment's guide
+ * argues for. Reinforces the *why* of the indirection by making it visible.
+ *
+ * All state lives on the wrapper as CSS custom properties; a downward "flow"
+ * pulse plays on change. Dependency-free, single-instance, reduced-motion aware.
+ */
+
+const palette = [
+  { id: 'blue',   label: 'Blue',   token: 'color.blue.500',   hex: '#3B82F6' },
+  { id: 'plum',   label: 'Plum',   token: 'color.plum.500',   hex: '#6C4AB6' },
+  { id: 'coral',  label: 'Coral',  token: 'color.coral.500',  hex: '#E8573D' },
+  { id: 'sage',   label: 'Sage',   token: 'color.sage.500',   hex: '#3E6E3D' },
+] as const;
+---
+
+<section
+  class="tcn"
+  data-token-chain
+  style={`--tcn-color: ${palette[0].hex}; --tcn-radius: 10px;`}
+  aria-labelledby="tcn-title"
+>
+  <header class="tcn-head">
+    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
+      follow the value
+    </span>
+    <h3 id="tcn-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+      One change, three tiers deep.
+    </h3>
+    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+      Set a global value. It is <em>aliased</em> by a semantic token, which is <em>consumed</em> by
+      a component token, which paints the button. A rebrand touches the top tier only &mdash;
+      everything below follows.
+    </p>
+  </header>
+
+  <div class="tcn-grid">
+    <!-- ============ CONTROLS ============ -->
+    <div class="tcn-controls">
+      <div class="tcn-field">
+        <span class="tcn-label" id="tcn-color-label">Global brand color</span>
+        <div class="tcn-chip-row" role="radiogroup" aria-labelledby="tcn-color-label">
+          {palette.map((p, i) => (
+            <label class="tcn-chip" data-tcn-chip data-value={p.hex} data-token={p.token} style={`--chip: ${p.hex};`}>
+              <input type="radio" name="tcn-color" value={p.hex} checked={i === 0} data-tcn-control="color" />
+              <span class="tcn-chip-dot" aria-hidden="true"></span>
+              <span class="tcn-chip-label">{p.label}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div class="tcn-field">
+        <div class="tcn-label-row">
+          <label for="tcn-radius" class="tcn-label">Global radius &middot; <code>radius.md</code></label>
+          <output id="tcn-radius-out" for="tcn-radius" class="tcn-output">10px</output>
+        </div>
+        <input
+          id="tcn-radius"
+          type="range"
+          min="0"
+          max="20"
+          step="1"
+          value="10"
+          data-tcn-control="radius"
+          aria-describedby="tcn-radius-out"
+        />
+      </div>
+
+      <p class="tcn-note">
+        Components never reference a raw value. They ask for a role &mdash; the chain decides what it
+        resolves to.
+      </p>
+    </div>
+
+    <!-- ============ CHAIN + PREVIEW ============ -->
+    <div class="tcn-stage">
+      <ol class="tcn-chain" data-tcn-chain>
+        <li class="tcn-tier" data-tier="global">
+          <span class="tcn-tier-tag">Global</span>
+          <code class="tcn-tier-token" data-tcn-global-token>color.blue.500</code>
+          <span class="tcn-swatch" aria-hidden="true"></span>
+        </li>
+        <li class="tcn-arrow" aria-hidden="true"><span>aliased by</span></li>
+        <li class="tcn-tier" data-tier="semantic">
+          <span class="tcn-tier-tag tcn-tier-tag--plum">Semantic</span>
+          <code class="tcn-tier-token">color.brand.primary</code>
+          <span class="tcn-ref" data-tcn-global-ref>&rarr; color.blue.500</span>
+        </li>
+        <li class="tcn-arrow" aria-hidden="true"><span>consumed by</span></li>
+        <li class="tcn-tier" data-tier="component">
+          <span class="tcn-tier-tag tcn-tier-tag--sunset">Component</span>
+          <code class="tcn-tier-token">button.background</code>
+          <span class="tcn-ref">&rarr; color.brand.primary</span>
+        </li>
+      </ol>
+
+      <div class="tcn-preview">
+        <span class="tcn-preview-rule">renders</span>
+        <button type="button" class="tcn-sample-btn" tabindex="-1" aria-hidden="true">
+          <span>Save changes</span>
+        </button>
+        <span class="tcn-sample-tag" aria-hidden="true">brand</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  type Control = 'color' | 'radius';
+  const root = document.querySelector<HTMLElement>('[data-token-chain]');
+  if (root) {
+    const radiusOut = root.querySelector<HTMLOutputElement>('#tcn-radius-out')!;
+    const radiusInput = root.querySelector<HTMLInputElement>('#tcn-radius')!;
+    const globalToken = root.querySelector<HTMLElement>('[data-tcn-global-token]')!;
+    const globalRef = root.querySelector<HTMLElement>('[data-tcn-global-ref]')!;
+    const chain = root.querySelector<HTMLElement>('[data-tcn-chain]')!;
+
+    const reduceMotion =
+      typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let primed = false;
+
+    function fillTrack(input: HTMLInputElement) {
+      const min = parseFloat(input.min || '0');
+      const max = parseFloat(input.max || '100');
+      const pct = max > min ? ((parseFloat(input.value) - min) / (max - min)) * 100 : 0;
+      input.style.setProperty('--tcn-fill', `${pct}%`);
+    }
+
+    /** Replay the downward flow pulse through the three tiers. */
+    function flow() {
+      if (reduceMotion || !primed) return;
+      chain.classList.remove('tcn-flow');
+      void chain.offsetWidth;
+      chain.classList.add('tcn-flow');
+      setTimeout(() => chain.classList.remove('tcn-flow'), 900);
+    }
+
+    function syncChips(value: string) {
+      let token = 'color.blue.500';
+      root!.querySelectorAll<HTMLElement>('[data-tcn-chip]').forEach((chip) => {
+        const on = chip.dataset.value === value;
+        chip.classList.toggle('is-on', on);
+        if (on) token = chip.dataset.token ?? token;
+        if (on && primed && !reduceMotion) {
+          chip.classList.remove('tcn-pop');
+          void chip.offsetWidth;
+          chip.classList.add('tcn-pop');
+        }
+      });
+      globalToken.textContent = token;
+      globalRef.innerHTML = `&rarr; ${token}`;
+    }
+
+    function apply(control: Control, value: string) {
+      if (control === 'color') {
+        root!.style.setProperty('--tcn-color', value);
+        syncChips(value);
+      } else {
+        root!.style.setProperty('--tcn-radius', `${value}px`);
+        radiusOut.textContent = `${value}px`;
+        fillTrack(radiusInput);
+      }
+      flow();
+    }
+
+    root.addEventListener('input', (e) => {
+      const t = e.target as HTMLInputElement;
+      const ctrl = t.dataset.tcnControl as Control | undefined;
+      if (ctrl) apply(ctrl, t.value);
+    });
+
+    syncChips(getComputedStyle(root).getPropertyValue('--tcn-color').trim() || '#3B82F6');
+    fillTrack(radiusInput);
+    primed = true;
+  }
+</script>
+
+<style>
+  .tcn {
+    --tcn-color: #3b82f6;
+    --tcn-radius: 10px;
+    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
+    border: 1px solid rgba(45, 43, 85, 0.08);
+    border-radius: 22px;
+    box-shadow:
+      0 24px 50px -28px rgba(45, 43, 85, 0.28),
+      0 0 0 1px rgba(108, 74, 182, 0.04);
+    padding: clamp(1.25rem, 2.4vw, 2.5rem);
+  }
+  .tcn-head { margin-bottom: 1.5rem; }
+  .tcn-head code {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.92em;
+    color: #6c4ab6;
+  }
+
+  .tcn-grid { display: grid; gap: 2rem; }
+  @media (min-width: 880px) {
+    .tcn-grid { grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 2.5rem; align-items: start; }
+  }
+
+  /* ========== controls ========== */
+  .tcn-field { margin-bottom: 1.4rem; }
+  .tcn-label-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.45rem; }
+  .tcn-label {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6c4ab6; display: block; margin-bottom: 0.5rem;
+  }
+  .tcn-label code { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
+  .tcn-output {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-size: 0.78rem; color: #2d2b55;
+    background: rgba(108, 74, 182, 0.08); padding: 2px 8px; border-radius: 6px;
+  }
+  .tcn-note {
+    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-size: 0.78rem; color: rgba(45, 43, 85, 0.7); line-height: 1.5; margin-top: 0.5rem;
+  }
+
+  .tcn input[type='range'] {
+    width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px;
+    background: linear-gradient(90deg, var(--tcn-color) 0%, var(--tcn-color) var(--tcn-fill, 50%), rgba(108, 74, 182, 0.18) var(--tcn-fill, 50%));
+    outline: none; cursor: pointer;
+  }
+  .tcn input[type='range']::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
+    background: #fff; border: 2.5px solid var(--tcn-color);
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3); cursor: grab; transition: transform 0.15s ease;
+  }
+  .tcn input[type='range']::-webkit-slider-thumb:active { transform: scale(1.14) rotate(-7deg); cursor: grabbing; }
+  .tcn input[type='range']::-moz-range-thumb {
+    width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 2.5px solid var(--tcn-color);
+    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3); cursor: grab;
+  }
+  .tcn input[type='range']:focus-visible { outline: 2px dashed var(--tcn-color); outline-offset: 6px; }
+
+  .tcn-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tcn-chip {
+    --chip: #6c4ab6; position: relative; display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.45rem 0.85rem; border-radius: 999px; background: #fffbf5;
+    border: 1.5px solid rgba(108, 74, 182, 0.18);
+    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.78rem; font-weight: 600;
+    color: #2d2b55; cursor: pointer; transition: all 0.18s ease;
+  }
+  .tcn-chip input { position: absolute; opacity: 0; pointer-events: none; }
+  .tcn-chip:hover { border-color: rgba(108, 74, 182, 0.45); }
+  .tcn-chip:focus-within { outline: 2px dashed #6c4ab6; outline-offset: 3px; }
+  .tcn-chip.is-on { background: var(--chip); border-color: var(--chip); color: #fff; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3); }
+  .tcn-chip.tcn-pop { animation: tcn-pop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  @keyframes tcn-pop { 0% { transform: scale(1); } 45% { transform: scale(1.1) rotate(-1.5deg); } 100% { transform: scale(1); } }
+  .tcn-chip-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--chip); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4); }
+  .tcn-chip.is-on .tcn-chip-dot { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
+
+  /* ========== chain ========== */
+  .tcn-stage {
+    background: #fff; border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 18px;
+    padding: clamp(1.1rem, 2vw, 1.6rem);
+    box-shadow: 0 18px 40px -24px rgba(45, 43, 85, 0.28), 0 0 0 1px rgba(108, 74, 182, 0.05);
+  }
+  .tcn-chain { list-style: none; margin: 0; padding: 0; }
+  .tcn-tier {
+    display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
+    background: #fffbf5; border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 12px;
+    padding: 0.7rem 0.85rem; position: relative;
+  }
+  .tcn-tier-tag {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.62rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em; color: #fff; background: #3e6e3d;
+    padding: 3px 8px; border-radius: 999px; flex-shrink: 0;
+  }
+  .tcn-tier[data-tier='global'] .tcn-tier-tag { background: #2d2b55; }
+  .tcn-tier-tag--plum { background: #6c4ab6 !important; }
+  .tcn-tier-tag--sunset { background: #a24818 !important; }
+  .tcn-tier-token {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.8rem; color: #2d2b55; font-weight: 600;
+  }
+  .tcn-ref {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.72rem;
+    color: rgba(45, 43, 85, 0.55); margin-left: auto;
+  }
+  .tcn-swatch {
+    width: 22px; height: 22px; border-radius: 6px; margin-left: auto; flex-shrink: 0;
+    background: var(--tcn-color); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
+    transition: background 0.25s ease;
+  }
+  .tcn-arrow {
+    display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0 0.3rem 1rem; position: relative;
+  }
+  .tcn-arrow::before {
+    content: ''; width: 2px; height: 18px; background: rgba(108, 74, 182, 0.3); border-radius: 2px; margin-right: 0.4rem;
+  }
+  .tcn-arrow span {
+    font-family: var(--font-fraunces), Georgia, serif; font-style: italic; font-size: 0.78rem; color: #6c4ab6;
+  }
+  /* downward flow pulse: each tier lights in sequence */
+  .tcn-chain.tcn-flow .tcn-tier { animation: tcn-light 0.5s ease-out backwards; }
+  .tcn-chain.tcn-flow .tcn-tier[data-tier='global'] { animation-delay: 0s; }
+  .tcn-chain.tcn-flow .tcn-tier[data-tier='semantic'] { animation-delay: 0.16s; }
+  .tcn-chain.tcn-flow .tcn-tier[data-tier='component'] { animation-delay: 0.32s; }
+  @keyframes tcn-light {
+    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tcn-color) 45%, transparent); border-color: var(--tcn-color); }
+    100% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--tcn-color) 0%, transparent); }
+  }
+
+  /* ========== preview ========== */
+  .tcn-preview {
+    display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;
+    margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed rgba(108, 74, 182, 0.2);
+  }
+  .tcn-preview-rule {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(45, 43, 85, 0.6);
+  }
+  .tcn-sample-btn {
+    background: var(--tcn-color); color: #fff; border: 0; border-radius: var(--tcn-radius);
+    padding: 0.6rem 1.1rem; font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--tcn-color) 70%, transparent);
+    transition: background 0.25s ease, border-radius 0.25s ease, box-shadow 0.25s ease;
+  }
+  .tcn-sample-tag {
+    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.72rem;
+    color: var(--tcn-color); background: color-mix(in srgb, var(--tcn-color) 12%, transparent);
+    padding: 0.25rem 0.6rem; border-radius: calc(var(--tcn-radius) * 0.6 + 2px); transition: all 0.25s ease;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tcn-chip, .tcn-swatch, .tcn-sample-btn, .tcn-sample-tag,
+    .tcn input[type='range']::-webkit-slider-thumb { transition: none; }
+    .tcn-chip.tcn-pop, .tcn-chain.tcn-flow .tcn-tier { animation: none; }
+  }
+</style>

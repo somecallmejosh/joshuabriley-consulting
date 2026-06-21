@@ -257,13 +257,17 @@ const related = [
         </div>
 
 
-        <div class="lg:col-span-5 relative h-[400px] md:h-[480px] hidden lg:block" aria-hidden="true">
+        <div data-st-illo class="lg:col-span-5 relative h-[400px] md:h-[480px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-72 h-72 rounded-full bg-plum/10 animate-pulse-ring"></div>
           </div>
 
+          {/* Connectors drawn by hero-motion.ts, anchored to the live card positions;
+              a colored pulse travels up from the token palette into each component. */}
+          <svg data-st-conn class="absolute inset-0 w-full h-full"></svg>
 
-          <div class="absolute top-[6%] left-[2%] w-[56%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float -rotate-3">
+
+          <div data-st-comp data-st-color="#7BB47A" class="absolute top-[6%] left-[2%] w-[56%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float -rotate-3">
             <div class="flex items-center justify-between mb-3">
               <span class="inline-flex items-center gap-1.5 bg-sage/20 text-sage-deep border border-sage/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
                 <Icon name="ph:check-circle-duotone" size={14} />
@@ -276,7 +280,7 @@ const related = [
           </div>
 
 
-          <div class="absolute top-[2%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float rotate-6">
+          <div data-st-comp data-st-color="#6C4AB6" class="absolute top-[2%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float rotate-6">
             <div class="flex items-center gap-1.5">
               <span class="inline-flex items-center gap-1 bg-lemon text-navy rounded-full px-2 py-0.5 font-heading text-[0.65rem] font-bold">
                 NEW
@@ -286,7 +290,7 @@ const related = [
           </div>
 
 
-          <div class="absolute top-[38%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3.5 animate-float-slow rotate-[4deg]">
+          <div data-st-comp data-st-color="#E8573D" class="absolute top-[38%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3.5 animate-float-slow rotate-[4deg]">
             <div class="flex items-center gap-2">
               <span class="inline-flex items-center gap-1.5 bg-[#C13A22] text-white rounded-full px-3 py-1.5">
                 <Icon name="ph:sparkle-duotone" size={14} />
@@ -297,7 +301,7 @@ const related = [
           </div>
 
 
-          <div class="absolute top-[46%] left-[6%] w-[48%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float-delay -rotate-2">
+          <div data-st-comp data-st-color="#5DADE2" class="absolute top-[46%] left-[6%] w-[48%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 animate-float-delay -rotate-2">
             <div class="flex items-center gap-2 mb-2.5">
               <span class="inline-flex items-center gap-1.5 bg-sky/20 text-navy border border-sky/30 rounded-full px-2.5 py-1 font-heading text-[0.72rem] font-semibold">
                 <Icon name="ph:text-aa-duotone" size={14} />
@@ -310,7 +314,7 @@ const related = [
           </div>
 
 
-          <div class="absolute bottom-[4%] right-[4%] w-[64%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 rotate-2">
+          <div data-st-tokens class="absolute bottom-[4%] right-[4%] w-[64%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 rotate-2">
             <div class="flex items-center gap-2 mb-2.5">
               <Icon name="ph:palette-duotone" size={16} class="text-plum" />
               <span class="font-heading text-[0.7rem] font-semibold text-navy/70 uppercase tracking-wider">Tokens</span>
@@ -608,4 +612,53 @@ const related = [
       Take the free scorecard
     </Button>
   </CTABanner>
+
+  {/* Hero illustration motion: the token palette feeds the whole kit — a colored pulse
+      travels up from the tokens card into each component, which lights up as it lands. */}
+  <script>
+    import { connect, gsap } from '~/scripts/hero-motion';
+
+    const illo = document.querySelector<HTMLElement>('[data-st-illo]');
+    const svg = illo?.querySelector<SVGSVGElement>('[data-st-conn]');
+    const tokens = illo?.querySelector('[data-st-tokens]');
+    const comps = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-st-comp]')) : [];
+
+    if (svg && tokens && comps.length) {
+      const colors = comps.map((el) => el.dataset.stColor || '#6C4AB6');
+      // fan the four lines out cleanly by alternating curve sign
+      const curves = [-0.22, 0.18, -0.14, 0.24];
+      const c = connect(
+        svg,
+        comps.map((el, i) => ({
+          from: tokens,
+          to: el,
+          color: colors[i],
+          curve: curves[i % curves.length],
+          opacity: 0.85,
+        })),
+      );
+
+      if (!c.reduce) {
+        const cycle = 2.4;
+        c.links.forEach((link, i) => {
+          // pulse travels tokens -> component (default from->to direction)
+          link.addPulse({ duration: 1.3, delay: i * 0.4, repeatDelay: cycle - 1.3, size: 5, color: colors[i] });
+          // component lights up as its pulse arrives (filter only — cards already run CSS float)
+          gsap.fromTo(
+            comps[i],
+            { filter: 'brightness(1)' },
+            {
+              filter: 'brightness(1.07)',
+              duration: 0.22,
+              yoyo: true,
+              repeat: 1,
+              ease: 'power1.inOut',
+              delay: i * 0.4 + 1.15,
+              repeatDelay: cycle - 0.44,
+            },
+          );
+        });
+      }
+    }
+  </script>
 </BaseLayout>

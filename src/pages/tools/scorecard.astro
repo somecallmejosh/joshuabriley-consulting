@@ -81,7 +81,7 @@ const stepBgMap: Record<string, string> = {
         <div class="lg:col-span-6 relative">
           <div class="relative max-w-md mx-auto lg:ml-auto">
             <div class="absolute -inset-8 bg-plum/12 blob-shape-alt animate-float-slow" aria-hidden="true"></div>
-            <div class="report-paper rotate-[-1.5deg] relative z-10">
+            <div data-sc-card class="report-paper rotate-[-1.5deg] relative z-10">
               <span class="tape tl" aria-hidden="true"></span>
               <span class="tape tr" aria-hidden="true"></span>
               <div class="pl-12">
@@ -93,29 +93,29 @@ const stepBgMap: Record<string, string> = {
                   Term: ongoing · Student: <span class="font-semibold text-coral">your team</span>
                 </p>
                 <ul class="space-y-2.5 font-heading text-sm">
-                  <li class="flex items-center justify-between">
+                  <li data-sc-row class="flex items-center justify-between">
                     <span class="text-charcoal/80">01 · Component Consistency</span>
                     <span class="font-display font-bold text-plum">—</span>
                   </li>
-                  <li class="flex items-center justify-between">
+                  <li data-sc-row class="flex items-center justify-between">
                     <span class="text-charcoal/80">02 · Accessibility</span>
                     <span class="font-display font-bold text-plum">—</span>
                   </li>
-                  <li class="flex items-center justify-between">
+                  <li data-sc-row class="flex items-center justify-between">
                     <span class="text-charcoal/80">03 · Token Architecture</span>
                     <span class="font-display font-bold text-plum">—</span>
                   </li>
-                  <li class="flex items-center justify-between">
+                  <li data-sc-row class="flex items-center justify-between">
                     <span class="text-charcoal/80">04 · Documentation</span>
                     <span class="font-display font-bold text-plum">—</span>
                   </li>
-                  <li class="flex items-center justify-between">
+                  <li data-sc-row class="flex items-center justify-between">
                     <span class="text-charcoal/80">05 · Handoff Process</span>
                     <span class="font-display font-bold text-plum">—</span>
                   </li>
                 </ul>
                 <div class="mt-5 pt-4 border-t-2 border-dashed border-coral/30 flex items-end justify-between">
-                  <div>
+                  <div data-sc-final>
                     <p class="font-hand text-plum text-lg leading-none">Final grade</p>
                     <p class="font-display text-3xl font-bold text-navy">—/64</p>
                   </div>
@@ -216,6 +216,52 @@ const stepBgMap: Record<string, string> = {
       </div>
     </Container>
   </Section>
+  {/* Hero illustration motion: a looping "grading sweep" — each subject row gets a brief
+      emphasis in turn, then the final-grade block gets a small stamp pop. The static card
+      stays blank ("—") under reduced motion / no JS. */}
+  <script>
+    import { gsap, reduceMotion } from '~/scripts/hero-motion';
+
+    const card = document.querySelector<HTMLElement>('[data-sc-card]');
+    const rows = card ? Array.from(card.querySelectorAll<HTMLElement>('[data-sc-row]')) : [];
+    const final = card?.querySelector<HTMLElement>('[data-sc-final]');
+
+    if (card && rows.length && !reduceMotion()) {
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.4, defaults: { ease: 'power2.out' } });
+
+      rows.forEach((row, i) => {
+        const grade = row.querySelector<HTMLElement>('span:last-child');
+        const at = i * 0.18;
+        // soft background highlight sweeping down the row
+        tl.fromTo(
+          row,
+          { boxShadow: '0 0 0 0 rgba(108,74,182,0)' },
+          { boxShadow: '0 0 0 6px rgba(108,74,182,0.12)', duration: 0.22, yoyo: true, repeat: 1 },
+          at,
+        );
+        if (grade) {
+          // subtle pop on the grade mark (transform-safe: row has no CSS animation)
+          tl.fromTo(
+            grade,
+            { scale: 1, opacity: 0.85 },
+            { scale: 1.22, opacity: 1, duration: 0.2, yoyo: true, repeat: 1, transformOrigin: 'center' },
+            at,
+          );
+        }
+      });
+
+      if (final) {
+        // "stamp" pop on the final grade once the sweep reaches the bottom
+        const stampAt = rows.length * 0.18 + 0.15;
+        tl.fromTo(
+          final,
+          { scale: 1.15, rotation: -3 },
+          { scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(2.4)', transformOrigin: 'left center' },
+          stampAt,
+        );
+      }
+    }
+  </script>
 </BaseLayout>
 
 <style>

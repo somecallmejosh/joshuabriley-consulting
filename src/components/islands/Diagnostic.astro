@@ -221,6 +221,64 @@ const demos = [
     const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[data-dx-tab]'));
     const panels = Array.from(root.querySelectorAll<HTMLElement>('[data-dx-panel]'));
     const toggle = root.querySelector<HTMLInputElement>('[data-dx-show-issues]')!;
+    const reduceMotion =
+      typeof matchMedia === 'function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // Stagger each call-out badge by its number, so 01/02/03 pop in sequence.
+    root.querySelectorAll<HTMLElement>('[data-dx-mark]').forEach((m) => {
+      const n = parseInt(m.dataset.dxMark ?? '1', 10);
+      m.style.setProperty('--dx-delay', `${(n - 1) * 90}ms`);
+    });
+
+    // Bidirectional spotlight: hovering a finding lights its mark, and vice versa.
+    panels.forEach((panel) => {
+      panel.querySelectorAll<HTMLElement>('.dx-issues li').forEach((li) => {
+        const num = li.querySelector('.dx-issues-num')?.textContent?.trim();
+        const mark = num ? panel.querySelector<HTMLElement>(`[data-dx-mark="${num}"]`) : null;
+        if (!mark) return;
+        const on = () => {
+          li.classList.add('dx-issue-hot');
+          mark.classList.add('dx-mark-hot');
+        };
+        const off = () => {
+          li.classList.remove('dx-issue-hot');
+          mark.classList.remove('dx-mark-hot');
+        };
+        li.addEventListener('mouseenter', on);
+        li.addEventListener('mouseleave', off);
+        mark.addEventListener('mouseenter', on);
+        mark.addEventListener('mouseleave', off);
+      });
+    });
+
+    function countUp(el: HTMLElement, to: number) {
+      if (reduceMotion) {
+        el.textContent = String(to);
+        return;
+      }
+      const dur = 520;
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        el.textContent = String(Math.round(to * (1 - Math.pow(1 - t, 3))));
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    }
+
+    /** Replay the scan sweep, count-up and staggered findings for a panel. */
+    function reveal(panel: HTMLElement | undefined) {
+      if (!panel || panel.dataset.dxState !== 'issues') return;
+      const countEl = panel.querySelector<HTMLElement>('.dx-issues-count span');
+      const total = panel.querySelectorAll('.dx-issues li').length;
+      if (countEl) countUp(countEl, total);
+      if (reduceMotion) return;
+      panel.classList.remove('dx-animate');
+      void panel.offsetWidth; // restart the CSS animations
+      panel.classList.add('dx-animate');
+      setTimeout(() => panel.classList.remove('dx-animate'), 1200);
+    }
 
     function activate(id: string) {
       root!.dataset.active = id;
@@ -231,6 +289,7 @@ const demos = [
       panels.forEach((p) => {
         p.hidden = p.dataset.dxPanel !== id;
       });
+      reveal(panels.find((p) => p.dataset.dxPanel === id));
     }
 
     tabs.forEach((t) => {
@@ -240,6 +299,7 @@ const demos = [
     toggle.addEventListener('change', () => {
       const state = toggle.checked ? 'issues' : 'fixed';
       panels.forEach((p) => (p.dataset.dxState = state));
+      reveal(panels.find((p) => !p.hidden));
     });
   }
 </script>
@@ -467,11 +527,15 @@ const demos = [
      The badge absolutely positions itself, so it skips position:relative. */
   [data-dx-mark]:not(.dx-price-badge) { position: relative; }
 
-  [data-dx-state='issues'] [data-dx-mark] {
-    outline: 2px dashed #e8573d;
+  /* The dashed call-out + its number bubble are always present; the toggle
+     fades/scales them in and out so the reveal feels deliberate, not snapped.
+     A transparent outline holds its space with zero reflow when hidden. */
+  [data-dx-mark] {
+    outline: 2px dashed transparent;
     outline-offset: 3px;
+    transition: outline-color 0.3s ease;
   }
-  [data-dx-state='issues'] [data-dx-mark]::after {
+  [data-dx-mark]::after {
     content: attr(data-dx-mark);
     position: absolute;
     top: -10px; left: -10px;
@@ -486,6 +550,54 @@ const demos = [
     display: inline-flex; align-items: center; justify-content: center;
     box-shadow: 0 4px 8px -2px rgba(232, 87, 61, 0.5);
     pointer-events: none;
+    opacity: 0;
+    transform: scale(0);
+    transition:
+      transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
+      opacity 0.24s ease,
+      box-shadow 0.2s ease;
+  }
+  [data-dx-state='issues'] [data-dx-mark] { outline-color: #e8573d; }
+  [data-dx-state='issues'] [data-dx-mark]::after {
+    opacity: 1;
+    transform: scale(1);
+    transition-delay: var(--dx-delay, 0ms);
+  }
+  [data-dx-state='fixed'] [data-dx-mark]::after {
+    opacity: 0;
+    transform: scale(0);
+  }
+  /* Spotlight when a linked finding is hovered (or the mark itself). */
+  [data-dx-mark].dx-mark-hot { outline-color: #c13a22; }
+  [data-dx-state='issues'] [data-dx-mark].dx-mark-hot::after {
+    transform: scale(1.22);
+    box-shadow: 0 7px 16px -2px rgba(193, 58, 34, 0.7);
+  }
+
+  /* Diagnostic scan sweep, replayed each time issues are revealed. */
+  .dx-frame::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 -45%;
+    width: 40%;
+    z-index: 4;
+    pointer-events: none;
+    opacity: 0;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(232, 87, 61, 0.16),
+      rgba(232, 87, 61, 0.42),
+      rgba(232, 87, 61, 0.16),
+      transparent
+    );
+  }
+  .dx-panel.dx-animate .dx-frame::before { animation: dx-scan 0.95s cubic-bezier(0.4, 0, 0.2, 1); }
+  @keyframes dx-scan {
+    0% { left: -45%; opacity: 0; }
+    14% { opacity: 1; }
+    86% { opacity: 1; }
+    100% { left: 105%; opacity: 0; }
   }
 
   /* The defects (drifted radius, color, spacing, type, contrast) always
@@ -524,7 +636,36 @@ const demos = [
     padding: 0.55rem 0.7rem;
     background: #fff;
     border: 1px solid rgba(232, 87, 61, 0.15);
+    border-left-width: 3px;
     border-radius: 10px;
+    cursor: default;
+    transition:
+      background 0.2s ease,
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+  /* Severity ramp: deep coral (critical) -> coral -> sunset (minor). */
+  .dx-issues li:nth-child(1) { border-left-color: #c13a22; }
+  .dx-issues li:nth-child(2) { border-left-color: #e8573d; }
+  .dx-issues li:nth-child(3) { border-left-color: #ff8e53; }
+  .dx-issues li.dx-issue-hot {
+    background: rgba(232, 87, 61, 0.06);
+    box-shadow:
+      0 0 0 2px rgba(232, 87, 61, 0.25),
+      0 10px 20px -12px rgba(232, 87, 61, 0.5);
+    transform: translateX(3px);
+  }
+
+  /* Staggered findings reveal, replayed by .dx-animate on the panel. */
+  .dx-panel.dx-animate .dx-issues li {
+    animation: dx-item-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+  }
+  .dx-panel.dx-animate .dx-issues li:nth-child(1) { animation-delay: 0.14s; }
+  .dx-panel.dx-animate .dx-issues li:nth-child(2) { animation-delay: 0.24s; }
+  .dx-panel.dx-animate .dx-issues li:nth-child(3) { animation-delay: 0.34s; }
+  @keyframes dx-item-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
   }
   .dx-issues-num {
     width: 22px; height: 22px;
@@ -580,6 +721,10 @@ const demos = [
     .dx-tab,
     .dx-toggle-track,
     .dx-toggle-thumb,
-    .dx-mark { transition: none; }
+    [data-dx-mark],
+    [data-dx-mark]::after,
+    .dx-issues li { transition: none; }
+    .dx-panel.dx-animate .dx-frame::before,
+    .dx-panel.dx-animate .dx-issues li { animation: none; }
   }
 </style>

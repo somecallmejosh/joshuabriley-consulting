@@ -267,7 +267,7 @@ const stepBgMap: Record<string, string> = {
         </div>
 
 
-        <div class="lg:col-span-5 relative h-[420px] md:h-[480px] hidden lg:block" aria-hidden="true">
+        <div data-wf-illo class="lg:col-span-5 relative h-[420px] md:h-[480px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
           </div>
@@ -276,7 +276,7 @@ const stepBgMap: Record<string, string> = {
           </div>
 
 
-          <div class="absolute top-[18%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float -rotate-3">
+          <div data-wf-design class="absolute top-[18%] left-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float -rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
                 <Icon name="ph:figma-logo-duotone" size={18} class="text-plum" />
@@ -291,7 +291,7 @@ const stepBgMap: Record<string, string> = {
           </div>
 
 
-          <div class="absolute bottom-[18%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float-delay rotate-3">
+          <div data-wf-code class="absolute bottom-[18%] right-[2%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-40 animate-float-delay rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-sunset/15 flex items-center justify-center">
                 <Icon name="ph:code-duotone" size={18} class="text-sunset" />
@@ -300,26 +300,16 @@ const stepBgMap: Record<string, string> = {
             </div>
             <div class="font-mono text-[10px] text-charcoal/70 leading-relaxed">
               <div>&lt;Button</div>
-              <div class="pl-2 text-[#C13A22]">variant="primary"</div>
+              <div data-wf-value class="pl-2 text-[#C13A22]">variant="primary"</div>
               <div>/&gt;</div>
             </div>
           </div>
 
+          {/* The design→code connector is drawn by hero-motion.ts, anchored to the live cards;
+              the token chip rides it from the Figma frame into the code. */}
+          <svg data-wf-conn class="absolute inset-0 w-full h-full"></svg>
 
-          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 480" fill="none">
-            <path
-              d="M 110 150 C 180 200, 220 280, 290 340"
-              stroke="#6C4AB6"
-              stroke-width="3"
-              stroke-linecap="round"
-              style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite"
-            />
-            <circle cx="110" cy="150" r="5" fill="#6C4AB6" />
-            <circle cx="290" cy="340" r="5" fill="#E8573D" />
-          </svg>
-
-
-          <div class="absolute top-[44%] left-[38%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-slide-chip">
+          <div data-wf-chip class="absolute top-[44%] left-[38%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 z-10">
             <div class="w-2.5 h-2.5 rounded-full bg-coral"></div>
             <span class="font-heading text-[11px] font-semibold text-navy">token.color.primary</span>
           </div>
@@ -331,7 +321,7 @@ const stepBgMap: Record<string, string> = {
           </div>
 
 
-          <div class="absolute bottom-[4%] left-[18%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-2.5 flex items-center gap-2 animate-float -rotate-2">
+          <div data-wf-spec class="absolute bottom-[4%] left-[18%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-2.5 flex items-center gap-2 animate-float -rotate-2">
             <Icon name="ph:check-circle-duotone" size={18} class="text-sage" />
             <span class="font-heading text-[11px] font-semibold text-navy">Spec matches</span>
           </div>
@@ -583,22 +573,63 @@ const stepBgMap: Record<string, string> = {
       Take the free scorecard
     </Button>
   </CTABanner>
+  {/* Hero illustration motion: the token chip carries one decision from the Figma frame into
+      the code, where the spec then matches. */}
+  <script>
+    import { connect, gsap } from '~/scripts/hero-motion';
+
+    const illo = document.querySelector<HTMLElement>('[data-wf-illo]');
+    const svg = illo?.querySelector<SVGSVGElement>('[data-wf-conn]');
+    const design = illo?.querySelector('[data-wf-design]');
+    const code = illo?.querySelector('[data-wf-code]');
+    const chip = illo?.querySelector<HTMLElement>('[data-wf-chip]');
+    const value = illo?.querySelector('[data-wf-value]');
+    const spec = illo?.querySelector('[data-wf-spec]');
+
+    if (illo && svg && design && code && chip) {
+      const c = connect(svg, [{ from: design, to: code, color: '#6C4AB6', curve: 0.12, opacity: 0.85 }]);
+
+      // anchor = card center expressed in the illustration's own coordinate box
+      const anchor = (el: Element) => {
+        const a = el.getBoundingClientRect();
+        const o = illo.getBoundingClientRect();
+        return { x: a.left + a.width / 2 - o.left, y: a.top + a.height / 2 - o.top };
+      };
+
+      let tl: gsap.core.Timeline | null = null;
+      const build = () => {
+        tl?.kill();
+        const d = anchor(design);
+        const e = anchor(code);
+        gsap.set(chip, { xPercent: -50, yPercent: -50, left: 0, top: 0 });
+        if (c.reduce) {
+          // park the chip mid-handoff — a complete, legible still
+          gsap.set(chip, { x: (d.x + e.x) / 2, y: (d.y + e.y) / 2, opacity: 1 });
+          return;
+        }
+        tl = gsap.timeline({ repeat: -1, repeatDelay: 0.9, defaults: { ease: 'power1.inOut' } });
+        tl.set(chip, { x: d.x, y: d.y, opacity: 0 })
+          .to(chip, { opacity: 1, duration: 0.25 }, 0)
+          .to(chip, { x: e.x, y: e.y, duration: 1.5 }, 0)
+          .to(chip, { opacity: 0, duration: 0.25 }, 1.3);
+        if (value) {
+          tl.fromTo(value, { color: '#C13A22' }, { color: '#E8573D', duration: 0.18, yoyo: true, repeat: 1 }, 1.35);
+        }
+        if (spec) {
+          tl.fromTo(spec, { filter: 'brightness(1)' }, { filter: 'brightness(1.12)', duration: 0.22, yoyo: true, repeat: 1 }, 1.45);
+        }
+      };
+      build();
+      let raf = 0;
+      window.addEventListener('resize', () => {
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(build);
+      });
+    }
+  </script>
 </BaseLayout>
 
 <style>
-  @keyframes dash-flow {
-    to {
-      stroke-dashoffset: -40;
-    }
-  }
-  @keyframes slide-chip {
-    0% { transform: translateX(-8px); opacity: 0.7; }
-    50% { transform: translateX(8px); opacity: 1; }
-    100% { transform: translateX(-8px); opacity: 0.7; }
-  }
-  .animate-slide-chip {
-    animation: slide-chip 4s ease-in-out infinite;
-  }
   .dot-paper {
     background-image: radial-gradient(rgba(108, 74, 182, 0.18) 1.3px, transparent 1.3px);
     background-size: 24px 24px;

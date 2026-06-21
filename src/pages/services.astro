@@ -122,19 +122,20 @@ const process = [
           </div>
         </div>
 
-        {/* Three engagements illustration */}
-        <div class="lg:col-span-5 relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
+        {/* Three engagements illustration — an ascending progression: Audit (look) →
+            Starter (build) → Workflow (operate). Each tier rises and grows; a single
+            pulse travels the chain (motion + connectors by hero-motion.ts). */}
+        <div data-se-illo class="lg:col-span-5 relative h-[380px] md:h-[460px] hidden lg:block" aria-hidden="true">
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="w-[22rem] h-[22rem] rounded-full border-2 border-dashed border-coral/25 animate-spin-slow"></div>
           </div>
 
-          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 460" fill="none">
-            <path d="M 110 110 C 160 170, 200 200, 230 230" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
-            <path d="M 230 230 C 200 280, 170 320, 130 360" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.5s" />
-          </svg>
+          {/* Connectors drawn by hero-motion.ts, anchored to the live card borders:
+              Audit → Starter (coral) → Workflow (plum). */}
+          <svg data-se-conn class="absolute inset-0 w-full h-full"></svg>
 
-          {/* Audit card */}
-          <div class="absolute top-[6%] left-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float -rotate-3">
+          {/* Audit card — lowest, smallest (look) */}
+          <div data-se-step class="absolute bottom-[8%] left-[2%] bg-white rounded-2xl shadow-lg border border-charcoal/5 p-4 w-40 animate-float -rotate-3">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-coral/15 flex items-center justify-center">
@@ -151,8 +152,8 @@ const process = [
             </div>
           </div>
 
-          {/* Starter card */}
-          <div class="absolute top-[40%] right-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float-delay rotate-3">
+          {/* Starter card — middle tier (build) */}
+          <div data-se-step class="absolute top-[36%] left-[28%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float-delay rotate-2">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-plum/15 flex items-center justify-center">
@@ -169,8 +170,8 @@ const process = [
             </div>
           </div>
 
-          {/* Workflow card */}
-          <div class="absolute bottom-[8%] left-[10%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-44 animate-float-slow -rotate-2">
+          {/* Workflow card — highest, largest (operate) */}
+          <div data-se-step class="absolute top-[3%] right-[2%] bg-white rounded-2xl shadow-2xl border border-charcoal/5 p-4 w-48 animate-float-slow rotate-3">
             <div class="flex items-center justify-between mb-3">
               <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-sky/15 flex items-center justify-center">
@@ -392,4 +393,42 @@ const process = [
       Or send a note
     </Button>
   </CTABanner>
+
+  {/* Hero illustration motion: a single pulse climbs the chain Audit → Starter → Workflow,
+      lighting each tier as it arrives (filter only — cards already run their CSS float). */}
+  <script>
+    import { connect, gsap } from '~/scripts/hero-motion';
+
+    const illo = document.querySelector<HTMLElement>('[data-se-illo]');
+    const svg = illo?.querySelector<SVGSVGElement>('[data-se-conn]');
+    const steps = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-se-step]')) : [];
+
+    if (svg && steps.length === 3) {
+      const [audit, starter, workflow] = steps;
+      const c = connect(svg, [
+        { from: audit, to: starter, color: '#E8573D', curve: -0.18, opacity: 0.85 },
+        { from: starter, to: workflow, color: '#6C4AB6', curve: 0.18, opacity: 0.85 },
+      ]);
+
+      if (!c.reduce) {
+        const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.6 });
+        // brightness pop when the pulse reaches a tier (transform-safe)
+        // fromTo with an explicit brightness(1) base — tweening filter from `none`
+        // makes GSAP interpolate from brightness(0), i.e. a black flash.
+        const pop = (el: HTMLElement, at: number) =>
+          tl.fromTo(
+            el,
+            { filter: 'brightness(1)' },
+            { filter: 'brightness(1.07)', duration: 0.18, yoyo: true, repeat: 1, ease: 'power1.inOut', immediateRender: false },
+            at,
+          );
+
+        tl.add(c.links[0].addPulse({ paused: true, duration: 1.1, size: 5, color: '#E8573D' }), 0);
+        pop(starter, 1.0);
+        tl.add(c.links[1].addPulse({ paused: true, duration: 1.1, size: 5, color: '#6C4AB6' }), 1.2);
+        pop(workflow, 2.2);
+        pop(audit, 0.05);
+      }
+    }
+  </script>
 </BaseLayout>

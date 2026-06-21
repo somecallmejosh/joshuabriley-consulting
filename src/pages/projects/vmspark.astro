@@ -4,6 +4,10 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import ProofPanel from '~/components/patterns/ProofPanel.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import Diagnostic from '~/components/islands/Diagnostic.astro';
+import RoiCalculator from '~/components/islands/RoiCalculator.astro';
 
 const title = 'VMSpark — Joshua Briley';
 const description =
@@ -133,31 +137,23 @@ const outcomeStats = [
     rotate: '0.3deg',
   },
 ];
+
+const proof = [
+  { label: 'Skills proven', tone: 'plum' as const, items: ['CRUD Development', 'Accessible component APIs', 'Frontend architecture', 'UI/UX Design', 'Style Guide Documentation', 'Training'] },
+  { label: 'Stack', tone: 'navy' as const, items: ['Ruby on Rails', 'Stimulus.js', 'Design tokens', 'Modern CSS'] },
+  { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
+  { label: 'Outcomes', tone: 'coral' as const, items: ['Increase in sales conversion', 'Increase customer retention', 'Increase usage by existing customers'] },
+];
 ---
 
 <BaseLayout title={title} description={description}>
 
-  <section class="relative overflow-hidden pt-16 pb-20 md:pt-24 md:pb-28">
-    <div
-      class="absolute top-14 right-[6%] w-20 h-20 bg-coral/30 blob-shape animate-float opacity-70"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="absolute top-40 left-[4%] w-12 h-12 bg-plum/20 rounded-full animate-float-delay"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="absolute bottom-20 right-[18%] w-14 h-14 bg-lemon/60 blob-shape animate-float-slow"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="absolute bottom-24 left-[10%] w-9 h-9 bg-sunset/20 rounded-full animate-float"
-      aria-hidden="true"
-    ></div>
+  <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+    <span class="hero-index" aria-hidden="true">05</span>
 
-    <div class="max-w-4xl mx-auto px-6 relative z-10">
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
       <nav
-        class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70"
+        class="mb-12 flex items-center gap-2 font-heading text-sm text-charcoal/60"
         aria-label="Breadcrumb"
       >
         <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
@@ -165,117 +161,59 @@ const outcomeStats = [
         <span class="text-navy">VMSpark</span>
       </nav>
 
-      <article class="shell-card p-8 md:p-14" style="transform: rotate(-0.4deg)">
-        <span
-          class="tape"
-          style="top: -14px; left: 10%; transform: rotate(-6deg)"
-          aria-hidden="true"
-        ></span>
-        <span
-          class="tape"
-          style="top: -14px; right: 10%; transform: rotate(5deg)"
-          aria-hidden="true"
-        ></span>
-
-        <div
-          class="absolute top-8 right-8 hidden md:block text-[#C13A22] paper-stamp"
-          aria-hidden="true"
-        >
-          Shipped&nbsp;·&nbsp;In&nbsp;production
-        </div>
-
-        <div class="relative text-center">
-          <div class="project-logo-tag">
-            <img src="/images/logos/vmspark.svg" alt="VMSpark logo" />
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="mb-7 flex items-center gap-3">
+            <img src="/images/logos/vmspark.svg" alt="VMSpark logo" class="hero-logo-img" />
+            <span class="h-4 w-px bg-charcoal/20" aria-hidden="true"></span>
+            <span class="font-heading text-[0.7rem] uppercase tracking-[0.24em] text-plum/70">Case study no. 05</span>
           </div>
 
-          <div
-            class="inline-flex items-center gap-2 bg-coral/10 text-[#C13A22] px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider"
-          >
-            <Icon name="ph:browsers-duotone" size={18} />
-            Case study &middot; File no. 05
-          </div>
+          <p class="marker-label text-2xl md:text-3xl mb-5">from the workbench —</p>
 
-          <p class="marker-label text-2xl md:text-3xl mb-4">from the workbench —</p>
-
-          <h1
-            class="font-display text-4xl sm:text-5xl md:text-6xl font-semibold text-navy leading-[1.05] tracking-tight mb-6"
-          >
+          <h1 class="font-display font-semibold text-navy leading-[1.04] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 3.75rem);">
             A Rails shell,
             <br />
             <span class="relative inline-block">
               rebuilt for 2026
-              <svg
-                class="absolute -bottom-3 left-0 w-full"
-                viewBox="0 0 520 14"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path
-                  d="M3 9 Q 130 2 260 9 Q 390 16 517 7"
-                  stroke="#E8573D"
-                  stroke-width="3"
-                  stroke-linecap="round"
-                  opacity="0.55"
-                />
+              <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 520 14" fill="none" aria-hidden="true">
+                <path d="M3 9 Q 130 2 260 9 Q 390 16 517 7" stroke="#E8573D" stroke-width="3" stroke-linecap="round" opacity="0.55" />
               </svg>
-            </span>
-            <span class="text-coral">.</span>
+            </span><span class="text-coral">.</span>
           </h1>
 
-          <p
-            class="text-lg md:text-xl text-charcoal/70 max-w-2xl mx-auto font-body leading-relaxed mb-10"
-          >
-            A shell redesign for <WavyUnderline>VMSpark</WavyUnderline> — the multi-tenant
-            pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+
-            ATS providers — raising the visual caliber of the admin app without touching the
-            pipeline underneath.
+          <p class="mt-8 text-lg md:text-xl text-charcoal/75 max-w-xl font-body leading-relaxed">
+            A shell redesign for VMSpark — the multi-tenant pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+ ATS providers — raising the visual caliber of the admin app without touching the pipeline underneath.
           </p>
-
-          <div class="border-t border-dashed border-coral/25 pt-6 mt-2">
-            <dl
-              class="grid grid-cols-2 md:grid-cols-4 gap-6 text-left md:text-center"
-            >
-              <div>
-                <dt
-                  class="font-heading text-[0.7rem] uppercase tracking-widest text-[#C13A22] mb-1"
-                >
-                  Role
-                </dt>
-                <dd class="font-display text-lg text-navy font-semibold">Design + Eng</dd>
-              </div>
-              <div>
-                <dt
-                  class="font-heading text-[0.7rem] uppercase tracking-widest text-[#C13A22] mb-1"
-                >
-                  Client
-                </dt>
-                <dd class="font-display text-lg text-navy font-semibold">VMSpark</dd>
-              </div>
-              <div>
-                <dt
-                  class="font-heading text-[0.7rem] uppercase tracking-widest text-[#C13A22] mb-1"
-                >
-                  Stack
-                </dt>
-                <dd class="font-display text-lg text-navy font-semibold">
-                  Rails &middot; Hotwire
-                </dd>
-              </div>
-              <div>
-                <dt
-                  class="font-heading text-[0.7rem] uppercase tracking-widest text-[#C13A22] mb-1"
-                >
-                  Focus
-                </dt>
-                <dd class="font-display text-lg text-navy font-semibold">
-                  Shell &middot; Tokens
-                </dd>
-              </div>
-            </dl>
-          </div>
         </div>
-      </article>
+
+        <aside class="hero-rail" aria-label="Project details">
+          <dl>
+            <div>
+              <dt>Role</dt>
+              <dd>Design + Eng</dd>
+            </div>
+            <div>
+              <dt>Client</dt>
+              <dd>VMSpark</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Rails &middot; Hotwire</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Shell &middot; Tokens</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="pb-4 md:pb-8 relative" aria-label="Project receipts">
+    <div class="max-w-4xl mx-auto px-6">
+      <ProofPanel sections={proof} />
     </div>
   </section>
 
@@ -375,6 +313,17 @@ const outcomeStats = [
 
 
       <div
+        class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-x-6 gap-y-8 bg-white rounded-2xl p-7 md:p-8 border border-charcoal/5 shadow-sm"
+        style="transform: rotate(-0.2deg)"
+      >
+        <Metric value="350" label="ERB templates inventoried" tone="plum" />
+        <Metric value="8+" label="button styles, one concept" tone="coral" />
+        <Metric value="10+" label="form-element styles" tone="sunset" />
+        <Metric value="~40" label="views bypassing the tokens" tone="sky" />
+      </div>
+
+
+      <div
         class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
         style="transform: rotate(-0.3deg)"
       >
@@ -449,6 +398,18 @@ const outcomeStats = [
           views to route through it.
         </p>
       </div>
+    </div>
+
+    <div class="max-w-5xl mx-auto px-6 mt-16 md:mt-20">
+      <div class="flex items-start gap-3 mb-6">
+        <Icon name="ph:cursor-click-duotone" size={26} class="text-plum mt-1 flex-shrink-0" />
+        <p class="text-charcoal/75 leading-relaxed font-body max-w-2xl">
+          The VMSpark audit was a ~700-line document. Here is the same idea you can poke at: pick a
+          screen, toggle the call-outs on and off, and hover a finding to spotlight the exact drift
+          it flags &mdash; the kind of pass that started this whole redesign.
+        </p>
+      </div>
+      <Diagnostic />
     </div>
   </section>
 
@@ -741,6 +702,28 @@ const outcomeStats = [
           </ul>
         </div>
       </div>
+    </div>
+  </section>
+
+
+  <section class="py-16 md:py-20 relative">
+    <div
+      class="absolute top-10 right-6 w-20 h-20 bg-sunset/15 blob-shape animate-float-slow"
+      aria-hidden="true"
+    ></div>
+    <div class="max-w-5xl mx-auto px-6 relative z-10">
+      <div class="mb-8 text-center">
+        <p class="marker-label text-2xl md:text-3xl text-coral mb-1">the cost of the mess &mdash;</p>
+        <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold leading-tight">
+          What the sprawl was quietly costing
+        </h2>
+        <p class="mt-3 text-charcoal/75 font-body max-w-2xl mx-auto leading-relaxed">
+          Ten input styles and forty token-bypassing views never land on one invoice &mdash; which
+          is exactly why they survive. Put a team&rsquo;s shape into the model and watch the drift
+          add up to the figure a disciplined system reclaims.
+        </p>
+      </div>
+      <RoiCalculator />
     </div>
   </section>
 
