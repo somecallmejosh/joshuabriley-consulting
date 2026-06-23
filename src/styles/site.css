@@ -158,6 +158,11 @@ header .mobile-menu a[aria-current='page']::before {
   height: 30px;
   font-size: 0.95rem;
 }
+.logo-monogram-lg {
+  width: 58px;
+  height: 58px;
+  font-size: 1.6rem;
+}
 .card-hover {
   transition:
     transform 0.3s ease,
@@ -697,19 +702,22 @@ header .mobile-menu a[aria-current='page']::before {
   }
 }
 
-/* Blog markdown tables — recipe-card treatment */
+/* Blog markdown tables — warm editorial treatment.
+   Whimsy is kept to the soft peach header wash + italic Fraunces heads; the body
+   stays clean (hairline rules, no zebra/dashes/blob-bullets) so it reads as a
+   considered data table rather than a scrapbook sticker. */
 .prose-whimsy table {
   width: 100%;
   border-collapse: collapse;
   margin: 2.5rem 0;
-  font-size: 0.98rem;
-  line-height: 1.55;
+  font-size: 0.95rem;
+  line-height: 1.6;
   color: #2e2e30;
-  background: #fffdf9;
-  border: 1.5px solid rgba(232, 87, 61, 0.18);
-  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(45, 43, 85, 0.1);
+  border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 18px 40px -28px rgba(45, 43, 85, 0.28);
+  box-shadow: 0 12px 32px -26px rgba(45, 43, 85, 0.22);
 }
 .prose-whimsy table code {
   font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
@@ -730,42 +738,27 @@ header .mobile-menu a[aria-current='page']::before {
   margin: 0;
 }
 .prose-whimsy thead {
-  background: linear-gradient(135deg, #fde68a 0%, #ffe8d6 100%);
+  background: rgba(255, 232, 214, 0.45);
 }
 .prose-whimsy thead th {
   font-family: var(--font-fraunces), Georgia, serif;
   font-weight: 600;
   font-style: italic;
   color: #2d2b55;
-  font-size: 1.05rem;
-  padding: 1rem 1.25rem;
-  border-bottom: 2px dashed rgba(232, 87, 61, 0.45);
+  font-size: 0.95rem;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid rgba(45, 43, 85, 0.12);
 }
 .prose-whimsy tbody td {
-  padding: 1rem 1.25rem;
-  border-bottom: 1px dashed rgba(45, 43, 85, 0.12);
+  padding: 0.8rem 1.25rem;
+  border-bottom: 1px solid rgba(45, 43, 85, 0.07);
 }
 .prose-whimsy tbody tr:last-child td {
   border-bottom: 0;
 }
-.prose-whimsy tbody tr:nth-child(even) {
-  background: rgba(255, 232, 214, 0.35);
-}
 .prose-whimsy tbody td:first-child {
   font-weight: 600;
   color: #2d2b55;
-  position: relative;
-  padding-left: 2rem;
-}
-.prose-whimsy tbody td:first-child::before {
-  content: '';
-  position: absolute;
-  left: 0.85rem;
-  top: 1.35rem;
-  width: 0.55rem;
-  height: 0.55rem;
-  background: #e8573d;
-  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
 }
 
 @media (max-width: 640px) {
@@ -781,11 +774,20 @@ header .mobile-menu a[aria-current='page']::before {
   }
   .prose-whimsy table tr {
     margin-bottom: 1rem;
-    padding: 0.5rem 0;
+    padding: 0.5rem 0 0.75rem;
+    border-bottom: 1px solid rgba(45, 43, 85, 0.08);
+  }
+  .prose-whimsy table tr:last-child {
+    margin-bottom: 0;
+    border-bottom: 0;
   }
   .prose-whimsy table td {
-    padding: 0.4rem 1rem !important;
+    padding: 0.3rem 1.25rem !important;
     border: 0 !important;
+  }
+  .prose-whimsy table td:first-child {
+    font-size: 1.02rem;
+    padding-top: 0.5rem !important;
   }
 }
 
@@ -805,6 +807,12 @@ header .mobile-menu a[aria-current='page']::before {
     gap: 4rem;
     align-items: start;
   }
+}
+
+/* Hero main column — kept above the oversized chapter-numeral watermark. */
+.hero-main {
+  position: relative;
+  z-index: 1;
 }
 
 .hero-wordmark {

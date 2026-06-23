@@ -11,7 +11,20 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+
+// Sibling posts for the "keep reading" footer — most recent, excluding this one.
+const morePosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 2)
+  .map((p) => ({
+    id: p.id,
+    title: p.data.title,
+    description: p.data.description,
+    category: p.data.category,
+    readMinutes: p.data.readMinutes,
+  }));
 ---
 
 <BlogPost
@@ -22,6 +35,8 @@ const { Content } = await render(post);
   date={post.data.date}
   readMinutes={post.data.readMinutes}
   pathname={`/blog/${post.id}/`}
+  headings={headings}
+  morePosts={morePosts}
 >
   <Content />
 </BlogPost>

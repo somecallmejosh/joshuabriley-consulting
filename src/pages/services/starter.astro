@@ -11,6 +11,7 @@ import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
 import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
 import CardGrid from '~/components/patterns/CardGrid.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
@@ -92,11 +93,11 @@ const deliverables = [
 ];
 
 const accentMap: Record<string, { text: string; bg: string }> = {
-  coral: { text: 'text-coral', bg: 'bg-coral/10' },
+  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10' },
   plum: { text: 'text-plum', bg: 'bg-plum/10' },
-  sunset: { text: 'text-sunset', bg: 'bg-sunset/10' },
-  sage: { text: 'text-sage', bg: 'bg-sage/20' },
-  sky: { text: 'text-sky', bg: 'bg-sky/15' },
+  sunset: { text: 'text-sunset-deep', bg: 'bg-sunset/10' },
+  sage: { text: 'text-sage-deep', bg: 'bg-sage/20' },
+  sky: { text: 'text-sky-deep', bg: 'bg-sky/15' },
 };
 
 const components = [
@@ -158,13 +159,6 @@ const process = [
     body: 'Repository delivery with a live walk-through for your team — architecture, conventions, and how to extend it without breaking it.',
   },
 ];
-
-const stepBgMap: Record<string, string> = {
-  coral: 'bg-[#C13A22] shadow-coral/20',
-  plum: 'bg-plum shadow-plum/20',
-  sunset: 'bg-sunset-deep shadow-sunset/20',
-  sage: 'bg-sage-deep shadow-sage/20',
-};
 
 const related = [
   {
@@ -477,9 +471,7 @@ const related = [
       <div class="space-y-6">
         {process.map((step) => (
           <div class="flex gap-5">
-            <div class={`w-14 h-14 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg`}>
-              {step.n}
-            </div>
+            <CardNumber n={Number(step.n)} tone={step.tone as 'coral' | 'plum' | 'sunset' | 'sage'} size="lg" inline />
             <Card variant="paper" tilt={0} class="flex-1">
               <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
               <Text tone="muted">{step.body}</Text>
@@ -608,7 +600,7 @@ const related = [
     <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
       Book an intro call
     </Button>
-    <Button class="hover:underline" variant="text"  iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+    <Button variant="text"  iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
       Take the free scorecard
     </Button>
   </CTABanner>

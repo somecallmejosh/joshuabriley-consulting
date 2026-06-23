@@ -11,6 +11,7 @@ import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
 import Card from '~/components/card/Card.astro';
+import CardNumber from '~/components/card/CardNumber.astro';
 import CardGrid from '~/components/patterns/CardGrid.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
@@ -182,13 +183,6 @@ const process = [
     body: "We meet, I walk your team through it, answer questions, and make sure the recommendations actually land somewhere they'll get used.",
   },
 ];
-
-const stepBgMap: Record<string, string> = {
-  coral: 'bg-[#C13A22] shadow-coral/20',
-  plum: 'bg-plum shadow-plum/20',
-  sunset: 'bg-sunset-deep shadow-sunset/20',
-  sage: 'bg-sage-deep shadow-sage/20',
-};
 
 // Testimonials
 const testimonials = [
@@ -465,20 +459,12 @@ const testimonials = [
                 >
                   <Icon name={d.icon} size={28} class={t.iconClass} />
                 </div>
-                <h3
-                  class={`font-display text-xl font-semibold mb-2 ${
-                    isNavy ? 'text-white' : 'text-navy'
-                  }`}
-                >
+                <Heading level={3} visual="h3" tone={isNavy ? 'white' : 'navy'} class="mb-2">
                   {d.title}
-                </h3>
-                <p
-                  class={`font-body leading-relaxed text-sm ${
-                    isNavy ? 'text-white/75' : 'text-charcoal/70'
-                  }`}
-                >
+                </Heading>
+                <Text size="sm" tone={isNavy ? 'whiteMuted' : 'muted'}>
                   {d.body}
-                </p>
+                </Text>
               </div>
             </Card>
           );
@@ -511,8 +497,8 @@ const testimonials = [
                   <Icon name={s.icon} size={24} class={t.iconClass} />
                 </div>
                 <div>
-                  <h3 class="font-display text-lg font-semibold text-navy mb-1" set:html={s.title}></h3>
-                  <p class="text-charcoal/70 font-body text-sm leading-relaxed" set:html={s.body}></p>
+                  <Heading level={3} visual="h3" class="mb-1"><Fragment set:html={s.title} /></Heading>
+                  <Text size="sm" tone="muted"><Fragment set:html={s.body} /></Text>
                 </div>
               </li>
             );
@@ -536,11 +522,7 @@ const testimonials = [
       <div class="space-y-6">
         {process.map((step) => (
           <div class="flex gap-5">
-            <div
-              class={`w-14 h-14 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-heading font-bold text-lg flex-shrink-0 shadow-lg`}
-            >
-              {step.n}
-            </div>
+            <CardNumber n={Number(step.n)} tone={step.tone as 'coral' | 'plum' | 'sunset' | 'sage'} size="lg" inline />
             <Card variant="paper" tilt={step.tilt} class="flex-1">
               <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
               <Text tone="muted">{step.body}</Text>
@@ -634,7 +616,7 @@ const testimonials = [
     >
       Book an intro call
     </Button>
-    <Button class="hover:underline" variant="text"  iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+    <Button variant="text"  iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
       Take the free scorecard
     </Button>
   </CTABanner>

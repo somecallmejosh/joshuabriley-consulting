@@ -34,11 +34,11 @@ const Tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = `h${level}` as any;
 
 const visualStyles: Record<HeadingVisual, string> = {
   'display-xl':
-    'font-display text-5xl sm:text-6xl md:text-7xl font-semibold leading-[1.05] tracking-tight',
+    'font-display text-5xl sm:text-6xl md:text-7xl font-semibold leading-[1.05] tracking-tight text-balance',
   'display-lg':
     'font-display text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.1] tracking-tight',
   'display-md':
-    'font-display text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] tracking-tight text-balance',
+    'font-display text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] tracking-tight',
   h1: 'font-display text-4xl md:text-5xl font-semibold leading-tight',
   h2: 'font-display text-3xl md:text-4xl font-semibold leading-tight',
   h3: 'font-heading text-xl md:text-2xl font-semibold leading-snug',
@@ -62,7 +62,6 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
     tones[tone],
     align === 'center' && 'text-center',
     balance && 'text-balance',
-    'text-balance',
     className,
   )}
 >

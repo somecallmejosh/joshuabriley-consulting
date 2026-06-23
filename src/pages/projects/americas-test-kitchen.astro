@@ -2,7 +2,6 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
@@ -135,7 +134,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
   </Fragment>
 
   <div class="corkboard">
-    <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+    <section class="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
       <span class="hero-index" aria-hidden="true">02</span>
 
       <div class="max-w-5xl mx-auto px-6 relative z-10">
@@ -202,7 +201,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="flex items-center gap-3 mb-6">
           <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
-          <Heading level={2} visual="h2">On the menu</Heading>
+          <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold">On the menu</h2>
         </div>
         <div class="flex flex-wrap gap-3">
           {onMenu.map((item) => (
@@ -233,7 +232,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
           <span class="step-num" aria-hidden="true">01</span>
           <div>
             <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step one</p>
-            <Heading level={2} visual="display-md">The core architecture problem</Heading>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">The core architecture problem</h2>
           </div>
         </div>
 
@@ -297,7 +296,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
           <span class="step-num" aria-hidden="true">02</span>
           <div>
             <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step two</p>
-            <Heading level={2} visual="display-md">Library decisions in practice</Heading>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">Library decisions in practice</h2>
           </div>
         </div>
 
@@ -380,7 +379,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
           <span class="step-num" aria-hidden="true">03</span>
           <div>
             <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step three</p>
-            <Heading level={2} visual="display-md">Accessibility across every surface</Heading>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">Accessibility across every surface</h2>
           </div>
         </div>
 
@@ -428,7 +427,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
           <span class="step-num" aria-hidden="true">04</span>
           <div>
             <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">Step four</p>
-            <Heading level={2} visual="display-md">What a shared library enables at scale</Heading>
+            <h2 class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight">What a shared library enables at scale</h2>
           </div>
         </div>
 
@@ -476,7 +475,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
       <div class="max-w-4xl mx-auto px-6 relative z-10">
         <div class="text-center mb-10">
           <p class="marker-label text-2xl md:text-3xl text-coral mb-1">tasted &amp; approved &mdash;</p>
-          <Heading level={2} visual="h2" align="center">What Fran said</Heading>
+          <h2 class="font-display text-2xl md:text-3xl text-navy font-semibold text-center">What Fran said</h2>
         </div>
 
         <figure class="card-base card-sticky rot-2 max-w-2xl mx-auto p-8 md:p-12">

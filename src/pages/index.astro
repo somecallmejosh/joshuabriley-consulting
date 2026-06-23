@@ -17,31 +17,43 @@ import Link from '~/components/primitives/Link.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
 import Card from '~/components/card/Card.astro';
+import Metric from '~/components/patterns/Metric.astro';
 
+// The four proofs the homepage exists to make unmistakable: it looks excellent,
+// it is built correctly, it scales as a system, and it earns its place in the
+// business. Every claim below is backed by the site itself or a real case study.
 const pillars = [
   {
-    icon: 'ph:magnifying-glass-duotone',
+    icon: 'ph:sparkle-duotone',
     accent: 'coral',
-    eyebrow: 'Clarify',
-    title: 'Clarify the experience',
-    body: 'I turn confusing flows, vague requirements, and inconsistent interface decisions into clearer product experiences — reviewing user journeys, identifying friction, simplifying interaction patterns, and helping teams make decisions that are easier for users to understand.',
+    eyebrow: 'Craft',
+    title: 'It looks excellent',
+    body: "Type, spacing, motion, and restraint that read as deliberate — the polish you're looking at right now. The same eye goes into brand-grade UI for teams like America's Test Kitchen, NASCAR, and the NFL.",
     tilt: -1 as const,
   },
   {
-    icon: 'ph:cube-duotone',
+    icon: 'ph:seal-check-duotone',
     accent: 'plum',
-    eyebrow: 'Strengthen',
-    title: 'Strengthen the system',
-    body: 'I improve the reusable pieces that shape the product experience — component behavior, accessibility guidance, design tokens, documentation, usage rules, and the patterns teams rely on every day.',
+    eyebrow: 'Correctness',
+    title: "It's built correctly",
+    body: 'Semantic HTML, WCAG 2.2 accessibility, keyboard and screen-reader testing, and a real eye on performance. Built the way it looks — production-grade, not a pretty shell over brittle markup.',
     tilt: 1 as const,
   },
   {
-    icon: 'ph:handshake-duotone',
+    icon: 'ph:stack-duotone',
     accent: 'sky',
-    eyebrow: 'Bridge',
-    title: 'Bridge design & engineering',
-    body: "I reduce the translation loss between design intent and implementation. I work comfortably with designers, engineers, product owners, and stakeholders so interface decisions aren't only thoughtful — they're buildable, maintainable, and accessible.",
+    eyebrow: 'Systems',
+    title: 'It scales as a system',
+    body: 'Tokens, components, and documentation so one decision lands on every surface at once. The backbone behind Rudiment UI and the multi-brand component library at America\'s Test Kitchen.',
     tilt: -1 as const,
+  },
+  {
+    icon: 'ph:trend-up-duotone',
+    accent: 'sunset',
+    eyebrow: 'Business surfaces',
+    title: 'It moves the business',
+    body: 'Interfaces tuned for conversion and retention, technical SEO that helps pages rank, and campaign and landing surfaces marketing can actually move — like the design system that unblocked campaigns at Berxi.',
+    tilt: 1 as const,
   },
 ];
 
@@ -49,6 +61,7 @@ const accentMap: Record<string, { text: string; bg: string; ring: string }> = {
   coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10', ring: 'ring-coral/20' },
   plum: { text: 'text-plum', bg: 'bg-plum/10', ring: 'ring-plum/20' },
   sky: { text: 'text-sky-deep', bg: 'bg-sky/10', ring: 'ring-sky/30' },
+  sunset: { text: 'text-sunset-deep', bg: 'bg-sunset/10', ring: 'ring-sunset/20' },
 };
 
 const questions = [
@@ -154,8 +167,8 @@ const toolsPreview = [
 ---
 
 <BaseLayout
-  title="Joshua Briley — UX Engineer & Experience Systems Designer"
-  description="I help teams create clearer, more accessible product experiences. UX engineering, design systems, accessibility, and front-end implementation — 20 years in."
+  title="Joshua Briley — UX Engineer: interfaces that look right, build right & convert"
+  description="UX engineer with 20 years in production UI. I make product interfaces that look excellent, are built correctly (accessibility, semantic HTML, performance), scale as design systems, and move the business — conversion, retention, technical SEO, and campaign surfaces."
 >
   <Fragment slot="head">
     <style>
@@ -180,15 +193,15 @@ const toolsPreview = [
       <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div class="lg:col-span-7">
           <Badge tone="lemon" icon="ph:sparkle-duotone" class="mb-8">
-            Structure over tooling
+            Design · Engineering · Systems · Growth
           </Badge>
 
           <Heading level={1} visual="display-xl" class="mb-6">
-            I fix inconsistent UI systems so teams can <WavyUnderline>ship faster</WavyUnderline>.
+            Interfaces that <WavyUnderline>look excellent</WavyUnderline> — and prove it.
           </Heading>
 
           <Text size="lg" tone="muted" class="max-w-xl mb-8">
-            Twenty years at the seam between design and engineering, building the component libraries, tokens, and documentation that make the right output the natural result of using the system. Structure over tooling. Clarity over more.
+            Twenty years at the seam between design and engineering. Not just polished in Figma — built correctly in code, coherent as a system, and tuned to perform for the business.
           </Text>
 
           <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -202,8 +215,9 @@ const toolsPreview = [
 
           <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-charcoal/70 font-body">
             <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />20 yrs in production UI</li>
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />WCAG 2.2 built in, not bolted on</li>
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />1 open-source library, built in public</li>
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />WCAG 2.2, keyboard &amp; screen-reader tested</li>
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />Tokens &amp; docs that scale</li>
+            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />Tuned to convert &amp; to rank</li>
           </ul>
         </div>
 
@@ -221,9 +235,9 @@ const toolsPreview = [
           <div class="absolute top-[8%] left-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
-                <Icon name="ph:magnifying-glass-duotone" size={18} class="text-coral" />
+                <Icon name="ph:sparkle-duotone" size={18} class="text-coral" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Clarify</span>
+              <span class="font-heading text-xs font-semibold text-navy">Excellent</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -234,9 +248,9 @@ const toolsPreview = [
           <div class="absolute top-[38%] left-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-2">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
-                <Icon name="ph:cube-duotone" size={18} class="text-plum" />
+                <Icon name="ph:seal-check-duotone" size={18} class="text-plum" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Strengthen</span>
+              <span class="font-heading text-xs font-semibold text-navy">Correct</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -247,9 +261,9 @@ const toolsPreview = [
           <div class="absolute bottom-[12%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow -rotate-2">
             <div class="flex items-center gap-2 mb-2">
               <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
-                <Icon name="ph:handshake-duotone" size={18} class="text-sky" />
+                <Icon name="ph:stack-duotone" size={18} class="text-sky" />
               </div>
-              <span class="font-heading text-xs font-semibold text-navy">Bridge</span>
+              <span class="font-heading text-xs font-semibold text-navy">Systems</span>
             </div>
             <div class="space-y-1.5">
               <div class="h-1.5 rounded-full bg-charcoal/10"></div>
@@ -258,86 +272,73 @@ const toolsPreview = [
           </div>
 
           <div class="absolute top-[22%] right-[8%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float rotate-3">
-            <Icon name="ph:check-circle-duotone" size={14} class="text-sage" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Usable</span>
+            <Icon name="ph:trend-up-duotone" size={14} class="text-sage" />
+            <span class="font-heading text-[11px] font-semibold text-navy">Converts</span>
           </div>
 
           <div class="absolute bottom-[32%] left-[4%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay -rotate-3">
-            <Icon name="ph:shield-check-duotone" size={14} class="text-plum" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Accessible</span>
+            <Icon name="ph:magnifying-glass-duotone" size={14} class="text-plum" />
+            <span class="font-heading text-[11px] font-semibold text-navy">Ranks</span>
           </div>
         </div>
       </div>
     </Container>
   </Section>
 
-  <SquiggleDivider />
 
-
-  <Section tone="cream" padding="default">
-    <Container>
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
-        <div class="lg:col-span-7">
-          <Badge tone="coral" icon="ph:compass-duotone" class="mb-6">Where the work happens</Badge>
-          <Heading level={2} visual="display-md" balance class="mb-6">
-            Good product experiences <WavyUnderline>do not happen</WavyUnderline> by accident.
-          </Heading>
-          <Text size="xl" tone="muted" class="max-w-2xl">
-            They depend on clear decisions, consistent patterns, accessible interactions, and a shared understanding between design and engineering.
-          </Text>
-        </div>
-
-        <div class="lg:col-span-5 lg:pt-2">
-          <Text size="lg" tone="muted" class="mb-8 max-w-xl">
-            I help teams make sense of messy interface problems. Sometimes that means improving a design system. Sometimes it means clarifying a workflow. Sometimes it means making sure a component isn't just reusable, but understandable, accessible, and useful in the hands of real product teams.
-          </Text>
-
-          <div class="inline-flex items-center gap-3 bg-white rounded-full border border-charcoal/10 px-5 py-2.5 shadow-sm">
-            <Icon name="ph:star-four-duotone" size={18} class="text-coral" />
-            <p class="font-heading text-sm md:text-base font-semibold text-navy">
-              Clarity over complexity. Structure in service of experience.
-            </p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </Section>
 
 
   <Section id="what-i-do" tone="white" padding="default">
     <Container>
       <SectionHeader
-        eyebrow="What I do"
-        eyebrowIcon="ph:toolbox-duotone"
+        eyebrow="What you actually get"
+        eyebrowIcon="ph:squares-four-duotone"
         eyebrowTone="plum"
-        title="I help teams improve the systems behind the experience."
-        lead="Product teams often struggle in the space between an idea and a shipped interface. Designs look polished in Figma; the implementation drifts. Components exist; teams don't know how to use them. Accessibility gets discussed late. Small interface decisions pile up until the product feels harder to use than it should."
+        title="Excellent, correct, systematic — and good for business."
+        lead="Most of the work lives in the gap between an idea and a shipped interface: designs that look great in Figma but drift in code, components nobody knows how to reuse, accessibility raised late, performance and search left to chance. I close that gap on four axes at once."
         align="left"
-        class="mb-16 max-w-4xl"
+        class="mb-14 max-w-4xl"
       />
 
-      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 lg:gap-8 lg:items-start" data-reveal-stagger>
+      <div class="grid gap-6 md:grid-cols-2 lg:gap-8 lg:items-start" data-reveal-stagger>
         {pillars.map((p, idx) => {
           const a = accentMap[p.accent];
-          // Stagger the cards down the page so the row reads as a hand-placed
-          // collage rather than a rigid three-up grid.
-          const offset = ['lg:mt-0', 'lg:mt-14', 'lg:mt-6'][idx];
+          // Nudge the second column down so the 2×2 reads as a hand-placed
+          // collage rather than a rigid quadrant grid.
+          const offset = ['lg:mt-0', 'lg:mt-10', 'lg:mt-0', 'lg:mt-10'][idx];
           return (
             <Card variant="paper" tilt={p.tilt} padding="loose" class={`relative overflow-hidden ${a.ring} ${offset}`}>
               <div class={`absolute -top-10 -right-10 w-32 h-32 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
               <div class="relative">
+                <div class="flex items-center gap-2 mb-2">
+                  <span class={`flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full ${a.bg} font-heading text-xs font-bold ${a.text}`} aria-hidden="true">
+                    {idx + 1}
+                  </span>
+                  <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider`}>
+                    {p.eyebrow}
+                  </span>
+                </div>
                 <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
                   <Icon name={p.icon} size={28} class={a.text} />
                 </div>
-                <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider mb-2`}>
-                  {p.eyebrow}
-                </span>
                 <Heading level={3} visual="h2" class="mb-3 leading-tight">{p.title}</Heading>
                 <Text tone="muted">{p.body}</Text>
               </div>
             </Card>
           );
         })}
+      </div>
+
+      <div class="mt-16">
+        <p class="font-heading text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-6 flex items-center gap-2">
+          <Icon name="ph:seal-check-duotone" size={18} class="text-plum" />
+          Receipts, not adjectives
+        </p>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 bg-white rounded-2xl p-7 md:p-9 border border-charcoal/5 shadow-sm">
+          <Metric value="75%" label="fewer support calls" caption="IVFCRYO — clearer, recoverable flows" tone="sage" />
+          <Metric value="55%" label="fewer shipping errors" caption="IVFCRYO — accessible forms at the source" tone="plum" />
+          <Metric value="3" label="brands, one library" caption="America's Test Kitchen — divergence lives in tokens" tone="coral" />
+        </div>
       </div>
     </Container>
   </Section>
@@ -377,14 +378,72 @@ const toolsPreview = [
             The interface is where <span class="text-lemon">strategy</span> becomes real.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mb-8">
-            A product can have a smart roadmap, strong research, and talented teams — but users only experience what makes it to the screen. That means small details matter.
+            A product can have a smart roadmap, strong research, and talented teams — but users only experience what makes it to the screen. The screen is where trust is won, where a flow converts or stalls, where a page earns its ranking. Small details, real consequences.
           </Text>
           <Text size="base" tone="whiteMuted" class="italic max-w-md border-l-2 border-lemon/60 pl-4">
-            Good UX isn't only about big ideas. It's also about the small, repeated choices that shape how a product feels over time. My work focuses on those choices.
+            So I treat the interface as a business surface, not just a canvas — the place where craft, correctness, and system decisions show up as outcomes.
           </Text>
         </div>
 
 
+      </div>
+    </Container>
+  </Section>
+
+
+  <Section id="business" tone="peach" padding="default" decorated>
+    <Blob tone="coral" size="lg" animate="float-slow" opacity="opacity-25" class="absolute -top-6 right-[6%]" />
+    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-50" class="absolute bottom-12 left-[8%] rounded-full" />
+
+    <Container class="relative z-10">
+      <SectionHeader
+        eyebrow="Business surfaces"
+        eyebrowIcon="ph:chart-line-up-duotone"
+        eyebrowTone="coral"
+        title="Design that has to perform, not just please."
+        lead="The interface is where conversion, retention, and search visibility actually happen. I build the surfaces the business leans on — and the front-end quality that makes them fast, findable, and easy for marketing to move."
+        align="left"
+        class="mb-14 max-w-3xl"
+      />
+
+      <div class="grid gap-6 md:grid-cols-3 lg:gap-8" data-reveal-stagger>
+        <Card variant="paper" tilt={-1} padding="loose" class="flex flex-col">
+          <div class="w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center mb-4">
+            <Icon name="ph:trend-up-duotone" size={26} class="text-[#C13A22]" />
+          </div>
+          <Heading level={3} visual="h3" class="mb-2 leading-tight">Conversion &amp; retention</Heading>
+          <Text tone="muted" class="text-[0.95rem] flex-1">
+            Flows tuned to convert and to keep people. At VMSpark I rebuilt a multi-tenant admin shell that lifted sales conversion and customer retention — without touching the pipeline underneath.
+          </Text>
+          <a href="/projects/vmspark/" class="mt-4 inline-flex items-center gap-1.5 font-heading font-semibold text-[#C13A22] text-sm hover:gap-3 transition-all">
+            Read the VMSpark story
+            <Icon name="ph:arrow-right-bold" size={16} />
+          </a>
+        </Card>
+
+        <Card variant="paper" tilt={1} padding="loose" class="flex flex-col">
+          <div class="w-12 h-12 rounded-2xl bg-plum/10 flex items-center justify-center mb-4">
+            <Icon name="ph:magnifying-glass-duotone" size={26} class="text-plum" />
+          </div>
+          <Heading level={3} visual="h3" class="mb-2 leading-tight">Technical SEO</Heading>
+          <Text tone="muted" class="text-[0.95rem] flex-1">
+            Semantic HTML, clean document structure, structured data, and the Core Web Vitals performance that helps pages rank. The same correctness that serves screen readers serves search engines.
+          </Text>
+        </Card>
+
+        <Card variant="paper" tilt={-1} padding="loose" class="flex flex-col">
+          <div class="w-12 h-12 rounded-2xl bg-sunset/10 flex items-center justify-center mb-4">
+            <Icon name="ph:megaphone-duotone" size={26} class="text-sunset-deep" />
+          </div>
+          <Heading level={3} visual="h3" class="mb-2 leading-tight">Campaigns &amp; landing pages</Heading>
+          <Text tone="muted" class="text-[0.95rem] flex-1">
+            Campaign and landing surfaces marketing can move without an engineering bottleneck. At Berxi, the design system I built unblocked the marketing team to ship campaigns and landing-page variations on their own.
+          </Text>
+          <a href="/projects/berxi-insurance/" class="mt-4 inline-flex items-center gap-1.5 font-heading font-semibold text-sunset-deep text-sm hover:gap-3 transition-all">
+            Read the Berxi story
+            <Icon name="ph:arrow-right-bold" size={16} />
+          </a>
+        </Card>
       </div>
     </Container>
   </Section>
@@ -588,7 +647,7 @@ const toolsPreview = [
           </Heading>
           <div class="space-y-4 text-charcoal/70 text-base md:text-lg leading-relaxed">
             <p>
-              I've spent my career working between design and engineering — building marketing sites, product interfaces, design systems, component libraries, and internal tools across a range of teams and industries.
+              I've spent my career working between design and engineering — building conversion-focused marketing sites, product interfaces, design systems, component libraries, and internal tools across a range of teams and industries.
             </p>
             <p>
               The common thread is simple: I care about making interfaces clearer, more accessible, and easier for teams to use well. I'm not interested in complexity for its own sake — I'm interested in the kind of structure that helps people move through software with more confidence and less friction.
@@ -616,14 +675,14 @@ const toolsPreview = [
 
 
   <CTABanner
-    title="Have an inconsistent UI system that's slowing you down?"
-    lead="Whether you're hiring for a design systems or UX engineering role, or want a second pair of eyes on a component library, send a note. I reply within one business day."
+    title="Need an interface that looks right, works right, and pulls its weight?"
+    lead="Hiring for design systems or UX engineering, shipping a product or marketing surface that has to convert, or want a second pair of eyes on a component library — send a note. I reply within one business day."
     align="left"
   >
     <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
       Get in touch
     </Button>
-    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+    <Button variant="text" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
       Connect on LinkedIn
     </Button>
   </CTABanner>

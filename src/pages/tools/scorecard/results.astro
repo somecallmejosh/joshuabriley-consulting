@@ -7,7 +7,7 @@ import Text from '~/components/primitives/Text.astro';
 import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
 
 const description =
   'Your personalized design system scorecard results with recommendations based on the five dimensions of a healthy design system.';
@@ -98,27 +98,17 @@ const description =
   </section>
 
 
-  <Section padding="default" decorated>
-    <Blob tone="coral" size="md" class="absolute top-0 left-8" animate="float" opacity="opacity-30" />
-    <Blob tone="sky" size="sm" class="absolute top-4 right-12 rounded-full" animate="float-delay" opacity="opacity-40" />
-
-    <Container width="narrow" class="text-center relative z-10">
-      <Heading level={2} visual="display-md" align="center" balance class="mb-6">
-        The results are the <WavyUnderline>URL</WavyUnderline>.
-      </Heading>
-      <Text size="lg" tone="muted" align="center" class="max-w-2xl mx-auto mb-10">
-        No database, no account, no cookie &mdash; a few characters carry the whole report. It&rsquo;s the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?
-      </Text>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/" class="!bg-navy hover:!bg-navy/90">
-          Get in touch
-        </Button>
-        <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-          Connect on LinkedIn
-        </Button>
-      </div>
-    </Container>
-  </Section>
+  <CTABanner
+    title="The results are the URL."
+    lead="No database, no account, no cookie — a few characters carry the whole report. It’s the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?"
+  >
+    <Button variant="navy" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
+    </Button>
+    <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+      Connect on LinkedIn
+    </Button>
+  </CTABanner>
 </BaseLayout>
 
 <style is:global>

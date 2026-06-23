@@ -4,10 +4,25 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
+import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import Card from '~/components/card/Card.astro';
 import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+
+interface TocHeading {
+  depth: number;
+  slug: string;
+  text: string;
+}
+
+interface MorePost {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  readMinutes: number;
+}
 
 interface Props {
   title: string;
@@ -17,6 +32,8 @@ interface Props {
   date: Date;
   readMinutes: number;
   pathname?: string;
+  headings?: TocHeading[];
+  morePosts?: MorePost[];
 }
 
 const {
@@ -27,6 +44,8 @@ const {
   date,
   readMinutes,
   pathname,
+  headings = [],
+  morePosts = [],
 } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -35,6 +54,14 @@ const formattedDate = date.toLocaleDateString('en-US', {
   day: 'numeric',
 });
 const isoDate = date.toISOString().slice(0, 10);
+
+// In-page table of contents — top-level sections only.
+const toc = headings.filter((h) => h.depth === 2);
+
+// Share targets.
+const shareUrl = new URL(pathname ?? '/', Astro.site ?? 'https://joshuabriley.com').toString();
+const xShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`;
+const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
 ---
 
 <BaseLayout
@@ -47,87 +74,234 @@ const isoDate = date.toISOString().slice(0, 10);
     author: 'Joshua Briley',
   }}
 >
-  <!-- HERO -->
-  <Section padding="default" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-16 right-[6%]" animate="float" />
-    <Blob tone="sage" size="sm" class="absolute top-44 left-[4%] rounded-full" animate="float-delay" opacity="opacity-40" />
-    <Blob tone="sky" size="sm" class="absolute bottom-10 right-[18%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="peach" size="sm" class="absolute bottom-24 left-[10%]" animate="float" />
 
-    <Container width="narrow" class="relative z-10">
-      <nav class="mb-10 flex items-center justify-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
-        <a href="/blog/" class="hover:text-coral transition-colors">Blog</a>
-        <Icon name="ph:caret-right-bold" size={12} />
-        <span class="text-navy">{category}</span>
-      </nav>
+  <div class="reading-progress" aria-hidden="true">
+    <span class="reading-progress-bar" data-progress-bar></span>
+  </div>
 
-      <article class="recipe-card p-8 md:p-14" style="transform: rotate(-0.35deg)">
-        <div class="relative text-center">
-          <div class="inline-flex items-center gap-2 bg-coral/10 text-coral px-4 py-2 rounded-full mb-6 font-heading text-xs font-semibold border border-coral/20 uppercase tracking-wider">
-            <Icon name={categoryIcon} size={18} />
+  <Section padding="loose" decorated>
+    <Blob tone="lemon" size="md" class="absolute top-16 right-[7%]" animate="float" opacity="opacity-50" />
+
+    <Container width="wide" class="relative z-10">
+      <div class="max-w-4xl">
+        <nav class="mb-8 flex items-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
+          <a href="/blog/" class="hover:text-coral transition-colors">Blog</a>
+          <Icon name="ph:caret-right-bold" size={12} />
+          <span class="text-navy">{category}</span>
+        </nav>
+
+        <div class="mb-6">
+          <Badge tone="coral" icon={categoryIcon} size="sm" class="font-semibold uppercase tracking-wider">
             {category}
-          </div>
-
-          <Heading level={1} visual="display-lg" balance class="mb-6">
-            <WavyUnderline>{title}</WavyUnderline>
-          </Heading>
-
-          <Text size="xl" tone="muted" align="center" class="max-w-2xl mx-auto mb-10">
-            {description}
-          </Text>
-
-          <div class="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-sm text-charcoal/70 font-heading">
-            <span class="inline-flex items-center gap-2">
-              <span class="logo-monogram logo-monogram-sm" aria-hidden="true">jb</span>
-              Joshua Briley
-            </span>
-            <span aria-hidden="true">•</span>
-            <time datetime={isoDate}>{formattedDate}</time>
-            <span aria-hidden="true">•</span>
-            <span class="inline-flex items-center gap-1.5">
-              <Icon name="ph:clock-duotone" size={16} />
-              {readMinutes} min read
-            </span>
-          </div>
+          </Badge>
         </div>
-      </article>
+
+        <Heading level={1} visual="display-lg" balance class="mb-6">
+          {title}
+        </Heading>
+
+        <Text size="xl" tone="muted" class="mb-10">
+          {description}
+        </Text>
+
+        <div class="flex flex-wrap items-center gap-x-5 gap-y-2 pt-6 border-t border-charcoal/10 text-sm text-charcoal/70 font-heading">
+          <span class="inline-flex items-center gap-2">
+            <span class="logo-monogram logo-monogram-sm" aria-hidden="true">jb</span>
+            Joshua Briley
+          </span>
+          <span aria-hidden="true">•</span>
+          <time datetime={isoDate}>{formattedDate}</time>
+          <span aria-hidden="true">•</span>
+          <span class="inline-flex items-center gap-1.5">
+            <Icon name="ph:clock-duotone" size={16} />
+            {readMinutes} min read
+          </span>
+        </div>
+      </div>
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-4xl mx-auto px-6" aria-hidden="true"></div>
-
-  <!-- ARTICLE BODY -->
   <Section padding="default">
-    <Container width="narrow">
-      <article class="prose-whimsy">
-        <slot />
-      </article>
+    <Container width="wide">
+      <div class="lg:grid lg:grid-cols-[1fr_minmax(0,42rem)_1fr] lg:gap-x-10 xl:gap-x-14">
+        <!-- Margin rail: in-page contents + share (desktop only) -->
+        <aside class="hidden lg:block lg:justify-self-end lg:w-56" aria-label="Article tools">
+          <div class="sticky top-28">
+            {toc.length >= 2 && (
+              <nav class="mb-9" aria-label="On this page">
+                <p class="rail-label">On this page</p>
+                <ol class="toc-list">
+                  {toc.map((h) => (
+                    <li>
+                      <a href={`#${h.slug}`} class="toc-link" data-toc-link={h.slug}>{h.text}</a>
+                    </li>
+                  ))}
+                </ol>
+              </nav>
+            )}
 
-      <!-- Author card -->
-      <div class="mt-16 recipe-card p-6 md:p-8 flex flex-col sm:flex-row items-start gap-5" style="transform: rotate(0.2deg)">
-        <span class="logo-monogram" style="width: 58px; height: 58px; font-size: 1.6rem" aria-hidden="true">jb</span>
-        <div class="flex-1 relative">
-          <p class="font-heading text-xs uppercase tracking-wider text-plum mb-1">Written by</p>
-          <h3 class="font-display text-2xl font-semibold text-navy leading-tight mb-2">Joshua Briley</h3>
-          <Text size="sm" tone="muted" class="mb-4">
-            UX software engineer and consultant. I help product teams turn drifting UIs into design systems people actually use — and can defend in a budget meeting.
-          </Text>
-          <div class="flex flex-wrap items-center gap-3">
-            <Button variant="primary" size="sm" iconLeft="ph:paper-plane-tilt-duotone" href="/contact/">
-              Work with me
-            </Button>
-            <Button variant="ghost" size="sm" iconLeft="ph:books-duotone" href="/blog/">
-              More essays
-            </Button>
+            <p class="rail-label">Share</p>
+            <div class="flex items-center gap-2">
+              <a href={xShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on X">
+                <Icon name="ph:x-logo-duotone" size={18} />
+              </a>
+              <a href={liShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on LinkedIn">
+                <Icon name="ph:linkedin-logo-duotone" size={18} />
+              </a>
+              <button type="button" class="share-btn" data-copy-link aria-label="Copy link">
+                <Icon name="ph:link-duotone" size={18} />
+              </button>
+            </div>
           </div>
+        </aside>
+
+        <!-- Reading column -->
+        <div class="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
+          <article class="prose-whimsy">
+            <slot />
+          </article>
+
+          <!-- Author card -->
+          <div class="mt-16 recipe-card p-6 md:p-8 flex flex-col sm:flex-row items-start gap-5" style="transform: rotate(0.2deg)" data-reveal>
+            <span class="logo-monogram logo-monogram-lg" aria-hidden="true">jb</span>
+            <div class="flex-1 relative">
+              <p class="font-heading text-xs uppercase tracking-wider text-plum mb-1">Written by</p>
+              <h2 class="font-display text-2xl font-semibold text-navy leading-tight mb-2">Joshua Briley</h2>
+              <Text size="sm" tone="muted" class="mb-4">
+                UX software engineer and consultant. I help product teams turn drifting UIs into design systems people actually use — and can defend in a budget meeting.
+              </Text>
+              <div class="flex flex-wrap items-center gap-3">
+                <Button variant="primary" size="sm" iconLeft="ph:paper-plane-tilt-duotone" href="/contact/">
+                  Work with me
+                </Button>
+                <Button variant="ghost" size="sm" iconLeft="ph:books-duotone" href="/blog/">
+                  More essays
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keep reading -->
+          {morePosts.length > 0 && (
+            <section class="mt-16 pt-10 border-t border-charcoal/10" aria-label="More essays">
+              <p class="font-heading text-sm uppercase tracking-[0.18em] text-[#C13A22] mb-6">Keep reading</p>
+              <div class="grid sm:grid-cols-2 gap-6" data-reveal-stagger>
+                {morePosts.map((p) => (
+                  <Card as="article" variant="paper" padding="none" class="overflow-hidden">
+                    <a href={`/blog/${p.id}/`} class="block group p-6 h-full">
+                      <p class="font-heading text-xs uppercase tracking-wider text-plum mb-2">{p.category}</p>
+                      <Heading level={3} visual="h3" class="mb-2 group-hover:text-coral transition-colors">
+                        {p.title}
+                      </Heading>
+                      <Text size="sm" tone="muted" class="mb-4 line-clamp-2">
+                        {p.description}
+                      </Text>
+                      <span class="inline-flex items-center gap-1.5 text-[#C13A22] font-heading text-sm font-semibold">
+                        Read essay
+                        <Icon name="ph:arrow-right-bold" size={14} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
+                      </span>
+                    </a>
+                  </Card>
+                ))}
+              </div>
+            </section>
+          )}
         </div>
+
+        <!-- Right spacer keeps the reading column optically centred -->
+        <div class="hidden lg:block" aria-hidden="true"></div>
       </div>
     </Container>
   </Section>
 </BaseLayout>
 
 <style is:global>
-  /* Whimsy prose styling — ported verbatim from the legacy blog post template. */
+  /* ── Reading chrome (progress + margin rail) ──────────────────────────── */
+  .reading-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    z-index: 50;
+    background: rgba(45, 43, 85, 0.06);
+    pointer-events: none;
+  }
+  .reading-progress-bar {
+    display: block;
+    height: 100%;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left center;
+    background: linear-gradient(90deg, #ff8e53, #e8573d 45%, #6c4ab6);
+    will-change: transform;
+  }
+  .rail-label {
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: #6c4ab6;
+    margin-bottom: 0.85rem;
+  }
+  .toc-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .toc-link {
+    display: block;
+    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-size: 0.82rem;
+    line-height: 1.35;
+    color: rgba(46, 46, 48, 0.72);
+    padding: 0.4rem 0 0.4rem 0.85rem;
+    border-left: 2px solid rgba(108, 74, 182, 0.16);
+    transition:
+      color 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+      border-color 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+  }
+  .toc-link:hover {
+    color: #c13a22;
+  }
+  .toc-link.is-active {
+    color: #2d2b55;
+    border-left-color: #e8573d;
+    font-weight: 600;
+  }
+  .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 9999px;
+    background: #fff;
+    border: 1.5px solid rgba(45, 43, 85, 0.1);
+    color: #2d2b55;
+    cursor: pointer;
+    transition:
+      transform 0.3s cubic-bezier(0.32, 0.72, 0, 1),
+      color 0.2s ease,
+      border-color 0.2s ease;
+  }
+  .share-btn:hover {
+    color: #e8573d;
+    border-color: rgba(232, 87, 61, 0.4);
+    transform: translateY(-2px);
+  }
+  .share-btn.is-copied {
+    color: #3e6e3d;
+    border-color: rgba(123, 180, 122, 0.55);
+  }
+
+  /* Anchor offset so deep-linked headings clear the sticky header. */
+  .prose-whimsy :is(h2, h3)[id] {
+    scroll-margin-top: 6rem;
+  }
+
+  /* ── Whimsy prose styling — ported verbatim from the legacy blog post template. */
   .prose-whimsy {
     font-family: var(--font-dm-sans), system-ui, sans-serif;
     color: #2e2e30;
@@ -184,13 +358,14 @@ const isoDate = date.toISOString().slice(0, 10);
     margin-top: 2.25rem;
   }
   .prose-whimsy a {
-    color: #e8573d;
+    /* deep coral — AA on cream (5.4:1); base coral #e8573d is only 3.5:1 as body text */
+    color: #c13a22;
     text-decoration: underline;
-    text-decoration-color: rgba(232, 87, 61, 0.4);
+    text-decoration-color: rgba(193, 58, 34, 0.4);
     text-underline-offset: 4px;
   }
   .prose-whimsy a:hover {
-    text-decoration-color: #e8573d;
+    text-decoration-color: #c13a22;
   }
   .prose-whimsy strong {
     color: #2d2b55;
@@ -298,5 +473,70 @@ const isoDate = date.toISOString().slice(0, 10);
     border-radius: 999px;
     line-height: 1.4;
   }
-
 </style>
+
+<script>
+  // Reading progress — transform-only, passive scroll, rAF-throttled.
+  const bar = document.querySelector<HTMLElement>('[data-progress-bar]');
+  if (bar) {
+    let max = 0;
+    const measure = () => {
+      max = document.documentElement.scrollHeight - window.innerHeight;
+    };
+    const update = () => {
+      const p = max > 0 ? Math.min(window.scrollY / max, 1) : 0;
+      bar.style.transform = `scaleX(${p})`;
+    };
+    measure();
+    update();
+    let ticking = false;
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          update();
+          ticking = false;
+        });
+      },
+      { passive: true },
+    );
+    window.addEventListener('resize', () => { measure(); update(); }, { passive: true });
+  }
+
+  // Table-of-contents scroll-spy.
+  const tocLinks = document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]');
+  if (tocLinks.length) {
+    const byId = new Map([...tocLinks].map((l) => [l.dataset.tocLink, l]));
+    const spy = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          tocLinks.forEach((l) => l.classList.remove('is-active'));
+          byId.get((entry.target as HTMLElement).id)?.classList.add('is-active');
+        });
+      },
+      { rootMargin: '-15% 0px -75% 0px', threshold: 0 },
+    );
+    document.querySelectorAll('.prose-whimsy h2[id]').forEach((h) => spy.observe(h));
+  }
+
+  // Copy-link button.
+  const copyBtn = document.querySelector<HTMLButtonElement>('[data-copy-link]');
+  if (copyBtn) {
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(window.location.href);
+        copyBtn.classList.add('is-copied');
+        copyBtn.setAttribute('aria-label', 'Link copied');
+        window.setTimeout(() => {
+          copyBtn.classList.remove('is-copied');
+          copyBtn.setAttribute('aria-label', 'Copy link');
+        }, 1600);
+      } catch {
+        /* clipboard unavailable — no-op */
+      }
+    });
+  }
+</script>

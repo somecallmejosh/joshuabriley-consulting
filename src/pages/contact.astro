@@ -12,6 +12,7 @@ import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import Card from '~/components/card/Card.astro';
 import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import ContactForm from '~/components/islands/ContactForm.astro';
 
 const description =
@@ -142,14 +143,14 @@ const featuredQuotes = [
             <Icon name="ph:pencil-line-duotone" size={26} class="text-navy" />
           </div>
 
-          <div class="mb-8">
-            <div class="mb-4 inline-block">
-              <Badge tone="coral" sticker icon="ph:hand-waving-duotone">Say hi</Badge>
-            </div>
-            <Heading level={2} visual="display-md" balance class="max-w-[22ch]">
-              Tell me about your project.
-            </Heading>
-          </div>
+          <SectionHeader
+            eyebrow="Say hi"
+            eyebrowIcon="ph:hand-waving-duotone"
+            eyebrowTone="coral"
+            title="Tell me about your project."
+            align="left"
+            class="mb-8"
+          />
 
           <ContactForm />
         </div>
@@ -194,14 +195,14 @@ const featuredQuotes = [
 
   <Section padding="default">
     <Container>
-      <div class="text-center mb-14">
-        <div class="mb-5 inline-block">
-          <Badge tone="lemon" sticker icon="ph:heart-duotone">Kind words</Badge>
-        </div>
-        <Heading level={2} visual="display-md" align="center" balance class="mx-auto max-w-[30ch]">
-          What folks say after we work together.
-        </Heading>
-      </div>
+      <SectionHeader
+        eyebrow="Kind words"
+        eyebrowIcon="ph:heart-duotone"
+        eyebrowTone="lemon"
+        title="What folks say after we work together."
+        align="center"
+        class="mb-14"
+      />
 
       <div class="grid md:grid-cols-2 gap-6 md:gap-8">
         {featuredQuotes.map((q) => (
@@ -246,7 +247,7 @@ const featuredQuotes = [
             Grab a spot on my calendar directly, or say hi on LinkedIn. I read everything.
           </Text>
           <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button variant="primary" size="sm" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/" class="!bg-navy hover:!bg-navy/90">
+            <Button variant="navy" size="sm" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
               Book a 30-min call
             </Button>
             <Button variant="ghost" size="sm" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">

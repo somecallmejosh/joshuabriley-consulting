@@ -251,17 +251,14 @@ const process = [
 
   <Section id="services" padding="default" class="bg-charcoal/[0.03]">
     <Container>
-      <div class="max-w-3xl mx-auto text-center mb-16">
-        <div class="mb-6 inline-block">
-          <Badge tone="coral" icon="ph:toolbox-duotone">How I can help</Badge>
-        </div>
-        <Heading level={2} visual="display-md" align="center" class="mb-4">
-          Three ways to <WavyUnderline>work together</WavyUnderline>
-        </Heading>
-        <Text size="lg" tone="muted" align="center">
-          Every engagement starts with an audit. I won't build anything until I know what's actually broken.
-        </Text>
-      </div>
+      <SectionHeader
+        eyebrow="How I can help"
+        eyebrowIcon="ph:toolbox-duotone"
+        eyebrowTone="coral"
+        title="Three ways to work together"
+        lead="Every engagement starts with an audit. I won't build anything until I know what's actually broken."
+        class="max-w-3xl mx-auto mb-16"
+      />
 
       <div class="grid lg:grid-cols-3 gap-6">
         {services.map((s) => {
@@ -376,7 +373,7 @@ const process = [
               Take the free Design System Scorecard. Ten minutes. No fluff. You'll know exactly where your system stands.
             </Text>
           </div>
-          <Button variant="primary" iconRight="ph:arrow-right-bold" href="/tools/scorecard/" class="!bg-navy hover:!bg-navy/90 whitespace-nowrap">
+          <Button variant="navy" iconRight="ph:arrow-right-bold" href="/tools/scorecard/" class="whitespace-nowrap">
             Get the scorecard
           </Button>
         </div>
@@ -389,7 +386,7 @@ const process = [
     <Button variant="primary" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
       Book an intro call
     </Button>
-    <Button class="hover:underline" variant="text"  iconLeft="ph:envelope-duotone" href="/contact/">
+    <Button variant="text"  iconLeft="ph:envelope-duotone" href="/contact/">
       Or send a note
     </Button>
   </CTABanner>

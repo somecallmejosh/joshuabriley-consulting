@@ -30,7 +30,7 @@ const updated = 'June 2026';
       </Text>
       <p class="font-heading text-sm text-charcoal/60">Last updated {updated}</p>
 
-      <div class="mt-10 space-y-10 max-w-2xl text-charcoal/75 text-base md:text-lg leading-relaxed">
+      <div class="prose-whimsy mt-10 space-y-10 max-w-2xl">
         <section>
           <Heading level={2} visual="h2" class="mb-3">What I collect</Heading>
           <p>
@@ -39,7 +39,7 @@ const updated = 'June 2026';
             message. If you book a call, the scheduling step collects the details needed to set up
             that meeting. I don't ask for anything I don't need to reply.
           </p>
-          <p class="mt-3">
+          <p>
             Like any website, the hosting platform records standard technical logs — IP address,
             browser type, and the pages requested — used to keep the site running and secure.
           </p>
@@ -48,22 +48,13 @@ const updated = 'June 2026';
         <section>
           <Heading level={2} visual="h2" class="mb-3">Who processes it</Heading>
           <p>A few third parties handle data on my behalf, each under their own privacy terms:</p>
-          <ul class="mt-3 space-y-2 list-none">
-            <li class="flex gap-3">
-              <Icon name="ph:dot-outline-fill" size={20} class="text-coral flex-shrink-0 mt-1" />
-              <span><strong class="text-navy font-medium">HubSpot</strong> receives contact-form
-              submissions and stores them so I can manage and respond to inquiries.</span>
-            </li>
-            <li class="flex gap-3">
-              <Icon name="ph:dot-outline-fill" size={20} class="text-plum flex-shrink-0 mt-1" />
-              <span><strong class="text-navy font-medium">Calendly</strong> powers the optional
-              "book a call" scheduling on the contact page.</span>
-            </li>
-            <li class="flex gap-3">
-              <Icon name="ph:dot-outline-fill" size={20} class="text-sky-deep flex-shrink-0 mt-1" />
-              <span><strong class="text-navy font-medium">Netlify</strong> hosts the site and keeps
-              the server logs described above.</span>
-            </li>
+          <ul>
+            <li><strong>HubSpot</strong> receives contact-form
+              submissions and stores them so I can manage and respond to inquiries.</li>
+            <li><strong>Calendly</strong> powers the optional
+              "book a call" scheduling on the contact page.</li>
+            <li><strong>Netlify</strong> hosts the site and keeps
+              the server logs described above.</li>
           </ul>
         </section>
 

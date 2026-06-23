@@ -3,6 +3,7 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
 import ProofPanel from '~/components/patterns/ProofPanel.astro';
 import TokenPlayground from '~/components/islands/TokenPlayground.astro';
 
@@ -65,7 +66,7 @@ const proof = [
 
 <BaseLayout title={title} description={description}>
   <div class="corkboard">
-    <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+    <section class="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
       <span class="hero-index" aria-hidden="true">03</span>
 
       <div class="max-w-5xl mx-auto px-6 relative z-10">
@@ -121,7 +122,7 @@ const proof = [
       </div>
     </section>
 
-    <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+    <SquiggleDivider />
 
 
     <section class="py-16 md:py-20 relative">
@@ -399,7 +400,7 @@ const proof = [
       </div>
     </section>
 
-    <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+    <SquiggleDivider />
 
 
     <section class="py-20 md:py-28">
@@ -453,22 +454,6 @@ const proof = [
 </BaseLayout>
 
 <style>
-  .policy-card {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow:
-      0 30px 60px -28px rgba(45, 43, 85, 0.28),
-      0 4px 10px rgba(45, 43, 85, 0.06);
-    position: relative;
-  }
-  .policy-card::before {
-    content: '';
-    position: absolute;
-    inset: 10px;
-    border: 1.5px dashed rgba(108, 74, 182, 0.25);
-    border-radius: 12px;
-    pointer-events: none;
-  }
   .tape {
     position: absolute;
     width: 90px;

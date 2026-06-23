@@ -53,6 +53,18 @@ const colors = [
   { name: 'sky',      hex: '#5DADE2', surface: 'bg-sky' },
 ];
 
+// AA-passing "deep" variants for TEXT on light surfaces. Reach for these (not the
+// base accents) whenever a color is used as body text. Deep coral is the one
+// exception: it is applied as the arbitrary value text-[#C13A22] / bg-[#C13A22],
+// NOT a named token — under this project's per-route CSS splitting a named
+// `coral-deep` utility silently fails on some routes.
+const deepColors = [
+  { name: 'coral-deep',  hex: '#C13A22', surface: 'bg-[#C13A22]' },
+  { name: 'sunset-deep', hex: '#A24818', surface: 'bg-sunset-deep' },
+  { name: 'sage-deep',   hex: '#3E6E3D', surface: 'bg-sage-deep' },
+  { name: 'sky-deep',    hex: '#1B6FA1', surface: 'bg-sky-deep' },
+];
+
 const sections = [
   { id: 'foundations', label: 'Foundations',   icon: 'ph:palette-duotone' },
   { id: 'atoms',       label: 'Atoms',         icon: 'ph:cards-three-duotone' },
@@ -110,13 +122,9 @@ const proofSections = [
     <Container>
       <nav aria-label="Inventory sections" class="flex flex-wrap items-center justify-center gap-2">
         {sections.map((s) => (
-          <a
-            href={`#${s.id}`}
-            class="inline-flex items-center gap-1.5 px-4 py-2 rounded-full bg-cream border border-charcoal/60 text-sm font-heading font-medium text-navy hover:bg-coral/10 hover:border-plum transition-colors"
-          >
-            <Icon name={s.icon} size={16} class="text-coral" />
+          <Button variant="ghost" size="sm" href={`#${s.id}`} iconLeft={s.icon}>
             {s.label}
-          </a>
+          </Button>
         ))}
       </nav>
     </Container>
@@ -138,6 +146,18 @@ const proofSections = [
         <Grid cols={4} gap="md">
           {colors.map((c) => (
             <ShowcaseSwatch surface={c.surface} name={c.name} hex={c.hex} />
+          ))}
+        </Grid>
+      </div>
+
+      <div class="mt-8">
+        <Heading level={4} visual="h4" class="mb-2">AA text variants</Heading>
+        <Text size="sm" tone="muted" class="mb-5 max-w-2xl">
+          Reach for these whenever an accent color is used as text on a light surface — the base accents fail AA at body sizes. Deep coral is the arbitrary value <code class="font-mono text-[#C13A22]">text-[#C13A22]</code>, never a named <code class="font-mono">coral-deep</code> token (per-route CSS splitting drops it).
+        </Text>
+        <Grid cols={4} gap="md">
+          {deepColors.map((c) => (
+            <ShowcaseSwatch surface={c.surface} name={c.name} hex={c.hex} textOn="white" />
           ))}
         </Grid>
       </div>

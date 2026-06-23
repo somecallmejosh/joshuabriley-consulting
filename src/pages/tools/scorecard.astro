@@ -9,6 +9,9 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+import Card from '~/components/card/Card.astro';
 import ScorecardEngine from '~/components/islands/ScorecardEngine.astro';
 
 const description =
@@ -25,6 +28,13 @@ const stepBgMap: Record<string, string> = {
   plum: 'bg-plum',
   sage: 'bg-sage',
 };
+
+// Full literal class strings so Tailwind's JIT can see each rotation.
+const stepTiltClass: Record<string, string> = {
+  '-1deg': 'rotate-[-1deg]',
+  '1deg': 'rotate-[1deg]',
+  '-0.5deg': 'rotate-[-0.5deg]',
+};
 ---
 
 <BaseLayout
@@ -39,7 +49,7 @@ const stepBgMap: Record<string, string> = {
     <Blob tone="coral" size="sm" class="absolute bottom-24 left-[10%] rounded-full" animate="float" opacity="opacity-30" />
     <iconify-icon
       icon="ph:pencil-duotone"
-      class="pencil top-10% right-8 lg:top-[22%] lg:left-[6%] animate-wiggle"
+      class="pencil top-[10%] right-8 lg:top-[22%] lg:left-[6%] animate-wiggle"
       aria-hidden="true"
     ></iconify-icon>
     <iconify-icon
@@ -141,23 +151,26 @@ const stepBgMap: Record<string, string> = {
 
   <Section id="how" padding="tight">
     <Container width="default">
-      <div class="text-center mb-12">
-        <span class="font-hand text-coral text-2xl block mb-2 rotate-[-2deg]">the rules of the game</span>
-        <Heading level={2} visual="display-md" align="center">How it works</Heading>
-      </div>
+      <SectionHeader
+        eyebrow="the rules of the game"
+        eyebrowTone="coral"
+        title="How it works"
+        align="center"
+        class="mb-12"
+      />
       <div class="grid md:grid-cols-3 gap-6">
         {howSteps.map((step) => (
-          <div class={`relative bg-white rounded-2xl p-7 shadow-lg border border-charcoal/5`} style={`transform: rotate(${step.tilt})`}>
-            <div class={`absolute -top-5 -left-3 w-12 h-12 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-display font-bold text-xl shadow-lg`}>
+          <Card variant="paper" padding="none" class={`${stepTiltClass[step.tilt]} p-7 shadow-lg`}>
+            <div slot="corner" class={`absolute -top-5 -left-3 w-12 h-12 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-display font-bold text-xl shadow-lg`}>
               {step.n}
             </div>
             <h3 class="font-heading font-semibold text-lg text-navy mt-3 mb-2">{step.title}</h3>
             <p class="text-sm text-charcoal/75 leading-relaxed" set:html={step.body.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')} />
-          </div>
+          </Card>
         ))}
       </div>
 
-      <div class="mt-12 bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 shadow-sm max-w-3xl mx-auto">
+      <Card variant="paper" class="mt-12 max-w-3xl mx-auto">
         <p class="font-hand text-plum text-xl mb-4 text-center">teacher&rsquo;s grading key</p>
         <div class="grid sm:grid-cols-3 gap-4">
           <div class="flex items-start gap-3 bg-coral/5 rounded-xl p-4 border border-coral/15">
@@ -182,7 +195,7 @@ const stepBgMap: Record<string, string> = {
             </div>
           </div>
         </div>
-      </div>
+      </Card>
     </Container>
   </Section>
 
@@ -194,28 +207,17 @@ const stepBgMap: Record<string, string> = {
   </Section>
 
 
-  <Section padding="default" decorated>
-    <Blob tone="coral" size="md" class="absolute top-0 left-8" animate="float" opacity="opacity-30" />
-    <Blob tone="sky" size="sm" class="absolute top-4 right-12 rounded-full" animate="float-delay" opacity="opacity-40" />
-    <Blob tone="lemon" size="md" shape="alt" class="absolute bottom-0 right-4" animate="float-slow" />
-
-    <Container width="narrow" class="text-center relative z-10">
-      <Heading level={2} visual="display-md" align="center" balance class="mb-6">
-        This scorecard is also a <WavyUnderline>work sample</WavyUnderline>.
-      </Heading>
-      <Text size="lg" tone="muted" align="center" class="max-w-2xl mx-auto mb-10">
-        It&rsquo;s built like everything else here: accessible radio groups, live scoring, no frameworks, the same tokens. Whatever your number says, if you want to compare notes &mdash; or you&rsquo;re hiring someone who builds tools like this &mdash; get in touch.
-      </Text>
-      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-        <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/" class="!bg-navy hover:!bg-navy/90">
-          Get in touch
-        </Button>
-        <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-          Connect on LinkedIn
-        </Button>
-      </div>
-    </Container>
-  </Section>
+  <CTABanner
+    title="This scorecard is also a work sample."
+    lead="It’s built like everything else here: accessible radio groups, live scoring, no frameworks, the same tokens. Whatever your number says, if you want to compare notes — or you’re hiring someone who builds tools like this — get in touch."
+  >
+    <Button variant="navy" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
+    </Button>
+    <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+      Connect on LinkedIn
+    </Button>
+  </CTABanner>
   {/* Hero illustration motion: a looping "grading sweep" — each subject row gets a brief
       emphasis in turn, then the final-grade block gets a small stamp pop. The static card
       stays blank ("—") under reduced motion / no JS. */}

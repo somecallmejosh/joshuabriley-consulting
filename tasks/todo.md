@@ -327,3 +327,86 @@ the untouched `FAQ.astro`. All five `dist/projects/*` built with exactly one of 
 marker; module scripts bundled. Playwright screenshots at 1280px reviewed for every embed
 (VMSpark Metric/Diagnostic/ROI, Berxi TokenPlayground, Rudiment TokenChain, ATK BrandSwitcher,
 IVFCRYO StatusAnnouncer) — all 2-col, on-brand, interactive, no console/page errors.
+
+---
+
+# Homepage re-spine around four proofs (`/brandkit` request, content rebrand)
+
+**Goal:** a visitor must leave the homepage *completely understanding* four things — he can (1) make
+things **look excellent**, (2) **build them correctly**, (3) **understand systems**, (4) understand
+**business surfaces** (conversion, retention, SEO, campaigns). `/brandkit` is an image skill with no
+renderer wired here; the real ask was a content/positioning rebrand of `src/pages/index.astro`, so it
+was treated as such. User chose the boldest option: **re-spine the page around the four proofs**.
+
+## Changes (all in `src/pages/index.astro`)
+- [x] **Meta/SEO** — new `<title>`/`description` asserting the four axes with honest searchable terms
+  (eat-our-own-dogfood for goal 4).
+- [x] **Hero** — H1 "Interfaces that **look excellent** — and prove it." (tightened from a 6-line
+  wall to 3 lines; measured 216px ÷ 72px line-height). Lead now names built-correctly / system /
+  business. Trust chips swapped from a11y-only to one per axis. Decorative illo relabelled
+  Clarify/Strengthen/Bridge + Usable/Accessible → Excellent / Correct / Systems / Converts / Ranks.
+- [x] **Four-proof spine** — replaced the experience-only "Good experiences…" section AND the
+  `Clarify/Strengthen/Bridge` pillars with a numbered 2×2 of the four proofs (Craft / Correctness /
+  Systems / Business surfaces). Added a 4th accent (`sunset`) to `accentMap`.
+- [x] **Receipts `Metric` row** — real numbers only: `75%` fewer support calls + `55%` fewer shipping
+  errors (IVFCRYO), `3` brands one library (ATK). Reuses `~/components/patterns/Metric.astro`.
+- [x] **Navy section re-aimed** toward performance/business ("the interface is a business surface").
+- [x] **New `#business` section** — the missing dimension gets dedicated room: Conversion & retention
+  (links VMSpark), Technical SEO (capability), Campaigns & landing (links Berxi).
+- [x] **About** nodded to conversion-focused marketing sites; **CTA** broadened beyond hiring to
+  product/growth teams.
+
+## Honesty pass (per brand-technical-register §3)
+User confirmed only **conversion/retention, SEO, campaigns** are real — NOT acquisition/growth
+metrics or A/B testing. Verified: every business claim traces to a real case study (VMSpark "increase
+in sales conversion/retention"; Berxi "marketing unblocked"); SEO is capability-only; Metric row uses
+only real IVFCRYO/ATK figures. Rendered-HTML grep for forbidden language (A/B test, funnel, paid
+growth, invented conversion %/lift) returned **zero matches**.
+
+## Verified
+`npm run build` clean (10.6s, no errors). Playwright at 1280px: hero (3-line H1), four-proof spine +
+receipts, business beat — all on-brand, no console/page errors. No new components; reused existing
+primitives/patterns + `Metric`. Note: the page's old `work` const is now unused dead data (pre-existing,
+left untouched to keep the diff focused).
+
+---
+
+# Design Consistency Pass — Review (2026-06-23, `/high-end-visual-design`)
+
+Goal: align all 26 pages + 55 components to the existing design system without losing whimsy.
+Driven by a 5-agent audit (~50 findings). Full pass approved; coral chosen as the single focus ring.
+
+## Done
+- **Primitives:** added Button `text` (fixes 11 silently-broken `variant="text"` sites) + `navy`
+  variants; unified focus ring to coral (Button, SubmitButton, 10 islands); removed Heading
+  redundant `text-balance`; fixed Logo label typo; defined missing `.logo-monogram-lg`.
+- **Case studies:** removed phantom classes (`hero-editorial`, `animate-wiggle-slow`), defined
+  `.hero-main`; VMSpark parity (corkboard wrap, plum underline + step eyebrows); ATK heading-scale
+  parity; Berxi/VMSpark raw dividers → `<SquiggleDivider>`; deleted dead `.policy-card`/`.shell-card`
+  CSS; IVFCRYO quote-icon color.
+- **Shared-pattern adoption:** faqs + scorecard CTAs → `<CTABanner>`; hand-rolled intros →
+  `<SectionHeader>` (services/about/contact/workflow/scorecard); deliverable titles → `<Heading>`,
+  step circles → `<CardNumber>`; white panels → `<Card>` (blog/404/tools/audit-findings); blog
+  card → `<Card>`; BlogPost category pill → `<Badge>`; `!bg-navy` overrides → `variant="navy"`.
+- **Prose/tokens:** privacy + terms → `.prose-whimsy`; 404 dots → `<Blob>`; hex casing normalized;
+  style-guide: added AA `-deep` swatches + deep-coral rule, nav pills → `<Button>`.
+
+## Verification
+- `npm run build` clean; `npm run test` 4/4; **`npx playwright test` 25/25** (axe-core WCAG AA on
+  12 pages + keyboard/focus). One regression caught & fixed mid-pass — see below.
+- `astro check` crashes on a pre-existing compiler WASM bug in FAQ.astro (unrelated; build is clean).
+
+## Regression caught (logged in tasks/lessons.md)
+- Changing Logo surname to deep coral `#C13A22` broke contrast on the navy footer (2.45:1) across
+  all pages. Reverted to `text-coral` (large display text passes 3:1 on both light + navy). The
+  audit over-flagged it; deep-coral is for SMALL text on LIGHT surfaces only.
+
+## Deliberately deferred (rationale)
+- TestimonialCard → Avatar primitive: Avatar has 3 gradients, testimonials use a richer 5-tone
+  palette; adopting would *reduce* fidelity. Kept as intentional divergence.
+- A few `<WavyUnderline>` flourishes dropped where headings became `<SectionHeader>` string titles
+  (uniform headings per directive; could restore via a slot-based title if wanted).
+- Island internal pill-buttons (`.sa-btn`, `.mtg-next`) and lined-paper CSS dedup: invasive /
+  invisible internal cleanups; focus rings already unified.
+- Berxi `<Metric>` band: would require inventing figures (content, not consistency).
+- `font-hand`/`'Caveat'`: NOT a bug — `--font-caveat` var doesn't exist; literal matches the token.

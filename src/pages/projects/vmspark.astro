@@ -4,6 +4,7 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
 import ProofPanel from '~/components/patterns/ProofPanel.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import Diagnostic from '~/components/islands/Diagnostic.astro';
@@ -147,8 +148,9 @@ const proof = [
 ---
 
 <BaseLayout title={title} description={description}>
+  <div class="corkboard">
 
-  <section class="hero-editorial relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
+  <section class="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
     <span class="hero-index" aria-hidden="true">05</span>
 
     <div class="max-w-5xl mx-auto px-6 relative z-10">
@@ -177,7 +179,7 @@ const proof = [
             <span class="relative inline-block">
               rebuilt for 2026
               <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 520 14" fill="none" aria-hidden="true">
-                <path d="M3 9 Q 130 2 260 9 Q 390 16 517 7" stroke="#E8573D" stroke-width="3" stroke-linecap="round" opacity="0.55" />
+                <path d="M3 9 Q 130 2 260 9 Q 390 16 517 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
               </svg>
             </span><span class="text-coral">.</span>
           </h1>
@@ -217,7 +219,7 @@ const proof = [
     </div>
   </section>
 
-  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+  <SquiggleDivider />
 
 
   <section class="py-16 md:py-20 relative">
@@ -285,7 +287,7 @@ const proof = [
       <div class="flex items-start gap-6 mb-8">
         <span class="step-num" aria-hidden="true">01</span>
         <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-[#C13A22] mb-1">
+          <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">
             Step one
           </p>
           <h2
@@ -423,7 +425,7 @@ const proof = [
       <div class="flex items-start gap-6 mb-8">
         <span class="step-num" aria-hidden="true">02</span>
         <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-[#C13A22] mb-1">
+          <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">
             Step two
           </p>
           <h2
@@ -567,7 +569,7 @@ const proof = [
       <div class="flex items-start gap-6 mb-8">
         <span class="step-num" aria-hidden="true">03</span>
         <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-[#C13A22] mb-1">
+          <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">
             Step three
           </p>
           <h2
@@ -737,7 +739,7 @@ const proof = [
       <div class="flex items-start gap-6 mb-8">
         <span class="step-num" aria-hidden="true">04</span>
         <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-[#C13A22] mb-1">
+          <p class="font-heading text-xs uppercase tracking-widest text-plum mb-1">
             Step four
           </p>
           <h2
@@ -886,7 +888,7 @@ const proof = [
     </div>
   </section>
 
-  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+  <SquiggleDivider />
 
 
   <section class="py-20 md:py-28">
@@ -956,25 +958,10 @@ const proof = [
       </div>
     </div>
   </section>
+  </div>
 </BaseLayout>
 
 <style>
-  .shell-card {
-    background: #fff;
-    border-radius: 18px;
-    box-shadow:
-      0 30px 60px -28px rgba(45, 43, 85, 0.28),
-      0 4px 10px rgba(45, 43, 85, 0.06);
-    position: relative;
-  }
-  .shell-card::before {
-    content: '';
-    position: absolute;
-    inset: 10px;
-    border: 1.5px dashed rgba(232, 87, 61, 0.25);
-    border-radius: 12px;
-    pointer-events: none;
-  }
   .tape {
     position: absolute;
     width: 90px;

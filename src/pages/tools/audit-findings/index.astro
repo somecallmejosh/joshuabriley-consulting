@@ -13,6 +13,7 @@ import Button from '~/components/primitives/Button.astro';
 import Hero from '~/components/patterns/Hero.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
+import Card from '~/components/card/Card.astro';
 import Diagnostic from '~/components/islands/Diagnostic.astro';
 ---
 
@@ -143,12 +144,12 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
         a PDF report with every finding ranked by severity and a specific remediation recommendation for each,
         followed by a 60-minute debrief call to map what to fix first and why.
       </Text>
-      <div class="inline-flex items-start gap-3 bg-white rounded-2xl border border-charcoal/10 px-5 py-4 shadow-sm">
+      <Card variant="paper" padding="none" hover={false} class="inline-flex items-start gap-3 px-5 py-4">
         <Icon name="ph:paper-plane-tilt-duotone" size={22} class="text-coral flex-shrink-0 mt-0.5" />
         <p class="font-heading text-sm md:text-base text-navy">
           Send a Storybook URL, Figma file, or GitHub repo. No specific format required.
         </p>
-      </div>
+      </Card>
     </Container>
   </Section>
 
@@ -160,7 +161,7 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
     <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
       Get in touch
     </Button>
-    <Button class="hover:underline" variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+    <Button variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
       Try the scorecard
     </Button>
   </CTABanner>

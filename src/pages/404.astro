@@ -7,6 +7,7 @@ import Text from '~/components/primitives/Text.astro';
 import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import Card from '~/components/card/Card.astro';
 import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
@@ -32,9 +33,9 @@ const detours = [
     <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
 
     <Blob tone="plum" size="lg" animate="float" opacity="opacity-20" class="absolute top-20 right-[8%] w-20 h-20" />
-    <div class="absolute top-40 left-[7%] w-12 h-12 bg-lemon/70 rounded-full animate-float-delay" aria-hidden="true"></div>
+    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-70" class="absolute top-40 left-[7%] rounded-full" />
     <Blob tone="sage" size="md" animate="float-slow" opacity="opacity-30" class="absolute bottom-24 right-[14%] w-14 h-14" />
-    <div class="absolute bottom-32 left-[12%] w-10 h-10 bg-sky/30 rounded-full animate-float" aria-hidden="true"></div>
+    <Blob tone="sky" size="sm" animate="float" opacity="opacity-30" class="absolute bottom-32 left-[12%] w-10 h-10 rounded-full" />
 
     <Container class="relative z-10">
       <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -87,22 +88,22 @@ const detours = [
             <div class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"></div>
           </div>
 
-          <div class="absolute top-0 -left-4 -rotate-6 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+          <Card variant="paper" padding="none" hover={false} class="absolute top-0 -left-4 -rotate-6 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
             <div class="w-2 h-2 rounded-full bg-coral"></div>
             <span class="font-heading text-xs font-semibold text-navy">/wandered-off</span>
-          </div>
-          <div class="absolute top-0 -right-4 rotate-6 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+          </Card>
+          <Card variant="paper" padding="none" hover={false} class="absolute top-0 -right-4 rotate-6 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
             <div class="w-2 h-2 rounded-full bg-sunset"></div>
             <span class="font-heading text-xs font-semibold text-navy">/typo-maybe</span>
-          </div>
-          <div class="absolute bottom-2 -left-4 rotate-3 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+          </Card>
+          <Card variant="paper" padding="none" hover={false} class="absolute bottom-2 -left-4 rotate-3 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
             <div class="w-2 h-2 rounded-full bg-sage"></div>
             <span class="font-heading text-xs font-semibold text-navy">/renamed-2023</span>
-          </div>
-          <div class="absolute bottom-2 -right-4 -rotate-3 bg-white rounded-xl shadow-lg border border-charcoal/5 px-3 py-2 flex items-center gap-2">
+          </Card>
+          <Card variant="paper" padding="none" hover={false} class="absolute bottom-2 -right-4 -rotate-3 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
             <div class="w-2 h-2 rounded-full bg-plum"></div>
             <span class="font-heading text-xs font-semibold text-navy">/oops-404</span>
-          </div>
+          </Card>
 
           <div class="absolute inset-0 flex items-center justify-center">
             <div class="relative animate-float-slow">
@@ -144,15 +145,14 @@ const detours = [
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {detours.map((d) => (
-          <a
-            href={d.href}
-            class={`card-hover group bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm ${d.tilt}`}
-          >
-            <div class={`w-12 h-12 ${d.iconBg} rounded-xl flex items-center justify-center mb-4`}>
-              <Icon name={d.icon} size={24} class={d.iconClass} />
-            </div>
-            <p class="font-heading font-medium text-navy mb-1">{d.title}</p>
-            <Text size="sm" tone="muted">{d.body}</Text>
+          <a href={d.href} class={`group block ${d.tilt}`}>
+            <Card variant="paper">
+              <div class={`w-12 h-12 ${d.iconBg} rounded-xl flex items-center justify-center mb-4`}>
+                <Icon name={d.icon} size={24} class={d.iconClass} />
+              </div>
+              <p class="font-heading font-medium text-navy mb-1">{d.title}</p>
+              <Text size="sm" tone="muted">{d.body}</Text>
+            </Card>
           </a>
         ))}
       </div>

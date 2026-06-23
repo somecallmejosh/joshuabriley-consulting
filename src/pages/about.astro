@@ -14,6 +14,7 @@ import Card from '~/components/card/Card.astro';
 import CardNumber from '~/components/card/CardNumber.astro';
 import CardGrid from '~/components/patterns/CardGrid.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
+import SectionHeader from '~/components/patterns/SectionHeader.astro';
 
 const description =
   '20 years building UI systems where accessibility is architecture, documentation is delivery, and the right output is the natural result of using the system.';
@@ -226,14 +227,14 @@ const stickerCopy: Record<string, string> = {
 
   <Section padding="default">
     <Container>
-      <div class="max-w-3xl mx-auto text-center mb-16">
-        <div class="mb-6 inline-block">
-          <Badge tone="plum" icon="ph:compass-duotone">How I work</Badge>
-        </div>
-        <Heading level={2} visual="display-md" align="center">
-          Three things I hold on to
-        </Heading>
-      </div>
+      <SectionHeader
+        eyebrow="How I work"
+        eyebrowIcon="ph:compass-duotone"
+        eyebrowTone="plum"
+        title="Three things I hold on to"
+        align="center"
+        class="max-w-3xl mx-auto mb-16"
+      />
 
       <CardGrid cols={3}>
         {principles.map((p) => (
@@ -329,7 +330,7 @@ const stickerCopy: Record<string, string> = {
     <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/">
       Get in touch
     </Button>
-    <Button class="hover:underline" variant="text" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+    <Button variant="text" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
       Connect on LinkedIn
     </Button>
   </CTABanner>

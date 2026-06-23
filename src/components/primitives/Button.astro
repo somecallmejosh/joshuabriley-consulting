@@ -8,7 +8,7 @@ import Icon from './Icon.astro';
  * MUST supply an `aria-label` (TS enforces this via discriminated union).
  */
 
-type Variant = 'primary' | 'secondary' | 'ghost';
+type Variant = 'primary' | 'secondary' | 'ghost' | 'navy' | 'text';
 type Size = 'sm' | 'md' | 'lg';
 
 interface BaseProps {
@@ -69,10 +69,18 @@ const variants: Record<Variant, string> = {
     'bg-white/10 text-white border border-white/20 hover:bg-white/20',
   ghost:
     'bg-transparent text-navy border border-charcoal/60 hover:bg-charcoal/5',
+  // Solid navy fill — for dark CTAs that need to read as a primary action
+  // without the plum (e.g. on peach/cream scorecard bands).
+  navy:
+    'bg-navy text-white hover:bg-navy/90 hover:shadow-lg hover:shadow-navy/30',
+  // Quiet text-link button — secondary CTA beside a filled primary. Deep coral
+  // (#C13A22) on hover keeps the underlined text AA on light surfaces.
+  text:
+    'bg-transparent text-plum hover:text-[#C13A22] hover:underline underline-offset-4 decoration-2',
 };
 
 const base =
-  'inline-flex items-center justify-center rounded-full font-heading font-semibold transition-all duration-200 ease-out active:scale-[0.98] active:translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-plum disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:active:translate-y-0';
+  'inline-flex items-center justify-center rounded-full font-heading font-semibold transition-all duration-200 ease-out active:scale-[0.98] active:translate-y-px focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 disabled:active:translate-y-0';
 
 const classes = cx(base, sizes[size], variants[variant], className);
 

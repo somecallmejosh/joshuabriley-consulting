@@ -12,6 +12,7 @@ import Blob from '~/components/decorative/Blob.astro';
 import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import FAQ from '~/components/patterns/FAQ.astro';
 import FAQItem from '~/components/patterns/FAQItem.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
 
 const description =
   "Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics.";
@@ -144,37 +145,17 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
   </Section>
 
   <!-- CTA -->
-  <Section padding="default" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-10 left-[10%]" animate="float" opacity="opacity-80" />
-    <Blob tone="sage" size="md" shape="alt" class="absolute bottom-12 right-[12%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="sky" size="sm" class="absolute top-1/2 right-[8%] rounded-full" animate="float-delay" opacity="opacity-40" />
-
-    <Container width="narrow" class="relative z-10">
-      <div class="relative bg-gradient-to-br from-navy via-navy to-plum text-white rounded-[36px] px-8 py-14 md:px-16 md:py-20 text-center shadow-[0_40px_80px_-30px_rgba(45,43,85,0.55)]">
-        <div class="absolute -top-6 -left-6 w-14 h-14 bg-lemon blob-shape hidden md:block" aria-hidden="true"></div>
-        <div class="absolute -bottom-8 -right-4 w-16 h-16 bg-coral blob-shape-alt hidden md:block" aria-hidden="true"></div>
-
-        <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-white px-4 py-2 rounded-full mb-6 font-heading text-xs uppercase tracking-wider">
-          <Icon name="ph:envelope-duotone" size={18} />
-          Still curious?
-        </div>
-        <Heading level={2} visual="display-md" tone="white" align="center" class="mb-6">
-          Didn't find your question? <span class="text-lemon">Ask it directly.</span>
-        </Heading>
-        <Text size="xl" tone="whiteMuted" align="center" class="max-w-2xl mx-auto mb-10">
-          The fastest way to find out whether something is a fit &mdash; a role, a project, or just an idea &mdash; is a real conversation. No pressure, no sales pitch.
-        </Text>
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/">
-            Get in touch
-          </Button>
-          <Button variant="secondary" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
-            Grab the free scorecard
-          </Button>
-        </div>
-      </div>
-    </Container>
-  </Section>
+  <CTABanner
+    title="Didn't find your question? Ask it directly."
+    lead="The fastest way to find out whether something is a fit — a role, a project, or just an idea — is a real conversation. No pressure, no sales pitch."
+  >
+    <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/">
+      Get in touch
+    </Button>
+    <Button variant="text" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+      Grab the free scorecard
+    </Button>
+  </CTABanner>
 </BaseLayout>
 
 <style>
