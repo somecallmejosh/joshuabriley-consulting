@@ -206,7 +206,7 @@ const featuredQuotes = [
 
       <div class="grid md:grid-cols-2 gap-6 md:gap-8">
         {featuredQuotes.map((q) => (
-          <Card variant="paper" tilt={q.tilt} padding="loose" as="article">
+          <Card hover={false} variant="paper" tilt={q.tilt} padding="loose" as="article">
             <CardQuoteMark size={40} class={q.quoteTone} />
             <blockquote>
               <p class="font-display text-xl text-navy leading-snug mb-6 max-w-[42ch]">

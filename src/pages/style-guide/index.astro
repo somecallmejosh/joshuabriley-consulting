@@ -368,7 +368,7 @@ const proofSections = [
       />
 
       <CardGrid cols={3} class="mt-12">
-        <Card variant="paper" tilt={-1}>
+        <Card variant="paper" tilt={-1} hover={false}>
           <CardNumber n={1} slot="corner" />
           <Icon name="ph:binoculars-duotone" size={36} class="text-coral mb-4" />
           <Heading level={3} visual="h3" class="mb-2">Service card</Heading>
@@ -379,7 +379,7 @@ const proofSections = [
           </ul>
         </Card>
 
-        <Card variant="paper" tilt={-1}>
+        <Card variant="paper" tilt={-1} hover={false}>
           <CardQuoteMark slot="corner" />
           <blockquote class="text-charcoal/70 text-sm leading-relaxed italic mb-4">
             “Josh transformed our scattered components into a system the whole team trusts.”
@@ -399,7 +399,7 @@ const proofSections = [
           <p class="font-heading text-xs uppercase tracking-widest text-navy mt-3">— Priya N., VP Engineering</p>
         </Card>
 
-        <Card variant="polaroid" tilt={-2} class="max-w-xs">
+        <Card variant="polaroid" tilt={-2} hover={false} class="max-w-xs">
           <Pin slot="corner" />
           <div slot="media" class="avatar-slab bg-gradient-to-br from-plum/30 to-sky/30">
             <Icon name="ph:cards-three-duotone" size={48} class="text-plum" />
@@ -414,7 +414,7 @@ const proofSections = [
           <Button variant="primary" iconRight="ph:arrow-right" href="/tools/scorecard/">Take the scorecard</Button>
         </Card>
 
-        <Card variant="outline" tilt={1}>
+        <Card variant="outline" tilt={1} hover={false}>
           <Badge tone="sage" class="mb-4" icon="ph:sparkle-duotone">New</Badge>
           <Heading level={3} visual="h3">Quarterly retainer</Heading>
           <Text size="sm" tone="muted" class="mt-2">Steady support for teams who want a hand on the rudder.</Text>

@@ -343,7 +343,7 @@ const process = [
         {forYouSignals.map((s) => {
           const t = signalToneMap[s.tone];
           return (
-            <Card variant="paper" tilt={s.tilt} class={s.span ? 'sm:col-span-2 flex gap-4' : 'flex gap-4'}>
+            <Card hover={false} variant="paper" tilt={s.tilt} class={s.span ? 'sm:col-span-2 flex gap-4' : 'flex gap-4'}>
               <div class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}>
                 <Icon name={s.icon} size={24} class={t.iconClass} />
               </div>
@@ -358,7 +358,7 @@ const process = [
 
   <Section padding="tight" class="bg-charcoal/[0.03]">
     <Container width="narrow">
-      <Card variant="paper" tilt={0} padding="loose" class="relative overflow-hidden -rotate-[0.3deg]">
+      <Card hover={false} variant="paper" tilt={0} padding="loose" class="relative overflow-hidden -rotate-[0.3deg]">
         <Blob tone="sunset" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
         <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
 
@@ -392,7 +392,7 @@ const process = [
         {deliverables.map((d) => {
           const a = deliverableAccentMap[d.accent];
           return (
-            <Card variant="paper" tilt={d.tilt} padding="loose" class="relative overflow-hidden">
+            <Card hover={false} variant="paper" tilt={d.tilt} padding="loose" class="relative overflow-hidden">
               <div class={`absolute -top-6 -right-6 w-24 h-24 ${a.ring} rounded-full pointer-events-none`} aria-hidden="true"></div>
               <div class="relative">
                 <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
@@ -406,7 +406,7 @@ const process = [
         })}
 
 
-        <div class="card-hover bg-gradient-to-br from-navy to-plum text-white rounded-3xl p-7 border border-navy/10 shadow-sm relative overflow-hidden rotate-1">
+        <div class="bg-gradient-to-br from-navy to-plum text-white rounded-3xl p-7 border border-navy/10 shadow-sm relative overflow-hidden rotate-1">
           <div class="absolute -top-6 -right-6 w-24 h-24 bg-coral/20 rounded-full" aria-hidden="true"></div>
           <div class="relative">
             <div class="w-14 h-14 bg-white/10 rounded-2xl flex items-center justify-center mb-5">
@@ -434,7 +434,7 @@ const process = [
         class="mb-14"
       />
 
-      <Card variant="paper" padding="none" class="overflow-hidden">
+      <Card hover={false} variant="paper" padding="none" class="overflow-hidden">
         <ul class="divide-y divide-charcoal/5">
           {included.map((item) => {
             const i = includedIconMap[item.accent];
@@ -470,7 +470,7 @@ const process = [
         {process.map((step) => (
           <div class="flex gap-5">
             <CardNumber n={Number(step.n)} tone={step.tone as 'coral' | 'plum' | 'sunset' | 'sage'} size="lg" inline />
-            <Card variant="paper" tilt={step.tilt} class="flex-1">
+            <Card hover={false} variant="paper" tilt={step.tilt} class="flex-1">
               <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
               <Text tone="muted">{step.body}</Text>
             </Card>

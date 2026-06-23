@@ -383,7 +383,7 @@ const testimonials = [
         {signals.map((s) => {
           const t = signalToneMap[s.tone];
           return (
-            <Card variant="paper" tilt={s.tilt} class="flex gap-4">
+            <Card hover={false} variant="paper" tilt={s.tilt} class="flex gap-4">
               <div
                 class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
               >
@@ -523,7 +523,7 @@ const testimonials = [
         {process.map((step) => (
           <div class="flex gap-5">
             <CardNumber n={Number(step.n)} tone={step.tone as 'coral' | 'plum' | 'sunset' | 'sage'} size="lg" inline />
-            <Card variant="paper" tilt={step.tilt} class="flex-1">
+            <Card hover={false} variant="paper" tilt={step.tilt} class="flex-1">
               <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
               <Text tone="muted">{step.body}</Text>
             </Card>

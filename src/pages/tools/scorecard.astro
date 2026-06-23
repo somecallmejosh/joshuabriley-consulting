@@ -160,7 +160,7 @@ const stepTiltClass: Record<string, string> = {
       />
       <div class="grid md:grid-cols-3 gap-6">
         {howSteps.map((step) => (
-          <Card variant="paper" padding="none" class={`${stepTiltClass[step.tilt]} p-7 shadow-lg`}>
+          <Card hover={false} variant="paper" padding="none" class={`${stepTiltClass[step.tilt]} p-7 shadow-lg`}>
             <div slot="corner" class={`absolute -top-5 -left-3 w-12 h-12 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-display font-bold text-xl shadow-lg`}>
               {step.n}
             </div>
@@ -170,7 +170,7 @@ const stepTiltClass: Record<string, string> = {
         ))}
       </div>
 
-      <Card variant="paper" class="mt-12 max-w-3xl mx-auto">
+      <Card hover={false} variant="paper" class="mt-12 max-w-3xl mx-auto">
         <p class="font-hand text-plum text-xl mb-4 text-center">teacher&rsquo;s grading key</p>
         <div class="grid sm:grid-cols-3 gap-4">
           <div class="flex items-start gap-3 bg-coral/5 rounded-xl p-4 border border-coral/15">

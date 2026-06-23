@@ -192,27 +192,34 @@ const tools = [
         {tools.map((t, idx) => {
           const a = accentMap[t.accent];
           return (
-            <Card variant="paper" tilt={t.tilt} padding="loose" class="flex flex-col">
+            <Card variant="paper" tilt={t.tilt} padding="none" class="flex flex-col">
               <CardNumber slot="corner" n={idx + 1} tone={cardNumberTones[t.accent] ?? 'coral'} announce />
-              <div class="relative flex flex-col flex-1">
+              {/* Soft accent blob in the corner — clipped to the card without
+                  hiding the tucked-out CardNumber badge. */}
+              <div class="absolute inset-0 overflow-hidden rounded-2xl pointer-events-none" aria-hidden="true">
+                <div class={`absolute -top-10 -right-10 w-32 h-32 ${a.bg} rounded-full`}></div>
+              </div>
+              {/* The whole card is the link: padding lives on the anchor so it
+                  fills the card edge-to-edge. */}
+              <a href={t.href} class="relative flex flex-col flex-1 group p-8 md:p-10">
                 <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
                   <Icon name={t.icon} size={28} class={a.text} />
                 </div>
                 <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider mb-2`}>
                   {t.eyebrow}
                 </span>
-                <Heading level={2} visual="h2" class="mb-3 leading-tight">{t.title}</Heading>
+                <Heading level={2} visual="h2" class="mb-3 leading-tight group-hover:text-coral transition-colors">{t.title}</Heading>
                 <Text tone="muted" class="mb-5">{t.body}</Text>
                 <ul class="flex flex-wrap gap-2 mb-6 mt-auto">
                   {t.tags.map((tag) => (
                     <li class="font-heading text-xs font-medium text-charcoal/70 bg-charcoal/5 rounded-full px-3 py-1">{tag}</li>
                   ))}
                 </ul>
-                <a href={t.href} class={`inline-flex items-center gap-1.5 font-heading font-semibold ${a.text} text-sm hover:gap-3 transition-all`}>
+                <span class={`inline-flex items-center gap-1.5 font-heading font-semibold ${a.text} text-sm`}>
                   {t.cta}
-                  <Icon name="ph:arrow-right-bold" size={16} />
-                </a>
-              </div>
+                  <Icon name="ph:arrow-right-bold" size={16} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
+                </span>
+              </a>
             </Card>
           );
         })}

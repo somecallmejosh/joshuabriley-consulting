@@ -238,7 +238,7 @@ const stickerCopy: Record<string, string> = {
 
       <CardGrid cols={3}>
         {principles.map((p) => (
-          <Card variant="paper" tilt={p.tilt}>
+          <Card hover={false} variant="paper" tilt={p.tilt}>
             <CardNumber n={p.n} slot="corner" />
             <div class={`w-12 h-12 ${p.iconBg} rounded-xl flex items-center justify-center mb-4 mt-2`}>
               <Icon name={p.icon} size={26} class={p.iconClass} />
@@ -293,10 +293,10 @@ const stickerCopy: Record<string, string> = {
         <ul class="space-y-5 list-none relative pt-4">
           {learning.map((item, i) => (
             <li
-              class={`learning-card group relative flex items-start gap-4 bg-white/[0.06] backdrop-blur-sm rounded-xl p-5 pr-6 border border-white/10 transform ${item.tilt} transition-transform duration-300 ease-out hover:rotate-0 hover:-translate-y-1 hover:bg-white/[0.09] hover:border-lemon/30 hover:shadow-2xl hover:shadow-coral/10`}
+              class={`learning-card relative flex items-start gap-4 bg-white/[0.06] backdrop-blur-sm rounded-xl p-5 pr-6 border border-white/10 transform ${item.tilt}`}
               style={`animation-delay: ${i * 120}ms`}
             >
-              <div class={`w-11 h-11 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0 group-hover:rotate-6 transition-transform duration-300`}>
+              <div class={`w-11 h-11 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0`}>
                 <Icon name={item.icon} size={24} class={item.iconClass} />
               </div>
               <div class="flex-1 min-w-0">

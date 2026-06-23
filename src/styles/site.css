@@ -564,13 +564,7 @@ header .mobile-menu a[aria-current='page']::before {
     transform 0.35s ease,
     box-shadow 0.35s ease;
 }
-.card-base:hover {
-  transform: rotate(0deg) translateY(-4px) !important;
-  box-shadow:
-    0 24px 50px -18px rgba(45, 43, 85, 0.28),
-    0 0 0 1px rgba(108, 74, 182, 0.08);
-  z-index: 2;
-}
+/* No :hover lift — testimonial / quote cards aren't links (see card-base usage). */
 .card-sticky {
   background: linear-gradient(180deg, #fef3c7 0%, #fde68a 100%);
   border-radius: 3px 3px 18px 3px;
