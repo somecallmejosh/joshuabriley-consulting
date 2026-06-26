@@ -21,14 +21,14 @@ const { variant, hidden = true, id, class: className } = Astro.props;
 
 const styles: Record<typeof variant, { surface: string; icon: string; iconColor: string }> = {
   success: {
-    surface: 'bg-sage/10 border-sage-deep text-navy',
-    icon: 'ph:check-circle-duotone',
-    iconColor: 'text-sage-deep',
+    surface: 'bg-raised border-line-strong text-ink',
+    icon: 'ph:check-circle',
+    iconColor: 'text-ink',
   },
   error: {
-    surface: 'bg-coral/10 border-plum text-navy',
-    icon: 'ph:warning-circle-duotone',
-    iconColor: 'text-plum',
+    surface: 'bg-raised border-accent text-ink',
+    icon: 'ph:warning-circle',
+    iconColor: 'text-accent',
   },
 };
 
@@ -43,7 +43,7 @@ const role = variant === 'error' ? 'alert' : 'status';
   hidden={hidden}
   data-form-alert={variant}
   class={cx(
-    'rounded-2xl border px-5 py-4 text-sm leading-relaxed font-body flex items-start gap-3 focus:outline-none [&[hidden]]:hidden',
+    'rounded-md border px-5 py-4 text-sm leading-relaxed font-body flex items-start gap-3 focus:outline-none [&[hidden]]:hidden',
     styles[variant].surface,
     className,
   )}

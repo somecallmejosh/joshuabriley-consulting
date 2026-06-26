@@ -5,14 +5,11 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
+import Link from '~/components/primitives/Link.astro';
 import FAQ from '~/components/patterns/FAQ.astro';
 import FAQItem from '~/components/patterns/FAQItem.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
 
 const description =
   "Answers to the questions clients and colleagues ask most about audits, component library builds, process, timelines, deliverables, and logistics.";
@@ -21,18 +18,11 @@ const allFaqs = await getCollection('faqs');
 const sorted = allFaqs.sort((a, b) => a.data.order - b.data.order);
 
 const categories = [
-  { id: 'services-fit', n: '01', label: 'Services & Fit', tone: 'coral', icon: 'ph:compass-duotone', dot: 'bg-coral', heading: 'Is this the right kind of help?' },
-  { id: 'process-timeline', n: '02', label: 'Process & Timeline', tone: 'plum', icon: 'ph:calendar-duotone', dot: 'bg-plum', heading: 'What the engagement looks like.' },
-  { id: 'deliverables', n: '03', label: 'Deliverables', tone: 'sage', icon: 'ph:package-duotone', dot: 'bg-sage', heading: 'What you get at the end.' },
-  { id: 'logistics', n: '04', label: 'Logistics', tone: 'sky', icon: 'ph:gear-duotone', dot: 'bg-sky', heading: 'The practical stuff.' },
+  { id: 'services-fit', n: '01', label: 'Services & Fit', heading: 'Is this the right kind of help?' },
+  { id: 'process-timeline', n: '02', label: 'Process & Timeline', heading: 'What the engagement looks like.' },
+  { id: 'deliverables', n: '03', label: 'Deliverables', heading: 'What you get at the end.' },
+  { id: 'logistics', n: '04', label: 'Logistics', heading: 'The practical stuff.' },
 ] as const;
-
-const tabToneMap: Record<string, string> = {
-  coral: 'bg-coral/10 text-[#C13A22] border-coral/25',
-  plum: 'bg-plum/15 text-plum border-plum/25',
-  sage: 'bg-sage/20 text-sage-deep border-sage/30',
-  sky: 'bg-sky/15 text-sky-deep border-sky/30',
-};
 
 // Pre-render answer bodies (markdown) for each FAQ.
 const rendered = await Promise.all(
@@ -46,90 +36,53 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
 
 <BaseLayout title="FAQs — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
 
-  <Section padding="loose" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-6 lg:top-16 right-[8%]" animate="float" />
-    <Blob tone="sage" size="sm" class="absolute top-44 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
-    <Blob tone="sky" size="sm" class="absolute bottom-10 right-[14%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="coral" size="sm" class="absolute bottom-24 left-[18%] rounded-full" animate="float" opacity="opacity-30" />
-
-    <Container width="default" class="relative z-10 text-center">
-      <div class="mb-8 inline-block">
-        <Badge tone="lemon" icon="ph:chats-circle-duotone">Frequently asked, happily answered</Badge>
-      </div>
-      <Heading level={1} visual="display-xl" align="center" balance class="mb-6">
-        Let's clear <WavyUnderline>the air</WavyUnderline>.
-      </Heading>
-      <Text size="xl" tone="muted" align="center" class="mb-14 max-w-2xl mx-auto">
-        These questions come from clients and colleagues I've worked with over the years. Most concern consulting engagements; if you're here from the hiring side, the short version is that everything below describes how I work.
-        If yours isn't here, <a href="/contact/" class="text-plum underline underline-offset-4 hover:text-coral font-semibold">just ask</a>.
-      </Text>
-
-      <div class="grid sm:grid-cols-2 gap-6 max-w-3xl mx-auto text-left">
-        <div class="bubble" style="transform: rotate(-1.2deg)" aria-hidden="true">
-          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-plum mb-1">
-            <Icon name="ph:user-circle-duotone" size={18} />
-            Client
-          </div>
-          <p class="font-display text-navy text-lg leading-snug">
-            "How long does a typical engagement take?"
-          </p>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Questions / 01</p>
+      <div class="mt-6 grid gap-8 lg:grid-cols-12 lg:gap-16 lg:items-end">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+            Answers to the questions I get <em class="ink-wink font-normal italic">asked most</em>.
+          </Heading>
         </div>
-        <div class="bubble bubble-right" style="transform: rotate(1deg); background: #fff6ec" aria-hidden="true">
-          <div class="flex items-center gap-2 text-xs font-heading uppercase tracking-wider text-[#C13A22] mb-1 justify-end">
-            Joshua
-            <Icon name="ph:sparkle-duotone" size={18} />
-          </div>
-          <p class="font-display text-navy text-lg leading-snug text-right">
-            "Usually 2–3 weeks for the starter. I'll walk you through it below."
-          </p>
+        <div class="lg:col-span-5">
+          <Text size="lg" tone="muted" class="max-w-xl">
+            These come from clients and colleagues over the years. Most concern consulting
+            engagements; if you are here from the hiring side, everything below still describes how
+            I work. If yours is not here,
+            <Link href="/contact/" variant="inline">just ask</Link>.
+          </Text>
         </div>
       </div>
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-6xl mx-auto" aria-hidden="true"></div>
-
-  <!-- BODY -->
-  <Section padding="default">
-    <Container>
-      <div class="grid lg:grid-cols-12 gap-10 lg:gap-14">
-        <!-- Sticky jump list -->
+  {/* ───────────────────────── BODY ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        {/* Sticky jump list */}
         <aside class="lg:col-span-4 xl:col-span-3">
           <div class="lg:sticky lg:top-28">
-            <p class="font-heading text-xs uppercase tracking-[0.15em] text-charcoal/70 mb-4 pl-2">Jump to</p>
-            <nav class="flex flex-col gap-1" aria-label="FAQ sections">
+            <p class="mono-label">Jump to</p>
+            <nav class="mt-5 flex flex-col" aria-label="FAQ sections">
               {categories.map((c) => (
-                <a href={`#${c.id}`} class="jump-link">
-                  <span class={`dot ${c.dot}`} aria-hidden="true"></span>
-                  {c.label}
+                <a href={`#${c.id}`} class="jump-link group flex items-baseline gap-3 border-b border-line py-3 transition-colors hover:text-accent">
+                  <span class="font-mono text-[0.7rem] text-accent">{c.n}</span>
+                  <span class="font-display text-[0.95rem] font-medium tracking-tight text-ink transition-colors group-hover:text-accent">{c.label}</span>
                 </a>
               ))}
             </nav>
-
-            <div class="mt-8 bg-white rounded-2xl border border-charcoal/5 p-5 shadow-[0_14px_32px_-22px_rgba(45,43,85,0.22)] hidden lg:block">
-              <div class="flex items-center gap-2 mb-2">
-                <Icon name="ph:lightbulb-duotone" size={22} class="text-sunset" />
-                <span class="font-heading text-xs uppercase tracking-wider text-navy font-semibold">Tip</span>
-              </div>
-              <Text size="sm" tone="muted">
-                Click any question to expand its answer. Still stuck?
-                <a href="/contact/" class="text-plum font-semibold hover:text-coral">Send me a note</a>.
-              </Text>
-            </div>
           </div>
         </aside>
 
-        <!-- FAQ sections -->
+        {/* FAQ sections */}
         <div class="lg:col-span-8 xl:col-span-9 space-y-16">
           {categories.map((c) => (
             <section id={c.id} class="scroll-mt-28">
-              <div class="flex items-center gap-4 mb-6">
-                <span class={`tab-label ${tabToneMap[c.tone]} border`}>
-                  <Icon name={c.icon} size={16} />
-                  {c.n} · {c.label}
-                </span>
-              </div>
-              <Heading level={2} visual="display-md" class="mb-8">{c.heading}</Heading>
+              <p class="mono-label">{c.n} / {c.label}</p>
+              <Heading level={2} visual="display-md" class="mt-4 mb-7">{c.heading}</Heading>
               <FAQ>
                 {byCategory(c.id).map(({ entry, Content }) => (
                   <FAQItem question={entry.data.question}>
@@ -144,84 +97,30 @@ const byCategory = (cat: string) => rendered.filter((r) => r.entry.data.category
     </Container>
   </Section>
 
-  <!-- CTA -->
-  <CTABanner
-    title="Didn't find your question? Ask it directly."
-    lead="The fastest way to find out whether something is a fit — a role, a project, or just an idea — is a real conversation. No pressure, no sales pitch."
-  >
-    <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-    <Button variant="text" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
-      Grab the free scorecard
-    </Button>
-  </CTABanner>
+  {/* ───────────────────────── CONTACT (ink) ───────────────────────── */}
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label !text-paper/65">Still wondering / 02</p>
+          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[20ch]">
+            Didn’t find your question? Ask it directly.
+          </Heading>
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            The fastest way to find out whether something is a fit — a role, a project, or just an
+            idea — is a real conversation. No pressure, no sales pitch.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">Get in touch</Button>
+            <a
+              href="/tools/scorecard/"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Grab the free scorecard <Icon name="ph:arrow-up-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>
-
-<style>
-  .bubble {
-    position: relative;
-    background: #ffffff;
-    border: 1.5px solid rgba(45, 43, 85, 0.08);
-    border-radius: 22px;
-    padding: 1rem 1.25rem;
-    box-shadow: 0 18px 40px -22px rgba(45, 43, 85, 0.28);
-  }
-  .bubble::after {
-    content: '';
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    background: inherit;
-    border-right: 1.5px solid rgba(45, 43, 85, 0.08);
-    border-bottom: 1.5px solid rgba(45, 43, 85, 0.08);
-    bottom: -10px;
-    left: 28px;
-    transform: rotate(45deg);
-    border-bottom-right-radius: 4px;
-  }
-  .bubble-right::after {
-    left: auto;
-    right: 28px;
-  }
-  .tab-label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.6rem;
-    padding: 0.5rem 1.15rem;
-    border-radius: 9999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-weight: 600;
-    font-size: 0.78rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-  .jump-link {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    padding: 0.65rem 0.9rem;
-    border-radius: 12px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: rgba(46, 46, 48, 0.72);
-    transition:
-      background 0.2s ease,
-      color 0.2s ease,
-      transform 0.2s ease;
-  }
-  .jump-link:hover,
-  .jump-link:focus-visible {
-    background: rgba(232, 87, 61, 0.08);
-    color: #b53e25;
-    transform: translateX(2px);
-    outline: none;
-  }
-  .jump-link .dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 9999px;
-    flex-shrink: 0;
-  }
-</style>

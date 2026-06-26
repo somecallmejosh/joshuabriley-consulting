@@ -1,0 +1,167 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * SiteShot — a screenshot of a live site presented as a quiet browser window.
+ * Editorial-Technical: hairline frame, a mono URL rail (spec-sheet voice), and
+ * a soft ambient lift. The whole frame links out to the real site, so a gentle
+ * hover is earned — a "Visit site" tab slides up and the frame settles up a hair.
+ */
+
+interface Props {
+  /** Root-relative screenshot path, e.g. /images/projects/atk-live.webp */
+  src: string;
+  alt: string;
+  /** Live URL the frame links to. */
+  href: string;
+  /** Display URL shown in the address rail, e.g. americastestkitchen.com */
+  label: string;
+  class?: string;
+}
+
+const { src, alt, href, label, class: className } = Astro.props;
+---
+
+<figure class={cx('site-shot', className)}>
+  <a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="site-shot-link group/shot"
+    aria-label={`Visit ${label} (opens in a new tab)`}
+  >
+    <span class="site-shot-bar">
+      <span class="site-shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+      <span class="site-shot-url">{label}</span>
+      <span class="site-shot-live"><span class="site-shot-live-dot" aria-hidden="true"></span>live</span>
+    </span>
+    <span class="site-shot-stage">
+      <img src={src} alt={alt} width="1600" height="1005" loading="lazy" decoding="async" />
+      <span class="site-shot-visit" aria-hidden="true">
+        Visit site <Icon name="ph:arrow-up-right" size={14} />
+      </span>
+    </span>
+  </a>
+  <figcaption class="site-shot-cap mono-label">
+    <span>Live site</span><span>{label}</span>
+  </figcaption>
+</figure>
+
+<style>
+  .site-shot { margin: 0; }
+
+  .site-shot-link {
+    display: block;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+    transform: translateY(0);
+    transition:
+      transform 0.5s var(--ease-out),
+      box-shadow 0.5s var(--ease-out);
+    will-change: transform;
+  }
+  .site-shot-link:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.05),
+      0 28px 60px -26px rgba(27, 26, 23, 0.38);
+  }
+
+  /* Address rail — the spec-sheet voice. Mono URL, hairline dots, a live tick. */
+  .site-shot-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.95rem;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .site-shot-dots { display: inline-flex; gap: 6px; }
+  .site-shot-dots span {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+  .site-shot-url {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .site-shot-live {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-muted);
+  }
+  .site-shot-live-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: site-shot-pulse 2.6s ease-in-out infinite;
+  }
+  @keyframes site-shot-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+  }
+
+  /* Stage — the screenshot itself, with a hover "Visit site" tab. */
+  .site-shot-stage { position: relative; display: block; line-height: 0; }
+  .site-shot-stage img { width: 100%; height: auto; display: block; }
+  .site-shot-visit {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 0.9rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.82rem;
+    font-weight: 500;
+    line-height: 1;
+    opacity: 0;
+    transform: translateY(8px);
+    transition:
+      opacity 0.4s var(--ease-out),
+      transform 0.4s var(--ease-out);
+  }
+  .group\/shot:hover .site-shot-visit,
+  .group\/shot:focus-visible .site-shot-visit {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .site-shot-cap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .site-shot-link, .site-shot-link:hover { transform: none; }
+    .site-shot-visit { transition: none; }
+    .site-shot-live-dot { animation: none; }
+  }
+</style>

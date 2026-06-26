@@ -5,12 +5,7 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
-import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Card from '~/components/card/Card.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 
 const description =
   'Practical takes, honest opinions, and the occasional fictional UX engineer. Essays on design systems, accessibility, and front-end architecture.';
@@ -19,223 +14,119 @@ const all = await getCollection('posts', ({ data }) => !data.draft);
 const sorted = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
 const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
-// Every essay renders as the same card; the latest just leads and wears a tag.
+// Every essay renders as the same row; the latest just leads and wears a tag.
 const posts = [featured, ...sorted.filter((p) => p !== featured)];
 
-// Per-card accent (corner blob + icon chip + category) keyed off the post's
-// sticker tone. All `text` values are AA on white.
-const accentMap: Record<string, { text: string; bg: string; ring: string }> = {
-  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10', ring: 'ring-coral/20' },
-  plum: { text: 'text-plum', bg: 'bg-plum/10', ring: 'ring-plum/20' },
-  sky: { text: 'text-sky-deep', bg: 'bg-sky/15', ring: 'ring-sky/30' },
-  sunset: { text: 'text-sunset-deep', bg: 'bg-sunset/10', ring: 'ring-sunset/25' },
-  sage: { text: 'text-sage-deep', bg: 'bg-sage/15', ring: 'ring-sage/30' },
-  lemon: { text: 'text-navy', bg: 'bg-lemon/30', ring: 'ring-lemon/50' },
-};
-
-const topics = [
-  { icon: 'ph:stack-duotone', label: 'Design systems' },
-  { icon: 'ph:wheelchair-duotone', label: 'Accessibility' },
-  { icon: 'ph:tree-structure-duotone', label: 'Front-end architecture' },
-];
+const fmtDate = (d: Date) =>
+  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
 
 <BaseLayout title="Blog — Joshua Briley | UX Engineering, in Practice" description={description}>
-  {/* ── Hero: identity (left) + field-notes illustration (right) ──────────── */}
-  <Section padding="loose" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-16 left-[4%]" animate="float" opacity="opacity-40" />
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Writing · Field Notes</span>
+        <span class="hidden sm:inline text-ink-muted">{posts.length} essays</span>
+      </div>
 
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-8 items-center">
-        <div class="lg:col-span-6">
-          <Badge tone="coral" icon="ph:notebook-duotone">Field Notes</Badge>
-          <Heading level={1} visual="display-xl" class="mt-6 mb-5">
-            UX engineering, <WavyUnderline>in practice</WavyUnderline>
-          </Heading>
-          <Text size="xl" tone="muted" class="max-w-xl">
-            Practical takes, honest opinions, and the occasional fictional UX engineer —
-            written from 20 years of shipping systems teams actually use.
-          </Text>
-
-          <div class="mt-8 flex flex-wrap gap-2.5">
-            {topics.map((t) => (
-              <span class="inline-flex items-center gap-1.5 rounded-full bg-white border border-charcoal/10 px-3.5 py-1.5 text-xs font-heading font-medium text-navy/80 shadow-sm">
-                <Icon name={t.icon} size={15} class="text-plum" />
-                {t.label}
-              </span>
-            ))}
-          </div>
-        </div>
-
-        {/* Field-notes scene — desktop only, decorative */}
-        <div class="lg:col-span-6 relative h-[460px] hidden lg:block" aria-hidden="true">
-          <Blob tone="coral" size="md" animate="float" opacity="opacity-20" class="absolute top-6 right-[14%]" />
-          <Blob tone="sky" size="sm" animate="float-slow" opacity="opacity-30" class="absolute bottom-12 left-[8%] rounded-full" />
-
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/20 animate-spin-slow"></div>
-          </div>
-
-          {/* Notebook page centrepiece */}
-          <div class="notebook-page absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-64 -rotate-[4deg] animate-float-slow bg-white rounded-2xl shadow-xl border border-charcoal/5 p-6 pl-11 overflow-hidden">
-            <div class="relative z-10">
-              <p class="font-display italic text-navy text-xl mb-2">Field notes</p>
-              <div class="h-1.5 w-20 rounded-full bg-coral/50 mb-4"></div>
-              <div class="space-y-2.5">
-                <div class="h-2 rounded-full bg-charcoal/10"></div>
-                <div class="h-2 rounded-full bg-charcoal/10 w-5/6"></div>
-                <div class="h-2 rounded-full bg-coral/30 w-2/3"></div>
-                <div class="h-2 rounded-full bg-charcoal/10 w-11/12"></div>
-                <div class="h-2 rounded-full bg-charcoal/10 w-1/2"></div>
-              </div>
-              <div class="mt-5 inline-flex items-center gap-1.5 rounded-full bg-plum/10 px-3 py-1.5">
-                <Icon name="ph:pencil-line-duotone" size={14} class="text-plum" />
-                <span class="font-heading text-[11px] font-semibold text-plum">Drafting…</span>
-              </div>
-            </div>
-          </div>
-
-          {/* Floating "new idea" sticky */}
-          <div class="absolute top-[5%] right-[2%] bg-white rounded-2xl shadow-lg border border-charcoal/5 px-4 py-3 w-40 animate-float rotate-3">
-            <div class="flex items-center gap-2 mb-2">
-              <span class="w-7 h-7 rounded-lg bg-lemon/50 flex items-center justify-center">
-                <Icon name="ph:lightbulb-filament-duotone" size={16} class="text-[#A24818]" />
-              </span>
-              <span class="font-heading text-xs font-semibold text-navy">New idea</span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="h-1.5 rounded-full bg-charcoal/10"></div>
-              <div class="h-1.5 rounded-full bg-lemon/60 w-3/5"></div>
-            </div>
-          </div>
-
-          {/* Floating "published" pill */}
-          <div class="absolute bottom-[8%] right-[10%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay -rotate-3">
-            <Icon name="ph:seal-check-duotone" size={14} class="text-sage-deep" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Published</span>
-          </div>
-
-          <Icon name="ph:star-four-duotone" size={22} class="text-coral absolute top-[22%] left-[6%] animate-wiggle" />
-          <Icon name="ph:star-four-duotone" size={14} class="text-plum absolute bottom-[28%] left-[20%] animate-float" />
-        </div>
+      <div class="mt-10 max-w-3xl lg:mt-14">
+        <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+          UX engineering, <em class="ink-wink font-normal italic">in practice</em>.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+          Practical takes, honest opinions, and the occasional fictional UX engineer —
+          written from 20 years of shipping systems teams actually use.
+        </Text>
+        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+          {['Design systems', 'Accessibility', 'Front-end architecture'].map((t) => (
+            <li class="flex items-center gap-2">
+              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{t}
+            </li>
+          ))}
+        </ul>
       </div>
     </Container>
   </Section>
 
-  {/* ── Essays: one card vocabulary, per-card accent for life ────────────── */}
-  <Section padding="default">
-    <Container>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" data-reveal-stagger>
-        {posts.map((post, i) => {
-          const a = accentMap[post.data.sticker] ?? accentMap.coral;
-          return (
-            <Card as="article" variant="paper" padding="none" class={`relative overflow-hidden ${a.ring}`}>
-              <div class={`absolute -top-12 -right-12 w-32 h-32 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
-              <a href={`/blog/${post.id}/`} class="relative flex flex-col h-full group p-6 md:p-7">
-                <div class={`w-12 h-12 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
-                  <Icon name={post.data.icon} size={26} class={a.text} />
-                </div>
+  {/* ───────────────────────── ESSAY LIST ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <p class="mono-label">All essays / 01</p>
 
-                <p class="flex flex-wrap items-center gap-x-2 gap-y-1 font-heading text-xs uppercase tracking-wider mb-3">
-                  {i === 0 && (
-                    <>
-                      <span class="inline-flex items-center gap-1 text-[#C13A22] font-semibold">
-                        <Icon name="ph:star-four-duotone" size={12} />
-                        Latest
-                      </span>
-                      <span class="text-charcoal/30" aria-hidden="true">·</span>
-                    </>
-                  )}
-                  <span class={`${a.text} font-semibold`}>{post.data.category}</span>
-                </p>
+      <ul class="mt-8 border-t border-line">
+        {posts.map((post, i) => (
+          <li>
+            <a
+              href={`/blog/${post.id}/`}
+              class="group grid grid-cols-12 items-baseline gap-4 border-b border-line py-7 transition-colors hover:bg-ink/[0.02]"
+            >
+              <div class="col-span-12 flex flex-wrap items-center gap-x-3 gap-y-1 sm:col-span-3 lg:col-span-3">
+                <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{post.data.category}</span>
+                <time datetime={post.data.date.toISOString().slice(0, 10)} class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">
+                  {fmtDate(post.data.date)}
+                </time>
+                {i === 0 && (
+                  <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">· Latest</span>
+                )}
+              </div>
 
-                <Heading level={3} visual="h3" class="mb-3 group-hover:text-coral transition-colors">
+              <div class="col-span-10 sm:col-span-8 lg:col-span-8">
+                <Heading level={2} visual="h3" class="transition-colors group-hover:text-accent">
                   {post.data.title}
                 </Heading>
-
-                <Text size="sm" tone="muted" class="mb-6 line-clamp-3">
+                <Text tone="muted" class="mt-2 max-w-2xl">
                   {post.data.description}
                 </Text>
-
-                <span class="mt-auto inline-flex items-center gap-2 text-sm text-charcoal/70 font-heading">
-                  <span class="inline-flex items-center gap-1.5 text-[#C13A22] font-semibold">
-                    Read essay
-                    <Icon name="ph:arrow-right-bold" size={14} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-                  </span>
-                  <span class="text-charcoal/25" aria-hidden="true">·</span>
-                  <span class="inline-flex items-center gap-1">
-                    <Icon name="ph:clock-duotone" size={15} />
-                    {post.data.readMinutes} min
-                  </span>
+                <span class="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-ink-muted">
+                  <Icon name="ph:clock" size={13} />{post.data.readMinutes} min read
                 </span>
-              </a>
-            </Card>
-          );
-        })}
-      </div>
+              </div>
+
+              <div class="col-span-2 flex justify-end sm:col-span-1 lg:col-span-1">
+                <Icon name="ph:arrow-right" size={18} class="text-ink-faint transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent" />
+              </div>
+            </a>
+          </li>
+        ))}
+      </ul>
     </Container>
   </Section>
 
-  {/* ── Newsletter ───────────────────────────────────────────────────────── */}
-  <Section padding="default">
-    <Container width="narrow">
-      <div class="relative bg-navy text-white rounded-3xl p-10 md:p-16 overflow-hidden">
-        <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-30" />
-        <Blob tone="plum" size="lg" shape="alt" class="absolute -bottom-12 -left-8" animate="float" opacity="opacity-50" />
-
-        <div class="relative z-10 text-center">
-          <div class="inline-flex items-center gap-2 bg-white/10 border border-white/20 text-lemon px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium">
-            <Icon name="ph:envelope-simple-duotone" size={18} />
-            Field Notes, delivered
-          </div>
-          <Heading level={2} visual="display-md" tone="white" align="center" class="mb-5">
-            Get new essays in your inbox
+  {/* ───────────────────────── NEWSLETTER (ink) ───────────────────────── */}
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-7">
+          <p class="mono-label !text-paper/65">Field notes, delivered / 02</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[18ch]">
+            Get new essays in your inbox.
           </Heading>
-          <Text size="lg" tone="whiteMuted" align="center" class="max-w-xl mx-auto mb-8">
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
             One honest essay at a time. No spam, no funnels — just the stuff I'd send a friend
             running into the same design system problems you are.
           </Text>
-          <form class="flex flex-col sm:flex-row items-stretch gap-3 max-w-md mx-auto" onsubmit="event.preventDefault()">
+        </div>
+        <div class="lg:col-span-5">
+          <form class="flex flex-col gap-3 sm:flex-row sm:items-stretch" onsubmit="event.preventDefault()">
             <label class="sr-only" for="newsletter-email">Email address</label>
             <input
               id="newsletter-email"
               type="email"
               required
               placeholder="you@workmail.com"
-              class="flex-1 px-5 py-3 rounded-full bg-white/10 border border-white/20 text-white placeholder-white/50 font-body focus:outline-none focus:border-coral focus:bg-white/15 transition-colors"
+              class="flex-1 rounded-md border border-paper/20 bg-paper/10 px-4 py-3 font-sans text-paper placeholder-paper/45 transition-colors focus:border-accent focus:bg-paper/15 focus:outline-none"
             />
-            <Button variant="primary" size="sm" iconRight="ph:paper-plane-tilt-duotone" type="submit">
-              Subscribe
-            </Button>
+            <button
+              type="submit"
+              class="inline-flex items-center justify-center gap-2 rounded-md bg-paper px-5 py-3 font-sans text-[0.9rem] font-medium tracking-tight text-ink transition-colors hover:bg-paper/90"
+            >Subscribe <Icon name="ph:arrow-right" size={15} /></button>
           </form>
-          <p class="text-xs text-white/50 mt-4 font-body">Unsubscribe any time. I'll respect the inbox.</p>
+          <p class="mt-3 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-paper/55">
+            Unsubscribe any time.
+          </p>
         </div>
       </div>
     </Container>
   </Section>
 </BaseLayout>
-
-<style>
-  /* Ruled-paper texture for the hero notebook illustration. */
-  .notebook-page::before {
-    content: '';
-    position: absolute;
-    left: 28px;
-    top: 0;
-    bottom: 0;
-    width: 1px;
-    background: rgba(232, 87, 61, 0.3);
-  }
-  .notebook-page::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: repeating-linear-gradient(
-      to bottom,
-      transparent 0,
-      transparent 27px,
-      rgba(93, 173, 226, 0.16) 28px
-    );
-    pointer-events: none;
-  }
-</style>

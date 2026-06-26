@@ -2,19 +2,11 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import Grid from '~/components/layout/Grid.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
+import Link from '~/components/primitives/Link.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import Card from '~/components/card/Card.astro';
-import CardNumber from '~/components/card/CardNumber.astro';
-import CardGrid from '~/components/patterns/CardGrid.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
 
 const description =
   '20 years building UI systems where accessibility is architecture, documentation is delivery, and the right output is the natural result of using the system.';
@@ -23,30 +15,18 @@ const currentWork = [
   {
     company: 'Travelers',
     stack: 'Web Components · React',
-    icon: 'ph:shield-star-duotone',
-    iconClass: 'text-coral',
-    iconBg: 'bg-coral/10',
-    tilt: -1 as const,
     body:
-      "An accessible component library that crosses framework boundaries — built so the right markup is the only markup you can ship.",
+      'An accessible component library that crosses framework boundaries — built so the right markup is the only markup you can ship.',
   },
   {
     company: 'Berkshire Hathaway Specialty',
     stack: 'Vue.js · Nuxt.js',
-    icon: 'ph:buildings-duotone',
-    iconClass: 'text-plum',
-    iconBg: 'bg-plum/10',
-    tilt: 1 as const,
     body:
       "An enterprise-scale component library for an insurance platform where consistency isn't aesthetic — it's regulatory.",
   },
   {
     company: "America's Test Kitchen",
     stack: 'React · Next.js',
-    icon: 'ph:cooking-pot-duotone',
-    iconClass: 'text-sunset',
-    iconBg: 'bg-sunset/15',
-    tilt: -1 as const,
     body:
       'A shared component system unifying multiple editorial brands — where design tokens carry as much weight as the recipes.',
   },
@@ -54,297 +34,230 @@ const currentWork = [
 
 const principles = [
   {
-    n: 1,
+    index: '01',
     title: 'Accessibility as architecture',
-    icon: 'ph:wheelchair-duotone',
-    iconClass: 'text-coral',
-    iconBg: 'bg-coral/10',
-    tilt: -1 as const,
     body:
       "Not an audit at the end. Not a ticket for later. A structural constraint, built into the foundation, so every component that leaves the library is accessible because it can't be any other way.",
   },
   {
-    n: 2,
+    index: '02',
     title: 'Documentation is delivery',
-    icon: 'ph:book-open-duotone',
-    iconClass: 'text-plum',
-    iconBg: 'bg-plum/10',
-    tilt: 1 as const,
     body:
       "A component without accurate docs isn't done. It's a riddle. I treat the written word as part of the shipped artifact — examples, rationale, edge cases, and all.",
   },
   {
-    n: 3,
+    index: '03',
     title: 'Directness over diplomacy',
-    icon: 'ph:chat-circle-text-duotone',
-    iconClass: 'text-sage',
-    iconBg: 'bg-sage/15',
-    tilt: 0 as const,
     body:
       "If your system is sick, I'll tell you exactly where and why — kindly, but without hedging. Then we'll map the shortest honest path to health. You're hiring me for the truth, not the comfort.",
   },
 ];
 
 const learning = [
-  {
-    icon: 'ph:scroll-duotone',
-    iconClass: 'text-coral',
-    iconBg: 'bg-coral/20',
-    tilt: '-rotate-2',
-    title: 'WAI-ARIA & APG',
-    sticker: 'dog-eared',
-    body: 'Authoring practices for patterns that truly work for assistive tech.',
-  },
-  {
-    icon: 'ph:palette-duotone',
-    iconClass: 'text-lemon',
-    iconBg: 'bg-plum/30',
-    tilt: 'rotate-1',
-    title: 'Design Tokens CG',
-    sticker: 'highlighted',
-    body: 'The emerging standard for portable, multi-platform design decisions.',
-  },
-  {
-    icon: 'ph:atom-duotone',
-    iconClass: 'text-sage',
-    iconBg: 'bg-sage/25',
-    tilt: '-rotate-1',
-    title: 'CSS Working Group',
-    sticker: 'fresh-ink',
-    body: 'Container queries, anchor positioning, cascade layers — the good stuff.',
-  },
-  {
-    icon: 'ph:github-logo-duotone',
-    iconClass: 'text-sunset',
-    iconBg: 'bg-sunset/25',
-    tilt: 'rotate-2',
-    title: 'Rudiment UI',
-    sticker: 'open-source',
-    body: 'My open-source sandbox for accessible component primitives.',
-  },
+  { title: 'WAI-ARIA & APG', note: 'Authoring practices for patterns that truly work for assistive tech.' },
+  { title: 'Design Tokens CG', note: 'The emerging standard for portable, multi-platform design decisions.' },
+  { title: 'CSS Working Group', note: 'Container queries, anchor positioning, cascade layers — the good stuff.' },
+  { title: 'Rudiment UI', note: 'My open-source sandbox for accessible component primitives.' },
 ];
-
-const stickerCopy: Record<string, string> = {
-  'dog-eared': 'currently dog-eared',
-  highlighted: 'highlighter-stained',
-  'fresh-ink': 'ink still wet',
-  'open-source': 'built in public',
-};
 ---
 
 <BaseLayout title="About — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
 
-  <Section padding="loose" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-16 right-[6%]" />
-    <Blob tone="sage" size="sm" class="absolute top-40 left-[4%] rounded-full" animate="float-delay" />
-    <Blob tone="sky" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" />
-    <Blob tone="coral" size="sm" class="absolute bottom-24 left-[12%] rounded-full" animate="float" opacity="opacity-30" />
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>About · UX Engineer</span>
+        <span class="hidden sm:inline text-ink-muted">20 yrs · Index 01</span>
+      </div>
 
-    <Container width="default" class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+            I build the <em class="ink-wink font-normal italic">quiet parts</em> of great products.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            I'm a UX software engineer and design-systems consultant. For two decades I've
+            lived at the seam between design and engineering — building the component
+            libraries, tokens, and documentation that let teams ship faster without tripping
+            over themselves.
+          </Text>
+          <Text tone="muted" class="mt-5 max-w-xl">
+            My favorite question to sit with is a quiet one:
+            <em class="text-ink not-italic font-medium"> how do you build a system where the
+            right output is the natural result of using it</em> — not something individual
+            developers have to remember to do correctly?
+          </Text>
 
-        <div class="lg:col-span-5 flex justify-center lg:justify-start">
-          <div class="relative w-72 md:w-80">
-            <div
-              class="absolute -inset-6 bg-plum/15 blob-shape-alt animate-float-slow"
-              aria-hidden="true"
-            ></div>
-            <div
-              class="absolute -top-4 -left-5 w-14 h-14 bg-coral/80 rounded-full shadow-lg flex items-center justify-center text-white animate-wiggle z-10"
-              aria-hidden="true"
-            >
-              <Icon name="ph:star-four-duotone" size={28} />
-            </div>
-            <div
-              class="absolute -bottom-5 -right-4 z-10 bg-white px-4 py-2 rounded-full shadow-lg border border-charcoal/5 font-heading text-xs font-semibold text-navy rotate-3"
-            >
-              <span class="text-[#C13A22]">20</span> yrs &amp; counting
-            </div>
-            <div class="portrait-frame blob-shape-alt relative overflow-hidden">
-              <img
-                src="/images/josh-biz-cazsh.png"
-                alt="Joshua Briley"
-                loading="lazy"
-                class="absolute inset-0 w-full h-full object-cover"
-              />
-            </div>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
+              Get in touch
+            </Button>
+            <Button variant="ghost" size="lg" href="/projects/">
+              See the work
+            </Button>
           </div>
+
+          <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+            {['Design systems', 'Accessibility', 'Documentation', 'UX engineering'].map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
         </div>
 
-
-        <div class="lg:col-span-7 text-center lg:text-left">
-          <div class="mb-6 inline-block">
-            <Badge tone="lemon" icon="ph:hand-waving-duotone">Hi there, I'm Joshua</Badge>
-          </div>
-          <Heading level={1} visual="display-lg" class="mb-6">
-            I build the <WavyUnderline>quiet parts</WavyUnderline> of great products.
-          </Heading>
-          <Text size="xl" tone="muted" class="mb-6 max-w-xl lg:max-w-none">
-            I'm a <strong class="text-charcoal font-semibold">UX software engineer</strong>
-            and design systems consultant. For two decades I've lived at the seam between
-            design and engineering — building the component libraries, tokens, and documentation
-            that let teams ship faster without tripping over themselves.
-          </Text>
-          <Text size="lg" tone="muted" class="max-w-xl lg:max-w-none">
-            My favorite question to sit with is a quiet one:
-            <em class="text-plum font-medium"
-              >how do you build a system where the right output is the natural result of using it</em
-            >
-            — not something individual developers have to remember to do correctly?
-          </Text>
-
-          <div class="flex flex-wrap gap-3 mt-8 justify-center lg:justify-start">
-            <Badge tone="plum" icon="ph:code-duotone">Design Systems</Badge>
-            <Badge tone="coral" icon="ph:wheelchair-duotone">Accessibility</Badge>
-            <Badge tone="sage" icon="ph:books-duotone">Documentation</Badge>
-            <Badge tone="sky" icon="ph:compass-tool-duotone">UX Engineering</Badge>
-          </div>
+        <div class="lg:col-span-5">
+          <figure class="overflow-hidden rounded-lg border border-line">
+            <img
+              src="/images/josh-biz-cazsh.jpg"
+              alt="Joshua Briley, UX Engineer"
+              class="aspect-[4/5] w-full object-cover"
+              loading="lazy"
+              width="640"
+              height="800"
+            />
+          </figure>
         </div>
       </div>
     </Container>
   </Section>
 
-
-  <Section padding="default" decorated class="bg-peach/40">
-    <Blob tone="lemon" size="md" class="absolute top-8 left-8" animate="float-slow" opacity="opacity-60" />
-    <Blob tone="sage" size="md" class="absolute bottom-10 right-10 rounded-full" animate="float" />
-
-    <Container width="narrow" class="relative z-10">
-      <div class="paper-note" style="transform: rotate(-1deg)">
-        <Icon name="ph:quotes-duotone" size={44} class="text-coral mb-3" />
-        <p class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-snug font-medium">
+  {/* ───────────────────────── PULL QUOTE ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-b border-line">
+    <Container width="narrow">
+      <p class="mono-label">The question / 02</p>
+      <blockquote class="mt-5">
+        <p class="font-display text-2xl md:text-3xl lg:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.025em] text-ink text-balance">
           How do you build a system that makes the
-          <span class="text-coral">right output</span> the natural result of using it —
+          <span class="text-accent">right output</span> the natural result of using it —
           rather than the result of individual developers making the right decisions?
         </p>
-        <p class="mt-5 font-heading text-sm text-charcoal/70 uppercase tracking-wider">
-          — the question I'm always chasing
-        </p>
+      </blockquote>
+      <p class="mt-6 mono-label">The question I'm always chasing</p>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── PRINCIPLES ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">How I work / 03</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          Three things I hold on to.
+        </Heading>
+      </div>
+
+      <div class="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+        {principles.map((p) => (
+          <div class="bg-paper p-7 md:p-9">
+            <div class="flex items-baseline gap-3">
+              <span class="font-mono text-[0.75rem] text-accent">{p.index}</span>
+              <Heading level={3} visual="h3">{p.title}</Heading>
+            </div>
+            <Text tone="muted" class="mt-3">{p.body}</Text>
+          </div>
+        ))}
       </div>
     </Container>
   </Section>
 
+  {/* ───────────────────────── CURRENT WORK (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label !text-paper/65">Where this lands / 04</p>
+        <Heading level={2} visual="display-md" tone="paper" class="mt-4">
+          Systems in production, not slideware.
+        </Heading>
+        <Text size="lg" tone="whiteMuted" class="mt-5">
+          The work shows up in places where consistency carries weight — across frameworks,
+          across brands, and under regulatory scrutiny.
+        </Text>
+      </div>
 
-  <Section padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="How I work"
-        eyebrowIcon="ph:compass-duotone"
-        eyebrowTone="plum"
-        title="Three things I hold on to"
-        align="center"
-        class="max-w-3xl mx-auto mb-16"
-      />
-
-      <CardGrid cols={3}>
-        {principles.map((p) => (
-          <Card hover={false} variant="paper" tilt={p.tilt}>
-            <CardNumber n={p.n} slot="corner" />
-            <div class={`w-12 h-12 ${p.iconBg} rounded-xl flex items-center justify-center mb-4 mt-2`}>
-              <Icon name={p.icon} size={26} class={p.iconClass} />
+      <ul class="mt-14 border-t border-paper/10">
+        {currentWork.map((w) => (
+          <li>
+            <div class="grid grid-cols-12 items-baseline gap-4 border-b border-paper/10 py-5">
+              <span class="col-span-12 sm:col-span-4 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{w.stack}</span>
+              <span class="col-span-12 sm:col-span-8">
+                <span class="font-display text-lg font-medium tracking-tight text-paper">{w.company}</span>
+                <span class="mt-1 block text-sm text-paper/55 max-w-2xl">{w.body}</span>
+              </span>
             </div>
-            <Heading level={3} visual="h3" class="mb-3">{p.title}</Heading>
-            <Text size="sm" tone="muted">{p.body}</Text>
-          </Card>
+          </li>
         ))}
-      </CardGrid>
+      </ul>
     </Container>
   </Section>
 
-
-  <Section tone="navy" padding="default" decorated>
-    <Blob tone="lemon" size="lg" class="absolute top-10 right-[8%]" animate="float-slow" opacity="opacity-10" />
-    <Blob tone="coral" size="md" class="absolute bottom-10 left-[6%] rounded-full" animate="float-delay" opacity="opacity-30" />
-    <Blob tone="sage" size="sm" class="absolute top-1/2 left-[42%] rounded-full" animate="float" opacity="opacity-15" />
-
-    <Container width="default" class="relative z-10">
-      <Grid cols={2} gap="lg" class="items-center">
-        <div class="relative">
-          <div class="mb-6 inline-block relative">
-            <Badge tone="lemon" icon="ph:sparkle-duotone" class="!bg-lemon !border-lemon">
-              Always learning
-            </Badge>
-            <span
-              class="absolute -top-3 -right-6 text-lemon/80 animate-wiggle"
-              aria-hidden="true"
-            >
-              <Icon name="ph:star-four-duotone" size={20} />
-            </span>
-          </div>
-          <Heading level={2} visual="display-md" tone="white" class="mb-6">
-            Twenty years in, still reading the <span class="text-lemon">spec drafts</span>
-            <span class="inline-block text-coral animate-float-slow ml-1" aria-hidden="true">.</span>
+  {/* ───────────────────────── ALWAYS LEARNING ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="mono-label">Always learning / 05</p>
+          <Heading level={2} visual="display-md" class="mt-4 max-w-[16ch]">
+            Twenty years in, still reading the spec drafts.
           </Heading>
-          <Text tone="whiteMuted" class="mb-4">
-            I stay close to the sources: WAI-ARIA working drafts, the Design Tokens Community Group,
-            CSS Working Group proposals. The platform moves — the best systems move with it.
-          </Text>
-          <Text tone="whiteMuted">
-            I also maintain <strong class="text-lemon font-semibold">Rudiment UI</strong>,
-            an open-source library where I sharpen ideas in public before they land in client work.
-          </Text>
-
-          <p class="mt-8 font-heading text-xs uppercase tracking-[0.2em] text-white/70 flex items-center gap-2">
-            <Icon name="ph:arrow-bend-right-down-duotone" size={18} class="text-lemon/70" />
-            <span>currently on the nightstand</span>
-          </p>
+          <div class="mt-7 space-y-4 text-ink-muted leading-relaxed max-w-md">
+            <p>
+              I stay close to the sources: WAI-ARIA working drafts, the Design Tokens Community
+              Group, CSS Working Group proposals. The platform moves — the best systems move
+              with it.
+            </p>
+            <p>
+              I also maintain <span class="text-ink font-medium">Rudiment UI</span>, an
+              open-source library where I sharpen ideas in public before they land in client work.
+            </p>
+          </div>
         </div>
 
-        <ul class="space-y-5 list-none relative pt-4">
-          {learning.map((item, i) => (
-            <li
-              class={`learning-card relative flex items-start gap-4 bg-white/[0.06] backdrop-blur-sm rounded-xl p-5 pr-6 border border-white/10 transform ${item.tilt}`}
-              style={`animation-delay: ${i * 120}ms`}
-            >
-              <div class={`w-11 h-11 rounded-lg ${item.iconBg} flex items-center justify-center flex-shrink-0`}>
-                <Icon name={item.icon} size={24} class={item.iconClass} />
-              </div>
-              <div class="flex-1 min-w-0">
-                <div class="flex items-baseline justify-between gap-2 mb-1">
-                  <p class="font-heading font-semibold text-white">{item.title}</p>
-                  <span class="font-heading text-[10px] uppercase tracking-wider text-lemon/90 italic whitespace-nowrap">
-                    {stickerCopy[item.sticker]}
-                  </span>
+        <div class="lg:col-span-7">
+          <p class="mono-label">Currently on the nightstand</p>
+          <ul class="mt-5 divide-y divide-line border-y border-line">
+            {learning.map((item, i) => (
+              <li class="flex items-baseline gap-4 py-4">
+                <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <p class="font-display text-base font-medium tracking-tight text-ink">{item.title}</p>
+                  <p class="mt-0.5 text-sm text-ink-muted">{item.note}</p>
                 </div>
-                <p class="text-sm text-white/65 leading-relaxed">{item.body}</p>
-              </div>
-            </li>
-          ))}
-
-          <span
-            class="absolute -right-3 -bottom-4 text-[#C13A22] rotate-12 hidden md:block"
-            aria-hidden="true"
-          >
-            <Icon name="ph:scribble-loop-duotone" size={56} />
-          </span>
-        </ul>
-      </Grid>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </Container>
   </Section>
 
-
-  <CTABanner
-    title="Think we'd work well together?"
-    lead="Whether you're hiring for a team or untangling a system, send a note. I'll tell you honestly whether I'm the right fit. If not, I probably know who is."
-  >
-    <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-    <Button variant="text" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-      Connect on LinkedIn
-    </Button>
-  </CTABanner>
+  {/* ───────────────────────── CONTACT (ink) ───────────────────────── */}
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label !text-paper/65">Work together / 06</p>
+          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[20ch]">
+            Think we'd work well together?
+          </Heading>
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            Whether you're hiring for a team or untangling a system, send a note. I'll tell you
+            honestly whether I'm the right fit. If not, I probably know who is.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
+            <a
+              href="https://www.linkedin.com/in/joshuabriley/"
+              rel="noopener noreferrer"
+              target="_blank"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Connect on LinkedIn <Icon name="ph:arrow-up-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>
-
-<style>
-  .portrait-frame {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    background: linear-gradient(135deg, #ffe8d6 0%, #fde68a 60%, #7bb47a 140%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 30px 60px -25px rgba(108, 74, 182, 0.35);
-  }
-</style>

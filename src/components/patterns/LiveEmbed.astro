@@ -1,0 +1,212 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * LiveEmbed — a poster screenshot in the editorial browser-frame, that swaps to
+ * a real interactive <iframe> on demand. The iframe is pre-rendered with NO src
+ * (zero network until clicked) so it loads lazily AND keeps Astro's scoped
+ * styles — runtime-injected nodes would miss them. Click "Load live demo" and
+ * the poster fades out, the live story fades in.
+ */
+
+interface Props {
+  /** Poster screenshot, root-relative. */
+  posterSrc: string;
+  posterAlt: string;
+  /** The iframe (story canvas) URL — loaded only on activation. */
+  embedSrc: string;
+  /** Full URL for the "open" affordance (opens in a new tab). */
+  href: string;
+  /** Short title shown in the frame bar + used for the iframe a11y title. */
+  title: string;
+  /** CSS aspect-ratio for the stage, matching the poster. */
+  ratio?: string;
+  class?: string;
+}
+
+const {
+  posterSrc,
+  posterAlt,
+  embedSrc,
+  href,
+  title,
+  ratio = '1600 / 1039',
+  class: className,
+} = Astro.props;
+---
+
+<figure class={cx('live-embed', className)} data-live-embed>
+  <div class="live-embed-bar">
+    <span class="live-embed-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+    <span class="live-embed-title">{title} — interactive</span>
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="live-embed-open"
+      aria-label={`Open ${title} in Storybook (new tab)`}
+    >open <Icon name="ph:arrow-up-right" size={12} /></a>
+  </div>
+
+  <div class="live-embed-stage" style={`aspect-ratio:${ratio}`}>
+    <img class="live-embed-poster" src={posterSrc} alt={posterAlt} loading="lazy" decoding="async" />
+
+    <button type="button" class="live-embed-cta" data-embed-trigger aria-label={`Load the interactive ${title} demo`}>
+      <span class="live-embed-cta-pill">
+        <Icon name="ph:play-fill" size={15} />
+        Load live demo
+      </span>
+      <span class="live-embed-cta-note">the real Storybook story</span>
+    </button>
+
+    {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
+    <iframe
+      class="live-embed-iframe"
+      data-embed-frame
+      data-src={embedSrc}
+      title={`${title} — live interactive demo`}
+      loading="lazy"
+      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+      allow="fullscreen"
+    ></iframe>
+  </div>
+</figure>
+
+<style>
+  .live-embed { margin: 0; }
+
+  .live-embed-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem 0.95rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 16px 16px 0 0;
+  }
+  .live-embed-dots { display: inline-flex; gap: 6px; }
+  .live-embed-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+  .live-embed-title {
+    flex: 1;
+    text-align: center;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.04em;
+    color: var(--ink-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .live-embed-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease-out);
+  }
+  .live-embed-open:hover { color: var(--accent); }
+
+  .live-embed-stage {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: 0 0 16px 16px;
+    background: var(--raised);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+  }
+
+  .live-embed-poster,
+  .live-embed-iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .live-embed-poster {
+    object-fit: cover;
+    object-position: top center;
+    transition: opacity 0.5s var(--ease-out), filter 0.4s var(--ease-out);
+  }
+  .live-embed-iframe {
+    border: 0;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.6s var(--ease-out);
+  }
+
+  /* Load affordance — a dark pill centered over a faint scrim. */
+  .live-embed-cta {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.7rem;
+    cursor: pointer;
+    border: 0;
+    background: radial-gradient(60% 60% at 50% 50%, rgba(27, 26, 23, 0.06), rgba(27, 26, 23, 0.02));
+    transition: background 0.4s var(--ease-out);
+  }
+  .live-embed-cta:hover { background: radial-gradient(60% 60% at 50% 50%, rgba(27, 26, 23, 0.12), rgba(27, 26, 23, 0.04)); }
+
+  .live-embed-cta-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.3rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: 0 10px 30px -12px rgba(27, 26, 23, 0.5);
+    transition: transform 0.35s var(--ease-out);
+  }
+  .live-embed-cta:hover .live-embed-cta-pill { transform: translateY(-2px) scale(1.02); }
+  .live-embed-cta:active .live-embed-cta-pill { transform: scale(0.97); }
+  .live-embed-cta-note {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-muted);
+  }
+
+  /* Activated: poster + CTA bow out, live story fades in. */
+  .live-embed[data-loaded] .live-embed-poster { opacity: 0; pointer-events: none; }
+  .live-embed[data-loaded] .live-embed-cta { display: none; }
+  .live-embed[data-loaded] .live-embed-iframe { opacity: 1; pointer-events: auto; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .live-embed-poster, .live-embed-iframe, .live-embed-cta-pill { transition: none; }
+  }
+</style>
+
+<script>
+  // Activate on click: set the iframe's real src (it was rendered src-less, so
+  // nothing loaded until now), then flag the figure so CSS swaps poster → frame.
+  document.querySelectorAll('[data-embed-trigger]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const root = btn.closest('[data-live-embed]') as HTMLElement | null;
+      const frame = root?.querySelector('[data-embed-frame]') as HTMLIFrameElement | null;
+      if (!root || !frame || root.dataset.loaded) return;
+      if (frame.dataset.src) frame.src = frame.dataset.src;
+      root.dataset.loaded = 'true';
+    });
+  });
+</script>

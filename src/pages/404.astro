@@ -4,158 +4,102 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
-import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Card from '~/components/card/Card.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import MissingTokenGame from '~/components/islands/MissingTokenGame.astro';
 
 const description =
   "The page you're looking for wandered off. Let's get you back on track.";
 
 const detours = [
-  { href: '/services', icon: 'ph:hammer-duotone', iconClass: 'text-coral', iconBg: 'bg-coral/10', title: 'Services', body: 'Audits, starters, and workflow work.', tilt: '-rotate-[0.6deg]' },
-  { href: '/projects/', icon: 'ph:briefcase-duotone', iconClass: 'text-plum', iconBg: 'bg-plum/10', title: 'Projects', body: 'A peek at recent client work.', tilt: 'rotate-[0.5deg]' },
-  { href: '/tools/scorecard/', icon: 'ph:clipboard-text-duotone', iconClass: 'text-sunset', iconBg: 'bg-sunset/10', title: 'Free Scorecard', body: 'Score your design system in minutes.', tilt: '-rotate-[0.4deg]' },
-  { href: '/about/', icon: 'ph:user-duotone', iconClass: 'text-sky', iconBg: 'bg-sky/10', title: 'About', body: '20 years of opinions on UI systems.', tilt: 'rotate-[0.7deg]' },
-  { href: '/blog/', icon: 'ph:notebook-duotone', iconClass: 'text-sage', iconBg: 'bg-sage/20', title: 'Blog', body: 'Notes from the design-system trenches.', tilt: '-rotate-[0.3deg]' },
-  { href: '/contact/', icon: 'ph:chat-circle-duotone', iconClass: 'text-sunset', iconBg: 'bg-lemon/40', title: 'Contact', body: 'Say hi or report this broken link.', tilt: 'rotate-[0.4deg]' },
+  { href: '/', label: 'Home' },
+  { href: '/projects/', label: 'Selected work' },
+  { href: '/contact/', label: 'Contact' },
 ];
 ---
 
 <BaseLayout title="Page not found — Joshua Briley" description={description} noindex>
-  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
-    <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
-    <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
-    <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
+  <Section tone="paper" padding="loose">
+    <Container width="wide">
+      <div class="relative">
+        {/* Oversized chapter-style numeral watermark — same editorial tell as the
+            project heroes. Decorative; the heading carries the real meaning. */}
+        <span class="notfound-mark" aria-hidden="true">404</span>
 
-    <Blob tone="plum" size="lg" animate="float" opacity="opacity-20" class="absolute top-20 right-[8%] w-20 h-20" />
-    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-70" class="absolute top-40 left-[7%] rounded-full" />
-    <Blob tone="sage" size="md" animate="float-slow" opacity="opacity-30" class="absolute bottom-24 right-[14%] w-14 h-14" />
-    <Blob tone="sky" size="sm" animate="float" opacity="opacity-30" class="absolute bottom-32 left-[12%] w-10 h-10 rounded-full" />
+        <div class="relative">
+          <p class="mono-label">404 / Not found</p>
 
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        <div class="lg:col-span-7">
-          <Badge tone="peach" icon="ph:compass-duotone" class="mb-8">
-            Error 404 &middot; Page not found
-          </Badge>
-
-          <Heading level={1} visual="display-xl" balance class="mb-6">
-            You've wandered <WavyUnderline>off the map</WavyUnderline>.
+          <Heading level={1} visual="display-xl" class="mt-7 max-w-[18ch]">
+            This page took an unplanned detour.
           </Heading>
 
-          <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
-            This page took an unplanned detour.
-          </p>
-
-          <Text size="lg" tone="muted" class="max-w-xl mb-10">
-            Maybe it was renamed. Maybe it's a typo. Maybe it drifted out of the system and nobody wrote it down &mdash;
-            <strong class="text-charcoal font-semibold">happens to the best of us</strong>.
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            Maybe it was renamed, maybe it's a typo, or maybe it drifted out of the system and nobody
+            wrote it down. Either way, here are a few good places to land.
           </Text>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <Button href="/" variant="primary" size="lg" iconLeft="ph:house-duotone">
-              Back to homepage
-            </Button>
-            <Button href="#detours" variant="ghost" size="lg" iconLeft="ph:arrow-down-duotone">
-              Try a detour
-            </Button>
-          </div>
-
-          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/70">
-            <span class="inline-flex items-center gap-1.5">
-              <Icon name="ph:warning-duotone" size={18} class="text-plum" />
-              Broken link?
-            </span>
-            <span class="w-1 h-1 rounded-full bg-charcoal/30" aria-hidden="true"></span>
-            <a href="/contact/" class="inline-flex items-center gap-1.5 hover:text-coral transition-colors">
-              <Icon name="ph:paper-plane-tilt-duotone" size={18} class="text-plum" />
-              Let me know
-            </a>
-          </div>
-        </div>
-
-
-        <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/30 animate-spin-slow"></div>
-          </div>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"></div>
-          </div>
-
-          <Card variant="paper" padding="none" hover={false} class="absolute top-0 -left-4 -rotate-6 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-coral"></div>
-            <span class="font-heading text-xs font-semibold text-navy">/wandered-off</span>
-          </Card>
-          <Card variant="paper" padding="none" hover={false} class="absolute top-0 -right-4 rotate-6 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-sunset"></div>
-            <span class="font-heading text-xs font-semibold text-navy">/typo-maybe</span>
-          </Card>
-          <Card variant="paper" padding="none" hover={false} class="absolute bottom-2 -left-4 rotate-3 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-sage"></div>
-            <span class="font-heading text-xs font-semibold text-navy">/renamed-2023</span>
-          </Card>
-          <Card variant="paper" padding="none" hover={false} class="absolute bottom-2 -right-4 -rotate-3 rounded-xl shadow-lg px-3 py-2 flex items-center gap-2">
-            <div class="w-2 h-2 rounded-full bg-plum"></div>
-            <span class="font-heading text-xs font-semibold text-navy">/oops-404</span>
-          </Card>
-
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="relative animate-float-slow">
-              <div class="w-48 h-48 rounded-full bg-gradient-to-br from-white/90 to-peach/70 border-[10px] border-navy shadow-2xl backdrop-blur-[1px] flex items-center justify-center">
-                <Icon name="ph:compass-duotone" size={84} class="text-coral" />
-              </div>
-              <div class="absolute -top-4 -right-6 bg-lemon text-navy px-3 py-1.5 rounded-full font-heading font-semibold text-xs shadow-md border border-lemon/70 rotate-[8deg]">
-                <Icon name="ph:map-pin-duotone" size={14} class="mr-1 text-sunset" />
-                You are here
-              </div>
-              <div class="absolute -bottom-10 left-1/2 -translate-x-1/2 font-display text-4xl font-bold whitespace-nowrap -rotate-3">
-                <span class="text-navy">4</span><span class="text-coral">0</span><span class="text-plum">4</span>
-              </div>
-            </div>
-          </div>
+          {/* A git-diff aside — the design-systems voice having a quiet laugh. */}
+          <pre class="notfound-diff" aria-hidden="true"><span class="del">- removed   the page you wanted</span><span class="add">+ added     three worth landing on</span></pre>
         </div>
       </div>
-    </Container>
-  </Section>
 
-  <SquiggleDivider />
-
-  <Section tone="cream" padding="tight">
-    <Container width="default">
-      <MissingTokenGame />
-    </Container>
-  </Section>
-
-  <SquiggleDivider />
-
-  <Section id="detours" tone="cream" padding="default">
-    <Container width="wide">
-      <div class="text-center mb-14">
-        <Badge tone="sage" icon="ph:signpost-duotone" sticker class="mb-6">
-          Try one of these instead
-        </Badge>
-        <Heading level={2} visual="h2" align="center">Popular places to land</Heading>
-      </div>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <ul class="relative mt-12 max-w-xl divide-y divide-line border-y border-line">
         {detours.map((d) => (
-          <a href={d.href} class={`group block ${d.tilt}`}>
-            <Card variant="paper">
-              <div class={`w-12 h-12 ${d.iconBg} rounded-xl flex items-center justify-center mb-4`}>
-                <Icon name={d.icon} size={24} class={d.iconClass} />
-              </div>
-              <p class="font-heading font-medium text-navy mb-1">{d.title}</p>
-              <Text size="sm" tone="muted">{d.body}</Text>
-            </Card>
-          </a>
+          <li>
+            <a href={d.href} class="group flex items-center justify-between gap-4 py-5">
+              <span class="font-display text-lg font-medium tracking-tight text-ink transition-colors group-hover:text-accent">{d.label}</span>
+              <Icon name="ph:arrow-right" size={18} class="text-ink-muted transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent" />
+            </a>
+          </li>
         ))}
-      </div>
+      </ul>
+
+      <p class="mt-10 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted">
+        Broken link?
+        <a href="/contact/" class="text-ink underline decoration-line-strong decoration-1 underline-offset-[3px] transition-colors hover:text-accent hover:decoration-accent">Let me know</a>.
+      </p>
     </Container>
   </Section>
 </BaseLayout>
+
+<style>
+  /* Oversized italic "404" — a quiet outline watermark, the same editorial tell
+     as the project-hero chapter numerals. Sits behind the heading block. */
+  .notfound-mark {
+    position: absolute;
+    top: -2.5rem;
+    right: -0.5rem;
+    z-index: 0;
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 500;
+    font-style: italic;
+    line-height: 0.8;
+    font-size: clamp(7rem, 26vw, 18rem);
+    color: transparent;
+    -webkit-text-stroke: 1.5px rgba(27, 26, 23, 0.08);
+    pointer-events: none;
+    user-select: none;
+  }
+  @media (min-width: 768px) {
+    .notfound-mark {
+      top: -3.5rem;
+      right: 2rem;
+    }
+  }
+
+  /* A git-diff aside in the design-systems voice. Mono, hairline-framed. */
+  .notfound-diff {
+    margin-top: 2.25rem;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    padding: 0.85rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: var(--raised);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    white-space: pre;
+  }
+  .notfound-diff .del { color: var(--ink-muted); }
+  .notfound-diff .add { color: var(--accent); }
+</style>

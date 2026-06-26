@@ -4,209 +4,112 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Card from '~/components/card/Card.astro';
-import CardNumber from '~/components/card/CardNumber.astro';
-import CardGrid from '~/components/patterns/CardGrid.astro';
+import Link from '~/components/primitives/Link.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import TestimonialCard from '~/components/patterns/TestimonialCard.astro';
 
 const description =
   "A structured design system audit that finds what's actually broken — component inconsistency, accessibility risk, token drift, and documentation gaps — with a prioritized roadmap your team can run.";
 
-// "This is for you if…" cards
 const signals = [
-  {
-    icon: 'ph:puzzle-piece-duotone',
-    tone: 'coral',
-    tilt: -1 as const,
-    body: 'Your component library has become inconsistent or hard to trust.',
-  },
-  {
-    icon: 'ph:users-duotone',
-    tone: 'plum',
-    tilt: 1 as const,
-    body: 'Designers and developers are solving the same UI problems differently.',
-  },
-  {
-    icon: 'ph:wheelchair-duotone',
-    tone: 'sunset',
-    tilt: 0 as const,
-    body: 'Accessibility issues keep surfacing late — in QA, in audits, in production.',
-  },
-  {
-    icon: 'ph:warning-duotone',
-    tone: 'sage',
-    tilt: 1 as const,
-    body: "Your system exists, but it isn't working the way it should.",
-  },
+  'Your component library has become inconsistent or hard to trust.',
+  'Designers and developers are solving the same UI problems differently.',
+  'Accessibility issues keep surfacing late — in QA, in audits, in production.',
+  "Your system exists, but it isn't working the way it should.",
 ];
 
-const signalToneMap: Record<string, { iconClass: string; iconBg: string }> = {
-  coral: { iconClass: 'text-coral', iconBg: 'bg-coral/10' },
-  plum: { iconClass: 'text-plum', iconBg: 'bg-plum/10' },
-  sunset: { iconClass: 'text-sunset', iconBg: 'bg-sunset/10' },
-  sage: { iconClass: 'text-sage', iconBg: 'bg-sage/20' },
-};
-
-// Deliverables
 const deliverables = [
   {
-    icon: 'ph:eye-duotone',
-    tone: 'coral',
-    tilt: -1 as const,
+    index: '01',
     title: "Where it's inconsistent — and why",
     body: "A clear view of what's drifting visually, structurally, and in code — plus the reasons it keeps happening.",
   },
   {
-    icon: 'ph:wheelchair-duotone',
-    tone: 'plum',
-    tilt: 0 as const,
+    index: '02',
     title: 'Accessibility risk, component-by-component',
     body: 'A WCAG 2.1 AA breakdown that tells you exactly where your risk lives — not just a score.',
   },
   {
-    icon: 'ph:list-numbers-duotone',
-    tone: 'sunset',
-    tilt: 0 as const,
+    index: '03',
     title: 'A prioritized list of issues',
     body: "Not everything is equally broken. You'll know what to fix first, what to defer, and what to ignore.",
   },
   {
-    icon: 'ph:wrench-duotone',
-    tone: 'sage',
-    tilt: 1 as const,
+    index: '04',
     title: 'Specific recommendations for each fix',
     body: '"Refactor your button API" isn\'t advice. I give you the actual approach, tradeoffs, and what "done" looks like.',
   },
   {
-    icon: 'ph:map-trifold-duotone',
-    tone: 'sky',
-    tilt: 0 as const,
+    index: '05',
     title: 'A roadmap your team can actually follow',
     body: 'Sequenced, scoped, and honest about effort. Something you can run without me if you want to.',
   },
   {
-    icon: 'ph:chats-circle-duotone',
-    tone: 'navy',
-    tilt: 0 as const,
+    index: '06',
     title: 'A debrief with your team',
     body: "A live walk-through so findings don't just land in a doc and die. Your team asks questions; I push back on mine.",
   },
 ];
 
-const deliverableToneMap: Record<string, { iconClass: string; iconBg: string; halo: string }> = {
-  coral: { iconClass: 'text-coral', iconBg: 'bg-coral/10', halo: 'bg-coral/5' },
-  plum: { iconClass: 'text-plum', iconBg: 'bg-plum/10', halo: 'bg-plum/5' },
-  sunset: { iconClass: 'text-sunset', iconBg: 'bg-sunset/10', halo: 'bg-sunset/10' },
-  sage: { iconClass: 'text-sage', iconBg: 'bg-sage/20', halo: 'bg-sage/10' },
-  sky: { iconClass: 'text-sky', iconBg: 'bg-sky/15', halo: 'bg-sky/10' },
-  navy: { iconClass: 'text-lemon', iconBg: 'bg-white/10', halo: 'bg-coral/20' },
-};
-
-// Scope items
 const scope = [
   {
-    icon: 'ph:squares-four-duotone',
-    tone: 'coral',
     title: 'Component consistency analysis',
-    body: 'Visual <em>and</em> code-level. Where components diverge from the spec, each other, and themselves.',
+    body: 'Visual and code-level. Where components diverge from the spec, each other, and themselves.',
   },
   {
-    icon: 'ph:shield-check-duotone',
-    tone: 'plum',
     title: 'Accessibility risk assessment',
     body: 'WCAG 2.1 AA scored at the component level, with the real risks called out in plain language.',
   },
   {
-    icon: 'ph:palette-duotone',
-    tone: 'sunset',
-    title: 'Design token structure &amp; naming review',
+    title: 'Design token structure & naming review',
     body: 'Are your tokens doing the work they should? Do the names tell the truth? Where are the leaks?',
   },
   {
-    icon: 'ph:book-open-duotone',
-    tone: 'sage',
-    title: 'Documentation quality &amp; coverage',
+    title: 'Documentation quality & coverage',
     body: 'Does your documentation match the code people actually ship? Where are the gaps driving forks?',
   },
   {
-    icon: 'ph:flag-duotone',
-    tone: 'sky',
     title: 'Prioritized remediation roadmap',
     body: 'Ranked, sequenced, and sized. The thing your team can point to when someone asks "what\'s next?"',
   },
 ];
 
-const scopeToneMap: Record<string, { iconClass: string; iconBg: string }> = {
-  coral: { iconClass: 'text-coral', iconBg: 'bg-coral/10' },
-  plum: { iconClass: 'text-plum', iconBg: 'bg-plum/10' },
-  sunset: { iconClass: 'text-sunset', iconBg: 'bg-sunset/10' },
-  sage: { iconClass: 'text-sage', iconBg: 'bg-sage/20' },
-  sky: { iconClass: 'text-sky', iconBg: 'bg-sky/15' },
-};
-
-// Process steps
 const process = [
   {
     n: '01',
-    tone: 'coral',
-    tilt: -1 as const,
     title: 'Share access',
     body: 'Storybook, Figma, repo — whatever represents the actual state of your system. We start by looking at the real thing, not what you wish existed.',
   },
   {
     n: '02',
-    tone: 'plum',
-    tilt: 1 as const,
     title: 'Audit review',
     body: 'I work through consistency, accessibility, tokens, and documentation — one track at a time, with notes and evidence as I go.',
   },
   {
     n: '03',
-    tone: 'sunset',
-    tilt: 0 as const,
     title: 'Structured report',
     body: 'You get a ranked set of findings with recommendations, tradeoffs, and a roadmap — written for humans, not for a pitch deck.',
   },
   {
     n: '04',
-    tone: 'sage',
-    tilt: 0 as const,
     title: 'Debrief walk-through',
     body: "We meet, I walk your team through it, answer questions, and make sure the recommendations actually land somewhere they'll get used.",
   },
 ];
 
-// Testimonials
 const testimonials = [
   {
-    name: 'Rebecca Cachia, PMP',
-    role: 'Project Manager',
-    company: 'Publicis Sapient',
     quote:
       'Josh has an unusual ability to hold the big picture and the details at the same time. He brings clarity to messy systems and the kind of structure that actually holds up under delivery pressure.',
-    initials: 'RC',
-    avatarTone: 'plum' as const,
-    tilt: 'rot-1' as const,
-    image: '/images/rebecca-cachia.jpeg',
+    name: 'Rebecca Cachia, PMP',
+    role: 'Project Manager · Publicis Sapient',
   },
   {
-    name: 'Drew DiPasquale',
-    role: 'Principal Researcher',
-    company: 'HubSpot',
     quote:
       "Josh sees the real problem quickly and knows how to articulate it in a way that gets teams moving. That's rare — and genuinely valuable.",
-    initials: 'DD',
-    avatarTone: 'sky' as const,
-    tilt: 'rot-2' as const,
-    image: '/images/drew-dipasquale.jpeg',
+    name: 'Drew DiPasquale',
+    role: 'Principal Researcher · HubSpot',
   },
 ];
 ---
@@ -215,469 +118,233 @@ const testimonials = [
   title="Design System Audit — Joshua Briley | Design Systems Consulting"
   description={description}
 >
-
-  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
-
-    <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
-    <div
-      class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent"
-      aria-hidden="true"
-    ></div>
-    <div
-      class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent"
-      aria-hidden="true"
-    ></div>
-
-
-    <Blob tone="plum" size="lg" class="absolute top-20 right-[8%]" opacity="opacity-30" animate="float" />
-    <Blob tone="lemon" size="sm" class="absolute top-40 left-[7%] rounded-full" animate="float-delay" />
-    <Blob tone="sage" size="sm" class="absolute bottom-24 right-[14%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="sky" size="sm" class="absolute bottom-32 left-[12%] rounded-full" animate="float" opacity="opacity-40" />
-
-    <Container class="relative z-10">
-
-      <nav
-        class="flex items-center gap-2 text-sm font-heading text-charcoal/70 mb-10"
-        aria-label="Breadcrumb"
-      >
-        <a
-          href="/services/"
-          class="hover:text-coral transition-colors inline-flex items-center gap-1.5"
-        >
-          <Icon name="ph:arrow-left-duotone" size={16} />
-          All services
-        </a>
-        <span aria-hidden="true">/</span>
-        <span class="text-charcoal/80">Design System Audit</span>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav class="mono-label flex items-center gap-2" aria-label="Breadcrumb">
+        <Link href="/services/" variant="unstyled" class="inline-flex items-center gap-1.5 text-ink-muted transition-colors hover:text-accent">
+          <Icon name="ph:arrow-left" size={13} /> All services
+        </Link>
+        <span aria-hidden="true" class="text-ink-faint">/</span>
+        <span>Design System Audit</span>
       </nav>
 
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div class="lg:col-span-7">
-          <div class="mb-8 inline-block">
-            <Badge tone="peach" icon="ph:magnifying-glass-duotone">Start here</Badge>
-          </div>
-
-          <Heading level={1} visual="display-xl" class="mb-6">
-            Design System <WavyUnderline>Audit</WavyUnderline>.
+          <p class="mono-label">Start here · Audit</p>
+          <Heading level={1} visual="display-xl" class="mt-5 max-w-[16ch]">
+            Find what's <em class="ink-wink font-normal italic">actually broken</em> in your design system.
           </Heading>
-
-          <p class="font-display text-xl md:text-2xl text-navy/80 italic mb-6 leading-snug">
-            Find what's actually broken in your design system.
-          </p>
-
-          <Text size="lg" tone="muted" class="max-w-xl mb-10">
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
             If your components feel inconsistent, your system is hard to maintain, or your team is
-            solving the same problems differently every sprint —
-            <strong class="text-charcoal font-semibold">this is where to start</strong>.
+            solving the same problems differently every sprint — this is where to start.
           </Text>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <Button
-              variant="primary"
-              size="lg"
-              iconLeft="ph:calendar-check-duotone"
-              href="https://calendly.com/josh-thebrileys/30min/"
-            >
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="https://calendly.com/josh-thebrileys/30min/" iconRight="ph:arrow-right" class="js-magnetic">
               Book an intro call
             </Button>
-            <Button
-              variant="ghost"
-              size="lg"
-              iconLeft="ph:arrow-down-duotone"
-              href="#deliverables"
-            >
+            <Button variant="ghost" size="lg" href="#deliverables">
               See what you get
             </Button>
           </div>
 
-          <div class="flex items-center gap-4 mt-10 text-sm font-heading text-charcoal/70">
-            <span class="inline-flex items-center gap-1.5">
-              <Icon name="ph:clock-duotone" size={18} class="text-plum" />
-              ~2 week turnaround
-            </span>
-            <span class="w-1 h-1 rounded-full bg-charcoal/30" aria-hidden="true"></span>
-            <span class="inline-flex items-center gap-1.5">
-              <Icon name="ph:currency-dollar-duotone" size={18} class="text-plum" />
-              Starting at $2,000
-            </span>
-          </div>
+          <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+            <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>~2 week turnaround</li>
+            <li class="flex items-center gap-2"><span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>Starting at $2,000</li>
+          </ul>
         </div>
 
-
-        <div
-          data-au-illo
-          class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block"
-          aria-hidden="true"
-        >
-
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-72 h-72 rounded-full border-2 border-dashed border-plum/30 animate-spin-slow"></div>
+        <div class="lg:col-span-5">
+          <div class="rounded-lg border border-line bg-raised p-7 md:p-9">
+            <p class="mono-label">Audit tracks</p>
+            <ul class="mt-5 divide-y divide-line">
+              {scope.map((s, i) => (
+                <li class="flex items-baseline gap-4 py-3.5 first:pt-0 last:pb-0">
+                  <span class="font-mono text-[0.72rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                  <span class="text-sm font-medium text-ink">{s.title}</span>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-56 h-56 rounded-full bg-coral/10 animate-pulse-ring"></div>
-          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 
+  {/* ───────────────────────── SIGNALS ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">This is for you if / 01</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          You're stuck in the same loops.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Not every team needs an audit. But if one of these sounds painfully familiar, it's probably
+          time for an honest look.
+        </Text>
+      </div>
 
-          <div
-            data-au-token
-            class="absolute top-[18%] left-[12%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 -rotate-6"
-          >
-            <div class="w-2 h-2 rounded-full bg-coral"></div>
-            <span class="font-heading text-xs font-semibold text-navy">Button / Primary</span>
-          </div>
-          <div
-            data-au-token
-            class="absolute top-[8%] right-[6%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 rotate-3"
-          >
-            <div class="w-2 h-2 rounded-full bg-sage"></div>
-            <span class="font-heading text-xs font-semibold text-navy">Token: spacing-md</span>
-          </div>
-          <div
-            data-au-token
-            class="absolute bottom-[14%] left-[4%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 rotate-3"
-          >
-            <div class="w-2 h-2 rounded-full bg-sunset"></div>
-            <span class="font-heading text-xs font-semibold text-navy">Input / Error</span>
-          </div>
-          <div
-            data-au-token
-            class="absolute bottom-[8%] right-[10%] bg-white rounded-xl shadow-lg border border-charcoal/5 p-3 flex items-center gap-2 -rotate-6"
-          >
-            <div class="w-2 h-2 rounded-full bg-plum"></div>
-            <span class="font-heading text-xs font-semibold text-navy">Card / Elevated</span>
-          </div>
+      <ul class="mt-12 divide-y divide-line border-y border-line">
+        {signals.map((s, i) => (
+          <li class="flex gap-5 py-5">
+            <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+            <p class="text-[1.05rem] leading-snug text-ink">{s}</p>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
 
+  {/* ───────────────────────── PULL QUOTE (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label !text-paper/65">The pattern / 02</p>
+        <Heading level={2} visual="display-md" tone="paper" class="mt-5 max-w-[20ch]">
+          Most teams try to fix their system by adding more.
+        </Heading>
+        <Text size="lg" tone="whiteMuted" class="mt-5 max-w-xl">
+          More components. More documentation. More rules. That usually makes things worse. An audit
+          finds what to remove, not just what to add.
+        </Text>
+      </div>
+    </Container>
+  </Section>
 
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div data-au-glass class="relative">
-              <div
-                class="w-48 h-48 rounded-full bg-gradient-to-br from-white/80 to-peach/60 border-[10px] border-navy shadow-2xl backdrop-blur-[1px] flex items-center justify-center"
-              >
-                <Icon name="ph:magnifying-glass-duotone" size={72} class="text-coral" />
-              </div>
-              <div
-                class="absolute -bottom-10 -right-10 w-24 h-6 bg-navy rounded-full shadow-xl rotate-45"
-              ></div>
+  {/* ───────────────────────── DELIVERABLES ───────────────────────── */}
+  <Section id="deliverables" tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">What you walk away with / 03</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          A clear view of what's actually going on.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          No vague "here are some ideas" deck. You get a structured, honest, prioritized plan.
+        </Text>
+      </div>
+
+      <div class="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {deliverables.map((d) => (
+          <div class="bg-paper p-7 md:p-8">
+            <span class="font-mono text-[0.75rem] text-accent">{d.index}</span>
+            <Heading level={3} visual="h3" class="mt-3">{d.title}</Heading>
+            <Text size="sm" tone="muted" class="mt-2.5">{d.body}</Text>
+          </div>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── SCOPE ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="default">
+      <div class="max-w-3xl">
+        <p class="mono-label">Inside the audit / 04</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          The full scope.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Five focused tracks across your system, your code, and your documentation.
+        </Text>
+      </div>
+
+      <ul class="mt-12 divide-y divide-line border-y border-line">
+        {scope.map((s, i) => (
+          <li class="flex gap-5 py-6">
+            <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+            <div>
+              <Heading level={3} visual="h3">{s.title}</Heading>
+              <Text size="sm" tone="muted" class="mt-1.5">{s.body}</Text>
             </div>
-          </div>
-        </div>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── PROCESS (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label !text-paper/65">How it works / 05</p>
+        <Heading level={2} visual="display-md" tone="paper" class="mt-4">
+          Four steps, no surprises.
+        </Heading>
       </div>
-    </Container>
-  </Section>
 
-  <SquiggleDivider />
-
-
-  <Section padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="This is for you if…"
-        eyebrowIcon="ph:hand-waving-duotone"
-        eyebrowTone="plum"
-        title="You're stuck in the same loops"
-        lead="Not every team needs an audit. But if one of these sounds painfully familiar, it's probably time for an honest look."
-        class="mb-14"
-      />
-
-      <CardGrid cols={2} gap="md">
-        {signals.map((s) => {
-          const t = signalToneMap[s.tone];
-          return (
-            <Card hover={false} variant="paper" tilt={s.tilt} class="flex gap-4">
-              <div
-                class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
-              >
-                <Icon name={s.icon} size={24} class={t.iconClass} />
-              </div>
-              <p class="font-heading font-medium text-navy self-center">{s.body}</p>
-            </Card>
-          );
-        })}
-      </CardGrid>
-    </Container>
-  </Section>
-
-
-  <Section padding="tight" class="bg-charcoal/[0.03]">
-    <Container width="narrow">
-      <div
-        class="relative bg-white rounded-3xl p-10 md:p-14 border border-charcoal/5 shadow-sm overflow-hidden -rotate-1"
-      >
-        <Blob tone="lemon" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-40" />
-        <Blob tone="plum" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-20" />
-
-        <div class="relative">
-          <Icon name="ph:quotes-duotone" size={48} class="text-[#C13A22] mb-4" />
-          <p
-            class="font-display text-2xl md:text-3xl lg:text-4xl text-navy leading-[1.3] font-medium mb-6"
-          >
-            Most teams try to fix their system by adding
-            <span class="italic">more</span>. More components. More documentation. More rules.
-          </p>
-          <p class="font-display text-xl md:text-2xl text-coral leading-snug italic">
-            That usually makes things worse.
-          </p>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-
-  <Section id="deliverables" padding="loose">
-    <Container>
-      <SectionHeader
-        eyebrow="What you walk away with"
-        eyebrowIcon="ph:gift-duotone"
-        eyebrowTone="coral"
-        title="A clear view of what's actually going on"
-        lead='No vague "here are some ideas" deck. You get a structured, honest, prioritized plan.'
-        class="mb-16"
-      />
-
-      <CardGrid cols={3} gap="md">
-        {deliverables.map((d) => {
-          const t = deliverableToneMap[d.tone];
-          const isNavy = d.tone === 'navy';
-          return (
-            <Card
-              variant="paper"
-              tilt={d.tilt}
-              padding="loose"
-              class={`relative overflow-hidden ${
-                isNavy
-                  ? '!bg-gradient-to-br from-navy to-plum text-white !border-navy/10'
-                  : ''
-              }`}
-            >
-              <div
-                class={`absolute -top-6 -right-6 w-24 h-24 ${t.halo} rounded-full pointer-events-none`}
-                aria-hidden="true"
-              ></div>
-              <div class="relative">
-                <div
-                  class={`w-14 h-14 ${t.iconBg} rounded-2xl flex items-center justify-center mb-5`}
-                >
-                  <Icon name={d.icon} size={28} class={t.iconClass} />
-                </div>
-                <Heading level={3} visual="h3" tone={isNavy ? 'white' : 'navy'} class="mb-2">
-                  {d.title}
-                </Heading>
-                <Text size="sm" tone={isNavy ? 'whiteMuted' : 'muted'}>
-                  {d.body}
-                </Text>
-              </div>
-            </Card>
-          );
-        })}
-      </CardGrid>
-    </Container>
-  </Section>
-
-
-  <Section padding="default" class="bg-charcoal/[0.03]">
-    <Container width="narrow">
-      <SectionHeader
-        eyebrow="Inside the audit"
-        eyebrowIcon="ph:package-duotone"
-        eyebrowTone="sunset"
-        title="The full scope"
-        lead="Five focused tracks across your system, your code, and your documentation."
-        class="mb-14"
-      />
-
-      <div class="bg-white rounded-3xl border border-charcoal/5 shadow-sm overflow-hidden">
-        <ul class="divide-y divide-charcoal/5">
-          {scope.map((s) => {
-            const t = scopeToneMap[s.tone];
-            return (
-              <li class="flex items-start gap-5 p-6 md:p-7">
-                <div
-                  class={`w-12 h-12 ${t.iconBg} rounded-xl flex items-center justify-center flex-shrink-0`}
-                >
-                  <Icon name={s.icon} size={24} class={t.iconClass} />
-                </div>
-                <div>
-                  <Heading level={3} visual="h3" class="mb-1"><Fragment set:html={s.title} /></Heading>
-                  <Text size="sm" tone="muted"><Fragment set:html={s.body} /></Text>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </Container>
-  </Section>
-
-
-  <Section padding="loose">
-    <Container width="narrow">
-      <SectionHeader
-        eyebrow="How it works"
-        eyebrowIcon="ph:path-duotone"
-        eyebrowTone="sage"
-        title="Four steps, no surprises"
-        class="mb-14"
-      />
-
-      <div class="space-y-6">
+      <ol class="mt-14 grid gap-px overflow-hidden rounded-lg border border-paper/10 bg-paper/10 sm:grid-cols-2">
         {process.map((step) => (
-          <div class="flex gap-5">
-            <CardNumber n={Number(step.n)} tone={step.tone as 'coral' | 'plum' | 'sunset' | 'sage'} size="lg" inline />
-            <Card hover={false} variant="paper" tilt={step.tilt} class="flex-1">
-              <Heading level={3} visual="h3" class="mb-2">{step.title}</Heading>
-              <Text tone="muted">{step.body}</Text>
-            </Card>
-          </div>
+          <li class="bg-ink p-7 md:p-9">
+            <span class="font-mono text-[0.75rem] text-accent">{step.n}</span>
+            <Heading level={3} visual="h3" tone="paper" class="mt-3">{step.title}</Heading>
+            <p class="mt-2.5 text-sm leading-relaxed text-paper/70">{step.body}</p>
+          </li>
         ))}
-      </div>
+      </ol>
     </Container>
   </Section>
 
-  <Section padding="tight" class="bg-charcoal/[0.03]">
-    <Container width="narrow">
-      <div
-        class="relative bg-gradient-to-br from-navy via-navy to-plum rounded-3xl p-10 md:p-14 overflow-hidden"
-      >
-        <Blob tone="coral" size="xl" class="absolute -top-10 -right-10" animate="float-slow" opacity="opacity-20" />
-        <Blob tone="lemon" size="lg" class="absolute -bottom-8 -left-8 rounded-full" animate="float-delay" opacity="opacity-15" />
-        <Blob tone="sage" size="sm" class="absolute top-8 left-1/2 rounded-full" animate="float" opacity="opacity-20" />
-
-        <div class="relative text-center">
-          <span
-            class="inline-flex items-center gap-2 bg-white/10 text-white/90 border border-white/15 px-4 py-2 rounded-full mb-6 font-heading text-sm font-medium"
-          >
-            <Icon name="ph:tag-duotone" size={18} class="text-lemon" />
-            Flat-scope engagement
-          </span>
-          <Heading level={2} visual="h2" tone="white" align="center" class="mb-4">
-            Design System Audit
-          </Heading>
-          <div class="flex items-baseline justify-center gap-2 mb-6">
-            <span class="text-white/60 font-heading text-lg">Starting at</span>
-            <span class="font-display text-white text-5xl md:text-6xl font-semibold">$2,000</span>
+  {/* ───────────────────────── PRICING ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="default">
+      <div class="rounded-lg border border-line bg-raised p-8 md:p-12">
+        <p class="mono-label">Flat-scope engagement / 06</p>
+        <div class="mt-6 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div>
+            <Heading level={2} visual="h2">Design System Audit</Heading>
+            <div class="mt-4 flex items-baseline gap-2">
+              <span class="font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted">Starting at</span>
+              <span class="font-display text-5xl font-semibold tracking-[-0.03em] text-ink">$2,000</span>
+            </div>
+            <Text tone="muted" class="mt-4 max-w-lg">
+              Final scope depends on system size and surface area — we'll sort that out on the intro
+              call. No retainers, no surprises.
+            </Text>
           </div>
-          <Text tone="whiteMuted" align="center" class="max-w-xl mx-auto mb-8">
-            Final scope depends on system size and surface area — we'll sort that out on the intro
-            call. No retainers, no surprises.
-          </Text>
-          <div class="flex justify-center">
-            <Button
-              variant="primary"
-              size="lg"
-              iconLeft="ph:calendar-check-duotone"
-              href="https://calendly.com/josh-thebrileys/30min/"
-
-            >
-              Book an intro call
-            </Button>
-          </div>
+          <Button variant="primary" size="lg" href="https://calendly.com/josh-thebrileys/30min/" iconRight="ph:arrow-right">
+            Book an intro call
+          </Button>
         </div>
       </div>
     </Container>
   </Section>
 
-  <Section padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Kind words"
-        eyebrowIcon="ph:heart-duotone"
-        eyebrowTone="lemon"
-        title="From folks who've worked with me"
-        class="mb-14"
-      />
+  {/* ───────────────────────── TESTIMONIALS ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <p class="mono-label">Kind words / 07</p>
+      <Heading level={2} visual="display-md" class="mt-4">
+        From folks who've worked with me.
+      </Heading>
 
-      <CardGrid cols={2} gap="md">
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line md:grid-cols-2">
         {testimonials.map((t) => (
-          <TestimonialCard
-            name={t.name}
-            role={t.role}
-            company={t.company}
-            quote={t.quote}
-            initials={t.initials}
-            avatarTone={t.avatarTone}
-            variant="index"
-            tilt={t.tilt}
-            image={t.image}
-          />
+          <figure class="bg-paper p-7 md:p-9">
+            <blockquote class="font-display text-lg leading-snug tracking-tight text-ink">"{t.quote}"</blockquote>
+            <figcaption class="mt-6">
+              <p class="text-sm font-medium text-ink">{t.name}</p>
+              <p class="mt-0.5 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-muted">{t.role}</p>
+            </figcaption>
+          </figure>
         ))}
-      </CardGrid>
+      </div>
     </Container>
   </Section>
 
+  {/* ───────────────────────── CTA ───────────────────────── */}
   <CTABanner
+    eyebrow="Start a project / 08"
     title="Let's find what's actually broken."
     lead="Book a 30-minute intro call. Tell me what's frustrating about your system and I'll tell you whether an audit is the right next step — honestly."
   >
-    <Button
-      variant="primary"
-      iconLeft="ph:calendar-check-duotone"
-      href="https://calendly.com/josh-thebrileys/30min/"
-
-    >
+    <Button variant="primary" href="https://calendly.com/josh-thebrileys/30min/" iconRight="ph:arrow-right">
       Book an intro call
     </Button>
-    <Button variant="text"  iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
+    <Button variant="text" href="/tools/scorecard/">
       Take the free scorecard
     </Button>
   </CTABanner>
-  {/* Hero illustration motion: the magnifying glass drifts over each token card in turn —
-      active coverage — and each card lights up as it's "reviewed". */}
-  <script>
-    import { gsap, reduceMotion } from '~/scripts/hero-motion';
-
-    const illo = document.querySelector<HTMLElement>('[data-au-illo]');
-    const glass = illo?.querySelector<HTMLElement>('[data-au-glass]');
-    const tokens = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-au-token]')) : [];
-
-    if (illo && glass && tokens.length) {
-      // center of an element expressed in the illustration's own coordinate box
-      const center = (el: Element) => {
-        const r = el.getBoundingClientRect();
-        const o = illo.getBoundingClientRect();
-        return { x: r.left + r.width / 2 - o.left, y: r.top + r.height / 2 - o.top };
-      };
-
-      let tl: gsap.core.Timeline | null = null;
-      const build = () => {
-        tl?.kill();
-        // glass is centered by its flex wrapper, so drive it with x/y offsets from illo center
-        gsap.set(glass, { x: 0, y: 0 });
-        gsap.set(tokens, { filter: 'brightness(1)', boxShadow: '0 0 0 0 rgba(0,0,0,0)' });
-
-        if (reduceMotion()) {
-          // park the glass at its centered rest position; cards stay static
-          return;
-        }
-
-        const o = illo.getBoundingClientRect();
-        const ic = { x: o.width / 2, y: o.height / 2 };
-
-        tl = gsap.timeline({ repeat: -1, defaults: { ease: 'power1.inOut' } });
-        tokens.forEach((card) => {
-          const c = center(card);
-          tl!
-            .to(glass, { x: c.x - ic.x, y: c.y - ic.y, duration: 0.9 })
-            .to(
-              card,
-              {
-                filter: 'brightness(1.12)',
-                boxShadow: '0 0 0 3px rgba(225,58,34,0.35)',
-                duration: 0.28,
-                yoyo: true,
-                repeat: 1,
-              },
-              '>-0.1',
-            )
-            .to({}, { duration: 0.35 }); // brief hold while "reviewing"
-        });
-      };
-
-      build();
-      let raf = 0;
-      window.addEventListener('resize', () => {
-        cancelAnimationFrame(raf);
-        raf = requestAnimationFrame(build);
-      });
-    }
-  </script>
 </BaseLayout>

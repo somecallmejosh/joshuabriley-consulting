@@ -2,37 +2,31 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
-import Hero from '~/components/patterns/Hero.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
+import Icon from '~/components/primitives/Icon.astro';
 import RoiCalculator from '~/components/islands/RoiCalculator.astro';
 import { WEEKS_PER_YEAR } from '~/lib/roi';
 
 const assumptions = [
   {
-    icon: 'ph:calendar-blank-duotone',
+    icon: 'ph:calendar-blank',
     title: `${WEEKS_PER_YEAR} working weeks`,
     body: 'A year minus holidays, PTO, and ramp — so the annual figure reflects time actually worked, not a flat 52.',
   },
   {
-    icon: 'ph:scales-duotone',
+    icon: 'ph:scales',
     title: 'Conservative reclaim',
     body: 'A structured system is modelled to remove only a fraction of today’s rework — 20–60% by how much drift you carry — never all of it.',
   },
   {
-    icon: 'ph:stack-duotone',
+    icon: 'ph:stack',
     title: 'Surface drag',
     body: 'Each extra product nudges the reclaimable share up a little: keeping N surfaces in sync is where inconsistency compounds.',
   },
   {
-    icon: 'ph:eye-duotone',
+    icon: 'ph:eye',
     title: 'Nothing hidden',
     body: 'Every output traces back to an input you set. No black box, no stored data, no email — the link you copy is the whole state.',
   },
@@ -48,7 +42,6 @@ const references = [
     year: '2018',
     body: 'Developers lose more than 17 hours a week to maintenance, debugging, and refactoring — about a quarter of it on bad code. Stripe pegs the global drag at $85 billion a year.',
     href: 'https://stripe.com/files/reports/the-developer-coefficient.pdf',
-    tone: 'coral',
   },
   {
     stat: '+32 pts',
@@ -57,7 +50,6 @@ const references = [
     year: '2018',
     body: 'Across 300 companies tracked over five years, top-quartile design performers grew revenue 32 points faster and returns to shareholders 56 points higher than their industry rivals.',
     href: 'https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/the-business-value-of-design',
-    tone: 'sky',
   },
   {
     stat: 'Efficiency',
@@ -66,7 +58,6 @@ const references = [
     year: '2021',
     body: 'A design system lets work be “created and replicated quickly and at scale,” reducing the need to reinvent the wheel and the unintended inconsistency that comes with it.',
     href: 'https://www.nngroup.com/articles/design-systems-101/',
-    tone: 'plum',
   },
   {
     stat: 'Consistency',
@@ -75,257 +66,185 @@ const references = [
     year: '2019',
     body: 'Surveying 250+ teams that run design systems, the two payoffs reported most often were consistency and efficiency — the exact drag this calculator prices.',
     href: 'https://sparkbox.com/foundry/2019_design_systems_survey_results',
-    tone: 'sage',
   },
 ];
-
-// Arbitrary hex (not named tokens) so the utilities survive this project's
-// per-route CSS split; text shades are the AA-legible -deep variants.
-const refToneMap: Record<string, { chip: string; text: string }> = {
-  coral: { chip: 'bg-[#E8573D]/12', text: 'text-[#C13A22]' },
-  sky: { chip: 'bg-[#5DADE2]/15', text: 'text-[#1B6FA1]' },
-  plum: { chip: 'bg-[#6C4AB6]/12', text: 'text-[#6C4AB6]' },
-  sage: { chip: 'bg-[#7BB47A]/18', text: 'text-[#3E6E3D]' },
-};
 ---
 
 <BaseLayout
   title="What inconsistency costs — ROI Calculator — Tools — Joshua Briley"
   description="An interactive calculator that turns UI inconsistency into a number: the engineer and designer hours — and dollars — a structured design system reclaims each year."
 >
-  {/* ====== HERO ====== */}
-  <Hero tone="cream" align="left" split>
-    <Blob slot="decorations" tone="sunset" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
-    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
-    <Blob slot="decorations" tone="coral" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" opacity="opacity-40" />
-
-    <Badge slot="eyebrow" tone="peach" icon="ph:calculator-duotone">Interactive tool &middot; the business case</Badge>
-    <Heading slot="title" level={1} visual="display-xl">
-      What inconsistency <WavyUnderline>actually costs</WavyUnderline>.
-    </Heading>
-    <Text slot="lead" size="xl" tone="muted">
-      Drift never lands on a single invoice, so it stays invisible — a few hours here, a rebuilt component there.
-      Add it up across a team and a year and it&rsquo;s a salary. Set your numbers below and see the figure
-      stakeholders actually respond to.
-    </Text>
-
-    {/* The page's thesis, drawn: small, easy-to-ignore scraps of rework — an hour
-        here, a rebuilt component there — funnel down and compound into one
-        salary-sized number a year. Decorative. */}
-    <div slot="media" data-roi-illo class="relative mx-auto h-[470px] w-full max-w-[420px] hidden lg:block" aria-hidden="true">
-      {/* Soft spinning ring for depth */}
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 rounded-full border-2 border-dashed border-sunset/15 animate-spin-slow"></div>
-
-      {/* Floating accent dots */}
-      <span class="absolute top-[3%] right-[5%] w-4 h-4 rounded-full bg-lemon animate-float-delay"></span>
-      <span class="absolute bottom-[10%] left-[1%] w-3 h-3 rounded-full bg-coral/60 animate-float-slow"></span>
-
-      {/* Converging flow lines (each small rework cost drains into the annual total) drawn by
-          hero-motion.ts, anchored to the live cards; cost tokens drop down into the total. */}
-      <svg data-roi-conn class="absolute inset-0 w-full h-full"></svg>
-
-      {/* Three small, easy-to-ignore rework line items */}
-      <div data-roi-chip class="absolute top-[2%] left-0 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-3 animate-float">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">This sprint</span>
-        <div class="flex items-center justify-between gap-2">
-          <span class="font-heading text-xs font-semibold text-navy">Modal rebuilt</span>
-          <span class="font-mono text-xs font-bold text-[#C13A22]">+3h</span>
-        </div>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Tools / The business case</span>
+        <span class="hidden sm:inline text-ink-muted">ROI 04</span>
       </div>
 
-      <div data-roi-chip class="absolute top-[19%] right-0 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-2 animate-float-delay">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Code review</span>
-        <div class="flex items-center justify-between gap-2">
-          <span class="font-heading text-xs font-semibold text-navy">Color drift</span>
-          <span class="font-mono text-xs font-bold text-[#C13A22]">+1h</span>
-        </div>
-      </div>
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+            What inconsistency <em class="ink-wink font-normal italic">actually costs</em>.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            Drift never lands on a single invoice, so it stays invisible — a few hours here, a rebuilt
+            component there. Add it up across a team and a year and it is a salary. Set your numbers
+            below and see the figure stakeholders actually respond to.
+          </Text>
 
-      <div data-roi-chip class="absolute top-[30%] left-1/2 -translate-x-1/2 w-40 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-1 animate-float-slow">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70 mb-1.5">Handoff</span>
-        <div class="flex items-center justify-between gap-2">
-          <span class="font-heading text-xs font-semibold text-navy">Spacing one-off</span>
-          <span class="font-mono text-xs font-bold text-[#C13A22]">+2h</span>
-        </div>
-      </div>
-
-      {/* The total: the same scraps, compounded across a team and a year */}
-      <div data-roi-total class="absolute bottom-0 left-1/2 -translate-x-1/2 w-64 bg-white rounded-2xl shadow-2xl border border-charcoal/5 px-5 py-4 rotate-1 animate-float">
-        <div class="flex items-center justify-between border-b border-dashed border-sunset/25 pb-2 mb-3">
-          <span class="font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/70">Drift &middot; one team &middot; one year</span>
-          <iconify-icon icon="ph:receipt-duotone" width="16" height="16" class="text-sunset"></iconify-icon>
-        </div>
-        <p class="font-display font-extrabold text-4xl text-[#A24818] leading-none tracking-tight">$140k</p>
-        <div class="mt-3 flex items-center gap-2.5">
-          <div class="flex-1 h-2.5 rounded-full bg-charcoal/8 overflow-hidden">
-            <div data-roi-bar class="h-full rounded-full" style="width:100%; background:linear-gradient(90deg,#E8573D,#FF8E53)"></div>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="#calculator" iconRight="ph:arrow-right" class="js-magnetic">
+              Run the numbers
+            </Button>
+            <Button variant="ghost" size="lg" href="/tools/scorecard/">
+              Score your system
+            </Button>
           </div>
-          <span class="font-mono text-[11px] font-semibold text-navy whitespace-nowrap">&asymp; a salary</span>
+        </div>
+
+        {/* Static receipt — the thesis: small scraps compound into one figure. */}
+        <div class="lg:col-span-5" aria-hidden="true">
+          <figure class="rounded-lg border border-line bg-raised p-5 md:p-6">
+            <figcaption class="flex items-center justify-between mono-label">
+              <span>Drift · one team · one year</span>
+            </figcaption>
+            <ul class="mt-4 divide-y divide-line">
+              {[
+                { label: 'Modal rebuilt', cost: '+3h' },
+                { label: 'Color drift in review', cost: '+1h' },
+                { label: 'Spacing one-off', cost: '+2h' },
+              ].map((r) => (
+                <li class="flex items-center justify-between py-2.5 first:pt-0">
+                  <span class="text-sm text-ink-muted">{r.label}</span>
+                  <span class="font-mono text-[0.8rem] font-medium text-accent">{r.cost}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="mt-4 flex items-end justify-between border-t border-line pt-4">
+              <span class="mono-label">≈ a salary</span>
+              <span class="font-display text-3xl font-semibold tracking-[-0.03em] text-ink">$140k</span>
+            </div>
+          </figure>
         </div>
       </div>
+    </Container>
+  </Section>
 
-      {/* hand-drawn aside */}
-      <span class="absolute bottom-[1%] right-[1%] font-hand text-sunset text-xl rotate-[-5deg]">it adds up.</span>
-    </div>
-  </Hero>
-
-  <SquiggleDivider />
-
-  {/* ====== THE CALCULATOR ====== */}
-  <Section padding="default">
+  {/* ───────────────────────── THE TOOL (island, intact) ───────────────────────── */}
+  <Section id="calculator" tone="paper" padding="default">
     <Container width="default">
-      <SectionHeader
-        align="left"
-        eyebrowIcon="ph:calculator-duotone"
-        eyebrowTone="coral"
-        title="Turn drift into a number"
-        lead="Five inputs about your team and the rework you live with. The panel shows what a structured system is modelled to reclaim &mdash; in hours and dollars, every year."
-        class="mb-10 max-w-[65ch]"
-      />
+      <div class="mb-10 max-w-[65ch]">
+        <p class="mono-label">The calculator / 01</p>
+        <Heading level={2} visual="display-md" class="mt-4">Turn drift into a number.</Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Five inputs about your team and the rework you live with. The panel shows what a structured
+          system is modelled to reclaim — in hours and dollars, every year.
+        </Text>
+      </div>
       <RoiCalculator />
     </Container>
   </Section>
 
-  {/* ====== HOW IT'S CALCULATED ====== */}
-  <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
-    <Container width="default">
-      <SectionHeader
-        align="left"
-        eyebrowIcon="ph:function-duotone"
-        eyebrowTone="sky"
-        title="Defensible beats dramatic"
-        lead="A number you can&rsquo;t explain is a number a stakeholder ignores. Here&rsquo;s every assumption behind the figure."
-        class="mb-10 max-w-[65ch]"
-      />
-      <div class="grid sm:grid-cols-2 gap-5">
+  {/* ───────────────────────── HOW IT'S CALCULATED (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label !text-paper/65">The assumptions / 02</p>
+        <Heading level={2} visual="display-md" tone="paper" class="mt-4">Defensible beats dramatic.</Heading>
+        <Text size="lg" tone="whiteMuted" class="mt-5">
+          A number you cannot explain is a number a stakeholder ignores. Here is every assumption
+          behind the figure.
+        </Text>
+      </div>
+
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-paper/10 bg-paper/10 sm:grid-cols-2">
         {assumptions.map((a) => (
-          <div class="flex gap-4 bg-white/70 border border-charcoal/8 rounded-2xl p-5">
-            <div class="shrink-0 w-11 h-11 rounded-xl bg-sunset/10 flex items-center justify-center">
-              <iconify-icon icon={a.icon} width="22" height="22" class="text-sunset" aria-hidden="true"></iconify-icon>
-            </div>
+          <div class="flex gap-4 bg-ink p-7 md:p-8">
+            <Icon name={a.icon} size={22} class="mt-0.5 flex-shrink-0 text-accent" />
             <div>
-              <h3 class="font-heading font-bold text-navy mb-1">{a.title}</h3>
-              <p class="text-sm text-charcoal/70 leading-relaxed">{a.body}</p>
+              <Heading level={3} visual="h3" tone="paper">{a.title}</Heading>
+              <p class="mt-2 text-sm leading-relaxed text-paper/65">{a.body}</p>
             </div>
           </div>
         ))}
       </div>
-      <Text size="sm" tone="muted" class="mt-6 italic">
-        This is an estimate to start a conversation, not an audit. The real number comes from looking at your
-        actual components, tokens, and workflow.
-      </Text>
+      <p class="mt-6 text-sm italic text-paper/55">
+        This is an estimate to start a conversation, not an audit. The real number comes from looking
+        at your actual components, tokens, and workflow.
+      </p>
     </Container>
   </Section>
 
-  {/* ====== THE RESEARCH ====== */}
-  <Section padding="default" decorated>
-    <Blob tone="sky" size="sm" class="absolute top-20 right-[8%] rounded-full" animate="float-slow" opacity="opacity-30" />
-    <Blob tone="lemon" size="sm" class="absolute bottom-16 left-[6%] rounded-full" animate="float-delay" opacity="opacity-40" />
-    <Container width="default" class="relative z-10">
-      <SectionHeader
-        align="left"
-        eyebrow="The research"
-        eyebrowIcon="ph:books-duotone"
-        eyebrowTone="sage"
-        title="Not just my opinion"
-        lead="The premise behind the math &mdash; that drift and rework quietly drain real money, and structure wins it back &mdash; is well-trodden ground. A few sources worth keeping in your back pocket."
-        class="mb-10 max-w-[65ch]"
-      />
-      <div class="grid sm:grid-cols-2 gap-5">
-        {references.map((r) => {
-          const t = refToneMap[r.tone];
-          return (
-            <a
-              href={r.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="group flex flex-col bg-white/70 border border-charcoal/8 rounded-2xl p-6 transition hover:-translate-y-0.5 hover:border-charcoal/15 hover:shadow-lg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#A24818]"
-            >
-              <div class="flex items-baseline gap-3 mb-3">
-                <span class={`inline-flex items-center rounded-lg px-2.5 py-1 font-display font-extrabold text-xl leading-none ${t.chip} ${t.text}`}>
-                  {r.stat}
-                </span>
-                <span class="font-heading text-[11px] font-semibold uppercase tracking-wider text-charcoal/70">
-                  {r.statLabel}
-                </span>
-              </div>
-              <p class="text-sm text-charcoal/75 leading-relaxed mb-4 flex-1">{r.body}</p>
-              <div class="flex items-center justify-between gap-3 pt-3 border-t border-charcoal/8">
-                <span class="font-heading text-xs font-semibold text-navy">
-                  {r.source} <span class="text-charcoal/70 font-normal">&middot; {r.year}</span>
-                </span>
-                <span class={`inline-flex items-center gap-1 text-xs font-semibold whitespace-nowrap ${t.text}`}>
-                  Source
-                  <iconify-icon icon="ph:arrow-up-right-duotone" width="14" height="14" class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"></iconify-icon>
-                </span>
-              </div>
-            </a>
-          );
-        })}
+  {/* ───────────────────────── THE RESEARCH (paper) ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">The research / 03</p>
+        <Heading level={2} visual="display-md" class="mt-4">Not just my opinion.</Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          The premise behind the math — that drift and rework quietly drain real money, and structure
+          wins it back — is well-trodden ground. A few sources worth keeping in your back pocket.
+        </Text>
       </div>
-      <Text size="sm" tone="muted" class="mt-6 italic">
-        These studies measure the broad pattern, not your team specifically &mdash; they&rsquo;re here to show the
-        direction is real, not to set your exact number. That still comes from looking at your actual system.
-      </Text>
+
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+        {references.map((r) => (
+          <a
+            href={r.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group flex flex-col bg-paper p-7 transition-colors hover:bg-ink/[0.02] md:p-8"
+          >
+            <div class="flex items-baseline gap-3">
+              <span class="font-display text-2xl font-semibold tracking-[-0.03em] text-accent">{r.stat}</span>
+              <span class="mono-label">{r.statLabel}</span>
+            </div>
+            <p class="mt-4 flex-1 text-sm leading-relaxed text-ink-muted">{r.body}</p>
+            <div class="mt-5 flex items-center justify-between gap-3 border-t border-line pt-4">
+              <span class="font-display text-sm font-medium tracking-tight text-ink">
+                {r.source} <span class="font-normal text-ink-muted">· {r.year}</span>
+              </span>
+              <span class="inline-flex items-center gap-1.5 whitespace-nowrap font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted transition-colors group-hover:text-accent">
+                Source <Icon name="ph:arrow-up-right" size={13} class="transition-transform duration-300 ease-out group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <p class="mt-6 text-sm italic text-ink-muted">
+        These studies measure the broad pattern, not your team specifically — they are here to show
+        the direction is real, not to set your exact number. That still comes from looking at your
+        actual system.
+      </p>
     </Container>
   </Section>
 
-  {/* ====== FINAL CTA ====== */}
-  <CTABanner
-    title="Put a real number behind it"
-    lead="The estimate above is the rough shape. A design system audit replaces it with specifics — which patterns drift, what it costs, and the order to fix them in. I take a handful of engagements a year."
-    align="left"
-  >
-    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
-      Talk about an audit
-    </Button>
-    <Button variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
-      Score your system first
-    </Button>
-  </CTABanner>
-
-  {/* Hero illustration motion: small, ignorable rework costs drop down their connectors and
-      compound into the one salary-sized total. */}
-  <script>
-    import { connect, gsap } from '~/scripts/hero-motion';
-
-    const illo = document.querySelector<HTMLElement>('[data-roi-illo]');
-    const svg = illo?.querySelector<SVGSVGElement>('[data-roi-conn]');
-    const chips = illo ? Array.from(illo.querySelectorAll('[data-roi-chip]')) : [];
-    const total = illo?.querySelector('[data-roi-total]');
-    const bar = illo?.querySelector('[data-roi-bar]');
-
-    if (svg && total && chips.length) {
-      const c = connect(
-        svg,
-        chips.map((chip, i) => ({
-          from: chip,
-          to: total,
-          color: '#E8573D',
-          curve: i === 1 ? 0.14 : i === 2 ? -0.12 : 0.05,
-          opacity: 0.8,
-        })),
-      );
-
-      if (!c.reduce) {
-        const cycle = 3;
-        chips.forEach((_, i) => {
-          c.links[i].addPulse({ duration: 1.5, delay: i * 0.45, repeatDelay: cycle - 1.5, size: 6, color: '#E8573D' });
-        });
-        // the total reacts each time the costs land (filter on the floating card; scaleX on the bar)
-        gsap.fromTo(
-          total,
-          { filter: 'brightness(1)' },
-          { filter: 'brightness(1.07)', duration: 0.28, yoyo: true, repeat: 1, ease: 'power1.inOut', delay: 1.7, repeatDelay: cycle - 0.56 },
-        );
-        if (bar) {
-          gsap.fromTo(
-            bar,
-            { scaleX: 0.94 },
-            { scaleX: 1, transformOrigin: 'left center', duration: 0.6, ease: 'power2.out', delay: 1.7, repeat: -1, repeatDelay: cycle - 0.6 },
-          );
-        }
-      }
-    }
-  </script>
+  {/* ───────────────────────── CTA (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label !text-paper/65">Make it real / 04</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[20ch]">
+            Put a real number behind it.
+          </Heading>
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            The estimate above is the rough shape. A design system audit replaces it with specifics —
+            which patterns drift, what it costs, and the order to fix them in. I take a handful of
+            engagements a year.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right">Talk about an audit</Button>
+            <a
+              href="/tools/scorecard/"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Score your system first <Icon name="ph:arrow-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>

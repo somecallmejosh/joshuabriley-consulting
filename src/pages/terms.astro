@@ -4,7 +4,6 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
 
 const updated = 'June 2026';
@@ -14,25 +13,19 @@ const updated = 'June 2026';
   title="Terms of Use — Joshua Briley"
   description="The ground rules for using this site, its content, and the tools on it."
 >
-  <Section tone="cream" padding="default" decorated>
-    <div class="absolute inset-0 grid-paper opacity-50" aria-hidden="true"></div>
-    <Container width="narrow" class="relative z-10">
-      <nav class="mb-8 flex items-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-coral transition-colors">Home</a>
-        <Icon name="ph:caret-right-bold" size={12} />
-        <span class="text-navy">Terms</span>
-      </nav>
+  <Section tone="paper" padding="default">
+    <Container width="narrow">
+      <p class="mono-label">Legal · Last updated {updated}</p>
 
-      <Heading level={1} visual="display-md" balance class="mb-4">Terms of use</Heading>
-      <Text size="lg" tone="muted" class="mb-2 max-w-2xl">
+      <Heading level={1} visual="display-lg" class="mt-5">Terms of use</Heading>
+      <Text size="lg" tone="muted" class="mt-6 max-w-2xl">
         This is a personal site for sharing my work and a few free tools. Using it means you're okay
         with the short list below.
       </Text>
-      <p class="font-heading text-sm text-charcoal/60">Last updated {updated}</p>
 
-      <div class="prose-whimsy mt-10 space-y-10 max-w-2xl">
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">The content</Heading>
+      <div class="legal mt-12 divide-y divide-line border-t border-line">
+        <section class="py-9 first:pt-0">
+          <Heading level={2} visual="h2" class="mb-4">The content</Heading>
           <p>
             The writing, designs, code samples, and tools here are mine unless noted otherwise. You're
             welcome to read them, share links, and quote a passage with attribution. Please don't
@@ -40,8 +33,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">The tools</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">The tools</Heading>
           <p>
             The scorecard, calculators, and other interactive tools are offered as-is to help you
             think through your own systems. They give estimates and starting points, not a guarantee
@@ -49,8 +42,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Getting in touch isn't a contract</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Getting in touch isn't a contract</Heading>
           <p>
             Sending a message or booking a call is the start of a conversation, not a working
             agreement. Any engagement begins only when we've both signed a separate, written scope of
@@ -58,8 +51,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Links out</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Links out</Heading>
           <p>
             Some pages link to other sites — articles, profiles, the tools that power the contact form
             and scheduling. I don't control those sites and I'm not responsible for their content or
@@ -67,8 +60,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">No warranties</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">No warranties</Heading>
           <p>
             I keep the site accurate and online as best I can, but it's provided without warranties of
             any kind. I'm not liable for losses that come from using — or being unable to use — the
@@ -76,8 +69,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Questions</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Questions</Heading>
           <p>
             If anything here is unclear, email
             <Link href="mailto:josh@thebrileys.com" variant="inline">josh@thebrileys.com</Link> and
@@ -92,3 +85,15 @@ const updated = 'June 2026';
     </Container>
   </Section>
 </BaseLayout>
+
+<style>
+  .legal p {
+    color: var(--ink-muted);
+    line-height: 1.75;
+    max-width: 65ch;
+  }
+  .legal strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

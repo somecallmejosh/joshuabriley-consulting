@@ -23,13 +23,11 @@ const steps = [
 
 <section class="sa" data-status-announcer data-step="0" style={`--sa-accent: ${steps[0].tone};`} aria-labelledby="sa-title">
   <header class="sa-head">
-    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
-      press play
-    </span>
-    <h3 id="sa-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+    <span class="mono-label">Press play</span>
+    <h3 id="sa-title" class="font-display text-2xl md:text-3xl font-bold text-ink leading-tight mt-2">
       What a screen reader actually hears.
     </h3>
-    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+    <p class="text-sm text-ink-muted mt-2 leading-relaxed max-w-prose">
       Advance the shipment. The status updates on screen &mdash; and a live region announces it to
       assistive tech. That announcement is invisible to most people, so here it is, written out as
       it is spoken.
@@ -71,7 +69,7 @@ const steps = [
     <!-- ============ SCREEN-READER OUTPUT ============ -->
     <div class="sa-sr">
       <div class="sa-sr-rule">
-        <Icon name="ph:speaker-high-duotone" size={16} class="text-lemon" />
+        <Icon name="ph:speaker-high-duotone" size={16} class="text-paper" />
         <span>Screen reader output</span>
       </div>
       <ol class="sa-transcript" data-sa-transcript>
@@ -173,10 +171,9 @@ const steps = [
 
 <style>
   .sa {
-    --sa-accent: #6c4ab6;
-    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
-    border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 22px;
-    box-shadow: 0 24px 50px -28px rgba(45, 43, 85, 0.28), 0 0 0 1px rgba(108, 74, 182, 0.04);
+    --sa-accent: var(--accent);
+    background: var(--paper);
+    border: 1px solid var(--line); border-radius: 12px;
     padding: clamp(1.25rem, 2.4vw, 2.5rem);
   }
   .sr-only {
@@ -192,23 +189,22 @@ const steps = [
 
   /* ========== shipment app ========== */
   .sa-app {
-    background: #fff; border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 16px;
+    background: var(--raised); border: 1px solid var(--line); border-radius: 12px;
     padding: clamp(1.1rem, 2vw, 1.5rem);
-    box-shadow: 0 18px 40px -24px rgba(45, 43, 85, 0.28), 0 0 0 1px rgba(108, 74, 182, 0.05);
   }
   .sa-app-top { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.25rem; }
   .sa-app-id {
     display: inline-flex; align-items: center; gap: 0.35rem;
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.78rem; color: rgba(45, 43, 85, 0.75);
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.78rem; color: var(--ink-muted);
   }
-  .sa-app-id :global(svg) { color: #1b6fa1; }
+  .sa-app-id :global(svg) { color: var(--accent); }
   .sa-pill {
-    --sa-accent: #9aa0ab; display: inline-flex; align-items: center; gap: 0.4rem;
-    background: color-mix(in srgb, var(--sa-accent) 12%, transparent); color: var(--sa-accent);
-    border: 1px solid color-mix(in srgb, var(--sa-accent) 35%, transparent);
-    padding: 0.25rem 0.7rem; border-radius: 999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-weight: 700; font-size: 0.74rem;
-    transition: color 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+    --sa-accent: var(--ink-faint); display: inline-flex; align-items: center; gap: 0.4rem;
+    background: var(--ink); color: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 0.25rem 0.7rem; border-radius: 8px;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-weight: 700; font-size: 0.74rem;
+    transition: color 0.3s var(--ease-out), background 0.3s var(--ease-out), border-color 0.3s var(--ease-out);
   }
   .sa-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--sa-accent); }
 
@@ -216,92 +212,90 @@ const steps = [
     list-style: none; margin: 0 0 1.1rem; padding: 0;
     display: grid; grid-template-columns: repeat(6, 1fr); gap: 0.4rem;
   }
-  .sa-step { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; text-align: center; opacity: 0.45; transition: opacity 0.25s ease; }
+  /* "Not reached" is signalled by a dimmed icon mark, NOT a faded label —
+     so every step label keeps a full-contrast ink-muted that passes AA. */
+  .sa-step { display: flex; flex-direction: column; align-items: center; gap: 0.35rem; text-align: center; }
   .sa-step-mark {
     width: 34px; height: 34px; border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
-    background: rgba(45, 43, 85, 0.06); color: rgba(45, 43, 85, 0.55);
-    border: 1.5px solid transparent; transition: all 0.25s ease;
+    background: var(--line); color: var(--ink-faint); opacity: 0.6;
+    border: 1px solid transparent; transition: all 0.25s var(--ease-out);
   }
   .sa-step-label {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.6rem; font-weight: 600;
-    color: rgba(45, 43, 85, 0.65); line-height: 1.15;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.6rem; font-weight: 600;
+    color: var(--ink-muted); line-height: 1.15;
   }
-  .sa-step.is-done { opacity: 1; }
-  .sa-step.is-done .sa-step-mark { background: color-mix(in srgb, var(--step-tone) 14%, transparent); color: var(--step-tone); }
+  .sa-step.is-done .sa-step-mark { background: color-mix(in srgb, var(--step-tone) 14%, transparent); color: var(--step-tone); opacity: 1; }
   .sa-step.is-current .sa-step-mark {
-    background: var(--step-tone); color: #fff; border-color: var(--step-tone);
-    box-shadow: 0 6px 14px -6px var(--step-tone);
+    background: var(--step-tone); color: var(--paper); border-color: var(--step-tone); opacity: 1;
   }
-  .sa-step.is-current { opacity: 1; }
 
-  .sa-progress { height: 7px; border-radius: 999px; background: rgba(45, 43, 85, 0.08); overflow: hidden; }
+  .sa-progress { height: 7px; border-radius: 6px; background: var(--line); overflow: hidden; }
   .sa-progress span {
-    display: block; height: 100%; width: 0; border-radius: 999px; background: var(--sa-accent);
-    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), background 0.3s ease;
+    display: block; height: 100%; width: 0; border-radius: 6px; background: var(--sa-accent);
+    transition: width 0.4s var(--ease-out), background 0.3s var(--ease-out);
   }
   .sa-progress-text {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.7rem;
-    color: rgba(45, 43, 85, 0.6); margin: 0.5rem 0 1.1rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.7rem;
+    color: var(--ink-muted); margin: 0.5rem 0 1.1rem;
   }
 
   .sa-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
   .sa-btn {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-weight: 600; font-size: 0.85rem;
-    padding: 0.55rem 1rem; border-radius: 12px; border: 1.5px solid transparent; cursor: pointer;
-    transition: transform 0.15s ease, box-shadow 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-weight: 600; font-size: 0.85rem;
+    padding: 0.55rem 1rem; border-radius: 8px; border: 1px solid transparent; cursor: pointer;
+    transition: transform 0.15s var(--ease-out), background 0.2s var(--ease-out), opacity 0.2s var(--ease-out);
   }
-  .sa-btn:focus-visible { outline: 2px solid #E8573D; outline-offset: 3px; }
-  .sa-btn--primary { background: var(--sa-accent); color: #fff; box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--sa-accent) 70%, transparent); }
+  .sa-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .sa-btn--primary { background: var(--accent); color: var(--paper); }
   .sa-btn--primary:hover:not(:disabled) { transform: translateY(-1px); }
   .sa-btn--primary:disabled { opacity: 0.55; cursor: default; }
-  .sa-btn--ghost { background: transparent; color: #2d2b55; border-color: rgba(45, 43, 85, 0.2); }
-  .sa-btn--ghost:hover { background: rgba(108, 74, 182, 0.06); }
+  .sa-btn--ghost { background: transparent; color: var(--ink); border-color: var(--line-strong); }
+  .sa-btn--ghost:hover { background: var(--line); }
 
   /* ========== screen-reader output ========== */
   .sa-sr {
-    background: #2d2b55; border-radius: 16px; padding: 1.1rem 1.2rem;
+    background: var(--ink); border-radius: 12px; padding: 1.1rem 1.2rem;
     display: flex; flex-direction: column;
-    box-shadow: 0 18px 40px -24px rgba(45, 43, 85, 0.5);
   }
   .sa-sr-rule {
     display: flex; align-items: center; gap: 0.45rem;
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.7rem;
-    text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255, 255, 255, 0.7);
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.15); padding-bottom: 0.7rem; margin-bottom: 0.85rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.7rem;
+    text-transform: uppercase; letter-spacing: 0.1em; color: rgba(245, 244, 241, 0.7);
+    border-bottom: 1px solid rgba(245, 244, 241, 0.15); padding-bottom: 0.7rem; margin-bottom: 0.85rem;
   }
   .sa-transcript {
     list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; align-content: start;
     overflow-y: auto; max-height: 260px; flex: 1;
   }
   .sa-transcript-empty {
-    font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.82rem;
-    color: rgba(255, 255, 255, 0.5); line-height: 1.5;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.82rem;
+    color: rgba(245, 244, 241, 0.7); line-height: 1.5;
   }
-  .sa-transcript-empty strong { color: rgba(255, 255, 255, 0.8); }
+  .sa-transcript-empty strong { color: var(--paper); }
   /* once the first status is announced, swap the prompt for the transcript */
   [data-status-announcer]:not([data-step='0']) .sa-transcript-empty { display: none; }
   .sa-transcript-line.is-hidden { display: none; }
   .sa-transcript-line {
     display: flex; gap: 0.6rem; align-items: flex-start;
-    background: rgba(255, 255, 255, 0.05); border-left: 2px solid var(--sa-accent);
-    border-radius: 8px; padding: 0.5rem 0.7rem;
+    background: rgba(245, 244, 241, 0.05); border-left: 2px solid var(--sa-accent);
+    border-radius: 6px; padding: 0.5rem 0.7rem;
   }
-  .sa-transcript-line.sa-in { animation: sa-line-in 0.4s cubic-bezier(0.22, 1, 0.36, 1); }
+  .sa-transcript-line.sa-in { animation: sa-line-in 0.4s var(--ease-out); }
   @keyframes sa-line-in { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .sa-transcript-tag {
-    flex-shrink: 0; font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.6rem;
-    text-transform: uppercase; letter-spacing: 0.05em; color: #fde68a;
-    background: rgba(253, 230, 138, 0.12); padding: 2px 6px; border-radius: 5px; margin-top: 1px;
+    flex-shrink: 0; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.6rem;
+    text-transform: uppercase; letter-spacing: 0.05em; color: var(--paper);
+    background: rgba(245, 244, 241, 0.12); padding: 2px 6px; border-radius: 6px; margin-top: 1px;
   }
   .sa-transcript-text {
-    font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.85rem; color: #f1eefb; line-height: 1.45;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.85rem; color: var(--paper); line-height: 1.45;
   }
 
   .sa-foot {
     margin-top: 1.25rem; text-align: center;
-    font-family: 'Caveat', cursive; font-size: 1.15rem; color: #6c4ab6;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.9rem; color: var(--ink-muted);
     max-width: 52ch; margin-left: auto; margin-right: auto;
   }
 

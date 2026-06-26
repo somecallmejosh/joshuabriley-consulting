@@ -44,7 +44,7 @@ const fieldId = id ?? `field-${name}`;
     aria-required={required ? 'true' : undefined}
     aria-invalid={invalid ? 'true' : undefined}
     aria-describedby={describedBy}
-    class="appearance-none w-full bg-white border border-charcoal/60 rounded-lg px-4 py-3 pr-10 font-body text-sm text-charcoal focus:border-plum aria-[invalid=true]:border-plum"
+    class="appearance-none w-full bg-raised border border-line rounded-md px-4 py-3 pr-10 font-body text-sm text-ink transition-colors focus:border-line-strong aria-[invalid=true]:border-accent"
   >
     {placeholder && <option value="" disabled selected={!value}>{placeholder}</option>}
     {options.map((opt) => (
@@ -53,7 +53,7 @@ const fieldId = id ?? `field-${name}`;
       </option>
     ))}
   </select>
-  <span aria-hidden="true" class="absolute right-3 top-1/2 -translate-y-1/2 text-charcoal/70 pointer-events-none">
+  <span aria-hidden="true" class="absolute right-3 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none">
     <Icon name="ph:caret-down-bold" size={16} />
   </span>
 </div>

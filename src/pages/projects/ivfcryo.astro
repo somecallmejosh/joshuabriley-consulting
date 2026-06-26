@@ -1,10 +1,12 @@
 ---
 import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Link from '~/components/primitives/Link.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import ProofPanel from '~/components/patterns/ProofPanel.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import StatusAnnouncer from '~/components/islands/StatusAnnouncer.astro';
 
@@ -21,653 +23,420 @@ const proof = [
 ---
 
 <BaseLayout title={title} description={description}>
-  <Fragment slot="head">
-    <style>
-      .tape {
-        position: absolute;
-        width: 90px;
-        height: 22px;
-        background: rgba(253, 230, 138, 0.88);
-        box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.15);
-        z-index: 5;
-      }
-    </style>
-  </Fragment>
 
-  <div class="corkboard">
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav
+        class="mb-12 flex items-center gap-2 font-mono text-sm text-ink-muted"
+        aria-label="Breadcrumb"
+      >
+        <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">IVFCRYO</span>
+      </nav>
 
-    <section class="relative overflow-hidden pt-12 pb-16 md:pt-16 md:pb-24">
-      <span class="hero-index" aria-hidden="true">04</span>
-
-      <div class="max-w-5xl mx-auto px-6 relative z-10">
-        <nav
-          class="mb-12 flex items-center gap-2 font-heading text-sm text-charcoal/60"
-          aria-label="Breadcrumb"
-        >
-          <a href="/projects/" class="hover:text-coral transition-colors">Projects</a>
-          <Icon name="ph:caret-right-bold" size={12} />
-          <span class="text-navy">IVFCRYO</span>
-        </nav>
-
-        <div class="hero-grid">
-          <div class="hero-main">
-            <div class="mb-7 flex items-center gap-3">
-              <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" class="hero-logo-img" />
-              <span class="h-4 w-px bg-charcoal/20" aria-hidden="true"></span>
-              <span class="font-heading text-[0.7rem] uppercase tracking-[0.24em] text-plum/70">Case study no. 04</span>
-            </div>
-
-            <p class="marker-label text-2xl md:text-3xl mb-5">from the lab notebook —</p>
-
-            <h1 class="font-display font-semibold text-navy leading-[1.04] tracking-tight" style="font-size: clamp(2.25rem, 5vw, 3.75rem);">
-              What it looks like when
-              <br />
-              <span class="relative inline-block">
-                accessibility
-                <svg class="absolute -bottom-2 left-0 w-full" viewBox="0 0 260 14" fill="none" aria-hidden="true">
-                  <path d="M3 9 Q 65 2 130 9 Q 195 16 257 7" stroke="#6C4AB6" stroke-width="3" stroke-linecap="round" opacity="0.55" />
-                </svg>
-              </span>
-              is built in from the start.
-            </h1>
-
-            <p class="mt-8 text-lg md:text-xl text-charcoal/75 max-w-xl font-body leading-relaxed">
-              A self-service shipping application for fertility specimen logistics, with real-time environmental tracking, multi-carrier labels, and a legally blind collaborator in the room from day one.
-            </p>
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="mb-7 flex items-center gap-3">
+            <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" class="hero-logo-img" />
+            <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
+            <p class="mono-label">Case study / 04</p>
           </div>
 
-          <aside class="hero-rail" aria-label="Project details">
-            <dl>
-              <div>
-                <dt>Role</dt>
-                <dd>UX Engineer</dd>
-              </div>
-              <div>
-                <dt>Domain</dt>
-                <dd>Fertility logistics</dd>
-              </div>
-              <div>
-                <dt>Stack</dt>
-                <dd>Web &middot; Sensors</dd>
-              </div>
-              <div>
-                <dt>Focus</dt>
-                <dd>A11y-first arch.</dd>
-              </div>
-            </dl>
-          </aside>
+          <Heading level={1} visual="display-xl">
+            What it looks like when <em class="ink-wink font-normal italic">accessibility</em> is built in from the start.
+          </Heading>
+
+          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
+            A self-service shipping application for fertility specimen logistics, with real-time environmental tracking, multi-carrier labels, and a legally blind collaborator in the room from day one.
+          </Text>
         </div>
+
+        <aside class="hero-rail" aria-label="Project details">
+          <dl>
+            <div>
+              <dt>Role</dt>
+              <dd>UX Engineer</dd>
+            </div>
+            <div>
+              <dt>Domain</dt>
+              <dd>Fertility logistics</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Web &middot; Sensors</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>A11y-first arch.</dd>
+            </div>
+          </dl>
+        </aside>
       </div>
-    </section>
+    </Container>
+  </Section>
 
-    <section class="pb-4 md:pb-8 relative" aria-label="Project receipts">
-      <div class="max-w-4xl mx-auto px-6">
-        <ProofPanel sections={proof} />
-      </div>
-    </section>
+  <Section tone="paper" padding="tight">
+    <Container width="default">
+      <p class="mono-label mb-8">Receipts / 02</p>
+      <dl class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+        {proof.map((group) => (
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5 text-ink-muted">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2">
+                    <Icon name="ph:check" size={14} class="mt-1 flex-shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </Section>
 
-    <SquiggleDivider />
-
-
-    <section class="py-16 md:py-20 relative">
-      <Blob tone="plum" size="lg" class="absolute top-10 right-6" animate="float-slow" opacity="opacity-20" />
-
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <div class="flex items-center gap-3 mb-6">
-          <Icon name="ph:list-checks-duotone" size={28} class="text-sunset" />
-          <h2
-            class="font-display text-2xl md:text-3xl text-navy font-semibold"
-          >
-            On the bench
-          </h2>
-        </div>
-        <div class="flex flex-wrap gap-3">
-          <a
-            href="#stakes"
-            class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-          >
-            <Icon name="ph:warning-circle-duotone" size={18} class="text-coral" />
+  <Section tone="paper" padding="default">
+    <Container width="default">
+      <p class="mono-label mb-6">On the bench / 03</p>
+      <ul class="grid gap-3 sm:grid-cols-2">
+        <li>
+          <a href="#stakes" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
+            <Icon name="ph:warning-circle" size={18} class="text-ink-muted" />
             The stakes behind the product
           </a>
-          <a
-            href="#collaborator"
-            class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-          >
-            <Icon name="ph:users-three-duotone" size={18} class="text-plum" />
+        </li>
+        <li>
+          <a href="#collaborator" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
+            <Icon name="ph:users-three" size={18} class="text-ink-muted" />
             A blind user in the room
           </a>
-          <a
-            href="#architecture"
-            class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-          >
-            <Icon name="ph:stack-duotone" size={18} class="text-sunset" />
+        </li>
+        <li>
+          <a href="#architecture" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
+            <Icon name="ph:stack" size={18} class="text-ink-muted" />
             Accessibility in the architecture
           </a>
-          <a
-            href="#scale"
-            class="ingredient-chip hover:border-coral hover:text-coral transition-colors"
-          >
-            <Icon name="ph:trend-up-duotone" size={18} class="text-sage" />
+        </li>
+        <li>
+          <a href="#scale" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
+            <Icon name="ph:trend-up" size={18} class="text-ink-muted" />
             Why this compounds at scale
           </a>
-        </div>
+        </li>
+      </ul>
 
-        <p
-          class="mt-10 text-lg md:text-xl text-charcoal/80 leading-relaxed font-body"
-        >
-          IVFCRYO replaced a manual, paper-based shipping process with a web
-          application that handles shipment requests, label generation across
-          multiple carriers, and real-time specimen tracking from integrated
-          sensor data. The people using it are usually in the middle of
-          something high-stakes and emotionally sensitive. Clarity and
-          reliability aren't nice-to-haves here. They're features of the
-          product, and accessibility is how that clarity reaches everyone.
+      <Text size="lg" tone="muted" class="mt-10 max-w-2xl">
+        IVFCRYO replaced a manual, paper-based shipping process with a web
+        application that handles shipment requests, label generation across
+        multiple carriers, and real-time specimen tracking from integrated
+        sensor data. The people using it are usually in the middle of
+        something high-stakes and emotionally sensitive. Clarity and
+        reliability aren't nice-to-haves here. They're features of the
+        product, and accessibility is how that clarity reaches everyone.
+      </Text>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24">
+    <Container width="narrow">
+      <p class="mono-label mb-3">Step 01</p>
+      <Heading level={2} visual="display-md">The stakes behind the product</Heading>
+
+      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
+        <p>
+          Fertility logistics has a narrow margin for error. A mislabeled
+          shipment, a missed temperature excursion, or an ambiguous status
+          update isn't just a workflow annoyance. It can have irreversible
+          consequences for someone's family. The people using this tool are
+          often clinicians working under time pressure, or patients and
+          couriers navigating a process they've never touched before, during
+          one of the most stressful weeks of their lives.
+        </p>
+        <p>
+          That reframes what accessibility means here. It isn't a compliance
+          checkbox to satisfy at the end of the build. It's part of how the
+          product communicates <em>at all</em>: whether status updates
+          reach the person who needs to act on them, whether form errors are
+          recoverable, whether a screen reader user can trust what the page
+          is telling them.
         </p>
       </div>
-    </section>
 
-
-    <section id="stakes" class="py-16 md:py-20 relative scroll-mt-24">
-      <div class="max-w-4xl mx-auto px-6">
-        <div class="flex items-start gap-6 mb-8">
-          <span class="step-num" aria-hidden="true">01</span>
-          <div>
-            <p
-              class="font-heading text-xs uppercase tracking-widest text-plum mb-1"
-            >
-              Step one
-            </p>
-            <h2
-              class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
-            >
-              The stakes behind the product
-            </h2>
-          </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-2">
+        <div class="rounded-lg border border-line bg-raised p-6">
+          <p class="mono-label mb-4">High-stakes input</p>
+          <Heading level={3} visual="h3" class="mb-2">Specimens &amp; sensors</Heading>
+          <Text size="sm" tone="muted">
+            Temperature data, chain-of-custody details, carrier handoffs,
+            all flowing through forms people may be filling out under
+            duress.
+          </Text>
         </div>
-
-        <div
-          class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
-        >
-          <p>
-            Fertility logistics has a narrow margin for error. A mislabeled
-            shipment, a missed temperature excursion, or an ambiguous status
-            update isn't just a workflow annoyance. It can have irreversible
-            consequences for someone's family. The people using this tool are
-            often clinicians working under time pressure, or patients and
-            couriers navigating a process they've never touched before, during
-            one of the most stressful weeks of their lives.
-          </p>
-          <p>
-            That reframes what accessibility means here. It isn't a compliance
-            checkbox to satisfy at the end of the build. It's part of how the
-            product communicates <em>at all</em>: whether status updates
-            reach the person who needs to act on them, whether form errors are
-            recoverable, whether a screen reader user can trust what the page
-            is telling them.
-          </p>
-        </div>
-
-
-        <div class="mt-10 grid md:grid-cols-2 gap-6">
-          <div
-            class="bg-white rounded-2xl p-6 border border-coral/20 shadow-sm relative"
-            style="transform: rotate(-0.6deg)"
-          >
-            <span
-              class="sticker bg-coral/10 text-coral border-coral/40 absolute -top-3 left-5"
-            >
-              High-stakes input
-            </span>
-            <h3
-              class="font-display text-xl text-navy font-semibold mt-4 mb-2"
-            >
-              Specimens &amp; sensors
-            </h3>
-            <p class="text-charcoal/70">
-              Temperature data, chain-of-custody details, carrier handoffs,
-              all flowing through forms people may be filling out under
-              duress.
-            </p>
-          </div>
-          <div
-            class="bg-white rounded-2xl p-6 border border-plum/20 shadow-sm relative"
-            style="transform: rotate(0.5deg)"
-          >
-            <span
-              class="sticker bg-plum/10 text-plum border-plum/40 absolute -top-3 left-5"
-            >
-              High-stakes output
-            </span>
-            <h3
-              class="font-display text-xl text-navy font-semibold mt-4 mb-2"
-            >
-              Status &amp; recovery
-            </h3>
-            <p class="text-charcoal/70">
-              A shipment that has moved, a label that has printed, an error
-              that needs correcting. The app has to surface all of it,
-              reliably, to every user.
-            </p>
-          </div>
+        <div class="rounded-lg border border-line bg-raised p-6">
+          <p class="mono-label mb-4">High-stakes output</p>
+          <Heading level={3} visual="h3" class="mb-2">Status &amp; recovery</Heading>
+          <Text size="sm" tone="muted">
+            A shipment that has moved, a label that has printed, an error
+            that needs correcting. The app has to surface all of it,
+            reliably, to every user.
+          </Text>
         </div>
       </div>
-    </section>
+    </Container>
+  </Section>
 
+  <Section tone="paper" padding="default" id="collaborator" class="scroll-mt-24">
+    <Container width="narrow">
+      <p class="mono-label mb-3">Step 02</p>
+      <Heading level={2} visual="display-md">A blind user in the room, from day one</Heading>
 
-    <section id="collaborator" class="py-16 md:py-20 relative scroll-mt-24">
-      <div
-        class="absolute bottom-20 left-6 w-16 h-16 bg-sunset/20 rounded-full animate-float"
-        aria-hidden="true"
-      ></div>
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <div class="flex items-start gap-6 mb-8">
-          <span class="step-num" aria-hidden="true">02</span>
+      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
+        <p>
+          The most consequential decision on this project wasn't technical.
+          Instead of treating accessibility as an end-of-project audit, the
+          team brought in a legally blind customer as an ongoing
+          collaborator. He reviewed interface decisions as they were being
+          made, tested with a screen reader while components were still
+          being built, and kept offering feedback as features shipped.
+        </p>
+        <p>
+          That changes what you build, not just what you fix. Problems that
+          would have surfaced as a long list of bugs at the end (the kind
+          that usually get triaged, downgraded, and half-addressed) instead
+          showed up as design conversations while the design was still cheap
+          to change. The output wasn't a remediation report. It was
+          different decisions.
+        </p>
+      </div>
+
+      <ul class="mt-8 space-y-4">
+        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
+          <Icon name="ph:megaphone" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
           <div>
-            <p
-              class="font-heading text-xs uppercase tracking-widest text-plum mb-1"
-            >
-              Step two
-            </p>
-            <h2
-              class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
-            >
-              A blind user in the room, from day one
-            </h2>
+            <Heading level={3} visual="h3" class="mb-1">Real-time form validation</Heading>
+            <Text size="sm" tone="muted">
+              Errors announced to a screen reader the moment they happen,
+              not buried in a summary at the top of the page after submit.
+            </Text>
           </div>
-        </div>
+        </li>
+        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
+          <Icon name="ph:broadcast" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+          <div>
+            <Heading level={3} visual="h3" class="mb-1">Status updates that reach you</Heading>
+            <Text size="sm" tone="muted">
+              Shipment state changes are announced automatically, so a user
+              doesn't have to go hunting through the page to learn that
+              something moved.
+            </Text>
+          </div>
+        </li>
+        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
+          <Icon name="ph:compass" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+          <div>
+            <Heading level={3} visual="h3" class="mb-1">Navigation you can learn once</Heading>
+            <Text size="sm" tone="muted">
+              Consistent, predictable patterns across the app. The kind of
+              thing a sighted user takes for granted and a screen reader
+              user notices immediately when it's missing.
+            </Text>
+          </div>
+        </li>
+      </ul>
 
-        <div
-          class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
-        >
-          <p>
-            The most consequential decision on this project wasn't technical.
-            Instead of treating accessibility as an end-of-project audit, the
-            team brought in a legally blind customer as an ongoing
-            collaborator. He reviewed interface decisions as they were being
-            made, tested with a screen reader while components were still
-            being built, and kept offering feedback as features shipped.
-          </p>
-          <p>
-            That changes what you build, not just what you fix. Problems that
-            would have surfaced as a long list of bugs at the end (the kind
-            that usually get triaged, downgraded, and half-addressed) instead
-            showed up as design conversations while the design was still cheap
-            to change. The output wasn't a remediation report. It was
-            different decisions.
-          </p>
-        </div>
+      <figure class="my-12 border-l-2 border-accent pl-6">
+        <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+          Accessible output at scale comes from accessible architecture,
+          not from accessible intent.
+        </blockquote>
+      </figure>
+    </Container>
+  </Section>
 
-        <ul class="mt-8 space-y-5">
-          <li
-            class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
-          >
-            <Icon name="ph:megaphone-duotone" size={28} class="text-plum flex-shrink-0 mt-1" />
-            <div>
-              <h3 class="font-display text-lg text-navy font-semibold mb-1">
-                Real-time form validation
-              </h3>
-              <p class="text-charcoal/70">
-                Errors announced to a screen reader the moment they happen,
-                not buried in a summary at the top of the page after submit.
-              </p>
-            </div>
+  <Section tone="paper" padding="default" id="architecture" class="scroll-mt-24">
+    <Container width="narrow">
+      <p class="mono-label mb-3">Step 03</p>
+      <Heading level={2} visual="display-md">Accessibility in the architecture</Heading>
+
+      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
+        <p>
+          Collaboration gave us the right instincts. Architecture made those
+          instincts load-bearing. Interactive components were built with
+          keyboard operability and ARIA as
+          <strong class="text-ink font-semibold">primary requirements</strong>, not
+          post-hoc additions. Components that controlled visibility managed
+          their own focus internally, so the user never lost their place.
+          Dynamic content (the part of the app that changes while you're
+          looking at it) announced itself to assistive tech instead of
+          silently updating the DOM.
+        </p>
+        <p>
+          Every piece of information in the UI was expressed through more
+          than one channel: text <em>and</em> icon <em>and</em> color, never
+          color alone. That rule is small, almost boring, and it prevents an
+          enormous class of failures that would otherwise quietly ship.
+        </p>
+      </div>
+
+      <div class="mt-10 rounded-lg border border-line bg-raised p-7">
+        <p class="mono-label mb-5">Built-in, not bolted-on</p>
+        <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+          <li class="flex items-center gap-3">
+            <Icon name="ph:keyboard" size={20} class="text-ink-muted" />
+            Full keyboard operability
           </li>
-          <li
-            class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
-          >
-            <Icon name="ph:broadcast-duotone" size={28} class="text-coral flex-shrink-0 mt-1" />
-            <div>
-              <h3 class="font-display text-lg text-navy font-semibold mb-1">
-                Status updates that reach you
-              </h3>
-              <p class="text-charcoal/70">
-                Shipment state changes are announced automatically, so a user
-                doesn't have to go hunting through the page to learn that
-                something moved.
-              </p>
-            </div>
+          <li class="flex items-center gap-3">
+            <Icon name="ph:target" size={20} class="text-ink-muted" />
+            Internal focus management
           </li>
-          <li
-            class="flex gap-4 bg-white rounded-2xl p-5 border border-charcoal/5 shadow-sm"
-          >
-            <Icon name="ph:compass-duotone" size={28} class="text-sunset flex-shrink-0 mt-1" />
-            <div>
-              <h3 class="font-display text-lg text-navy font-semibold mb-1">
-                Navigation you can learn once
-              </h3>
-              <p class="text-charcoal/70">
-                Consistent, predictable patterns across the app. The kind of
-                thing a sighted user takes for granted and a screen reader
-                user notices immediately when it's missing.
-              </p>
-            </div>
+          <li class="flex items-center gap-3">
+            <Icon name="ph:megaphone" size={20} class="text-ink-muted" />
+            Live regions for dynamic updates
+          </li>
+          <li class="flex items-center gap-3">
+            <Icon name="ph:eye" size={20} class="text-ink-muted" />
+            Multi-channel information design
           </li>
         </ul>
-
-
-        <figure
-          class="mt-12 bg-plum/5 border-l-4 border-coral rounded-r-2xl p-6 md:p-8 relative"
-          style="transform: rotate(-0.3deg)"
-        >
-          <Icon name="ph:quotes-duotone" size={32} class="text-[#C13A22] absolute -top-3 left-6 bg-cream px-1" />
-          <blockquote
-            class="pull-quote text-xl md:text-2xl text-navy leading-snug"
-          >
-            Accessible output at scale comes from accessible architecture,
-            not from accessible intent.
-          </blockquote>
-        </figure>
-      </div>
-    </section>
-
-
-    <section id="architecture" class="py-16 md:py-20 relative scroll-mt-24">
-      <div class="max-w-4xl mx-auto px-6">
-        <div class="flex items-start gap-6 mb-8">
-          <span class="step-num" aria-hidden="true">03</span>
-          <div>
-            <p
-              class="font-heading text-xs uppercase tracking-widest text-plum mb-1"
-            >
-              Step three
-            </p>
-            <h2
-              class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
-            >
-              Accessibility in the architecture
-            </h2>
-          </div>
-        </div>
-
-        <div
-          class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
-        >
-          <p>
-            Collaboration gave us the right instincts. Architecture made those
-            instincts load-bearing. Interactive components were built with
-            keyboard operability and ARIA as
-            <strong class="text-coral">primary requirements</strong>, not
-            post-hoc additions. Components that controlled visibility managed
-            their own focus internally, so the user never lost their place.
-            Dynamic content (the part of the app that changes while you're
-            looking at it) announced itself to assistive tech instead of
-            silently updating the DOM.
-          </p>
-          <p>
-            Every piece of information in the UI was expressed through more
-            than one channel: text <em>and</em> icon <em>and</em> color, never
-            color alone. That rule is small, almost boring, and it prevents an
-            enormous class of failures that would otherwise quietly ship.
-          </p>
-        </div>
-
-
-        <div
-          class="mt-10 bg-white rounded-3xl p-7 md:p-9 border border-charcoal/5 shadow-sm relative"
-          style="transform: rotate(0.4deg)"
-        >
-          <div
-            class="absolute -top-4 left-8 sticker bg-sage/20 text-sage border-sage/50"
-            style="transform: rotate(-3deg)"
-          >
-            <Icon name="ph:check-fat-duotone" size={14} class="mr-1" />
-            Built-in, not bolted-on
-          </div>
-          <ul
-            class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mt-4 font-body text-charcoal/80"
-          >
-            <li class="flex items-center gap-3">
-              <Icon name="ph:keyboard-duotone" size={22} class="text-plum" />
-              Full keyboard operability
-            </li>
-            <li class="flex items-center gap-3">
-              <Icon name="ph:target-duotone" size={22} class="text-coral" />
-              Internal focus management
-            </li>
-            <li class="flex items-center gap-3">
-              <Icon name="ph:megaphone-duotone" size={22} class="text-sunset" />
-              Live regions for dynamic updates
-            </li>
-            <li class="flex items-center gap-3">
-              <Icon name="ph:eye-duotone" size={22} class="text-sky" />
-              Multi-channel information design
-            </li>
-          </ul>
-        </div>
       </div>
 
-      <div class="max-w-5xl mx-auto px-6 mt-12 md:mt-16">
-        <div class="flex items-start gap-3 mb-6">
-          <Icon name="ph:cursor-click-duotone" size={26} class="text-coral mt-1 flex-shrink-0" />
-          <p class="text-charcoal/75 leading-relaxed font-body max-w-2xl">
-            &ldquo;Announced to assistive tech&rdquo; is the kind of phrase that washes over you in
-            prose. So watch it happen: advance the shipment and see the announcement a screen reader
-            would speak &mdash; the behavior the blind collaborator was testing against.
-          </p>
-        </div>
+      <div class="mt-12 rounded-lg border border-line bg-raised p-6 md:p-8">
+        <p class="mono-label mb-4">Live demo</p>
+        <Text tone="muted" class="mb-6 max-w-2xl">
+          &ldquo;Announced to assistive tech&rdquo; is the kind of phrase that washes over you in
+          prose. So watch it happen: advance the shipment and see the announcement a screen reader
+          would speak &mdash; the behavior the blind collaborator was testing against.
+        </Text>
         <StatusAnnouncer />
       </div>
-    </section>
+    </Container>
+  </Section>
 
+  <Section tone="paper" padding="default" id="scale" class="scroll-mt-24">
+    <Container width="narrow">
+      <p class="mono-label mb-3">Step 04</p>
+      <Heading level={2} visual="display-md">Why this compounds at scale</Heading>
 
-    <section id="scale" class="py-16 md:py-20 relative scroll-mt-24">
-      <Blob tone="lemon" size="lg" class="absolute top-10 right-6 w-20 h-20" animate="float-slow" opacity="opacity-50" />
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <div class="flex items-start gap-6 mb-8">
-          <span class="step-num" aria-hidden="true">04</span>
+      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
+        <p>
+          Once the component library has the right behaviors baked in, every
+          feature built on top of it inherits them. A developer shipping a
+          new shipment form doesn't have to remember to wire up live
+          regions, or decide how focus should move when a dialog opens, or
+          check contrast against the palette. Those decisions have already
+          been made, correctly, once.
+        </p>
+        <p>
+          That's the structural benefit of putting accessibility at the
+          architectural level: it stops being a discipline individual
+          developers have to sustain, and starts being a property of the
+          system they're building inside. The ceiling of accessibility in
+          the product is no longer the ceiling of any one engineer's
+          attention.
+        </p>
+      </div>
+
+      <div class="mt-12 grid grid-cols-2 gap-8 rounded-lg border border-line bg-raised p-7 md:p-8">
+        <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" />
+        <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" />
+      </div>
+
+      <div class="mt-12 grid gap-6 md:grid-cols-3">
+        <div class="rounded-lg border border-line bg-raised p-6">
+          <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
+          <Heading level={3} visual="h3" class="mb-1">Inherited by default</Heading>
+          <Text size="sm" tone="muted">
+            New features get accessible behavior without anyone having to
+            remember to add it.
+          </Text>
+        </div>
+        <div class="rounded-lg border border-line bg-raised p-6">
+          <Icon name="ph:chat-circle-dots" size={28} class="mb-3 text-ink-muted" />
+          <Heading level={3} visual="h3" class="mb-1">Clarity for every user</Heading>
+          <Text size="sm" tone="muted">
+            Status changes, errors, and recovery paths reach the person who
+            needs to act on them.
+          </Text>
+        </div>
+        <div class="rounded-lg border border-line bg-raised p-6">
+          <Icon name="ph:infinity" size={28} class="mb-3 text-ink-muted" />
+          <Heading level={3} visual="h3" class="mb-1">Costs that don't snowball</Heading>
+          <Text size="sm" tone="muted">
+            No remediation backlog waiting at the end of the project,
+            because the backlog was never created.
+          </Text>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="default">
+    <Container width="narrow">
+      <p class="mono-label mb-6">What Don said / 05</p>
+      <figure class="rounded-lg border border-line bg-raised p-8 md:p-10">
+        <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+          What Josh did at IVFCRYO wasn't a typical build. He insisted we
+          put a blind user in the room from week one, and that decision
+          changed the product. We didn't pass an accessibility audit at
+          the end &mdash; we shipped a tool that was accessible because
+          it was built that way.
+        </blockquote>
+        <figcaption class="mt-8 flex items-center gap-4 border-t border-line pt-6">
+          <img
+            src="/images/don-fish.png"
+            alt="Don Fish"
+            class="h-12 w-12 rounded-full border border-line"
+            loading="lazy"
+            decoding="async"
+          />
           <div>
-            <p
-              class="font-heading text-xs uppercase tracking-widest text-plum mb-1"
-            >
-              Step four
-            </p>
-            <h2
-              class="font-display text-3xl md:text-4xl text-navy font-semibold leading-tight"
-            >
-              Why this compounds at scale
-            </h2>
+            <p class="font-display font-semibold text-ink">Don Fish</p>
+            <p class="text-sm text-ink-muted">CEO &middot; IVFCRYO</p>
           </div>
-        </div>
+        </figcaption>
+      </figure>
+    </Container>
+  </Section>
 
-        <div
-          class="space-y-5 text-charcoal/80 text-lg leading-relaxed font-body"
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65 mb-6">The standard, not the exception / 06</p>
+      <Heading level={2} visual="display-lg" tone="paper">
+        This is the standard, not the exception.
+      </Heading>
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-xl">
+        Accessibility as architecture is how I approach every system I
+        build or lead. If that's the bar you're hiring for, or the bar you
+        want your own library held to, let's talk.
+      </Text>
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button
+          variant="navy"
+          size="lg"
+          iconLeft="ph:envelope"
+          href="/contact/"
+          class="js-magnetic"
         >
-          <p>
-            Once the component library has the right behaviors baked in, every
-            feature built on top of it inherits them. A developer shipping a
-            new shipment form doesn't have to remember to wire up live
-            regions, or decide how focus should move when a dialog opens, or
-            check contrast against the palette. Those decisions have already
-            been made, correctly, once.
-          </p>
-          <p>
-            That's the structural benefit of putting accessibility at the
-            architectural level: it stops being a discipline individual
-            developers have to sustain, and starts being a property of the
-            system they're building inside. The ceiling of accessibility in
-            the product is no longer the ceiling of any one engineer's
-            attention.
-          </p>
-        </div>
-
-
-        <div
-          class="mt-12 grid grid-cols-2 gap-x-6 gap-y-8 bg-white rounded-2xl p-7 md:p-8 border border-charcoal/5 shadow-sm"
-          style="transform: rotate(-0.2deg)"
+          Get in touch
+        </Button>
+        <a
+          href="https://www.linkedin.com/in/joshuabriley/"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
         >
-          <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" tone="sage" />
-          <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" tone="plum" />
-        </div>
-
-
-        <div class="mt-12 grid md:grid-cols-3 gap-6">
-          <div
-            class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
-            style="transform: rotate(-0.6deg)"
-          >
-            <Icon name="ph:shield-check-duotone" size={32} class="text-coral mb-3" />
-            <h3 class="font-display text-lg text-navy font-semibold mb-1">
-              Inherited by default
-            </h3>
-            <p class="text-charcoal/70 text-sm">
-              New features get accessible behavior without anyone having to
-              remember to add it.
-            </p>
-          </div>
-          <div
-            class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
-            style="transform: rotate(0.4deg)"
-          >
-            <Icon name="ph:chat-circle-dots-duotone" size={32} class="text-plum mb-3" />
-            <h3 class="font-display text-lg text-navy font-semibold mb-1">
-              Clarity for every user
-            </h3>
-            <p class="text-charcoal/70 text-sm">
-              Status changes, errors, and recovery paths reach the person who
-              needs to act on them.
-            </p>
-          </div>
-          <div
-            class="bg-white rounded-2xl p-6 border border-charcoal/5 shadow-sm"
-            style="transform: rotate(-0.3deg)"
-          >
-            <Icon name="ph:infinity-duotone" size={32} class="text-sunset mb-3" />
-            <h3 class="font-display text-lg text-navy font-semibold mb-1">
-              Costs that don't snowball
-            </h3>
-            <p class="text-charcoal/70 text-sm">
-              No remediation backlog waiting at the end of the project,
-              because the backlog was never created.
-            </p>
-          </div>
-        </div>
+          <Icon name="ph:linkedin-logo" size={18} />
+          Connect on LinkedIn
+        </a>
       </div>
-    </section>
 
-
-    <section class="py-16 md:py-20 relative">
-      <Blob tone="sky" size="lg" class="absolute top-12 left-6 w-20 h-20" animate="float-slow" opacity="opacity-30" />
-      <div
-        class="absolute bottom-10 right-8 w-14 h-14 bg-plum/25 rounded-full animate-float"
-        aria-hidden="true"
-      ></div>
-
-      <div class="max-w-4xl mx-auto px-6 relative z-10">
-        <div class="text-center mb-10">
-          <p class="marker-label text-2xl md:text-3xl text-coral mb-1">
-            signed off &mdash;
-          </p>
-          <h2
-            class="font-display text-2xl md:text-3xl text-navy font-semibold"
-          >
-            What Don said
-          </h2>
-        </div>
-
-        <figure class="card-base card-sticky rot-1 max-w-2xl mx-auto p-8 md:p-12">
-          <span class="pin plum" aria-hidden="true"></span>
-
-          <Icon name="ph:quotes-duotone" size={36} class="text-[#C13A22] mb-3" />
-
-          <blockquote
-            class="font-hand text-2xl md:text-3xl text-navy leading-snug mb-7"
-          >
-            What Josh did at IVFCRYO wasn't a typical build. He insisted we
-            put a blind user in the room from week one, and that decision
-            changed the product. We didn't pass an accessibility audit at
-            the end &mdash; we shipped a tool that was accessible because
-            it was built that way.
-          </blockquote>
-
-          <figcaption
-            class="flex items-center gap-4 pt-5 border-t border-navy/15"
-          >
-            <img
-              src="/images/don-fish.png"
-              alt="Don Fish"
-              class="avatar avatar-lg"
-              loading="lazy"
-              decoding="async"
-            />
-            <div>
-              <p class="font-heading font-semibold text-navy text-base">
-                Don Fish
-              </p>
-              <p class="text-sm text-navy/70">
-                CEO &middot; IVFCRYO
-              </p>
-            </div>
-          </figcaption>
-        </figure>
+      <div class="mt-14 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/">Back to all projects</Link>
       </div>
-    </section>
-
-    <SquiggleDivider />
-
-
-    <section class="py-20 md:py-28">
-      <div class="max-w-4xl mx-auto px-6">
-        <div
-          class="bg-navy text-white rounded-[2rem] p-10 md:p-14 relative overflow-hidden"
-        >
-          <Blob tone="coral" size="xl" class="absolute -top-10 -right-10 w-40 h-40" animate="float-slow" opacity="opacity-30" />
-          <div
-            class="absolute -bottom-8 -left-8 w-28 h-28 bg-plum/40 rounded-full animate-float"
-            aria-hidden="true"
-          ></div>
-          <div class="relative z-10 text-center">
-            <span
-              class="sticker bg-white/10 text-lemon border-lemon/40 mb-6"
-              style="transform: rotate(-2deg)"
-            >
-              <Icon name="ph:check-square-duotone" size={14} class="mr-1" />
-              The standard, not the exception
-            </span>
-            <h2
-              class="font-display text-3xl md:text-4xl lg:text-5xl font-semibold leading-tight mb-5"
-            >
-              This is the standard, not the exception.
-            </h2>
-            <p class="text-white/70 text-lg max-w-xl mx-auto mb-8 font-body">
-              Accessibility as architecture is how I approach every system I
-              build or lead. If that's the bar you're hiring for, or the bar you
-              want your own library held to, let's talk.
-            </p>
-            <div
-              class="flex flex-col sm:flex-row items-center justify-center gap-4"
-            >
-              <Button
-                variant="primary"
-                size="lg"
-                iconLeft="ph:envelope-duotone"
-                href="/contact/"
-
-              >
-                Get in touch
-              </Button>
-              <Button
-                variant="secondary"
-                size="lg"
-                iconLeft="ph:linkedin-logo-duotone"
-                href="https://www.linkedin.com/in/joshuabriley/"
-              >
-                Connect on LinkedIn
-              </Button>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="mt-14 flex justify-center">
-          <a
-            href="/projects/"
-            class="group inline-flex items-center gap-3 font-heading text-navy hover:text-coral transition-colors"
-          >
-            <Icon name="ph:arrow-left-bold" size={18} class="group-hover:-translate-x-1 transition-transform" />
-            Back to all projects on the corkboard
-          </a>
-        </div>
-      </div>
-    </section>
-  </div>
+    </Container>
+  </Section>
 </BaseLayout>

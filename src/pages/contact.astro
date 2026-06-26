@@ -4,33 +4,19 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Avatar from '~/components/primitives/Avatar.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import Card from '~/components/card/Card.astro';
-import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
 import ContactForm from '~/components/islands/ContactForm.astro';
 
 const description =
   "Whether you're hiring for a design systems or UX engineering role, wrestling with component library debt, or want a second opinion on accessibility, send a note. I reply within one business day.";
 
 const steps = [
-  { n: 1, tone: 'coral', tilt: '-4deg', title: 'You send a message', body: "Takes about two minutes. Tell me the rough shape of what you're dealing with." },
-  { n: 2, tone: 'plum', tilt: '3deg', title: 'I reply within one business day', body: 'Usually the same day. No templates, no autoresponders.' },
-  { n: 3, tone: 'sky', tilt: '-2deg', title: 'Free 30-minute consult', body: "We talk through what's actually happening. Zero obligation to go further." },
-  { n: 4, tone: 'sage', tilt: '4deg', title: "A clear next step, if we're a fit", body: "For roles, that's a real conversation. For project work, a simple proposal with clear scope and price. Either way, if we're not a fit, I'll point you to someone who is." },
+  { title: 'You send a message', body: "Takes about two minutes. Tell me the rough shape of what you're dealing with." },
+  { title: 'I reply within one business day', body: 'Usually the same day. No templates, no autoresponders.' },
+  { title: 'Free 30-minute consult', body: "We talk through what's actually happening. Zero obligation to go further." },
+  { title: "A clear next step, if we're a fit", body: "For roles, that's a real conversation. For project work, a simple proposal with clear scope and price. Either way, if we're not a fit, I'll point you to someone who is." },
 ];
-
-const stepBgMap: Record<string, string> = {
-  coral: 'bg-coral',
-  plum: 'bg-plum',
-  sky: 'bg-sky',
-  sage: 'bg-sage',
-};
 
 const featuredQuotes = [
   {
@@ -38,149 +24,81 @@ const featuredQuotes = [
     name: 'Rebecca Cachia, PMP',
     role: 'Web Product & Project Manager',
     company: 'Publicis Sapient',
-    initials: 'RC',
-    avatarTone: 'plum' as const,
-    tilt: -1 as const,
-    quoteTone: 'text-[#C13A22]',
-    image: '/images/rebecca-cachia.jpeg',
   },
   {
     quote: 'Josh delivered assignments as planned, and his work quality allowed him bandwidth for additional responsibilities.',
     name: 'Gabriel Bressi',
     role: 'QA Lead',
     company: 'Kopius, Inc.',
-    initials: 'GB',
-    avatarTone: 'sage' as const,
-    tilt: 1 as const,
-    quoteTone: 'text-plum',
-    image: '/images/gabriel-bressi.jpeg',
   },
 ];
 ---
 
 <BaseLayout title="Contact — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
 
-  <Section padding="default" decorated>
-    <Blob tone="lemon" size="md" class="absolute top-16 right-[8%]" animate="float" />
-    <Blob tone="plum" size="sm" class="absolute top-8 lg:top-24 left-[10%] rounded-full" animate="float-delay" opacity="opacity-30" />
-    <Blob tone="sage" size="sm" class="absolute bottom-8 right-[18%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="coral" size="sm" class="absolute bottom-12 left-[6%] rounded-full" animate="float" opacity="opacity-30" />
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span class="inline-flex items-center gap-2">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+          Open to roles &amp; engagements
+        </span>
+        <span class="hidden sm:inline text-ink-muted">Contact · Index 01</span>
+      </div>
 
-    <Container width="default" class="relative z-10">
-      <div class="grid md:grid-cols-[1.3fr_1fr] gap-10 items-center">
-        <div>
-          <div class="mb-6 inline-flex items-center gap-2 bg-sage/15 text-sage-deep border border-sage/40 rounded-full px-3 py-1.5 font-heading text-sm font-medium" style="transform: rotate(-1.5deg)">
-            <span class="w-2 h-2 rounded-full bg-sage animate-pulse" aria-hidden="true"></span>
-            Open to roles &amp; new engagements
-          </div>
-          <Heading level={1} visual="display-lg" balance class="mb-6 max-w-[18ch]">
-            Let's <WavyUnderline>talk</WavyUnderline> about the work.
+      <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-end">
+        <div class="lg:col-span-8">
+          <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+            Let's talk about <em class="ink-wink font-normal italic">the work</em>.
           </Heading>
-          <Text size="xl" tone="muted" class="max-w-[52ch]">
-            Whether you're hiring for a
-            <strong class="text-charcoal font-semibold">design systems or UX engineering role</strong>,
-            wrestling with <strong class="text-charcoal font-semibold">component library debt</strong>, or
-            just want a second opinion on an
-            <strong class="text-charcoal font-semibold">accessibility question</strong>,
+          <Text size="lg" tone="muted" class="mt-7 max-w-2xl">
+            Whether you're hiring for a design systems or UX engineering role, wrestling with
+            component library debt, or just want a second opinion on an accessibility question,
             send a note. I'll get back to you within one business day.
           </Text>
-
-          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 font-heading text-sm text-charcoal/70">
-            <span class="inline-flex items-center gap-2">
-              <Icon name="ph:clock-duotone" size={18} class="text-coral" />
-              ~2 minutes
-            </span>
-            <span class="inline-flex items-center gap-2">
-              <Icon name="ph:lock-key-duotone" size={18} class="text-plum" />
-              No spam, ever
-            </span>
-            <span class="inline-flex items-center gap-2">
-              <Icon name="ph:chat-circle-dots-duotone" size={18} class="text-sky" />
-              Free 30-min call
-            </span>
-          </div>
         </div>
-
-
-        <div class="hidden md:block relative" aria-hidden="true">
-          <div class="bg-white rounded-3xl p-6 shadow-lg border border-charcoal/5 relative" style="transform: rotate(3deg)">
-            <div class="absolute -top-3 -left-3 w-10 h-10 bg-lemon blob-shape"></div>
-            <div class="flex items-center gap-2 pb-4 border-b border-dashed border-charcoal/10">
-              <Icon name="ph:envelope-open-duotone" size={22} class="text-coral" />
-              <span class="font-heading text-xs text-charcoal/70">FROM: you</span>
-            </div>
-            <div class="pt-4 space-y-2">
-              <div class="h-2 bg-charcoal/10 rounded-full w-11/12"></div>
-              <div class="h-2 bg-charcoal/10 rounded-full w-10/12"></div>
-              <div class="h-2 bg-charcoal/10 rounded-full w-9/12"></div>
-              <div class="h-2 bg-coral/30 rounded-full w-7/12"></div>
-            </div>
-            <div class="mt-5 flex items-center gap-2">
-              <div class="logo-monogram logo-monogram-sm" aria-hidden="true">jb</div>
-              <span class="font-logo text-lg text-navy">reply soon</span>
-            </div>
-          </div>
-          <div class="absolute -bottom-4 -right-2 w-16 h-16 bg-plum/15 rounded-2xl flex items-center justify-center" style="transform: rotate(-8deg)">
-            <Icon name="ph:paper-plane-tilt-duotone" size={32} class="text-plum" />
-          </div>
+        <div class="lg:col-span-4">
+          <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted lg:flex-col lg:gap-y-3">
+            {['~2 minutes', 'No spam, ever', 'Free 30-min call'].map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+  {/* ───────────────────────── FORM + STEPS ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
 
-
-  <Section padding="default" decorated>
-    <Blob tone="sunset" size="lg" class="absolute top-20 right-[5%]" animate="float-slow" opacity="opacity-10" />
-    <Blob tone="sky" size="md" class="absolute bottom-40 left-[4%] rounded-full" animate="float-delay" opacity="opacity-20" />
-
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-[1.4fr_1fr] gap-10 lg:gap-14 items-start">
-
-        <div class="bg-white rounded-3xl p-8 md:p-12 border border-charcoal/5 shadow-sm relative" style="transform: rotate(-0.4deg)">
-          <div class="absolute -top-4 -right-4 w-16 h-16 bg-lemon/70 blob-shape flex items-center justify-center" aria-hidden="true">
-            <Icon name="ph:pencil-line-duotone" size={26} class="text-navy" />
+        <div class="lg:col-span-7">
+          <p class="mono-label">Say hi / 02</p>
+          <Heading level={2} visual="display-md" class="mt-4">
+            Tell me about your project.
+          </Heading>
+          <div class="mt-9 rounded-lg border border-line bg-raised p-7 md:p-9">
+            <ContactForm />
           </div>
-
-          <SectionHeader
-            eyebrow="Say hi"
-            eyebrowIcon="ph:hand-waving-duotone"
-            eyebrowTone="coral"
-            title="Tell me about your project."
-            align="left"
-            class="mb-8"
-          />
-
-          <ContactForm />
         </div>
 
-
-        <aside class="lg:sticky lg:top-28">
-          <div class="mb-5 inline-block">
-            <Badge tone="plum" sticker icon="ph:compass-duotone">What happens next</Badge>
-          </div>
-          <Heading level={2} visual="h1" balance class="mb-8 max-w-[22ch]">
+        <aside class="lg:col-span-5 lg:sticky lg:top-28">
+          <p class="mono-label">What happens next / 03</p>
+          <Heading level={2} visual="h2" class="mt-4 max-w-[20ch]">
             A simple, no-pressure path forward.
           </Heading>
 
-          <ol role="list" class="space-y-5">
+          <ol class="mt-8 divide-y divide-line border-y border-line">
             {steps.map((step, i) => (
-              <li class="flex gap-4">
-                <div class="flex flex-col items-center">
-                  <div
-                    class={`w-11 h-11 rounded-2xl ${stepBgMap[step.tone]} text-white font-heading font-semibold flex items-center justify-center shrink-0`}
-                    style={`transform: rotate(${step.tilt})`}
-                  >
-                    {step.n}
-                  </div>
-                  {i < steps.length - 1 && (
-                    <div class="w-px flex-1 dotted-line mt-2" aria-hidden="true"></div>
-                  )}
-                </div>
-                <div class={i < steps.length - 1 ? 'pb-2' : ''}>
-                  <p class="font-heading font-semibold text-navy mb-1">{step.title}</p>
-                  <Text size="sm" tone="muted">{step.body}</Text>
+              <li class="flex gap-4 py-5">
+                <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <p class="font-display text-base font-medium tracking-tight text-ink">{step.title}</p>
+                  <Text size="sm" tone="muted" class="mt-1">{step.body}</Text>
                 </div>
               </li>
             ))}
@@ -190,80 +108,61 @@ const featuredQuotes = [
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-4xl mx-auto" aria-hidden="true"></div>
+  {/* ───────────────────────── KIND WORDS ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">Kind words / 04</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          What folks say after we work together.
+        </Heading>
+      </div>
 
-
-  <Section padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Kind words"
-        eyebrowIcon="ph:heart-duotone"
-        eyebrowTone="lemon"
-        title="What folks say after we work together."
-        align="center"
-        class="mb-14"
-      />
-
-      <div class="grid md:grid-cols-2 gap-6 md:gap-8">
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
         {featuredQuotes.map((q) => (
-          <Card hover={false} variant="paper" tilt={q.tilt} padding="loose" as="article">
-            <CardQuoteMark size={40} class={q.quoteTone} />
+          <figure class="bg-paper p-7 md:p-9">
             <blockquote>
-              <p class="font-display text-xl text-navy leading-snug mb-6 max-w-[42ch]">
+              <p class="font-display text-xl leading-snug tracking-[-0.015em] text-ink max-w-[42ch]">
                 {q.quote}
               </p>
             </blockquote>
-            <div class="flex items-center gap-3 pt-5 border-t border-dashed border-charcoal/10">
-              <Avatar
-                initials={q.initials}
-                name={q.name}
-                gradient={q.avatarTone === 'plum' ? 'plumSky' : 'sageLemon'}
-                size="md"
-                image={q.image}
-              />
-              <div>
-                <p class="font-heading font-semibold text-navy">{q.name}</p>
-                <p class="text-sm text-charcoal/70">{q.role}, {q.company}</p>
-              </div>
-            </div>
-          </Card>
+            <figcaption class="mt-6 border-t border-line pt-5">
+              <p class="font-display text-base font-medium tracking-tight text-ink">{q.name}</p>
+              <p class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">{q.role} · {q.company}</p>
+            </figcaption>
+          </figure>
         ))}
       </div>
     </Container>
   </Section>
 
-
-  <Section padding="tight">
-    <Container width="narrow">
-      <div class="bg-gradient-to-br from-peach/60 to-lemon/30 rounded-3xl p-10 md:p-12 text-center relative overflow-hidden border border-sunset/10">
-        <Blob tone="coral" size="xl" class="absolute -top-6 -right-6" opacity="opacity-20" />
-        <Blob tone="plum" size="xl" class="absolute -bottom-6 -left-6 rounded-full" opacity="opacity-10" />
-        <div class="relative z-10">
-          <Icon name="ph:coffee-duotone" size={44} class="text-coral mb-3" />
-          <Heading level={2} visual="h1" align="center" balance class="mx-auto max-w-[28ch] mb-3">
-            Prefer to skip the form?
+  {/* ───────────────────────── SKIP THE FORM (ink) ───────────────────────── */}
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label !text-paper/65">Prefer to skip the form / 05</p>
+          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[22ch]">
+            Grab a spot on my calendar directly.
           </Heading>
-          <Text tone="muted" align="center" class="mx-auto max-w-[52ch] mb-7">
-            Grab a spot on my calendar directly, or say hi on LinkedIn. I read everything.
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            Book a call, or say hi on LinkedIn. I read everything.
           </Text>
-          <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
-            <Button variant="navy" size="sm" iconLeft="ph:calendar-check-duotone" href="https://calendly.com/josh-thebrileys/30min/">
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="navy" size="lg" href="https://calendly.com/josh-thebrileys/30min/" iconRight="ph:arrow-right" class="js-magnetic">
               Book a 30-min call
             </Button>
-            <Button variant="ghost" size="sm" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-              Connect on LinkedIn
-            </Button>
+            <a
+              href="https://www.linkedin.com/in/joshuabriley/"
+              rel="noopener noreferrer"
+              target="_blank"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Connect on LinkedIn <Icon name="ph:arrow-up-right" size={12} /></a>
           </div>
         </div>
       </div>
     </Container>
   </Section>
 </BaseLayout>
-
-<style>
-  .dotted-line {
-    background-image: linear-gradient(to bottom, rgba(45, 43, 85, 0.25) 50%, transparent 50%);
-    background-size: 1px 8px;
-    background-repeat: repeat-y;
-  }
-</style>

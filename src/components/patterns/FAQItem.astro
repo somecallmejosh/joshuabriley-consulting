@@ -4,7 +4,8 @@ import { cx } from '~/lib/cx';
 
 /**
  * Native <details>/<summary> accordion. Zero JS — works with keyboard, screen
- * readers, and progressive enhancement out of the box.
+ * readers, and progressive enhancement out of the box. Recomposed as a clean
+ * hairline-divided editorial row.
  */
 
 interface Props {
@@ -17,28 +18,18 @@ interface Props {
 const { question, open = false, class: className } = Astro.props;
 ---
 
-<details
-  class={cx(
-    'faq-card group bg-white rounded-2xl border border-charcoal/5 shadow-sm overflow-hidden',
-    className,
-  )}
-  open={open}
->
+<details class={cx('faq-item group', className)} open={open}>
   <summary
-    class="flex items-start gap-3 p-5 cursor-pointer list-none focus-visible:outline-2 focus-visible:outline-coral focus-visible:outline-offset-[-2px]"
+    class="flex items-start gap-4 py-5 cursor-pointer list-none focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
   >
-    <span
-      aria-hidden="true"
-      class="flex-shrink-0 w-8 h-8 rounded-full bg-plum text-white font-display font-bold flex items-center justify-center"
-    >Q</span>
-    <span class="flex-1 font-heading font-medium text-navy text-base leading-snug">{question}</span>
+    <span class="flex-1 font-display text-[1.05rem] font-medium tracking-tight text-ink leading-snug">{question}</span>
     <Icon
-      name="ph:caret-down-bold"
-      size={20}
-      class="flex-shrink-0 text-charcoal/70 transition-transform group-open:rotate-180 mt-1"
+      name="ph:caret-down"
+      size={18}
+      class="flex-shrink-0 mt-1 text-ink-muted transition-transform duration-300 ease-out group-open:rotate-180"
     />
   </summary>
-  <div class="px-5 pb-5 pl-16 text-charcoal/70 text-sm leading-relaxed font-body">
+  <div class="pb-6 pr-8 text-ink-muted leading-relaxed">
     <slot />
   </div>
 </details>

@@ -2,17 +2,10 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Hero from '~/components/patterns/Hero.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
 import TokenPlayground from '~/components/islands/TokenPlayground.astro';
 ---
 
@@ -20,203 +13,135 @@ import TokenPlayground from '~/components/islands/TokenPlayground.astro';
   title="What a design token actually does — Tools — Joshua Briley"
   description="An interactive demo of token architecture: change one primitive and watch it propagate through every component at once. Semantic tokens reference primitives, names describe intent."
 >
-  {/* ====== HERO ====== */}
-  <Hero tone="cream" align="left" split>
-    <Blob slot="decorations" tone="sky" size="md" class="absolute top-16 right-[12%]" opacity="opacity-30" />
-    <Blob slot="decorations" tone="lemon" size="sm" class="absolute top-28 left-[10%] rounded-full" animate="float-delay" />
-    <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[18%]" animate="float-slow" opacity="opacity-40" />
-
-    <Badge slot="eyebrow" tone="sky" icon="ph:sliders-horizontal-duotone">Interactive demo &middot; token architecture</Badge>
-    <Heading slot="title" level={1} visual="display-xl">
-      What a design token <WavyUnderline>actually does</WavyUnderline>.
-    </Heading>
-    <Text slot="lead" size="xl" tone="muted">
-      Tokens live in a single source of truth. Semantic tokens reference primitives, not raw values, and names
-      describe intent, not value. That's abstract until you move one. Change a decision below and watch it
-      propagate through every component at once.
-    </Text>
-
-    {/* One primitive value cascades down through a semantic token into three
-        components — all rendered in that same value. The whole page's thesis,
-        drawn: change the source, change everything downstream. Decorative. */}
-    <div slot="media" data-tp-illo class="relative mx-auto h-[460px] w-full max-w-[420px] hidden lg:block" aria-hidden="true">
-      {/* Soft concentric depth, sized to sit behind the cascade (not across it) */}
-      <div class="absolute top-[44%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 rounded-full border border-dashed border-sky/15 animate-spin-slow"></div>
-
-      {/* Flow lines (primitive → semantic → each component) drawn by hero-motion.ts,
-          anchored to the live card positions so they actually touch. */}
-      <svg data-tp-conn class="absolute inset-0 w-full h-full"></svg>
-
-      {/* Layer 1 — Primitive: the single raw value */}
-      <div data-tp-primitive class="absolute top-0 left-1/2 -translate-x-1/2 w-44 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 -rotate-2 animate-float">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Primitive</span>
-        <div class="flex items-center gap-2.5">
-          <span class="w-8 h-8 rounded-lg shadow-inner" style="background:#E8573D"></span>
-          <span class="font-mono text-sm text-navy">#E8573D</span>
-        </div>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Tools / Token architecture</span>
+        <span class="hidden sm:inline text-ink-muted">Tokens 03</span>
       </div>
 
-      {/* Layer 2 — Semantic: intent that references the primitive */}
-      <div data-tp-semantic class="absolute top-[40%] left-1/2 -translate-x-1/2 w-52 bg-white rounded-2xl shadow-xl border border-charcoal/5 px-4 py-3 rotate-1 animate-float-delay">
-        <span class="block font-heading text-[10px] font-bold uppercase tracking-wider text-charcoal/40 mb-2">Semantic</span>
-        <div class="flex items-center gap-2">
-          <code class="font-mono text-sm font-semibold text-coral">action.primary</code>
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+            What a design token <em class="ink-wink font-normal italic">actually does</em>.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            Tokens live in a single source of truth. Semantic tokens reference primitives, not raw
+            values, and names describe intent, not value. That is abstract until you move one. Change
+            a decision below and watch it propagate through every component at once.
+          </Text>
+
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="#playground" iconRight="ph:arrow-right" class="js-magnetic">
+              Open the playground
+            </Button>
+            <Button variant="ghost" size="lg" href="/tools/scorecard/">
+              Score your system
+            </Button>
+          </div>
         </div>
-        <div class="mt-1.5 flex items-center gap-1.5 text-charcoal/45">
-          <Icon name="ph:arrow-up-duotone" size={13} />
-          <span class="font-mono text-[11px]">references primitive</span>
+
+        {/* Static three-tier chain — the page's thesis, drawn editorially. */}
+        <div class="lg:col-span-5" aria-hidden="true">
+          <figure class="rounded-lg border border-line bg-raised p-5 md:p-6">
+            <figcaption class="flex items-center justify-between mono-label">
+              <span>token chain</span><span>live</span>
+            </figcaption>
+            <ul class="mt-4 space-y-1">
+              <li class="flex items-center justify-between rounded-[6px] border border-line bg-paper px-3.5 py-2.5">
+                <span class="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-ink-muted">Primitive</span>
+                <span class="font-mono text-[0.8rem] text-accent">#A8412A</span>
+              </li>
+              <li class="ml-4 h-4 w-px bg-line"></li>
+              <li class="flex items-center justify-between rounded-[6px] border border-line bg-paper px-3.5 py-2.5">
+                <span class="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-ink-muted">Semantic</span>
+                <span class="font-mono text-[0.8rem] text-ink">action.primary</span>
+              </li>
+              <li class="ml-4 h-4 w-px bg-line"></li>
+              <li class="grid grid-cols-3 gap-1">
+                {['Button', 'Badge', 'Link'].map((c) => (
+                  <span class="rounded-[6px] border border-line bg-paper px-2 py-3 text-center font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">{c}</span>
+                ))}
+              </li>
+            </ul>
+          </figure>
         </div>
       </div>
+    </Container>
+  </Section>
 
-      {/* Layer 3 — Components: one evenly-spaced row, all rendered from the same value.
-          A flex row (not absolute placement) keeps them from ever overlapping. */}
-      <div class="absolute inset-x-0 bottom-1 flex items-end justify-between gap-2.5">
-        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 -rotate-2 animate-float-slow">
-          <div class="flex items-center gap-1.5 mb-2">
-            <Icon name="ph:cursor-click-duotone" size={15} class="text-charcoal/40" />
-            <span class="font-heading text-[10px] font-semibold text-navy">Button</span>
-          </div>
-          <span data-tp-swatch class="block rounded-lg px-2 py-1.5 text-center text-[11px] font-semibold text-white" style="background:#E8573D">Save</span>
-        </div>
-
-        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 animate-float">
-          <div class="flex items-center gap-1.5 mb-2">
-            <Icon name="ph:tag-duotone" size={15} class="text-charcoal/40" />
-            <span class="font-heading text-[10px] font-semibold text-navy">Badge</span>
-          </div>
-          <span data-tp-swatch class="block rounded-full px-2 py-1.5 text-center text-[11px] font-semibold bg-coral/15 text-[#C13A22]">New</span>
-        </div>
-
-        <div data-tp-comp class="w-[31%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-3 rotate-2 animate-float-delay">
-          <div class="flex items-center gap-1.5 mb-2">
-            <Icon name="ph:text-aa-duotone" size={15} class="text-charcoal/40" />
-            <span class="font-heading text-[10px] font-semibold text-navy">Link</span>
-          </div>
-          <span data-tp-swatch class="block py-1.5 text-center text-[11px] font-semibold underline decoration-2 underline-offset-2 text-[#C13A22]">Read more</span>
-        </div>
-      </div>
-    </div>
-  </Hero>
-
-  <SquiggleDivider />
-
-  {/* ====== THE PLAYGROUND ====== */}
-  <Section padding="default">
+  {/* ───────────────────────── THE TOOL (island, intact) ───────────────────────── */}
+  <Section id="playground" tone="paper" padding="default">
     <Container width="default">
-      <SectionHeader
-        align="left"
-        eyebrow="The playground"
-        eyebrowIcon="ph:sliders-horizontal-duotone"
-        eyebrowTone="plum"
-        title="One change, everywhere at once"
-        lead="Drag a knob, change the whole card. That&rsquo;s the leverage a real system gives a team &mdash; every component pulls from the same vocabulary."
-        class="mb-10 max-w-[65ch]"
-      />
+      <div class="mb-10 max-w-[65ch]">
+        <p class="mono-label">The playground / 01</p>
+        <Heading level={2} visual="display-md" class="mt-4">One change, everywhere at once.</Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Drag a knob, change the whole card. That is the leverage a real system gives a team — every
+          component pulls from the same vocabulary.
+        </Text>
+      </div>
       <TokenPlayground />
     </Container>
   </Section>
 
-  {/* ====== WHY THE MIDDLE LAYER MATTERS ====== */}
-  <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
-    <Container width="narrow">
-      <SectionHeader
-        align="left"
-        eyebrow="The trick, explained"
-        eyebrowIcon="ph:stack-duotone"
-        eyebrowTone="sky"
-        title="Intent in the middle, value at the edge"
-        class="mb-8"
-      />
-      <div class="space-y-5 text-charcoal/75 text-base md:text-lg leading-relaxed">
-        <p>
-          The brand picker above changes exactly one value: the primitive. Every component updates because they
-          reference intent (<code class="font-mono text-sm text-plum">action-primary</code>) and intent references
-          the primitive. That indirection is the entire trick.
-        </p>
-        <p>
-          It's why a rebrand becomes an afternoon instead of a quarter, why a dark mode is a remap instead of a
-          rewrite, and why no component ever redefines a value instead of referencing it. When the mode toggle
-          flips this demo to ink, the components don't change — the semantic layer re-points to different
-          primitives underneath them.
-        </p>
-        <p>
-          It's also why the audit checks token names as carefully as token values. A token called
-          <code class="font-mono text-sm text-plum">color.blue</code> can never survive the day the brand stops
-          being blue. A token called <code class="font-mono text-sm text-plum">color.action.primary</code> can.
-        </p>
+  {/* ───────────────────────── WHY THE MIDDLE LAYER (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="mono-label !text-paper/65">The trick, explained / 02</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[16ch]">
+            Intent in the middle, value at the edge.
+          </Heading>
+        </div>
+        <div class="lg:col-span-7 space-y-5 text-paper/70 leading-relaxed">
+          <p>
+            The brand picker above changes exactly one value: the primitive. Every component updates
+            because they reference intent (<code class="font-mono text-sm text-accent">action-primary</code>) and
+            intent references the primitive. That indirection is the entire trick.
+          </p>
+          <p>
+            It is why a rebrand becomes an afternoon instead of a quarter, why a dark mode is a remap
+            instead of a rewrite, and why no component ever redefines a value instead of referencing
+            it. When the mode toggle flips this demo to ink, the components do not change — the
+            semantic layer re-points to different primitives underneath them.
+          </p>
+          <p>
+            It is also why the audit checks token names as carefully as token values. A token called
+            <code class="font-mono text-sm text-accent">color.blue</code> can never survive the day the brand
+            stops being blue. A token called <code class="font-mono text-sm text-accent">color.action.primary</code> can.
+          </p>
+        </div>
       </div>
     </Container>
   </Section>
 
-  {/* ====== FINAL CTA ====== */}
-  <CTABanner
-    title="Curious how yours measures up?"
-    lead="Token architecture is one of five audit dimensions. The free scorecard has six questions on exactly this. Ten minutes, and you'll know whether your tokens are load-bearing or decorative."
-    align="left"
-  >
-    <Button variant="primary" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
-      Try the scorecard
-    </Button>
-    <Button variant="text" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-  </CTABanner>
-
-  {/* Hero illustration motion: the primitive's value cascades down through the semantic
-      token and repaints all three components in sequence. */}
-  <script>
-    import { connect, gsap } from '~/scripts/hero-motion';
-
-    const PRIMITIVE = '#E8573D';
-    const illo = document.querySelector<HTMLElement>('[data-tp-illo]');
-    const svg = illo?.querySelector<SVGSVGElement>('[data-tp-conn]');
-    const primitive = illo?.querySelector('[data-tp-primitive]');
-    const semantic = illo?.querySelector('[data-tp-semantic]');
-    const comps = illo ? Array.from(illo.querySelectorAll('[data-tp-comp]')) : [];
-    const swatches = illo
-      ? Array.from(illo.querySelectorAll<HTMLElement>('[data-tp-swatch]'))
-      : [];
-
-    if (svg && primitive && semantic && comps.length === 3) {
-      const c = connect(svg, [
-        { from: primitive, to: semantic, color: PRIMITIVE, curve: 0 },
-        { from: semantic, to: comps[0], color: PRIMITIVE, curve: 0.25 },
-        { from: semantic, to: comps[1], color: PRIMITIVE, curve: 0 },
-        { from: semantic, to: comps[2], color: PRIMITIVE, curve: -0.25 },
-      ]);
-
-      if (!c.reduce) {
-        const [toSemantic, ...toComps] = c.links;
-        const tl = gsap.timeline({ repeat: -1, repeatDelay: 1, defaults: { ease: 'power1.inOut' } });
-
-        // 1. value drops from the primitive into the semantic token
-        tl.add(toSemantic.addPulse({ paused: true, duration: 0.85, size: 6 }), 0);
-        tl.fromTo(
-          semantic,
-          { filter: 'brightness(1)' },
-          { filter: 'brightness(1.12)', duration: 0.2, yoyo: true, repeat: 1 },
-          0.85,
-        );
-
-        // 2. it fans out to all three components, each repainting as it lands.
-        //    Reactions use `filter` only — animating transform here would override the
-        //    cards' layout/centering and shove them into each other.
-        toComps.forEach((link, i) => {
-          tl.add(link.addPulse({ paused: true, duration: 0.8, size: 5 }), 1.0);
-          tl.fromTo(
-            swatches[i],
-            { filter: 'brightness(1.85) saturate(1.3)' },
-            { filter: 'brightness(1) saturate(1)', duration: 0.6 },
-            1.7,
-          );
-          tl.fromTo(
-            comps[i],
-            { filter: 'brightness(1)' },
-            { filter: 'brightness(1.06)', duration: 0.18, yoyo: true, repeat: 1, immediateRender: false },
-            1.7,
-          );
-        });
-      }
-    }
-  </script>
+  {/* ───────────────────────── CTA (paper) ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label">Measure yours / 03</p>
+          <Heading level={2} visual="display-md" class="mt-4 max-w-[20ch]">
+            Curious how yours measures up?
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-6 max-w-xl">
+            Token architecture is one of five audit dimensions. The free scorecard has six questions on
+            exactly this. Ten minutes, and you will know whether your tokens are load-bearing or decorative.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="primary" size="lg" href="/tools/scorecard/" iconRight="ph:arrow-right">Try the scorecard</Button>
+            <a
+              href="/contact/"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-accent"
+            >Get in touch <Icon name="ph:arrow-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>

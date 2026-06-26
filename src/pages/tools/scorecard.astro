@@ -4,273 +4,165 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
-import Card from '~/components/card/Card.astro';
 import ScorecardEngine from '~/components/islands/ScorecardEngine.astro';
 
 const description =
   'An interactive self-assessment covering the five dimensions of a healthy design system: component consistency, accessibility, token architecture, documentation, and handoff process.';
 
 const howSteps = [
-  { n: 1, tone: 'coral', tilt: '-1deg', title: 'Answer honestly', body: 'For each prompt, pick **No**, **Partial**, or **Yes**. Nobody&rsquo;s grading *you*.' },
-  { n: 2, tone: 'plum', tilt: '1deg', title: 'Watch the score', body: 'Subject grades appear live. The floating badge tracks your running total as you go.' },
-  { n: 3, tone: 'sage', tilt: '-0.5deg', title: 'Read the report', body: 'Finish every row and a written report card appears with what to tackle first, and what to leave alone.' },
+  { n: '01', title: 'Answer honestly', body: 'For each prompt, pick No, Partial, or Yes. Nobody is grading you.' },
+  { n: '02', title: 'Watch the score', body: 'Subject grades appear live. The running total tracks as you go.' },
+  { n: '03', title: 'Read the report', body: 'Finish every row and a written report appears with what to tackle first, and what to leave alone.' },
 ];
 
-const stepBgMap: Record<string, string> = {
-  coral: 'bg-coral',
-  plum: 'bg-plum',
-  sage: 'bg-sage',
-};
+const gradingKey = [
+  { value: '0', title: 'No', body: 'Not addressed yet.' },
+  { value: '1', title: 'Partial', body: 'Partially in place.' },
+  { value: '2', title: 'Yes', body: 'Working well.' },
+];
 
-// Full literal class strings so Tailwind's JIT can see each rotation.
-const stepTiltClass: Record<string, string> = {
-  '-1deg': 'rotate-[-1deg]',
-  '1deg': 'rotate-[1deg]',
-  '-0.5deg': 'rotate-[-0.5deg]',
-};
+const dimensions = [
+  '01 · Component Consistency',
+  '02 · Accessibility',
+  '03 · Token Architecture',
+  '04 · Documentation',
+  '05 · Handoff Process',
+];
 ---
 
 <BaseLayout
   title="Design System Scorecard — Joshua Briley | UX Engineer & Design Systems Consultant"
   description={description}
 >
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Tools / Self-assessment</span>
+        <span class="hidden sm:inline text-ink-muted">Scorecard 01</span>
+      </div>
 
-  <Section padding="default" decorated>
-    <Blob tone="lemon" size="lg" class="absolute top-16 right-[6%]" animate="float" />
-    <Blob tone="sage" size="sm" class="absolute top-40 left-[4%] rounded-full" animate="float-delay" opacity="opacity-40" />
-    <Blob tone="sky" size="md" class="absolute bottom-12 right-[14%]" animate="float-slow" opacity="opacity-40" />
-    <Blob tone="coral" size="sm" class="absolute bottom-24 left-[10%] rounded-full" animate="float" opacity="opacity-30" />
-    <iconify-icon
-      icon="ph:pencil-duotone"
-      class="pencil top-[10%] right-8 lg:top-[22%] lg:left-[6%] animate-wiggle"
-      aria-hidden="true"
-    ></iconify-icon>
-    <iconify-icon
-      icon="ph:star-four-duotone"
-      class="absolute top-[15%] right-[12%] text-3xl text-coral animate-wiggle"
-      aria-hidden="true"
-    ></iconify-icon>
-
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        <div class="lg:col-span-6">
-          <div class="mb-5 inline-block">
-            <Badge tone="peach" icon="ph:graduation-cap-duotone">Design System Self-Assessment</Badge>
-          </div>
-          <Heading level={1} visual="display-xl" balance class="mb-6">
-            Grade your design <WavyUnderline>system</WavyUnderline>
-            <span class="font-hand text-coral text-4xl md:text-5xl block mt-3 rotate-[-2deg]">
-              …like a report card.
-            </span>
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+            Grade your design system <em class="ink-wink font-normal italic">like a report card</em>.
           </Heading>
-          <Text size="xl" tone="muted" class="max-w-xl mb-8">
-            Ten minutes, five subjects, thirty-two questions. An honest snapshot of where your system shines and where it&rsquo;s quietly burning your team out.
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            Ten minutes, five subjects, thirty-two questions. An honest snapshot of where your system
+            shines and where it is quietly burning your team out.
           </Text>
-          <div class="flex flex-wrap items-center gap-3 mb-8">
-            <Badge tone="sage" icon="ph:timer-duotone">~10 minutes</Badge>
-            <Badge tone="sky" icon="ph:lock-open-duotone">No signup</Badge>
-            <Badge tone="plum" icon="ph:eye-slash-duotone">Stays on your device</Badge>
-          </div>
-          <div class="flex flex-col sm:flex-row gap-4">
-            <Button variant="primary" iconLeft="ph:pencil-simple-line-duotone" href="#scorecard">
+
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="#scorecard" iconRight="ph:arrow-right" class="js-magnetic">
               Start scoring
             </Button>
-            <Button variant="ghost" iconLeft="ph:question-duotone" href="#how">
+            <Button variant="ghost" size="lg" href="#how">
               How it works
             </Button>
           </div>
+
+          <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+            {['~10 minutes', 'No signup', 'Stays on your device'].map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div class="lg:col-span-6 relative">
-          <div class="relative max-w-md mx-auto lg:ml-auto">
-            <div class="absolute -inset-8 bg-plum/12 blob-shape-alt animate-float-slow" aria-hidden="true"></div>
-            <div data-sc-card class="report-paper rotate-[-1.5deg] relative z-10">
-              <span class="tape tl" aria-hidden="true"></span>
-              <span class="tape tr" aria-hidden="true"></span>
-              <div class="pl-12">
-                <p class="font-hand text-plum text-2xl leading-none mb-1">Briley &amp; Co. Academy</p>
-                <h2 class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight mb-1">
-                  Design System Report Card
-                </h2>
-                <p class="font-body text-xs text-charcoal/70 mb-5">
-                  Term: ongoing · Student: <span class="font-semibold text-coral">your team</span>
-                </p>
-                <ul class="space-y-2.5 font-heading text-sm">
-                  <li data-sc-row class="flex items-center justify-between">
-                    <span class="text-charcoal/80">01 · Component Consistency</span>
-                    <span class="font-display font-bold text-plum">—</span>
-                  </li>
-                  <li data-sc-row class="flex items-center justify-between">
-                    <span class="text-charcoal/80">02 · Accessibility</span>
-                    <span class="font-display font-bold text-plum">—</span>
-                  </li>
-                  <li data-sc-row class="flex items-center justify-between">
-                    <span class="text-charcoal/80">03 · Token Architecture</span>
-                    <span class="font-display font-bold text-plum">—</span>
-                  </li>
-                  <li data-sc-row class="flex items-center justify-between">
-                    <span class="text-charcoal/80">04 · Documentation</span>
-                    <span class="font-display font-bold text-plum">—</span>
-                  </li>
-                  <li data-sc-row class="flex items-center justify-between">
-                    <span class="text-charcoal/80">05 · Handoff Process</span>
-                    <span class="font-display font-bold text-plum">—</span>
-                  </li>
-                </ul>
-                <div class="mt-5 pt-4 border-t-2 border-dashed border-coral/30 flex items-end justify-between">
-                  <div data-sc-final>
-                    <p class="font-hand text-plum text-lg leading-none">Final grade</p>
-                    <p class="font-display text-3xl font-bold text-navy">—/64</p>
-                  </div>
-                  <p class="font-hand text-coral text-xl rotate-[-4deg]">let&rsquo;s find out!</p>
-                </div>
-              </div>
-            </div>
-            <div class="absolute -top-6 -right-4 w-16 h-16 bg-sunset rounded-full flex items-center justify-center text-white shadow-xl animate-wiggle z-20" aria-hidden="true">
-              <Icon name="ph:star-duotone" size={32} />
-            </div>
-            <div class="absolute -bottom-3 -left-4 bg-white rounded-full px-4 py-2 shadow-lg border border-charcoal/5 rotate-[-4deg] z-20 flex items-center gap-2">
-              <Icon name="ph:check-circle-duotone" size={18} class="text-sage" />
-              <span class="font-hand text-navy text-lg leading-none">no wrong answers</span>
-            </div>
-          </div>
+        {/* Preview of the report the engine fills in — static, editorial. */}
+        <div class="lg:col-span-5" aria-hidden="true">
+          <figure class="rounded-lg border border-line bg-raised p-5 md:p-6">
+            <figcaption class="flex items-center justify-between mono-label">
+              <span>Report card</span><span>—/64</span>
+            </figcaption>
+            <ul class="mt-4 divide-y divide-line">
+              {dimensions.map((d) => (
+                <li class="flex items-center justify-between py-3 first:pt-0">
+                  <span class="font-mono text-[0.75rem] uppercase tracking-[0.1em] text-ink-muted">{d}</span>
+                  <span class="font-display text-sm font-semibold text-ink-faint">—</span>
+                </li>
+              ))}
+            </ul>
+          </figure>
         </div>
       </div>
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-5xl mx-auto mb-10"></div>
+  {/* ───────────────────────── HOW IT WORKS ───────────────────────── */}
+  <Section id="how" tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">How it works / 01</p>
+        <Heading level={2} visual="display-md" class="mt-4">The rules of the game.</Heading>
+      </div>
 
-
-  <Section id="how" padding="tight">
-    <Container width="default">
-      <SectionHeader
-        eyebrow="the rules of the game"
-        eyebrowTone="coral"
-        title="How it works"
-        align="center"
-        class="mb-12"
-      />
-      <div class="grid md:grid-cols-3 gap-6">
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
         {howSteps.map((step) => (
-          <Card hover={false} variant="paper" padding="none" class={`${stepTiltClass[step.tilt]} p-7 shadow-lg`}>
-            <div slot="corner" class={`absolute -top-5 -left-3 w-12 h-12 rounded-full ${stepBgMap[step.tone]} text-white flex items-center justify-center font-display font-bold text-xl shadow-lg`}>
-              {step.n}
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-navy mt-3 mb-2">{step.title}</h3>
-            <p class="text-sm text-charcoal/75 leading-relaxed" set:html={step.body.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>')} />
-          </Card>
+          <div class="bg-paper p-7 md:p-9">
+            <span class="font-mono text-[0.75rem] text-accent">{step.n}</span>
+            <Heading level={3} visual="h3" class="mt-3">{step.title}</Heading>
+            <Text tone="muted" class="mt-2">{step.body}</Text>
+          </div>
         ))}
       </div>
 
-      <Card hover={false} variant="paper" class="mt-12 max-w-3xl mx-auto">
-        <p class="font-hand text-plum text-xl mb-4 text-center">teacher&rsquo;s grading key</p>
-        <div class="grid sm:grid-cols-3 gap-4">
-          <div class="flex items-start gap-3 bg-coral/5 rounded-xl p-4 border border-coral/15">
-            <div class="w-10 h-10 rounded-full bg-coral/90 text-white flex items-center justify-center flex-shrink-0 font-display font-bold">0</div>
-            <div>
-              <p class="font-heading font-semibold text-navy">No</p>
-              <p class="text-xs text-charcoal/70">Not addressed yet.</p>
+      <div class="mt-8 rounded-lg border border-line bg-raised p-7 md:p-9">
+        <p class="mono-label">The grading key</p>
+        <div class="mt-6 grid gap-px overflow-hidden rounded-md border border-line bg-line sm:grid-cols-3">
+          {gradingKey.map((g) => (
+            <div class="flex items-start gap-3 bg-paper p-5">
+              <span class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-md border border-line-strong font-display font-semibold text-ink">
+                {g.value}
+              </span>
+              <div>
+                <p class="font-display font-semibold tracking-tight text-ink">{g.title}</p>
+                <p class="mt-0.5 text-sm text-ink-muted">{g.body}</p>
+              </div>
             </div>
-          </div>
-          <div class="flex items-start gap-3 bg-sunset/5 rounded-xl p-4 border border-sunset/25">
-            <div class="w-10 h-10 rounded-full bg-sunset text-white flex items-center justify-center flex-shrink-0 font-display font-bold">1</div>
-            <div>
-              <p class="font-heading font-semibold text-navy">Partial</p>
-              <p class="text-xs text-charcoal/70">Partially in place.</p>
-            </div>
-          </div>
-          <div class="flex items-start gap-3 bg-sage/5 rounded-xl p-4 border border-sage/25">
-            <div class="w-10 h-10 rounded-full bg-sage text-white flex items-center justify-center flex-shrink-0 font-display font-bold">2</div>
-            <div>
-              <p class="font-heading font-semibold text-navy">Yes</p>
-              <p class="text-xs text-charcoal/70">Working well.</p>
-            </div>
-          </div>
+          ))}
         </div>
-      </Card>
+      </div>
     </Container>
   </Section>
 
-
-  <Section id="scorecard" padding="tight">
+  {/* ───────────────────────── THE TOOL (island, intact) ───────────────────────── */}
+  <Section id="scorecard" tone="paper" padding="default" class="border-t border-line">
     <Container width="narrow">
       <ScorecardEngine />
     </Container>
   </Section>
 
-
-  <CTABanner
-    title="This scorecard is also a work sample."
-    lead="It’s built like everything else here: accessible radio groups, live scoring, no frameworks, the same tokens. Whatever your number says, if you want to compare notes — or you’re hiring someone who builds tools like this — get in touch."
-  >
-    <Button variant="navy" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-    <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-      Connect on LinkedIn
-    </Button>
-  </CTABanner>
-  {/* Hero illustration motion: a looping "grading sweep" — each subject row gets a brief
-      emphasis in turn, then the final-grade block gets a small stamp pop. The static card
-      stays blank ("—") under reduced motion / no JS. */}
-  <script>
-    import { gsap, reduceMotion } from '~/scripts/hero-motion';
-
-    const card = document.querySelector<HTMLElement>('[data-sc-card]');
-    const rows = card ? Array.from(card.querySelectorAll<HTMLElement>('[data-sc-row]')) : [];
-    const final = card?.querySelector<HTMLElement>('[data-sc-final]');
-
-    if (card && rows.length && !reduceMotion()) {
-      const tl = gsap.timeline({ repeat: -1, repeatDelay: 1.4, defaults: { ease: 'power2.out' } });
-
-      rows.forEach((row, i) => {
-        const grade = row.querySelector<HTMLElement>('span:last-child');
-        const at = i * 0.18;
-        // soft background highlight sweeping down the row
-        tl.fromTo(
-          row,
-          { boxShadow: '0 0 0 0 rgba(108,74,182,0)' },
-          { boxShadow: '0 0 0 6px rgba(108,74,182,0.12)', duration: 0.22, yoyo: true, repeat: 1 },
-          at,
-        );
-        if (grade) {
-          // subtle pop on the grade mark (transform-safe: row has no CSS animation)
-          tl.fromTo(
-            grade,
-            { scale: 1, opacity: 0.85 },
-            { scale: 1.22, opacity: 1, duration: 0.2, yoyo: true, repeat: 1, transformOrigin: 'center' },
-            at,
-          );
-        }
-      });
-
-      if (final) {
-        // "stamp" pop on the final grade once the sweep reaches the bottom
-        const stampAt = rows.length * 0.18 + 0.15;
-        tl.fromTo(
-          final,
-          { scale: 1.15, rotation: -3 },
-          { scale: 1, rotation: 0, duration: 0.45, ease: 'back.out(2.4)', transformOrigin: 'left center' },
-          stampAt,
-        );
-      }
-    }
-  </script>
+  {/* ───────────────────────── CTA (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label !text-paper/65">A work sample / 02</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[22ch]">
+            This scorecard is also a work sample.
+          </Heading>
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            It is built like everything else here: accessible radio groups, live scoring, no
+            frameworks, the same tokens. Whatever your number says, if you want to compare notes — or
+            you are hiring someone who builds tools like this — get in touch.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
+            <a
+              href="https://www.linkedin.com/in/joshuabriley/"
+              rel="noopener noreferrer"
+              target="_blank"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Connect on LinkedIn <Icon name="ph:arrow-up-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>
-
-<style>
-  .pencil {
-    position: absolute;
-    font-size: 3rem;
-    color: #6c4ab6;
-    transform: rotate(-22deg);
-  }
-</style>

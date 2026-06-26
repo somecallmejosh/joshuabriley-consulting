@@ -51,7 +51,7 @@ const body = code.replace(/^\n+|\n+$/g, '');
         {copy && <CopyButton text={body} label="Copy code" tone="onDark" />}
       </span>
     </div>
-    <pre class="px-4 py-4 md:px-5 md:py-5 overflow-x-auto text-[0.8rem] md:text-sm leading-relaxed font-mono text-[#E7E5F7]"><code>{body}</code></pre>
+    <pre tabindex="0" role="region" aria-label={filename ? `Code: ${filename}` : 'Code sample'} class="px-4 py-4 md:px-5 md:py-5 overflow-x-auto text-[0.8rem] md:text-sm leading-relaxed font-mono text-[#E7E5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"><code>{body}</code></pre>
   </div>
   {caption && (
     <figcaption class="mt-3 text-sm text-charcoal/70 font-body">{caption}</figcaption>

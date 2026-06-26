@@ -21,13 +21,11 @@ const demos = [
 
 <section class="dx" data-dx-root data-active="pricing" aria-labelledby="dx-title">
   <header class="dx-head">
-    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
-      take a look
-    </span>
-    <h3 id="dx-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+    <span class="mono-label">Take a look</span>
+    <h3 id="dx-title" class="font-display text-2xl md:text-3xl font-bold text-ink leading-tight mt-2">
       What an audit actually finds.
     </h3>
-    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+    <p class="text-sm text-ink-muted mt-2 leading-relaxed max-w-prose">
       Pick a screen. Toggle &ldquo;show issues&rdquo;. The dashed boxes are the inconsistencies a quick pass would flag &mdash; the kind that quietly cost your team sprint velocity.
     </p>
   </header>
@@ -306,12 +304,9 @@ const demos = [
 
 <style>
   .dx {
-    background: #fff;
-    border: 1px solid rgba(45, 43, 85, 0.08);
-    border-radius: 22px;
-    box-shadow:
-      0 22px 50px -28px rgba(45, 43, 85, 0.3),
-      0 0 0 1px rgba(108, 74, 182, 0.05);
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     padding: clamp(1.5rem, 3vw, 2.25rem);
   }
 
@@ -324,8 +319,8 @@ const demos = [
   }
   .dx-tabs {
     display: inline-flex;
-    background: #fffbf5;
-    border: 1.5px solid rgba(108, 74, 182, 0.18);
+    background: var(--paper);
+    border: 1px solid var(--line);
     border-radius: 999px;
     padding: 4px;
   }
@@ -333,48 +328,47 @@ const demos = [
     border: 0; background: transparent;
     padding: 0.4rem 0.95rem;
     border-radius: 999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.78rem;
-    color: #6b6b73;
+    color: var(--ink-muted);
     cursor: pointer;
-    transition: all 0.18s ease;
+    transition: all 0.18s var(--ease-out);
   }
   .dx-tab[aria-selected='true'] {
-    background: #2d2b55;
-    color: #fff;
-    box-shadow: 0 6px 14px -6px rgba(45, 43, 85, 0.4);
+    background: var(--ink);
+    color: var(--paper);
   }
-  .dx-tab:focus-visible { outline: 2px solid #E8573D; outline-offset: 3px; }
+  .dx-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
   .dx-toggle {
     display: inline-flex; align-items: center; gap: 0.6rem;
     cursor: pointer;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.8rem;
-    color: #2d2b55;
+    color: var(--ink);
   }
   .dx-toggle input { position: absolute; opacity: 0; pointer-events: none; }
   .dx-toggle-track {
     width: 38px; height: 22px;
-    background: rgba(108, 74, 182, 0.2);
+    background: var(--line);
     border-radius: 999px;
     position: relative;
-    transition: background 0.2s ease;
+    transition: background 0.2s var(--ease-out);
   }
   .dx-toggle-thumb {
     position: absolute;
     top: 2px; left: 2px;
     width: 18px; height: 18px;
-    background: #fff;
+    background: var(--raised);
     border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(45, 43, 85, 0.25);
-    transition: transform 0.2s ease;
+    box-shadow: 0 0 0 1px var(--line);
+    transition: transform 0.2s var(--ease-out);
   }
-  .dx-toggle input:checked + .dx-toggle-track { background: #e8573d; }
+  .dx-toggle input:checked + .dx-toggle-track { background: var(--accent); }
   .dx-toggle input:checked + .dx-toggle-track .dx-toggle-thumb { transform: translateX(16px); }
-  .dx-toggle input:focus-visible + .dx-toggle-track { outline: 2px solid #E8573D; outline-offset: 3px; }
+  .dx-toggle input:focus-visible + .dx-toggle-track { outline: 2px solid var(--accent); outline-offset: 3px; }
 
   /* ============ stage ============ */
   .dx-stage {
@@ -385,28 +379,27 @@ const demos = [
   }
   .dx-frame {
     position: relative;
-    background: linear-gradient(180deg, #f7f5ff 0%, #fffbf5 100%);
-    border: 1px solid rgba(45, 43, 85, 0.1);
-    border-radius: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 12px 30px -18px rgba(45, 43, 85, 0.3);
   }
   .dx-chrome {
     display: flex; align-items: center; gap: 0.6rem;
-    background: #2d2b55;
-    color: rgba(255, 255, 255, 0.7);
+    background: var(--ink);
+    color: rgba(245, 244, 241, 0.7);
     padding: 0.5rem 0.8rem;
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.7rem;
   }
   .dx-chrome-dots { display: inline-flex; gap: 4px; }
   .dx-chrome-dots i {
     width: 9px; height: 9px; border-radius: 50%;
-    background: rgba(255,255,255,0.25);
+    background: var(--line-strong);
   }
-  .dx-chrome-dots i:nth-child(1) { background: #ff8e53; }
-  .dx-chrome-dots i:nth-child(2) { background: #fde68a; }
-  .dx-chrome-dots i:nth-child(3) { background: #7bb47a; }
+  .dx-chrome-dots i:nth-child(1) { background: var(--line-strong); }
+  .dx-chrome-dots i:nth-child(2) { background: var(--line-strong); }
+  .dx-chrome-dots i:nth-child(3) { background: var(--line-strong); }
   .dx-chrome-url { letter-spacing: 0.04em; }
 
   /* ============ pricing demo ============ */
@@ -417,52 +410,52 @@ const demos = [
   }
   @media (min-width: 560px) { .dx-pricing { grid-template-columns: repeat(3, 1fr); } }
   .dx-price-card {
-    background: #fff;
-    border: 1px solid rgba(45, 43, 85, 0.1);
-    border-radius: 16px;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     padding: 0.9rem;
     position: relative;
   }
   /* "broken" — radius drift */
   .dx-price-card--bad-radius { border-radius: 4px; }
-  /* "broken" — drifted color */
+  /* "broken" — drifted color (off-token brown-orange one-off, AA-safe) */
   .dx-price-card--featured .dx-price-badge {
-    background: #f08a5d;
+    background: #9A4A1E;
   }
   .dx-price-tier {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #6c4ab6;
+    color: var(--ink-muted);
     margin: 0 0 0.2rem;
   }
   .dx-price-num {
-    font-family: var(--font-fraunces), Georgia, serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 800;
-    color: #2d2b55;
+    color: var(--ink);
     font-size: 1.6rem;
     margin: 0 0 0.6rem;
   }
-  .dx-price-num span { font-size: 0.78rem; color: rgba(45, 43, 85, 0.8); font-weight: 400; }
+  .dx-price-num span { font-size: 0.78rem; color: var(--ink-muted); font-weight: 400; }
   .dx-price-card ul {
     list-style: none; padding: 0; margin: 0 0 0.9rem;
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.78rem;
-    color: rgba(46, 46, 48, 0.8);
+    color: var(--ink-muted);
     display: grid; gap: 0.35rem;
   }
   /* "broken" — off-grid */
   .dx-price-spacing-bug { margin-top: 18px !important; }
   .dx-price-cta {
     width: 100%;
-    background: #6c4ab6;
-    color: #fff;
+    background: var(--ink);
+    color: var(--paper);
     border: 0;
     border-radius: 10px;
     padding: 0.45rem 0.7rem;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.78rem;
   }
@@ -470,9 +463,9 @@ const demos = [
     position: absolute;
     top: -10px; left: 50%;
     transform: translateX(-50%);
-    background: #e8573d;
-    color: #fff;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.65rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -484,41 +477,42 @@ const demos = [
   /* ============ hero demo ============ */
   .dx-hero { padding: 2rem 1.25rem 1.5rem; }
   .dx-hero-title {
-    font-family: var(--font-fraunces), Georgia, serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 700;
     font-size: 38px; /* off-scale */
-    color: #2d2b55;
+    color: var(--ink);
     line-height: 1.1;
     margin: 0 0 0.5rem;
     max-width: 28ch;
   }
   .dx-hero-body {
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    color: rgba(46, 46, 48, 0.85);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    color: var(--ink-muted);
     font-size: 0.95rem;
     margin: 0 0 0.8rem;
     max-width: 36ch;
   }
   .dx-hero-help {
-    color: #b8a8d6; /* fails AA on cream */
+    color: var(--ink-muted); /* contrast fix — passes AA */
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.78rem;
     margin: 0 0 1rem;
   }
   .dx-hero-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
   .dx-hero-cta {
-    background: #e8573d;
-    color: #fff;
+    background: var(--accent);
+    color: var(--paper);
     border: 0;
     border-radius: 6px; /* off — system is 14px */
     padding: 0.55rem 1rem;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.85rem;
   }
   .dx-hero-cta--ghost {
     background: transparent;
-    color: #2d2b55;
-    border: 1.5px solid rgba(45, 43, 85, 0.3);
+    color: var(--ink);
+    border: 1px solid var(--line);
   }
 
   /* ============ issue marks (anchored to the real element) ============ */
@@ -531,33 +525,31 @@ const demos = [
      fades/scales them in and out so the reveal feels deliberate, not snapped.
      A transparent outline holds its space with zero reflow when hidden. */
   [data-dx-mark] {
-    outline: 2px dashed transparent;
+    outline: 2px solid transparent;
     outline-offset: 3px;
-    transition: outline-color 0.3s ease;
+    transition: outline-color 0.3s var(--ease-out);
   }
   [data-dx-mark]::after {
     content: attr(data-dx-mark);
     position: absolute;
     top: -10px; left: -10px;
     width: 22px; height: 22px;
-    background: #e8573d;
-    color: #fff;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.68rem;
     font-weight: 700;
     line-height: 1;
     border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
-    box-shadow: 0 4px 8px -2px rgba(232, 87, 61, 0.5);
     pointer-events: none;
     opacity: 0;
     transform: scale(0);
     transition:
       transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1),
-      opacity 0.24s ease,
-      box-shadow 0.2s ease;
+      opacity 0.24s ease;
   }
-  [data-dx-state='issues'] [data-dx-mark] { outline-color: #e8573d; }
+  [data-dx-state='issues'] [data-dx-mark] { outline-color: var(--accent); }
   [data-dx-state='issues'] [data-dx-mark]::after {
     opacity: 1;
     transform: scale(1);
@@ -568,10 +560,9 @@ const demos = [
     transform: scale(0);
   }
   /* Spotlight when a linked finding is hovered (or the mark itself). */
-  [data-dx-mark].dx-mark-hot { outline-color: #c13a22; }
+  [data-dx-mark].dx-mark-hot { outline-color: var(--accent); }
   [data-dx-state='issues'] [data-dx-mark].dx-mark-hot::after {
     transform: scale(1.22);
-    box-shadow: 0 7px 16px -2px rgba(193, 58, 34, 0.7);
   }
 
   /* Diagnostic scan sweep, replayed each time issues are revealed. */
@@ -586,9 +577,9 @@ const demos = [
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(232, 87, 61, 0.16),
-      rgba(232, 87, 61, 0.42),
-      rgba(232, 87, 61, 0.16),
+      rgb(var(--accent-rgb) / 0.16),
+      rgb(var(--accent-rgb) / 0.42),
+      rgb(var(--accent-rgb) / 0.16),
       transparent
     );
   }
@@ -605,23 +596,23 @@ const demos = [
 
   /* ============ issues panel ============ */
   .dx-issues {
-    background: #fffbf5;
-    border: 1px solid rgba(232, 87, 61, 0.2);
-    border-radius: 14px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     padding: 1.1rem 1.2rem;
   }
   .dx-issues-count {
     display: inline-flex; align-items: center; gap: 0.4rem;
-    font-family: var(--font-fraunces), Georgia, serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 700;
     font-size: 1.1rem;
-    color: #C13A22;
+    color: var(--accent);
     margin: 0 0 0.6rem;
   }
   .dx-issues-count span {
-    background: #C13A22;
-    color: #fff;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.75rem;
     padding: 2px 8px;
     border-radius: 999px;
@@ -634,25 +625,23 @@ const demos = [
   .dx-issues li {
     display: flex; gap: 0.7rem;
     padding: 0.55rem 0.7rem;
-    background: #fff;
-    border: 1px solid rgba(232, 87, 61, 0.15);
+    background: var(--raised);
+    border: 1px solid var(--line);
     border-left-width: 3px;
     border-radius: 10px;
     cursor: default;
     transition:
-      background 0.2s ease,
-      box-shadow 0.2s ease,
-      transform 0.2s ease;
+      background 0.2s var(--ease-out),
+      box-shadow 0.2s var(--ease-out),
+      transform 0.2s var(--ease-out);
   }
-  /* Severity ramp: deep coral (critical) -> coral -> sunset (minor). */
-  .dx-issues li:nth-child(1) { border-left-color: #c13a22; }
-  .dx-issues li:nth-child(2) { border-left-color: #e8573d; }
-  .dx-issues li:nth-child(3) { border-left-color: #ff8e53; }
+  /* Severity ramp: critical (accent) -> minor (muted -> faint line). */
+  .dx-issues li:nth-child(1) { border-left-color: var(--accent); }
+  .dx-issues li:nth-child(2) { border-left-color: var(--ink-muted); }
+  .dx-issues li:nth-child(3) { border-left-color: var(--line-strong); }
   .dx-issues li.dx-issue-hot {
-    background: rgba(232, 87, 61, 0.06);
-    box-shadow:
-      0 0 0 2px rgba(232, 87, 61, 0.25),
-      0 10px 20px -12px rgba(232, 87, 61, 0.5);
+    background: rgb(var(--accent-rgb) / 0.06);
+    box-shadow: 0 0 0 1px var(--accent);
     transform: translateX(3px);
   }
 
@@ -669,9 +658,9 @@ const demos = [
   }
   .dx-issues-num {
     width: 22px; height: 22px;
-    background: #C13A22;
-    color: #fff;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.68rem;
     font-weight: 700;
     border-radius: 50%;
@@ -679,24 +668,25 @@ const demos = [
     flex: 0 0 auto;
   }
   .dx-issues-title {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.85rem;
-    color: #2d2b55;
+    color: var(--ink);
     margin: 0 0 0.15rem;
   }
   .dx-issues-body {
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.78rem;
-    color: rgba(46, 46, 48, 0.78);
+    color: var(--ink-muted);
     margin: 0;
     line-height: 1.4;
   }
   .dx-issues code {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.72rem;
-    background: rgba(108, 74, 182, 0.1);
-    color: #6c4ab6;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    color: var(--accent);
     padding: 1px 5px;
     border-radius: 4px;
   }
@@ -704,18 +694,18 @@ const demos = [
   .dx-foot-note {
     margin-top: 1.25rem;
     text-align: center;
-    font-family: 'Caveat', cursive;
-    font-size: 1.15rem;
-    color: rgba(45, 43, 85, 0.7);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.9rem;
+    color: var(--ink-muted);
   }
   .dx-foot-link {
-    color: #C13A22;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    color: var(--accent);
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 600;
     font-size: 0.85rem;
     margin-left: 0.4rem;
   }
-  .dx-foot-link:hover { color: #c64a32; }
+  .dx-foot-link:hover { color: var(--ink); }
 
   @media (prefers-reduced-motion: reduce) {
     .dx-tab,

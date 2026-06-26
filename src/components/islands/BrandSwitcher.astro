@@ -20,13 +20,11 @@ const brands = [
 
 <section class="bs" data-brand-switcher data-brand="cc" aria-labelledby="bs-title">
   <header class="bs-head">
-    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
-      same component
-    </span>
-    <h3 id="bs-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+    <span class="mono-label">Same component</span>
+    <h3 id="bs-title" class="font-display text-2xl md:text-3xl font-bold text-ink leading-tight mt-2">
       One component, every brand.
     </h3>
-    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+    <p class="text-sm text-ink-muted mt-2 leading-relaxed max-w-prose">
       Switch the brand context. The card&rsquo;s markup and props never change &mdash; only the
       tokens it reads. No <code>brand</code> prop, no forked render tree.
     </p>
@@ -56,7 +54,7 @@ const brands = [
         <div><dt>--color-primary</dt><dd data-bs-out="primary">#B5532E</dd></div>
         <div><dt>--color-accent</dt><dd data-bs-out="accent">#3E6E3D</dd></div>
         <div><dt>--radius-card</dt><dd data-bs-out="radius">6px</dd></div>
-        <div><dt>--font-display</dt><dd data-bs-out="font">Fraunces</dd></div>
+        <div><dt>--font-display</dt><dd data-bs-out="font">Georgia</dd></div>
       </dl>
       <p class="bs-tokens-foot">
         <code>&lt;RecipeCard /&gt;</code> &mdash; one component, no <code>brand</code> prop.
@@ -68,7 +66,7 @@ const brands = [
       <article class="bs-card" data-bs-card>
         <div class="bs-card-cover">
           <span class="bs-card-badge">Weeknight</span>
-          <Icon name="ph:cooking-pot-duotone" size={40} class="bs-card-coveric" />
+          <Icon name="ph:cooking-pot-duotone" size={40} class="bs-card-coveric text-white" />
         </div>
         <div class="bs-card-body">
           <p class="bs-card-kicker">30-minute supper</p>
@@ -99,17 +97,17 @@ const brands = [
   const BRANDS: Record<string, Brand> = {
     cc: {
       primary: '#B5532E', accent: '#3E6E3D', surface: '#FBF6EE', ink: '#3A2A20',
-      radius: '6px', font: 'var(--font-fraunces), Georgia, serif', fontLabel: 'Fraunces',
+      radius: '6px', font: 'Georgia, "Times New Roman", serif', fontLabel: 'Georgia',
       caption: 'Cook’s Country renders this exact card with rustic, warm tokens.',
     },
     ci: {
       primary: '#1F3A5F', accent: '#8C6A3F', surface: '#F6F4EF', ink: '#22303F',
-      radius: '3px', font: 'var(--font-fraunces), Georgia, serif', fontLabel: 'Fraunces',
+      radius: '3px', font: 'Georgia, "Times New Roman", serif', fontLabel: 'Georgia',
       caption: 'Cook’s Illustrated: the same card, squared off and authoritative.',
     },
     atk: {
       primary: '#E8573D', accent: '#6C4AB6', surface: '#FFFBF5', ink: '#2D2B55',
-      radius: '16px', font: 'var(--font-space-grotesk), system-ui, sans-serif', fontLabel: 'Space Grotesk',
+      radius: '16px', font: 'var(--font-hanken), system-ui, sans-serif', fontLabel: 'Hanken',
       caption: 'America’s Test Kitchen: rounder, brighter — same component underneath.',
     },
   };
@@ -164,37 +162,36 @@ const brands = [
 <style>
   .bs {
     --bs-primary: #b5532e; --bs-accent: #3e6e3d; --bs-surface: #fbf6ee; --bs-ink: #3a2a20;
-    --bs-radius: 6px; --bs-font: var(--font-fraunces), Georgia, serif;
-    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
-    border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 22px;
-    box-shadow: 0 24px 50px -28px rgba(45, 43, 85, 0.28), 0 0 0 1px rgba(108, 74, 182, 0.04);
+    --bs-radius: 6px; --bs-font: Georgia, "Times New Roman", serif;
+    background: var(--raised);
+    border: 1px solid var(--line); border-radius: 12px;
     padding: clamp(1.25rem, 2.4vw, 2.5rem);
   }
   .bs-head { margin-bottom: 1.25rem; }
   .bs-head code {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.9em; color: #6c4ab6;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.9em; color: var(--accent);
   }
 
   .bs-tabs { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
   .bs-tab {
     display: flex; flex-direction: column; align-items: flex-start; gap: 1px;
-    background: #fffbf5; border: 1.5px solid rgba(108, 74, 182, 0.18); border-radius: 14px;
-    padding: 0.55rem 0.95rem; cursor: pointer; text-align: left; transition: all 0.18s ease;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 8px;
+    padding: 0.55rem 0.95rem; cursor: pointer; text-align: left;
+    transition: border-color 0.18s var(--ease-out), background 0.18s var(--ease-out);
   }
   .bs-tab-name {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-weight: 700; font-size: 0.85rem; color: #2d2b55;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-weight: 700; font-size: 0.85rem; color: var(--ink);
   }
   .bs-tab-note {
-    font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.68rem; color: rgba(45, 43, 85, 0.6);
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.68rem; color: #5c5b55;
   }
-  .bs-tab:hover { border-color: rgba(108, 74, 182, 0.45); }
-  .bs-tab:focus-visible { outline: 2px solid #E8573D; outline-offset: 3px; }
+  .bs-tab:hover { border-color: var(--line-strong); }
+  .bs-tab:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
   .bs-tab[aria-selected='true'] {
-    background: var(--bs-primary); border-color: var(--bs-primary);
-    box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--bs-primary) 70%, transparent);
+    background: var(--ink); border-color: var(--ink);
   }
-  .bs-tab[aria-selected='true'] .bs-tab-name { color: #fff; }
-  .bs-tab[aria-selected='true'] .bs-tab-note { color: rgba(255, 255, 255, 0.8); }
+  .bs-tab[aria-selected='true'] .bs-tab-name { color: var(--paper); }
+  .bs-tab[aria-selected='true'] .bs-tab-note { color: rgba(245, 244, 241, 0.8); }
 
   .bs-grid { display: grid; gap: 1.75rem; }
   @media (min-width: 880px) {
@@ -203,29 +200,28 @@ const brands = [
 
   /* ========== token readout ========== */
   .bs-tokens {
-    background: #2d2b55; border-radius: 16px; padding: 1.25rem 1.35rem;
-    box-shadow: 0 18px 40px -24px rgba(45, 43, 85, 0.5);
+    background: var(--ink); border-radius: 12px; padding: 1.25rem 1.35rem;
   }
   .bs-tokens-rule {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.68rem;
-    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(255, 255, 255, 0.5);
-    border-bottom: 1px dashed rgba(255, 255, 255, 0.15); padding-bottom: 0.6rem; margin-bottom: 0.85rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(245, 244, 241, 0.6);
+    border-bottom: 1px solid rgba(245, 244, 241, 0.15); padding-bottom: 0.6rem; margin-bottom: 0.85rem;
   }
   .bs-token-list { margin: 0; display: grid; gap: 0.55rem; }
   .bs-token-list div { display: flex; align-items: baseline; justify-content: space-between; gap: 1rem; }
   .bs-token-list dt {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.74rem; color: #b9a9e6;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.74rem; color: rgba(245, 244, 241, 0.65);
   }
   .bs-token-list dd {
-    margin: 0; font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.74rem;
-    font-weight: 600; color: #fff; transition: color 0.2s ease;
+    margin: 0; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.74rem;
+    font-weight: 600; color: var(--paper); transition: color 0.2s ease;
   }
   .bs-tokens-foot {
-    margin-top: 1rem; padding-top: 0.85rem; border-top: 1px dashed rgba(255, 255, 255, 0.15);
-    font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.74rem; color: rgba(255, 255, 255, 0.65); line-height: 1.5;
+    margin-top: 1rem; padding-top: 0.85rem; border-top: 1px solid rgba(245, 244, 241, 0.15);
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.74rem; color: rgba(245, 244, 241, 0.65); line-height: 1.5;
   }
   .bs-tokens-foot code {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; color: #fde68a; font-size: 0.92em;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; color: var(--paper); font-size: 0.92em;
   }
 
   /* ========== live sample card (all driven by --bs-* tokens) ========== */
@@ -252,13 +248,13 @@ const brands = [
   .bs-card-badge {
     position: absolute; top: 10px; left: 10px;
     background: rgba(255, 255, 255, 0.92); color: var(--bs-primary);
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.62rem; font-weight: 700;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.62rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.06em; padding: 3px 9px;
     border-radius: calc(var(--bs-radius) * 0.7 + 2px); transition: color 0.3s ease, border-radius 0.3s ease;
   }
   .bs-card-body { padding: 1rem 1.1rem 1.15rem; }
   .bs-card-kicker {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.64rem; font-weight: 700;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.64rem; font-weight: 700;
     text-transform: uppercase; letter-spacing: 0.1em; color: var(--bs-accent); margin: 0 0 0.25rem;
     transition: color 0.3s ease;
   }
@@ -268,7 +264,7 @@ const brands = [
   }
   .bs-card-meta {
     display: flex; flex-wrap: wrap; gap: 0.85rem; margin-bottom: 1rem;
-    font-family: var(--font-dm-sans), system-ui, sans-serif; font-size: 0.76rem; color: color-mix(in srgb, var(--bs-ink) 75%, transparent);
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.76rem; color: color-mix(in srgb, var(--bs-ink) 75%, transparent);
   }
   .bs-card-meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
   .bs-card-meta :global(svg) { color: var(--bs-accent); }
@@ -277,14 +273,14 @@ const brands = [
     flex: 1; min-width: 0;
     background: var(--bs-primary); color: #fff; border: 1.5px solid var(--bs-primary);
     border-radius: var(--bs-radius); padding: 0.5rem 0.9rem;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-weight: 600; font-size: 0.82rem;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-weight: 600; font-size: 0.82rem;
     transition: background 0.3s ease, border-radius 0.3s ease, border-color 0.3s ease;
   }
   .bs-card-btn--ghost { background: transparent; color: var(--bs-ink); border-color: color-mix(in srgb, var(--bs-ink) 25%, transparent); }
 
   .bs-caption {
     margin-top: 1.1rem; text-align: center; max-width: 34ch;
-    font-family: 'Caveat', cursive; font-size: 1.15rem; color: #6c4ab6; min-height: 1.5em;
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.9rem; color: var(--ink-muted); min-height: 1.5em;
   }
 
   @media (prefers-reduced-motion: reduce) {

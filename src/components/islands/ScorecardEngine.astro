@@ -27,14 +27,14 @@ const labels = [
 ---
 
 <div
-  class="bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 shadow-md mb-12"
+  class="bg-raised rounded-xl border border-line p-6 md:p-8 mb-12"
   data-scorecard-totals
 >
   <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
     <div>
-      <p class="font-hand text-[#C13A22] text-xl leading-none mb-1">total score so far</p>
-      <p class="font-display text-4xl md:text-5xl font-bold text-navy leading-none">
-        <span data-total-score>0</span><span class="text-charcoal/70">/{TOTAL_MAX}</span>
+      <p class="mono-label mb-1">Total score so far</p>
+      <p class="font-serif text-5xl md:text-6xl font-semibold tracking-[-0.03em] text-ink leading-[0.85]">
+        <span data-total-score>0</span><span class="text-ink-faint">/{TOTAL_MAX}</span>
       </p>
     </div>
     <div class="text-right">
@@ -111,26 +111,26 @@ const labels = [
   >
     Reset the card
   </Button>
-  <p class="font-hand text-plum text-lg">scroll for your final report &rarr;</p>
+  <p class="mono-label">Scroll for your final report &rarr;</p>
 </div>
 
 <div class="mt-14">
   <div class="reveal-card">
     <div class="relative z-10">
-      <p class="font-hand text-lemon text-2xl leading-none mb-2">teacher's report</p>
+      <p class="mono-label !text-paper/65 mb-2">Teacher's report</p>
       <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
         <span data-result-headline>Keep going — answer every question to unlock your report.</span>
       </h3>
-      <div class="flex flex-wrap items-center gap-6 mb-6">
+      <div class="flex flex-wrap items-end gap-x-10 gap-y-5 mb-7">
         <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-lemon/80 font-semibold mb-1">Final score</p>
-          <p class="font-display text-5xl md:text-6xl font-bold leading-none">
-            <span data-final-score>0</span><span class="text-white/50">/{TOTAL_MAX}</span>
-          </p>
+          <p class="mono-label !text-paper/60 mb-1">Overall grade</p>
+          <p class="sc-final-grade font-serif font-semibold leading-[0.74] tracking-[-0.04em] text-paper" data-final-grade>—</p>
         </div>
-        <div>
-          <p class="font-heading text-xs uppercase tracking-widest text-lemon/80 font-semibold mb-1">Overall grade</p>
-          <p class="font-display text-5xl md:text-6xl font-bold leading-none" data-final-grade>—</p>
+        <div class="pb-1">
+          <p class="mono-label !text-paper/60 mb-1">Final score</p>
+          <p class="font-serif text-4xl md:text-5xl font-medium leading-none text-paper">
+            <span data-final-score>0</span><span class="text-paper/45">/{TOTAL_MAX}</span>
+          </p>
         </div>
       </div>
       <p data-result-body class="text-white/80 leading-relaxed max-w-2xl font-body">
@@ -163,7 +163,7 @@ const labels = [
 <div class="score-float" aria-hidden="true">
   <div class="score-bubble" data-float-score>0</div>
   <div class="leading-tight">
-    <p class="font-hand text-plum text-lg leading-none">so far…</p>
+    <p class="mono-label">So far</p>
     <p class="font-heading text-xs text-charcoal/70 uppercase tracking-wider">
       <span data-float-answered>0</span> of {TOTAL_ITEMS} answered
     </p>
@@ -395,41 +395,33 @@ const labels = [
 <style>
   .subject-card {
     position: relative;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow:
-      0 18px 40px -22px rgba(45, 43, 85, 0.28),
-      0 0 0 1px rgba(108, 74, 182, 0.06);
-    transition:
-      transform 0.35s ease,
-      box-shadow 0.35s ease;
+    background: var(--raised);
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    transition: border-color 0.35s var(--ease-out);
   }
   .subject-card:hover {
-    transform: translateY(-3px);
-    box-shadow:
-      0 24px 50px -20px rgba(45, 43, 85, 0.35),
-      0 0 0 1px rgba(232, 87, 61, 0.18);
+    border-color: var(--line-strong);
   }
   .subject-tab {
     position: absolute;
     top: -14px;
     left: 2rem;
     padding: 0.45rem 1.1rem;
-    border-radius: 999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    border-radius: 8px;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.72rem;
     font-weight: 700;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #fff;
-    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
-    transform: rotate(-2deg);
+    background: var(--ink);
+    color: var(--paper);
   }
-  .subject-tab.coral { background: linear-gradient(135deg, #ff8e53, #e8573d); }
-  .subject-tab.plum { background: linear-gradient(135deg, #9b7ed9, #6c4ab6); }
-  .subject-tab.sage { background: linear-gradient(135deg, #a8d4a6, #7bb47a); }
-  .subject-tab.sky { background: linear-gradient(135deg, #8ccff0, #5dade2); }
-  .subject-tab.sunset { background: linear-gradient(135deg, #fdba74, #ff8e53); }
+  .subject-tab.coral,
+  .subject-tab.plum,
+  .subject-tab.sage,
+  .subject-tab.sky,
+  .subject-tab.sunset { background: var(--ink); color: var(--paper); }
 
   /* Card gives a little hop when its section earns a grade. */
   .subject-card.subject-complete { animation: sc-card-celebrate 0.7s ease-out; }
@@ -445,46 +437,44 @@ const labels = [
     align-items: center;
     gap: 1rem;
     padding: 1rem 0;
-    border-top: 1px dashed rgba(108, 74, 182, 0.18);
+    border-top: 1px solid var(--line);
   }
   .q-row:first-of-type { border-top: none; }
   .q-text {
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    color: #2e2e30;
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    color: var(--ink);
     line-height: 1.55;
   }
   .q-num {
     display: inline-block;
-    font-family: var(--font-fraunces), Georgia, serif;
-    font-style: italic;
-    color: #6C4AB6;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    color: var(--accent);
     font-weight: 600;
     margin-right: 0.4rem;
   }
   .choice-group {
     display: inline-flex;
-    background: #fffbf5;
+    background: var(--paper);
     border-radius: 9999px;
     padding: 4px;
-    border: 1.5px solid rgba(108, 74, 182, 0.18);
-    box-shadow: inset 0 2px 4px rgba(45, 43, 85, 0.05);
+    border: 1px solid var(--line);
   }
   .choice {
     position: relative;
     padding: 0.5rem 1rem;
     border-radius: 9999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.78rem;
     font-weight: 600;
-    color: #6b6b73;
+    color: var(--ink-muted);
     cursor: pointer;
     user-select: none;
-    transition: all 0.2s ease;
+    transition: all 0.2s var(--ease-out);
     border: 1.5px solid transparent;
   }
   .choice:hover {
-    color: #2d2b55;
-    background: rgba(253, 230, 138, 0.35);
+    color: var(--ink);
+    background: rgba(0, 0, 0, 0.03);
   }
   .choice input {
     position: absolute;
@@ -492,22 +482,21 @@ const labels = [
     pointer-events: none;
   }
   .choice.is-on {
-    color: #fff;
-    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3);
+    color: var(--paper);
     transform: translateY(-1px);
   }
-  .choice[data-v='0'].is-on { background: linear-gradient(135deg, #ff9f87, #e8573d); }
-  .choice[data-v='1'].is-on { background: linear-gradient(135deg, #fdba74, #ff8e53); color: #2d2b55; }
-  .choice[data-v='2'].is-on { background: linear-gradient(135deg, #a8d4a6, #7bb47a); }
+  .choice[data-v='0'].is-on,
+  .choice[data-v='1'].is-on,
+  .choice[data-v='2'].is-on { background: var(--ink); color: var(--paper); }
   .choice:focus-within {
-    outline: 2px solid #E8573D;
+    outline: 2px solid var(--accent);
     outline-offset: 3px;
   }
   /* Springy settle when an answer is chosen. Lands on the is-on resting transform. */
   .choice.choice-pop { animation: sc-choice-pop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
   @keyframes sc-choice-pop {
     0% { transform: translateY(-1px) scale(0.9); }
-    55% { transform: translateY(-2px) scale(1.09); }
+    55% { transform: translateY(-1px) scale(1.09); }
     100% { transform: translateY(-1px) scale(1); }
   }
 
@@ -516,28 +505,17 @@ const labels = [
     right: 1.25rem;
     bottom: 1.25rem;
     z-index: 45;
-    background: #fff;
-    border-radius: 18px;
+    background: var(--raised);
+    border-radius: 12px;
+    border: 1px solid var(--line);
     padding: 0.9rem 1.1rem;
-    box-shadow:
-      0 18px 40px -12px rgba(45, 43, 85, 0.35),
-      0 0 0 1px rgba(108, 74, 182, 0.08);
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    transform: rotate(-2deg);
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
   }
   .score-float::before {
-    content: '';
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%) rotate(-3deg);
-    width: 52px;
-    height: 16px;
-    background: rgba(253, 230, 138, 0.9);
-    box-shadow: 0 2px 6px -2px rgba(0, 0, 0, 0.18);
+    content: none;
   }
   .score-bubble {
     width: 52px;
@@ -546,14 +524,11 @@ const labels = [
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-fraunces), Georgia, serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 800;
     font-size: 1.1rem;
-    color: #fff;
-    background: radial-gradient(circle at 30% 25%, #ff8e53, #e8573d 55%, #9a2f1a);
-    box-shadow:
-      inset -3px -3px 5px rgba(0, 0, 0, 0.2),
-      inset 2px 2px 4px rgba(255, 255, 255, 0.3);
+    background: var(--ink);
+    color: var(--paper);
   }
   .score-bubble.score-pop { animation: sc-bubble-pop 0.38s cubic-bezier(0.34, 1.56, 0.64, 1); }
   @keyframes sc-bubble-pop {
@@ -581,7 +556,7 @@ const labels = [
     background: linear-gradient(
       115deg,
       transparent 30%,
-      rgba(253, 230, 138, 0.32) 50%,
+      rgba(245, 244, 241, 0.18) 50%,
       transparent 70%
     );
     transform: translateX(-110%);
@@ -589,14 +564,17 @@ const labels = [
   }
   @keyframes sc-sheen { to { transform: translateX(110%); } }
 
+  .sc-final-grade {
+    font-size: clamp(4.5rem, 13vw, 7rem);
+  }
   [data-final-grade].grade-pop {
     display: inline-block;
     animation: sc-grade-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
   }
   @keyframes sc-grade-pop {
-    0% { transform: scale(0.4) rotate(-14deg); opacity: 0; }
-    60% { transform: scale(1.14) rotate(5deg); opacity: 1; }
-    100% { transform: scale(1) rotate(0); opacity: 1; }
+    0% { transform: scale(0.4); opacity: 0; }
+    60% { transform: scale(1.14); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
   }
 
   [data-result-actions].actions-in > * {

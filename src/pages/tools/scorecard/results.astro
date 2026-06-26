@@ -4,9 +4,7 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
-import Blob from '~/components/decorative/Blob.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
 
 const description =
@@ -37,214 +35,225 @@ const description =
     <meta name="twitter:image" content="/images/og-image.png" />
   </Fragment>
 
+  {/* ───────────────────────── HERO (paper, slim intro) ───────────────────────── */}
+  <Section tone="paper" padding="tight" class="pt-12 md:pt-16">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Tools / Self-assessment</span>
+        <span class="hidden sm:inline text-ink-muted">Results 01</span>
+      </div>
 
-  <Section padding="default" decorated>
-    <Blob tone="lemon" size="lg" class="absolute top-12 right-[8%]" animate="float" opacity="opacity-70" />
-    <Blob tone="sage" size="sm" class="absolute top-32 left-[5%] rounded-full" animate="float-delay" opacity="opacity-40" />
-
-    <Container class="relative z-10">
-      <div class="text-center max-w-2xl mx-auto">
-        <div class="mb-5 inline-block">
-          <Badge tone="peach" icon="ph:graduation-cap-duotone">Your Results</Badge>
-        </div>
-        <Heading level={1} visual="display-xl" balance class="mb-4">
-          Your report card
-          <span class="font-hand text-coral text-3xl md:text-4xl block mt-2 rotate-[-2deg]">
-            &hellip;is in.
-          </span>
+      <div class="mt-10 max-w-3xl lg:mt-12">
+        <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+          Your <em class="ink-wink font-normal italic">report card</em> is in.
         </Heading>
-        <Text size="lg" tone="muted" align="center" class="max-w-xl mx-auto">
-          Here&rsquo;s how your design system scored across all five dimensions, plus a personalized recommendation.
+        <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+          Here is how your design system scored across all five dimensions, plus a personalized
+          recommendation for where to start.
         </Text>
+
+        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+          {['Saved in the URL', 'No account', 'Retake anytime'].map((p) => (
+            <li class="flex items-center gap-2">
+              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+            </li>
+          ))}
+        </ul>
       </div>
     </Container>
   </Section>
 
-  <div class="squiggle-divider max-w-5xl mx-auto mb-10"></div>
+  {/* ───────────────────────── VERDICT (ink, the billboard grade) ───────────── */}
+  <Section tone="ink" padding="default" class="verdict-section">
+    <Container width="wide">
+      <div id="verdictBand"></div>
+    </Container>
+  </Section>
 
-
-  <section class="pb-24">
-    <div class="max-w-6xl mx-auto px-6">
-      <div class="grid lg:grid-cols-[1fr_360px] gap-8 items-start">
-
-        <div class="space-y-10 order-2 lg:order-1">
-
-          <div class="report-paper rotate-[-0.5deg]">
-            <span class="tape tl" aria-hidden="true"></span>
-            <span class="tape tr" aria-hidden="true"></span>
-            <div class="pl-14">
-              <p class="font-hand text-plum text-xl leading-none mb-1">
-                performance overview
-              </p>
-              <h2 class="font-display text-2xl font-bold text-navy leading-tight mb-4">
-                Radar Chart
-              </h2>
-            </div>
-            <div id="radarChartContainer" aria-hidden="true"></div>
-          </div>
-
-
-          <div id="recommendationContainer"></div>
-        </div>
-
-
-        <div class="order-1 lg:order-2 lg:sticky lg:top-24">
-          <div id="scorePanel" class="subject-card p-7 md:p-8">
-
-          </div>
-        </div>
+  {/* ───────────────────────── BREAKDOWN (paper) ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-2xl">
+        <p class="mono-label">Performance overview</p>
+        <Heading level={2} visual="display-md" class="mt-4">How you scored, by dimension.</Heading>
       </div>
-    </div>
-  </section>
 
+      <div class="mt-12 grid items-center gap-10 lg:mt-14 lg:grid-cols-2 lg:gap-16">
+        <div class="report-paper" id="radarCard">
+          <div id="radarChartContainer" aria-hidden="true"></div>
+        </div>
+        <div id="breakdownPanel"></div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── RECOMMENDATION (ink card on paper) ───────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div id="recommendationContainer"></div>
+    </Container>
+  </Section>
 
   <CTABanner
-    title="The results are the URL."
-    lead="No database, no account, no cookie — a few characters carry the whole report. It’s the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?"
+    eyebrow="The results are the URL"
+    title="The whole report is in the address bar."
+    lead="No database, no account, no cookie — a few characters carry the entire result. It is the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?"
   >
-    <Button variant="navy" iconLeft="ph:envelope-duotone" href="/contact/">
+    <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/" class="js-magnetic">
       Get in touch
     </Button>
-    <Button variant="primary" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
+    <Button variant="ghost" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
       Connect on LinkedIn
     </Button>
   </CTABanner>
 </BaseLayout>
 
 <style is:global>
-  .subject-card {
-    position: relative;
-    background: #fff;
-    border-radius: 14px;
-    box-shadow:
-      0 18px 40px -22px rgba(45, 43, 85, 0.28),
-      0 0 0 1px rgba(108, 74, 182, 0.06);
+  /* ═══ VERDICT BAND — the billboard grade reveal ════════════════════════ */
+  .verdict-grid {
+    display: grid;
+    gap: 2.5rem;
+    align-items: center;
   }
-  .subject-tab {
-    position: absolute;
-    top: -14px;
-    left: 2rem;
-    padding: 0.45rem 1.1rem;
+  @media (min-width: 768px) {
+    .verdict-grid {
+      grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+      gap: clamp(2.5rem, 6vw, 5.5rem);
+    }
+  }
+
+  .verdict-grade {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 600;
+    line-height: 0.74;
+    letter-spacing: -0.045em;
+    font-size: clamp(7rem, 27vw, 15.5rem);
+    color: var(--paper);
+  }
+  .verdict-grade[data-status='investment'] { color: var(--accent); }
+  .verdict-grade .g {
+    display: inline-block;
+    opacity: 0;
+    transform: scale(0.72) translateY(0.1em);
+    filter: blur(10px);
+    transition:
+      opacity 0.8s var(--ease-out),
+      transform 1s var(--ease-out),
+      filter 0.8s var(--ease-out);
+  }
+  .verdict-grid.is-in .verdict-grade .g { opacity: 1; transform: none; filter: blur(0); }
+
+  .verdict-score {
+    font-family: var(--font-fraunces), Georgia, serif;
+    font-weight: 500;
+    font-size: clamp(2.2rem, 5vw, 3.25rem);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: var(--paper);
+  }
+  .verdict-score .slash { color: rgba(245, 244, 241, 0.45); }
+
+  .verdict-meter {
+    height: 6px;
     border-radius: 999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: #fff;
-    box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.35);
-    transform: rotate(-2deg);
+    background: rgba(245, 244, 241, 0.14);
+    overflow: hidden;
   }
-  .subject-tab.coral {
-    background: linear-gradient(135deg, #ff8e53, #e8573d);
+  .verdict-meter i {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: 999px;
+    background: var(--paper);
+    transition: width 1s var(--ease-out) 0.25s;
   }
-  .subject-tab.plum {
-    background: linear-gradient(135deg, #9b7ed9, #6c4ab6);
+  .verdict-grid.is-in .verdict-meter i { width: var(--w, 0%); }
+
+  /* status pill — ink-surface variant (paper text) */
+  .verdict-details .status-pill { color: rgba(245, 244, 241, 0.7); }
+  .verdict-details .status-pill::before { background: rgba(245, 244, 241, 0.5); }
+  .verdict-details .status-pill.critical { color: var(--accent); }
+  .verdict-details .status-pill.critical::before { background: var(--accent); }
+
+  /* ═══ BREAKDOWN — staggered dimension rows + bars ══════════════════════ */
+  #breakdownPanel .bd-row {
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.6s var(--ease-out) var(--d, 0s),
+      transform 0.6s var(--ease-out) var(--d, 0s);
   }
-  .subject-tab.sage {
-    background: linear-gradient(135deg, #a8d4a6, #7bb47a);
+  #breakdownPanel.is-in .bd-row { opacity: 1; transform: none; }
+  #breakdownPanel .mini-bar-fill {
+    width: 0;
+    transition: width 0.85s var(--ease-out) var(--d, 0s);
   }
-  .subject-tab.sky {
-    background: linear-gradient(135deg, #8ccff0, #5dade2);
+  #breakdownPanel.is-in .mini-bar-fill { width: var(--w, 0%); }
+
+  /* ═══ RADAR draw-in (scales up from centre) ════════════════════════════ */
+  #radarChartContainer .radar-data {
+    opacity: 0;
+    transform: scale(0.55);
+    transform-origin: 230px 170px;
+    transition:
+      opacity 0.7s var(--ease-out) 0.1s,
+      transform 0.95s var(--ease-out) 0.1s;
   }
-  .subject-tab.sunset {
-    background: linear-gradient(135deg, #fdba74, #ff8e53);
-  }
+  #radarCard.is-in #radarChartContainer .radar-data { opacity: 1; transform: none; }
+
+  /* ── Mini score bars — flat ink fill on a line track, no knob, no stripes ── */
   .mini-bar-track {
     position: relative;
-    height: 10px;
-    background-color: #fef3c7;
-    background-image: repeating-linear-gradient(
-      90deg,
-      transparent 0,
-      transparent calc(25% - 1px),
-      rgba(108, 74, 182, 0.22) calc(25% - 1px),
-      rgba(108, 74, 182, 0.22) 25%
-    );
+    height: 6px;
+    background-color: var(--line);
     border-radius: 999px;
-    border: 1px solid rgba(108, 74, 182, 0.2);
-    overflow: visible;
-    box-shadow: inset 0 1px 2px rgba(45, 43, 85, 0.08);
+    overflow: hidden;
   }
   .mini-bar-fill {
     position: relative;
     height: 100%;
     border-radius: 999px;
+    background: var(--ink);
     transition: width 0.6s cubic-bezier(0.22, 1, 0.36, 1);
-    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  }
-  .mini-bar-fill::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    right: -3px;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    transform: translateY(-50%);
-    box-shadow:
-      0 1px 2px rgba(45, 43, 85, 0.25),
-      inset 0 1px 0 rgba(255, 255, 255, 0.35);
-  }
-  .mini-bar-fill.sage {
-    background:
-      repeating-linear-gradient(-38deg, rgba(255, 255, 255, 0.22) 0 4px, transparent 4px 9px),
-      linear-gradient(90deg, #a8d4a6, #7bb47a);
-  }
-  .mini-bar-fill.sage::after {
-    background: #6ea66d;
-  }
-  .mini-bar-fill.sunset {
-    background:
-      repeating-linear-gradient(-38deg, rgba(255, 255, 255, 0.24) 0 4px, transparent 4px 9px),
-      linear-gradient(90deg, #fdba74, #ff8e53);
-  }
-  .mini-bar-fill.sunset::after {
-    background: #ea7a3f;
-  }
-  .mini-bar-fill.coral {
-    background:
-      repeating-linear-gradient(-38deg, rgba(255, 255, 255, 0.24) 0 4px, transparent 4px 9px),
-      linear-gradient(90deg, #ff9f87, #e8573d);
-  }
-  .mini-bar-fill.coral::after {
-    background: #d0422a;
   }
   .mini-bar-fill.neutral {
-    background: #d1d5db;
+    background: var(--ink-faint);
   }
-  .mini-bar-fill.neutral::after {
-    display: none;
-  }
-  .mini-bar-fill[style*='width: 0%']::after,
-  .mini-bar-fill[style*='width:0%']::after {
-    display: none;
-  }
+
+  /* ── Status label — monospace, ink text + a small accent tick ── */
   .status-pill {
     display: inline-flex;
     align-items: center;
-    padding: 2px 10px;
-    border-radius: 9999px;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: 0.72rem;
-    font-weight: 600;
-    border: 1.5px dashed;
+    gap: 0.4rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--ink-muted);
   }
-  .status-pill.sage {
-    background: rgba(123, 180, 122, 0.1);
-    color: #5a9a59;
-    border-color: rgba(123, 180, 122, 0.4);
+  .status-pill::before {
+    content: '';
+    width: 5px;
+    height: 5px;
+    border-radius: 1px;
+    flex-shrink: 0;
+    background: var(--ink-faint);
   }
-  .status-pill.sunset {
-    background: rgba(255, 142, 83, 0.1);
-    color: #c96a2e;
-    border-color: rgba(255, 142, 83, 0.4);
+  .status-pill.strong::before {
+    background: var(--ink);
   }
-  .status-pill.coral {
-    background: rgba(232, 87, 61, 0.1);
-    color: #c9402a;
-    border-color: rgba(232, 87, 61, 0.4);
+  .status-pill.attention::before {
+    background: var(--ink-muted);
   }
+  .status-pill.critical::before {
+    background: var(--accent);
+  }
+  .status-pill.critical {
+    color: var(--accent);
+  }
+
+  /* ── Recommendation section list (inside ink reveal-card) ── */
   .rec-section-list {
     display: flex;
     flex-direction: column;
@@ -253,195 +262,113 @@ const description =
   .rec-section-item {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    font-size: 0.88rem;
+    gap: 0.6rem;
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.9rem;
   }
+
+  /* ── "Where to focus" heading inside the ink card ── */
   .focus-heading {
-    position: relative;
-    display: inline-flex;
-    align-items: baseline;
-    gap: 0.4rem;
-    margin-bottom: 1.1rem;
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 1.85rem;
-    line-height: 1;
-    color: #fde68a;
-    transform: rotate(-2deg);
+    display: block;
+    margin-bottom: 1rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: rgba(245, 244, 241, 0.65);
   }
-  .focus-heading::after {
-    content: '';
-    display: inline-block;
-    width: 62px;
-    height: 14px;
-    margin-left: 0.35rem;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 62 14' fill='none'%3E%3Cpath d='M2 7 Q 16 2 32 7 T 56 7' stroke='%23fde68a' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3Cpath d='M56 7 l-6 -4 M56 7 l-5 5' stroke='%23fde68a' stroke-width='2' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");
-    background-repeat: no-repeat;
-    background-position: center;
-    transform: translateY(2px) rotate(12deg);
-  }
+
+  /* ── Focus list — clean hairline cards with mono index numerals ── */
   .focus-list {
     display: flex;
     flex-direction: column;
-    gap: 1.6rem;
-    padding-top: 0.5rem;
   }
   .focus-item {
     position: relative;
-    padding: 1.3rem 1.25rem 1.1rem;
-    border-radius: 4px 16px 6px 14px;
-    background: #fffaf0;
-    color: #2d2b55;
-    box-shadow:
-      0 22px 38px -22px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(108, 74, 182, 0.08);
-    transform: rotate(-0.9deg);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    padding: 1.25rem 0;
+    border-top: 1px solid rgba(245, 244, 241, 0.15);
   }
-  .focus-item:nth-child(2) {
-    background: #fef3c7;
-    transform: rotate(0.8deg);
-    border-radius: 14px 4px 16px 6px;
-  }
-  .focus-item:nth-child(3) {
-    background: #ffe4d6;
-    transform: rotate(-1.3deg);
-    border-radius: 10px 14px 4px 18px;
-  }
-  .focus-item:hover {
-    transform: rotate(0deg) translateY(-2px);
-    box-shadow:
-      0 28px 44px -20px rgba(0, 0, 0, 0.55),
-      0 0 0 1px rgba(108, 74, 182, 0.12);
-  }
-  .focus-item::before {
-    content: '';
-    position: absolute;
-    top: -9px;
-    left: 50%;
-    width: 78px;
-    height: 18px;
-    background: rgba(125, 211, 252, 0.8);
-    box-shadow: 0 4px 8px -4px rgba(0, 0, 0, 0.25);
-    transform: translateX(-50%) rotate(-3deg);
-  }
-  .focus-item:nth-child(2)::before {
-    background: rgba(253, 230, 138, 0.9);
-    transform: translateX(-50%) rotate(4deg);
-  }
-  .focus-item:nth-child(3)::before {
-    background: rgba(255, 158, 128, 0.8);
-    transform: translateX(-50%) rotate(-5deg);
+  .focus-item:first-child {
+    border-top: none;
+    padding-top: 0;
   }
   .focus-priority {
-    position: absolute;
-    top: -18px;
-    left: -14px;
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: var(--font-fraunces), Georgia, serif;
-    font-weight: 900;
-    font-size: 1.3rem;
-    color: #fff;
-    border: 2px dashed rgba(255, 255, 255, 0.55);
-    box-shadow:
-      0 8px 16px -6px rgba(0, 0, 0, 0.45),
-      inset -2px -2px 5px rgba(0, 0, 0, 0.25),
-      inset 2px 2px 4px rgba(255, 255, 255, 0.3);
-    transform: rotate(-10deg);
-  }
-  .focus-priority.coral {
-    background: radial-gradient(circle at 30% 25%, #ff9f87, #e8573d 55%, #8b2a1a);
-  }
-  .focus-priority.sunset {
-    background: radial-gradient(circle at 30% 25%, #fdba74, #ff8e53 55%, #b7501f);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(245, 244, 241, 0.6);
+    letter-spacing: 0.04em;
   }
   .focus-item-head {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding-left: 2.4rem;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    align-items: baseline;
+    gap: 0.6rem;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 1rem;
-    font-weight: 700;
-    color: #2d2b55;
+    font-weight: 600;
+    color: var(--paper);
     letter-spacing: -0.005em;
   }
   .focus-item-score {
     margin-left: auto;
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: 0.78rem;
-    font-weight: 600;
-    color: rgba(45, 43, 85, 0.55);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: rgba(245, 244, 241, 0.55);
     white-space: nowrap;
   }
   .focus-item-score strong {
-    color: #2d2b55;
+    color: var(--paper);
+    font-weight: 600;
   }
   .focus-item-benefit {
-    margin-top: 0.7rem;
-    padding-left: 2.4rem;
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
+    margin-top: 0.65rem;
+    padding-left: 1.65rem;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-size: 0.9rem;
-    line-height: 1.55;
-    color: rgba(45, 43, 85, 0.78);
+    line-height: 1.6;
+    color: rgba(245, 244, 241, 0.75);
   }
   .focus-item-consequence {
     position: relative;
-    margin: 0.9rem 0 0 2.4rem;
-    padding: 0.55rem 0.8rem 0.55rem 0.9rem;
-    border-left: 2.5px solid #e8573d;
-    border-radius: 0 10px 10px 0;
-    background: rgba(232, 87, 61, 0.1);
-    font-family: 'Caveat', cursive;
-    font-size: 1.12rem;
-    line-height: 1.35;
-    color: #8b2a1a;
-    transform: rotate(-0.3deg);
+    margin: 0.85rem 0 0 1.65rem;
+    padding: 0.6rem 0.9rem;
+    border-left: 2px solid var(--accent);
+    border-radius: 0 6px 6px 0;
+    background: rgb(var(--accent-rgb) / 0.12);
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    color: rgba(245, 244, 241, 0.82);
   }
   .focus-item-consequence-label {
-    font-family: 'Caveat', cursive;
-    font-weight: 700;
-    font-size: 1.18rem;
-    color: #c9402a;
-    margin-right: 0.15rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: var(--paper);
+    margin-right: 0.35rem;
   }
   @media (max-width: 640px) {
-    .focus-priority {
-      width: 40px;
-      height: 40px;
-      font-size: 1.15rem;
-      top: -14px;
-      left: -10px;
-    }
-    .focus-item-head,
-    .focus-item-benefit {
-      padding-left: 2rem;
+    .focus-item-benefit,
+    .focus-item-consequence {
+      padding-left: 0;
+      margin-left: 0;
     }
     .focus-item-consequence {
-      margin-left: 2rem;
+      padding-left: 0.9rem;
     }
   }
+
+  /* ── Secondary recommendation block (inside ink card) ── */
   .secondary-rec {
     margin-top: 1.5rem;
     padding: 1.25rem;
-    border-radius: 12px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-  }
-  @media (max-width: 640px) {
-    .grade-stamp {
-      width: 56px;
-      height: 56px;
-      font-size: 1.35rem;
-      top: 0.9rem;
-      right: 0.9rem;
-    }
+    border-radius: 8px;
+    background: rgba(245, 244, 241, 0.06);
+    border: 1px solid rgba(245, 244, 241, 0.15);
   }
 </style>
 
@@ -514,9 +441,9 @@ const description =
   };
 
   const STATUS_COLORS: Record<TotalStatus, string> = {
-    healthy: '#7bb47a',
-    functional: '#ff8e53',
-    investment: '#e8573d',
+    healthy: '#1B1A17',
+    functional: '#1B1A17',
+    investment: '#A8412A',
   };
 
   function sectionPercent(section: ScorecardSection, ratings: Ratings): number {
@@ -681,6 +608,19 @@ const description =
     const recommendation = buildRecommendation(ratings);
     const chartSections = getChartSections(ratings);
 
+    // ─── Canonical button language (mirrors Button.astro so the JS-rendered
+    //     actions match every other button on the site exactly). ──────────────
+    const BTN_BASE =
+      'group/btn inline-flex items-center justify-center gap-2 rounded-[5px] font-sans font-medium tracking-tight transition-[background-color,border-color,color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px active:scale-[0.97] active:translate-y-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent';
+    const BTN_LG = 'px-6 py-3 text-[0.95rem]';
+    const BTN_MD = 'px-5 py-2.5 text-[0.9rem]';
+    // Light surfaces (score panel):
+    const BTN_PRIMARY = 'bg-ink text-paper hover:bg-ink-soft';
+    const BTN_GHOST = 'bg-transparent text-ink border border-line-strong hover:border-ink/40 hover:bg-ink/[0.03]';
+    // Ink surfaces (recommendation reveal-card):
+    const BTN_NAVY = 'bg-paper text-ink hover:bg-white';
+    const BTN_SECONDARY = 'bg-transparent text-paper border border-paper/25 hover:bg-paper/10';
+
     // ─── Radar chart ─────────────────────────────────────────────────────────
     function renderRadarChart(
       container: HTMLElement,
@@ -706,7 +646,7 @@ const description =
         }).join(' ');
       }
 
-      const statusColor = STATUS_COLORS[statusKey] || '#6c4ab6';
+      const statusColor = STATUS_COLORS[statusKey] || '#1B1A17';
 
       const dataPoints = sections.map((s, i) => pt((s.max > 0 ? s.score / s.max : 0) * R, i));
       const dataPolygon = dataPoints.map((p) => `${p.x},${p.y}`).join(' ');
@@ -714,19 +654,21 @@ const description =
       let svg = `<svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" preserveAspectRatio="xMidYMid meet" aria-hidden="true">`;
 
       for (const level of GRID) {
-        svg += `<polygon points="${polygonPoints(R * level)}" fill="none" stroke="rgba(108,74,182,0.15)" stroke-width="1"/>`;
+        svg += `<polygon points="${polygonPoints(R * level)}" fill="none" stroke="rgba(27,26,23,0.12)" stroke-width="1"/>`;
       }
 
       for (let i = 0; i < n; i++) {
         const p = pt(R, i);
-        svg += `<line x1="${CX}" y1="${CY}" x2="${p.x}" y2="${p.y}" stroke="rgba(108,74,182,0.15)" stroke-width="1"/>`;
+        svg += `<line x1="${CX}" y1="${CY}" x2="${p.x}" y2="${p.y}" stroke="rgba(27,26,23,0.12)" stroke-width="1"/>`;
       }
 
+      svg += `<g class="radar-data">`;
       svg += `<polygon points="${dataPolygon}" fill="${statusColor}" fill-opacity="0.15" stroke="${statusColor}" stroke-width="2.5" stroke-linejoin="round"/>`;
 
       for (const p of dataPoints) {
-        svg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${statusColor}" stroke="#fff" stroke-width="2"/>`;
+        svg += `<circle cx="${p.x}" cy="${p.y}" r="5" fill="${statusColor}" stroke="#FFFFFF" stroke-width="2"/>`;
       }
+      svg += `</g>`;
 
       for (let i = 0; i < n; i++) {
         const p = pt(LABEL_R, i);
@@ -735,109 +677,51 @@ const description =
         const anchor = cosA > 0.2 ? 'start' : cosA < -0.2 ? 'end' : 'middle';
         const baseline = sinA > 0.2 ? 'hanging' : sinA < -0.2 ? 'auto' : 'middle';
         const label = SHORT_LABELS[sections[i].title] || sections[i].title;
-        svg += `<text x="${p.x}" y="${p.y}" text-anchor="${anchor}" dominant-baseline="${baseline}" fill="#2d2b55" style="font-size:13px;font-weight:600;font-family:'Space Grotesk',sans-serif">${label}</text>`;
+        svg += `<text x="${p.x}" y="${p.y}" text-anchor="${anchor}" dominant-baseline="${baseline}" fill="#1B1A17" style="font-size:13px;font-weight:600;font-family:'Hanken Grotesk',sans-serif">${label}</text>`;
       }
 
       svg += '</svg>';
       container.innerHTML = svg;
     }
 
-    // ─── Score panel ──────────────────────────────────────────────────────────
-    function renderScorePanel(container: HTMLElement) {
-      const statusColorClass = ({ healthy: 'sage', functional: 'sunset', investment: 'coral' } as const)[status];
+    // ─── Verdict band (ink) — the billboard grade reveal ──────────────────────
+    function renderVerdict(container: HTMLElement) {
+      const statusClass = ({ healthy: 'strong', functional: 'attention', investment: 'critical' } as const)[status];
 
-      let html = `
-        <div class="relative">
-          <div class="grade-stamp" data-grade="${grade}">${grade}</div>
-          <p class="font-hand text-[#C13A22] text-xl leading-none mb-1">final grade</p>
-          <p class="font-display text-5xl font-bold text-navy leading-none mb-1">
-            ${score}<span class="text-charcoal/70">/${TOTAL_MAX}</span>
-          </p>
-          <span class="sr-only">Total score: ${score} out of ${TOTAL_MAX}</span>
-          <div class="mt-3 mb-5">
-            <span class="status-pill ${statusColorClass}">
-              ${TOTAL_STATUS_LABEL[status]}
-            </span>
+      const startHere = status !== 'healthy'
+        ? `<strong class="text-paper font-semibold">Start here.</strong> Your lowest-scoring area is your highest-impact fix — in your case, <strong class="text-accent font-semibold">${weakest.title}</strong>. That&rsquo;s where you&rsquo;ll see the fastest improvement.`
+        : `<strong class="text-paper font-semibold">Excellent work.</strong> Your system is performing well across every dimension. The job now is keeping it that way.`;
+
+      container.innerHTML = `
+        <div class="verdict-grid">
+          <div class="verdict-glyph">
+            <p class="mono-label !text-paper/60">Final grade</p>
+            <div class="verdict-grade mt-3" data-status="${status}" aria-hidden="true"><span class="g">${grade}</span></div>
+            <span class="sr-only">Grade ${grade}. Total score ${score} out of ${TOTAL_MAX}.</span>
           </div>
-        </div>
 
+          <div class="verdict-details">
+            <p class="mono-label !text-paper/60">Total score</p>
+            <p class="verdict-score mt-2"><span data-countup>${score}</span><span class="slash">/${TOTAL_MAX}</span></p>
+            <div class="mt-4"><span class="status-pill ${statusClass}">${TOTAL_STATUS_LABEL[status]}</span></div>
 
-        <div class="meter-track mb-6">
-          <div class="meter-fill" style="width:${pct}%"></div>
-        </div>
+            <div class="verdict-meter mt-7 max-w-md" style="--w:${pct}%" aria-hidden="true"><i></i></div>
 
+            <p class="mt-7 max-w-md text-[0.95rem] leading-relaxed text-paper/75">${startHere}</p>
 
-        <ul class="space-y-4 mb-6">
-      `;
-
-      for (let i = 0; i < SECTIONS.length; i++) {
-        const s = SECTIONS[i];
-        const sc = sectionScore(s, ratings);
-        const sp = sectionPercent(s, ratings);
-        const ss = sectionStatus(s, ratings);
-        const barColor = ss === 'strong' ? 'sage' : ss === 'needs-attention' ? 'sunset' : ss === 'critical' ? 'coral' : 'neutral';
-
-        html += `
-          <li>
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-heading text-sm font-semibold text-navy">${s.title}</span>
-              <div class="flex items-center gap-2">
-                <span class="font-heading text-sm tabular-nums text-charcoal/70">
-                  <span class="sr-only">Score: </span>
-                  <strong class="text-navy">${sc}</strong>/${s.max}
-                </span>
-                ${ss ? `<span class="status-pill ${barColor}">${STATUS_LABEL[ss]}</span>` : ''}
-              </div>
+            <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+              <button type="button" id="shareBtn" class="${BTN_BASE} ${BTN_LG} ${BTN_NAVY} cursor-pointer">
+                <iconify-icon icon="ph:link-duotone" width="18"></iconify-icon>
+                <span id="shareBtnText">Share these results</span>
+              </button>
+              <a href="/tools/scorecard/?r=${raw}" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
+                <iconify-icon icon="ph:arrow-counter-clockwise-duotone" width="18"></iconify-icon>
+                Retake scorecard
+              </a>
             </div>
-            <div class="mini-bar-track">
-              <div class="mini-bar-fill ${barColor}" style="width:${sp}%"></div>
-            </div>
-          </li>
-        `;
-      }
-
-      html += '</ul>';
-
-      if (status !== 'healthy') {
-        html += `
-          <div class="border-t-2 border-dashed border-plum/20 pt-4 mb-5">
-            <p class="text-sm text-charcoal/80 leading-relaxed">
-              <strong class="text-navy">Start here.</strong> Your lowest-scoring area is your highest-impact fix. In your case, that&rsquo;s
-              <strong class="text-coral">${weakest.title}</strong>. That&rsquo;s where you&rsquo;ll see the fastest improvement.
-            </p>
           </div>
-        `;
-      } else {
-        html += `
-          <div class="border-t-2 border-dashed border-plum/20 pt-4 mb-5">
-            <p class="text-sm text-charcoal/80 leading-relaxed">
-              <strong class="text-navy">Excellent work.</strong> Your design system is performing well across every dimension. Keep it up.
-            </p>
-          </div>
-        `;
-      }
-
-      html += `
-        <div class="flex flex-col gap-3">
-          <button
-            type="button"
-            id="shareBtn"
-            class="inline-flex items-center justify-center gap-2 bg-white border border-charcoal/15 text-navy px-5 py-3 rounded-full hover:border-coral/40 transition-colors font-heading font-semibold text-sm cursor-pointer"
-          >
-            <iconify-icon icon="ph:link-duotone" width="18"></iconify-icon>
-            <span id="shareBtnText">Share these results</span>
-          </button>
-          <a
-            href="/tools/scorecard/?r=${raw}"
-            class="inline-flex items-center justify-center gap-2 bg-white border border-charcoal/15 text-navy px-5 py-3 rounded-full hover:border-coral/40 transition-colors font-heading font-semibold text-sm"
-          >
-            <iconify-icon icon="ph:arrow-counter-clockwise-duotone" width="18"></iconify-icon>
-            Retake scorecard
-          </a>
         </div>
       `;
-
-      container.innerHTML = html;
 
       const shareBtn = document.getElementById('shareBtn')!;
       const shareBtnText = document.getElementById('shareBtnText')!;
@@ -864,6 +748,39 @@ const description =
       });
     }
 
+    // ─── Breakdown (paper) — per-dimension rows + staggered bars ───────────────
+    function renderBreakdown(container: HTMLElement) {
+      let html = '<div class="space-y-5">';
+      for (let i = 0; i < SECTIONS.length; i++) {
+        const s = SECTIONS[i];
+        const sc = sectionScore(s, ratings);
+        const sp = sectionPercent(s, ratings);
+        const ss = sectionStatus(s, ratings);
+        const barColor = ss ? 'ink' : 'neutral';
+        const pillClass = ss === 'strong' ? 'strong' : ss === 'needs-attention' ? 'attention' : ss === 'critical' ? 'critical' : '';
+
+        html += `
+          <div class="bd-row" style="--d:${(i * 0.08).toFixed(2)}s">
+            <div class="flex items-center justify-between mb-1.5">
+              <span class="font-display text-sm font-semibold tracking-tight text-ink">${s.title}</span>
+              <div class="flex items-center gap-3">
+                <span class="font-mono text-xs tabular-nums text-ink-muted">
+                  <span class="sr-only">Score: </span>
+                  <strong class="text-ink font-semibold">${sc}</strong>/${s.max}
+                </span>
+                ${ss ? `<span class="status-pill ${pillClass}">${STATUS_LABEL[ss]}</span>` : ''}
+              </div>
+            </div>
+            <div class="mini-bar-track">
+              <div class="mini-bar-fill ${barColor}" style="--w:${sp}%; --d:${(i * 0.08 + 0.1).toFixed(2)}s"></div>
+            </div>
+          </div>
+        `;
+      }
+      html += '</div>';
+      container.innerHTML = html;
+    }
+
     // ─── Recommendation ───────────────────────────────────────────────────────
     function renderRecommendation(container: HTMLElement) {
       if (!recommendation) return;
@@ -872,23 +789,21 @@ const description =
 
       if (recommendation.type === 'healthy') {
         html += `
-          <p class="font-hand text-lemon text-2xl leading-none mb-2">teacher&rsquo;s notes</p>
-          <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
-            Gold stars all around.
+          <p class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-paper/65 mb-3">The verdict</p>
+          <h3 class="font-display text-3xl md:text-4xl font-semibold tracking-tight mb-4 leading-tight">
+            A system doing its job.
           </h3>
-          <p class="text-white/80 leading-relaxed max-w-2xl font-body mb-8">
+          <p class="text-paper/75 leading-relaxed max-w-2xl mb-8">
             Your system is doing its job: accessibility is architecture, tokens are trusted, and documentation travels with the work.
             The next wins are small polishes &mdash; maybe formalizing deprecation paths or tightening the handoff ceremony.
             Mostly: don&rsquo;t let this slip.
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
-            <a href="/contact/"
-              class="inline-flex items-center justify-center gap-2 bg-plum text-white px-6 py-3.5 rounded-full hover:bg-plum/90 hover:shadow-lg hover:shadow-plum/30 transition-all font-heading font-semibold text-sm">
+            <a href="/contact/" class="${BTN_BASE} ${BTN_LG} ${BTN_NAVY}">
               <iconify-icon icon="ph:envelope-duotone" width="18"></iconify-icon>
               Talk through your results
             </a>
-            <a href="/services"
-              class="inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/25 px-6 py-3.5 rounded-full hover:bg-white/15 transition-colors font-heading font-semibold text-sm">
+            <a href="/services" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
               <iconify-icon icon="ph:toolbox-duotone" width="18"></iconify-icon>
               See how I help
             </a>
@@ -899,37 +814,33 @@ const description =
         html += `
           <div class="flex items-start justify-between gap-4 mb-4">
             <div>
-              <span class="sticker bg-coral/20 text-coral border-coral/50 mb-3" style="transform:rotate(-2deg)">
-                <iconify-icon icon="ph:star-duotone" width="14" class="mr-1"></iconify-icon>
-                Recommended
-              </span>
-              <h3 class="font-display text-2xl md:text-3xl font-bold leading-tight mt-3">
+              <p class="mono-label !text-paper/65 mb-3">Recommended</p>
+              <h3 class="font-display text-2xl md:text-3xl font-semibold tracking-tight leading-tight">
                 ${rec.label}
               </h3>
             </div>
-            <div class="shrink-0 w-16 h-16 rounded-full flex items-center justify-center font-display font-bold text-lg text-white"
-              style="background:radial-gradient(circle at 30% 25%,#9b7ed9,#6c4ab6 55%,#3a2478);box-shadow:0 8px 20px -8px rgba(108,74,182,0.5),inset -3px -3px 6px rgba(0,0,0,0.25),inset 3px 3px 5px rgba(255,255,255,0.25);border:2px dashed rgba(255,255,255,0.35);transform:rotate(-6deg)">
+            <div class="shrink-0 rounded-md border border-paper/25 px-4 py-2 font-mono text-base font-medium text-paper">
               ${rec.price}
             </div>
           </div>
-          <p class="font-hand text-lemon text-lg leading-snug mb-3">${rec.tagline}</p>
-          <p class="text-white/80 leading-relaxed font-body mb-6">${rec.why}</p>
+          <p class="text-paper text-lg leading-snug mb-3">${rec.tagline}</p>
+          <p class="text-paper/75 leading-relaxed mb-7">${rec.why}</p>
         `;
 
         if (rec.strongSections && rec.strongSections.length > 0) {
           html += `
-            <div class="mb-4">
-              <p class="font-heading text-xs uppercase tracking-widest text-lemon/80 font-semibold mb-2">
+            <div class="mb-6">
+              <p class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-paper/65 font-medium mb-3">
                 What&rsquo;s working
               </p>
               <div class="rec-section-list">
           `;
           for (const s of rec.strongSections) {
             html += `
-              <div class="rec-section-item text-white/90">
-                <iconify-icon icon="ph:check-circle-duotone" width="18" class="text-sage" style="flex-shrink:0"></iconify-icon>
+              <div class="rec-section-item text-paper/90">
+                <iconify-icon icon="ph:check-duotone" width="18" class="text-paper" style="flex-shrink:0"></iconify-icon>
                 <span>${s.title}</span>
-                <span class="ml-auto text-white/50 font-heading text-xs tabular-nums">${s.score}/${s.max}</span>
+                <span class="ml-auto text-paper/55 font-mono text-xs tabular-nums">${s.score}/${s.max}</span>
               </div>
             `;
           }
@@ -938,20 +849,19 @@ const description =
 
         if (rec.weakSections && rec.weakSections.length > 0) {
           html += `
-            <div class="mb-6">
+            <div class="mb-7">
               <p class="focus-heading">
-                <span>where to focus</span>
+                <span>Where to focus</span>
               </p>
               <div class="focus-list">
           `;
           rec.weakSections.forEach((s, idx) => {
-            const stampColor = s.status === 'critical' ? 'coral' : 'sunset';
             const benefit = SECTION_BENEFITS[s.title] || '';
             const consequence = SECTION_CONSEQUENCES[s.title] || '';
             html += `
               <div class="focus-item">
-                <span class="focus-priority ${stampColor}" aria-hidden="true">${idx + 1}</span>
                 <div class="focus-item-head">
+                  <span class="focus-priority" aria-hidden="true">${String(idx + 1).padStart(2, '0')}</span>
                   <span>${s.title}</span>
                   <span class="focus-item-score">
                     <span class="sr-only">Score: </span>
@@ -959,7 +869,7 @@ const description =
                   </span>
                 </div>
                 ${benefit ? `<p class="focus-item-benefit">${benefit}</p>` : ''}
-                ${consequence ? `<p class="focus-item-consequence"><span class="focus-item-consequence-label">If ignored —</span> ${consequence}</p>` : ''}
+                ${consequence ? `<p class="focus-item-consequence"><span class="focus-item-consequence-label">If ignored</span> ${consequence}</p>` : ''}
               </div>
             `;
           });
@@ -968,13 +878,11 @@ const description =
 
         html += `
           <div class="flex flex-col sm:flex-row gap-3 mb-2">
-            <a href="${rec.link}"
-              class="inline-flex items-center justify-center gap-2 bg-plum text-white px-6 py-3.5 rounded-full hover:bg-plum/90 hover:shadow-lg hover:shadow-plum/30 transition-all font-heading font-semibold text-sm">
+            <a href="${rec.link}" class="${BTN_BASE} ${BTN_LG} ${BTN_NAVY}">
               <iconify-icon icon="ph:arrow-right-duotone" width="18"></iconify-icon>
               Learn about the ${rec.label}
             </a>
-            <a href="/contact/"
-              class="inline-flex items-center justify-center gap-2 bg-white/10 text-white border border-white/25 px-6 py-3.5 rounded-full hover:bg-white/15 transition-colors font-heading font-semibold text-sm">
+            <a href="/contact/" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
               <iconify-icon icon="ph:envelope-duotone" width="18"></iconify-icon>
               Get in touch
             </a>
@@ -985,13 +893,13 @@ const description =
           const sec = rec.secondaryRecommendation;
           html += `
             <div class="secondary-rec">
-              <p class="font-heading text-xs uppercase tracking-widest text-white/60 font-semibold mb-2">You may also benefit from</p>
-              <p class="font-display text-lg font-bold mb-1">${sec.label}</p>
-              <p class="text-white/70 text-sm font-body mb-3">
+              <p class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-paper/60 font-medium mb-2">You may also benefit from</p>
+              <p class="font-display text-lg font-semibold tracking-tight mb-1">${sec.label}</p>
+              <p class="text-paper/70 text-sm mb-3">
                 Your ${sec.sectionNames.map((n) => n.toLowerCase()).join(', ')} ${sec.sectionNames.length === 1 ? 'could' : 'could all'} use attention beyond the handoff fixes.
               </p>
               <a href="${sec.link}"
-                class="inline-flex items-center gap-1.5 text-coral hover:text-[#C13A22] font-heading font-semibold text-sm transition-colors">
+                class="inline-flex items-center gap-1.5 text-paper hover:text-accent font-sans font-medium tracking-tight text-sm transition-colors">
                 Learn more
                 <iconify-icon icon="ph:arrow-right" width="16"></iconify-icon>
               </a>
@@ -1010,7 +918,60 @@ const description =
       chartSections,
       status,
     );
-    renderScorePanel(document.getElementById('scorePanel')!);
+    renderVerdict(document.getElementById('verdictBand')!);
+    renderBreakdown(document.getElementById('breakdownPanel')!);
     renderRecommendation(document.getElementById('recommendationContainer')!);
+
+    // ─── Motion choreography ──────────────────────────────────────────────────
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function animateCount(el: Element, target: number, dur: number) {
+      const start = performance.now();
+      function tick(now: number) {
+        const t = Math.min(1, (now - start) / dur);
+        const eased = 1 - Math.pow(1 - t, 3);
+        el.textContent = String(Math.round(target * eased));
+        if (t < 1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    }
+
+    // Verdict sits near the top — reveal it on load.
+    const vGrid = document.querySelector('.verdict-grid');
+    const countEl = document.querySelector('[data-countup]');
+    requestAnimationFrame(() =>
+      requestAnimationFrame(() => {
+        vGrid?.classList.add('is-in');
+        if (countEl && !reduce) animateCount(countEl, score, 1000);
+      }),
+    );
+
+    // Radar + breakdown reveal as they scroll into view — but can never get
+    // stuck invisible (reduced-motion, already-on-screen, and timeout fallbacks).
+    const revealTargets = ['radarCard', 'breakdownPanel']
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => !!el);
+    const reveal = (el: Element) => el.classList.add('is-in');
+
+    if (reduce || !('IntersectionObserver' in window)) {
+      revealTargets.forEach(reveal);
+    } else {
+      const io = new IntersectionObserver(
+        (entries, obs) => {
+          for (const e of entries) {
+            if (e.isIntersecting) {
+              reveal(e.target);
+              obs.unobserve(e.target);
+            }
+          }
+        },
+        { threshold: 0.2, rootMargin: '0px 0px -8% 0px' },
+      );
+      revealTargets.forEach((el) => {
+        if (el.getBoundingClientRect().top < window.innerHeight) reveal(el);
+        else io.observe(el);
+      });
+      window.setTimeout(() => revealTargets.forEach(reveal), 2500);
+    }
   }
 </script>

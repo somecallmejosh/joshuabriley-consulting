@@ -4,7 +4,6 @@ import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
-import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
 
 const updated = 'June 2026';
@@ -14,25 +13,19 @@ const updated = 'June 2026';
   title="Privacy Policy — Joshua Briley"
   description="What I collect when you contact me, how it's used, and how to ask for it to be removed."
 >
-  <Section tone="cream" padding="default" decorated>
-    <div class="absolute inset-0 grid-paper opacity-50" aria-hidden="true"></div>
-    <Container width="narrow" class="relative z-10">
-      <nav class="mb-8 flex items-center gap-2 font-heading text-sm text-charcoal/70" aria-label="Breadcrumb">
-        <a href="/" class="hover:text-coral transition-colors">Home</a>
-        <Icon name="ph:caret-right-bold" size={12} />
-        <span class="text-navy">Privacy</span>
-      </nav>
+  <Section tone="paper" padding="default">
+    <Container width="narrow">
+      <p class="mono-label">Legal · Last updated {updated}</p>
 
-      <Heading level={1} visual="display-md" balance class="mb-4">Privacy policy</Heading>
-      <Text size="lg" tone="muted" class="mb-2 max-w-2xl">
+      <Heading level={1} visual="display-lg" class="mt-5">Privacy policy</Heading>
+      <Text size="lg" tone="muted" class="mt-6 max-w-2xl">
         Plain version: I only collect what you send me, I use it to reply, and I don't sell it. The
         detail is below.
       </Text>
-      <p class="font-heading text-sm text-charcoal/60">Last updated {updated}</p>
 
-      <div class="prose-whimsy mt-10 space-y-10 max-w-2xl">
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">What I collect</Heading>
+      <div class="legal mt-12 divide-y divide-line border-t border-line">
+        <section class="py-9 first:pt-0">
+          <Heading level={2} visual="h2" class="mb-4">What I collect</Heading>
           <p>
             When you fill out the contact form I receive what you choose to enter: your name, email
             address, an optional phone number, the type of work you're interested in, and your
@@ -45,8 +38,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Who processes it</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Who processes it</Heading>
           <p>A few third parties handle data on my behalf, each under their own privacy terms:</p>
           <ul>
             <li><strong>HubSpot</strong> receives contact-form
@@ -58,8 +51,8 @@ const updated = 'June 2026';
           </ul>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">How it's used</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">How it's used</Heading>
           <p>
             I use your information for one thing: to read your message and reply about the work
             you're asking about. I don't sell it, rent it, or share it for advertising. I won't add
@@ -67,8 +60,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Cookies</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Cookies</Heading>
           <p>
             The site itself doesn't set tracking or advertising cookies. The embedded HubSpot form
             and Calendly scheduler may set their own cookies when you interact with them; those are
@@ -76,8 +69,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Keeping and removing your data</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Keeping and removing your data</Heading>
           <p>
             I keep contact-form messages for as long as they're useful to our correspondence. You can
             ask me to show you what I have, correct it, or delete it at any time — just email
@@ -86,8 +79,8 @@ const updated = 'June 2026';
           </p>
         </section>
 
-        <section>
-          <Heading level={2} visual="h2" class="mb-3">Changes</Heading>
+        <section class="py-9">
+          <Heading level={2} visual="h2" class="mb-4">Changes</Heading>
           <p>
             If this policy changes, the "last updated" date above changes with it. Questions about
             any of this are welcome at
@@ -102,3 +95,41 @@ const updated = 'June 2026';
     </Container>
   </Section>
 </BaseLayout>
+
+<style>
+  .legal p {
+    color: var(--ink-muted);
+    line-height: 1.75;
+    max-width: 65ch;
+  }
+  .legal p + p {
+    margin-top: 1.1rem;
+  }
+  .legal ul {
+    margin-top: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    max-width: 65ch;
+  }
+  .legal li {
+    position: relative;
+    padding-left: 1.25rem;
+    color: var(--ink-muted);
+    line-height: 1.7;
+  }
+  .legal li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    height: 4px;
+    width: 4px;
+    border-radius: 1px;
+    background: var(--accent);
+  }
+  .legal strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+</style>

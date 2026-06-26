@@ -59,20 +59,20 @@ const describedBy = [hintId, errorId].filter(Boolean).join(' ') || undefined;
   <label
     for={id}
     class={cx(
-      'font-heading text-sm font-medium text-navy',
+      'mono-label !text-ink',
       hideLabel && 'sr-only',
     )}
   >
     {label}
-    {required && <span aria-hidden="true" class="text-[#C13A22] ml-0.5">*</span>}
+    {required && <span aria-hidden="true" class="text-accent ml-1">*</span>}
   </label>
   <slot />
   {hint && (
-    <p id={hintId} class="text-xs text-charcoal/70 leading-relaxed">{hint}</p>
+    <p id={hintId} class="text-xs text-ink-muted leading-relaxed">{hint}</p>
   )}
   {error && (
-    <p id={errorId} class="flex items-center gap-1.5 text-xs text-plum leading-relaxed" role="alert">
-      <Icon name="ph:warning-circle-duotone" size={14} />
+    <p id={errorId} class="flex items-center gap-1.5 text-xs text-accent leading-relaxed" role="alert">
+      <Icon name="ph:warning-circle" size={14} />
       {error}
     </p>
   )}

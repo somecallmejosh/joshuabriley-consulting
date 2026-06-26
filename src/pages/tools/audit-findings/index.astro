@@ -2,18 +2,10 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
-import Hero from '~/components/patterns/Hero.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
-import Card from '~/components/card/Card.astro';
 import Diagnostic from '~/components/islands/Diagnostic.astro';
 ---
 
@@ -21,209 +13,130 @@ import Diagnostic from '~/components/islands/Diagnostic.astro';
   title="What an audit actually finds — Tools — Joshua Briley"
   description="A working sample of the design system audit deliverable: inspect a specimen of drifted UI, then read findings ranked by severity, each paired with a specific remediation."
 >
-
-  <Hero tone="cream" align="left" split>
-    <Blob slot="decorations" tone="coral" size="md" class="absolute top-16 left-[6%]" opacity="opacity-30" />
-    <Blob slot="decorations" tone="lemon" size="sm" class="absolute bottom-20 left-[3%] rounded-full" animate="float-delay" />
-    <Blob slot="decorations" tone="plum" size="sm" class="absolute bottom-12 right-[6%]" animate="float-slow" opacity="opacity-40" />
-
-    <Badge slot="eyebrow" tone="coral" icon="ph:magnifying-glass-duotone">Interactive demo &middot; Design System Audit</Badge>
-    <Heading slot="title" level={1} visual="display-xl">
-      What an audit <WavyUnderline>actually finds</WavyUnderline>.
-    </Heading>
-    <Text slot="lead" size="xl" tone="muted">
-      Every audit ends in a report: every finding ranked by severity, each with a specific, actionable
-      recommendation. This page is a working sample. Run the inspection on the specimen, then read the findings
-      the way you'd read the real report.
-    </Text>
-
-    {/* The audit, drawn: a UI specimen under the glass, findings flagged and ranked
-        by severity around it — the page's promise made visual. Decorative. */}
-    <div slot="media" data-af-illo class="relative w-full max-w-[440px] mx-auto h-[400px] xl:h-[460px] hidden lg:block" aria-hidden="true">
-      <!-- Rotating dashed inspection ring -->
-      <div class="absolute inset-0 flex items-center justify-center">
-        <div class="w-[340px] h-[340px] rounded-full border-2 border-dashed border-coral/15 animate-spin-slow"></div>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Tools / Interactive demo</span>
+        <span class="hidden sm:inline text-ink-muted">Audit 02</span>
       </div>
 
-      <!-- Connectors drawn by hero-motion.ts, anchored to the live card positions:
-           each finding traced back to the specimen, a severity-colored pulse riding inward. -->
-      <svg data-af-conn class="absolute inset-0 w-full h-full"></svg>
+      <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
+        <div class="lg:col-span-7">
+          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+            What an audit <em class="ink-wink font-normal italic">actually finds</em>.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+            Every audit ends in a report: every finding ranked by severity, each with a specific,
+            actionable recommendation. This page is a working sample. Run the inspection on the
+            specimen, then read the findings the way you would read the real report.
+          </Text>
 
-      <!-- The specimen under audit: a component quietly drifting -->
-      <div data-af-specimen class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white rounded-2xl shadow-xl border border-charcoal/5 p-5 w-52 animate-float">
-        <div class="flex items-center gap-1.5 mb-3">
-          <span class="w-2 h-2 rounded-full bg-coral/60"></span>
-          <span class="w-2 h-2 rounded-full bg-lemon"></span>
-          <span class="w-2 h-2 rounded-full bg-sage/70"></span>
-          <span class="ml-auto font-heading text-[10px] uppercase tracking-wider text-charcoal/40">Specimen</span>
+          <div class="mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="#diagnostic" iconRight="ph:arrow-right" class="js-magnetic">
+              Inspect the specimen
+            </Button>
+            <Button variant="ghost" size="lg" href="/tools/scorecard/">
+              Score your system
+            </Button>
+          </div>
         </div>
-        <div class="h-2.5 rounded-full bg-navy/80 w-3/4 mb-2.5"></div>
-        <div class="h-2 rounded-full bg-charcoal/15 w-full mb-1.5"></div>
-        <div class="h-2 rounded-full bg-charcoal/15 w-5/6 mb-4"></div>
-        <!-- two buttons that don't agree: different radius, different color = drift -->
-        <div class="flex items-center gap-2">
-          <span class="h-7 px-3 rounded-lg bg-coral flex items-center">
-            <span class="h-1.5 w-8 rounded-full bg-white/80"></span>
-          </span>
-          <span class="h-7 px-3 rounded-full bg-plum/90 flex items-center">
-            <span class="h-1.5 w-6 rounded-full bg-white/70"></span>
-          </span>
+
+        {/* Static severity legend — the report's three ranks. */}
+        <div class="lg:col-span-5" aria-hidden="true">
+          <figure class="rounded-lg border border-line bg-raised p-5 md:p-6">
+            <figcaption class="flex items-center justify-between mono-label">
+              <span>Findings</span><span>by severity</span>
+            </figcaption>
+            <ul class="mt-4 divide-y divide-line">
+              {[
+                { rank: 'High', note: 'Breaks accessibility or trust' },
+                { rank: 'Med', note: 'Drift that compounds over time' },
+                { rank: 'Low', note: 'Polish and consistency' },
+              ].map((f) => (
+                <li class="flex items-center justify-between gap-4 py-3 first:pt-0">
+                  <span class="flex items-center gap-3">
+                    <span class="h-1.5 w-1.5 rounded-full bg-accent"></span>
+                    <span class="font-display text-sm font-medium tracking-tight text-ink">{f.rank}</span>
+                  </span>
+                  <span class="text-sm text-ink-muted">{f.note}</span>
+                </li>
+              ))}
+            </ul>
+          </figure>
         </div>
       </div>
+    </Container>
+  </Section>
 
-      <!-- The glass: hovering the specimen, magnifying a drifted swatch pair.
-           GSAP owns its position (drifts across the specimen); no CSS float here. -->
-      <div data-af-glass class="absolute top-[52%] left-[54%]">
-        <svg width="138" height="138" viewBox="0 0 138 138" fill="none">
-          <line x1="86" y1="86" x2="122" y2="122" stroke="#2D2B55" stroke-width="10" stroke-linecap="round" />
-          <circle cx="54" cy="54" r="46" fill="#FFFDF9" />
-          <rect x="28" y="40" width="22" height="22" rx="5" fill="#E8573D" />
-          <rect x="56" y="40" width="22" height="22" rx="11" fill="#FF8E53" />
-          <rect x="28" y="70" width="50" height="5" rx="2.5" fill="#2D2B55" fill-opacity="0.22" />
-          <rect x="28" y="80" width="34" height="5" rx="2.5" fill="#2D2B55" fill-opacity="0.22" />
-          <circle cx="54" cy="54" r="46" stroke="#2D2B55" stroke-width="5" />
-          <path d="M28 44 A38 38 0 0 1 46 24" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-opacity="0.7" />
-        </svg>
-      </div>
-
-      <!-- Findings, ranked by severity -->
-      <div data-af-finding data-af-color="#E8573D" class="absolute top-[1%] left-[0%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float -rotate-3">
-        <span class="w-2.5 h-2.5 rounded-full bg-coral flex-shrink-0"></span>
-        <span class="space-y-1.5 block">
-          <span class="h-1.5 w-16 rounded-full bg-charcoal/70 block"></span>
-          <span class="h-1.5 w-10 rounded-full bg-charcoal/20 block"></span>
-        </span>
-        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#C13A22]">High</span>
-      </div>
-
-      <div data-af-finding data-af-color="#FF8E53" class="absolute top-[44%] right-[0%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float-slow rotate-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-sunset flex-shrink-0"></span>
-        <span class="space-y-1.5 block">
-          <span class="h-1.5 w-14 rounded-full bg-charcoal/70 block"></span>
-          <span class="h-1.5 w-9 rounded-full bg-charcoal/20 block"></span>
-        </span>
-        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#A24818]">Med</span>
-      </div>
-
-      <div data-af-finding data-af-color="#7BB47A" class="absolute bottom-[2%] left-[6%] bg-white rounded-xl shadow-lg border border-charcoal/5 pl-3 pr-3.5 py-2.5 flex items-center gap-2.5 animate-float-delay -rotate-2">
-        <span class="w-2.5 h-2.5 rounded-full bg-sage flex-shrink-0"></span>
-        <span class="space-y-1.5 block">
-          <span class="h-1.5 w-12 rounded-full bg-charcoal/70 block"></span>
-          <span class="h-1.5 w-8 rounded-full bg-charcoal/20 block"></span>
-        </span>
-        <span class="font-heading text-[10px] font-bold uppercase tracking-wide text-[#3E6E3D]">Low</span>
-      </div>
-    </div>
-  </Hero>
-
-  <SquiggleDivider />
-
-  <Section padding="default">
+  {/* ───────────────────────── THE TOOL (island, intact) ───────────────────────── */}
+  <Section id="diagnostic" tone="paper" padding="default">
     <Container width="default">
-      <SectionHeader
-        align="left"
-        eyebrowTone="coral"
-        title="This is what drift looks like up close"
-        lead="Each exhibit shipped to production. Toggle &ldquo;show issues&rdquo; to reveal the inconsistencies a quick audit pass would flag &mdash; the kind that quietly cost your team sprint velocity."
-        class="mb-10 max-w-[65ch]"
-      />
+      <div class="mb-10 max-w-[65ch]">
+        <p class="mono-label">The specimen / 01</p>
+        <Heading level={2} visual="display-md" class="mt-4">This is what drift looks like up close.</Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Each exhibit shipped to production. Toggle “show issues” to reveal the inconsistencies a
+          quick audit pass would flag — the kind that quietly cost your team sprint velocity.
+        </Text>
+      </div>
       <Diagnostic />
     </Container>
   </Section>
 
-  <Section tone="cream" padding="default" class="bg-charcoal/[0.03]">
-    <Container width="narrow">
-      <SectionHeader
-        align="left"
-        eyebrowTone="plum"
-        title="What you walk away with"
-        class="mb-8"
-      />
-      <Text size="lg" tone="muted" class="mb-6">
-        The Design System Audit reviews your library across all five dimensions in five business days. You receive
-        a PDF report with every finding ranked by severity and a specific remediation recommendation for each,
-        followed by a 60-minute debrief call to map what to fix first and why.
-      </Text>
-      <Card variant="paper" padding="none" hover={false} class="inline-flex items-start gap-3 px-5 py-4">
-        <Icon name="ph:paper-plane-tilt-duotone" size={22} class="text-coral flex-shrink-0 mt-0.5" />
-        <p class="font-heading text-sm md:text-base text-navy">
-          Send a Storybook URL, Figma file, or GitHub repo. No specific format required.
-        </p>
-      </Card>
+  {/* ───────────────────────── DELIVERABLE (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="mono-label !text-paper/65">The deliverable / 02</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[16ch]">
+            What you walk away with.
+          </Heading>
+        </div>
+        <div class="lg:col-span-7 space-y-6">
+          <Text size="lg" tone="whiteMuted">
+            The Design System Audit reviews your library across all five dimensions in five business
+            days. You receive a PDF report with every finding ranked by severity and a specific
+            remediation recommendation for each, followed by a 60-minute debrief call to map what to
+            fix first and why.
+          </Text>
+          <div class="inline-flex items-start gap-3 rounded-lg border border-paper/15 bg-paper/[0.03] px-5 py-4">
+            <Icon name="ph:paper-plane-tilt" size={20} class="mt-0.5 flex-shrink-0 text-accent" />
+            <p class="text-[0.95rem] text-paper/80">
+              Send a Storybook URL, Figma file, or GitHub repo. No specific format required.
+            </p>
+          </div>
+        </div>
+      </div>
     </Container>
   </Section>
 
-  <CTABanner
-    title="This is the checklist I build against."
-    lead="The audit exists as a service, but these five dimensions are also the standard my own work is held to — every system I ship gets reviewed against the same list. Questions about either, send a note."
-    align="left"
-  >
-    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-    <Button variant="text" size="lg" iconLeft="ph:clipboard-text-duotone" href="/tools/scorecard/">
-      Try the scorecard
-    </Button>
-  </CTABanner>
-
-  {/* Hero illustration motion: the audit actively inspects and ranks — the glass drifts
-      across the specimen while each finding lights up in severity order (High→Med→Low),
-      tracing a severity-colored pulse back to the specimen it was found on. */}
-  <script>
-    import { connect, gsap } from '~/scripts/hero-motion';
-
-    const illo = document.querySelector<HTMLElement>('[data-af-illo]');
-    const svg = illo?.querySelector<SVGSVGElement>('[data-af-conn]');
-    const specimen = illo?.querySelector('[data-af-specimen]');
-    const glass = illo?.querySelector<HTMLElement>('[data-af-glass]');
-    const findings = illo ? Array.from(illo.querySelectorAll<HTMLElement>('[data-af-finding]')) : [];
-
-    if (svg && specimen && findings.length) {
-      const colors = findings.map((f) => f.dataset.afColor || '#E8573D');
-      // Each finding traced back to the specimen, in its severity color.
-      const c = connect(
-        svg,
-        findings.map((f, i) => ({
-          from: f,
-          to: specimen,
-          color: colors[i],
-          curve: i % 2 ? -0.16 : 0.16,
-          opacity: 0.85,
-        })),
-      );
-
-      if (!c.reduce) {
-        // The glass slowly drifts across the specimen (GSAP owns its transform).
-        if (glass) {
-          gsap
-            .timeline({ repeat: -1, yoyo: true, defaults: { ease: 'sine.inOut', duration: 3.4 } })
-            .to(glass, { x: 22, y: -16 })
-            .to(glass, { x: -14, y: 16 })
-            .to(glass, { x: 18, y: 20 })
-            .to(glass, { x: -20, y: -12 });
-        }
-
-        // Findings light up in severity order, each sending a pulse to the specimen.
-        const cycle = 3;
-        const step = 0.5;
-        c.links.forEach((link, i) => {
-          link.addPulse({ duration: 1.3, delay: i * step, repeatDelay: cycle - 1.3, size: 5, color: colors[i] });
-          // Reaction pop via filter only — chips already run CSS float on transform.
-          gsap.fromTo(
-            findings[i],
-            { filter: 'brightness(1)' },
-            {
-              filter: 'brightness(1.09)',
-              duration: 0.26,
-              yoyo: true,
-              repeat: 1,
-              ease: 'power1.inOut',
-              delay: i * step,
-              repeatDelay: cycle - 0.52,
-            },
-          );
-        });
-      }
-    }
-  </script>
+  {/* ───────────────────────── CTA (paper) ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <p class="mono-label">The standard / 03</p>
+          <Heading level={2} visual="display-md" class="mt-4 max-w-[22ch]">
+            This is the checklist I build against.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-6 max-w-xl">
+            The audit exists as a service, but these five dimensions are also the standard my own work
+            is held to — every system I ship gets reviewed against the same list. Questions about
+            either, send a note.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
+            <a
+              href="/tools/scorecard/"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-accent"
+            >Try the scorecard <Icon name="ph:arrow-right" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
 </BaseLayout>

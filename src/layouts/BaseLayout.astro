@@ -173,11 +173,9 @@ const jsonLdGraph = {
     {/* JSON-LD */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdGraph)} />
 
+    <Font cssVariable="--font-hanken" preload />
     <Font cssVariable="--font-fraunces" preload />
-    <Font cssVariable="--font-dm-sans" preload />
-    <Font cssVariable="--font-space-grotesk" />
-    <Font cssVariable="--font-jetbrains-mono" />
-    <Font cssVariable="--font-style-script" />
+    <Font cssVariable="--font-geist-mono" />
 
     <script
       is:inline
@@ -197,6 +195,25 @@ const jsonLdGraph = {
     <ViewSource />
     <script>
       import '~/scripts/scroll-reveal';
+      import '~/scripts/whimsy';
+    </script>
+
+    {/* A note for the curious dev in the console — on-brand for a UX engineer's
+        site, invisible to everyone else, and a quiet nudge toward the secret mode. */}
+    <script is:inline>
+      (() => {
+        const head = 'color:#1b1a17;font:600 22px/1.2 Georgia,serif';
+        const body = 'color:#5c5b55;font:400 13px/1.6 ui-monospace,monospace';
+        const clay = 'color:#a8412a;font:500 13px/1.6 ui-monospace,monospace';
+        console.log('%cJoshua Briley%c\n\nYou opened the console. Of course you did. 👋', head, body);
+        console.log(
+          '%cHand-built with Astro — no UI kit, no template. Type, tokens and motion are all deliberate.\n' +
+          '%cPsst: ↑ ↑ ↓ ↓ ← → ← → B A turns on Inspector Mode.\n' +
+          '%c(And yes — the period after my name is breathing. On purpose.)\n' +
+          '%cLike what you see under the hood? Let’s talk → /contact',
+          body, clay, body, body,
+        );
+      })();
     </script>
   </body>
 </html>
