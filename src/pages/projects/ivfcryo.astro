@@ -20,6 +20,13 @@ const proof = [
   { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
   { label: 'Outcomes', tone: 'coral' as const, items: ['75% fewer support calls', '55% decrease in shipping errors', 'Quicker customer onboarding'] },
 ];
+
+const docket = [
+  { href: '#stakes', icon: 'ph:warning-circle', label: 'The stakes behind the product' },
+  { href: '#collaborator', icon: 'ph:users-three', label: 'A blind user in the room' },
+  { href: '#architecture', icon: 'ph:stack', label: 'Accessibility in the architecture' },
+  { href: '#scale', icon: 'ph:trend-up', label: 'Why this compounds at scale' },
+];
 ---
 
 <BaseLayout title={title} description={description}>
@@ -76,18 +83,18 @@ const proof = [
     </Container>
   </Section>
 
-  <Section tone="paper" padding="tight">
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="default">
       <p class="mono-label mb-8">Receipts / 02</p>
-      <dl class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
             <dt class="mono-label mb-3">{group.label}</dt>
             <dd>
-              <ul class="space-y-1.5 text-ink-muted">
+              <ul class="space-y-1.5">
                 {group.items.map((item) => (
-                  <li class="flex items-start gap-2">
-                    <Icon name="ph:check" size={14} class="mt-1 flex-shrink-0 text-accent" />
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -99,37 +106,25 @@ const proof = [
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default">
+  <Section tone="paper" padding="tight">
     <Container width="default">
-      <p class="mono-label mb-6">On the bench / 03</p>
-      <ul class="grid gap-3 sm:grid-cols-2">
-        <li>
-          <a href="#stakes" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
-            <Icon name="ph:warning-circle" size={18} class="text-ink-muted" />
-            The stakes behind the product
-          </a>
-        </li>
-        <li>
-          <a href="#collaborator" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
-            <Icon name="ph:users-three" size={18} class="text-ink-muted" />
-            A blind user in the room
-          </a>
-        </li>
-        <li>
-          <a href="#architecture" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
-            <Icon name="ph:stack" size={18} class="text-ink-muted" />
-            Accessibility in the architecture
-          </a>
-        </li>
-        <li>
-          <a href="#scale" class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
-            <Icon name="ph:trend-up" size={18} class="text-ink-muted" />
-            Why this compounds at scale
-          </a>
-        </li>
+      <p class="mono-label mb-5">On the bench / 03</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
       </ul>
 
-      <Text size="lg" tone="muted" class="mt-10 max-w-2xl">
+      <Text size="lg" tone="muted" class="mt-10">
         IVFCRYO replaced a manual, paper-based shipping process with a web
         application that handles shipment requests, label generation across
         multiple carriers, and real-time specimen tracking from integrated

@@ -200,15 +200,20 @@ const proof = [
   </Section>
 
   <Section tone="paper" padding="tight" aria-label="Project receipts">
-    <Container width="wide">
-      <p class="mono-label mb-6">Receipts / 02</p>
-      <dl class="grid gap-x-8 gap-y-6 sm:grid-cols-2 lg:grid-cols-4 border-t border-line pt-6">
+    <Container width="default">
+      <p class="mono-label mb-8">Receipts / 02</p>
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
-          <div>
-            <dt class="mono-label mb-2">{group.label}</dt>
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
             <dd>
-              <ul class="space-y-1 text-sm text-ink-muted">
-                {group.items.map((item) => <li>{item}</li>)}
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
               </ul>
             </dd>
           </div>
@@ -217,22 +222,25 @@ const proof = [
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default">
-    <Container width="narrow">
-      <p class="mono-label mb-4">On the menu / 03</p>
-      <ul class="border-t border-line">
-        {menu.map((item) => (
-          <li class="border-b border-line">
-            <a href={item.href} class="group flex items-center gap-3 py-3 text-ink transition-colors hover:text-accent">
-              <Icon name={item.icon} size={18} class="text-ink-muted transition-colors group-hover:text-accent" />
-              <span class="flex-1">{item.label}</span>
-              <Icon name="ph:arrow-down-right" size={14} class="text-accent opacity-0 transition-opacity group-hover:opacity-100" />
+  <Section tone="paper" padding="tight">
+    <Container width="default">
+      <p class="mono-label mb-5">On the menu / 03</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {menu.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
             </a>
           </li>
         ))}
       </ul>
 
-      <p class="mt-10 text-ink-muted leading-relaxed text-lg">
+      <Text size="lg" tone="muted" class="mt-10">
         Rudiment UI is a personal reference project, not a client
         deliverable — and that's the point. It exists because most of the
         component libraries I've been brought in to fix share the same root
@@ -240,7 +248,7 @@ const proof = [
         wrong order, and now cost a quarter to untangle. Rudiment UI is the
         library I wish every team had started with, built deliberately,
         chapter by chapter, with the reasoning left in.
-      </p>
+      </Text>
     </Container>
   </Section>
 

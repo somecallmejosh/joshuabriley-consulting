@@ -1,3 +1,22 @@
+# Standardize "Receipts" + "On the docket" sections to the vmspark presentation (`/high-end-visual-design`, 2026-06-26)
+
+**Goal:** All five project pages present Receipts + docket sections with the same markup as `vmspark.astro` (the preferred version). Keep each page's themed docket label and any per-item icons; unify everything else.
+
+**Canonical (from vmspark):**
+- Receipts — `<Section ... aria-label="Project receipts">` + `Container width="default"`, `<dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">`, `dt/dd`, check-icon list, label `Receipts / 02` (mb-8).
+- Docket — `<Section padding="tight">` + `Container width="default"`, `<ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">`, numbered `0{i+1}` link, optional per-item icon (`{item.icon && …}`), trailing `ph:arrow-right`, label mb-5 unified to `/ 03`, lead paragraph `<Text size="lg" tone="muted" class="mt-10">`.
+
+**Tasks:**
+- [ ] vmspark — add optional-icon guard to docket list so the template is identical everywhere
+- [ ] berxi — receipts div/divide-y → canonical dl; docket bordered → canonical; label `In this case study / 03`; Container narrow→default; padding default→tight
+- [ ] ATK — receipts flex-wrap → canonical dl; docket → canonical; label `On the menu / 03` (fixes /02 collision); padding default→tight; lead Text tone ink→muted
+- [ ] IVFCRYO — add `docket` array (keeps per-item icons); receipts 2-col → canonical; hardcoded docket → `docket.map`; label `On the bench / 03`
+- [ ] rudiment — receipts wide/border-on-parent → canonical default; docket bordered → canonical (keeps `menu` icons); Container narrow→default; padding default→tight; raw `<p>` lead → `<Text>`
+
+**Review:** ✅ Done. All five pages now share one Receipts template (dl + 4-col grid + check icons, `Receipts / 02`) and one docket template (numbered `0{i+1}` links in a 2-col grid, optional per-item icon, `ph:arrow-right` hover, `/ 03`). Themed docket labels kept (On the docket / In this case study / On the menu / On the bench). IVFCRYO's hardcoded docket became a `docket` array; rudiment's raw `<p>` lead became `<Text>`. Fixed ATK's `/02` Receipts↔menu number collision and berxi's stray `/01`. `npm run build` passes.
+
+---
+
 # Redesign the Tools to better fit the existing design (`/high-end-visual-design`, 2026-06-26)
 
 **Scope:** interactive widgets + results-page rebuild (the four page shells already match `tools/index.astro`). **Ambition:** elevated craft, on-brand — editorial-flat (hairline rules, mono-labels, surface-aware clay, NO drop shadows / glassy bezels).

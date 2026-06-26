@@ -154,36 +154,45 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
   <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="default">
       <p class="mono-label mb-8">Receipts / 02</p>
-      <div class="grid gap-x-10 gap-y-8 sm:grid-cols-2">
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
-            <p class="mono-label mb-3">{group.label}</p>
-            <ul class="flex flex-wrap gap-x-4 gap-y-1.5">
-              {group.items.map((item) => (
-                <li class="text-sm text-ink">{item}</li>
-              ))}
-            </ul>
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
           </div>
         ))}
-      </div>
+      </dl>
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default">
+  <Section tone="paper" padding="tight">
     <Container width="default">
-      <p class="mono-label mb-6">On the menu / 02</p>
-      <ul class="grid gap-2 sm:grid-cols-2">
-        {onMenu.map((item) => (
+      <p class="mono-label mb-5">On the menu / 03</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {onMenu.map((item, i) => (
           <li>
-            <a href={item.href} class="group inline-flex items-center gap-2 text-ink transition-colors hover:text-accent">
-              <Icon name="ph:arrow-right" size={15} class="text-accent" />
-              {item.label}
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
             </a>
           </li>
         ))}
       </ul>
 
-      <Text size="lg" tone="ink" class="mt-10 max-w-2xl">
+      <Text size="lg" tone="muted" class="mt-10">
         America's Test Kitchen operates across multiple editorial brands, each with its own visual identity, its own product team,
         and its own publishing cadence. The challenge isn't unique to ATK: when a single component library needs to serve multiple
         products that look different but share behavior, the architecture has to be built for that from the start. Libraries

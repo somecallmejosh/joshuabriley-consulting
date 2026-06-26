@@ -32,6 +32,16 @@ body {
   font-feature-settings: 'cv01', 'ss01';
 }
 
+/* ─────────────────────────────────────────────────────────────────────────
+   READING MEASURE — one longform column, identical on every project page.
+   `.measure` caps body copy at ~65 characters (the readability sweet spot, and
+   the width the project case studies are tuned to). `.measure-head` caps the
+   display headlines so they wrap inside that same optical column at every
+   breakpoint — CSS `ch` is per-element, so a headline needs a tighter character
+   count than body text to land at the same physical width as 65ch of prose. */
+.measure { max-width: 65ch; }
+.measure-head { max-width: 28ch; }
+
 :focus {
   outline: none;
 }

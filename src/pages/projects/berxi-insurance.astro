@@ -134,40 +134,49 @@ const tokenLayers = [
   </Section>
 
   <!-- RECEIPTS -->
-  <Section tone="paper" padding="tight">
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="default">
       <p class="mono-label mb-8">Receipts / 02</p>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-10">
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
-          <div>
-            <p class="mono-label text-ink-muted mb-4">{group.label}</p>
-            <ul class="divide-y divide-line">
-              {group.items.map((item) => (
-                <li class="py-2 text-sm text-ink">{item}</li>
-              ))}
-            </ul>
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
           </div>
         ))}
-      </div>
+      </dl>
     </Container>
   </Section>
 
   <!-- ON THE DOCKET -->
-  <Section tone="paper" padding="default">
-    <Container width="narrow">
-      <p class="mono-label mb-6">In this case study / 01</p>
-      <ul class="border-t border-line">
-        {docket.map((d) => (
-          <li class="border-b border-line">
-            <a href={d.href} class="group flex items-center justify-between gap-4 py-4 text-ink hover:text-accent transition-colors">
-              <span class="font-display text-lg md:text-xl tracking-tight">{d.label}</span>
-              <Icon name="ph:arrow-down" size={16} class="text-ink-muted transition-transform duration-300 ease-out group-hover:translate-y-1 group-hover:text-accent" />
+  <Section tone="paper" padding="tight">
+    <Container width="default">
+      <p class="mono-label mb-5">In this case study / 03</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
             </a>
           </li>
         ))}
       </ul>
 
-      <Text class="mt-10" tone="muted">
+      <Text size="lg" tone="muted" class="mt-10">
         Berxi is a direct-to-consumer insurance platform built inside Berkshire Hathaway Specialty Insurance. The product was
         expanding quickly, and the frontend was expanding with it, but not in a coordinated way. Engineers were making design
         decisions independently across the codebase. Marketing wanted campaign flexibility they couldn't get. Engineering was
