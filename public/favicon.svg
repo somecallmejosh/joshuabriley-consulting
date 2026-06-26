@@ -1,10 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <defs>
-    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#6C4AB6" />
-      <stop offset="100%" stop-color="#E8573D" />
-    </linearGradient>
-  </defs>
-  <path fill="url(#g)" d="M32 2c10 0 16 4 22 10s8 14 6 22-8 14-18 20-22 6-30 0S2 40 4 30 12 10 22 6 28 2 32 2Z"/>
-  <text x="32" y="44" text-anchor="middle" font-family="Georgia, serif" font-size="34" font-style="italic" fill="#fff">jb</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Joshua Briley">
+  <!-- Editorial-Technical monogram: a machined index plate. Ink tile, paper
+       "JB" in monospace, and the signature clay period. -->
+  <rect width="64" height="64" rx="13" fill="#1B1A17"/>
+  <g fill="#F5F4F1" font-family="ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace" font-weight="700">
+    <text x="9" y="43" font-size="31" letter-spacing="-1">JB</text>
+  </g>
+  <!-- clay brand-dot — brightened clay for the dark surface (#D86A4A) -->
+  <circle cx="51.5" cy="41" r="3.4" fill="#D86A4A"/>
 </svg>
