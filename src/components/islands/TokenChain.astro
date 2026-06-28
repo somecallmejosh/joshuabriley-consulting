@@ -10,7 +10,7 @@
  */
 
 const palette = [
-  { id: 'blue',   label: 'Blue',   token: 'color.blue.500',   hex: '#3B82F6' },
+  { id: 'blue',   label: 'Blue',   token: 'color.blue.500',   hex: '#2563EB' },
   { id: 'plum',   label: 'Plum',   token: 'color.plum.500',   hex: '#6C4AB6' },
   { id: 'coral',  label: 'Coral',  token: 'color.coral.500',  hex: '#E8573D' },
   { id: 'sage',   label: 'Sage',   token: 'color.sage.500',   hex: '#3E6E3D' },
@@ -24,13 +24,11 @@ const palette = [
   aria-labelledby="tcn-title"
 >
   <header class="tcn-head">
-    <span class="font-hand text-[#C13A22] text-xl rotate-[-2deg] inline-block leading-none mb-1">
-      follow the value
-    </span>
-    <h3 id="tcn-title" class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight">
+    <span class="mono-label">Follow the value</span>
+    <h3 id="tcn-title" class="font-display text-2xl md:text-3xl font-bold text-ink leading-tight mt-2">
       One change, three tiers deep.
     </h3>
-    <p class="text-sm text-charcoal/70 mt-2 leading-relaxed max-w-prose">
+    <p class="text-sm text-ink-muted mt-2 leading-relaxed max-w-prose">
       Set a global value. It is <em>aliased</em> by a semantic token, which is <em>consumed</em> by
       a component token, which paints the button. A rebrand touches the top tier only &mdash;
       everything below follows.
@@ -181,21 +179,18 @@ const palette = [
 
 <style>
   .tcn {
-    --tcn-color: #3b82f6;
+    --tcn-color: #2563eb;
     --tcn-radius: 10px;
-    background: linear-gradient(180deg, #fff 0%, #fffaf0 100%);
-    border: 1px solid rgba(45, 43, 85, 0.08);
-    border-radius: 22px;
-    box-shadow:
-      0 24px 50px -28px rgba(45, 43, 85, 0.28),
-      0 0 0 1px rgba(108, 74, 182, 0.04);
+    background: var(--raised);
+    border: 1px solid var(--line);
+    border-radius: 12px;
     padding: clamp(1.25rem, 2.4vw, 2.5rem);
   }
   .tcn-head { margin-bottom: 1.5rem; }
   .tcn-head code {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.92em;
-    color: #6c4ab6;
+    color: var(--accent);
   }
 
   .tcn-grid { display: grid; gap: 2rem; }
@@ -207,126 +202,126 @@ const palette = [
   .tcn-field { margin-bottom: 1.4rem; }
   .tcn-label-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 0.45rem; }
   .tcn-label {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-    color: #6c4ab6; display: block; margin-bottom: 0.5rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6875rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--ink-muted); display: block; margin-bottom: 0.5rem;
   }
   .tcn-label code { text-transform: none; letter-spacing: 0; font-size: 0.78rem; }
   .tcn-output {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
-    font-size: 0.78rem; color: #2d2b55;
-    background: rgba(108, 74, 182, 0.08); padding: 2px 8px; border-radius: 6px;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.78rem; color: var(--ink);
+    background: var(--paper); border: 1px solid var(--line); padding: 2px 8px; border-radius: 6px;
   }
   .tcn-note {
-    font-family: var(--font-dm-sans), system-ui, sans-serif;
-    font-size: 0.78rem; color: rgba(45, 43, 85, 0.7); line-height: 1.5; margin-top: 0.5rem;
+    font-family: var(--font-hanken), system-ui, sans-serif;
+    font-size: 0.78rem; color: var(--ink-muted); line-height: 1.5; margin-top: 0.5rem;
   }
 
   .tcn input[type='range'] {
     width: 100%; -webkit-appearance: none; appearance: none; height: 6px; border-radius: 999px;
-    background: linear-gradient(90deg, var(--tcn-color) 0%, var(--tcn-color) var(--tcn-fill, 50%), rgba(108, 74, 182, 0.18) var(--tcn-fill, 50%));
+    background: linear-gradient(90deg, var(--ink) 0%, var(--ink) var(--tcn-fill, 50%), var(--line) var(--tcn-fill, 50%));
     outline: none; cursor: pointer;
   }
   .tcn input[type='range']::-webkit-slider-thumb {
     -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%;
-    background: #fff; border: 2.5px solid var(--tcn-color);
-    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3); cursor: grab; transition: transform 0.15s ease;
+    background: var(--raised); border: 2.5px solid var(--ink);
+    cursor: grab; transition: transform 0.15s var(--ease-out);
   }
-  .tcn input[type='range']::-webkit-slider-thumb:active { transform: scale(1.14) rotate(-7deg); cursor: grabbing; }
+  .tcn input[type='range']::-webkit-slider-thumb:active { transform: scale(1.12); cursor: grabbing; }
   .tcn input[type='range']::-moz-range-thumb {
-    width: 22px; height: 22px; border-radius: 50%; background: #fff; border: 2.5px solid var(--tcn-color);
-    box-shadow: 0 4px 10px -2px rgba(45, 43, 85, 0.3); cursor: grab;
+    width: 22px; height: 22px; border-radius: 50%; background: var(--raised); border: 2.5px solid var(--ink);
+    cursor: grab;
   }
-  .tcn input[type='range']:focus-visible { outline: 2px solid #E8573D; outline-offset: 6px; }
+  .tcn input[type='range']:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
 
   .tcn-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tcn-chip {
     --chip: #6c4ab6; position: relative; display: inline-flex; align-items: center; gap: 0.5rem;
-    padding: 0.45rem 0.85rem; border-radius: 999px; background: #fffbf5;
-    border: 1.5px solid rgba(108, 74, 182, 0.18);
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.78rem; font-weight: 600;
-    color: #2d2b55; cursor: pointer; transition: all 0.18s ease;
+    padding: 0.45rem 0.85rem; border-radius: 8px; background: var(--paper);
+    border: 1px solid var(--line);
+    font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.78rem; font-weight: 600;
+    color: var(--ink); cursor: pointer; transition: border-color 0.18s var(--ease-out), background 0.18s var(--ease-out);
   }
   .tcn-chip input { position: absolute; opacity: 0; pointer-events: none; }
-  .tcn-chip:hover { border-color: rgba(108, 74, 182, 0.45); }
-  .tcn-chip:focus-within { outline: 2px solid #E8573D; outline-offset: 3px; }
-  .tcn-chip.is-on { background: var(--chip); border-color: var(--chip); color: #fff; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, 0.3); }
+  .tcn-chip:hover { border-color: var(--line-strong); }
+  .tcn-chip:focus-within { outline: 2px solid var(--accent); outline-offset: 3px; }
+  .tcn-chip.is-on { background: var(--ink); border-color: var(--ink); color: var(--paper); }
   .tcn-chip.tcn-pop { animation: tcn-pop 0.34s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  @keyframes tcn-pop { 0% { transform: scale(1); } 45% { transform: scale(1.1) rotate(-1.5deg); } 100% { transform: scale(1); } }
-  .tcn-chip-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--chip); box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.4); }
-  .tcn-chip.is-on .tcn-chip-dot { box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.7); }
+  @keyframes tcn-pop { 0% { transform: scale(1); } 45% { transform: scale(1.08); } 100% { transform: scale(1); } }
+  /* The dot carries the demonstrated brand color (the data being picked); the label stays ink/paper for contrast. */
+  .tcn-chip-dot { width: 14px; height: 14px; border-radius: 50%; background: var(--chip); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.18); }
+  .tcn-chip.is-on .tcn-chip-dot { box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.85); }
 
   /* ========== chain ========== */
   .tcn-stage {
-    background: #fff; border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 18px;
+    background: var(--paper); border: 1px solid var(--line); border-radius: 12px;
     padding: clamp(1.1rem, 2vw, 1.6rem);
-    box-shadow: 0 18px 40px -24px rgba(45, 43, 85, 0.28), 0 0 0 1px rgba(108, 74, 182, 0.05);
   }
   .tcn-chain { list-style: none; margin: 0; padding: 0; }
   .tcn-tier {
     display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap;
-    background: #fffbf5; border: 1px solid rgba(45, 43, 85, 0.08); border-radius: 12px;
+    background: var(--raised); border: 1px solid var(--line); border-radius: 8px;
     padding: 0.7rem 0.85rem; position: relative;
   }
   .tcn-tier-tag {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif; font-size: 0.62rem; font-weight: 700;
-    text-transform: uppercase; letter-spacing: 0.08em; color: #fff; background: #3e6e3d;
-    padding: 3px 8px; border-radius: 999px; flex-shrink: 0;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.6rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--paper); background: var(--ink-muted);
+    padding: 3px 8px; border-radius: 6px; flex-shrink: 0;
   }
-  .tcn-tier[data-tier='global'] .tcn-tier-tag { background: #2d2b55; }
-  .tcn-tier-tag--plum { background: #6c4ab6 !important; }
-  .tcn-tier-tag--sunset { background: #a24818 !important; }
+  .tcn-tier[data-tier='global'] .tcn-tier-tag { background: var(--ink); }
+  .tcn-tier-tag--plum { background: var(--ink) !important; }
+  .tcn-tier-tag--sunset { background: var(--accent) !important; }
   .tcn-tier-token {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.8rem; color: #2d2b55; font-weight: 600;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.8rem; color: var(--ink); font-weight: 600;
   }
   .tcn-ref {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.72rem;
-    color: rgba(45, 43, 85, 0.55); margin-left: auto;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.72rem;
+    color: var(--ink-muted); margin-left: auto;
   }
   .tcn-swatch {
     width: 22px; height: 22px; border-radius: 6px; margin-left: auto; flex-shrink: 0;
-    background: var(--tcn-color); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.1);
-    transition: background 0.25s ease;
+    background: var(--tcn-color); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12);
+    transition: background 0.25s var(--ease-out);
   }
   .tcn-arrow {
     display: flex; align-items: center; gap: 0.5rem; padding: 0.3rem 0 0.3rem 1rem; position: relative;
   }
   .tcn-arrow::before {
-    content: ''; width: 2px; height: 18px; background: rgba(108, 74, 182, 0.3); border-radius: 2px; margin-right: 0.4rem;
+    content: ''; width: 1px; height: 18px; background: var(--line-strong); border-radius: 2px; margin-right: 0.4rem;
   }
   .tcn-arrow span {
-    font-family: var(--font-fraunces), Georgia, serif; font-style: italic; font-size: 0.78rem; color: #6c4ab6;
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.68rem;
+    text-transform: uppercase; letter-spacing: 0.12em; color: var(--ink-muted);
   }
   /* downward flow pulse: each tier lights in sequence */
-  .tcn-chain.tcn-flow .tcn-tier { animation: tcn-light 0.5s ease-out backwards; }
+  .tcn-chain.tcn-flow .tcn-tier { animation: tcn-light 0.5s var(--ease-out) backwards; }
   .tcn-chain.tcn-flow .tcn-tier[data-tier='global'] { animation-delay: 0s; }
   .tcn-chain.tcn-flow .tcn-tier[data-tier='semantic'] { animation-delay: 0.16s; }
   .tcn-chain.tcn-flow .tcn-tier[data-tier='component'] { animation-delay: 0.32s; }
   @keyframes tcn-light {
-    0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--tcn-color) 45%, transparent); border-color: var(--tcn-color); }
-    100% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--tcn-color) 0%, transparent); }
+    0% { box-shadow: 0 0 0 0 rgb(var(--accent-rgb) / 0.45); border-color: var(--accent); }
+    100% { box-shadow: 0 0 0 8px rgb(var(--accent-rgb) / 0); }
   }
 
   /* ========== preview ========== */
   .tcn-preview {
     display: flex; align-items: center; gap: 0.85rem; flex-wrap: wrap;
-    margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px dashed rgba(108, 74, 182, 0.2);
+    margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--line);
   }
   .tcn-preview-rule {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.68rem;
-    text-transform: uppercase; letter-spacing: 0.12em; color: rgba(45, 43, 85, 0.6);
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.6875rem;
+    text-transform: uppercase; letter-spacing: 0.16em; color: var(--ink-muted);
   }
   .tcn-sample-btn {
     background: var(--tcn-color); color: #fff; border: 0; border-radius: var(--tcn-radius);
-    padding: 0.6rem 1.1rem; font-family: var(--font-space-grotesk), system-ui, sans-serif;
-    font-weight: 600; font-size: 0.9rem; box-shadow: 0 8px 18px -8px color-mix(in srgb, var(--tcn-color) 70%, transparent);
-    transition: background 0.25s ease, border-radius 0.25s ease, box-shadow 0.25s ease;
+    padding: 0.6rem 1.1rem; font-family: var(--font-hanken), system-ui, sans-serif;
+    font-weight: 600; font-size: 0.9rem;
+    transition: background 0.25s var(--ease-out), border-radius 0.25s var(--ease-out);
   }
   .tcn-sample-tag {
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace; font-size: 0.72rem;
-    color: var(--tcn-color); background: color-mix(in srgb, var(--tcn-color) 12%, transparent);
-    padding: 0.25rem 0.6rem; border-radius: calc(var(--tcn-radius) * 0.6 + 2px); transition: all 0.25s ease;
-  }
+    font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 0.72rem;
+    color: var(--ink-muted); background: var(--paper); border: 1px solid var(--line);
+    padding: 0.25rem 0.6rem; border-radius: calc(var(--tcn-radius) * 0.6 + 2px); transition: border-radius 0.25s var(--ease-out); }
 
   @media (prefers-reduced-motion: reduce) {
     .tcn-chip, .tcn-swatch, .tcn-sample-btn, .tcn-sample-tag,

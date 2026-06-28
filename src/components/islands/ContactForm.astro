@@ -7,11 +7,10 @@ import FormAlert from '~/components/form/FormAlert.astro';
 import SubmitButton from '~/components/form/SubmitButton.astro';
 
 const services = [
-  { value: 'hiring-recruiting', label: 'Hiring or recruiting' },
-  { value: 'design-system-audit', label: 'Design system audit' },
-  { value: 'component-library', label: 'Component library' },
-  { value: 'accessibility-review', label: 'Accessibility review' },
-  { value: 'fractional-engagement', label: 'Fractional engagement' },
+  { value: 'product-engineer-role', label: 'Product engineer role' },
+  { value: 'frontend-ui-role', label: 'Front-end / UI engineer role' },
+  { value: 'contract-fractional', label: 'Contract / fractional role' },
+  { value: 'recruiting', label: 'Recruiting / talent' },
   { value: 'something-else', label: 'Something else' },
 ];
 ---
@@ -25,7 +24,7 @@ const services = [
   data-fallback-email="josh@thebrileys.com"
 >
   <FormAlert variant="success" id="form-alert-success">
-    <p class="font-heading font-semibold text-navy">Thanks — your message is on its way.</p>
+    <p class="font-heading font-semibold text-navy">Thanks. Your message is on its way.</p>
     <p class="mt-1 text-charcoal/75">I’ll reply within one business day, usually sooner.</p>
   </FormAlert>
   <FormAlert variant="error" id="form-alert-error">
@@ -50,11 +49,11 @@ const services = [
     <Input name="phone" type="tel" autocomplete="tel" inputmode="tel" />
   </Field>
 
-  <Field label="What can I help with?" name="service" required>
+  <Field label="What's this about?" name="service" required>
     <Select name="service" options={services} placeholder="Pick one" required />
   </Field>
 
-  <Field label="Project notes" name="message" required hint="A few sentences is plenty.">
+  <Field label="Notes" name="message" required hint="A few sentences about the role is plenty.">
     <Textarea name="message" rows={5} required />
   </Field>
 

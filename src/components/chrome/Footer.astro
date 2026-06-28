@@ -1,7 +1,7 @@
 ---
 import Container from '~/components/layout/Container.astro';
-import Logo from '~/components/primitives/Logo.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import Logo from '~/components/primitives/Logo.astro';
 import { FOOTER_NAV } from '~/lib/nav';
 import { cx } from '~/lib/cx';
 
@@ -13,46 +13,68 @@ const { class: className } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
-<footer class={cx('bg-navy text-white/70 py-12', className)}>
-  <Container>
-    <div class="grid md:grid-cols-4 gap-10">
-      <div class="md:col-span-2">
-        <Logo variant="lockup" tone="inverse" size="md" />
-        <p class="mt-4 text-sm text-white/60 max-w-sm">
-          UX engineer & design systems consultant — helping teams ship consistent, accessible interfaces.
+<footer class={cx('bg-ink text-paper/60 border-t border-paper/10', className)}>
+  <Container width="wide" class="py-16 md:py-20">
+    <div class="grid gap-12 lg:grid-cols-12">
+      <div class="lg:col-span-6">
+        <Logo variant="lockup" tone="inverse" size="lg" />
+        <p class="mt-6 max-w-sm text-sm leading-relaxed text-paper/55">
+          Design- and front-end-focused product engineer. The interface is where
+          I bring the most value: design-grade, accessible UI, backed by capable
+          full-stack development in Rails and TypeScript.
+        </p>
+        <p class="mt-5 inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/60">
+          <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
+          Open to product engineering roles
         </p>
       </div>
-      {FOOTER_NAV.map((col) => (
-        <nav aria-label={col.heading}>
-          <h2 class="font-heading text-sm font-semibold uppercase tracking-widest text-white mb-3">{col.heading}</h2>
-          <ul class="flex flex-col gap-2">
-            {col.links.map((link) => (
-              <li>
-                <a href={link.href} class="text-sm text-white/70 hover:text-lemon transition-colors">{link.label}</a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      ))}
-    </div>
-    <div class="mt-10 pt-6 border-t border-white/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 text-xs text-white/50">
-      <div class="flex flex-col sm:flex-row sm:items-center gap-x-5 gap-y-2">
-        <p>© {year} Briley Creative. All rights reserved.</p>
-        <nav class="flex items-center gap-5" aria-label="Legal">
-          <a href="/privacy/" class="hover:text-lemon transition-colors">Privacy</a>
-          <a href="/terms/" class="hover:text-lemon transition-colors">Terms</a>
-        </nav>
+
+      <div class="lg:col-span-6 grid grid-cols-2 gap-8 sm:gap-12">
+        {FOOTER_NAV.map((col) => (
+          <nav aria-label={col.heading}>
+            <h2 class="mono-label !text-paper/60">{col.heading}</h2>
+            <ul class="mt-4 flex flex-col gap-2.5">
+              {col.links.map((link) => (
+                <li>
+                  <a
+                    href={link.href}
+                    class="text-[0.95rem] text-paper/70 transition-colors hover:text-paper hover:underline underline-offset-4"
+                  >{link.label}</a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
       </div>
-      <a
-        href="https://www.linkedin.com/in/joshuabriley"
-        rel="noopener noreferrer"
-        target="_blank"
-        class="inline-flex items-center gap-1.5 hover:text-lemon transition-colors"
-        aria-label="LinkedIn profile"
-      >
-        <Icon name="ph:linkedin-logo-duotone" size={20} label="LinkedIn" />
-        LinkedIn
-      </a>
     </div>
+
+    <div class="mt-16 flex flex-col gap-4 border-t border-paper/10 pt-6 sm:flex-row sm:items-center sm:justify-between">
+      <div class="flex flex-col gap-x-5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 sm:flex-row sm:items-center">
+        <span class="inline-flex items-center min-h-[24px]">© {year} Joshua Briley</span>
+        <a href="/privacy/" class="inline-flex items-center min-h-[24px] transition-colors hover:text-paper/70 hover:underline underline-offset-4">Privacy</a>
+        <a href="/terms/" class="inline-flex items-center min-h-[24px] transition-colors hover:text-paper/70 hover:underline underline-offset-4">Terms</a>
+      </div>
+      <div class="flex items-center gap-5 font-mono text-[0.7rem] uppercase tracking-[0.12em]">
+        <a
+          href="https://www.linkedin.com/in/joshuabriley"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="inline-flex items-center gap-1.5 text-paper/55 transition-colors hover:text-paper hover:underline underline-offset-4"
+        >LinkedIn <Icon name="ph:arrow-up-right" size={12} /></a>
+        <a
+          href="https://github.com/somecallmejosh"
+          rel="noopener noreferrer"
+          target="_blank"
+          class="inline-flex items-center gap-1.5 text-paper/55 transition-colors hover:text-paper hover:underline underline-offset-4"
+        >GitHub <Icon name="ph:arrow-up-right" size={12} /></a>
+      </div>
+    </div>
+
+    {/* Colophon — a craft tell that quietly says "a person made this, not a kit." */}
+    <p class="mt-8 font-mono text-[0.66rem] leading-relaxed tracking-[0.1em] text-paper/35">
+      Hand-built with Astro · set in <span class="text-paper/55">Newsreader</span>,
+      <span class="text-paper/55"> Hanken Grotesk</span> &amp;
+      <span class="text-paper/55"> Geist Mono</span> · no templates were harmed.
+    </p>
   </Container>
 </footer>

@@ -1,0 +1,125 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+
+/**
+ * ScrollShot — a full-page screenshot shown inside a fixed-height browser window
+ * that scrolls internally. For long captures: you see the top and scroll the
+ * frame to reveal the whole page. Same editorial chrome as SiteShot. Pass `href`
+ * to make the label a link to the live site (omit for auth-gated / local views).
+ */
+
+interface Props {
+  src: string;
+  alt: string;
+  /** Short label in the frame bar, e.g. "berxi.com" or "Buttons". */
+  label: string;
+  /** Optional caption under the frame. */
+  caption?: string;
+  /** Optional outbound link — turns the label into a link to the live site. */
+  href?: string;
+  /** Max visible height of the scroll stage. */
+  maxH?: string;
+  class?: string;
+}
+
+const { src, alt, label, caption, href, maxH = '620px', class: className } = Astro.props;
+---
+
+<figure class={cx('scroll-shot', className)}>
+  <div class="scroll-shot-bar">
+    <span class="scroll-shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+    {href ? (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="scroll-shot-label scroll-shot-label--link"
+        aria-label={`Open ${label} in a new tab`}
+      >{label} <Icon name="ph:arrow-up-right" size={11} /></a>
+    ) : (
+      <span class="scroll-shot-label">{label}</span>
+    )}
+    <span class="scroll-shot-hint" aria-hidden="true">full page · scroll ↕</span>
+  </div>
+  <div class="scroll-shot-stage" style={`max-height:${maxH}`} tabindex="0" role="group" aria-label={`${label}: full-page screenshot, scrollable`}>
+    <img src={src} alt={alt} loading="lazy" decoding="async" />
+  </div>
+  {caption && <figcaption class="scroll-shot-cap">{caption}</figcaption>}
+</figure>
+
+<style>
+  .scroll-shot { margin: 0; }
+
+  .scroll-shot-bar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.55rem 0.9rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-bottom: 0;
+    border-radius: 14px 14px 0 0;
+  }
+  .scroll-shot-dots { display: inline-flex; gap: 6px; }
+  .scroll-shot-dots span {
+    width: 8px; height: 8px; border-radius: 50%;
+    border: 1px solid var(--line-strong);
+  }
+  .scroll-shot-label {
+    flex: 1;
+    min-width: 0;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  a.scroll-shot-label--link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    width: max-content;
+    transition: color 0.2s var(--ease-out);
+  }
+  a.scroll-shot-label--link:hover { color: var(--accent); }
+  .scroll-shot-hint {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .scroll-shot-stage {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    border: 1px solid var(--line);
+    border-radius: 0 0 14px 14px;
+    background: var(--raised);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+    scrollbar-width: thin;
+  }
+  .scroll-shot-stage:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .scroll-shot-stage img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .scroll-shot-cap {
+    margin-top: 0.85rem;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+</style>

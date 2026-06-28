@@ -1,0 +1,360 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Link from '~/components/primitives/Link.astro';
+
+const title = 'Bass Face | Joshua Briley';
+const description =
+  'Case study: a bass-practice tool I built for myself in React, with generative backing tracks from Tone.js and reflective feedback through the Claude API. A product engineer wiring live services into a finished product.';
+
+const proof = [
+  {
+    label: 'Skills proven',
+    items: [
+      'React product development',
+      'Generative audio with Tone.js',
+      'Claude API integration',
+      'Wiring live third-party services',
+      'Shipping a product end to end',
+    ],
+  },
+  {
+    // TODO(josh): confirm — only React, Tone.js, and the Claude API are confirmed.
+    // Add the build tool / hosting (e.g. Vite, Netlify) once verified.
+    label: 'Stack',
+    items: ['React', 'Tone.js', 'Claude API'],
+  },
+  {
+    // TODO(josh): confirm — these describe the intended engineering/a11y choices.
+    // Verify against the actual implementation before treating them as receipts.
+    label: 'Quality',
+    items: [
+      'User-initiated audio (no autoplay)',
+      'A real product, not a prototype',
+      'Two live services in one interface',
+    ],
+  },
+  {
+    label: 'Outcomes',
+    items: ['Built for daily practice', 'Live audio + an LLM in one product', 'Personal project · creative range'],
+  },
+];
+
+const docket = [
+  { href: '#why', icon: 'ph:guitar', label: 'Why I built my own practice tool' },
+  { href: '#live-services', icon: 'ph:plugs-connected', label: 'Wiring live services into a real product' },
+  { href: '#finish', icon: 'ph:sparkle', label: 'Creative range, and caring about the finish' },
+];
+---
+
+<BaseLayout title={title} description={description}>
+
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/personal-projects/" class="transition-colors hover:text-accent">Personal projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">Bass Face</span>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="mb-7 flex items-center gap-3">
+            <span class="hero-wordmark font-display text-ink">bass<span class="text-accent">face</span></span>
+            <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
+            <p class="mono-label">Case study</p>
+          </div>
+
+          <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
+            I built my own bass practice tool, and I <em class="ink-wink font-normal italic">finished</em> it.
+          </Heading>
+
+          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
+            A practice tool I built for myself in React: generative backing tracks
+            synthesized live with Tone.js, and reflective feedback wired in through the
+            Claude API. No client, no deadline. Just a real product, built end to end,
+            because I wanted to use it.
+          </Text>
+        </div>
+
+        <aside class="hero-rail" aria-label="Project details">
+          <dl>
+            <div>
+              <dt>Role</dt>
+              <dd>Product Engineer</dd>
+            </div>
+            <div>
+              {/* TODO(josh): confirm — domain label. "Music practice" inferred from the tool's purpose. */}
+              <dt>Domain</dt>
+              <dd>Music practice</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>React, Tone.js, Claude</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Live services in a product</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {proof.map((group) => (
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight">
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <Text size="lg" tone="muted" class="mt-10 measure">
+        Bass Face is a personal project, and that's the whole point. I play bass and gig
+        regularly, so I know exactly what I want out of a practice session. Instead of
+        settling for a metronome and a backing-track playlist, I built the thing I wished
+        existed. And because no one was asking for it, no one was around to talk me out of
+        sweating the finish.
+      </Text>
+    </Container>
+  </Section>
+
+  <Section id="why" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Why I built my own practice tool
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Practicing bass well takes two things most tools give you only one of: something
+              to play <em>against</em>, and an honest read on how it went. Backing tracks are
+              static: the same loop every time, in the same key, at the same tempo. And nothing
+              tells you what to work on next except your own memory of a session you were busy
+              playing through.
+            </p>
+            <p>
+              So I built Bass Face for myself, as a real React product rather than a weekend
+              throwaway. Building for an audience of one is a strange kind of freedom: there was
+              no spec to satisfy and no deadline to cut against, which meant the only thing
+              deciding when it was &ldquo;done&rdquo; was whether <em>I</em> actually wanted to
+              open it every day. That's a higher bar than most briefs set.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">What it needed</p>
+              <Heading level={3} visual="h3" class="mb-2">Something to play against</Heading>
+              <Text size="sm" tone="muted">
+                Backing tracks that change instead of repeating, generated live, so practice
+                never collapses into muscle memory of one fixed loop.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">What it needed</p>
+              <Heading level={3} visual="h3" class="mb-2">An honest read</Heading>
+              <Text size="sm" tone="muted">
+                Reflective feedback on a session, so the next one has a direction instead of
+                starting from a blank page every time.
+              </Text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="live-services" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Wiring live services into a real product
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Bass Face leans on two live services, each doing something a static app can't.
+              <strong class="text-ink font-semibold">Tone.js</strong> synthesizes the backing
+              tracks in the browser in real time. This is generated audio, not a file being
+              played back, so the accompaniment can shift instead of looping. Audio is always
+              <em>user-initiated</em>: you press play. That's both the natural interaction and
+              the right accessibility default: nothing blasts out of the speakers the moment the
+              page loads.
+            </p>
+            <p>
+              The second service is the <strong class="text-ink font-semibold">Claude API</strong>,
+              wired in for reflective feedback, turning a practice session into a short,
+              useful read on what to work on next. The interesting engineering isn't either
+              service on its own; it's making real-time audio synthesis and an LLM live together
+              in one coherent interface, with the latency, state, and failure modes of both
+              handled gracefully. That integration work is exactly what product engineering is.
+            </p>
+            {/* TODO(josh): confirm — what the Claude feedback is based on (e.g. notes/settings the user enters about a session). Claude doesn't process raw audio, so describe the actual input if you want this more concrete. */}
+          </div>
+
+          <div class="mt-10 border-t border-line">
+            <div class="border-b border-line py-5">
+              <div class="flex items-start gap-4">
+                <Icon name="ph:waveform" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+                <div>
+                  <Heading level={3} visual="h4" tone="ink">Tone.js · generative backing tracks</Heading>
+                  <p class="mt-1 text-ink-muted leading-relaxed">
+                    Audio synthesized live in the browser, user-initiated by design: practice
+                    accompaniment that changes instead of repeating.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="border-b border-line py-5">
+              <div class="flex items-start gap-4">
+                <Icon name="ph:chat-circle-dots" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+                <div>
+                  <Heading level={3} visual="h4" tone="ink">Claude API · reflective feedback</Heading>
+                  <p class="mt-1 text-ink-muted leading-relaxed">
+                    An LLM wired into the practice loop to reflect a session back and point at
+                    what to work on next.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              The hard part isn't either service alone. It's making real-time audio and an LLM
+              feel like one finished product.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="finish" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Creative range, and caring about the finish
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Bass Face covers a lot of distance for a personal project: live audio synthesis on
+              one side, an LLM integration on the other, and a real interface holding both
+              together. That range (comfortable wiring up DSP-style audio one moment and a
+              language model the next) is the part I'm proud of. It's the same instinct that
+              lets me move across a stack instead of staying in one lane.
+            </p>
+            <p>
+              And because I built it for myself, nothing forced me to cut the last ten percent:
+              the empty states, the play/stop interaction, the moment when there's nothing to
+              reflect on yet. That's the same finish I bring to the products I ship for teams. A
+              personal tool is just the clearest place to show it, because there's no one else to
+              blame for the parts that aren't done.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:arrows-out" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Creative range</Heading>
+              <Text size="sm" tone="muted">
+                Real-time audio and an LLM in one build: comfort moving across very different
+                parts of a stack.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:plugs-connected" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Live services, wired well</Heading>
+              <Text size="sm" tone="muted">
+                Third-party services integrated into a coherent product, not bolted on as a demo.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:sparkle" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">A finished feel</Heading>
+              <Text size="sm" tone="muted">
+                The last ten percent (empty states, interactions, defaults) treated as the
+                point, not the afterthought.
+              </Text>
+            </div>
+          </div>
+
+          {/* TODO(josh): confirm — there's no live demo / repo link on this page because I can't confirm one exists. If Bass Face is deployed or on GitHub, add hero CTAs (like rudiment-ui.astro) linking to it. */}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
+      <Heading level={2} visual="display-lg" tone="paper">
+        I build complete products, end to end.
+      </Heading>
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        Bass Face is what I build when no one's asking: live audio, an LLM, and a finished interface, wired together for the fun of it. The same instinct shows up in the products I ship for teams. Let's talk.
+      </Text>
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>
+        <a href="/resume/" class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper">
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
+      </div>
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/personal-projects/" class="!text-paper hover:!text-paper/70">Back to personal projects</Link>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>

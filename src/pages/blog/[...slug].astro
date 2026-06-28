@@ -37,6 +37,7 @@ const morePosts = (await getCollection('posts', ({ data }) => !data.draft))
   pathname={`/blog/${post.id}/`}
   headings={headings}
   morePosts={morePosts}
+  wide={post.data.interactive}
 >
   <Content />
 </BlogPost>

@@ -30,15 +30,6 @@ const testimonials = defineCollection({
   }),
 });
 
-const faqs = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/faqs' }),
-  schema: z.object({
-    question: z.string(),
-    category: z.enum(['services-fit', 'process-timeline', 'deliverables', 'logistics']),
-    order: z.number(),
-  }),
-});
-
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: z.object({
@@ -61,7 +52,10 @@ const posts = defineCollection({
     featured: z.boolean().default(false),
     /** Hide from listings — useful for drafts. */
     draft: z.boolean().default(false),
+    /** Interactive post (embeds a tool widget): drops the TOC rail and lets
+     *  `.post-tool` blocks break out wider than the reading column. */
+    interactive: z.boolean().default(false),
   }),
 });
 
-export const collections = { testimonials, faqs, posts };
+export const collections = { testimonials, posts };

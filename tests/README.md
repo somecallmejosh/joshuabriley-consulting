@@ -21,6 +21,7 @@ npm run test:e2e
 Runs against `npm run preview` (built site).
 
 What's covered:
+
 - `tests/e2e/keyboard.spec.ts`
   - axe-core scan of `/` and `/component-inventory/` (WCAG 2.1 AA, zero violations).
   - Skip-link tab → activate → focus on `#main`.
@@ -29,3 +30,5 @@ What's covered:
 Because the inventory page exercises every component variant, the page-level
 axe run effectively validates each component's accessibility contract. To
 add a new variant to the test surface, add it to the inventory page.
+
+http://localhost:4322/tools/scorecard/results/?r=12121212212212212121121111222121

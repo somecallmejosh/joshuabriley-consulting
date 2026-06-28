@@ -117,14 +117,13 @@
     pointer-events: none;
     width: max-content;
     max-width: 18rem;
-    background: #2d2b55;
-    color: #fffdf9;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--line-strong);
     border-radius: 10px;
     padding: 0.55rem 0.75rem 0.6rem;
-    box-shadow:
-      0 18px 40px -12px rgba(45, 43, 85, 0.5),
-      0 0 0 1px rgba(255, 255, 255, 0.08) inset;
-    font-family: var(--font-jetbrains-mono), ui-monospace, monospace;
+    box-shadow: 0 14px 36px -14px rgba(27, 26, 23, 0.5);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.72rem;
     line-height: 1.45;
     opacity: 0;
@@ -137,32 +136,32 @@
     margin-bottom: 0.15rem;
   }
   .vs-chip-mark {
-    color: #ff8e53;
+    color: var(--paper);
     font-weight: 700;
     font-size: 0.7rem;
   }
   .vs-chip-title {
-    font-family: var(--font-space-grotesk), system-ui, sans-serif;
+    font-family: var(--font-hanken), system-ui, sans-serif;
     font-weight: 700;
     font-size: 0.78rem;
     letter-spacing: 0.02em;
   }
   .vs-chip-meta {
-    color: rgba(255, 253, 249, 0.78);
+    color: rgba(245, 244, 241, 0.82);
     word-break: break-word;
   }
   .vs-chip-foot {
     margin-top: 0.4rem;
     padding-top: 0.4rem;
-    border-top: 1px dashed rgba(255, 255, 255, 0.18);
-    color: rgba(255, 253, 249, 0.6);
+    border-top: 1px solid rgba(245, 244, 241, 0.18);
+    color: rgba(245, 244, 241, 0.7);
     font-size: 0.65rem;
     display: flex; align-items: center; gap: 0.4rem;
   }
   .vs-chip kbd {
-    background: rgba(255, 142, 83, 0.22);
-    border: 1px solid rgba(255, 142, 83, 0.4);
-    color: #ffd9c2;
+    background: rgba(245, 244, 241, 0.12);
+    border: 1px solid rgba(245, 244, 241, 0.24);
+    color: var(--paper);
     font-size: 0.62rem;
     padding: 1px 5px;
     border-radius: 3px;
@@ -173,7 +172,7 @@
   html.vs-armed [data-source] { cursor: help; }
   html.vs-armed [data-source]:hover,
   html.vs-armed .vs-target {
-    outline: 1px dashed rgba(232, 87, 61, 0.7);
+    outline: 1px solid var(--accent);
     outline-offset: 4px;
   }
 

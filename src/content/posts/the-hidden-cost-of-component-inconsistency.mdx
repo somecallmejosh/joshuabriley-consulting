@@ -1,6 +1,6 @@
 ---
 title: The hidden cost of component inconsistency
-description: Fragmented UI components create distributed costs that rarely get tracked as a single problem. Here's how to see them — and make the case for the fix.
+description: Fragmented UI components create distributed costs that rarely get tracked as a single problem. Here's how to see them, and make the case for the fix.
 date: 2026-04-04
 category: Design Systems
 tags:
@@ -18,13 +18,13 @@ featured: true
   Every team I've worked with has a story that starts the same way: someone
   needed a button, the one in the design system didn't quite fit, so they made a
   new one. It was reasonable in the moment. It always is. Multiply that moment
-  by two years and six squads, and you have a problem nobody signed up for — and
+  by two years and six squads, and you have a problem nobody signed up for, and
   nobody owns.
 </p>
 
 Component inconsistency is rarely catastrophic. It's a tax. A steady, distributed drag that shows up in a dozen places and belongs to none of them. Because it's never the headline on any single ticket, it's almost impossible to point at. But when you start looking for its fingerprints, they're everywhere.
 
-This is my attempt to make those fingerprints visible — to name the specific places the cost hides, and to give you something you can bring to a planning conversation instead of a hunch.
+This is my attempt to make those fingerprints visible: to name the specific places the cost hides, and to give you something you can bring to a planning conversation instead of a hunch.
 
 > The hardest bugs to fix are the ones that don't look like bugs. They look like the way things are.
 
@@ -36,7 +36,7 @@ Here's where I consistently find it hiding:
 
 <div class="mt-10 grid sm:grid-cols-2 gap-5 not-prose">
   <div class="cost-card" style="transform: rotate(-0.4deg)">
-    <div class="icon-wrap" style="background: #e8573d">
+    <div class="icon-wrap">
       <iconify-icon
         icon="ph:git-pull-request-duotone"
         width="24"
@@ -47,11 +47,11 @@ Here's where I consistently find it hiding:
     </h3>
     <p class="text-charcoal/75 text-sm leading-relaxed">
       Reviewers pause to ask which version is the canonical one. It doesn't
-      block the PR — it just makes every PR a little slower, forever.
+      block the PR. It just makes every PR a little slower, forever.
     </p>
   </div>
   <div class="cost-card" style="transform: rotate(0.3deg)">
-    <div class="icon-wrap" style="background: #6c4ab6">
+    <div class="icon-wrap">
       <iconify-icon icon="ph:wheelchair-duotone" width="24"></iconify-icon>
     </div>
     <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
@@ -59,11 +59,11 @@ Here's where I consistently find it hiding:
     </h3>
     <p class="text-charcoal/75 text-sm leading-relaxed">
       A single fix stops being a single fix. You're now patching the same
-      violation in four codebases — and hoping you found all four.
+      violation in four codebases, and hoping you found all four.
     </p>
   </div>
   <div class="cost-card" style="transform: rotate(0.4deg)">
-    <div class="icon-wrap" style="background: #ff8e53">
+    <div class="icon-wrap">
       <iconify-icon icon="ph:pencil-ruler-duotone" width="24"></iconify-icon>
     </div>
     <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
@@ -75,7 +75,7 @@ Here's where I consistently find it hiding:
     </p>
   </div>
   <div class="cost-card" style="transform: rotate(-0.3deg)">
-    <div class="icon-wrap" style="background: #5dade2">
+    <div class="icon-wrap">
       <iconify-icon icon="ph:user-plus-duotone" width="24"></iconify-icon>
     </div>
     <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
@@ -87,14 +87,14 @@ Here's where I consistently find it hiding:
     </p>
   </div>
   <div class="cost-card sm:col-span-2" style="transform: rotate(-0.1deg)">
-    <div class="icon-wrap" style="background: #7bb47a">
+    <div class="icon-wrap">
       <iconify-icon icon="ph:trend-up-duotone" width="24"></iconify-icon>
     </div>
     <h3 class="font-display text-xl font-semibold text-navy leading-tight mb-2">
       Upgrades that only reach half the house
     </h3>
     <p class="text-charcoal/75 text-sm leading-relaxed">
-      You ship a better focus state, a cleaner token, a faster render path — and
+      You ship a better focus state, a cleaner token, a faster render path, and
       it only lands for the teams already using the shared version. The holdouts
       stay frozen. Over time, the ROI case for investing in the system gets
       harder, not easier, because its reach is quietly shrinking.
@@ -115,30 +115,20 @@ The organizational failure mode is that no one is summing the column. The tax ex
 
 ## <span class="num">3.</span> Making the invisible countable
 
-The fix for an accounting problem is an accounting tool. Not a manifesto, not a rewrite — a ledger. Something that takes the fragmented thing and pins a number to it so it can sit on the same page as the features it's quietly competing with.
+The fix for an accounting problem is an accounting tool. Not a manifesto, not a rewrite. A ledger. Something that takes the fragmented thing and pins a number to it so it can sit on the same page as the features it's quietly competing with.
 
 I call my version of this a **Design System Scorecard**, and it's deliberately unglamorous. It does three things:
 
-- **Inventories implementations.** How many buttons actually exist across the products? How many date pickers? You will be surprised, and leadership will be surprised with you — which is exactly the point.
+- **Inventories implementations.** How many buttons actually exist across the products? How many date pickers? You will be surprised, and leadership will be surprised with you, which is exactly the point.
 - **Measures divergence.** For each component, how far has each implementation drifted from the canonical one? A rough rubric beats no rubric.
 - **Quantifies maintenance burden.** Pull the last two or three quarters of tickets touching these components. Hours spent, bugs filed, accessibility findings. Put it on one page.
 
-None of this is novel. The value isn't in the technique — it's in the act of putting a number next to something that's been a feeling for years. A feeling loses budget arguments. A number wins them.
+None of this is novel. The value isn't in the technique. It's in the act of putting a number next to something that's been a feeling for years. A feeling loses budget arguments. A number wins them.
 
 ## <span class="num">4.</span> What to do on Monday
 
 If this is resonating and you're wondering where to start, don't start with a proposal. Start with a walk. Open the repos, open the Figma file, and count buttons. Just buttons. One afternoon.
 
-I promise two things will happen. First, the number will be larger than you expected. Second, once you've seen it, you won't be able to un-see it — and neither will anyone you show it to. That's the moment the abstract concern becomes a concrete conversation, and concrete conversations are how design systems actually get funded.
-
-<div class="callout not-prose">
-  <p class="mt-1">
-    <strong>If you want a shortcut:</strong> I built the{' '}
-    <a href="/tools/scorecard/">Design System Scorecard</a> to do exactly this walk
-    with you — inventory, divergence, and burden, in one afternoon instead of
-    one quarter. It's free, and you can take the results straight into your next
-    planning conversation.
-  </p>
-</div>
+I promise two things will happen. First, the number will be larger than you expected. Second, once you've seen it, you won't be able to un-see it, and neither will anyone you show it to. That's the moment the abstract concern becomes a concrete conversation, and concrete conversations are how design systems actually get funded.
 
 The hidden cost of component inconsistency isn't hidden because it's small. It's hidden because nobody's named it yet. Naming it is the whole job.

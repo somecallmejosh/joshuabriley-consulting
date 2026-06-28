@@ -3,18 +3,11 @@ import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
 import Grid from '~/components/layout/Grid.astro';
-import Hero from '~/components/patterns/Hero.astro';
 import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CardGrid from '~/components/patterns/CardGrid.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
 import FAQ from '~/components/patterns/FAQ.astro';
 import FAQItem from '~/components/patterns/FAQItem.astro';
-import ShowcaseSwatch from '~/components/patterns/ShowcaseSwatch.astro';
-import ShowcaseRow from '~/components/patterns/ShowcaseRow.astro';
-import CodeBlock from '~/components/patterns/CodeBlock.astro';
-import WindowFrame from '~/components/patterns/WindowFrame.astro';
-import Metric from '~/components/patterns/Metric.astro';
-import TechStack from '~/components/patterns/TechStack.astro';
-import ProofPanel from '~/components/patterns/ProofPanel.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
@@ -22,15 +15,6 @@ import Logo from '~/components/primitives/Logo.astro';
 import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
 import Badge from '~/components/primitives/Badge.astro';
-import Avatar from '~/components/primitives/Avatar.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import Tape from '~/components/decorative/Tape.astro';
-import Pin from '~/components/decorative/Pin.astro';
-import Card from '~/components/card/Card.astro';
-import CardNumber from '~/components/card/CardNumber.astro';
-import CardQuoteMark from '~/components/card/CardQuoteMark.astro';
 import Field from '~/components/form/Field.astro';
 import Input from '~/components/form/Input.astro';
 import Textarea from '~/components/form/Textarea.astro';
@@ -40,522 +24,393 @@ import Choice from '~/components/form/Choice.astro';
 import FormAlert from '~/components/form/FormAlert.astro';
 import SubmitButton from '~/components/form/SubmitButton.astro';
 
-const colors = [
-  { name: 'cream',    hex: '#FFFDF9', surface: 'bg-cream' },
-  { name: 'peach',    hex: '#FFE8D6', surface: 'bg-peach' },
-  { name: 'lemon',    hex: '#FDE68A', surface: 'bg-lemon' },
-  { name: 'coral',    hex: '#E8573D', surface: 'bg-coral' },
-  { name: 'sunset',   hex: '#FF8E53', surface: 'bg-sunset' },
-  { name: 'plum',     hex: '#6C4AB6', surface: 'bg-plum' },
-  { name: 'navy',     hex: '#2D2B55', surface: 'bg-navy' },
-  { name: 'charcoal', hex: '#2E2E30', surface: 'bg-charcoal' },
-  { name: 'sage',     hex: '#7BB47A', surface: 'bg-sage' },
-  { name: 'sky',      hex: '#5DADE2', surface: 'bg-sky' },
+// ── Foundations: the constrained token set that drives the whole system.
+// Hex values mirror :root in src/styles/site.css. Swatches are rendered as
+// small hairline-bordered chips, not bright scrapbook tiles.
+const tokens = [
+  { name: 'paper',       token: '--paper',       hex: '#F5F4F1', note: 'Page background', fill: 'bg-paper', border: 'border-line-strong' },
+  { name: 'raised',      token: '--raised',      hex: '#FFFFFF', note: 'Cards, inputs', fill: 'bg-raised', border: 'border-line-strong' },
+  { name: 'ink',         token: '--ink',         hex: '#1B1A17', note: 'Headings, body, dark sections', fill: 'bg-ink', border: 'border-ink' },
+  { name: 'ink-muted',   token: '--ink-muted',   hex: '#5C5B55', note: 'Body min on paper (AA)', fill: 'bg-[#5C5B55]', border: 'border-[#5C5B55]' },
+  { name: 'ink-faint',   token: '--ink-faint',   hex: '#9A9892', note: 'Decorative only, never body text', fill: 'bg-[#9A9892]', border: 'border-[#9A9892]' },
+  { name: 'line',        token: '--line',        hex: '#E5E3DC', note: 'Hairline borders, dividers', fill: 'bg-line', border: 'border-line-strong' },
+  { name: 'line-strong', token: '--line-strong', hex: '#D6D3CA', note: 'Emphasised hairline', fill: 'bg-line-strong', border: 'border-line-strong' },
+  { name: 'accent',      token: '--accent',      hex: '#A8412A', note: 'One clay accent, used sparingly', fill: 'bg-accent', border: 'border-accent' },
 ];
 
-// AA-passing "deep" variants for TEXT on light surfaces. Reach for these (not the
-// base accents) whenever a color is used as body text. Deep coral is the one
-// exception: it is applied as the arbitrary value text-[#C13A22] / bg-[#C13A22],
-// NOT a named token — under this project's per-route CSS splitting a named
-// `coral-deep` utility silently fails on some routes.
-const deepColors = [
-  { name: 'coral-deep',  hex: '#C13A22', surface: 'bg-[#C13A22]' },
-  { name: 'sunset-deep', hex: '#A24818', surface: 'bg-sunset-deep' },
-  { name: 'sage-deep',   hex: '#3E6E3D', surface: 'bg-sage-deep' },
-  { name: 'sky-deep',    hex: '#1B6FA1', surface: 'bg-sky-deep' },
-];
-
+// Live in-section nav for the editorial rail.
 const sections = [
-  { id: 'foundations', label: 'Foundations',   icon: 'ph:palette-duotone' },
-  { id: 'atoms',       label: 'Atoms',         icon: 'ph:cards-three-duotone' },
-  { id: 'decorative',  label: 'Decorative',    icon: 'ph:sparkle-duotone' },
-  { id: 'cards',       label: 'Cards',         icon: 'ph:stack-duotone' },
-  { id: 'patterns',    label: 'Patterns',      icon: 'ph:columns-duotone' },
-  { id: 'technical',   label: 'Technical proof', icon: 'ph:terminal-window-duotone' },
-  { id: 'forms',       label: 'Forms',         icon: 'ph:clipboard-text-duotone' },
+  { id: 'foundations', label: 'Foundations' },
+  { id: 'typography',  label: 'Typography' },
+  { id: 'primitives',  label: 'Primitives' },
+  { id: 'patterns',    label: 'Patterns' },
+  { id: 'forms',       label: 'Forms' },
+  { id: 'motion',      label: 'Motion & spacing' },
 ];
 
-const apiSnippet = `// Modal.tsx — behaviour is owned, appearance is tokenised.
-export function Modal({ open, onClose, title, children }: ModalProps) {
-  const ref = useFocusTrap(open);     // keyboard + focus management
-  useScrollLock(open);
-  return (
-    <Portal>
-      <div role="dialog" aria-modal="true" aria-label={title} ref={ref}>
-        {children}
-      </div>
-    </Portal>
-  );
-}
-// No \`brand\` prop. Every surface themes it through CSS variables.`;
+const apiSnippet = `// Field.astro — accessibility wired in by construction.
+// label[for], input id, aria-describedby (hint + error),
+// aria-invalid and aria-required are all derived, never hand-set.
+const hintId = hint ? \`\${id}-hint\` : undefined;
+const errorId = error ? \`\${id}-error\` : undefined;
+const describedBy =
+  [hintId, errorId].filter(Boolean).join(' ') || undefined;
+// You cannot create a mislabeled input through this API.`;
 
-const testRun = `$ npm run test:a11y
- ✓ Modal traps focus and restores it on close      (412 ms)
- ✓ Menu is fully operable by keyboard only          (288 ms)
- ✓ Tokens meet WCAG AA contrast across all brands    (96 ms)
-
- 3 passed · 0 failed · 0 flaky`;
-
-const proofSections = [
-  { label: 'Skills proven', tone: 'plum' as const, items: ['Design systems', 'Accessible component APIs', 'Frontend architecture', 'Design-to-code'] },
-  { label: 'Stack', tone: 'navy' as const, items: ['TypeScript', 'React', 'Stencil', 'Storybook', 'Playwright', 'Figma Code Connect'] },
-  { label: 'Testing', tone: 'sage' as const, items: ['Playwright E2E', 'Jest unit', 'axe-core', 'Keyboard + SR review'] },
-  { label: 'Outcomes', tone: 'coral' as const, items: ['Multi-team adoption', 'Less duplicated UI', 'A11y raised system-wide'] },
+// Illustrative metric figures — replace with real numbers in production.
+const metrics = [
+  { value: '8', label: 'colour tokens drive everything' },
+  { value: '2', label: 'typefaces: Hanken + Geist Mono' },
+  { value: '100%', label: 'components keyboard-operable' },
+  { before: '6', value: '1', label: 'button implementations' },
 ];
 ---
 
-<BaseLayout title="Component inventory — Joshua Briley">
-  <Hero tone="cream" align="center">
-    <Blob slot="decorations" tone="lemon" size="lg" class="absolute top-12 right-[8%]" />
-    <Blob slot="decorations" tone="plum" size="md" shape="alt" class="absolute bottom-12 left-[6%]" animate="float-slow" />
+<BaseLayout
+  title="Design system: Editorial-Technical reference | Joshua Briley"
+  description="The Editorial-Technical design system: warm paper, near-black ink, one clay accent, Hanken Grotesk and Geist Mono. Colour tokens, type scale, primitives, patterns, and accessible form components."
+>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span>Design system / Reference</span>
+        <span class="hidden sm:inline text-ink-muted">Editorial-Technical · 2026</span>
+      </div>
 
-    <Badge slot="eyebrow" tone="plum" icon="ph:stack-duotone">Component inventory</Badge>
-    <Heading slot="title" level={1} visual="display-lg" align="center" balance>
-      The system, <WavyUnderline>composable</WavyUnderline> from primitives.
-    </Heading>
-    <Text slot="lead" size="xl" tone="muted">
-      Every pattern below is built from a small set of accessibility-first primitives. One <code class="font-mono text-base">&lt;Card&gt;</code> handles every card variant on the site; one <code class="font-mono text-base">&lt;Field&gt;</code> wires every label, hint, and error.
-    </Text>
-  </Hero>
+      <div class="mt-10 max-w-3xl lg:mt-14">
+        <Heading level={1} visual="display-xl">
+          The Editorial-Technical system.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-7">
+          Warm paper, near-black ink, and a single clay accent. Hanken Grotesk for
+          headings, Geist Mono for labels. Small radii, hairline borders, heavy
+          whitespace. Every page on the site composes from the tokens and
+          components documented here.
+        </Text>
+      </div>
 
-  <Section padding="tight" tone="white">
-    <Container>
-      <nav aria-label="Inventory sections" class="flex flex-wrap items-center justify-center gap-2">
+      <nav aria-label="Reference sections" class="mt-10 flex flex-wrap items-center gap-2">
         {sections.map((s) => (
-          <Button variant="ghost" size="sm" href={`#${s.id}`} iconLeft={s.icon}>
-            {s.label}
-          </Button>
+          <Button variant="ghost" size="sm" href={`#${s.id}`}>{s.label}</Button>
         ))}
       </nav>
     </Container>
   </Section>
 
-
-  <Section id="foundations" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Foundations"
-        eyebrowIcon="ph:palette-duotone"
-        eyebrowTone="coral"
-        title="Tokens that drive the system."
-        lead="Colors, typography, and spacing — the constrained set that keeps every component predictable."
-      />
-
-      <div class="mt-12">
-        <Heading level={3} visual="h3" class="mb-5">Color palette</Heading>
-        <Grid cols={4} gap="md">
-          {colors.map((c) => (
-            <ShowcaseSwatch surface={c.surface} name={c.name} hex={c.hex} />
-          ))}
-        </Grid>
-      </div>
-
-      <div class="mt-8">
-        <Heading level={4} visual="h4" class="mb-2">AA text variants</Heading>
-        <Text size="sm" tone="muted" class="mb-5 max-w-2xl">
-          Reach for these whenever an accent color is used as text on a light surface — the base accents fail AA at body sizes. Deep coral is the arbitrary value <code class="font-mono text-[#C13A22]">text-[#C13A22]</code>, never a named <code class="font-mono">coral-deep</code> token (per-route CSS splitting drops it).
+  {/* ───────────────────────── 01 · FOUNDATIONS ───────────────────────── */}
+  <Section id="foundations" tone="paper" padding="default" class="border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Foundations / 01</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md">Colour tokens.</Heading>
+        <Text tone="muted" class="mt-4">
+          The full palette is eight tokens. There are no bright fills, no gradients.
+          Contrast and rhythm come from ink on paper, with the clay accent reserved
+          for one mark per view. Every value is a CSS custom property in
+          <code class="font-mono text-[0.9em] text-accent"> :root</code>.
         </Text>
-        <Grid cols={4} gap="md">
-          {deepColors.map((c) => (
-            <ShowcaseSwatch surface={c.surface} name={c.name} hex={c.hex} textOn="white" />
-          ))}
-        </Grid>
       </div>
 
-      <SquiggleDivider class="my-16" />
+      <Grid cols={4} gap="md" class="mt-12">
+        {tokens.map((t) => (
+          <div class="rounded-lg border border-line bg-raised p-4">
+            <div class={`h-16 w-full rounded-[5px] border ${t.fill} ${t.border}`}></div>
+            <div class="mt-4 flex items-baseline justify-between gap-2">
+              <span class="font-sans text-sm font-semibold tracking-tight text-ink">{t.name}</span>
+              <span class="font-mono text-[0.7rem] uppercase tracking-[0.06em] text-ink-muted">{t.hex}</span>
+            </div>
+            <p class="mt-1 font-mono text-[0.65rem] text-accent">{t.token}</p>
+            <p class="mt-2 text-xs leading-relaxed text-ink-muted">{t.note}</p>
+          </div>
+        ))}
+      </Grid>
 
-      <div>
-        <Heading level={3} visual="h3" class="mb-5">Typography</Heading>
-        <div class="space-y-6">
-          <div>
-            <Badge tone="plum" size="sm">font-display · Fraunces</Badge>
-            <p class="font-display text-5xl font-semibold text-navy mt-3">A serif with personality.</p>
+      <div class="mt-10 rounded-lg border border-line bg-raised p-6 md:p-7">
+        <p class="mono-label">Contrast contract</p>
+        <Text size="sm" tone="muted" class="mt-3 max-w-3xl">
+          WCAG AA throughout. On paper, body copy never goes lighter than
+          <code class="font-mono text-[0.9em] text-ink"> ink-muted</code>;
+          <code class="font-mono text-[0.9em] text-ink"> ink-faint</code> is decorative only
+          (rules, dividers, disabled marks). On ink surfaces, text stays at
+          <code class="font-mono text-[0.9em] text-ink"> text-paper</code> or
+          <code class="font-mono text-[0.9em] text-ink"> text-paper/70</code> and above.
+        </Text>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── 02 · TYPOGRAPHY ───────────────────────── */}
+  <Section id="typography" tone="paper" padding="default" class="border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Typography / 02</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md">Two typefaces, one scale.</Heading>
+        <Text tone="muted" class="mt-4">
+          Hanken Grotesk carries display and body; Geist Mono carries every label,
+          index, and eyebrow. The <code class="font-mono text-[0.9em] text-accent">Heading</code> primitive
+          splits semantic level from visual size, so the document outline never breaks
+          to satisfy a layout.
+        </Text>
+      </div>
+
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line">
+        {[
+          { spec: 'Heading · display-xl', visual: 'display-xl' as const, sample: 'Display extra-large' },
+          { spec: 'Heading · display-lg', visual: 'display-lg' as const, sample: 'Display large' },
+          { spec: 'Heading · display-md', visual: 'display-md' as const, sample: 'Display medium' },
+          { spec: 'Heading · h2',         visual: 'h2' as const,         sample: 'Section heading (h2)' },
+          { spec: 'Heading · h3',         visual: 'h3' as const,         sample: 'Subsection heading (h3)' },
+          { spec: 'Heading · h4',         visual: 'h4' as const,         sample: 'Minor heading (h4)' },
+        ].map((row) => (
+          <div class="bg-paper px-6 py-7 md:px-8">
+            <p class="mono-label mb-3">{row.spec}</p>
+            <Heading level={3} visual={row.visual}>{row.sample}</Heading>
           </div>
-          <div>
-            <Badge tone="coral" size="sm">font-heading · Space Grotesk</Badge>
-            <p class="font-heading text-2xl font-medium text-navy mt-3">UI labels, buttons, captions.</p>
+        ))}
+      </div>
+
+      <div class="mt-10 grid gap-8 md:grid-cols-2">
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Text · body sizes</p>
+          <div class="mt-5 space-y-4">
+            <Text size="xl">size xl: lead paragraph, comfortable and unhurried.</Text>
+            <Text size="lg" tone="muted">size lg: secondary lead, muted ink.</Text>
+            <Text size="base" tone="muted">size base: standard body copy at ink-muted.</Text>
+            <Text size="sm" tone="muted">size sm: captions and supporting notes.</Text>
+            <Text size="xs" tone="muted">size xs: fine print, still AA on paper.</Text>
           </div>
-          <div>
-            <Badge tone="sage" size="sm">font-body · DM Sans</Badge>
-            <p class="font-body text-lg text-charcoal/80 mt-3">Body copy and lead paragraphs sit here. Comfortable line length, relaxed leading.</p>
-          </div>
-          <div>
-            <Badge tone="navy" size="sm">font-logo · Style Script</Badge>
-            <p class="font-logo text-4xl text-navy mt-3">Joshua <span class="text-coral">Briley</span></p>
-          </div>
-          <div>
-            <Badge tone="sky" size="sm">font-mono · JetBrains Mono</Badge>
-            <p class="font-mono text-sm text-charcoal/80 mt-3">const inventory = await build();</p>
+        </div>
+
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Geist Mono · labels</p>
+          <div class="mt-5 space-y-6">
+            <div>
+              <p class="mono-label">Foundations / 01</p>
+              <Text size="sm" tone="muted" class="mt-2">
+                The <code class="font-mono text-[0.9em] text-ink">.mono-label</code> eyebrow:
+                uppercase, tracked, ink-muted. Numbered to anchor each section.
+              </Text>
+            </div>
+            <div>
+              <p class="font-mono text-sm text-ink">const tokens = await build();</p>
+              <Text size="sm" tone="muted" class="mt-2">
+                Inline mono for code, indices, and spec rails.
+              </Text>
+            </div>
+            <div class="flex items-center gap-3">
+              <Logo variant="wordmark" />
+              <span class="mono-label">Wordmark · Hanken</span>
+            </div>
           </div>
         </div>
       </div>
     </Container>
   </Section>
 
+  {/* ───────────────────────── 03 · PRIMITIVES ───────────────────────── */}
+  <Section id="primitives" tone="paper" padding="default" class="border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Primitives / 03</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md">The smallest reusable pieces.</Heading>
+        <Text tone="muted" class="mt-4">
+          Each primitive enforces accessibility through its API: semantic defaults,
+          required labels, decoupled visual sizing. They render the same on every page.
+        </Text>
+      </div>
 
-  <Section id="atoms" tone="cream" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Atoms"
-        eyebrowIcon="ph:cards-three-duotone"
-        title="The smallest reusable pieces."
-        lead="Every primitive enforces accessibility through its API: required labels, semantic defaults, decoupled visual sizing."
-      />
+      <div class="mt-12 grid gap-8 lg:grid-cols-2">
+        {/* Buttons */}
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Button: variants &amp; sizes</p>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <Button variant="primary" iconRight="ph:arrow-right">Primary</Button>
+            <Button variant="ghost">Ghost</Button>
+            <Button variant="text">Text</Button>
+          </div>
+          <div class="mt-4 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="sm">Small</Button>
+            <Button variant="primary" size="md">Medium</Button>
+            <Button variant="primary" size="lg" iconLeft="ph:paper-plane-tilt">Large + icon</Button>
+          </div>
+          <Text size="xs" tone="muted" class="mt-4">
+            <code class="font-mono text-ink">primary</code> and
+            <code class="font-mono text-ink"> navy</code> are for dark surfaces (shown below);
+            <code class="font-mono text-ink"> secondary</code> is the outlined action on ink.
+          </Text>
+        </div>
 
-      <div class="mt-12 grid gap-6">
-        <ShowcaseRow
-          title="Heading"
-          description="Semantic level (h1–h6) and visual size are independent props, so visual hierarchy never breaks the document outline."
-          snippet={`<Heading level={2} visual="display-md">A serif heading.</Heading>`}
-        >
-          <Heading level={2} visual="display-md">A serif heading.</Heading>
-        </ShowcaseRow>
+        {/* Buttons on ink */}
+        <div class="rounded-lg border border-ink bg-ink p-6 md:p-8">
+          <p class="mono-label !text-paper/65">Button: on ink surfaces</p>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <Button variant="navy" iconRight="ph:arrow-right">Navy (inverse fill)</Button>
+            <Button variant="secondary">Secondary (outlined)</Button>
+          </div>
+          <Text size="xs" tone="whiteMuted" class="mt-4">
+            Reserved for ink sections: paper fill or a hairline outline, never the
+            paper-surface primary.
+          </Text>
+        </div>
 
-        <ShowcaseRow
-          title="Text"
-          description="Body / lead paragraph primitive with size, tone, and weight controls."
-          snippet={`<Text size="xl" tone="muted">Lead paragraphs sit here.</Text>`}
-        >
-          <Text size="xl" tone="muted">Lead paragraphs sit here, comfortable and unhurried.</Text>
-        </ShowcaseRow>
+        {/* Links */}
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Link: inline / arrow / nav</p>
+          <div class="mt-5 space-y-3 text-sm">
+            <p class="text-ink-muted">
+              Read <Link href="/about/" variant="inline">the approach</Link>. Inline links
+              carry a quiet clay underline.
+            </p>
+            <p><Link href="/projects/" variant="arrow">Selected work</Link></p>
+            <p class="flex gap-5">
+              <Link href="/style-guide/" variant="nav" current>Active nav</Link>
+              <Link href="/blog/" variant="nav">Inactive nav</Link>
+            </p>
+          </div>
+        </div>
 
-        <ShowcaseRow
-          title="Logo"
-          description="Variant prop swaps wordmark / monogram / lockup. The monogram is decorative; the wordmark carries the accessible name."
-          snippet={`<Logo variant="lockup" href="/" />`}
-        >
-          <Logo variant="lockup" />
-          <Logo variant="monogram" />
-          <Logo variant="wordmark" />
-        </ShowcaseRow>
+        {/* Badge */}
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Badge: mono label chip</p>
+          <div class="mt-5 flex flex-wrap items-center gap-3">
+            <Badge>Default</Badge>
+            <Badge icon="ph:package">With icon</Badge>
+            <Badge tone="coral">Accent tick</Badge>
+            <Badge solid>Solid ink</Badge>
+            <Badge size="sm">Small</Badge>
+          </div>
+          <Text size="xs" tone="muted" class="mt-4">
+            A hairline tile in Geist Mono with a small tick: accent on
+            <code class="font-mono text-ink"> coral</code>/<code class="font-mono text-ink">sunset</code>,
+            neutral otherwise.
+          </Text>
+        </div>
 
-        <ShowcaseRow
-          title="Button"
-          description="Renders <button> by default; renders <a> when href is supplied. Variants: primary, secondary (on dark), ghost."
-          snippet={`<Button variant="primary" iconRight="ph:arrow-right">Take the scorecard</Button>`}
-        >
-          <Button variant="primary" iconRight="ph:arrow-right">Take the scorecard</Button>
-          <Button variant="ghost">Learn more</Button>
-        </ShowcaseRow>
+        {/* Logo */}
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Logo: lockup / monogram / wordmark</p>
+          <div class="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
+            <Logo variant="lockup" />
+            <Logo variant="monogram" />
+            <Logo variant="wordmark" />
+          </div>
+          <Text size="xs" tone="muted" class="mt-5">
+            A machined monogram plate plus a tight grotesk wordmark. The wordmark
+            carries the accessible name; the monogram is decorative.
+          </Text>
+        </div>
 
-        <ShowcaseRow
-          title="Button (secondary)"
-          description="Secondary variant is designed for navy surfaces."
-          snippet={`<Button variant="secondary" href="/contact/">Book a call</Button>`}
-          dark
-        >
-          <Button variant="primary" iconRight="ph:arrow-right" href="/tools/scorecard/">Take the scorecard</Button>
-          <Button variant="secondary" href="/contact/">Book a call</Button>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Link"
-          description='Inline (default), arrow, nav (auto-detects active page), or unstyled.'
-          snippet={`<Link href="/services/" variant="arrow">How audits help</Link>`}
-        >
-          <Link href="/services/" variant="arrow">How audits help</Link>
-          <Link href="/contact/" variant="inline">Get in touch</Link>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Badge / sticker"
-          description="Tone-constrained pill for eyebrows and category tags. Pass `sticker` for the dashed-border variant."
-          snippet={`<Badge tone="plum" icon="ph:package-duotone">Component library</Badge>`}
-        >
-          <Badge tone="plum" icon="ph:package-duotone">Component library</Badge>
-          <Badge tone="coral" icon="ph:sparkle-duotone">New</Badge>
-          <Badge tone="sage" icon="ph:check-circle-duotone">Shipped</Badge>
-          <Badge tone="lemon" sticker icon="ph:hand-waving-duotone">Eyebrow</Badge>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Avatar"
-          description="Initials avatar with three preset gradients. Initials are decorative; the full name is exposed via aria-label."
-          snippet={`<Avatar initials="JB" name="Joshua Briley" gradient="coralSunset" />`}
-        >
-          <Avatar initials="JB" name="Joshua Briley" gradient="coralSunset" />
-          <Avatar initials="MR" name="Maya Rao" gradient="plumSky" size="lg" />
-          <Avatar initials="PN" name="Priya Nair" gradient="sageLemon" size="sm" />
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Icon"
-          description='Decorative by default (aria-hidden). Pass `label` to expose meaningful icons to assistive tech.'
-          snippet={`<Icon name="ph:check-circle-duotone" size={24} class="text-sage" />`}
-        >
-          <Icon name="ph:check-circle-duotone" size={32} class="text-sage" />
-          <Icon name="ph:warning-duotone" size={32} class="text-coral" />
-          <Icon name="ph:sparkle-duotone" size={32} class="text-plum" />
-          <Icon name="ph:cards-three-duotone" size={32} class="text-sunset" />
-        </ShowcaseRow>
+        {/* Icon */}
+        <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+          <p class="mono-label">Icon: Phosphor set</p>
+          <div class="mt-6 flex flex-wrap items-center gap-6 text-ink">
+            <Icon name="ph:arrow-right" size={26} />
+            <Icon name="ph:check-circle" size={26} />
+            <Icon name="ph:warning-circle" size={26} class="text-accent" />
+            <Icon name="ph:terminal-window" size={26} />
+            <Icon name="ph:package" size={26} />
+          </div>
+          <Text size="xs" tone="muted" class="mt-5">
+            Decorative (aria-hidden) by default. Pass <code class="font-mono text-ink">label</code>
+            to expose a meaningful icon to assistive tech.
+          </Text>
+        </div>
       </div>
     </Container>
   </Section>
 
+  {/* ───────────────────────── 04 · PATTERNS ───────────────────────── */}
+  <Section id="patterns" tone="paper" padding="default" class="border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Patterns / 04</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md">Compositions used across pages.</Heading>
+        <Text tone="muted" class="mt-4">
+          A small set of patterns built from the primitives above: a section header,
+          a metrics row, a code window, and an FAQ. Every page draws from this set.
+        </Text>
+      </div>
 
-  <Section id="decorative" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Decorative"
-        eyebrowIcon="ph:sparkle-duotone"
-        eyebrowTone="sunset"
-        title="Personality, not noise."
-        lead="Every decorative element auto-marks itself aria-hidden so assistive tech ignores it."
-      />
+      {/* SectionHeader */}
+      <div class="mt-12 rounded-lg border border-line bg-raised p-7 md:p-10">
+        <p class="mono-label mb-6">SectionHeader</p>
+        <SectionHeader
+          eyebrow="Pattern"
+          eyebrowIcon="ph:columns"
+          title="A centred section header."
+          lead="Eyebrow Badge, balanced display heading, and an optional muted lead: the standard opener for a content section."
+        />
+      </div>
 
-      <div class="mt-12 grid gap-6">
-        <ShowcaseRow
-          title="Blob"
-          description="Floating organic shape. Tones, sizes, and animations are constrained to safe defaults."
-          snippet={`<Blob tone="lemon" size="lg" animate="float" />`}
-        >
-          <div class="relative h-32 w-full">
-            <Blob tone="lemon" size="lg" class="absolute top-2 left-8" />
-            <Blob tone="coral" size="md" class="absolute top-4 left-40" animate="float-slow" />
-            <Blob tone="plum" size="md" shape="alt" class="absolute top-6 left-72" animate="float-delay" />
-            <Blob tone="sage" size="sm" class="absolute top-10 left-[26rem]" animate="wiggle" />
-          </div>
-        </ShowcaseRow>
+      {/* Metric */}
+      <div class="mt-8 rounded-lg border border-line bg-raised p-7 md:p-10">
+        <p class="mono-label mb-6">Metric: a row of measured outcomes</p>
+        <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
+          {metrics.map((m) => (
+            <Metric value={m.value} before={m.before} label={m.label} />
+          ))}
+        </div>
+        <Text size="xs" tone="muted" class="mt-6">
+          Oversized ink figure, sans label, optional before→after. Illustrative values
+          shown. Use only real, defensible numbers in production.
+        </Text>
+      </div>
 
-        <ShowcaseRow
-          title="Wavy underline"
-          description="Inline emphasis on a key word in headings."
-          snippet={`<WavyUnderline>actually ship</WavyUnderline>`}
-        >
-          <p class="font-display text-3xl text-navy">Designs that <WavyUnderline>actually ship</WavyUnderline>.</p>
-        </ShowcaseRow>
+      {/* CodeBlock */}
+      <div class="mt-8">
+        <p class="mono-label mb-4">CodeBlock: framed code window</p>
+        <CodeBlock
+          filename="Field.astro"
+          lang="ts"
+          code={apiSnippet}
+          caption="A real component API, shown (not asserted). Dependency-free chrome carries the polish."
+        />
+      </div>
 
-        <ShowcaseRow
-          title="Squiggle divider"
-          description="Hand-drawn coral divider between sections."
-          snippet={`<SquiggleDivider />`}
-        >
-          <div class="w-full"><SquiggleDivider /></div>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Tape & pin"
-          description="Used inside cards for a tactile, scrapbook feel."
-          snippet={`<Card variant="polaroid"><Pin slot="corner" />…</Card>`}
-        >
-          <div class="relative bg-white rounded-md w-32 h-20 shadow-md">
-            <Tape position="left" />
-            <Tape position="right" tone="peach" />
-          </div>
-          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
-            <Pin />
-          </div>
-          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
-            <Pin tone="plum" />
-          </div>
-          <div class="relative bg-white rounded-md w-20 h-20 shadow-md">
-            <Pin tone="sage" />
-          </div>
-        </ShowcaseRow>
+      {/* FAQ */}
+      <div class="mt-10 rounded-lg border border-line bg-raised p-7 md:p-10">
+        <p class="mono-label mb-2">FAQ: native details/summary, zero JS</p>
+        <FAQ class="mt-4">
+          <FAQItem question="Why only one accent colour?" open>
+            Restraint reads as deliberate. A single clay mark per view keeps attention
+            where it belongs and never competes with content.
+          </FAQItem>
+          <FAQItem question="How is accessibility handled?">
+            By construction. Primitives bake in semantic structure, required labels, and
+            AA contrast, so misuse is hard to reach for in the first place.
+          </FAQItem>
+          <FAQItem question="What carries motion?">
+            Two shared easings plus scroll-reveal: transform and opacity only, and it
+            all pauses under prefers-reduced-motion.
+          </FAQItem>
+        </FAQ>
       </div>
     </Container>
   </Section>
 
-
-  <Section id="cards" tone="cream" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Cards"
-        eyebrowIcon="ph:stack-duotone"
-        eyebrowTone="plum"
-        title="One Card primitive. Every card variant."
-        lead="Variants supply the chrome (paper, polaroid, sticky, reveal, outline). Slots and atoms supply the content. We never write a TestimonialCard or ServiceCard component."
-      />
-
-      <CardGrid cols={3} class="mt-12">
-        <Card variant="paper" tilt={-1} hover={false}>
-          <CardNumber n={1} slot="corner" />
-          <Icon name="ph:binoculars-duotone" size={36} class="text-coral mb-4" />
-          <Heading level={3} visual="h3" class="mb-2">Service card</Heading>
-          <Text size="sm" tone="muted" class="mb-3">Numbered chrome via &lt;CardNumber&gt;.</Text>
-          <ul class="space-y-1.5 text-xs text-charcoal/70">
-            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Coverage map</li>
-            <li class="flex gap-2"><Icon name="ph:check-circle-duotone" size={14} class="text-sage" />Token plan</li>
-          </ul>
-        </Card>
-
-        <Card variant="paper" tilt={-1} hover={false}>
-          <CardQuoteMark slot="corner" />
-          <blockquote class="text-charcoal/70 text-sm leading-relaxed italic mb-4">
-            “Josh transformed our scattered components into a system the whole team trusts.”
-          </blockquote>
-          <div slot="footer" class="flex items-center gap-3">
-            <Avatar initials="MR" name="Maya Rao" gradient="plumSky" size="sm" />
-            <div>
-              <p class="font-heading text-sm font-semibold text-navy">Maya Rao</p>
-              <p class="text-xs text-charcoal/70">Director of Design, Acme</p>
-            </div>
-          </div>
-        </Card>
-
-        <Card variant="sticky" tone="peach" tilt={2} hover={false}>
-          <Pin slot="corner" />
-          <p class="font-display italic text-lg text-navy">“Best engagement we've had with a consultant in years.”</p>
-          <p class="font-heading text-xs uppercase tracking-widest text-navy mt-3">— Priya N., VP Engineering</p>
-        </Card>
-
-        <Card variant="polaroid" tilt={-2} hover={false} class="max-w-xs">
-          <Pin slot="corner" />
-          <div slot="media" class="avatar-slab bg-gradient-to-br from-plum/30 to-sky/30">
-            <Icon name="ph:cards-three-duotone" size={48} class="text-plum" />
-          </div>
-          <Badge tone="plum" sticker icon="ph:package-duotone">Component library</Badge>
-          <Heading level={3} visual="h4" class="mt-3 leading-tight">VMSpark consolidation</Heading>
-        </Card>
-
-        <Card variant="reveal" hover={false}>
-          <Heading level={3} visual="h3" tone="white" class="mb-3">Want a head start?</Heading>
-          <Text tone="whiteMuted" size="sm" class="mb-6">Score your design system in five minutes.</Text>
-          <Button variant="primary" iconRight="ph:arrow-right" href="/tools/scorecard/">Take the scorecard</Button>
-        </Card>
-
-        <Card variant="outline" tilt={1} hover={false}>
-          <Badge tone="sage" class="mb-4" icon="ph:sparkle-duotone">New</Badge>
-          <Heading level={3} visual="h3">Quarterly retainer</Heading>
-          <Text size="sm" tone="muted" class="mt-2">Steady support for teams who want a hand on the rudder.</Text>
-        </Card>
-      </CardGrid>
-    </Container>
-  </Section>
-
-
-  <Section id="patterns" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Patterns"
-        eyebrowIcon="ph:columns-duotone"
-        eyebrowTone="navy"
-        title="Compositions used across pages."
-        lead="Hero, SectionHeader, FAQ, CardGrid, CTABanner — every page composes from this small set."
-      />
-
-      <div class="mt-12 grid gap-6">
-        <ShowcaseRow
-          title="FAQ"
-          description="Native <details> + <summary>. Zero JS, fully keyboard-accessible, animates on toggle via CSS."
-        >
-          <div class="w-full">
-            <FAQ>
-              <FAQItem question="What does an audit actually deliver?" open>
-                A coverage map of your components, a token consolidation plan, and a prioritized punch list.
-              </FAQItem>
-              <FAQItem question="How long does engagement usually run?">
-                Audits are typically 2–3 weeks; library work runs 6–12 weeks depending on scope.
-              </FAQItem>
-              <FAQItem question="Do you work with our existing stack?">
-                Yes — Astro, Next, Remix, plain HTML, and design tools like Figma. The system is the system.
-              </FAQItem>
-            </FAQ>
-          </div>
-        </ShowcaseRow>
+  {/* ───────────────────────── 05 · FORMS ───────────────────────── */}
+  <Section id="forms" tone="paper" padding="default" class="border-b border-line">
+    <Container width="wide">
+      <p class="mono-label">Forms / 05</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md">Accessibility wired in by default.</Heading>
+        <Text tone="muted" class="mt-4">
+          <code class="font-mono text-[0.9em] text-accent">Field</code> auto-generates ids and
+          connects label, hint, error, aria-describedby, aria-invalid, and
+          aria-required. You cannot create a mislabeled input through this API.
+        </Text>
       </div>
-    </Container>
-  </Section>
-
-
-  <Section id="technical" tone="navy" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Technical proof"
-        eyebrowIcon="ph:terminal-window-duotone"
-        eyebrowTone="sky"
-        tone="white"
-        title="The engineering register."
-        lead="A second voice, added — not a redesign. The warm components prove taste; these prove depth. They carry the receipts a staff-level reader scans for: real code, stacks, tested behaviour, and measured outcomes."
-      />
-
-      <div class="mt-12 grid gap-6">
-        <ShowcaseRow
-          title="Code window (CodeBlock)"
-          description="A framed, copyable code window. Shows a real component API or type signature so React/TypeScript depth is visible, not just asserted. Dependency-free — the chrome carries the polish."
-          snippet={`<CodeBlock filename="Modal.tsx" lang="tsx" code={apiSnippet} />`}
-        >
-          <CodeBlock filename="Modal.tsx" lang="tsx" code={apiSnippet} caption="Behaviour is owned by the component; appearance flows through tokens — the same architecture argument, now shown in code." class="w-full" />
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Browser frame (WindowFrame · browser)"
-          description="Chrome for a digital artifact — a Storybook story, live docs, or a component preview. Wraps any slot content."
-          snippet={`<WindowFrame variant="browser" title="storybook…/button--primary">…</WindowFrame>`}
-        >
-          <WindowFrame variant="browser" title="storybook.joshuabriley.com/?path=/story/button--primary" class="w-full">
-            <div class="p-10 bg-cream flex items-center justify-center">
-              <Button variant="primary" iconRight="ph:arrow-right">Primary button</Button>
-            </div>
-          </WindowFrame>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Terminal frame (WindowFrame · terminal)"
-          description="The same chrome, dark variant — for a test run, CI output, or a CLI. Proof that behaviour is tested, not just claimed."
-          snippet={`<WindowFrame variant="terminal" title="zsh — design-system">…</WindowFrame>`}
-        >
-          <WindowFrame variant="terminal" title="zsh — design-system" class="w-full">
-            <pre class="font-mono text-[0.8rem] leading-relaxed text-[#E7E5F7] overflow-x-auto"><code>{testRun}</code></pre>
-          </WindowFrame>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="Metric"
-          description="One measured outcome with a big figure. Supports before→after and a trend badge. Illustrative values shown — use only real, defensible numbers in production."
-          snippet={`<Metric value="1" before="6" label="button implementations" tone="sky" />`}
-        >
-          <div class="w-full grid grid-cols-2 md:grid-cols-4 gap-6">
-            <Metric value="3" label="brands, one library" tone="plum" />
-            <Metric value="40%" label="duplicated UI removed" trend="down" tone="coral" />
-            <Metric value="100%" label="components keyboard-operable" tone="sage" />
-            <Metric before="6" value="1" label="button implementations" tone="sky" />
-          </div>
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="TechStack"
-          description="A labelled row of monospace keyword chips. Makes the stack scannable for recruiters who search for exact terms."
-          snippet={`<TechStack label="Stack" items={['TypeScript', 'React', 'Stencil', …]} />`}
-        >
-          <TechStack
-            label="Stack"
-            items={['TypeScript', 'React', 'Stencil', 'Storybook', 'Playwright', 'Gatsby', 'Vue / Nuxt', 'ViewComponent']}
-            class="w-full"
-          />
-        </ShowcaseRow>
-
-        <ShowcaseRow
-          title="ProofPanel"
-          description="The case-study 'receipts' block — skills proven, stack, testing, outcomes — in one scannable panel. Composes TechStack so chip styling stays single-sourced."
-          snippet={`<ProofPanel sections={[{ label: 'Stack', items: [...] }, …]} />`}
-        >
-          <ProofPanel sections={proofSections} class="w-full" />
-        </ShowcaseRow>
-      </div>
-    </Container>
-  </Section>
-
-
-  <Section id="forms" tone="cream" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Forms"
-        eyebrowIcon="ph:clipboard-text-duotone"
-        eyebrowTone="sage"
-        title="Accessibility wired in by default."
-        lead="<Field> auto-generates ids and connects label, hint, error, aria-describedby, aria-invalid, and aria-required. You can't create a mislabeled input through this API."
-      />
 
       <Grid cols={2} gap="lg" class="mt-12">
-        <div class="bg-white rounded-2xl border border-charcoal/10 p-6 md:p-8 flex flex-col gap-5">
+        <form class="rounded-lg border border-line bg-raised p-6 md:p-8 flex flex-col gap-5">
           <Heading level={3} visual="h4">Field examples</Heading>
 
           <Field label="Full name" name="demo-name" required>
             <Input name="demo-name" autocomplete="name" required />
           </Field>
 
-          <Field label="Email" name="demo-email" required hint="I'll only use this to reply.">
+          <Field label="Email" name="demo-email" required hint="Only used to reply.">
             <Input name="demo-email" type="email" autocomplete="email" required />
           </Field>
 
@@ -576,34 +431,88 @@ const proofSections = [
           </Field>
 
           <SubmitButton label="Send message" />
-        </div>
+        </form>
 
-        <div class="flex flex-col gap-5">
-          <ShowcaseRow title="ChoiceGroup" description="Fieldset + legend with radio pills.">
-            <div class="w-full">
-              <ChoiceGroup legend="How healthy is your design system?" name="demo-rating" required>
-                <Choice name="demo-rating" value="strong" label="Strong" />
-                <Choice name="demo-rating" value="ok" label="Functional" checked />
-                <Choice name="demo-rating" value="weak" label="Needs work" />
-              </ChoiceGroup>
+        <div class="flex flex-col gap-6">
+          <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+            <p class="mono-label mb-4">ChoiceGroup: fieldset + legend</p>
+            <ChoiceGroup legend="How healthy is your design system?" name="demo-rating" required>
+              <Choice name="demo-rating" value="strong" label="Strong" />
+              <Choice name="demo-rating" value="ok" label="Functional" checked />
+              <Choice name="demo-rating" value="weak" label="Needs work" />
+            </ChoiceGroup>
+          </div>
+
+          <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
+            <p class="mono-label mb-4">FormAlert: status &amp; alert</p>
+            <div class="space-y-4">
+              <FormAlert variant="success" hidden={false}>
+                <p class="font-sans font-semibold text-ink">Thanks. Your message is on its way.</p>
+                <p class="mt-1 text-ink-muted">I&rsquo;ll reply within one business day, usually sooner.</p>
+              </FormAlert>
+              <FormAlert variant="error" hidden={false}>
+                <p class="font-sans font-semibold text-ink">We couldn&rsquo;t send your message.</p>
+                <p class="mt-1 text-ink-muted">Please check the highlighted fields.</p>
+              </FormAlert>
             </div>
-          </ShowcaseRow>
-
-          <ShowcaseRow title="FormAlert (success)" description='role="status", focusable for AT announcement.'>
-            <FormAlert variant="success" hidden={false} class="w-full">
-              <p class="font-heading font-semibold text-navy">Thanks — your message is on its way.</p>
-              <p class="mt-1 text-charcoal/75">I'll reply within one business day, usually sooner.</p>
-            </FormAlert>
-          </ShowcaseRow>
-
-          <ShowcaseRow title="FormAlert (error)" description='role="alert", red coral surface.'>
-            <FormAlert variant="error" hidden={false} class="w-full">
-              <p class="font-heading font-semibold text-navy">We couldn't send your message.</p>
-              <p class="mt-1 text-charcoal/75">Please check the highlighted fields.</p>
-            </FormAlert>
-          </ShowcaseRow>
+          </div>
         </div>
       </Grid>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── 06 · MOTION & SPACING ───────────────────────── */}
+  <Section id="motion" tone="ink" padding="default">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65">Motion &amp; spacing / 06</p>
+      <div class="mt-4 max-w-2xl">
+        <Heading level={2} visual="display-md" tone="paper">Quiet, deliberate motion.</Heading>
+        <Text size="lg" tone="whiteMuted" class="mt-4">
+          Animation is restrained and reversible. Transform and opacity only; nothing
+          loops loudly, and everything yields to reduced-motion.
+        </Text>
+      </div>
+
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-paper/15 bg-paper/15 md:grid-cols-3">
+        <div class="bg-ink p-7">
+          <p class="mono-label !text-paper/65">Scroll reveal</p>
+          <p class="mt-3 font-mono text-sm text-paper">.scroll-reveal</p>
+          <Text size="sm" tone="whiteMuted" class="mt-3">
+            Blocks fade up 18px on enter over 0.9s. Disabled entirely under
+            prefers-reduced-motion.
+          </Text>
+        </div>
+        <div class="bg-ink p-7">
+          <p class="mono-label !text-paper/65">Easing: out</p>
+          <p class="mt-3 font-mono text-sm text-paper">cubic-bezier(.22, 1, .36, 1)</p>
+          <Text size="sm" tone="whiteMuted" class="mt-3">
+            <code class="font-mono text-paper">--ease-out</code>: entrances, hovers, and
+            arrow nudges.
+          </Text>
+        </div>
+        <div class="bg-ink p-7">
+          <p class="mono-label !text-paper/65">Easing: in/out</p>
+          <p class="mt-3 font-mono text-sm text-paper">cubic-bezier(.65, 0, .35, 1)</p>
+          <Text size="sm" tone="whiteMuted" class="mt-3">
+            <code class="font-mono text-paper">--ease-inout</code>: looping or symmetric
+            motion (e.g. the token-propagation demo).
+          </Text>
+        </div>
+      </div>
+
+      <div class="mt-8 rounded-lg border border-paper/15 p-7 md:p-8">
+        <p class="mono-label !text-paper/65">Section padding scale</p>
+        <Text size="sm" tone="whiteMuted" class="mt-3 max-w-3xl">
+          <code class="font-mono text-paper">Section</code> exposes three vertical rhythms:
+          <code class="font-mono text-paper"> tight</code> (py-14 / md:py-20),
+          <code class="font-mono text-paper"> default</code> (py-20 / md:py-28), and
+          <code class="font-mono text-paper"> loose</code> (py-24 / md:py-36).
+          <code class="font-mono text-paper"> Container</code> caps line length at
+          narrow / default / wide, and <code class="font-mono text-paper">Grid</code> handles
+          1-4 responsive columns. Heavy whitespace does the spacing work. No
+          decorative fills.
+        </Text>
+      </div>
     </Container>
   </Section>
 </BaseLayout>

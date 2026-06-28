@@ -2,696 +2,425 @@
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
-import Grid from '~/components/layout/Grid.astro';
-import SquiggleDivider from '~/components/decorative/SquiggleDivider.astro';
-import Blob from '~/components/decorative/Blob.astro';
-import WavyUnderline from '~/components/decorative/WavyUnderline.astro';
-import Pin from '~/components/decorative/Pin.astro';
-import Tape from '~/components/decorative/Tape.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import Badge from '~/components/primitives/Badge.astro';
 import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
-import SectionHeader from '~/components/patterns/SectionHeader.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
-import Card from '~/components/card/Card.astro';
-import Metric from '~/components/patterns/Metric.astro';
 
-// The four proofs the homepage exists to make unmistakable: it looks excellent,
-// it is built correctly, it scales as a system, and it earns its place in the
-// business. Every claim below is backed by the site itself or a real case study.
-const pillars = [
+// ── Content (every claim is backed by the site itself or a real case study) ──
+const clients = ['Travelers', 'Berkshire Hathaway', "America's Test Kitchen", 'NASCAR', 'NFL'];
+
+const capabilities = [
+  'Design-grade front-end',
+  'React · TypeScript · 20 yrs',
+  'Accessibility built in',
+  'Full-stack capable',
+];
+
+// The differentiator band. Why these products feel finished. The lead facet (UI)
+// is the featured cell; full-stack is the supporting capability that lets me own
+// the whole feature.
+const facets = [
   {
-    icon: 'ph:sparkle-duotone',
-    accent: 'coral',
-    eyebrow: 'Craft',
-    title: 'It looks excellent',
-    body: "Type, spacing, motion, and restraint that read as deliberate — the polish you're looking at right now. The same eye goes into brand-grade UI for teams like America's Test Kitchen, NASCAR, and the NFL.",
-    tilt: -1 as const,
+    title: 'The UI is where I bring the most value',
+    body:
+      'Twenty years in design systems taught me where interfaces break: type, spacing, motion, the empty and error states most engineers leave blank. I build it myself, design-grade, instead of handing a spec to someone who will approximate it.',
+    featured: true,
   },
   {
-    icon: 'ph:seal-check-duotone',
-    accent: 'plum',
-    eyebrow: 'Correctness',
-    title: "It's built correctly",
-    body: 'Semantic HTML, WCAG 2.2 accessibility, keyboard and screen-reader testing, and a real eye on performance. Built the way it looks — production-grade, not a pretty shell over brittle markup.',
-    tilt: 1 as const,
+    title: 'Accessible by construction',
+    body:
+      'Keyboard paths, focus management, and screen-reader behavior built in from the start. Accessibility is the mechanism that makes a product work for everyone, not a checkbox.',
   },
   {
-    icon: 'ph:stack-duotone',
-    accent: 'sky',
-    eyebrow: 'Systems',
-    title: 'It scales as a system',
-    body: 'Tokens, components, and documentation so one decision lands on every surface at once. The backbone behind Rudiment UI and the multi-brand component library at America\'s Test Kitchen.',
-    tilt: -1 as const,
+    title: 'I sweat the last 10%',
+    body:
+      'Empty states, recoverable forms, the screen that shows when there is nothing to show yet. Those are the parts that decide whether a product feels finished, and whether it holds up after launch.',
   },
   {
-    icon: 'ph:trend-up-duotone',
-    accent: 'sunset',
-    eyebrow: 'Business surfaces',
-    title: 'It moves the business',
-    body: 'Interfaces tuned for conversion and retention, technical SEO that helps pages rank, and campaign and landing surfaces marketing can actually move — like the design system that unblocked campaigns at Berxi.',
-    tilt: 1 as const,
+    title: 'Full-stack enough to own it',
+    body:
+      'A capable full-stack developer in Rails and TypeScript: auth, tenancy, data, API. Not because the backend is the point, but so the UI never stalls waiting on someone else to wire it up.',
   },
 ];
 
-const accentMap: Record<string, { text: string; bg: string; ring: string }> = {
-  coral: { text: 'text-[#C13A22]', bg: 'bg-coral/10', ring: 'ring-coral/20' },
-  plum: { text: 'text-plum', bg: 'bg-plum/10', ring: 'ring-plum/20' },
-  sky: { text: 'text-sky-deep', bg: 'bg-sky/10', ring: 'ring-sky/30' },
-  sunset: { text: 'text-sunset-deep', bg: 'bg-sunset/10', ring: 'ring-sunset/20' },
-};
-
-const questions = [
-  'Is this interaction clear to the user?',
-  'Does the interface behave the way people expect?',
-  'Can teams reuse this pattern without misusing it?',
-  'Are we solving the actual experience problem, or only making the screen look better?',
-  'Will this still make sense when another team has to build on it six months from now?',
+const metrics = [
+  { value: '75%', label: 'fewer support calls', note: 'IVFCRYO: clearer, recoverable flows' },
+  { value: '55%', label: 'fewer shipping errors', note: 'IVFCRYO: accessible forms at the source' },
+  { value: '3 → 1', label: 'brands, one library', note: "America's Test Kitchen: one system, three brands" },
 ];
 
+// Products owned end to end. Order follows the positioning doc.
 const work = [
   {
-    href: '/projects/',
-    label: 'Component systems',
-    labelTone: 'sage' as const,
-    labelIcon: 'ph:wheelchair-duotone',
-    marker: '01',
-    title: 'Accessible component systems',
-    summary:
-      'Reusable interface components built around semantic structure, keyboard support, focus management, responsive behavior, and practical usage guidance.',
-    cta: 'See the work',
-    tilt: '-1.8deg',
-    decoration: 'pin' as const,
-    pinTone: undefined,
-    collage: {
-      bgFrom: 'from-sage/30',
-      bgTo: 'to-lemon/30',
-      icon: 'ph:cube-transparent-duotone',
-      iconClass: 'text-sage',
-    },
+    href: '/projects/clempo/',
+    client: 'Clempo',
+    kind: 'Full-stack product',
+    line: 'A multi-tenant personal-finance app with real households using it: auth, tenancy, data model, and interface, all mine.',
   },
   {
-    href: '/projects/',
-    label: 'Design ↔ code',
-    labelTone: 'plum' as const,
-    labelIcon: 'ph:flow-arrow-duotone',
-    marker: '02',
-    title: 'Design-to-code alignment',
-    summary:
-      'Reducing friction between design tools, component libraries, documentation, and shipped product UI so design decisions survive implementation.',
-    cta: 'See the work',
-    tilt: '1.5deg',
-    decoration: 'tape-both' as const,
-    pinTone: undefined,
-    collage: {
-      bgFrom: 'from-plum/25',
-      bgTo: 'to-sky/30',
-      icon: 'ph:arrows-left-right-duotone',
-      iconClass: 'text-plum',
-    },
+    href: '/projects/ivfcryo/',
+    client: 'IVFCRYO',
+    kind: 'Accessible flows',
+    line: 'Recoverable specimen-shipping flows for a fertility logistics product. Accessibility was the mechanism that moved the numbers.',
   },
   {
-    href: '/projects/',
-    label: 'Experience audits',
-    labelTone: 'coral' as const,
-    labelIcon: 'ph:binoculars-duotone',
-    marker: '03',
-    title: 'Experience audits & reviews',
-    summary:
-      'Reviewing product interfaces for clarity, accessibility, consistency, and usability — turning findings into practical recommendations teams can act on.',
-    cta: 'See the work',
-    tilt: '-1.2deg',
-    decoration: 'pin' as const,
-    pinTone: 'plum' as const,
-    collage: {
-      bgFrom: 'from-coral/25',
-      bgTo: 'to-sunset/30',
-      icon: 'ph:magnifying-glass-duotone',
-      iconClass: 'text-coral',
-    },
-  },
-];
-
-const toolsPreview = [
-  {
-    icon: 'ph:clipboard-text-duotone',
-    accent: 'coral',
-    title: 'Design System Scorecard',
-    body:
-      'Score your system across the five dimensions of a healthy design system in about ten minutes. Walk away with a clear picture of your biggest gaps.',
-    href: '/tools/scorecard/',
-    cta: 'Take the scorecard',
+    href: '/projects/vmspark/',
+    client: 'VMSpark',
+    kind: 'Rails platform',
+    line: 'A multi-tenant Rails admin platform rebuilt and shipped in four phases, with no feature flags and zero pipeline regressions.',
   },
   {
-    icon: 'ph:magnifying-glass-duotone',
-    accent: 'plum',
-    title: 'What an audit finds',
-    body:
-      'A working sample of the audit deliverable: inspect a specimen of drifted UI and read findings ranked by severity, each paired with its remediation.',
-    href: '/tools/audit-findings/',
-    cta: 'Open the demo',
+    href: '/projects/west-baton-rouge-presbyterian/',
+    client: 'West Baton Rouge Presbyterian',
+    kind: 'Rails CMS',
+    line: 'A custom CMS built end to end over one weekend: content models, a Cloudinary pipeline, staff auth, and an accessible public site.',
   },
   {
-    icon: 'ph:sliders-horizontal-duotone',
-    accent: 'sky',
-    title: 'What a token does',
-    body:
-      'Change one primitive and watch it propagate through every component at once. The playground makes token indirection visible.',
-    href: '/tools/token-playground/',
-    cta: 'Open the demo',
+    href: '/projects/bass-face/',
+    client: 'Bass Face',
+    kind: 'React · live services',
+    line: 'A practice tool I built for myself, with Tone.js for generative backing tracks and a Claude API integration for reflective feedback.',
+  },
+  {
+    href: '/projects/americas-test-kitchen/',
+    client: "America's Test Kitchen",
+    kind: 'Design system',
+    line: 'When a product needs a real design system, I build that too: one library serving three editorial brands, one accessibility floor.',
   },
 ];
 ---
 
 <BaseLayout
-  title="Joshua Briley — UX Engineer: interfaces that look right, build right & convert"
-  description="UX engineer with 20 years in production UI. I make product interfaces that look excellent, are built correctly (accessibility, semantic HTML, performance), scale as design systems, and move the business — conversion, retention, technical SEO, and campaign surfaces."
+  title="Joshua Briley | Design & front-end focused Product Engineer"
+  description="Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value: design-grade, accessible, and finished to the last detail, backed by capable full-stack development in Rails and TypeScript."
 >
-  <Fragment slot="head">
-    <style>
-      @keyframes dash-flow {
-        to { stroke-dashoffset: -40; }
-      }
-    </style>
-  </Fragment>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <p class="hero-in hero-in-1 mono-label">
+        <span class="sr-only">My role is </span>Product Engineer
+        <span class="text-ink-faint"> · </span>
+        <span class="sr-only">I focus on </span>Design &amp; front-end
+      </p>
 
-
-  <Section tone="cream" padding="loose" decorated class="pt-16 md:pt-24">
-    <div class="absolute inset-0 grid-paper opacity-60" aria-hidden="true"></div>
-    <div class="absolute inset-x-0 top-0 h-48 bg-gradient-to-b from-cream via-cream to-transparent" aria-hidden="true"></div>
-    <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-cream to-transparent" aria-hidden="true"></div>
-
-    <Blob tone="plum" size="md" animate="float" opacity="opacity-30" class="absolute top-24 right-[10%]" />
-    <Blob tone="lemon" size="sm" animate="float-delay" class="absolute top-40 left-[6%] w-10 h-10 rounded-full" />
-    <Blob tone="sage" size="sm" animate="float-slow" opacity="opacity-50" class="absolute bottom-20 right-[16%]" />
-    <Blob tone="sky" size="sm" animate="float" opacity="opacity-50" class="absolute bottom-32 left-[14%] w-8 h-8 rounded-full" />
-
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+      <div class="mt-10 grid gap-12 lg:mt-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div class="lg:col-span-7">
-          <Badge tone="lemon" icon="ph:sparkle-duotone" class="mb-8">
-            Design · Engineering · Systems · Growth
-          </Badge>
-
-          <Heading level={1} visual="display-xl" class="mb-6">
-            Interfaces that <WavyUnderline>look excellent</WavyUnderline> — and prove it.
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
+            My best work lives at the <em class="ink-wink font-normal italic">interface</em>. I build the stack behind it, too.
           </Heading>
-
-          <Text size="lg" tone="muted" class="max-w-xl mb-8">
-            Twenty years at the seam between design and engineering. Not just polished in Figma — built correctly in code, coherent as a system, and tuned to perform for the business.
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
+            I'm a design- and front-end-focused product engineer with 20 years in production UI. The
+            interface is where I bring the most value, and I'm full-stack capable enough to own
+            what's behind it.
           </Text>
 
-          <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <Button variant="primary" size="lg" iconLeft="ph:folder-open-duotone" href="/projects/">
-              View selected work
+          <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
+              See what I've built
             </Button>
-            <Button variant="ghost" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-              Connect on LinkedIn
+            <Button variant="ghost" size="lg" href="/about/">
+              Read how I work
             </Button>
           </div>
+        </div>
 
-          <ul class="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-sm text-charcoal/70 font-body">
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />20 yrs in production UI</li>
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />WCAG 2.2, keyboard &amp; screen-reader tested</li>
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />Tokens &amp; docs that scale</li>
-            <li class="flex items-center gap-1.5"><Icon name="ph:check-circle-duotone" size={16} class="text-sage" />Tuned to convert &amp; to rank</li>
+        {/* Interface specimen: the literal thesis, shown not told. One field cycled
+            through its full state set (default → focus → error → done), the states
+            most builds leave blank. Decorative; freezes on the finished state under
+            reduced motion. Transform/opacity/colour only. */}
+        <div class="hero-in hero-in-5 lg:col-span-5" aria-hidden="true">
+          <figure class="spec rounded-lg border border-line bg-raised p-5 md:p-6 shadow-[0_24px_60px_-34px_rgba(27,26,23,0.4)]">
+            <figcaption class="flex items-center justify-between mono-label">
+              <span>one field, every state</span>
+              <span class="inline-flex items-center gap-1.5">
+                <span class="spec-live h-1.5 w-1.5 rounded-full bg-accent"></span>live
+              </span>
+            </figcaption>
+
+            <div class="mt-5">
+              <span class="block font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted">Work email</span>
+              <div class="spec-field mt-2 flex items-center justify-between gap-3 rounded-[8px] border bg-paper px-3.5 py-3">
+                <span class="spec-value inline-grid font-mono text-[0.85rem] leading-none">
+                  <span class="spec-val spec-val-empty text-ink-faint">you@company.com</span>
+                  <span class="spec-val spec-val-typing text-ink">josh@thebr</span>
+                  <span class="spec-val spec-val-done text-ink">josh@thebrileys.com</span>
+                </span>
+                <span class="spec-status relative inline-flex h-4 w-4 shrink-0">
+                  <Icon name="ph:envelope-simple" size={16} class="spec-i spec-i-default absolute inset-0 text-ink-faint" />
+                  <Icon name="ph:warning-circle" size={16} class="spec-i spec-i-error absolute inset-0 text-[#c2603a]" />
+                  <Icon name="ph:check-circle" size={16} class="spec-i spec-i-done absolute inset-0 text-accent" />
+                </span>
+              </div>
+              <span class="spec-msg mt-2 inline-grid text-[0.76rem] leading-snug">
+                <span class="spec-m spec-m-default text-ink-muted">We'll only use this to reply.</span>
+                <span class="spec-m spec-m-focus text-ink-muted">Keep going…</span>
+                <span class="spec-m spec-m-error text-[#c2603a]">That's missing a domain.</span>
+                <span class="spec-m spec-m-done text-accent">Looks good.</span>
+              </span>
+            </div>
+
+            <p class="mt-6 border-t border-line pt-4 text-[0.72rem] leading-relaxed text-ink-muted">
+              The same field, finished: focus ring, live validation, error recovery, success. The states most builds leave blank.
+            </p>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── CREDENTIALS STRIP ───────────────────────── */}
+  <Section tone="paper" padding="tight" class="!py-9 border-b border-line">
+    <Container width="wide">
+      <div class="grid gap-x-10 gap-y-6 lg:grid-cols-12 lg:items-center">
+        <ul class="lg:col-span-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+          {capabilities.map((c) => (
+            <li class="flex items-center gap-2">
+              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{c}
+            </li>
+          ))}
+        </ul>
+        <div class="lg:col-span-6 flex flex-wrap items-center gap-x-7 gap-y-2 lg:justify-end">
+          <span class="mono-label whitespace-nowrap"><span class="sr-only">My work has shipped at </span>Shipped at</span>
+          <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
+            {clients.map((c) => (
+              <li class="font-display text-[0.92rem] font-medium tracking-tight text-ink-muted">{c}</li>
+            ))}
           </ul>
         </div>
-
-
-        <div class="lg:col-span-5 relative h-[360px] md:h-[440px] hidden lg:block" aria-hidden="true">
-          <div class="absolute inset-0 flex items-center justify-center">
-            <div class="w-80 h-80 rounded-full border-2 border-dashed border-plum/25 animate-spin-slow"></div>
-          </div>
-
-          <svg class="absolute inset-0 w-full h-full" viewBox="0 0 400 440" fill="none">
-            <path d="M 130 120 C 170 180, 180 200, 200 220" stroke="#6C4AB6" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite" />
-            <path d="M 200 220 C 220 250, 250 280, 270 320" stroke="#E8573D" stroke-width="2.5" stroke-linecap="round" style="stroke-dasharray: 10 8; animation: dash-flow 1.6s linear infinite; animation-delay: 0.5s" />
-          </svg>
-
-          <div class="absolute top-[8%] left-[6%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float -rotate-3">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="w-7 h-7 rounded-lg bg-coral/15 flex items-center justify-center">
-                <Icon name="ph:sparkle-duotone" size={18} class="text-coral" />
-              </div>
-              <span class="font-heading text-xs font-semibold text-navy">Excellent</span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="h-1.5 rounded-full bg-charcoal/10"></div>
-              <div class="h-1.5 rounded-full bg-coral/40 w-3/5"></div>
-            </div>
-          </div>
-
-          <div class="absolute top-[38%] left-[30%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-delay rotate-2">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="w-7 h-7 rounded-lg bg-plum/15 flex items-center justify-center">
-                <Icon name="ph:seal-check-duotone" size={18} class="text-plum" />
-              </div>
-              <span class="font-heading text-xs font-semibold text-navy">Correct</span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="h-1.5 rounded-full bg-charcoal/10"></div>
-              <div class="h-1.5 rounded-full bg-plum/40 w-4/5"></div>
-            </div>
-          </div>
-
-          <div class="absolute bottom-[12%] right-[4%] bg-white rounded-2xl shadow-xl border border-charcoal/5 p-4 w-36 animate-float-slow -rotate-2">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="w-7 h-7 rounded-lg bg-sky/15 flex items-center justify-center">
-                <Icon name="ph:stack-duotone" size={18} class="text-sky" />
-              </div>
-              <span class="font-heading text-xs font-semibold text-navy">Systems</span>
-            </div>
-            <div class="space-y-1.5">
-              <div class="h-1.5 rounded-full bg-charcoal/10"></div>
-              <div class="h-1.5 rounded-full bg-sky/40 w-2/3"></div>
-            </div>
-          </div>
-
-          <div class="absolute top-[22%] right-[8%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float rotate-3">
-            <Icon name="ph:trend-up-duotone" size={14} class="text-sage" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Converts</span>
-          </div>
-
-          <div class="absolute bottom-[32%] left-[4%] bg-white rounded-full shadow-lg border border-charcoal/5 px-3 py-1.5 flex items-center gap-1.5 animate-float-delay -rotate-3">
-            <Icon name="ph:magnifying-glass-duotone" size={14} class="text-plum" />
-            <span class="font-heading text-[11px] font-semibold text-navy">Ranks</span>
-          </div>
-        </div>
       </div>
     </Container>
   </Section>
 
-
-
-
-  <Section id="what-i-do" tone="white" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="What you actually get"
-        eyebrowIcon="ph:squares-four-duotone"
-        eyebrowTone="plum"
-        title="Excellent, correct, systematic — and good for business."
-        lead="Most of the work lives in the gap between an idea and a shipped interface: designs that look great in Figma but drift in code, components nobody knows how to reuse, accessibility raised late, performance and search left to chance. I close that gap on four axes at once."
-        align="left"
-        class="mb-14 max-w-4xl"
-      />
-
-      <div class="grid gap-6 md:grid-cols-2 lg:gap-8 lg:items-start" data-reveal-stagger>
-        {pillars.map((p, idx) => {
-          const a = accentMap[p.accent];
-          // Nudge the second column down so the 2×2 reads as a hand-placed
-          // collage rather than a rigid quadrant grid.
-          const offset = ['lg:mt-0', 'lg:mt-10', 'lg:mt-0', 'lg:mt-10'][idx];
-          return (
-            <Card hover={false} variant="paper" tilt={p.tilt} padding="loose" class={`relative overflow-hidden ${a.ring} ${offset}`}>
-              <div class={`absolute -top-10 -right-10 w-32 h-32 ${a.bg} rounded-full pointer-events-none`} aria-hidden="true"></div>
-              <div class="relative">
-                <div class="flex items-center gap-2 mb-2">
-                  <span class={`flex-shrink-0 inline-flex items-center justify-center w-7 h-7 rounded-full ${a.bg} font-heading text-xs font-bold ${a.text}`} aria-hidden="true">
-                    {idx + 1}
-                  </span>
-                  <span class={`inline-block text-xs font-heading font-semibold ${a.text} uppercase tracking-wider`}>
-                    {p.eyebrow}
-                  </span>
-                </div>
-                <div class={`w-14 h-14 ${a.bg} rounded-2xl flex items-center justify-center mb-5`}>
-                  <Icon name={p.icon} size={28} class={a.text} />
-                </div>
-                <Heading level={3} visual="h2" class="mb-3 leading-tight">{p.title}</Heading>
-                <Text tone="muted">{p.body}</Text>
-              </div>
-            </Card>
-          );
-        })}
+  {/* ───────────────────────── DIFFERENTIATOR (asymmetric bento) ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <Heading level={2} visual="display-md">
+          Why my products feel finished.
+        </Heading>
+        <Text size="lg" tone="muted" class="mt-5">
+          Most engineers treat design and accessibility as someone else's job, or the first thing
+          cut when a deadline closes in. I build them in. That's why the things I ship work for
+          everyone, not just the average user on a fast laptop, and why they hold up after launch.
+        </Text>
       </div>
 
-      <div class="mt-16">
-        <p class="font-heading text-sm font-semibold text-charcoal/70 uppercase tracking-wider mb-6 flex items-center gap-2">
-          <Icon name="ph:seal-check-duotone" size={18} class="text-plum" />
-          Receipts, not adjectives
-        </p>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 bg-white rounded-2xl p-7 md:p-9 border border-charcoal/5 shadow-sm">
-          <Metric value="75%" label="fewer support calls" caption="IVFCRYO — clearer, recoverable flows" tone="sage" />
-          <Metric value="55%" label="fewer shipping errors" caption="IVFCRYO — accessible forms at the source" tone="plum" />
-          <Metric value="3" label="brands, one library" caption="America's Test Kitchen — divergence lives in tokens" tone="coral" />
-        </div>
+      <div
+        class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3"
+        data-reveal-stagger
+      >
+        {facets.map((c) => (
+          <div class={`bg-paper p-7 md:p-9 ${c.featured ? 'lg:col-span-2 lg:row-span-3 lg:flex lg:flex-col lg:justify-center md:p-10' : ''}`}>
+            {c.featured ? (
+              <>
+                <span class="mono-label text-accent">Where the value is</span>
+                <Heading level={3} visual="h2" class="mt-4 max-w-[16ch]">{c.title}</Heading>
+                <Text tone="muted" class="mt-4 max-w-lg">{c.body}</Text>
+              </>
+            ) : (
+              <>
+                <Heading level={3} visual="h3">{c.title}</Heading>
+                <Text tone="muted" size="sm" class="mt-3">{c.body}</Text>
+              </>
+            )}
+          </div>
+        ))}
       </div>
     </Container>
   </Section>
 
-
-  <Section tone="navy" padding="default" decorated>
-    <Blob tone="plum" size="lg" animate="float-slow" opacity="opacity-50" class="absolute top-8 left-[5%]" />
-    <Blob tone="coral" size="md" shape="alt" animate="float" opacity="opacity-30" class="absolute bottom-12 right-[8%] !rounded-full" />
-    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-40" class="absolute top-1/2 right-[14%]" />
-
-    <Container class="relative z-10">
-                <Badge tone="lemon" icon="ph:lightning-duotone" class="mb-6 rotate-1 !bg-lemon !border-lemon">
-            Why this work matters
-          </Badge>
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start lg:items-center">
-        <ul class="lg:col-span-6 grid sm:grid-cols-2 gap-4">
-          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Icon name="ph:text-aa-duotone" size={22} class="text-lemon flex-shrink-0 mt-0.5" />
-            <Text size="base" tone="whiteMuted">A button label can reduce confusion.</Text>
-          </li>
-          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Icon name="ph:textbox-duotone" size={22} class="text-coral flex-shrink-0 mt-0.5" />
-            <Text size="base" tone="whiteMuted">A form pattern can prevent errors.</Text>
-          </li>
-          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Icon name="ph:cursor-duotone" size={22} class="text-sky flex-shrink-0 mt-0.5" />
-            <Text size="base" tone="whiteMuted">A focus state can make a workflow usable.</Text>
-          </li>
-          <li class="flex items-start gap-3 bg-white/5 border border-white/10 rounded-2xl p-5">
-            <Icon name="ph:stack-duotone" size={22} class="text-sage flex-shrink-0 mt-0.5" />
-            <Text size="base" tone="whiteMuted">One system decision can save dozens of teams from re-solving the same problem.</Text>
-          </li>
-        </ul>
+  {/* ───────────────────────── SELECTED WORK (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-6">
-
-          <Heading level={2} visual="display-md" tone="white" balance class="mb-6">
-            The interface is where <span class="text-lemon">strategy</span> becomes real.
-          </Heading>
-          <Text size="lg" tone="whiteMuted" class="mb-8">
-            A product can have a smart roadmap, strong research, and talented teams — but users only experience what makes it to the screen. The screen is where trust is won, where a flow converts or stalls, where a page earns its ranking. Small details, real consequences.
-          </Text>
-          <Text size="base" tone="whiteMuted" class="italic max-w-md border-l-2 border-lemon/60 pl-4">
-            So I treat the interface as a business surface, not just a canvas — the place where craft, correctness, and system decisions show up as outcomes.
-          </Text>
+          <p class="mono-label !text-paper/65">Selected work</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4">Products I owned end to end.</Heading>
         </div>
+        <div class="lg:col-span-6 grid grid-cols-3 gap-6">
+          {metrics.map((m) => (
+            <div>
+              <p class="font-serif text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-paper">{m.value}</p>
+              <p class="mt-1 text-sm text-paper/70">{m.label}</p>
+              <p class="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.1em] leading-relaxed text-paper/60">{m.note}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
+      <ul class="mt-14 border-t border-paper/10" data-reveal-stagger>
+        {work.map((w) => (
+          <li>
+            <a href={w.href} class="group grid grid-cols-12 items-center gap-4 border-b border-paper/10 py-5 transition-colors hover:bg-paper/[0.03]">
+              <span class="col-span-12 flex items-center gap-3 sm:col-span-4">
+                <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{w.kind}</span>
+              </span>
+              <span class="col-span-10 sm:col-span-7">
+                <span class="font-display text-lg font-medium tracking-tight text-paper">{w.client}</span>
+                <span class="mt-0.5 block text-sm text-paper/55">{w.line}</span>
+              </span>
+              <span class="col-span-2 flex justify-end sm:col-span-1">
+                <Icon name="ph:arrow-right" size={18} class="text-paper/50 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-paper" />
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
 
+      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+        <a href="/projects/" class="inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-paper transition-colors hover:text-accent">
+          View all projects <Icon name="ph:arrow-right" size={15} />
+        </a>
+        <p class="text-sm text-paper/55 max-w-xl">
+          And the tooling that enforces the quality: a
+          <a href="/blog/what-an-audit-finds/" class="text-paper/80 underline decoration-paper/30 underline-offset-2 transition-colors hover:text-paper hover:decoration-paper">design-system drift auditor</a>
+          that measures UI debt in counts and hours, plus a decision guide for accessible interface patterns.
+        </p>
       </div>
     </Container>
   </Section>
 
-
-  <Section id="business" tone="peach" padding="default" decorated>
-    <Blob tone="coral" size="lg" animate="float-slow" opacity="opacity-25" class="absolute -top-6 right-[6%]" />
-    <Blob tone="lemon" size="sm" animate="float-delay" opacity="opacity-50" class="absolute bottom-12 left-[8%] rounded-full" />
-
-    <Container class="relative z-10">
-      <SectionHeader
-        eyebrow="Business surfaces"
-        eyebrowIcon="ph:chart-line-up-duotone"
-        eyebrowTone="coral"
-        title="Design that has to perform, not just please."
-        lead="The interface is where conversion, retention, and search visibility actually happen. I build the surfaces the business leans on — and the front-end quality that makes them fast, findable, and easy for marketing to move."
-        align="left"
-        class="mb-14 max-w-3xl"
-      />
-
-      <div class="grid gap-6 md:grid-cols-3 lg:gap-8" data-reveal-stagger>
-        <Card variant="paper" tilt={-1} padding="none" class="flex flex-col">
-          <a href="/projects/vmspark/" class="flex flex-col flex-1 group p-8 md:p-10">
-            <div class="w-12 h-12 rounded-2xl bg-coral/10 flex items-center justify-center mb-4">
-              <Icon name="ph:trend-up-duotone" size={26} class="text-[#C13A22]" />
-            </div>
-            <Heading level={3} visual="h3" class="mb-2 leading-tight group-hover:text-coral transition-colors">Conversion &amp; retention</Heading>
-            <Text tone="muted" class="text-[0.95rem] flex-1">
-              Flows tuned to convert and to keep people. At VMSpark I rebuilt a multi-tenant admin shell that lifted sales conversion and customer retention — without touching the pipeline underneath.
-            </Text>
-            <span class="mt-4 inline-flex items-center gap-1.5 font-heading font-semibold text-[#C13A22] text-sm">
-              Read the VMSpark story
-              <Icon name="ph:arrow-right-bold" size={16} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-            </span>
-          </a>
-        </Card>
-
-        <Card hover={false} variant="paper" tilt={1} padding="loose" class="flex flex-col">
-          <div class="w-12 h-12 rounded-2xl bg-plum/10 flex items-center justify-center mb-4">
-            <Icon name="ph:magnifying-glass-duotone" size={26} class="text-plum" />
+  {/* ───────────────────────── ABOUT STRIP ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="grid items-start gap-10 md:grid-cols-12 md:gap-14">
+        <div class="md:col-span-4">
+          <div class="overflow-hidden rounded-lg border border-line">
+            <img src="/images/josh-biz-cazsh.jpg" alt="Joshua Briley, product engineer" class="aspect-[4/5] w-full object-cover" loading="lazy" width="640" height="800" />
           </div>
-          <Heading level={3} visual="h3" class="mb-2 leading-tight">Technical SEO</Heading>
-          <Text tone="muted" class="text-[0.95rem] flex-1">
-            Semantic HTML, clean document structure, structured data, and the Core Web Vitals performance that helps pages rank. The same correctness that serves screen readers serves search engines.
-          </Text>
-        </Card>
-
-        <Card variant="paper" tilt={-1} padding="none" class="flex flex-col">
-          <a href="/projects/berxi-insurance/" class="flex flex-col flex-1 group p-8 md:p-10">
-            <div class="w-12 h-12 rounded-2xl bg-sunset/10 flex items-center justify-center mb-4">
-              <Icon name="ph:megaphone-duotone" size={26} class="text-sunset-deep" />
-            </div>
-            <Heading level={3} visual="h3" class="mb-2 leading-tight group-hover:text-coral transition-colors">Campaigns &amp; landing pages</Heading>
-            <Text tone="muted" class="text-[0.95rem] flex-1">
-              Campaign and landing surfaces marketing can move without an engineering bottleneck. At Berxi, the design system I built unblocked the marketing team to ship campaigns and landing-page variations on their own.
-            </Text>
-            <span class="mt-4 inline-flex items-center gap-1.5 font-heading font-semibold text-sunset-deep text-sm">
-              Read the Berxi story
-              <Icon name="ph:arrow-right-bold" size={16} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-            </span>
-          </a>
-        </Card>
+        </div>
+        <div class="md:col-span-8">
+          <Heading level={2} visual="display-md" class="max-w-[18ch]">
+            Designer by origin. Engineer by practice.
+          </Heading>
+          <div class="mt-6 space-y-4 text-ink-muted leading-relaxed max-w-2xl">
+            <p>
+              I started in design and moved into engineering because I wanted to build the things I
+              drew, not hand them off. Twenty years later, the front end is where I do my best work:
+              design-grade, accessible UI with the judgment most engineering teams have to hire a
+              separate designer to get. I'm also a capable full-stack developer in Rails and
+              TypeScript, so I can carry a product the rest of the way.
+            </p>
+            <p>
+              I build by feel, fast, and I sweat the finish. Away from the screen, I play bass and
+              gig regularly, which is its own lesson in getting the details right in real time.
+            </p>
+          </div>
+          <div class="mt-7">
+            <Link href="/about/" variant="arrow">Read more about how I work</Link>
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
-
-  <Section id="how-i-think" tone="cream" padding="default" decorated>
-    <Blob tone="peach" size="lg" animate="float-slow" opacity="opacity-40" class="absolute -top-8 right-[6%]" />
-    <Blob tone="sky" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-12 left-[8%] rounded-full" />
-
-    <Container class="relative z-10">
-      <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+  {/* ───────────────────────── WRITING + CLOSING CTA (ink) ───────────────────────── */}
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 lg:items-end">
         <div class="lg:col-span-7">
-          <Badge tone="sage" icon="ph:brain-duotone" class="mb-6 -rotate-1">How I think</Badge>
-          <Heading level={2} visual="display-md" balance class="mb-6">
-            I care about the space between <WavyUnderline>people, patterns, and code</WavyUnderline>.
+          <Heading level={2} visual="display-lg" tone="paper" class="max-w-[20ch]">
+            Looking for a team that cares about the finish.
           </Heading>
-          <div class="space-y-4 text-charcoal/75 text-base md:text-lg leading-relaxed">
-            <p>
-              I started as a designer who learned to code. Over time, that turned into 20 years of building interfaces, component libraries, and design systems for real product teams.
-            </p>
-            <p>
-              That background taught me something important: experience problems are rarely just design problems or engineering problems. They usually live in the handoff, the assumptions, the missing details, the unclear patterns — the places where teams <em class="text-charcoal font-medium not-italic">think</em> they agree but don't.
-            </p>
-            <p class="font-display italic text-navy text-xl">
-              I like working in that space.
-            </p>
-          </div>
-        </div>
-
-        <div class="lg:col-span-5">
-          <div class="bg-white/70 backdrop-blur rounded-3xl border border-charcoal/10 p-6 md:p-8 shadow-sm relative">
-            <span class="absolute -top-3 left-8 inline-flex items-center gap-1.5 bg-[#C13A22] text-white text-xs font-heading font-semibold uppercase tracking-wider px-3 py-1 rounded-full shadow-md -rotate-2">
-              <Icon name="ph:question-duotone" size={14} />
-              Questions I ask
-            </span>
-            <ol class="space-y-4 mt-3">
-              {questions.map((q, i) => (
-                <li class="flex gap-4 items-start">
-                  <span
-                    class="flex-shrink-0 w-9 h-9 rounded-full bg-cream border border-charcoal/15 flex items-center justify-center font-display font-semibold text-navy text-sm shadow-sm"
-                    aria-hidden="true"
-                  >
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                  <p class="font-display italic text-lg md:text-xl text-navy leading-snug pt-1">
-                    {q}
-                  </p>
-                </li>
-              ))}
-            </ol>
-            <p class="mt-8 pt-6 border-t border-charcoal/10 font-heading text-sm text-charcoal/70">
-              <Icon name="ph:sparkle-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
-              That's the work I want to keep doing.
-            </p>
-          </div>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-
-
-
-  <Section tone="peach" padding="default" decorated>
-    <Blob tone="lemon" size="md" animate="float" opacity="opacity-50" class="absolute top-10 right-[8%]" />
-    <Blob tone="coral" size="sm" animate="float-delay" opacity="opacity-40" class="absolute bottom-10 left-[10%] rounded-full" />
-
-    <Container width="wide" class="relative z-10">
-      <div class="grid md:grid-cols-12 gap-10 md:gap-12 items-center">
-        <div class="md:col-span-5">
-          <div class="relative max-w-sm mx-auto md:mx-0">
-            <div class="bg-white rounded-2xl p-6 shadow-xl border border-charcoal/5 -rotate-2">
-              <div class="flex items-center gap-2 mb-4">
-                <span class="w-2.5 h-2.5 rounded-full bg-coral"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-lemon"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-sage"></span>
-              </div>
-              <div class="space-y-3">
-                <p class="font-display text-lg font-semibold text-navy leading-snug">A shift to precision work</p>
-                <div class="h-1.5 rounded-full bg-charcoal/10"></div>
-                <div class="h-1.5 rounded-full bg-charcoal/10 w-4/5"></div>
-                <div class="h-1.5 rounded-full bg-coral/30 w-3/5"></div>
-                <div class="flex items-center gap-2 pt-2">
-                  <Badge tone="plum" size="sm">UX engineering</Badge>
-                </div>
-              </div>
-            </div>
-            <div class="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-lg border border-charcoal/5 rotate-3 w-44 hidden sm:block">
-              <p class="font-display text-sm font-semibold text-navy leading-snug">Accessibility debt</p>
-              <div class="h-1.5 rounded-full bg-charcoal/10 mt-2"></div>
-              <div class="h-1.5 rounded-full bg-sage/40 w-2/3 mt-1.5"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="md:col-span-7">
-          <Badge tone="navy" icon="ph:pen-nib-duotone" class="mb-6">Writing</Badge>
-          <Heading level={2} visual="display-md" balance class="mb-5">
-            Writing about UX engineering, accessibility, and design systems.
-          </Heading>
-          <Text size="lg" tone="muted" class="mb-4">
-            I write about the parts of front-end work that sit closest to the user: accessible components, design systems, interface patterns, AI-assisted development, and the changing role of front-end developers.
+          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
+            I want to build complete, accessible products on a team that treats the last 10% as the
+            point, not the afterthought. If that's the work, let's talk.
           </Text>
-          <Text size="base" tone="muted" class="mb-8">
-            Practical, reflective, and grounded in real work. I'm interested in how teams make better decisions, not just which tools they choose.
-          </Text>
-          <Button variant="primary" iconRight="ph:arrow-right-bold" href="/blog/">
-            Read the blog
-          </Button>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-
-  <Section id="tools" tone="cream" padding="default">
-    <Container>
-      <SectionHeader
-        eyebrow="Free tools"
-        eyebrowIcon="ph:wrench-duotone"
-        eyebrowTone="sage"
-        title="Tools that show how I think."
-        lead="Three interactive pieces, free to use — and a quick way to see how I approach systems work. Each one is accessible by construction and token-driven."
-        align="left"
-        class="mb-16 max-w-3xl"
-      />
-
-      {(() => {
-        const [featured, ...rest] = toolsPreview;
-        const fa = accentMap[featured.accent];
-        return (
-          <div class="grid gap-6 lg:grid-cols-12 lg:gap-8 lg:items-stretch" data-reveal-stagger>
-            <Card variant="paper" tilt={-1} padding="none" class="lg:col-span-7 flex flex-col relative overflow-hidden bg-gradient-to-br from-white to-coral/5 ring-1 ring-coral/15">
-              <span class="sticker bg-coral/10 text-[#C13A22] border-coral/40 absolute top-5 right-5 text-xs z-10 pointer-events-none" style="transform: rotate(2deg)">Start here</span>
-              <a href={featured.href} class="flex flex-col flex-1 group p-8 md:p-10">
-                <div class={`w-16 h-16 rounded-2xl ${fa.bg} flex items-center justify-center mb-6`}>
-                  <Icon name={featured.icon} size={44} class={fa.text} />
-                </div>
-                <Heading level={3} visual="h2" class="mb-3 group-hover:text-coral transition-colors">{featured.title}</Heading>
-                <Text size="lg" tone="muted" class="mb-6 flex-1 max-w-md">{featured.body}</Text>
-                <span class={`inline-flex items-center gap-1.5 font-heading font-semibold ${fa.text}`}>
-                  {featured.cta}
-                  <Icon name="ph:arrow-right-bold" size={18} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-                </span>
-              </a>
-            </Card>
-
-            <div class="lg:col-span-5 grid gap-6 sm:grid-cols-2 lg:grid-cols-1">
-              {rest.map((s, i) => {
-                const a = accentMap[s.accent];
-                return (
-                  <Card variant="paper" tilt={i % 2 === 0 ? 1 : -1} padding="none" class="flex flex-col">
-                    <a href={s.href} class="flex flex-col flex-1 group p-8 md:p-10">
-                      <div class="flex items-center gap-3 mb-3">
-                        <div class={`w-11 h-11 rounded-xl ${a.bg} flex items-center justify-center flex-shrink-0`}>
-                          <Icon name={s.icon} size={24} class={a.text} />
-                        </div>
-                        <Heading level={3} visual="h3" class="leading-tight group-hover:text-coral transition-colors">{s.title}</Heading>
-                      </div>
-                      <Text tone="muted" class="mb-5 flex-1 text-[0.95rem]">{s.body}</Text>
-                      <span class={`inline-flex items-center gap-1.5 font-heading font-semibold ${a.text} text-sm`}>
-                        {s.cta}
-                        <Icon name="ph:arrow-right-bold" size={16} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-                      </span>
-                    </a>
-                  </Card>
-                );
-              })}
-            </div>
-          </div>
-        );
-      })()}
-
-      <p class="text-sm text-charcoal/70 font-body mt-12">
-        <Icon name="ph:info-duotone" size={16} class="text-plum inline-block align-middle mr-1" />
-        Want the full set? <Link href="/tools/" variant="inline">Explore all the tools</Link>.
-      </p>
-    </Container>
-  </Section>
-
-
-  <Section id="about" tone="cream" padding="default" class="bg-charcoal/[0.03]">
-    <Container>
-      <div class="flex flex-col md:flex-row items-start gap-12 md:gap-16">
-        <div class="flex-shrink-0 relative mx-auto md:mx-0">
-          <div class="w-64 h-72 md:w-72 md:h-80 rounded-3xl overflow-hidden shadow-xl border-4 border-white -rotate-2">
-            <img src="/images/josh-biz-cazsh.jpg" alt="Joshua Briley, UX Engineer" class="w-full h-full object-cover" loading="lazy" />
-          </div>
-          <div class="absolute -bottom-4 -right-4 bg-lemon text-navy px-4 py-2 rounded-full font-heading font-semibold text-sm shadow-md rotate-3">
-            <Icon name="ph:coffee-duotone" size={16} class="mr-1 align-middle" />
-            20 years in
-          </div>
-          <div class="absolute -top-4 -left-4 bg-white border border-charcoal/10 px-3 py-1.5 rounded-full font-heading font-medium text-xs text-navy shadow-md -rotate-6 hidden md:flex items-center gap-1.5">
-            <Icon name="ph:check-circle-duotone" size={14} class="text-sage" />
-            Designer · Engineer
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">Get in touch</Button>
+            <a
+              href="/resume/"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
+            >Résumé <Icon name="ph:file-text" size={12} /></a>
           </div>
         </div>
 
-        <div class="flex-1">
-          <Badge tone="sky" icon="ph:user-duotone" class="mb-6 -rotate-1">
-            The human behind the systems
-          </Badge>
-          <Heading level={2} visual="display-md" balance class="mb-6">
-            Designer by origin. Engineer by practice. <WavyUnderline>Experience-focused</WavyUnderline> by choice.
+        <div class="lg:col-span-5 lg:border-l lg:border-paper/15 lg:pl-12">
+          <p class="mono-label !text-paper/55">Latest writing</p>
+          <Heading level={3} visual="h3" tone="paper" class="mt-3 max-w-[24ch]">
+            Notes on building complete products.
           </Heading>
-          <div class="space-y-4 text-charcoal/70 text-base md:text-lg leading-relaxed">
-            <p>
-              I've spent my career working between design and engineering — building conversion-focused marketing sites, product interfaces, design systems, component libraries, and internal tools across a range of teams and industries.
-            </p>
-            <p>
-              The common thread is simple: I care about making interfaces clearer, more accessible, and easier for teams to use well. I'm not interested in complexity for its own sake — I'm interested in the kind of structure that helps people move through software with more confidence and less friction.
-            </p>
-          </div>
-
-          <div class="mt-8">
-            <p class="font-heading text-sm font-medium text-charcoal/70 uppercase tracking-wider mb-4">
-              Teams I've worked with
-            </p>
-            <div class="flex flex-wrap gap-3">
-              {['Travelers', 'Berkshire Hathaway', "America's Test Kitchen", 'NASCAR', 'NFL'].map((team) => (
-                <span class="bg-white text-navy font-heading text-sm font-medium px-4 py-2 rounded-full border border-charcoal/10 shadow-sm">{team}</span>
-              ))}
-            </div>
-          </div>
-
-          <div class="mt-8">
-            <Link href="/about/" variant="arrow">More about me</Link>
+          <Text size="sm" tone="whiteMuted" class="mt-3 max-w-md">
+            Accessible interfaces, the details that make software feel finished, AI-assisted
+            development, and the changing shape of the front-end engineer.
+          </Text>
+          <div class="mt-5">
+            <a href="/blog/" class="inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-paper transition-colors hover:text-accent">
+              Read the blog <Icon name="ph:arrow-right" size={15} />
+            </a>
           </div>
         </div>
       </div>
     </Container>
   </Section>
-
-
-  <CTABanner
-    title="Need an interface that looks right, works right, and pulls its weight?"
-    lead="Hiring for design systems or UX engineering, shipping a product or marketing surface that has to convert, or want a second pair of eyes on a component library — send a note. I reply within one business day."
-    align="left"
-  >
-    <Button variant="primary" size="lg" iconLeft="ph:envelope-duotone" href="/contact/">
-      Get in touch
-    </Button>
-    <Button variant="text" size="lg" iconLeft="ph:linkedin-logo-duotone" href="https://www.linkedin.com/in/joshuabriley/">
-      Connect on LinkedIn
-    </Button>
-  </CTABanner>
 </BaseLayout>
+
+<style>
+  /* ── Hero load-in. A calm staggered rise on first paint. Transform/opacity only. */
+  .hero-in {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: hero-in 0.7s var(--ease-out) forwards;
+  }
+  .hero-in-1 { animation-delay: 0.04s; }
+  .hero-in-2 { animation-delay: 0.11s; }
+  .hero-in-3 { animation-delay: 0.19s; }
+  .hero-in-4 { animation-delay: 0.28s; }
+  .hero-in-5 { animation-delay: 0.36s; }
+  @keyframes hero-in {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* ── Interface specimen. One field, four states, on an 8s loop.
+     Each state's value, message, icon and the field's border/ring are driven by
+     opacity/colour keyframes sharing the same timeline so they stay in sync. */
+  .spec-value, .spec-msg { position: relative; }
+  .spec-val, .spec-m { grid-area: 1 / 1; }
+  .spec-i { opacity: 0; }
+
+  .spec-field { border-color: var(--line-strong); animation: spec-field 8s var(--ease-inout) infinite; }
+  .spec-live { animation: spec-live 2.4s ease-in-out infinite; }
+
+  .spec-val-empty  { animation: spec-A      8s var(--ease-inout) infinite; }
+  .spec-val-typing { animation: spec-typing 8s var(--ease-inout) infinite; }
+  .spec-val-done   { animation: spec-D      8s var(--ease-inout) infinite; }
+  .spec-m-default  { animation: spec-A      8s var(--ease-inout) infinite; }
+  .spec-m-focus    { animation: spec-B      8s var(--ease-inout) infinite; }
+  .spec-m-error    { animation: spec-C      8s var(--ease-inout) infinite; }
+  .spec-m-done     { animation: spec-D      8s var(--ease-inout) infinite; }
+  .spec-i-default  { animation: spec-AB     8s var(--ease-inout) infinite; }
+  .spec-i-error    { animation: spec-C      8s var(--ease-inout) infinite; }
+  .spec-i-done     { animation: spec-D      8s var(--ease-inout) infinite; }
+
+  @keyframes spec-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  @keyframes spec-field {
+    0%, 18%   { border-color: var(--line-strong); box-shadow: 0 0 0 0 rgba(168,65,42,0); }
+    24%, 44%  { border-color: var(--accent);      box-shadow: 0 0 0 3px rgba(168,65,42,0.14); }
+    50%, 68%  { border-color: #c2603a;            box-shadow: 0 0 0 3px rgba(194,96,58,0.13); }
+    74%, 100% { border-color: var(--accent);      box-shadow: 0 0 0 3px rgba(168,65,42,0.10); }
+  }
+
+  /* Visibility windows across the 8s loop: A=default, B=focus, C=error, D=done. */
+  @keyframes spec-A      { 0%, 18% { opacity: 1; } 22%, 100% { opacity: 0; } }
+  @keyframes spec-B      { 0%, 18% { opacity: 0; } 24%, 44% { opacity: 1; } 48%, 100% { opacity: 0; } }
+  @keyframes spec-C      { 0%, 46% { opacity: 0; } 50%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } }
+  @keyframes spec-D      { 0%, 70% { opacity: 0; } 74%, 100% { opacity: 1; } }
+  @keyframes spec-AB     { 0%, 44% { opacity: 1; } 48%, 100% { opacity: 0; } }
+  @keyframes spec-typing { 0%, 18% { opacity: 0; } 24%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in { animation: none; opacity: 1; transform: none; }
+    .spec-field, .spec-live,
+    .spec-val, .spec-m, .spec-i { animation: none !important; }
+    /* Freeze on the finished state. */
+    .spec-field { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(168,65,42,0.12); }
+    .spec-val-empty, .spec-val-typing,
+    .spec-m-default, .spec-m-focus, .spec-m-error,
+    .spec-i-default, .spec-i-error { opacity: 0; }
+    .spec-val-done, .spec-m-done { opacity: 1; }
+    .spec-i-done { opacity: 1; }
+  }
+</style>

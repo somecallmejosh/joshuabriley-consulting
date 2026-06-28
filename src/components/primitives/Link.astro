@@ -43,15 +43,15 @@ const isActive =
     (linkPath === pathname ||
       (linkPath !== '/' && pathname.startsWith(linkPath + '/'))));
 
-// Inline text links use plum for AA contrast on cream/white. The arrow
-// variant keeps plum because the icon + visible underline-on-hover give it
-// non-text contrast; pair with a heading-weight font.
+// Inline links read as ink with an accent underline. The arrow variant stays
+// quiet — ink label, accent on hover, icon nudges right (motion in the slot).
 const variants: Record<Variant, string> = {
-  inline: 'text-plum underline underline-offset-4 hover:text-coral',
+  inline:
+    'text-ink underline decoration-line-strong decoration-1 underline-offset-[3px] transition-colors hover:decoration-accent hover:text-accent',
   arrow:
-    'inline-flex items-center gap-1.5 font-heading font-semibold text-plum text-sm hover:gap-3 transition-all',
+    'group/lnk inline-flex items-center gap-2 font-sans font-medium text-[0.9rem] text-ink transition-colors hover:text-accent',
   nav:
-    'font-heading text-sm font-medium text-navy/80 hover:text-plum transition-colors',
+    'font-sans text-[0.9rem] font-medium text-ink-muted transition-colors',
   unstyled: '',
 };
 
@@ -70,5 +70,11 @@ const finalIconRight = variant === 'arrow' ? (iconRight ?? 'ph:arrow-right') : i
   {...externalAttrs}
 >
   <slot />
-  {finalIconRight && <Icon name={finalIconRight} size={16} />}
+  {finalIconRight && (
+    <Icon
+      name={finalIconRight}
+      size={15}
+      class={variant === 'arrow' ? 'transition-transform duration-300 ease-out group-hover/lnk:translate-x-1' : undefined}
+    />
+  )}
 </a>

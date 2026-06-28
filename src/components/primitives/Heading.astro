@@ -12,7 +12,7 @@ type HeadingVisual = 'display-xl' | 'display-lg' | 'display-md' | 'h1' | 'h2' | 
 interface Props {
   level: HeadingLevel;
   visual?: HeadingVisual;
-  tone?: 'navy' | 'white' | 'plum' | 'coral';
+  tone?: 'navy' | 'white' | 'plum' | 'coral' | 'ink' | 'paper' | 'accent' | 'muted';
   align?: 'left' | 'center';
   balance?: boolean;
   class?: string;
@@ -32,26 +32,34 @@ const {
 const resolvedVisual: HeadingVisual = visual ?? (`h${level}` as HeadingVisual);
 const Tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' = `h${level}` as any;
 
+// Display-scale headings use Fraunces (font-serif) for character; tracking is
+// relaxed vs. the old grotesk settings because a high-contrast serif crowds at
+// tight negative spacing. Sub-headings (h3/h4) stay in the grotesk for density
+// and scannability. Functional/small `font-display` uses elsewhere are untouched.
 const visualStyles: Record<HeadingVisual, string> = {
   'display-xl':
-    'font-display text-5xl sm:text-6xl md:text-7xl font-semibold leading-[1.05] tracking-tight text-balance',
+    'font-serif text-[2.75rem] leading-[1.02] sm:text-6xl md:text-[4.25rem] font-semibold tracking-[-0.02em] text-balance',
   'display-lg':
-    'font-display text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.1] tracking-tight',
+    'font-serif text-4xl sm:text-5xl md:text-6xl font-semibold leading-[1.05] tracking-[-0.02em]',
   'display-md':
-    'font-display text-3xl sm:text-4xl md:text-5xl font-semibold leading-[1.15] tracking-tight',
-  h1: 'font-display text-4xl md:text-5xl font-semibold leading-tight',
-  h2: 'font-display text-3xl md:text-4xl font-semibold leading-tight',
-  h3: 'font-heading text-xl md:text-2xl font-semibold leading-snug',
-  h4: 'font-heading text-lg font-semibold leading-snug',
+    'font-serif text-3xl sm:text-4xl md:text-[2.75rem] font-semibold leading-[1.08] tracking-[-0.018em]',
+  h1: 'font-serif text-4xl md:text-5xl font-semibold leading-[1.08] tracking-[-0.018em]',
+  h2: 'font-serif text-2xl md:text-[2rem] font-semibold leading-tight tracking-[-0.015em]',
+  h3: 'font-heading text-lg md:text-xl font-semibold leading-snug tracking-[-0.015em]',
+  h4: 'font-heading text-base font-semibold leading-snug tracking-[-0.01em]',
   eyebrow:
-    'font-heading text-xs font-medium uppercase tracking-[0.18em]',
+    'font-mono text-[0.6875rem] font-medium uppercase tracking-[0.16em]',
 };
 
 const tones: Record<NonNullable<Props['tone']>, string> = {
-  navy: 'text-navy',
-  white: 'text-white',
-  plum: 'text-plum',
-  coral: 'text-[#C13A22]',
+  navy: 'text-ink',
+  white: 'text-paper',
+  plum: 'text-ink',
+  coral: 'text-accent',
+  ink: 'text-ink',
+  paper: 'text-paper',
+  accent: 'text-accent',
+  muted: 'text-ink-muted',
 };
 ---
 

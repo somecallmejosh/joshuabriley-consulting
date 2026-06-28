@@ -1,0 +1,275 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+
+const updated = 'June 2026';
+
+const description =
+  'Front-end and UI developer with 20 years building accessible, high-performance interfaces, component libraries, and design systems in React, Vue, Rails, and Web Components.';
+
+const summary =
+  'Front-end and UI developer with 20 years building accessible, high-performance interfaces. I build and maintain the component libraries and design systems teams ship on, hold them to WCAG, and keep the code honest with automated testing. I mentor the people around me and fit UI work cleanly into whatever stack it lands in.';
+
+const experience = [
+  {
+    period: '2025 - Present',
+    company: 'Travelers',
+    role: 'Design Systems Engineer',
+    stack: 'Web Components · React',
+    bullets: [
+      'Build and maintain the component library used by 3,500 engineers and designers across the company.',
+      'Automated Storybook story generation, saving 10+ hours per component.',
+      'Automated Figma Code Connect, cutting the same design-to-code handoff cost again.',
+    ],
+  },
+  {
+    period: '2023 - 2024',
+    company: 'Logatot, Inc.',
+    role: 'Senior UI Developer',
+    stack: 'Rails · ViewComponents',
+    bullets: [
+      'Built modular, accessible UI with Rails ViewComponents, keeping design and layout consistent.',
+      'Folded WCAG into the build itself rather than auditing at the end.',
+      'Worked directly with product, design, and engineering to ship on schedule.',
+    ],
+  },
+  {
+    period: '2022 - 2023',
+    company: "America's Test Kitchen",
+    role: 'Senior Software Engineer',
+    stack: 'React · Next.js',
+    bullets: [
+      'Built and documented UI components in React, Next.js, and Storybook.',
+      'Introduced accessibility and responsive practices that moved user satisfaction measurably.',
+      'Balanced technical feasibility against user experience across cross-functional teams.',
+    ],
+  },
+  {
+    period: '2018 - 2022',
+    company: 'Berkshire Hathaway Specialty',
+    role: 'Principal Design Engineer',
+    stack: 'Vue.js · Nuxt.js',
+    bullets: [
+      'Created a Vue/Nuxt component library that standardized front-end work and sped up rollouts.',
+      'Pushed for inclusive design and held products to accessibility guidelines.',
+      'Delivered consistently ahead of schedule through efficient tooling and practices.',
+    ],
+  },
+  {
+    period: '2016 - 2018',
+    company: "America's Test Kitchen",
+    role: 'Lead UI Developer',
+    stack: 'UI Systems',
+    bullets: [
+      'Designed a scalable UI utility system that cut development overhead and lifted team velocity.',
+      'Trained the team on accessibility, SEO, and performance tuning.',
+      "Won the Breaking Bread Award for content solutions that strengthened the brand's digital engagement.",
+    ],
+  },
+  {
+    period: '2010 - Present',
+    company: 'Freelance',
+    role: 'UI Developer',
+    stack: 'Contract',
+    bullets: [
+      'Currently building data-intensive user and admin portals for Berkshire Hathaway Specialty.',
+      "Designed and built IVFCRYO's web app for shipping and real-time monitoring of frozen tissue specimens.",
+    ],
+  },
+];
+
+const education = [
+  {
+    title: 'B.S. Biology',
+    org: 'Troy University',
+    note: 'Built analytical and technical-writing habits through research-based projects.',
+  },
+];
+
+const continuingEd = [
+  { title: 'Mastering Nuxt', org: 'Michael Thiessen' },
+  { title: 'The Joy of React', org: 'Josh W. Comeau' },
+  { title: 'Learn UX Design', org: 'Erik Kennedy' },
+  { title: 'Web Accessibility', org: 'Deque University' },
+];
+
+const skills = [
+  {
+    group: 'Frameworks & libraries',
+    items: ['React', 'Next.js', 'Vue.js', 'Nuxt.js', 'Rails ViewComponents', 'Web Components', 'Storybook'],
+  },
+  {
+    group: 'Craft',
+    items: ['Accessibility (WCAG)', 'Design systems', 'Component & pattern libraries', 'Responsive design', 'Automated testing', 'Figma Code Connect'],
+  },
+  {
+    group: 'Languages',
+    items: ['TypeScript', 'JavaScript', 'Ruby', 'HTML', 'CSS'],
+  },
+];
+---
+
+<BaseLayout title="Resume | Joshua Briley | Product Engineer" description={description}>
+
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
+        <span>Résumé · Product Engineer</span>
+        <span class="hidden sm:inline text-ink-muted">Updated {updated}</span>
+      </div>
+
+      <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-end">
+        <div class="lg:col-span-8">
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[19ch]">
+            Twenty years building the parts of the product people actually <em class="ink-wink font-normal italic">touch</em>.
+          </Heading>
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
+            {summary}
+          </Text>
+        </div>
+
+        <div class="hero-in hero-in-4 lg:col-span-4 lg:flex lg:flex-col lg:items-end">
+          <div class="flex flex-wrap items-center gap-3 lg:justify-end">
+            <Button variant="primary" size="lg" href="/resume.pdf" target="_blank" rel="noopener" iconRight="ph:download-simple" class="js-magnetic">
+              Download PDF
+            </Button>
+            <Button variant="ghost" size="lg" href="/contact/">
+              Get in touch
+            </Button>
+          </div>
+          <ul class="mt-8 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted lg:justify-end">
+            {['20 yrs in production UI', 'Accessibility-first', 'Full-stack capable'].map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── EXPERIENCE ───────────────────────── */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div class="max-w-3xl">
+        <p class="mono-label">Experience</p>
+        <Heading level={2} visual="display-md" class="mt-4">
+          Products in production, across frameworks and brands.
+        </Heading>
+      </div>
+
+      <ul class="mt-14 border-t border-line" data-reveal-stagger>
+        {experience.map((job) => (
+          <li>
+            <div class="grid grid-cols-12 gap-x-4 gap-y-3 border-b border-line py-8 md:gap-x-8 md:py-9">
+              <div class="col-span-12 md:col-span-3">
+                <span class="block font-mono text-[0.7rem] uppercase tracking-[0.12em] text-accent">{job.period}</span>
+                <span class="mt-2 block font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">{job.stack}</span>
+              </div>
+              <div class="col-span-12 md:col-span-9">
+                <h3 class="font-display text-lg font-semibold tracking-tight text-ink">
+                  {job.role}
+                  <span class="font-normal text-ink-muted"> · {job.company}</span>
+                </h3>
+                <ul class="mt-4 space-y-2.5 max-w-2xl">
+                  {job.bullets.map((b) => (
+                    <li class="flex gap-3 text-sm leading-relaxed text-ink-muted">
+                      <span class="mt-2 h-1 w-1 shrink-0 rounded-[1px] bg-accent" aria-hidden="true"></span>
+                      <span>{b}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── EDUCATION · LEARNING · SKILLS ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+
+        {/* Education + continuing ed */}
+        <div class="lg:col-span-5">
+          <Heading level={2} visual="h2" tone="paper">Education</Heading>
+          <div class="mt-6 border-t border-paper/10">
+            {education.map((e) => (
+              <div class="border-b border-paper/10 py-5">
+                <p class="font-display text-base font-medium tracking-tight text-paper">{e.title}</p>
+                <p class="mt-0.5 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{e.org}</p>
+                <p class="mt-2 text-sm text-paper/55 max-w-md">{e.note}</p>
+              </div>
+            ))}
+          </div>
+
+          <p class="mt-10 mono-label text-paper/45">Recent continuing education</p>
+          <ul class="mt-5 border-t border-paper/10">
+            {continuingEd.map((c) => (
+              <li class="flex items-baseline justify-between gap-4 border-b border-paper/10 py-3.5">
+                <span class="font-display text-sm font-medium tracking-tight text-paper">{c.title}</span>
+                <span class="shrink-0 text-right text-xs text-paper/45">{c.org}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* Skills */}
+        <div class="lg:col-span-7">
+          <Heading level={2} visual="h2" tone="paper">Tools of the trade</Heading>
+          <div class="mt-6 space-y-8" data-reveal-stagger>
+            {skills.map((s) => (
+              <div class="grid grid-cols-12 items-baseline gap-4 border-t border-paper/10 pt-5">
+                <p class="col-span-12 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent sm:col-span-4">{s.group}</p>
+                <ul class="col-span-12 flex flex-wrap gap-2 sm:col-span-8">
+                  {s.items.map((item) => (
+                    <li class="rounded-[5px] border border-paper/15 px-2.5 py-1 text-[0.8rem] text-paper/80">{item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── CONTACT ───────────────────────── */}
+  <Section tone="paper" padding="loose" class="border-t border-line">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
+        <div class="lg:col-span-8">
+          <Heading level={2} visual="display-lg" class="max-w-[20ch]">
+            Looks like a fit? Let's talk.
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-6 max-w-xl">
+            If you're hiring a product engineer who builds the whole thing and sweats the finish,
+            send a note. I'll tell you honestly whether I'm the right fit, and if not, I probably
+            know who is.
+          </Text>
+        </div>
+        <div class="lg:col-span-4 lg:flex lg:justify-end">
+          <div class="flex flex-col items-start gap-3">
+            <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noopener"
+              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-ink"
+            >Download PDF <Icon name="ph:download-simple" size={12} /></a>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
