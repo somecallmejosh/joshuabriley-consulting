@@ -9,34 +9,34 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  "Kind words from clients and colleagues I've had the pleasure of working with over 20 years of design systems, accessibility, and front-end work.";
+  "Kind words from clients and colleagues I've had the pleasure of working with over 20 years of full-stack product engineering, accessibility, and design-systems work.";
 
 const all = await getCollection('testimonials');
 const sorted = all.sort((a, b) => a.data.order - b.data.order);
 ---
 
-<BaseLayout title="Testimonials — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+<BaseLayout title="Testimonials | Joshua Briley | Product Engineer" description={description}>
 
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <div class="flex items-center justify-between gap-4 mono-label">
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
         <span>Testimonials · {sorted.length} voices</span>
-        <span class="hidden sm:inline text-ink-muted">20 yrs · Index 01</span>
+        <span class="hidden sm:inline text-ink-muted">20 yrs</span>
       </div>
 
       <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-end">
         <div class="lg:col-span-8">
-          <Heading level={1} visual="display-xl" class="max-w-[16ch]">
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[16ch]">
             <em class="ink-wink font-normal italic">Kind words</em> from people I've worked with.
           </Heading>
-          <Text size="lg" tone="muted" class="mt-7 max-w-2xl">
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
             These come from clients and colleagues I've had the pleasure of working with. Their
-            words reflect what I care about most — collaboration, accessibility, and work that
+            words reflect what I care about most: collaboration, accessibility, and work that
             holds up over time.
           </Text>
 
-          <div class="mt-9 flex flex-wrap items-center gap-3">
+          <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
             <Button variant="primary" size="lg" href="#wall" iconRight="ph:arrow-down" class="js-magnetic">
               Read the wall
             </Button>
@@ -45,7 +45,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
             </Button>
           </div>
         </div>
-        <div class="lg:col-span-4">
+        <div class="hero-in hero-in-4 lg:col-span-4">
           <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted lg:flex-col lg:gap-y-3">
             {[`${sorted.length} voices`, '20 years', 'Apple · HubSpot · BHSI'].map((p) => (
               <li class="flex items-center gap-2">
@@ -62,13 +62,12 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
   <Section id="wall" tone="paper" padding="default">
     <Container width="wide">
       <div class="max-w-3xl">
-        <p class="mono-label">The wall / 02</p>
-        <Heading level={2} visual="display-md" class="mt-4">
+        <Heading level={2} visual="display-md">
           Notes from collaborators.
         </Heading>
       </div>
 
-      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
         {sorted.map((t, i) => (
           <figure class="flex flex-col bg-paper p-7 md:p-8">
             <span aria-hidden="true" class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
@@ -107,13 +106,13 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     <Container width="wide">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-8">
-          <p class="mono-label !text-paper/65">References / 03</p>
+          <p class="mono-label !text-paper/65">References</p>
           <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[22ch]">
             Most of these folks will take a call.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
             If you're evaluating me for a role or a project and want to talk to someone I've
-            worked with, just ask — I'm happy to make an introduction. Or reach out directly.
+            worked with, just ask. I'm happy to make an introduction. Or reach out directly.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">

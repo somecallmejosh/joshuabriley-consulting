@@ -1,3 +1,200 @@
+# Personal-projects section + tools-as-blog-posts (2026-06-28)
+
+Decisions (confirmed): case-study URLs MOVE; 4 separate posts; old /tools/* redirect.
+
+## Phase A — personal-projects section ✅ DONE + verified
+- [x] A1. moved projects/{clempo,bass-face}.astro -> personal-projects/
+- [x] A2. breadcrumbs + back-links -> /personal-projects/
+- [x] A3. personal-projects/index.astro hub (Clempo + Bass Face)
+- [x] A4. redirects /projects/{clempo,bass-face} -> /personal-projects/* (301 verified)
+- [x] A5. projects.astro: removed 2, renumbered 01-06, added personal-projects link row
+- [x] A6. nav.ts FOOTER "More": Personal Projects added
+- [x] A7. Verified: all 200s, redirects 301, screenshots good
+
+## Phase B — tools -> interactive blog posts ✅ DONE + verified
+- [x] B1. 4 MDX posts embedding islands in .not-prose, tool copy repurposed:
+      what-a-design-token-actually-does, what-an-audit-finds, what-inconsistency-costs,
+      design-system-scorecard
+- [x] B2. Scorecard: embedded ScorecardEngine quiz; results.astro kept at
+      /tools/scorecard/results/; fallback + retake link repointed to the post
+- [x] B3. Redirects in astro.config (Netlify _redirects verified, all 301):
+      /tools -> /blog; each /tools/<x> -> /blog/<slug>; /scorecard -> post
+- [x] B4. Deleted tools/{index,scorecard,audit-findings,token-playground,roi-calculator};
+      kept scorecard/results.astro; repointed homepage "drift auditor" link
+- [x] B5. Verified: prod build clean, all islands interactive (token 13 / audit 8 / roi 9 /
+      scorecard ~96 controls), blog index lists 7 essays, screenshots good
+
+## Phase B follow-up — tool widgets cramped + white cards (2026-06-28) ✅
+- [x] Added `interactive` flag to posts schema; passed `wide` to BlogPost.
+- [x] Interactive posts: single centered column (no TOC rail); `.post-tool` blocks
+      break out to min(72rem,94vw) centered. Verified: prose 672px, widget 1152px.
+- [x] De-carded white cards: BlogPost author block dropped `bg-raised` -> paper hairline;
+      site.css `.cost-card` `var(--raised)` -> `var(--paper)`.
+- [x] All 4 tool posts: `interactive: true` + wrapper class `not-prose post-tool my-10`.
+- [x] Verified: prod build clean; essay posts keep TOC layout; mobile collapses no overflow.
+      Note: interactive posts drop the side TOC/share rail (short tool demos).
+
+## Notes / optional follow-ups for Josh
+- Blog index: "the-hidden-cost..." has featured:true so it leads with a "· LATEST" tag even
+  though the new June posts are newer. Pre-existing featured mechanic, not changed. Flip its
+  featured flag (or move the tag logic to true-latest) if the label now reads wrong.
+- Scorecard "retake" lands on the post with ?r=...; engine may not prefill from it (fresh
+  retake). Fine as-is; wire prefill later if desired.
+- Pre-existing: `astro check` still crashes in components/patterns/FAQ.astro (deleted /faqs
+  collection). Prod build is clean; check is separate. Worth a small cleanup pass.
+
+---
+
+# Project case studies: fix dead space / narrow text (2026-06-28)
+
+Confirmed with user: body sections use `Container width="content"` (~1024px) but prose is
+capped at `.measure` (52ch ≈525px) and left-aligned -> ~500px L-void to the right of every
+prose block. Reads as "dead space / narrow text" on wide screens.
+Decision: **Targeted evolution** — keep editorial-technical system, rebalance to fill page.
+
+Approach: anchored two-column step layout (mirrors the index "through-line" 5/7 split that
+already exists). Left rail = mono-label "Step 0N" + display-md heading (sticky on lg).
+Right column = prose (fills) + supporting content. Reusable `.case-layout` CSS in site.css.
+Large media (ScrollShot/SiteShot) stays full-width outside the grid.
+
+- [x] 1. Add `.case-layout` CSS; prototype on west-baton-rouge; screenshot + iterate — VALIDATED at 1440/1024/mobile
+- [x] 2. Rolled out to clempo, ivfcryo, berxi, bass-face, ATK (subagents)
+- [x] 3. vmspark — Step 01 image galleries + ScrollShots kept full-width
+- [x] 4. rudiment-ui — 5 steps converted; embed sections + hero left intact
+- [x] 5. Nits: ivfcryo +4 tone="ink"; berxi & rudiment mb-4 -> mb-3
+- [x] 6. Re-screenshot all 8 desktop + mobile + 1024; verified
+- [x] 7. Review
+
+## Review
+What: added one reusable `.case-layout` class to site.css; wrapped every numbered "Step"
+section across all 8 case studies in an anchored two-column layout (label + heading in a
+sticky left rail; prose + content fill the right column). Collapses to single column
+<1024px so mobile is unchanged.
+Why: prose was `.measure` (~525px) left-aligned in a ~1024px container, leaving a ~500px
+L-void on its right. Moving the heading into that void kills the dead space without losing
+reading comfort.
+Verify: all 8 pages return 200; grep shows balanced case-layout/__head/__body counts, 0
+leftover mb-4 step labels, 0 display-md step headings missing tone. Shot all 8 @1440 +
+mobile + 1024.
+Media exceptions: vmspark Step 01 galleries + rudiment App Shell/Field Guide embeds kept
+full-width. Hero / Receipts / On-the-docket / testimonials / ink CTAs untouched.
+Pre-existing (NOT mine): `astro check` crashes in components/patterns/FAQ.astro (undefined
+.map) — leftover from the deleted /faqs collection. Dev renders all project pages fine.
+
+---
+
+# Projects pages: consistency + de-card (2026-06-28)
+
+Make the 5 featured case studies consistent, shrink "What X said" to the berxi
+treatment, kill the white-card LLM tell. (Tools islands already removed from project
+pages — verified clean.)
+
+System applied identically to all 5:
+- Equal-item grids (symptom pairs, outcome 3-ups, token tiers, scale grids): borderless
+  editorial columns `border-t border-line pt-5` — no `bg-raised`, no rounding (matches Receipts).
+- Metric bands: hairline band `border-y border-line py-8`, no fill.
+- Contained callouts (Built-in a11y box, vmspark findings/detail/options, rudiment explore
+  links, testimonial): outlined panel `rounded-lg border border-line p-X`, drop `bg-raised`.
+- Pull-quotes: `border-l-2 border-accent pl-6` everywhere (convert vmspark bg-ink quote).
+- "What X said": outlined panel (no fill), `ph:quotes` accent icon, blockquote `Text
+  size="lg"` (berxi-small), avatar figcaption. Drop vmspark "From the desk of" + H2.
+- Step eyebrows: `Step 01` (no slash) everywhere.
+- vmspark: reorder Inventory (01) before Directions (02)/Rollout (03).
+- rudiment: no testimonial (personal project — honest, not faked).
+
+Tasks: [x] berxi [x] ATK [x] ivfcryo [x] rudiment [x] vmspark [x] clempo [x] bass-face
+[x] west-baton-rouge [x] build+verify (all 8 → HTTP 200, no bg-raised, screenshots checked)
+
+## Review
+- All 8 project pages de-carded: zero `bg-raised` remaining. Grids → borderless
+  `border-t border-line pt-5` columns (the Receipts pattern); callouts → `border border-line`
+  outlined panels with no white fill; metric groups → `border-y border-line py-8` bands.
+- "What X said" unified to the small berxi treatment (`Text size="lg"`, ph:quotes accent
+  icon, avatar figcaption) on the 5 pages that have a testimonial. rudiment/clempo/bass-face/
+  wbr have none (no real quote to show — left honest, not faked).
+- vmspark: fixed section order (Inventory/01 was rendering after 02/03 → now 01→02→03→04);
+  dropped the extra "From the desk of" eyebrow + H2; converted the dark bg-ink pull-quote to
+  the standard left-accent-rule; restored framed panels on the A/B/C directions trio so the
+  accent "Chosen" still reads.
+- Step eyebrows unified to "Step 0n" (removed "Step / 0n"). Breadcrumbs unified (dropped
+  stray font-mono on ivfcryo/vmspark/bass-face). bass-face CTA eyebrow "/ 04" suffix removed.
+- Tools islands (TokenPlayground/BrandSwitcher/TokenChain/Diagnostic/RoiCalculator/
+  StatusAnnouncer) were already removed from project pages in the working tree — verified clean.
+
+## Round 2 — layout-width consistency + line length (2026-06-28)
+- Problem: step sections were 768px on 6 pages, 1152px on ATK/vmspark; body prose ran
+  83-147 chars/line (lead intros spanned the full container). `.measure` (65ch) existed but
+  wasn't applied, and 65ch ≈ 73 actual chars anyway.
+- Added a `content` width to Container = `max-w-5xl` (1024px), the happy medium between the
+  old narrow (768) and default (1152). Unified ALL reading-body sections (receipts, docket,
+  every step) to `content` on all 8 pages. Hero / live-shots / CTA stay `wide`.
+- Capped every prose block with `.measure`; bumped the 6 narrow pages' body prose to 18px
+  (text-lg) so all case-study body copy is 18px — fixes the font-size inconsistency that made
+  one measure impossible (16px packed ~80 chars, 18px ~65 at the same ch).
+- Tuned `.measure` 65ch → 52ch (site.css). Result: uniform 524px reading column on every
+  page; first-line median ~64 chars, avg 61, in the 60-70 band. (`.measure` is global; also
+  tightens blog prose, which is a readability win — verified blog still 200.)
+
+## Open for Josh
+- Orphan `/tools/*` routes still exist (audit-findings, roi-calculator, scorecard,
+  token-playground) and are NOT linked in nav. Not touched (deleting routes is not silent
+  work). Decide whether to delete the route tree + the unused island components.
+
+---
+
+# Reposition: Staff UX Engineer → Product Engineer (2026-06-28)
+
+Source of truth for voice/copy: `tasks/product-engineer.md`.
+Decisions (confirmed with user):
+- **Scope:** full site.
+- **Résumé link:** placeholder `/resume.pdf` (user must drop the file in `public/`).
+- **New projects (Clempo, West Baton Rouge Presbyterian, Bass Face):** draft new case pages; flag invented facts.
+
+## Voice shift (apply everywhere)
+- Role: "Staff UX Engineer / Design Systems Lead" → **"Product engineer"** (full-stack; design + a11y built in).
+- Thesis: "design systems teams build on" → **"I build complete, accessible products end to end"**.
+- Stack emphasis: Rails, React, TypeScript.
+- Remove "at staff level", "own your design system", "Open to Staff/Lead roles".
+- Keep all REAL metrics identical (IVFCRYO 75% / 55%; ATK 3→1 brands).
+- No Calendly / audit. Plain contact + résumé.
+
+## Spine pages (direct — voice-critical)
+- [ ] Header.astro — utility bar → product engineering roles + Résumé link
+- [ ] nav.ts — add Résumé
+- [ ] Footer.astro — blurb → product engineer
+- [ ] BaseLayout.astro — default description + Person/WebSite schema
+- [ ] index.astro — full rewrite per doc
+- [ ] about.astro — product-engineer framing
+- [ ] contact.astro — product framing; CTA = contact + résumé
+- [ ] projects.astro — product-first framing + new projects
+- [ ] testimonials.astro — meta title
+
+## Case studies (reframe, preserve structure & real metrics)
+- [ ] ivfcryo / americas-test-kitchen / berxi-insurance / vmspark / rudiment-ui
+
+## New case pages (draft from doc; flag invented facts)
+- [ ] clempo.astro / west-baton-rouge-presbyterian.astro / bass-face.astro
+
+## Verify
+- [ ] `npm run build` passes
+- [ ] grep residual "Staff UX" / "Staff or Lead" across src/
+- [ ] Update memory (positioning → Product Engineer)
+
+## Review — DONE ✅ (2026-06-28)
+All spine pages + 5 case-study reframes + 3 new case pages shipped; `npm run build` passes clean.
+- Spine: Header (utility bar + résumé), nav.ts (footer résumé), Footer, BaseLayout (default desc + Person/WebSite JSON-LD jobTitle="Product Engineer"), index.astro (full rewrite; hero animation re-themed data-model→API→interface→focus-state), about, contact, projects (index reordered product-first, 8 entries), testimonials, BlogPost author bio, ContactForm options, 2 scorecard titles.
+- New case pages (subagent-drafted, verified, build green): clempo (06), west-baton-rouge-presbyterian (07), bass-face (08). Each carries `{/* TODO(josh): confirm … */}` flags for inferred stack/specifics.
+- Case-study reframes: role labels "UX Engineer"→"Product Engineer"; "the work at staff level" closings → product framing; per-case LinkedIn secondary → /resume.pdf.
+
+### Follow-ups for Josh (not blockers)
+1. **Drop a real `/public/resume.pdf`** — every résumé link 404s until then.
+2. **Resolve the TODO(josh) flags** in clempo / west-baton-rouge-presbyterian / bass-face (real stacks, tenant-isolation mechanics, Claude-feedback input, any live demo/repo links).
+3. Confirm linking `/tools/` from the homepage is wanted (reverses the prior "tools intentionally unlinked" decision).
+4. OG share image still carries old positioning art — regenerate if desired.
+5. Update LinkedIn headline to match: "Product engineer · Full-stack · Design and accessibility built in."
+
+---
+
 # Standardize "Receipts" + "On the docket" sections to the vmspark presentation (`/high-end-visual-design`, 2026-06-26)
 
 **Goal:** All five project pages present Receipts + docket sections with the same markup as `vmspark.astro` (the preferred version). Keep each page's themed docket label and any per-item icons; unify everything else.

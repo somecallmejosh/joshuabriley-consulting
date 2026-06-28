@@ -7,7 +7,6 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
-import TokenChain from '~/components/islands/TokenChain.astro';
 import LiveEmbed from '~/components/patterns/LiveEmbed.astro';
 import SiteShot from '~/components/patterns/SiteShot.astro';
 
@@ -19,7 +18,7 @@ const menu = [
   { href: '#tokens', icon: 'ph:stack', label: 'A three-tier token system' },
   { href: '#accessibility', icon: 'ph:heart', label: 'Accessibility as a contract' },
   { href: '#chapters', icon: 'ph:book-open', label: 'The thirteen chapters' },
-  { href: '#explore', icon: 'ph:cube', label: 'See it served — guide & Storybook' },
+  { href: '#explore', icon: 'ph:cube', label: 'See it served: guide & Storybook' },
 ];
 
 const tokenTiers = [
@@ -85,7 +84,7 @@ const proof = [
 ];
 ---
 
-<BaseLayout title="Rudiment UI — Joshua Briley" description={description}>
+<BaseLayout title="Rudiment UI | Joshua Briley" description={description}>
 
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
@@ -100,7 +99,7 @@ const proof = [
           <div class="mb-7 flex items-center gap-3">
             <span class="hero-wordmark font-display text-ink">rudiment<span class="text-accent">.ui</span></span>
             <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
-            <p class="mono-label">Case study / 01</p>
+            <p class="mono-label">Case study</p>
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
@@ -111,7 +110,7 @@ const proof = [
             <Text as="span" size="lg" tone="muted">
               An open-source React component library paired with a
               <a href="https://rudiment-guide.netlify.app/" target="_blank" rel="noopener" class="hero-link">13-chapter guide</a>
-              that explains <em>why</em> each architectural decision is made — and what happens later if you make a different one.
+              that explains <em>why</em> each architectural decision is made, and what happens later if you make a different one.
             </Text>
           </p>
 
@@ -161,14 +160,14 @@ const proof = [
         The whole library, composed into one product surface.
       </Heading>
       <Text tone="muted" class="mt-4 max-w-2xl">
-        A complete app shell — navigation, dashboard, charts, and data cards — assembled
+        A complete app shell (navigation, dashboard, charts, and data cards) assembled
         entirely from Rudiment primitives. This is the real Storybook story: load it and
         click around.
       </Text>
       <div class="mt-9">
         <LiveEmbed
           posterSrc="/images/projects/rudiment-app-shell.webp"
-          posterAlt="Rudiment UI app-shell story — a product dashboard with metric cards, charts, and gauges"
+          posterAlt="Rudiment UI app-shell story: a product dashboard with metric cards, charts, and gauges"
           embedSrc="https://rudiment-ui.netlify.app/iframe.html?id=examples-app-shell--app-shell&viewMode=story"
           href="https://rudiment-ui.netlify.app/?path=/story/examples-app-shell--app-shell"
           title="App Shell"
@@ -186,12 +185,12 @@ const proof = [
       </Heading>
       <Text tone="muted" class="mt-4 max-w-2xl">
         Thirteen chapters, from an empty directory to a published, token-driven, accessible
-        library — each choice shown next to the alternatives it ruled out.
+        library, each choice shown next to the alternatives it ruled out.
       </Text>
       <div class="mt-9">
         <SiteShot
           src="/images/projects/rudiment-guide.webp"
-          alt="The Rudiment field guide — a 13-chapter walkthrough to building a component library"
+          alt="The Rudiment field guide: a 13-chapter walkthrough to building a component library"
           href="https://rudiment-guide.netlify.app/"
           label="rudiment-guide.netlify.app"
         />
@@ -200,8 +199,8 @@ const proof = [
   </Section>
 
   <Section tone="paper" padding="tight" aria-label="Project receipts">
-    <Container width="default">
-      <p class="mono-label mb-8">Receipts / 02</p>
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
       <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
@@ -223,8 +222,8 @@ const proof = [
   </Section>
 
   <Section tone="paper" padding="tight">
-    <Container width="default">
-      <p class="mono-label mb-5">On the menu / 03</p>
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
       <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
         {menu.map((item, i) => (
           <li>
@@ -240,9 +239,9 @@ const proof = [
         ))}
       </ul>
 
-      <Text size="lg" tone="muted" class="mt-10">
+      <Text size="lg" tone="muted" class="mt-10 measure">
         Rudiment UI is a personal reference project, not a client
-        deliverable — and that's the point. It exists because most of the
+        deliverable, and that's the point. It exists because most of the
         component libraries I've been brought in to fix share the same root
         cause: architectural decisions that nobody wrote down, made in the
         wrong order, and now cost a quarter to untangle. Rudiment UI is the
@@ -253,381 +252,391 @@ const proof = [
   </Section>
 
   <Section id="problem" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 01</p>
-      <Heading level={2} visual="display-md" tone="ink">
-        Why most libraries quietly fall apart
-      </Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Component libraries rarely fail loudly. They accumulate a thousand
-          small compromises until the thing that once felt like a system
-          feels like a
-          <strong class="text-ink font-semibold">patchwork</strong>. A missing semantic
-          token layer turns a rebrand into hundreds of manual renames. An
-          undecided styling strategy turns a refactor into a full rewrite.
-          Accessibility bolted on after launch always costs more than
-          accessibility designed in from day one.
-        </p>
-        <p>
-          Most of these mistakes aren't expensive because they were hard to
-          avoid. They're expensive because they were
-          <strong class="text-ink font-semibold">made implicitly</strong>: in a stand-up,
-          in a PR comment, in a hurried corner of someone's sprint. Rudiment
-          UI starts from the opposite assumption: the structural decisions
-          come first, with no code, and every choice gets written down
-          alongside its consequences.
-        </p>
-        <p>
-          That's what the guide is. Chapter 1 contains no code at all. It's
-          the conversation a team should have had
-          <em>before</em> picking a CSS strategy.
-        </p>
-      </div>
-
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label mb-3">The usual story</p>
-          <Heading level={3} visual="h3" tone="ink">Drift, then debt</Heading>
-          <p class="mt-2 text-ink-muted leading-relaxed">
-            Tokens get added per-component. Styles leak into overrides.
-            Documentation falls behind. The system stops being a system.
-          </p>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Why most libraries quietly fall apart
+          </Heading>
         </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label mb-3">Rudiment's bet</p>
-          <Heading level={3} visual="h3" tone="ink">Sequence on purpose</Heading>
-          <p class="mt-2 text-ink-muted leading-relaxed">
-            Token architecture shapes components. Components shape tests.
-            Tests shape what the docs have to explain. Get the order right
-            and the rest stops fighting you.
-          </p>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Component libraries rarely fail loudly. They accumulate a thousand
+              small compromises until the thing that once felt like a system
+              feels like a
+              <strong class="text-ink font-semibold">patchwork</strong>. A missing semantic
+              token layer turns a rebrand into hundreds of manual renames. An
+              undecided styling strategy turns a refactor into a full rewrite.
+              Accessibility bolted on after launch always costs more than
+              accessibility designed in from day one.
+            </p>
+            <p>
+              Most of these mistakes aren't expensive because they were hard to
+              avoid. They're expensive because they were
+              <strong class="text-ink font-semibold">made implicitly</strong>: in a stand-up,
+              in a PR comment, in a hurried corner of someone's sprint. Rudiment
+              UI starts from the opposite assumption: the structural decisions
+              come first, with no code, and every choice gets written down
+              alongside its consequences.
+            </p>
+            <p>
+              That's what the guide is. Chapter 1 contains no code at all. It's
+              the conversation a team should have had
+              <em>before</em> picking a CSS strategy.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-3">The usual story</p>
+              <Heading level={3} visual="h3" tone="ink">Drift, then debt</Heading>
+              <p class="mt-2 text-ink-muted leading-relaxed">
+                Tokens get added per-component. Styles leak into overrides.
+                Documentation falls behind. The system stops being a system.
+              </p>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-3">Rudiment's bet</p>
+              <Heading level={3} visual="h3" tone="ink">Sequence on purpose</Heading>
+              <p class="mt-2 text-ink-muted leading-relaxed">
+                Token architecture shapes components. Components shape tests.
+                Tests shape what the docs have to explain. Get the order right
+                and the rest stops fighting you.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </Container>
   </Section>
 
   <Section id="tokens" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 02</p>
-      <Heading level={2} visual="display-md" tone="ink">
-        A three-tier token system
-      </Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Most token systems collapse because they try to do two jobs in one
-          layer: hold raw values <em>and</em> express design intent.
-          Rudiment separates those jobs across three tiers, each referencing
-          the one beneath it. A brand change touches one file. A component
-          tweak doesn't cascade into the rest of the library.
-        </p>
-      </div>
-
-      <div class="mt-10 space-y-4">
-        {tokenTiers.map((tier) => (
-          <div class="rounded-lg border border-line bg-raised p-5 md:p-6">
-            <div class="flex items-start gap-4">
-              <Icon name={tier.icon} size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-              <div>
-                <Heading level={3} visual="h4" tone="ink">{tier.title}</Heading>
-                <p class="mb-3 mt-1 text-ink-muted leading-relaxed">{tier.desc}</p>
-                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">{tier.code}</code>
-              </div>
-            </div>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            A three-tier token system
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Most token systems collapse because they try to do two jobs in one
+              layer: hold raw values <em>and</em> express design intent.
+              Rudiment separates those jobs across three tiers, each referencing
+              the one beneath it. A brand change touches one file. A component
+              tweak doesn't cascade into the rest of the library.
+            </p>
           </div>
-        ))}
-      </div>
 
-      <figure class="my-12 border-l-2 border-accent pl-6">
-        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-          Building a component library is as much an exercise in sequencing
-          decisions as it is in writing components.
-        </blockquote>
-      </figure>
+          <div class="mt-10 border-t border-line">
+            {tokenTiers.map((tier) => (
+              <div class="border-b border-line py-5">
+                <div class="flex items-start gap-4">
+                  <Icon name={tier.icon} size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+                  <div>
+                    <Heading level={3} visual="h4" tone="ink">{tier.title}</Heading>
+                    <p class="mb-3 mt-1 text-ink-muted leading-relaxed">{tier.desc}</p>
+                    <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">{tier.code}</code>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
 
-      <p class="text-ink-muted leading-relaxed text-lg">
-        Token files use the Design Tokens Community Group format, flow
-        through Style Dictionary v4, and land in Tailwind CSS 4 via
-        <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">@theme inline</code>. Updating a single value propagates through every dependent
-        component — no hunt-and-replace, no orphans.
-      </p>
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              Building a component library is as much an exercise in sequencing
+              decisions as it is in writing components.
+            </blockquote>
+          </figure>
 
-      <div class="mt-12 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-4">Trace the chain</p>
-        <p class="mb-6 max-w-2xl text-ink-muted leading-relaxed">
-          Three tiers is easy to nod along to and hard to feel. So trace one value through the
-          chain yourself: change the global token and watch the alias and the component token
-          resolve down to the button, in order.
-        </p>
-        <TokenChain />
+          <p class="measure text-ink-muted leading-relaxed text-lg">
+            Token files use the Design Tokens Community Group format, flow
+            through Style Dictionary v4, and land in Tailwind CSS 4 via
+            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">@theme inline</code>. Updating a single value propagates through every dependent
+            component: no hunt-and-replace, no orphans.
+          </p>
+        </div>
       </div>
     </Container>
   </Section>
 
   <Section id="accessibility" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 03</p>
-      <Heading level={2} visual="display-md" tone="ink">
-        Accessibility as a contract, not a checklist
-      </Heading>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Accessibility as a contract, not a checklist
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              A single interactive component can carry an enormous accessibility
+              surface. A modal alone needs focus trapping, scroll locking,
+              escape-key handling, focus restoration, and
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">aria-modal</code>
+              management. Rudiment doesn't rebuild that for every component. It
+              leans on React Aria, maintained by Adobe's design system team, to
+              carry the behavior layer.
+            </p>
+            <p>
+              React Aria owns keyboard navigation, focus management, ARIA
+              semantics, pointer normalization, and i18n. Tailwind CSS 4 handles
+              the visuals. The two layers stay cleanly separated, which is what
+              lets the library re-skin without touching any behavior.
+            </p>
+            <p>
+              Tests then lock in that separation. Layout primitives are verified
+              against the tokens and classes they emit. UI components are
+              verified against their
+              <em>accessibility contract</em>: keyboard activation, disabled and
+              error states, focus behavior, loading-state ARIA, and zero
+              axe-core violations. Tests query by role and text, never by class
+              name, so refactors don't silently break coverage.
+            </p>
+          </div>
 
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          A single interactive component can carry an enormous accessibility
-          surface. A modal alone needs focus trapping, scroll locking,
-          escape-key handling, focus restoration, and
-          <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">aria-modal</code>
-          management. Rudiment doesn't rebuild that for every component. It
-          leans on React Aria, maintained by Adobe's design system team, to
-          carry the behavior layer.
-        </p>
-        <p>
-          React Aria owns keyboard navigation, focus management, ARIA
-          semantics, pointer normalization, and i18n. Tailwind CSS 4 handles
-          the visuals. The two layers stay cleanly separated — which is what
-          lets the library re-skin without touching any behavior.
-        </p>
-        <p>
-          Tests then lock in that separation. Layout primitives are verified
-          against the tokens and classes they emit. UI components are
-          verified against their
-          <em>accessibility contract</em>: keyboard activation, disabled and
-          error states, focus behavior, loading-state ARIA, and zero
-          axe-core violations. Tests query by role and text, never by class
-          name, so refactors don't silently break coverage.
-        </p>
-      </div>
-
-      <div class="mt-10 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-5">Built-in, not bolted-on</p>
-        <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
-          {a11yList.map((item) => (
-            <li class="flex items-center gap-3">
-              <Icon name={item.icon} size={20} class="flex-shrink-0 text-ink-muted" />
-              {item.text}
-            </li>
-          ))}
-        </ul>
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Built-in, not bolted-on</p>
+            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+              {a11yList.map((item) => (
+                <li class="flex items-center gap-3">
+                  <Icon name={item.icon} size={20} class="flex-shrink-0 text-ink-muted" />
+                  {item.text}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
   <Section id="chapters" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 04</p>
-      <Heading level={2} visual="display-md" tone="ink">
-        Thirteen chapters, in order
-      </Heading>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            Thirteen chapters, in order
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              The guide is sequenced deliberately. You can't make sensible
+              component decisions until the token layer is settled. You can't
+              write useful tests until the component API is stable. You can't
+              publish confidently until the build workflow guarantees every tier
+              stays in sync. Each chapter earns the next one.
+            </p>
+          </div>
 
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          The guide is sequenced deliberately. You can't make sensible
-          component decisions until the token layer is settled. You can't
-          write useful tests until the component API is stable. You can't
-          publish confidently until the build workflow guarantees every tier
-          stays in sync. Each chapter earns the next one.
-        </p>
+          <ul class="mt-10 rounded-lg border border-line">
+            {chapters.slice(0, 9).map((c) => (
+              <li class="flex items-center gap-4 border-b border-line px-5 py-3.5">
+                <span class="font-mono text-[0.75rem] text-accent">{c.num}</span>
+                <span class="text-sm text-ink">{c.title}</span>
+              </li>
+            ))}
+            <li class="border-b border-line">
+              <a
+                href="https://rudiment-ui.netlify.app/"
+                target="_blank"
+                rel="noopener"
+                class="group flex items-center gap-4 px-5 py-3.5 text-ink transition-colors hover:text-accent"
+              >
+                <span class="font-mono text-[0.75rem] text-accent">10</span>
+                <span class="flex-1 text-sm">Storybook documentation</span>
+                <Icon name="ph:arrow-up-right" size={14} class="text-accent opacity-0 transition-opacity group-hover:opacity-100" />
+              </a>
+            </li>
+            {chapters.slice(9).map((c) => (
+              <li class="flex items-center gap-4 border-b border-line px-5 py-3.5">
+                <span class="font-mono text-[0.75rem] text-accent">{c.num}</span>
+                <span class="text-sm text-ink">{c.title}</span>
+              </li>
+            ))}
+            <li class="flex items-center gap-4 px-5 py-3.5">
+              <span class="font-mono text-[0.75rem] text-accent">13</span>
+              <span class="text-sm text-ink">Publishing to npm</span>
+            </li>
+          </ul>
+
+          <Heading level={3} visual="h3" tone="ink" class="mt-16 mb-6">
+            What reading the guide leaves you with
+          </Heading>
+          <div class="grid gap-6 md:grid-cols-3">
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:compass" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={4} visual="h4" tone="ink">Judgment, not a template</Heading>
+              <p class="mt-1 text-sm text-ink-muted leading-relaxed">
+                Every decision is explained alongside the alternatives it closes
+                off, so you can extend the system instead of copying it.
+              </p>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:stack" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={4} visual="h4" tone="ink">A working reference</Heading>
+              <p class="mt-1 text-sm text-ink-muted leading-relaxed">
+                An end-to-end library you can run, read, and pull pieces from:
+                tokens, primitives, tests, publishing pipeline.
+              </p>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={4} visual="h4" tone="ink">Debt you don't pay later</Heading>
+              <p class="mt-1 text-sm text-ink-muted leading-relaxed">
+                The expensive mistakes (shallow tokens, retrofitted a11y,
+                drifting docs) get made visible before they compound.
+              </p>
+            </div>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              A repository without explanation gives you a working system.
+              Explaining the trade-offs at each step gives you the judgment to
+              extend it.
+            </blockquote>
+          </figure>
+        </div>
       </div>
-
-      <ul class="mt-10 rounded-lg border border-line bg-raised">
-        {chapters.slice(0, 9).map((c) => (
-          <li class="flex items-center gap-4 border-b border-line px-5 py-3.5">
-            <span class="font-mono text-[0.75rem] text-accent">{c.num}</span>
-            <span class="text-sm text-ink">{c.title}</span>
-          </li>
-        ))}
-        <li class="border-b border-line">
-          <a
-            href="https://rudiment-ui.netlify.app/"
-            target="_blank"
-            rel="noopener"
-            class="group flex items-center gap-4 px-5 py-3.5 text-ink transition-colors hover:text-accent"
-          >
-            <span class="font-mono text-[0.75rem] text-accent">10</span>
-            <span class="flex-1 text-sm">Storybook documentation</span>
-            <Icon name="ph:arrow-up-right" size={14} class="text-accent opacity-0 transition-opacity group-hover:opacity-100" />
-          </a>
-        </li>
-        {chapters.slice(9).map((c) => (
-          <li class="flex items-center gap-4 border-b border-line px-5 py-3.5">
-            <span class="font-mono text-[0.75rem] text-accent">{c.num}</span>
-            <span class="text-sm text-ink">{c.title}</span>
-          </li>
-        ))}
-        <li class="flex items-center gap-4 px-5 py-3.5">
-          <span class="font-mono text-[0.75rem] text-accent">13</span>
-          <span class="text-sm text-ink">Publishing to npm</span>
-        </li>
-      </ul>
-
-      <Heading level={3} visual="h3" tone="ink" class="mt-16 mb-6">
-        What reading the guide leaves you with
-      </Heading>
-      <div class="grid gap-6 md:grid-cols-3">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:compass" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={4} visual="h4" tone="ink">Judgment, not a template</Heading>
-          <p class="mt-1 text-sm text-ink-muted leading-relaxed">
-            Every decision is explained alongside the alternatives it closes
-            off — so you can extend the system instead of copying it.
-          </p>
-        </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:stack" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={4} visual="h4" tone="ink">A working reference</Heading>
-          <p class="mt-1 text-sm text-ink-muted leading-relaxed">
-            An end-to-end library you can run, read, and pull pieces from —
-            tokens, primitives, tests, publishing pipeline.
-          </p>
-        </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={4} visual="h4" tone="ink">Debt you don't pay later</Heading>
-          <p class="mt-1 text-sm text-ink-muted leading-relaxed">
-            The expensive mistakes — shallow tokens, retrofitted a11y,
-            drifting docs — get made visible before they compound.
-          </p>
-        </div>
-      </div>
-
-      <figure class="my-12 border-l-2 border-accent pl-6">
-        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-          A repository without explanation gives you a working system.
-          Explaining the trade-offs at each step gives you the judgment to
-          extend it.
-        </blockquote>
-      </figure>
     </Container>
   </Section>
 
   <Section id="explore" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 05</p>
-      <Heading level={2} visual="display-md" tone="ink">
-        See it served — both halves, live
-      </Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Rudiment ships as two deployed sites, and you can open both right
-          now. The guide walks through the
-          architectural decisions and trade-offs, chapter by chapter. The
-          Storybook is the working
-          library those decisions produced — every primitive, every
-          component, every variant, in your browser.
-        </p>
-      </div>
-
-      <div class="mt-10 grid gap-7 md:grid-cols-2">
-        <a
-          href="https://rudiment-guide.netlify.app/"
-          target="_blank"
-          rel="noopener"
-          class="group block rounded-lg border border-line bg-raised p-7 transition-colors hover:border-line-strong"
-        >
-          <Icon name="ph:compass" size={26} class="text-ink-muted" />
-          <Heading level={3} visual="h3" tone="ink" class="mt-5">The Rudiment Guide</Heading>
-          <p class="mt-1 font-mono text-xs text-ink-muted">rudiment-guide.netlify.app</p>
-
-          <p class="mt-5 text-ink-muted leading-relaxed">
-            A sequenced, decision-by-decision walkthrough — from an empty
-            directory to a published, token-driven, accessible React library.
-            Every choice is shown alongside the alternatives it closed off.
-          </p>
-
-          <ul class="mt-5 space-y-2 text-sm text-ink-muted">
-            {guideChecks.map((c) => (
-              <li class="flex items-start gap-2">
-                <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
-                {c}
-              </li>
-            ))}
-            <li class="flex items-start gap-2">
-              <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
-              The <em>why</em> behind each decision, not just the <em>what</em>
-            </li>
-          </ul>
-
-          <div class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors group-hover:text-accent">
-            Open the guide
-            <Icon name="ph:arrow-up-right" size={14} class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">
+            See it served: both halves, live
+          </Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Rudiment ships as two deployed sites, and you can open both right
+              now. The guide walks through the
+              architectural decisions and trade-offs, chapter by chapter. The
+              Storybook is the working
+              library those decisions produced: every primitive, every
+              component, every variant, in your browser.
+            </p>
           </div>
-        </a>
 
-        <a
-          href="https://rudiment-ui.netlify.app/"
-          target="_blank"
-          rel="noopener"
-          class="group block rounded-lg border border-line bg-raised p-7 transition-colors hover:border-line-strong"
-        >
-          <Icon name="ph:cube" size={26} class="text-ink-muted" />
-          <Heading level={3} visual="h3" tone="ink" class="mt-5">The Storybook</Heading>
-          <p class="mt-1 font-mono text-xs text-ink-muted">rudiment-ui.netlify.app</p>
+          <div class="mt-10 grid gap-7 md:grid-cols-2">
+            <a
+              href="https://rudiment-guide.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="group block rounded-lg border border-line p-7 transition-colors hover:border-line-strong"
+            >
+              <Icon name="ph:compass" size={26} class="text-ink-muted" />
+              <Heading level={3} visual="h3" tone="ink" class="mt-5">The Rudiment Guide</Heading>
+              <p class="mt-1 font-mono text-xs text-ink-muted">rudiment-guide.netlify.app</p>
 
-          <p class="mt-5 text-ink-muted leading-relaxed">
-            The deployed component library as an interactive reference —
-            layout primitives, form controls, overlays, and every variant
-            the guide produces, with controls and docs on each story.
-          </p>
+              <p class="mt-5 text-ink-muted leading-relaxed">
+                A sequenced, decision-by-decision walkthrough: from an empty
+                directory to a published, token-driven, accessible React library.
+                Every choice is shown alongside the alternatives it closed off.
+              </p>
 
-          <ul class="mt-5 space-y-2 text-sm text-ink-muted">
-            {storybookChecks.map((c) => (
-              <li class="flex items-start gap-2">
-                <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
-                {c}
-              </li>
-            ))}
-          </ul>
+              <ul class="mt-5 space-y-2 text-sm text-ink-muted">
+                {guideChecks.map((c) => (
+                  <li class="flex items-start gap-2">
+                    <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
+                    {c}
+                  </li>
+                ))}
+                <li class="flex items-start gap-2">
+                  <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
+                  The <em>why</em> behind each decision, not just the <em>what</em>
+                </li>
+              </ul>
 
-          <div class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors group-hover:text-accent">
-            Browse the Storybook
-            <Icon name="ph:arrow-up-right" size={14} class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <div class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors group-hover:text-accent">
+                Open the guide
+                <Icon name="ph:arrow-up-right" size={14} class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </div>
+            </a>
+
+            <a
+              href="https://rudiment-ui.netlify.app/"
+              target="_blank"
+              rel="noopener"
+              class="group block rounded-lg border border-line p-7 transition-colors hover:border-line-strong"
+            >
+              <Icon name="ph:cube" size={26} class="text-ink-muted" />
+              <Heading level={3} visual="h3" tone="ink" class="mt-5">The Storybook</Heading>
+              <p class="mt-1 font-mono text-xs text-ink-muted">rudiment-ui.netlify.app</p>
+
+              <p class="mt-5 text-ink-muted leading-relaxed">
+                The deployed component library as an interactive reference:
+                layout primitives, form controls, overlays, and every variant
+                the guide produces, with controls and docs on each story.
+              </p>
+
+              <ul class="mt-5 space-y-2 text-sm text-ink-muted">
+                {storybookChecks.map((c) => (
+                  <li class="flex items-start gap-2">
+                    <Icon name="ph:check" size={16} class="mt-0.5 flex-shrink-0 text-accent" />
+                    {c}
+                  </li>
+                ))}
+              </ul>
+
+              <div class="mt-6 inline-flex items-center gap-2 text-sm font-medium text-ink transition-colors group-hover:text-accent">
+                Browse the Storybook
+                <Icon name="ph:arrow-up-right" size={14} class="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              </div>
+            </a>
           </div>
-        </a>
-      </div>
 
-      <p class="mt-10 text-center text-sm text-ink-muted">
-        Read a chapter, then open the matching story — the guide and the
-        library are meant to be used side by side.
-      </p>
+          <p class="mt-10 text-center text-sm text-ink-muted">
+            Read a chapter, then open the matching story. The guide and the
+            library are meant to be used side by side.
+          </p>
+        </div>
+      </div>
     </Container>
   </Section>
 
   <Section tone="ink" padding="loose">
     <Container width="wide">
-      <p class="mono-label !text-paper/65 mb-6">Get in touch / 06</p>
+      <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
       <Heading level={2} visual="display-lg" tone="paper">
-        Let's build it on a foundation that holds.
+        A foundation that holds, built in public.
       </Heading>
-      <p class="mt-5 max-w-xl">
+      <p class="mt-5 max-w-2xl">
         <Text size="lg" tone="whiteMuted">
-          Starting (or rescuing) a component library? Score your current system
-          in 10 minutes, or grab 30 on my calendar to talk through where things
-          are drifting.
+          Rudiment UI is where I sharpen the engineering I bring to the products I ship:
+          accessible-by-construction primitives, a three-tier token system, and docs treated as
+          part of the artifact. The same care I bring to the whole product, end to end.
         </Text>
       </p>
-      <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center">
-        <Button
-          variant="navy"
-          size="lg"
-          iconLeft="ph:clipboard-text"
-          href="/tools/scorecard/"
-        >
-          Score your design system
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">
+          Get in touch
         </Button>
-        <Button
-          variant="secondary"
-          size="lg"
-          iconLeft="ph:calendar-check"
-          href="https://calendly.com/josh-thebrileys/30min/"
+        <a
+          href="/resume.pdf"
+          class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
         >
-          Book an intro call
-        </Button>
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
       </div>
 
-      <div class="mt-14 border-t border-paper/15 pt-8">
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/americas-test-kitchen/" class="!text-paper hover:!text-paper/70">Flagship: America's Test Kitchen</Link>
         <Link variant="arrow" href="/projects/" class="!text-paper hover:!text-paper/70">Back to all projects</Link>
       </div>
     </Container>

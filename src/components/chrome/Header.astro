@@ -34,12 +34,16 @@ const { class: className } = Astro.props;
           <span class="absolute inline-flex h-full w-full rounded-full bg-accent/60 motion-safe:animate-ping"></span>
           <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
         </span>
-        Available Q3
+        Open to product engineering roles
       </span>
       <a
+        href="/resume.pdf"
+        class="mono-label transition-colors hover:text-ink hover:underline underline-offset-4"
+      >Résumé</a>
+      <a
         href="/contact/"
-        class="inline-flex items-center gap-2 rounded-[5px] bg-ink px-4 py-2 font-sans text-[0.85rem] font-medium tracking-tight text-paper transition-colors hover:bg-ink-soft"
-      >Start a project</a>
+        class="inline-flex items-center gap-2 rounded-[5px] bg-ink px-4 py-2 font-sans text-[0.85rem] font-medium tracking-tight text-paper transition-[background-color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-ink-soft hover:-translate-y-px active:scale-[0.97] active:translate-y-0"
+      >Get in touch</a>
     </div>
 
     <MobileNav links={PRIMARY_NAV} />

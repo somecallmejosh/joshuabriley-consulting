@@ -1,0 +1,390 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Link from '~/components/primitives/Link.astro';
+
+const description =
+  'Case study: Clempo, a multi-tenant personal-finance app owned end to end (authentication, tenancy, data modeling, and the interface), built to keep every household correct and private.';
+
+const proof = [
+  { label: 'Skills proven', items: ['Full-stack ownership', 'Multi-tenant data modeling', 'Authentication & authorization', 'Frontend architecture', 'UI/UX Design', 'Accessibility'] },
+  // TODO(josh): confirm — Stack items below are inferred from the positioning doc ("Rails, likely, plus a JS front end"). Replace with the real stack.
+  { label: 'Stack', items: ['Ruby on Rails', 'PostgreSQL', 'JavaScript front end', 'TailwindCSS'] },
+  { label: 'Quality', items: ['Tenant data isolation', 'Keyboard operability', 'Focus management', 'ARIA semantics'] },
+  { label: 'Outcomes', items: ['Real households in production', 'Multi-tenant data isolation', 'Owned end to end'] },
+];
+
+const docket = [
+  { href: '#ownership', icon: 'ph:stack', label: 'Owning the whole stack' },
+  { href: '#tenancy', icon: 'ph:lock-key', label: 'Keeping every household separate' },
+  { href: '#interface', icon: 'ph:layout', label: 'An interface built with care' },
+  { href: '#production', icon: 'ph:users-three', label: 'Real households, in production' },
+];
+---
+
+<BaseLayout title="Clempo | Joshua Briley" description={description}>
+
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/personal-projects/" class="transition-colors hover:text-accent">Personal projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">Clempo</span>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="mb-7 flex items-center gap-3">
+            <span class="hero-wordmark font-display text-ink">clem<span class="text-accent">po</span></span>
+            <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
+            <p class="mono-label">Case study</p>
+          </div>
+
+          <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
+            A personal-finance app I own <em class="ink-wink font-normal italic">end to end</em>.
+          </Heading>
+
+          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
+            A multi-tenant personal-finance app with real households using it.
+            I own the whole stack (authentication, tenancy, data modeling, and
+            the interface), built to keep more than one household's data correct
+            and private at once.
+          </Text>
+        </div>
+
+        <aside class="hero-rail" aria-label="Project details">
+          <dl>
+            <div>
+              <dt>Role</dt>
+              <dd>Product Engineer</dd>
+            </div>
+            <div>
+              <dt>Domain</dt>
+              <dd>Personal finance</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              {/* TODO(josh): confirm — "Rails · JS" is inferred. Update to match the real stack. */}
+              <dd>Rails &middot; JS</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Multi-tenant</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {proof.map((group) => (
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight">
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <Text size="lg" tone="muted" class="mt-10 measure">
+        Clempo isn't a client deliverable or a demo. It's a real product with
+        real households relying on it to track their money. That changes what
+        "done" means. Every layer, from the login screen to the database
+        schema, has to hold up for people who'll notice immediately if their
+        numbers are wrong or, worse, if they ever see someone else's. I build
+        and own all of it.
+      </Text>
+    </Container>
+  </Section>
+
+  <Section id="ownership" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">Owning the whole stack</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              On Clempo there's no team to hand things off to. I'm the product
+              engineer for
+              <strong class="text-ink font-semibold">every layer</strong>:
+              authentication, multi-tenancy, the data model, and the interface
+              people actually touch. The same person who designs how a household
+              gets isolated in the database also designs how the empty state reads
+              when that household first signs in.
+            </p>
+            <p>
+              That end-to-end ownership is the whole point. Decisions that usually
+              get lost in the gap between a backend team and a frontend team
+              (how an error surfaces, what a permission boundary means in the UI,
+              where a piece of data is allowed to appear) are all made by one
+              person who has to live with the consequences.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">Back end</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">Data &amp; access</Heading>
+              <Text size="sm" tone="muted">
+                Authentication, tenancy, and the data model: the rules that decide
+                who can see what, enforced where it counts.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">Front end</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">The interface</Heading>
+              <Text size="sm" tone="muted">
+                The screens households use day to day, designed and built with the
+                same person's hands that shaped the schema underneath.
+              </Text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="tenancy" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">Keeping every household separate</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Multi-tenancy is the hardest promise Clempo makes. More than one
+              household's financial data lives in the same system, and the one
+              thing that can never happen is for a household to see (or affect)
+              data that isn't theirs. There's no graceful degradation on that
+              requirement. It's either correct or it's a breach of trust.
+            </p>
+            <p>
+              So tenant isolation is treated as a property of the
+              <strong class="text-ink font-semibold">architecture</strong>, not a
+              filter someone has to remember to add to every query. Scoping a
+              household's data is the default path, and stepping outside that scope
+              has to be deliberate and visible: the inverse of the usual setup,
+              where a forgotten condition quietly leaks rows.
+            </p>
+          </div>
+
+          {/* TODO(josh): confirm — the isolation mechanics below (row-level scoping, default tenant scope) are inferred. Swap in the actual approach (e.g. Rails default_scope, a current_tenant pattern, Postgres RLS, separate schemas). */}
+          <div class="mt-10 rounded-lg border border-line p-7">
+            <p class="mono-label mb-5">Isolation, by construction</p>
+            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+              <li class="flex items-center gap-3">
+                <Icon name="ph:lock-key" size={20} class="text-ink-muted" />
+                Every record scoped to its household
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:funnel" size={20} class="text-ink-muted" />
+                Tenant scope as the default, not an add-on
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:shield-check" size={20} class="text-ink-muted" />
+                Authorization checked where data is read
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:eye-slash" size={20} class="text-ink-muted" />
+                No path for cross-household exposure
+              </li>
+            </ul>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              Private-by-default isn't a feature you add to a finance app. It's the
+              architecture the rest of the product stands on.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="interface" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">An interface built with care</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The same judgment I bring to design systems goes into Clempo's
+              interface. Money is stressful, and a finance app earns trust through
+              clarity: legible numbers, recoverable forms, and states that tell you
+              the truth about what's happening. Design and accessibility aren't a
+              pass at the end. They're built in as the product takes shape.
+            </p>
+            <p>
+              Information is never carried by color alone. Status, errors, and
+              confirmations are expressed through text and structure as well, so
+              the interface stays legible to everyone, including keyboard and
+              screen-reader users. The details most products skip (the empty
+              state before there's data, the focus path through a form) are the
+              ones I deliberately sweat.
+            </p>
+          </div>
+
+          <ul class="mt-8 border-t border-line">
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:keyboard" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" tone="ink" class="mb-1">Operable by keyboard</Heading>
+                <Text size="sm" tone="muted">
+                  Every flow is reachable and usable without a mouse, with focus
+                  that goes where you'd expect.
+                </Text>
+              </div>
+            </li>
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:eye" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" tone="ink" class="mb-1">Never color alone</Heading>
+                <Text size="sm" tone="muted">
+                  Meaning is carried by text and structure too, so nothing depends
+                  on a user perceiving a single hue.
+                </Text>
+              </div>
+            </li>
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:list-checks" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" tone="ink" class="mb-1">The states that get skipped</Heading>
+                <Text size="sm" tone="muted">
+                  Empty, loading, and error states are designed on purpose: the
+                  parts that decide whether a product feels finished.
+                </Text>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="production" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">Real households, in production</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Clempo isn't a portfolio mock-up. Real households use it to keep
+              track of their money, which means it has to be correct, private, and
+              dependable every single day, not just on the demo path. That's a
+              different bar than a side project that only ever has to impress in a
+              screenshot.
+            </p>
+            <p>
+              Running a multi-tenant product with live users is where full-stack
+              ownership stops being a phrase and starts being a discipline. The
+              person who modeled the data is the person who hears about it if the
+              interface is confusing or a number looks off. That tight loop (own
+              it, ship it, live with it) is exactly the kind of product
+              engineering I want to do on a team.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:users-three" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" tone="ink" class="mb-1">Real households</Heading>
+              <Text size="sm" tone="muted">
+                Live users depending on it, not a seeded demo: the product has to
+                actually hold up.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:lock-key" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" tone="ink" class="mb-1">Private by default</Heading>
+              <Text size="sm" tone="muted">
+                Multi-tenant isolation keeps each household's data correct and
+                separate, every request.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:stack" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" tone="ink" class="mb-1">Owned end to end</Heading>
+              <Text size="sm" tone="muted">
+                One engineer from the data model to the last focus state. No
+                handoffs, no gaps.
+              </Text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
+      <Heading level={2} visual="display-lg" tone="paper">
+        I build complete products, end to end.
+      </Heading>
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        Clempo is one of them, owned from the data model to the last focus
+        state. If that's the kind of engineer your team needs, let's talk.
+      </Text>
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>
+        <a href="/resume.pdf" class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper">
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
+      </div>
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/personal-projects/" class="!text-paper hover:!text-paper/70">Back to personal projects</Link>
+      </div>
+    </Container>
+  </Section>
+
+</BaseLayout>

@@ -70,5 +70,5 @@ if (!reduce && finePointer) {
 // look away, the tab leans into the joke, then snaps back when you return.
 const restingTitle = document.title
 document.addEventListener('visibilitychange', () => {
-  document.title = document.hidden ? '🫈 You left!' : restingTitle
+  document.title = document.hidden ? '🫈 You left?' : restingTitle
 })

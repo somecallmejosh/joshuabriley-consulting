@@ -36,7 +36,7 @@ const initial = computeRoi(DEFAULTS);
         </h3>
         <p class="text-sm text-ink-muted mt-2 leading-relaxed">
           Five inputs about your team and the drift you live with. The panel on the
-          right updates as you go &mdash; no email, nothing saved.
+          right updates as you go. No email, nothing saved.
         </p>
       </div>
 
@@ -312,10 +312,10 @@ const initial = computeRoi(DEFAULTS);
     }
 
     function calloutFor(annual: number): string {
-      if (annual <= 0) return 'No rework cost? Either you have rare discipline — or the estimate is too low.';
+      if (annual <= 0) return 'No rework cost? Either you have rare discipline, or the estimate is too low.';
       if (annual >= 500_000) return 'That is a senior hire or two, spent every year on avoidable rework.';
       if (annual >= 150_000) return 'Most teams are surprised it&rsquo;s a salary, not a rounding error.';
-      if (annual >= 40_000) return 'Smaller, but it compounds — and it never shows up on one invoice.';
+      if (annual >= 40_000) return 'Smaller, but it compounds, and it never shows up on one invoice.';
       return 'Modest today. It rarely stays that way as surfaces multiply.';
     }
 

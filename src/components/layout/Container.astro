@@ -2,7 +2,7 @@
 import { cx } from '~/lib/cx';
 
 interface Props {
-  width?: 'narrow' | 'default' | 'wide';
+  width?: 'narrow' | 'content' | 'default' | 'wide';
   as?: 'div' | 'section' | 'article' | 'main' | 'header' | 'footer' | 'nav';
   class?: string;
 }
@@ -11,6 +11,9 @@ const { width = 'default', as: Tag = 'div', class: className } = Astro.props;
 
 const widths: Record<NonNullable<Props['width']>, string> = {
   narrow: 'max-w-3xl',
+  // Case-study reading body. A happy medium between the old narrow (768) and
+  // default (1152) frames; prose inside is separately capped to ~65ch via .measure.
+  content: 'max-w-5xl',
   default: 'max-w-6xl',
   wide: 'max-w-7xl',
 };

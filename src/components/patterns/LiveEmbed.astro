@@ -39,7 +39,7 @@ const {
 <figure class={cx('live-embed', className)} data-live-embed>
   <div class="live-embed-bar">
     <span class="live-embed-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-    <span class="live-embed-title">{title} — interactive</span>
+    <span class="live-embed-title">{title}: interactive</span>
     <a
       href={href}
       target="_blank"
@@ -65,7 +65,7 @@ const {
       class="live-embed-iframe"
       data-embed-frame
       data-src={embedSrc}
-      title={`${title} — live interactive demo`}
+      title={`${title}: live interactive demo`}
       loading="lazy"
       sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
       allow="fullscreen"

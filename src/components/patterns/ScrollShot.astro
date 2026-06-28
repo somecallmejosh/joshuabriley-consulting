@@ -42,7 +42,7 @@ const { src, alt, label, caption, href, maxH = '620px', class: className } = Ast
     )}
     <span class="scroll-shot-hint" aria-hidden="true">full page · scroll ↕</span>
   </div>
-  <div class="scroll-shot-stage" style={`max-height:${maxH}`} tabindex="0" role="group" aria-label={`${label} — full-page screenshot, scrollable`}>
+  <div class="scroll-shot-stage" style={`max-height:${maxH}`} tabindex="0" role="group" aria-label={`${label}: full-page screenshot, scrollable`}>
     <img src={src} alt={alt} loading="lazy" decoding="async" />
   </div>
   {caption && <figcaption class="scroll-shot-cap">{caption}</figcaption>}

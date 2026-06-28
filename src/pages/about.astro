@@ -9,87 +9,87 @@ import Link from '~/components/primitives/Link.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  '20 years building UI systems where accessibility is architecture, documentation is delivery, and the right output is the natural result of using the system.';
+  'Design- and front-end-focused product engineer. 20 years in production UI: design-grade, accessible interfaces with the judgment most teams have to hire a separate designer to get, backed by capable full-stack development in Rails and TypeScript.';
 
 const currentWork = [
   {
     company: 'Travelers',
     stack: 'Web Components · React',
     body:
-      'An accessible component library that crosses framework boundaries — built so the right markup is the only markup you can ship.',
+      'Accessible product UI that crosses framework boundaries: built so the right markup is the only markup you can ship.',
   },
   {
     company: 'Berkshire Hathaway Specialty',
     stack: 'Vue.js · Nuxt.js',
     body:
-      "An enterprise-scale component library for an insurance platform where consistency isn't aesthetic — it's regulatory.",
+      "Product surfaces for an insurance platform where consistency isn't aesthetic: it's regulatory.",
   },
   {
     company: "America's Test Kitchen",
     stack: 'React · Next.js',
     body:
-      'A shared component system unifying multiple editorial brands — where design tokens carry as much weight as the recipes.',
+      'When a product needs a real design system, I build that too: one shared library unifying three editorial brands.',
   },
 ];
 
 const principles = [
   {
     index: '01',
-    title: 'Accessibility as architecture',
+    title: 'The UI is where the value is',
     body:
-      "Not an audit at the end. Not a ticket for later. A structural constraint, built into the foundation, so every component that leaves the library is accessible because it can't be any other way.",
+      "The interface is my strongest work: type, spacing, motion, the empty and error states most engineers leave blank. I build it design-grade myself, and I'm full-stack capable in Rails and TypeScript so I can own the whole feature behind it.",
   },
   {
     index: '02',
-    title: 'Documentation is delivery',
+    title: 'Design and accessibility, built in',
     body:
-      "A component without accurate docs isn't done. It's a riddle. I treat the written word as part of the shipped artifact — examples, rationale, edge cases, and all.",
+      "Not an audit at the end. Not a ticket for later. The keyboard paths, focus states, and empty screens are part of how I build, which is why the things I ship work for everyone and feel finished.",
   },
   {
     index: '03',
     title: 'Directness over diplomacy',
     body:
-      "If your system is sick, I'll tell you exactly where and why — kindly, but without hedging. Then we'll map the shortest honest path to health. You're hiring me for the truth, not the comfort.",
+      "If a product is in trouble, I'll tell you exactly where and why. Kindly, but without hedging. Then we'll map the shortest honest path forward. You're hiring me for the truth, not the comfort.",
   },
 ];
 
 const learning = [
   { title: 'WAI-ARIA & APG', note: 'Authoring practices for patterns that truly work for assistive tech.' },
   { title: 'Design Tokens CG', note: 'The emerging standard for portable, multi-platform design decisions.' },
-  { title: 'CSS Working Group', note: 'Container queries, anchor positioning, cascade layers — the good stuff.' },
+  { title: 'CSS Working Group', note: 'Container queries, anchor positioning, cascade layers (the good stuff).' },
   { title: 'Rudiment UI', note: 'My open-source sandbox for accessible component primitives.' },
 ];
 ---
 
-<BaseLayout title="About — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+<BaseLayout title="About | Joshua Briley | Product Engineer" description={description}>
 
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <div class="flex items-center justify-between gap-4 mono-label">
-        <span>About · UX Engineer</span>
-        <span class="hidden sm:inline text-ink-muted">20 yrs · Index 01</span>
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
+        <span>About · Product Engineer</span>
+        <span class="hidden sm:inline text-ink-muted">20 yrs</span>
       </div>
 
       <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div class="lg:col-span-7">
-          <Heading level={1} visual="display-xl" class="max-w-[18ch]">
-            I build the <em class="ink-wink font-normal italic">quiet parts</em> of great products.
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
+            I build the whole product, and I sweat the parts most engineers <em class="ink-wink font-normal italic">skip</em>.
           </Heading>
-          <Text size="lg" tone="muted" class="mt-7 max-w-xl">
-            I'm a UX software engineer and design-systems consultant. For two decades I've
-            lived at the seam between design and engineering — building the component
-            libraries, tokens, and documentation that let teams ship faster without tripping
-            over themselves.
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
+            I'm a design- and front-end-focused product engineer with 20 years in production UI. The
+            interface is where I bring the most value: design-grade, accessible, with the judgment
+            most teams have to hire a separate designer to get. I'm also a capable full-stack
+            developer in Rails and TypeScript, so I can carry a feature the rest of the way.
           </Text>
-          <Text tone="muted" class="mt-5 max-w-xl">
-            My favorite question to sit with is a quiet one:
-            <em class="text-ink not-italic font-medium"> how do you build a system where the
-            right output is the natural result of using it</em> — not something individual
-            developers have to remember to do correctly?
+          <Text tone="muted" class="hero-in hero-in-3 mt-5 max-w-xl">
+            The part I care about most is the part most engineers leave blank:
+            <em class="text-ink not-italic font-medium"> the empty states, the keyboard paths, the
+            screen that shows when there's nothing to show yet</em>, the details that decide whether
+            a product feels finished.
           </Text>
 
-          <div class="mt-9 flex flex-wrap items-center gap-3">
+          <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
             <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
               Get in touch
             </Button>
@@ -98,8 +98,8 @@ const learning = [
             </Button>
           </div>
 
-          <ul class="mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
-            {['Design systems', 'Accessibility', 'Documentation', 'UX engineering'].map((p) => (
+          <ul class="hero-in hero-in-4 mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+            {['Design-grade front-end', 'React · TypeScript', 'Accessibility', 'Full-stack capable'].map((p) => (
               <li class="flex items-center gap-2">
                 <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
               </li>
@@ -107,11 +107,11 @@ const learning = [
           </ul>
         </div>
 
-        <div class="lg:col-span-5">
+        <div class="hero-in hero-in-5 lg:col-span-5">
           <figure class="overflow-hidden rounded-lg border border-line">
             <img
               src="/images/josh-biz-cazsh.jpg"
-              alt="Joshua Briley, UX Engineer"
+              alt="Joshua Briley, product engineer"
               class="aspect-[4/5] w-full object-cover"
               loading="lazy"
               width="640"
@@ -126,15 +126,15 @@ const learning = [
   {/* ───────────────────────── PULL QUOTE ───────────────────────── */}
   <Section tone="paper" padding="default" class="border-b border-line">
     <Container width="narrow">
-      <p class="mono-label">The question / 02</p>
+      <p class="mono-label">The standard</p>
       <blockquote class="mt-5">
         <p class="font-display text-2xl md:text-3xl lg:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.025em] text-ink text-balance">
-          How do you build a system that makes the
-          <span class="text-accent">right output</span> the natural result of using it —
-          rather than the result of individual developers making the right decisions?
+          Most engineers ship the screen. I ship the empty state, the keyboard
+          path, and the screen that shows when there's
+          <span class="text-accent">nothing to show yet</span>.
         </p>
       </blockquote>
-      <p class="mt-6 mono-label">The question I'm always chasing</p>
+      <p class="mt-6 mono-label">The last 10% is the point</p>
     </Container>
   </Section>
 
@@ -142,20 +142,23 @@ const learning = [
   <Section tone="paper" padding="default">
     <Container width="wide">
       <div class="max-w-3xl">
-        <p class="mono-label">How I work / 03</p>
+        <p class="mono-label">How I work</p>
         <Heading level={2} visual="display-md" class="mt-4">
           Three things I hold on to.
         </Heading>
       </div>
 
-      <div class="mt-14 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+      <div
+        class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3"
+        data-reveal-stagger
+      >
         {principles.map((p) => (
-          <div class="bg-paper p-7 md:p-9">
+          <div class={`bg-paper p-7 md:p-9 ${p.index === '01' ? 'lg:col-span-2 lg:row-span-2 lg:flex lg:flex-col lg:justify-center md:p-10' : ''}`}>
             <div class="flex items-baseline gap-3">
               <span class="font-mono text-[0.75rem] text-accent">{p.index}</span>
-              <Heading level={3} visual="h3">{p.title}</Heading>
+              <Heading level={3} visual={p.index === '01' ? 'h2' : 'h3'}>{p.title}</Heading>
             </div>
-            <Text tone="muted" class="mt-3">{p.body}</Text>
+            <Text tone="muted" class={p.index === '01' ? 'mt-4 max-w-lg' : 'mt-3'} size={p.index === '01' ? undefined : 'sm'}>{p.body}</Text>
           </div>
         ))}
       </div>
@@ -166,17 +169,16 @@ const learning = [
   <Section tone="ink" padding="default">
     <Container width="wide">
       <div class="max-w-3xl">
-        <p class="mono-label !text-paper/65">Where this lands / 04</p>
-        <Heading level={2} visual="display-md" tone="paper" class="mt-4">
-          Systems in production, not slideware.
+        <Heading level={2} visual="display-md" tone="paper">
+          Products in production, not slideware.
         </Heading>
         <Text size="lg" tone="whiteMuted" class="mt-5">
-          The work shows up in places where consistency carries weight — across frameworks,
+          The work shows up in places where the details carry weight: across frameworks,
           across brands, and under regulatory scrutiny.
         </Text>
       </div>
 
-      <ul class="mt-14 border-t border-paper/10">
+      <ul class="mt-14 border-t border-paper/10" data-reveal-stagger>
         {currentWork.map((w) => (
           <li>
             <div class="grid grid-cols-12 items-baseline gap-4 border-b border-paper/10 py-5">
@@ -197,26 +199,26 @@ const learning = [
     <Container width="wide">
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-5">
-          <p class="mono-label">Always learning / 05</p>
+          <p class="mono-label">Always learning</p>
           <Heading level={2} visual="display-md" class="mt-4 max-w-[16ch]">
             Twenty years in, still reading the spec drafts.
           </Heading>
           <div class="mt-7 space-y-4 text-ink-muted leading-relaxed max-w-md">
             <p>
               I stay close to the sources: WAI-ARIA working drafts, the Design Tokens Community
-              Group, CSS Working Group proposals. The platform moves — the best systems move
+              Group, CSS Working Group proposals. The platform moves. The best systems move
               with it.
             </p>
             <p>
               I also maintain <span class="text-ink font-medium">Rudiment UI</span>, an
-              open-source library where I sharpen ideas in public before they land in client work.
+              open-source library where I sharpen ideas in public before they land in production systems.
             </p>
           </div>
         </div>
 
         <div class="lg:col-span-7">
-          <p class="mono-label">Currently on the nightstand</p>
-          <ul class="mt-5 divide-y divide-line border-y border-line">
+          <p class="mono-label">What I follow</p>
+          <ul class="mt-5 divide-y divide-line border-y border-line" data-reveal-stagger>
             {learning.map((item, i) => (
               <li class="flex items-baseline gap-4 py-4">
                 <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
@@ -237,24 +239,22 @@ const learning = [
     <Container width="wide">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-8">
-          <p class="mono-label !text-paper/65">Work together / 06</p>
-          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[20ch]">
+          <Heading level={2} visual="display-lg" tone="paper" class="max-w-[20ch]">
             Think we'd work well together?
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            Whether you're hiring for a team or untangling a system, send a note. I'll tell you
-            honestly whether I'm the right fit. If not, I probably know who is.
+            If you're hiring a product engineer who builds the whole thing and sweats the finish,
+            send a note. I'll tell you honestly whether I'm the right fit, and if not, I probably
+            know who is.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">
           <div class="flex flex-col items-start gap-3">
             <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
             <a
-              href="https://www.linkedin.com/in/joshuabriley/"
-              rel="noopener noreferrer"
-              target="_blank"
+              href="/resume.pdf"
               class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
-            >Connect on LinkedIn <Icon name="ph:arrow-up-right" size={12} /></a>
+            >Résumé <Icon name="ph:file-text" size={12} /></a>
           </div>
         </div>
       </div>

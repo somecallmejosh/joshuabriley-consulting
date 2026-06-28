@@ -8,85 +8,62 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  'Products Joshua Briley owned end to end: multi-tenant apps, accessible flows, Rails platforms, and the design systems behind them. Each case study doubles as a work sample.';
+  'Personal projects Joshua Briley built for himself: a multi-tenant personal-finance app, a bass-practice tool wiring live audio and an LLM into one product, and an arcade game that teaches the W3C design-tokens spec. No client, no brief, just the finish for its own sake.';
 
 const projects = [
   {
     index: '01',
-    href: '/projects/ivfcryo/',
-    client: 'IVFCRYO',
-    kind: 'Accessible product',
-    title: 'Accessibility built in from the start',
+    href: '/personal-projects/clempo/',
+    client: 'Clempo',
+    kind: 'Full-stack product',
+    title: 'A personal-finance app, owned end to end',
     summary:
-      'A self-service shipping application for a fertility specimen logistics provider, with real-time environmental tracking, multi-carrier label printing, and accessibility built in from day one: the mechanism that moved the numbers.',
-    note: '75% fewer support calls',
+      'A multi-tenant personal-finance app with real households using it: authentication, tenancy, data modeling, and the interface, all mine. Built to keep more than one household’s data correct and private at once.',
+    note: 'Multi-tenant in production',
   },
   {
     index: '02',
-    href: '/projects/vmspark/',
-    client: 'VMSpark',
-    kind: 'Rails platform',
-    title: 'A multi-tenant Rails platform, rebuilt',
+    href: '/personal-projects/bass-face/',
+    client: 'Bass Face',
+    kind: 'React · live services',
+    title: 'Live audio and an LLM in one product',
     summary:
-      'Rebuilt and shipped in four phases with no feature flags and zero pipeline regressions: a 700-line inventory, 350 templates consolidated onto one component system, routed through a single token layer, with no operator retraining.',
-    note: '350 ERB templates',
+      'A bass-practice tool I built for myself in React: generative backing tracks synthesized with Tone.js and reflective feedback wired in through the Claude API. Creative range and comfort wiring live services into a real product.',
+    note: 'Tone.js + Claude API',
   },
   {
     index: '03',
-    href: '/projects/west-baton-rouge-presbyterian/',
-    client: 'West Baton Rouge Presbyterian',
-    kind: 'Rails CMS',
-    title: 'A full CMS, built in one weekend',
+    href: '/personal-projects/token-galaga/',
+    client: 'Token Adventure',
+    kind: 'Arcade game · Teaching tool',
+    title: 'A Galaga-style arcade that teaches design tokens',
     summary:
-      'A custom Rails CMS built end to end over a single weekend: content models for events, galleries, and pages, a Cloudinary media pipeline, staff authentication, and an accessible public site. Proof of range and speed.',
-    note: 'Shipped in a weekend',
-  },
-  {
-    index: '04',
-    href: '/projects/americas-test-kitchen/',
-    client: "America's Test Kitchen",
-    kind: 'Design system',
-    title: 'When a product needs a system, I build that too',
-    summary:
-      'A shared React and Next.js component library serving three editorial brands with zero brand-fork props, and one accessibility floor every team inherits, built on top of a previously inaccessible CMS.',
-    note: '60+ components',
-  },
-  {
-    index: '05',
-    href: '/projects/berxi-insurance/',
-    client: 'Berxi',
-    kind: 'Design system',
-    title: 'A design system for a growing platform',
-    summary:
-      'A custom design system for a growing insurance platform: from stakeholder alignment through component library, documentation, and cross-team adoption that unblocked marketing to ship campaigns on their own.',
-    note: 'Cross-team adoption',
-  },
-  {
-    index: '06',
-    href: '/projects/rudiment-ui/',
-    client: 'Rudiment UI',
-    kind: 'Open source',
-    title: 'Accessible component primitives, built in public',
-    summary:
-      'An open-source React component library and companion guide covering architectural decisions, a three-tier token system, intrinsic layout primitives, accessible components with React Aria, Storybook docs, testing, and npm distribution.',
-    note: '3-tier token system',
+      'A playable coding arcade that teaches the W3C Design Tokens Format spec across eight sectors, from why tokens exist to auditing a broken library. A hard spec turned into something you actually want to finish.',
+    note: 'Companion to Rudiment UI',
   },
 ];
 ---
 
-<BaseLayout title="Projects | Joshua Briley" description={description}>
+<BaseLayout title="Personal projects | Joshua Briley" description={description}>
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <p class="hero-in hero-in-1 mono-label">Selected work · Case studies</p>
+      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">Personal projects</span>
+      </nav>
+
+      <p class="hero-in hero-in-1 mono-label">Personal work · Built for myself</p>
 
       <div class="mt-10 max-w-4xl lg:mt-14">
         <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[20ch]">
-          Products I owned end to end, and the systems <em class="ink-wink font-normal italic">behind them</em>.
+          What I build when <em class="ink-wink font-normal italic">no one's asking</em>.
         </Heading>
         <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-          Built for teams with real constraints: messy timelines, mixed stacks, and real humans
-          using them on the other side. Each case study doubles as a work sample.
+          No client, no brief, no deadline to cut against. These are the projects where the only
+          bar is whether I actually want to use the thing, which turns out to be a higher bar than
+          most briefs set. The same finish I bring to the work I ship for teams.
         </Text>
       </div>
     </Container>
@@ -130,24 +107,6 @@ const projects = [
           </li>
         ))}
       </ul>
-
-      <a
-        href="/personal-projects/"
-        class="group mt-4 flex items-center justify-between gap-4 border-b border-line py-8 transition-colors hover:bg-ink/[0.02] md:py-9"
-      >
-        <span class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-          <span class="font-display text-lg font-medium tracking-tight text-ink md:text-xl">Personal projects</span>
-          <span class="text-sm leading-relaxed text-ink-muted">The things I build when no one's asking: Clempo and Bass Face.</span>
-        </span>
-        <span class="inline-flex shrink-0 items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted transition-colors group-hover:text-accent">
-          View
-          <Icon
-            name="ph:arrow-right"
-            size={16}
-            class="transition-transform duration-300 ease-out group-hover:translate-x-1"
-          />
-        </span>
-      </a>
     </Container>
   </Section>
 
@@ -156,21 +115,22 @@ const projects = [
     <Container width="wide">
       <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-5">
-          <p class="mono-label">The through-line</p>
+          <p class="mono-label">Why these are here</p>
           <Heading level={2} visual="display-md" class="mt-4 max-w-[16ch]">
-            The stack changes. The core work doesn't.
+            Side projects are where the finish shows.
           </Heading>
         </div>
         <div class="lg:col-span-7">
           <div class="space-y-4 text-ink-muted leading-relaxed">
             <p class="text-[1.15rem] leading-snug text-ink">
-              Every project comes back to the same instinct:
-              <span class="text-accent">the interface is the product, so make it feel finished.</span>
+              When nobody is asking for it,
+              <span class="text-accent">nobody is around to talk you out of sweating the last ten percent.</span>
             </p>
             <p>
-              The stack changes (React, TypeScript, Rails) but the core work stays the same: build
-              the UI design-grade and accessible, and be full-stack capable enough to own the feature
-              behind it. If that sounds like the engineer you need, let's talk.
+              The empty states, the play/stop interaction, the tenancy boundary that has to hold for
+              real households. That last ten percent is the work most people skip, and it is exactly
+              the part I bring to the products I ship for teams. Want the professional case studies
+              instead? They live on the <a href="/projects/" class="hero-link">projects page</a>.
             </p>
           </div>
         </div>
@@ -185,12 +145,11 @@ const projects = [
         <div class="lg:col-span-8">
           <p class="mono-label !text-paper/65">Open to roles</p>
           <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[20ch]">
-            Every case study doubles as a work sample.
+            The same instinct, on the clock.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            If you're evaluating me for a product engineering role, this is the level of craft and
-            finish to expect at the interface, and the full-stack range behind it. Questions about
-            any of it, send a note.
+            What I do for fun is what I do for teams: own the whole thing, wire the live services,
+            and ship it finished. If that's the engineer you need, send a note.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">

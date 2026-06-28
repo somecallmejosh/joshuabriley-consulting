@@ -1,0 +1,328 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Link from '~/components/primitives/Link.astro';
+
+const description =
+  'Case study: a product engineer building a custom Rails CMS end to end over one weekend: content models, a Cloudinary media pipeline, staff authentication, and an accessible public site.';
+
+const proof = [
+  { label: 'Skills proven', items: ['Data modeling', 'Media pipeline integration', 'Authentication', 'Accessible frontend', 'Full-stack ownership', 'Rapid delivery'] },
+  { label: 'Stack', items: ['Ruby on Rails', 'Cloudinary'] },
+  { label: 'Quality', items: ['Accessible public site', 'Staff-managed content', 'End-to-end ownership'] },
+  { label: 'Outcomes', items: ['Shipped in a weekend', 'End-to-end ownership', 'Accessible public site', 'Staff can self-manage content'] },
+];
+
+const docket = [
+  { href: '#ownership', icon: 'ph:user-focus', label: 'One weekend, one owner' },
+  { href: '#build', icon: 'ph:stack', label: 'Data models to a media pipeline' },
+  { href: '#public', icon: 'ph:globe', label: 'An accessible site staff can run' },
+];
+---
+
+<BaseLayout title="West Baton Rouge Presbyterian | Joshua Briley" description={description}>
+
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+        <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">West Baton Rouge Presbyterian</span>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="mb-7 flex items-center gap-3">
+            <span class="hero-wordmark font-display text-ink">WBR<span class="text-accent">.church</span></span>
+            <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
+            <p class="mono-label">Case study</p>
+          </div>
+
+          <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
+            A full CMS, built end to end, in one <em class="ink-wink font-normal italic">weekend</em>.
+          </Heading>
+
+          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
+            A custom Rails CMS for West Baton Rouge Presbyterian: content models
+            for events, galleries, and pages, a Cloudinary media pipeline, staff
+            authentication, and an accessible public site, owned from the data
+            layer to the last rendered page. Proof of range and speed.
+          </Text>
+        </div>
+
+        <aside class="hero-rail" aria-label="Project details">
+          <dl>
+            <div>
+              <dt>Role</dt>
+              <dd>Product Engineer</dd>
+            </div>
+            <div>
+              {/* TODO(josh): confirm domain label — "Church CMS" inferred from the org name. */}
+              <dt>Domain</dt>
+              <dd>Church CMS</dd>
+            </div>
+            <div>
+              <dt>Stack</dt>
+              <dd>Rails &middot; Cloudinary</dd>
+            </div>
+            <div>
+              <dt>Focus</dt>
+              <dd>Full-stack, in a weekend</dd>
+            </div>
+          </dl>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
+      {/* TODO(josh): confirm the rest of the Stack — only Rails + Cloudinary are confirmed in the brief. Likely candidates to verify: database (PostgreSQL/SQLite), auth library (Devise?), and front-end approach (Hotwire/ERB). */}
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {proof.map((group) => (
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight">
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <Text size="lg" tone="muted" class="mt-10 measure">
+        West Baton Rouge Presbyterian needed a site its own staff could run
+        (publish an event, post a gallery, edit a page) without a developer in
+        the loop. The answer wasn't a template or a plugin stack. It was a
+        custom Rails CMS, built end to end in a single weekend: data models,
+        media pipeline, authentication, and an accessible public site, all owned
+        by one person, all the way down.
+      </Text>
+    </Container>
+  </Section>
+
+  <Section id="ownership" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">One weekend, one owner</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The fastest way to ship a complete product is to have one person who
+              can hold the whole thing in their head: from the shape of the data to
+              the focus order on the public page. This build was exactly that. No
+              handoffs, no waiting on another team to model the schema or wire the
+              uploads. The
+              <strong class="text-ink font-semibold">range</strong> is the point:
+              back end, media, auth, and front end are not four specialties here.
+              They're one continuous decision.
+            </p>
+            <p>
+              A weekend is a constraint that exposes whether someone actually owns
+              the full stack or just a slice of it. There's no time to coordinate
+              across roles. You model the content, you build the pipeline, you ship
+              the site. And the only way that fits in two days is if the same
+              person is making every call in sequence.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">The constraint</p>
+              <Heading level={3} visual="h3" class="mb-2">A single weekend</Heading>
+              <Text size="sm" tone="muted">
+                Two days, start to finished. No room for handoffs, flags, or a
+                second pass that never gets scheduled.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">The proof</p>
+              <Heading level={3} visual="h3" class="mb-2">End-to-end range</Heading>
+              <Text size="sm" tone="muted">
+                Data models, media pipeline, authentication, and an accessible
+                public site, owned by one engineer, top to bottom.
+              </Text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="build" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">From data models to a media pipeline</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              A CMS is only as good as the content models underneath it. This one is
+              built on Rails, with first-class models for the things the church
+              actually publishes:
+              <strong class="text-ink font-semibold">events</strong>,
+              <strong class="text-ink font-semibold">galleries</strong>, and
+              <strong class="text-ink font-semibold">pages</strong>. Get those right
+              and the editing experience falls out of them naturally: staff manage
+              real concepts, not rows in a generic table.
+            </p>
+            <p>
+              Images are their own problem, so they get their own solution. A
+              Cloudinary media pipeline handles uploads, storage, and delivery, so
+              the galleries stay fast and the staff never have to think about
+              resizing or hosting. Authentication gates the editing surface: staff
+              sign in to manage content, and the public never touches the admin.
+            </p>
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-7">
+            <p class="mono-label mb-5">Owned end to end</p>
+            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+              <li class="flex items-center gap-3">
+                <Icon name="ph:calendar-check" size={20} class="text-ink-muted" />
+                Content models: events, galleries, pages
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:images" size={20} class="text-ink-muted" />
+                Cloudinary media pipeline
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:lock-key" size={20} class="text-ink-muted" />
+                Staff authentication
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:globe" size={20} class="text-ink-muted" />
+                Accessible public site
+              </li>
+            </ul>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              Range isn't a list of technologies. It's being able to own every
+              layer at once and still ship something finished.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="public" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">An accessible site the staff can run</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Speed is only worth bragging about if what you shipped is actually
+              good. The public site was built to be
+              <strong class="text-ink font-semibold">accessible</strong>, not just
+              functional: the finish that decides whether a product works for
+              everyone or only for the average visitor on a fast connection. That
+              standard held even under a weekend deadline, because it was part of
+              how the site was built rather than a pass bolted on at the end.
+            </p>
+            <p>
+              The other half of "finished" is who can run it afterward. Because the
+              content models map to the things staff actually publish, and because
+              authentication keeps the editing surface theirs, the church can
+              self-manage its own content. The handoff isn't a pile of instructions.
+              It's a working tool the people who own it can keep using.
+            </p>
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:globe" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Accessible by build</Heading>
+              <Text size="sm" tone="muted">
+                The public site works for everyone, because accessibility was part
+                of the build rather than a later remediation pass.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:pencil-simple" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Self-managed content</Heading>
+              <Text size="sm" tone="muted">
+                Staff sign in and publish events, galleries, and pages on their own.
+                No developer required in the loop.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:rocket-launch" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Shipped, then theirs</Heading>
+              <Text size="sm" tone="muted">
+                Delivered in a weekend and left in the hands of the people who run
+                it, finished rather than half-done.
+              </Text>
+            </div>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
+      <Heading level={2} visual="display-lg" tone="paper">
+        I build complete products, end to end.
+      </Heading>
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        A full CMS in a weekend is the same skill at a different scale: own the whole thing, ship it finished, leave it accessible. If that's the work, let's talk.
+      </Text>
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>
+        <a href="/resume.pdf" class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper">
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
+      </div>
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/" class="!text-paper hover:!text-paper/70">Back to all projects</Link>
+      </div>
+    </Container>
+  </Section>
+
+</BaseLayout>

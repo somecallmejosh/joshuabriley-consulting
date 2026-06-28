@@ -32,6 +32,8 @@ interface Props {
   pathname?: string;
   headings?: TocHeading[];
   morePosts?: MorePost[];
+  /** Interactive post: single column, no TOC rail, tool widgets break out wide. */
+  wide?: boolean;
 }
 
 const {
@@ -44,6 +46,7 @@ const {
   pathname,
   headings = [],
   morePosts = [],
+  wide = false,
 } = Astro.props;
 
 const formattedDate = date.toLocaleDateString('en-US', {
@@ -108,8 +111,9 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
   {/* ───────────────────────── BODY ───────────────────────── */}
   <Section tone="paper" padding="default">
     <Container width="wide">
-      <div class="lg:grid lg:grid-cols-[1fr_minmax(0,42rem)_1fr] lg:gap-x-10 xl:gap-x-14">
+      <div class={wide ? 'mx-auto max-w-2xl' : 'lg:grid lg:grid-cols-[1fr_minmax(0,42rem)_1fr] lg:gap-x-10 xl:gap-x-14'}>
         {/* Margin rail: in-page contents + share (desktop only) */}
+        {!wide && (
         <aside class="hidden lg:block lg:justify-self-end lg:w-56" aria-label="Article tools">
           <div class="sticky top-28">
             {toc.length >= 2 && (
@@ -139,23 +143,43 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
             </div>
           </div>
         </aside>
+        )}
 
         {/* Reading column */}
-        <div class="max-w-2xl mx-auto lg:max-w-none lg:mx-0">
-          <article class="prose-whimsy">
+        <div class={wide ? '' : 'max-w-2xl mx-auto lg:max-w-none lg:mx-0'}>
+          <article class:list={['prose-whimsy', wide && 'prose-interactive']}>
             <slot />
           </article>
 
+          {/* Inline share — interactive posts drop the side rail, so the share
+              affordance lives at the foot of the article instead. */}
+          {wide && (
+            <div class="mt-12 flex items-center gap-4 border-t border-line pt-6">
+              <span class="mono-label">Share</span>
+              <div class="flex items-center gap-2">
+                <a href={xShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on X">
+                  <Icon name="ph:x-logo" size={17} />
+                </a>
+                <a href={liShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on LinkedIn">
+                  <Icon name="ph:linkedin-logo" size={17} />
+                </a>
+                <button type="button" class="share-btn" data-copy-link aria-label="Copy link">
+                  <Icon name="ph:link" size={17} />
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Author block */}
-          <div class="mt-16 rounded-lg border border-line bg-raised p-7 md:p-9">
+          <div class="mt-16 rounded-lg border border-line p-7 md:p-9">
             <p class="mono-label">Written by</p>
             <Heading level={2} visual="h2" class="mt-3">Joshua Briley</Heading>
             <Text tone="muted" class="mt-3 max-w-xl">
-              UX software engineer and consultant. I help product teams turn drifting UIs into design systems people actually use — and can defend in a budget meeting.
+              Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value (design-grade, accessible front-end), backed by capable full-stack development in Rails and TypeScript.
             </Text>
             <div class="mt-6 flex flex-wrap items-center gap-3">
               <Button variant="primary" size="sm" iconRight="ph:arrow-right" href="/contact/">
-                Work with me
+                Get in touch
               </Button>
               <Button variant="ghost" size="sm" href="/blog/">
                 More essays
@@ -191,7 +215,7 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
         </div>
 
         {/* Right spacer keeps the reading column optically centred */}
-        <div class="hidden lg:block" aria-hidden="true"></div>
+        {!wide && <div class="hidden lg:block" aria-hidden="true"></div>}
       </div>
     </Container>
   </Section>
@@ -270,6 +294,16 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
   /* Anchor offset so deep-linked headings clear the sticky header. */
   .prose-whimsy :is(h2, h3)[id] {
     scroll-margin-top: 6rem;
+  }
+
+  /* ── Interactive posts: embedded tool widgets break out of the reading
+     column. Prose stays at its comfortable measure; a `.post-tool` block
+     widens to a centered band (capped to the wide container) so the tools
+     are not cramped. Symmetric breakout keys off the parent column width,
+     so it collapses to full-width on small screens with no overflow. */
+  .prose-interactive .post-tool {
+    width: min(72rem, 94vw);
+    margin-inline: calc(50% - min(72rem, 94vw) / 2);
   }
 </style>
 

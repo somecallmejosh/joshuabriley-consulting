@@ -62,7 +62,7 @@ const labels = [
       <span class={`subject-tab ${subjectTabTone[idx]}`}>
         {String(idx + 1).padStart(2, '0')} · {section.title}
       </span>
-      <div class="grade-stamp" data-grade-stamp>—</div>
+      <div class="grade-stamp" data-grade-stamp>-</div>
       <div class="p-7 md:p-10 pt-14 md:pt-16">
         <div class="mb-6 max-w-md">
           <h3 class="font-display text-2xl md:text-3xl font-bold text-navy leading-tight mb-2">
@@ -119,12 +119,12 @@ const labels = [
     <div class="relative z-10">
       <p class="mono-label !text-paper/65 mb-2">Teacher's report</p>
       <h3 class="font-display text-3xl md:text-4xl font-bold mb-4 leading-tight">
-        <span data-result-headline>Keep going — answer every question to unlock your report.</span>
+        <span data-result-headline>Keep going. Answer every question to unlock your report.</span>
       </h3>
       <div class="flex flex-wrap items-end gap-x-10 gap-y-5 mb-7">
         <div>
           <p class="mono-label !text-paper/60 mb-1">Overall grade</p>
-          <p class="sc-final-grade font-serif font-semibold leading-[0.74] tracking-[-0.04em] text-paper" data-final-grade>—</p>
+          <p class="sc-final-grade font-serif font-semibold leading-[0.74] tracking-[-0.04em] text-paper" data-final-grade>-</p>
         </div>
         <div class="pb-1">
           <p class="mono-label !text-paper/60 mb-1">Final score</p>
@@ -149,8 +149,8 @@ const labels = [
         <Button
           variant="secondary"
           size="md"
-          iconLeft="ph:calendar-check-duotone"
-          href="https://calendly.com/josh-thebrileys/30min/"
+          iconLeft="ph:envelope-duotone"
+          href="/contact/"
         >
           Talk through your results
         </Button>
@@ -273,7 +273,7 @@ const labels = [
         ).length;
 
         if (answeredInSubject === 0) {
-          stamp.textContent = '—';
+          stamp.textContent = '-';
           stamp.removeAttribute('data-grade');
           stamp.removeAttribute('data-state');
           return;
@@ -327,7 +327,7 @@ const labels = [
           body = 'Every new feature costs more than the last one. Click below for a detailed breakdown with a specific recommendation on where to start.';
         } else {
           headline = "You’re building on sand, and that’s okay to name.";
-          body = "A low score isn’t a failing grade — it’s a starting map. Click below for your personalized report with exactly what to tackle first.";
+          body = "A low score isn’t a failing grade, it’s a starting map. Click below for your personalized report with exactly what to tackle first.";
         }
         resultHeadline.textContent = headline;
         resultBody.textContent = body;
@@ -340,7 +340,7 @@ const labels = [
         }
         wasComplete = true;
       } else {
-        finalGradeEl.textContent = '—';
+        finalGradeEl.textContent = '-';
         resultActions.hidden = true;
         resultHeadline.textContent = 'Keep going. Answer every question to see your report.';
         resultBody.textContent = `You're ${answered} of ${TOTAL_ITEMS} questions in. A personalized writeup appears here once you've scored every row.`;

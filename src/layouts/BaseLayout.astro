@@ -41,7 +41,7 @@ const TWITTER_HANDLE = '@joshuabriley';
 
 const {
   title,
-  description = 'UX engineer & design systems consultant — Joshua Briley.',
+  description = 'Joshua Briley: design- and front-end-focused product engineer. Design-grade, accessible UI, backed by capable full-stack development.',
   pathname = Astro.url.pathname,
   bare = false,
   image = DEFAULT_OG_IMAGE,
@@ -64,8 +64,8 @@ const personSchema = {
   name: 'Joshua Briley',
   url: SITE_URL + '/',
   image: new URL('/images/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
-  jobTitle: 'UX Engineer & Design Systems Consultant',
-  description: 'UX engineer and design systems consultant helping product teams ship consistent, accessible UI.',
+  jobTitle: 'Product Engineer',
+  description: 'Design- and front-end-focused product engineer with 20 years in production UI. The interface is where he brings the most value (design-grade, accessible front-end), backed by capable full-stack development in Rails and TypeScript.',
   sameAs: [
     'https://github.com/somecallmejosh',
     'https://www.linkedin.com/in/joshuabriley/',
@@ -77,7 +77,7 @@ const websiteSchema = {
   '@id': `${SITE_URL}/#website`,
   url: SITE_URL + '/',
   name: SITE_NAME,
-  description: 'UX engineering & design systems consulting by Joshua Briley.',
+  description: 'Design- and front-end-focused product engineering by Joshua Briley: design-grade, accessible UI, backed by capable full-stack development.',
   publisher: { '@id': `${SITE_URL}/#person` },
   inLanguage: 'en-US',
 };
@@ -147,7 +147,7 @@ const jsonLdGraph = {
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={absoluteImage} />
-    <meta property="og:image:alt" content={`${title} — ${SITE_NAME}`} />
+    <meta property="og:image:alt" content={`${title}: ${SITE_NAME}`} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:locale" content="en_US" />
@@ -168,7 +168,7 @@ const jsonLdGraph = {
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={absoluteImage} />
-    <meta name="twitter:image:alt" content={`${title} — ${SITE_NAME}`} />
+    <meta name="twitter:image:alt" content={`${title}: ${SITE_NAME}`} />
 
     {/* JSON-LD */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdGraph)} />
@@ -207,9 +207,9 @@ const jsonLdGraph = {
         const clay = 'color:#a8412a;font:500 13px/1.6 ui-monospace,monospace';
         console.log('%cJoshua Briley%c\n\nYou opened the console. Of course you did. 👋', head, body);
         console.log(
-          '%cHand-built with Astro — no UI kit, no template. Type, tokens and motion are all deliberate.\n' +
+          '%cHand-built with Astro: no UI kit, no template. Type, tokens and motion are all deliberate.\n' +
           '%cPsst: ↑ ↑ ↓ ↓ ← → ← → B A turns on Inspector Mode.\n' +
-          '%c(And yes — the period after my name is breathing. On purpose.)\n' +
+          '%c(And yes, the period after my name is breathing. On purpose.)\n' +
           '%cLike what you see under the hood? Let’s talk → /contact',
           body, clay, body, body,
         );

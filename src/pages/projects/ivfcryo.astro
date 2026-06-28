@@ -8,9 +8,8 @@ import Link from '~/components/primitives/Link.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
-import StatusAnnouncer from '~/components/islands/StatusAnnouncer.astro';
 
-const title = 'IVFCRYO — Joshua Briley';
+const title = 'IVFCRYO | Joshua Briley';
 const description: string =
   'Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one.';
 
@@ -34,7 +33,7 @@ const docket = [
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <nav
-        class="mb-12 flex items-center gap-2 font-mono text-sm text-ink-muted"
+        class="mb-12 flex items-center gap-2 text-sm text-ink-muted"
         aria-label="Breadcrumb"
       >
         <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
@@ -47,7 +46,7 @@ const docket = [
           <div class="mb-7 flex items-center gap-3">
             <img src="/images/logos/ivfcryo.svg" alt="IVFCRYO logo" class="hero-logo-img" />
             <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
-            <p class="mono-label">Case study / 04</p>
+            <p class="mono-label">Case study</p>
           </div>
 
           <Heading level={1} visual="display-xl">
@@ -63,7 +62,7 @@ const docket = [
           <dl>
             <div>
               <dt>Role</dt>
-              <dd>UX Engineer</dd>
+              <dd>Product Engineer</dd>
             </div>
             <div>
               <dt>Domain</dt>
@@ -84,8 +83,8 @@ const docket = [
   </Section>
 
   <Section tone="paper" padding="tight" aria-label="Project receipts">
-    <Container width="default">
-      <p class="mono-label mb-8">Receipts / 02</p>
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
       <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
@@ -107,8 +106,8 @@ const docket = [
   </Section>
 
   <Section tone="paper" padding="tight">
-    <Container width="default">
-      <p class="mono-label mb-5">On the bench / 03</p>
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
       <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
         {docket.map((item, i) => (
           <li>
@@ -124,7 +123,7 @@ const docket = [
         ))}
       </ul>
 
-      <Text size="lg" tone="muted" class="mt-10">
+      <Text size="lg" tone="muted" class="mt-10 measure">
         IVFCRYO replaced a manual, paper-based shipping process with a web
         application that handles shipment requests, label generation across
         multiple carriers, and real-time specimen tracking from integrated
@@ -137,250 +136,263 @@ const docket = [
   </Section>
 
   <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-3">Step 01</p>
-      <Heading level={2} visual="display-md">The stakes behind the product</Heading>
-
-      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
-        <p>
-          Fertility logistics has a narrow margin for error. A mislabeled
-          shipment, a missed temperature excursion, or an ambiguous status
-          update isn't just a workflow annoyance. It can have irreversible
-          consequences for someone's family. The people using this tool are
-          often clinicians working under time pressure, or patients and
-          couriers navigating a process they've never touched before, during
-          one of the most stressful weeks of their lives.
-        </p>
-        <p>
-          That reframes what accessibility means here. It isn't a compliance
-          checkbox to satisfy at the end of the build. It's part of how the
-          product communicates <em>at all</em>: whether status updates
-          reach the person who needs to act on them, whether form errors are
-          recoverable, whether a screen reader user can trust what the page
-          is telling them.
-        </p>
-      </div>
-
-      <div class="mt-10 grid gap-6 md:grid-cols-2">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label mb-4">High-stakes input</p>
-          <Heading level={3} visual="h3" class="mb-2">Specimens &amp; sensors</Heading>
-          <Text size="sm" tone="muted">
-            Temperature data, chain-of-custody details, carrier handoffs,
-            all flowing through forms people may be filling out under
-            duress.
-          </Text>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">The stakes behind the product</Heading>
         </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label mb-4">High-stakes output</p>
-          <Heading level={3} visual="h3" class="mb-2">Status &amp; recovery</Heading>
-          <Text size="sm" tone="muted">
-            A shipment that has moved, a label that has printed, an error
-            that needs correcting. The app has to surface all of it,
-            reliably, to every user.
-          </Text>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Fertility logistics has a narrow margin for error. A mislabeled
+              shipment, a missed temperature excursion, or an ambiguous status
+              update isn't just a workflow annoyance. It can have irreversible
+              consequences for someone's family. The people using this tool are
+              often clinicians working under time pressure, or patients and
+              couriers navigating a process they've never touched before, during
+              one of the most stressful weeks of their lives.
+            </p>
+            <p>
+              That reframes what accessibility means here. It isn't a compliance
+              checkbox to satisfy at the end of the build. It's part of how the
+              product communicates <em>at all</em>: whether status updates
+              reach the person who needs to act on them, whether form errors are
+              recoverable, whether a screen reader user can trust what the page
+              is telling them.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-2">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">High-stakes input</p>
+              <Heading level={3} visual="h3" class="mb-2">Specimens &amp; sensors</Heading>
+              <Text size="sm" tone="muted">
+                Temperature data, chain-of-custody details, carrier handoffs,
+                all flowing through forms people may be filling out under
+                duress.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label mb-4">High-stakes output</p>
+              <Heading level={3} visual="h3" class="mb-2">Status &amp; recovery</Heading>
+              <Text size="sm" tone="muted">
+                A shipment that has moved, a label that has printed, an error
+                that needs correcting. The app has to surface all of it,
+                reliably, to every user.
+              </Text>
+            </div>
+          </div>
         </div>
       </div>
     </Container>
   </Section>
 
   <Section tone="paper" padding="default" id="collaborator" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-3">Step 02</p>
-      <Heading level={2} visual="display-md">A blind user in the room, from day one</Heading>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">A blind user in the room, from day one</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The most consequential decision on this project wasn't technical.
+              Instead of treating accessibility as an end-of-project audit, the
+              team brought in a legally blind customer as an ongoing
+              collaborator. He reviewed interface decisions as they were being
+              made, tested with a screen reader while components were still
+              being built, and kept offering feedback as features shipped.
+            </p>
+            <p>
+              That changes what you build, not just what you fix. Problems that
+              would have surfaced as a long list of bugs at the end (the kind
+              that usually get triaged, downgraded, and half-addressed) instead
+              showed up as design conversations while the design was still cheap
+              to change. The output wasn't a remediation report. It was
+              different decisions.
+            </p>
+          </div>
 
-      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
-        <p>
-          The most consequential decision on this project wasn't technical.
-          Instead of treating accessibility as an end-of-project audit, the
-          team brought in a legally blind customer as an ongoing
-          collaborator. He reviewed interface decisions as they were being
-          made, tested with a screen reader while components were still
-          being built, and kept offering feedback as features shipped.
-        </p>
-        <p>
-          That changes what you build, not just what you fix. Problems that
-          would have surfaced as a long list of bugs at the end (the kind
-          that usually get triaged, downgraded, and half-addressed) instead
-          showed up as design conversations while the design was still cheap
-          to change. The output wasn't a remediation report. It was
-          different decisions.
-        </p>
+          <ul class="mt-8 border-t border-line">
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:megaphone" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" class="mb-1">Real-time form validation</Heading>
+                <Text size="sm" tone="muted">
+                  Errors announced to a screen reader the moment they happen,
+                  not buried in a summary at the top of the page after submit.
+                </Text>
+              </div>
+            </li>
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:broadcast" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" class="mb-1">Status updates that reach you</Heading>
+                <Text size="sm" tone="muted">
+                  Shipment state changes are announced automatically, so a user
+                  doesn't have to go hunting through the page to learn that
+                  something moved.
+                </Text>
+              </div>
+            </li>
+            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
+              <Icon name="ph:compass" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+              <div>
+                <Heading level={3} visual="h3" class="mb-1">Navigation you can learn once</Heading>
+                <Text size="sm" tone="muted">
+                  Consistent, predictable patterns across the app. The kind of
+                  thing a sighted user takes for granted and a screen reader
+                  user notices immediately when it's missing.
+                </Text>
+              </div>
+            </li>
+          </ul>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              Accessible output at scale comes from accessible architecture,
+              not from accessible intent.
+            </blockquote>
+          </figure>
+        </div>
       </div>
-
-      <ul class="mt-8 space-y-4">
-        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
-          <Icon name="ph:megaphone" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-          <div>
-            <Heading level={3} visual="h3" class="mb-1">Real-time form validation</Heading>
-            <Text size="sm" tone="muted">
-              Errors announced to a screen reader the moment they happen,
-              not buried in a summary at the top of the page after submit.
-            </Text>
-          </div>
-        </li>
-        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
-          <Icon name="ph:broadcast" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-          <div>
-            <Heading level={3} visual="h3" class="mb-1">Status updates that reach you</Heading>
-            <Text size="sm" tone="muted">
-              Shipment state changes are announced automatically, so a user
-              doesn't have to go hunting through the page to learn that
-              something moved.
-            </Text>
-          </div>
-        </li>
-        <li class="flex gap-4 rounded-lg border border-line bg-raised p-5">
-          <Icon name="ph:compass" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-          <div>
-            <Heading level={3} visual="h3" class="mb-1">Navigation you can learn once</Heading>
-            <Text size="sm" tone="muted">
-              Consistent, predictable patterns across the app. The kind of
-              thing a sighted user takes for granted and a screen reader
-              user notices immediately when it's missing.
-            </Text>
-          </div>
-        </li>
-      </ul>
-
-      <figure class="my-12 border-l-2 border-accent pl-6">
-        <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-          Accessible output at scale comes from accessible architecture,
-          not from accessible intent.
-        </blockquote>
-      </figure>
     </Container>
   </Section>
 
   <Section tone="paper" padding="default" id="architecture" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-3">Step 03</p>
-      <Heading level={2} visual="display-md">Accessibility in the architecture</Heading>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Accessibility in the architecture</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Collaboration gave us the right instincts. Architecture made those
+              instincts load-bearing. Interactive components were built with
+              keyboard operability and ARIA as
+              <strong class="text-ink font-semibold">primary requirements</strong>, not
+              post-hoc additions. Components that controlled visibility managed
+              their own focus internally, so the user never lost their place.
+              Dynamic content (the part of the app that changes while you're
+              looking at it) announced itself to assistive tech instead of
+              silently updating the DOM.
+            </p>
+            <p>
+              Every piece of information in the UI was expressed through more
+              than one channel: text <em>and</em> icon <em>and</em> color, never
+              color alone. That rule is small, almost boring, and it prevents an
+              enormous class of failures that would otherwise quietly ship.
+            </p>
+          </div>
 
-      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
-        <p>
-          Collaboration gave us the right instincts. Architecture made those
-          instincts load-bearing. Interactive components were built with
-          keyboard operability and ARIA as
-          <strong class="text-ink font-semibold">primary requirements</strong>, not
-          post-hoc additions. Components that controlled visibility managed
-          their own focus internally, so the user never lost their place.
-          Dynamic content (the part of the app that changes while you're
-          looking at it) announced itself to assistive tech instead of
-          silently updating the DOM.
-        </p>
-        <p>
-          Every piece of information in the UI was expressed through more
-          than one channel: text <em>and</em> icon <em>and</em> color, never
-          color alone. That rule is small, almost boring, and it prevents an
-          enormous class of failures that would otherwise quietly ship.
-        </p>
-      </div>
-
-      <div class="mt-10 rounded-lg border border-line bg-raised p-7">
-        <p class="mono-label mb-5">Built-in, not bolted-on</p>
-        <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
-          <li class="flex items-center gap-3">
-            <Icon name="ph:keyboard" size={20} class="text-ink-muted" />
-            Full keyboard operability
-          </li>
-          <li class="flex items-center gap-3">
-            <Icon name="ph:target" size={20} class="text-ink-muted" />
-            Internal focus management
-          </li>
-          <li class="flex items-center gap-3">
-            <Icon name="ph:megaphone" size={20} class="text-ink-muted" />
-            Live regions for dynamic updates
-          </li>
-          <li class="flex items-center gap-3">
-            <Icon name="ph:eye" size={20} class="text-ink-muted" />
-            Multi-channel information design
-          </li>
-        </ul>
-      </div>
-
-      <div class="mt-12 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-4">Live demo</p>
-        <Text tone="muted" class="mb-6 max-w-2xl">
-          &ldquo;Announced to assistive tech&rdquo; is the kind of phrase that washes over you in
-          prose. So watch it happen: advance the shipment and see the announcement a screen reader
-          would speak &mdash; the behavior the blind collaborator was testing against.
-        </Text>
-        <StatusAnnouncer />
+          <div class="mt-10 rounded-lg border border-line p-7">
+            <p class="mono-label mb-5">Built-in, not bolted-on</p>
+            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+              <li class="flex items-center gap-3">
+                <Icon name="ph:keyboard" size={20} class="text-ink-muted" />
+                Full keyboard operability
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:target" size={20} class="text-ink-muted" />
+                Internal focus management
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:megaphone" size={20} class="text-ink-muted" />
+                Live regions for dynamic updates
+              </li>
+              <li class="flex items-center gap-3">
+                <Icon name="ph:eye" size={20} class="text-ink-muted" />
+                Multi-channel information design
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
   <Section tone="paper" padding="default" id="scale" class="scroll-mt-24">
-    <Container width="narrow">
-      <p class="mono-label mb-3">Step 04</p>
-      <Heading level={2} visual="display-md">Why this compounds at scale</Heading>
-
-      <div class="mt-8 space-y-5 leading-relaxed text-ink-muted">
-        <p>
-          Once the component library has the right behaviors baked in, every
-          feature built on top of it inherits them. A developer shipping a
-          new shipment form doesn't have to remember to wire up live
-          regions, or decide how focus should move when a dialog opens, or
-          check contrast against the palette. Those decisions have already
-          been made, correctly, once.
-        </p>
-        <p>
-          That's the structural benefit of putting accessibility at the
-          architectural level: it stops being a discipline individual
-          developers have to sustain, and starts being a property of the
-          system they're building inside. The ceiling of accessibility in
-          the product is no longer the ceiling of any one engineer's
-          attention.
-        </p>
-      </div>
-
-      <div class="mt-12 grid grid-cols-2 gap-8 rounded-lg border border-line bg-raised p-7 md:p-8">
-        <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" />
-        <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" />
-      </div>
-
-      <div class="mt-12 grid gap-6 md:grid-cols-3">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={3} visual="h3" class="mb-1">Inherited by default</Heading>
-          <Text size="sm" tone="muted">
-            New features get accessible behavior without anyone having to
-            remember to add it.
-          </Text>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">Why this compounds at scale</Heading>
         </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:chat-circle-dots" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={3} visual="h3" class="mb-1">Clarity for every user</Heading>
-          <Text size="sm" tone="muted">
-            Status changes, errors, and recovery paths reach the person who
-            needs to act on them.
-          </Text>
-        </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <Icon name="ph:infinity" size={28} class="mb-3 text-ink-muted" />
-          <Heading level={3} visual="h3" class="mb-1">Costs that don't snowball</Heading>
-          <Text size="sm" tone="muted">
-            No remediation backlog waiting at the end of the project,
-            because the backlog was never created.
-          </Text>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Once the component library has the right behaviors baked in, every
+              feature built on top of it inherits them. A developer shipping a
+              new shipment form doesn't have to remember to wire up live
+              regions, or decide how focus should move when a dialog opens, or
+              check contrast against the palette. Those decisions have already
+              been made, correctly, once.
+            </p>
+            <p>
+              That's the structural benefit of putting accessibility at the
+              architectural level: it stops being a discipline individual
+              developers have to sustain, and starts being a property of the
+              system they're building inside. The ceiling of accessibility in
+              the product is no longer the ceiling of any one engineer's
+              attention.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-2 gap-8 border-y border-line py-8">
+            <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" />
+            <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" />
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Inherited by default</Heading>
+              <Text size="sm" tone="muted">
+                New features get accessible behavior without anyone having to
+                remember to add it.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:chat-circle-dots" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Clarity for every user</Heading>
+              <Text size="sm" tone="muted">
+                Status changes, errors, and recovery paths reach the person who
+                needs to act on them.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <Icon name="ph:infinity" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h3" class="mb-1">Costs that don't snowball</Heading>
+              <Text size="sm" tone="muted">
+                No remediation backlog waiting at the end of the project,
+                because the backlog was never created.
+              </Text>
+            </div>
+          </div>
         </div>
       </div>
     </Container>
   </Section>
 
   <Section tone="paper" padding="default">
-    <Container width="narrow">
-      <p class="mono-label mb-6">What Don said / 05</p>
-      <figure class="rounded-lg border border-line bg-raised p-8 md:p-10">
-        <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-          What Josh did at IVFCRYO wasn't a typical build. He insisted we
-          put a blind user in the room from week one, and that decision
-          changed the product. We didn't pass an accessibility audit at
-          the end &mdash; we shipped a tool that was accessible because
-          it was built that way.
+    <Container width="content">
+      <p class="mono-label mb-8">What Don said</p>
+      <figure class="rounded-lg border border-line p-8 md:p-10">
+        <Icon name="ph:quotes" size={32} class="text-accent mb-4" />
+        <blockquote>
+          <Text size="lg" tone="ink" class="font-display tracking-tight leading-snug">
+            What Josh did at IVFCRYO wasn't a typical build. He insisted we
+            put a blind user in the room from week one, and that decision
+            changed the product. We didn't pass an accessibility audit at
+            the end. We shipped a tool that was accessible because
+            it was built that way.
+          </Text>
         </blockquote>
-        <figcaption class="mt-8 flex items-center gap-4 border-t border-line pt-6">
+        <figcaption class="mt-7 flex items-center gap-4 border-t border-line pt-6">
           <img
             src="/images/don-fish.png"
             alt="Don Fish"
@@ -399,14 +411,13 @@ const docket = [
 
   <Section tone="ink" padding="loose">
     <Container width="wide">
-      <p class="mono-label !text-paper/65 mb-6">The standard, not the exception / 06</p>
+      <p class="mono-label !text-paper/65 mb-6">The standard, not the exception</p>
       <Heading level={2} visual="display-lg" tone="paper">
         This is the standard, not the exception.
       </Heading>
-      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-xl">
-        Accessibility as architecture is how I approach every system I
-        build or lead. If that's the bar you're hiring for, or the bar you
-        want your own library held to, let's talk.
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        Accessibility as architecture is how I build every product: the mechanism that makes the
+        thing work for everyone, not a checkbox at the end. If that's the bar you're hiring for, let's talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button
@@ -419,17 +430,16 @@ const docket = [
           Get in touch
         </Button>
         <a
-          href="https://www.linkedin.com/in/joshuabriley/"
-          rel="noopener noreferrer"
-          target="_blank"
+          href="/resume.pdf"
           class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
         >
-          <Icon name="ph:linkedin-logo" size={18} />
-          Connect on LinkedIn
+          <Icon name="ph:file-text" size={18} />
+          Résumé
         </a>
       </div>
 
-      <div class="mt-14 border-t border-paper/15 pt-8">
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/americas-test-kitchen/">Flagship: America's Test Kitchen</Link>
         <Link variant="arrow" href="/projects/">Back to all projects</Link>
       </div>
     </Container>

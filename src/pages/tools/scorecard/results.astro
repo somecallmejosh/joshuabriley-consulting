@@ -12,14 +12,14 @@ const description =
 ---
 
 <BaseLayout
-  title="Your Scorecard Results — Joshua Briley | UX Engineer & Design Systems Consultant"
+  title="Your Scorecard Results | Joshua Briley | Product Engineer"
   description={description}
 >
   <Fragment slot="head">
     <meta name="robots" content="noindex, nofollow" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://joshuabriley.com/tools/scorecard/results/" />
-    <meta property="og:title" content="Your Scorecard Results — Joshua Briley" />
+    <meta property="og:title" content="Your Scorecard Results | Joshua Briley" />
     <meta
       property="og:description"
       content="Your personalized design system scorecard results with recommendations."
@@ -27,7 +27,7 @@ const description =
     <meta property="og:image" content="/images/og-image-2026.png" />
     <meta property="og:site_name" content="Joshua Briley" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Your Scorecard Results — Joshua Briley" />
+    <meta name="twitter:title" content="Your Scorecard Results | Joshua Briley" />
     <meta
       name="twitter:description"
       content="Your personalized design system scorecard results with recommendations."
@@ -40,7 +40,7 @@ const description =
     <Container width="wide">
       <div class="flex items-center justify-between gap-4 mono-label">
         <span>Tools / Self-assessment</span>
-        <span class="hidden sm:inline text-ink-muted">Results 01</span>
+        <span class="hidden sm:inline text-ink-muted">Results</span>
       </div>
 
       <div class="mt-10 max-w-3xl lg:mt-12">
@@ -97,7 +97,7 @@ const description =
   <CTABanner
     eyebrow="The results are the URL"
     title="The whole report is in the address bar."
-    lead="No database, no account, no cookie — a few characters carry the entire result. It is the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?"
+    lead="No database, no account, no cookie: a few characters carry the entire result. It is the same philosophy as the rest of this site: state where it belongs, structure doing the work. Want to compare notes on your score, or talk about how this was built?"
   >
     <Button variant="primary" iconLeft="ph:envelope-duotone" href="/contact/" class="js-magnetic">
       Get in touch
@@ -406,26 +406,26 @@ const description =
     'Component consistency':
       'When patterns live in one shared library, every fix propagates automatically. Your team stops rebuilding the same button a dozen different ways and designers trust that what they spec is what ships.',
     'Accessibility':
-      'Accessible defaults widen your addressable market, shield you from legal exposure, and surface usability bugs that hurt every user — not just those relying on assistive tech. Baking it in early costs a fraction of retrofitting it later.',
+      'Accessible defaults widen your addressable market, shield you from legal exposure, and surface usability bugs that hurt every user, not just those relying on assistive tech. Baking it in early costs a fraction of retrofitting it later.',
     'Token architecture':
       'Tokens turn rebrands, theming, and dark mode into a config change instead of a codebase-wide sweep. Design decisions become cheap to revisit, which means the system can evolve without stalling the roadmap.',
     'Documentation':
       'Clear docs replace Slack threads and tribal knowledge. New hires ramp in days instead of weeks, designers stop guessing at what components already exist, and the system scales past the handful of people who built it.',
     'Handoff process':
-      'A shared vocabulary between design and code means less rework, fewer one-off rebuilds, and faster shipping. Fix the ritual once and the sprint tax — the questions, the Figma-to-PR translation, the surprise at review — largely goes away.',
+      'A shared vocabulary between design and code means less rework, fewer one-off rebuilds, and faster shipping. Fix the ritual once and the sprint tax (the questions, the Figma-to-PR translation, the surprise at review) largely goes away.',
   };
 
   const SECTION_CONSEQUENCES: Record<string, string> = {
     'Component consistency':
       'Leave it alone and every team keeps shipping slight variations of the same component. A minor button tweak turns into a week of hunting down one-offs, and the same bugs keep resurfacing because the fix only landed in half the places it needed to.',
     'Accessibility':
-      'Ignore it and you are one complaint or procurement review away from an expensive retrofit — while quietly locking out the roughly 1-in-4 users who rely on assistive tech, larger text, or reduced motion. The usability bugs it hides hurt every user, not just the ones you are overlooking.',
+      'Ignore it and you are one complaint or procurement review away from an expensive retrofit, while quietly locking out the roughly 1-in-4 users who rely on assistive tech, larger text, or reduced motion. The usability bugs it hides hurt every user, not just the ones you are overlooking.',
     'Token architecture':
       'Without tokens, every rebrand, theme, or dark-mode ask becomes a multi-sprint search-and-replace. Small visual changes balloon into cross-team projects, and the first time a rebrand or white-label gets proposed, the estimate quietly kills the idea.',
     'Documentation':
       'Skip this and institutional knowledge stays trapped in Slack DMs and 1:1s. Onboarding stretches from days into weeks, designers rebuild components that already exist, and the handful of people who know how the system works become bottlenecks the whole team routes through.',
     'Handoff process':
-      'Left unaddressed, handoff friction becomes a hidden tax on every sprint: duplicate Figma-to-code translation, surprise PR reviews, and components rebuilt because no one knew they existed. Nothing breaks outright — everything just ships slower than it should, and the team stops noticing the drag.',
+      'Left unaddressed, handoff friction becomes a hidden tax on every sprint: duplicate Figma-to-code translation, surprise PR reviews, and components rebuilt because no one knew they existed. Nothing breaks outright. Everything just ships slower than it should, and the team stops noticing the drag.',
   };
 
   const STATUS_LABEL: Record<SectionStatus, string> = {
@@ -473,9 +473,7 @@ const description =
         why: string;
         strongSections: StrongSec[];
         weakSections: WeakSec[];
-        secondaryRecommendation?: { label: string; sectionNames: string[]; link: string };
-        price: string;
-        link: string;
+        secondaryRecommendation?: { label: string; sectionNames: string[] };
       };
 
   function getRecommendationType(ratings: Ratings): 'audit' | 'workflow' | 'healthy' {
@@ -545,11 +543,8 @@ const description =
           ? {
               label: 'Design System Audit',
               sectionNames: secondarySections.map((s) => s.title),
-              link: '/services/audit/',
             }
           : undefined,
-        price: '$2,500',
-        link: '/services/workflow/',
       };
     }
 
@@ -579,8 +574,6 @@ const description =
       why,
       strongSections: strong,
       weakSections: weak,
-      price: '$2,000',
-      link: '/services/audit/',
     };
   }
 
@@ -597,7 +590,7 @@ const description =
   const raw = params.get('r');
 
   if (!raw || !VALID_PARAM_RE.test(raw)) {
-    window.location.replace('/tools/scorecard/');
+    window.location.replace('/blog/design-system-scorecard/');
   } else {
     const ratings = decodeRatings(raw);
     const score = getTotalScore(ratings);
@@ -689,7 +682,7 @@ const description =
       const statusClass = ({ healthy: 'strong', functional: 'attention', investment: 'critical' } as const)[status];
 
       const startHere = status !== 'healthy'
-        ? `<strong class="text-paper font-semibold">Start here.</strong> Your lowest-scoring area is your highest-impact fix — in your case, <strong class="text-accent font-semibold">${weakest.title}</strong>. That&rsquo;s where you&rsquo;ll see the fastest improvement.`
+        ? `<strong class="text-paper font-semibold">Start here.</strong> Your lowest-scoring area is your highest-impact fix: in your case, <strong class="text-accent font-semibold">${weakest.title}</strong>. That&rsquo;s where you&rsquo;ll see the fastest improvement.`
         : `<strong class="text-paper font-semibold">Excellent work.</strong> Your system is performing well across every dimension. The job now is keeping it that way.`;
 
       container.innerHTML = `
@@ -714,7 +707,7 @@ const description =
                 <iconify-icon icon="ph:link-duotone" width="18"></iconify-icon>
                 <span id="shareBtnText">Share these results</span>
               </button>
-              <a href="/tools/scorecard/?r=${raw}" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
+              <a href="/blog/design-system-scorecard/?r=${raw}" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
                 <iconify-icon icon="ph:arrow-counter-clockwise-duotone" width="18"></iconify-icon>
                 Retake scorecard
               </a>
@@ -795,7 +788,7 @@ const description =
           </h3>
           <p class="text-paper/75 leading-relaxed max-w-2xl mb-8">
             Your system is doing its job: accessibility is architecture, tokens are trusted, and documentation travels with the work.
-            The next wins are small polishes &mdash; maybe formalizing deprecation paths or tightening the handoff ceremony.
+            The next wins are small polishes: maybe formalizing deprecation paths or tightening the handoff ceremony.
             Mostly: don&rsquo;t let this slip.
           </p>
           <div class="flex flex-col sm:flex-row gap-3">
@@ -803,25 +796,16 @@ const description =
               <iconify-icon icon="ph:envelope-duotone" width="18"></iconify-icon>
               Talk through your results
             </a>
-            <a href="/services" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
-              <iconify-icon icon="ph:toolbox-duotone" width="18"></iconify-icon>
-              See how I help
-            </a>
           </div>
         `;
       } else {
         const rec = recommendation;
         html += `
-          <div class="flex items-start justify-between gap-4 mb-4">
-            <div>
-              <p class="mono-label !text-paper/65 mb-3">Recommended</p>
-              <h3 class="font-display text-2xl md:text-3xl font-semibold tracking-tight leading-tight">
-                ${rec.label}
-              </h3>
-            </div>
-            <div class="shrink-0 rounded-md border border-paper/25 px-4 py-2 font-mono text-base font-medium text-paper">
-              ${rec.price}
-            </div>
+          <div class="mb-4">
+            <p class="mono-label !text-paper/65 mb-3">Where I'd focus first</p>
+            <h3 class="font-display text-2xl md:text-3xl font-semibold tracking-tight leading-tight">
+              ${rec.label}
+            </h3>
           </div>
           <p class="text-paper text-lg leading-snug mb-3">${rec.tagline}</p>
           <p class="text-paper/75 leading-relaxed mb-7">${rec.why}</p>
@@ -878,13 +862,9 @@ const description =
 
         html += `
           <div class="flex flex-col sm:flex-row gap-3 mb-2">
-            <a href="${rec.link}" class="${BTN_BASE} ${BTN_LG} ${BTN_NAVY}">
-              <iconify-icon icon="ph:arrow-right-duotone" width="18"></iconify-icon>
-              Learn about the ${rec.label}
-            </a>
-            <a href="/contact/" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
+            <a href="/contact/" class="${BTN_BASE} ${BTN_LG} ${BTN_NAVY}">
               <iconify-icon icon="ph:envelope-duotone" width="18"></iconify-icon>
-              Get in touch
+              Talk through your results
             </a>
           </div>
         `;
@@ -895,14 +875,9 @@ const description =
             <div class="secondary-rec">
               <p class="font-mono text-[0.6875rem] uppercase tracking-[0.16em] text-paper/60 font-medium mb-2">You may also benefit from</p>
               <p class="font-display text-lg font-semibold tracking-tight mb-1">${sec.label}</p>
-              <p class="text-paper/70 text-sm mb-3">
+              <p class="text-paper/70 text-sm">
                 Your ${sec.sectionNames.map((n) => n.toLowerCase()).join(', ')} ${sec.sectionNames.length === 1 ? 'could' : 'could all'} use attention beyond the handoff fixes.
               </p>
-              <a href="${sec.link}"
-                class="inline-flex items-center gap-1.5 text-paper hover:text-accent font-sans font-medium tracking-tight text-sm transition-colors">
-                Learn more
-                <iconify-icon icon="ph:arrow-right" width="16"></iconify-icon>
-              </a>
             </div>
           `;
         }

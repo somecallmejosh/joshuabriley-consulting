@@ -32,10 +32,10 @@ const tokens = [
   { name: 'raised',      token: '--raised',      hex: '#FFFFFF', note: 'Cards, inputs', fill: 'bg-raised', border: 'border-line-strong' },
   { name: 'ink',         token: '--ink',         hex: '#1B1A17', note: 'Headings, body, dark sections', fill: 'bg-ink', border: 'border-ink' },
   { name: 'ink-muted',   token: '--ink-muted',   hex: '#5C5B55', note: 'Body min on paper (AA)', fill: 'bg-[#5C5B55]', border: 'border-[#5C5B55]' },
-  { name: 'ink-faint',   token: '--ink-faint',   hex: '#9A9892', note: 'Decorative only — never body text', fill: 'bg-[#9A9892]', border: 'border-[#9A9892]' },
+  { name: 'ink-faint',   token: '--ink-faint',   hex: '#9A9892', note: 'Decorative only, never body text', fill: 'bg-[#9A9892]', border: 'border-[#9A9892]' },
   { name: 'line',        token: '--line',        hex: '#E5E3DC', note: 'Hairline borders, dividers', fill: 'bg-line', border: 'border-line-strong' },
   { name: 'line-strong', token: '--line-strong', hex: '#D6D3CA', note: 'Emphasised hairline', fill: 'bg-line-strong', border: 'border-line-strong' },
-  { name: 'accent',      token: '--accent',      hex: '#A8412A', note: 'One clay accent — used sparingly', fill: 'bg-accent', border: 'border-accent' },
+  { name: 'accent',      token: '--accent',      hex: '#A8412A', note: 'One clay accent, used sparingly', fill: 'bg-accent', border: 'border-accent' },
 ];
 
 // Live in-section nav for the editorial rail.
@@ -60,14 +60,14 @@ const describedBy =
 // Illustrative metric figures — replace with real numbers in production.
 const metrics = [
   { value: '8', label: 'colour tokens drive everything' },
-  { value: '2', label: 'typefaces — Hanken + Geist Mono' },
+  { value: '2', label: 'typefaces: Hanken + Geist Mono' },
   { value: '100%', label: 'components keyboard-operable' },
   { before: '6', value: '1', label: 'button implementations' },
 ];
 ---
 
 <BaseLayout
-  title="Design system — Editorial-Technical reference | Joshua Briley"
+  title="Design system: Editorial-Technical reference | Joshua Briley"
   description="The Editorial-Technical design system: warm paper, near-black ink, one clay accent, Hanken Grotesk and Geist Mono. Colour tokens, type scale, primitives, patterns, and accessible form components."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
@@ -85,7 +85,7 @@ const metrics = [
         <Text size="lg" tone="muted" class="mt-7">
           Warm paper, near-black ink, and a single clay accent. Hanken Grotesk for
           headings, Geist Mono for labels. Small radii, hairline borders, heavy
-          whitespace — every page on the site composes from the tokens and
+          whitespace. Every page on the site composes from the tokens and
           components documented here.
         </Text>
       </div>
@@ -105,8 +105,8 @@ const metrics = [
       <div class="mt-4 max-w-2xl">
         <Heading level={2} visual="display-md">Colour tokens.</Heading>
         <Text tone="muted" class="mt-4">
-          The full palette is eight tokens. There are no bright fills, no gradients —
-          contrast and rhythm come from ink on paper, with the clay accent reserved
+          The full palette is eight tokens. There are no bright fills, no gradients.
+          Contrast and rhythm come from ink on paper, with the clay accent reserved
           for one mark per view. Every value is a CSS custom property in
           <code class="font-mono text-[0.9em] text-accent"> :root</code>.
         </Text>
@@ -174,11 +174,11 @@ const metrics = [
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Text · body sizes</p>
           <div class="mt-5 space-y-4">
-            <Text size="xl">size xl — lead paragraph, comfortable and unhurried.</Text>
-            <Text size="lg" tone="muted">size lg — secondary lead, muted ink.</Text>
-            <Text size="base" tone="muted">size base — standard body copy at ink-muted.</Text>
-            <Text size="sm" tone="muted">size sm — captions and supporting notes.</Text>
-            <Text size="xs" tone="muted">size xs — fine print, still AA on paper.</Text>
+            <Text size="xl">size xl: lead paragraph, comfortable and unhurried.</Text>
+            <Text size="lg" tone="muted">size lg: secondary lead, muted ink.</Text>
+            <Text size="base" tone="muted">size base: standard body copy at ink-muted.</Text>
+            <Text size="sm" tone="muted">size sm: captions and supporting notes.</Text>
+            <Text size="xs" tone="muted">size xs: fine print, still AA on paper.</Text>
           </div>
         </div>
 
@@ -188,7 +188,7 @@ const metrics = [
             <div>
               <p class="mono-label">Foundations / 01</p>
               <Text size="sm" tone="muted" class="mt-2">
-                The <code class="font-mono text-[0.9em] text-ink">.mono-label</code> eyebrow —
+                The <code class="font-mono text-[0.9em] text-ink">.mono-label</code> eyebrow:
                 uppercase, tracked, ink-muted. Numbered to anchor each section.
               </Text>
             </div>
@@ -215,7 +215,7 @@ const metrics = [
       <div class="mt-4 max-w-2xl">
         <Heading level={2} visual="display-md">The smallest reusable pieces.</Heading>
         <Text tone="muted" class="mt-4">
-          Each primitive enforces accessibility through its API — semantic defaults,
+          Each primitive enforces accessibility through its API: semantic defaults,
           required labels, decoupled visual sizing. They render the same on every page.
         </Text>
       </div>
@@ -223,7 +223,7 @@ const metrics = [
       <div class="mt-12 grid gap-8 lg:grid-cols-2">
         {/* Buttons */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Button — variants &amp; sizes</p>
+          <p class="mono-label">Button: variants &amp; sizes</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
             <Button variant="primary" iconRight="ph:arrow-right">Primary</Button>
             <Button variant="ghost">Ghost</Button>
@@ -243,23 +243,23 @@ const metrics = [
 
         {/* Buttons on ink */}
         <div class="rounded-lg border border-ink bg-ink p-6 md:p-8">
-          <p class="mono-label !text-paper/65">Button — on ink surfaces</p>
+          <p class="mono-label !text-paper/65">Button: on ink surfaces</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
             <Button variant="navy" iconRight="ph:arrow-right">Navy (inverse fill)</Button>
             <Button variant="secondary">Secondary (outlined)</Button>
           </div>
           <Text size="xs" tone="whiteMuted" class="mt-4">
-            Reserved for ink sections — paper fill or a hairline outline, never the
+            Reserved for ink sections: paper fill or a hairline outline, never the
             paper-surface primary.
           </Text>
         </div>
 
         {/* Links */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Link — inline / arrow / nav</p>
+          <p class="mono-label">Link: inline / arrow / nav</p>
           <div class="mt-5 space-y-3 text-sm">
             <p class="text-ink-muted">
-              Read <Link href="/about/" variant="inline">the approach</Link> — inline links
+              Read <Link href="/about/" variant="inline">the approach</Link>. Inline links
               carry a quiet clay underline.
             </p>
             <p><Link href="/projects/" variant="arrow">Selected work</Link></p>
@@ -272,7 +272,7 @@ const metrics = [
 
         {/* Badge */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Badge — mono label chip</p>
+          <p class="mono-label">Badge: mono label chip</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
             <Badge>Default</Badge>
             <Badge icon="ph:package">With icon</Badge>
@@ -281,7 +281,7 @@ const metrics = [
             <Badge size="sm">Small</Badge>
           </div>
           <Text size="xs" tone="muted" class="mt-4">
-            A hairline tile in Geist Mono with a small tick — accent on
+            A hairline tile in Geist Mono with a small tick: accent on
             <code class="font-mono text-ink"> coral</code>/<code class="font-mono text-ink">sunset</code>,
             neutral otherwise.
           </Text>
@@ -289,7 +289,7 @@ const metrics = [
 
         {/* Logo */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Logo — lockup / monogram / wordmark</p>
+          <p class="mono-label">Logo: lockup / monogram / wordmark</p>
           <div class="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
             <Logo variant="lockup" />
             <Logo variant="monogram" />
@@ -303,7 +303,7 @@ const metrics = [
 
         {/* Icon */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Icon — Phosphor set</p>
+          <p class="mono-label">Icon: Phosphor set</p>
           <div class="mt-6 flex flex-wrap items-center gap-6 text-ink">
             <Icon name="ph:arrow-right" size={26} />
             <Icon name="ph:check-circle" size={26} />
@@ -327,7 +327,7 @@ const metrics = [
       <div class="mt-4 max-w-2xl">
         <Heading level={2} visual="display-md">Compositions used across pages.</Heading>
         <Text tone="muted" class="mt-4">
-          A small set of patterns built from the primitives above — a section header,
+          A small set of patterns built from the primitives above: a section header,
           a metrics row, a code window, and an FAQ. Every page draws from this set.
         </Text>
       </div>
@@ -339,13 +339,13 @@ const metrics = [
           eyebrow="Pattern"
           eyebrowIcon="ph:columns"
           title="A centred section header."
-          lead="Eyebrow Badge, balanced display heading, and an optional muted lead — the standard opener for a content section."
+          lead="Eyebrow Badge, balanced display heading, and an optional muted lead: the standard opener for a content section."
         />
       </div>
 
       {/* Metric */}
       <div class="mt-8 rounded-lg border border-line bg-raised p-7 md:p-10">
-        <p class="mono-label mb-6">Metric — a row of measured outcomes</p>
+        <p class="mono-label mb-6">Metric: a row of measured outcomes</p>
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
           {metrics.map((m) => (
             <Metric value={m.value} before={m.before} label={m.label} />
@@ -353,24 +353,24 @@ const metrics = [
         </div>
         <Text size="xs" tone="muted" class="mt-6">
           Oversized ink figure, sans label, optional before→after. Illustrative values
-          shown — use only real, defensible numbers in production.
+          shown. Use only real, defensible numbers in production.
         </Text>
       </div>
 
       {/* CodeBlock */}
       <div class="mt-8">
-        <p class="mono-label mb-4">CodeBlock — framed code window</p>
+        <p class="mono-label mb-4">CodeBlock: framed code window</p>
         <CodeBlock
           filename="Field.astro"
           lang="ts"
           code={apiSnippet}
-          caption="A real component API, shown — not asserted. Dependency-free chrome carries the polish."
+          caption="A real component API, shown (not asserted). Dependency-free chrome carries the polish."
         />
       </div>
 
       {/* FAQ */}
       <div class="mt-10 rounded-lg border border-line bg-raised p-7 md:p-10">
-        <p class="mono-label mb-2">FAQ — native details/summary, zero JS</p>
+        <p class="mono-label mb-2">FAQ: native details/summary, zero JS</p>
         <FAQ class="mt-4">
           <FAQItem question="Why only one accent colour?" open>
             Restraint reads as deliberate. A single clay mark per view keeps attention
@@ -381,7 +381,7 @@ const metrics = [
             AA contrast, so misuse is hard to reach for in the first place.
           </FAQItem>
           <FAQItem question="What carries motion?">
-            Two shared easings plus scroll-reveal — transform and opacity only, and it
+            Two shared easings plus scroll-reveal: transform and opacity only, and it
             all pauses under prefers-reduced-motion.
           </FAQItem>
         </FAQ>
@@ -435,7 +435,7 @@ const metrics = [
 
         <div class="flex flex-col gap-6">
           <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-            <p class="mono-label mb-4">ChoiceGroup — fieldset + legend</p>
+            <p class="mono-label mb-4">ChoiceGroup: fieldset + legend</p>
             <ChoiceGroup legend="How healthy is your design system?" name="demo-rating" required>
               <Choice name="demo-rating" value="strong" label="Strong" />
               <Choice name="demo-rating" value="ok" label="Functional" checked />
@@ -444,10 +444,10 @@ const metrics = [
           </div>
 
           <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-            <p class="mono-label mb-4">FormAlert — status &amp; alert</p>
+            <p class="mono-label mb-4">FormAlert: status &amp; alert</p>
             <div class="space-y-4">
               <FormAlert variant="success" hidden={false}>
-                <p class="font-sans font-semibold text-ink">Thanks — your message is on its way.</p>
+                <p class="font-sans font-semibold text-ink">Thanks. Your message is on its way.</p>
                 <p class="mt-1 text-ink-muted">I&rsquo;ll reply within one business day, usually sooner.</p>
               </FormAlert>
               <FormAlert variant="error" hidden={false}>
@@ -483,18 +483,18 @@ const metrics = [
           </Text>
         </div>
         <div class="bg-ink p-7">
-          <p class="mono-label !text-paper/65">Easing — out</p>
+          <p class="mono-label !text-paper/65">Easing: out</p>
           <p class="mt-3 font-mono text-sm text-paper">cubic-bezier(.22, 1, .36, 1)</p>
           <Text size="sm" tone="whiteMuted" class="mt-3">
-            <code class="font-mono text-paper">--ease-out</code> — entrances, hovers, and
+            <code class="font-mono text-paper">--ease-out</code>: entrances, hovers, and
             arrow nudges.
           </Text>
         </div>
         <div class="bg-ink p-7">
-          <p class="mono-label !text-paper/65">Easing — in/out</p>
+          <p class="mono-label !text-paper/65">Easing: in/out</p>
           <p class="mt-3 font-mono text-sm text-paper">cubic-bezier(.65, 0, .35, 1)</p>
           <Text size="sm" tone="whiteMuted" class="mt-3">
-            <code class="font-mono text-paper">--ease-inout</code> — looping or symmetric
+            <code class="font-mono text-paper">--ease-inout</code>: looping or symmetric
             motion (e.g. the token-propagation demo).
           </Text>
         </div>
@@ -503,13 +503,13 @@ const metrics = [
       <div class="mt-8 rounded-lg border border-paper/15 p-7 md:p-8">
         <p class="mono-label !text-paper/65">Section padding scale</p>
         <Text size="sm" tone="whiteMuted" class="mt-3 max-w-3xl">
-          <code class="font-mono text-paper">Section</code> exposes three vertical rhythms —
+          <code class="font-mono text-paper">Section</code> exposes three vertical rhythms:
           <code class="font-mono text-paper"> tight</code> (py-14 / md:py-20),
           <code class="font-mono text-paper"> default</code> (py-20 / md:py-28), and
           <code class="font-mono text-paper"> loose</code> (py-24 / md:py-36).
           <code class="font-mono text-paper"> Container</code> caps line length at
           narrow / default / wide, and <code class="font-mono text-paper">Grid</code> handles
-          1–4 responsive columns. Heavy whitespace does the spacing work — no
+          1-4 responsive columns. Heavy whitespace does the spacing work. No
           decorative fills.
         </Text>
       </div>

@@ -8,14 +8,12 @@ import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
-import Diagnostic from '~/components/islands/Diagnostic.astro';
-import RoiCalculator from '~/components/islands/RoiCalculator.astro';
 import SiteShot from '~/components/patterns/SiteShot.astro';
 import ScrollShot from '~/components/patterns/ScrollShot.astro';
 
-const title = 'VMSpark — Joshua Briley';
+const title = 'VMSpark | Joshua Briley';
 const description =
-  'Case study: redesigning the VMSpark admin shell — a multi-tenant VMS-to-ATS pipeline — to read as a 2026-caliber product without touching the pipeline underneath. Covers inventory, direction selection, phased rollout, and brand alignment.';
+  'Case study: redesigning the VMSpark admin shell (a multi-tenant VMS-to-ATS pipeline) to read as a 2026-caliber product without touching the pipeline underneath. Covers inventory, direction selection, phased rollout, and brand alignment.';
 
 interface Finding {
   count: string;
@@ -28,13 +26,13 @@ const findings: Finding[] = [
     count: '8+',
     title: 'Button styles competing for attention',
     body:
-      'Primary, secondary, danger, and ghost variants — each implemented two or three different ways. Some leaned on Bootstrap utility classes, others on per-view custom CSS, a few were inline-styled anchors pretending to be buttons. A <em>Save</em> on one screen didn’t match a <em>Save</em> two clicks away.',
+      'Primary, secondary, danger, and ghost variants, each implemented two or three different ways. Some leaned on Bootstrap utility classes, others on per-view custom CSS, a few were inline-styled anchors pretending to be buttons. A <em>Save</em> on one screen didn’t match a <em>Save</em> two clicks away.',
   },
   {
     count: '10+',
     title: 'Form element styles, all at once',
     body:
-      'Plain Rails helpers sat next to Bootstrap <code class="font-mono text-[0.85em] bg-ink/[0.04] text-ink px-1 rounded-[4px]">form-control</code> inputs, Select2 widgets, and hand-rolled dropdowns. Border radius, padding, focus rings, and disabled treatments all diverged. The same concept — <em>pick one from a list</em> — rendered five different ways across the app.',
+      'Plain Rails helpers sat next to Bootstrap <code class="font-mono text-[0.85em] bg-ink/[0.04] text-ink px-1 rounded-[4px]">form-control</code> inputs, Select2 widgets, and hand-rolled dropdowns. Border radius, padding, focus rings, and disabled treatments all diverged. The same concept (<em>pick one from a list</em>) rendered five different ways across the app.',
   },
   {
     count: '5',
@@ -91,7 +89,7 @@ const sprawlImages: SprawlImg[] = [
     src: '/images/projects/vmspark/before-announcements.png',
     alt: 'VMSpark Announcements screen. Each row ends with a dark gray pencil edit icon next to a solid red trash icon. A filled orange New Announcement button sits in the top right.',
     caption:
-      '<strong class="text-ink font-semibold">Announcements.</strong> Yet another icon-button pattern — dark gray paired with solid red, nothing like the blue outlines elsewhere.',
+      '<strong class="text-ink font-semibold">Announcements.</strong> Yet another icon-button pattern: dark gray paired with solid red, nothing like the blue outlines elsewhere.',
   },
   {
     src: '/images/projects/vmspark/before-openai-usage.png',
@@ -143,7 +141,7 @@ const docket = [
 
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <nav class="mb-12 flex items-center gap-2 font-mono text-sm text-ink-muted" aria-label="Breadcrumb">
+      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
         <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
         <Icon name="ph:caret-right" size={12} />
         <span class="text-ink">VMSpark</span>
@@ -154,7 +152,7 @@ const docket = [
           <div class="mb-7 flex items-center gap-3">
             <img src="/images/logos/vmspark.svg" alt="VMSpark logo" class="hero-logo-img" />
             <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
-            <p class="mono-label">Case study / 05</p>
+            <p class="mono-label">Case study</p>
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink">
@@ -162,7 +160,7 @@ const docket = [
           </Heading>
 
           <Text size="lg" tone="muted" class="mt-8 max-w-xl">
-            A shell redesign for VMSpark — the multi-tenant pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+ ATS providers — raising the visual caliber of the admin app without touching the pipeline underneath.
+            A shell redesign for VMSpark, the multi-tenant pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+ ATS providers, raising the visual caliber of the admin app without touching the pipeline underneath.
           </Text>
         </div>
 
@@ -203,8 +201,8 @@ const docket = [
   </Section>
 
   <Section tone="paper" padding="tight" aria-label="Project receipts">
-    <Container width="default">
-      <p class="mono-label mb-8">Receipts / 02</p>
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
       <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
@@ -226,8 +224,8 @@ const docket = [
   </Section>
 
   <Section tone="paper" padding="tight">
-    <Container width="default">
-      <p class="mono-label mb-5">On the docket / 03</p>
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
       <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
         {docket.map((item, i) => (
           <li>
@@ -243,245 +241,67 @@ const docket = [
         ))}
       </ul>
 
-      <Text size="lg" tone="muted" class="mt-10">
+      <Text size="lg" tone="muted" class="mt-10 measure">
         VMSpark normalizes thousands of VMS job listings a day, runs them through an
         account-specific rule engine, and fans them out to whichever ATS the customer has
         contracted with. The product works. The shell it lived in did not look like it.
-        Leadership was scheduling investor demos, and the admin app — the surface those
-        conversations lived inside — felt like a Rails scaffold from 2018. Operators noticed
+        Leadership was scheduling investor demos, and the admin app, the surface those
+        conversations lived inside, felt like a Rails scaffold from 2018. Operators noticed
         it daily. Investors noticed it in the first thirty seconds of a demo.
       </Text>
-      <Text size="lg" tone="muted" class="mt-5">
+      <Text size="lg" tone="muted" class="mt-5 measure">
         The brief I gave myself:
         <strong class="text-ink font-semibold">make the shell read as a modern, enterprise-grade product that matches the
-        sophistication of the pipeline underneath</strong>
-        — without touching the pipeline, the rule engine, or anything an operator had muscle
+        sophistication of the pipeline underneath</strong>, without touching the pipeline, the rule engine, or anything an operator had muscle
         memory for.
       </Text>
     </Container>
   </Section>
 
-  <Section id="directions" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="default">
-      <p class="mono-label mb-3">Step / 02</p>
-      <Heading level={2} visual="display-md" tone="ink">Three directions, one chosen</Heading>
-
-      <Text size="lg" tone="muted" class="mt-8 max-w-3xl">
-        Rather than design in a vacuum, I spec'd three mutually exclusive directions with
-        honest tradeoffs. Writing the options down — with their reasons and risks — is what
-        lets the choice get overturned on evidence later, not preference.
-      </Text>
-
-      <div class="mt-10 grid md:grid-cols-3 gap-6 items-stretch">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <div class="mb-2 flex items-center gap-2">
-            <span class="font-mono text-[0.75rem] text-accent">A</span>
-            <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Command Shell</span>
-          </div>
-          <Text size="sm" tone="muted" class="mb-3">Dense &middot; Keyboard-first</Text>
-          <Text size="sm" tone="muted">
-            56 px icon rail, tight 13/14 px type, hairline borders,
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">⌘K</code> palette as the centerpiece,
-            orange reserved for exactly one thing per screen.
-          </Text>
-          <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
-            <Icon name="ph:target" size={15} class="mt-0.5 shrink-0 text-accent" />
-            <span>Signals &ldquo;scales to power users.&rdquo;</span>
-          </p>
+  <Section id="inventory" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">Inventory before invention</Heading>
         </div>
-
-        <div class="relative rounded-lg border border-accent bg-raised p-6">
-          <p class="mono-label !text-accent mb-2">Chosen</p>
-          <div class="mb-2 flex items-center gap-2">
-            <span class="font-mono text-[0.75rem] text-accent">B</span>
-            <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Two-Tier Platform</span>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5">
+            <Text size="lg" tone="muted">
+              Before writing a line of new CSS, I cataloged what was there. The result was a
+              <strong class="text-ink font-semibold">~700-line design inventory</strong>
+              covering every one of the 350 ERB templates (roughly 11,800 lines) across the app.
+            </Text>
+            <Text size="lg" tone="muted">
+              The audit wasn't a complaint list. It was the map that told me which problems were
+              cosmetic (fixable during the redesign), which were structural (needed architectural
+              decisions), and which were out of scope (pipeline-adjacent, don't touch). Most of
+              what I found was UI sprawl: the same interaction rendered a dozen different ways
+              across the app, each screen a small argument against the one before it.
+            </Text>
           </div>
-          <Text size="sm" tone="muted" class="mb-3">Enterprise-familiar</Text>
-          <Text size="sm" tone="muted">
-            48 px product rail plus 260 px project nav — the real two-tier pattern.
-            App-switcher waffle, breadcrumbed page headers, right-side inspector panel. Brand
-            orange on active rail state, soft navy-tinted elevation.
-          </Text>
-          <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
-            <Icon name="ph:users-three" size={15} class="mt-0.5 shrink-0 text-accent" />
-            <span>Every enterprise buyer has used this pattern before.</span>
-          </p>
-        </div>
 
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <div class="mb-2 flex items-center gap-2">
-            <span class="font-mono text-[0.75rem] text-accent">C</span>
-            <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Modern Workspace</span>
+          <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 border-y border-line py-8">
+            <Metric value="350" label="ERB templates inventoried" />
+            <Metric value="8+" label="button styles, one concept" />
+            <Metric value="10+" label="form-element styles" />
+            <Metric value="~40" label="views bypassing the tokens" />
           </div>
-          <Text size="sm" tone="muted" class="mb-3">Spacious &middot; Document-forward</Text>
-          <Text size="sm" tone="muted">
-            270 px soft sidebar, no persistent top bar,
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">⌘K</code> by shortcut only, generous spacing.
-          </Text>
-          <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
-            <Icon name="ph:warning" size={15} class="mt-0.5 shrink-0 text-accent" />
-            <span>Risk: reads as lightweight for a dense ops tool.</span>
-          </p>
-        </div>
-      </div>
 
-      <div class="mt-10 max-w-3xl space-y-5">
-        <Text size="lg" tone="muted">
-          I chose B. Not because it was the prettiest (C was), and not because it was the
-          most sophisticated (A was). I chose it because the product's audience was
-          multi-tenant operators, and the lowest-risk path to both user and investor trust
-          was the pattern those operators had already used at every previous job.
-        </Text>
-        <Text size="lg" tone="muted">
-          I also <strong class="text-ink font-semibold">dropped</strong> a feature I'd
-          originally scoped in: a global "Create" button. Most creates in this product are
-          feed-driven, not user-initiated. Adding one would have been copying a convention
-          without earning it.
-        </Text>
-      </div>
-
-      <figure class="my-12 border-l-2 border-accent pl-6">
-        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-          Pattern familiarity compounds trust faster than novelty does.
-        </blockquote>
-      </figure>
-    </Container>
-  </Section>
-
-  <Section id="rollout" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="default">
-      <p class="mono-label mb-3">Step / 03</p>
-      <Heading level={2} visual="display-md" tone="ink">Phased rollout</Heading>
-
-      <Text size="lg" tone="muted" class="mt-8 max-w-3xl">
-        Each phase was
-        <strong class="text-ink font-semibold">shippable on its own</strong>, behind no
-        flags, with the previous phase's work still intact if I needed to roll back.
-      </Text>
-
-      <div class="mt-12 grid md:grid-cols-2 gap-6">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label">Phase 1 &middot; Baseline</p>
-          <div class="mt-3 mb-3 flex items-center gap-2">
-            <Icon name="ph:ruler" size={22} class="text-ink-muted" />
-            <Heading level={3} visual="h3" tone="ink">Visual baseline</Heading>
-          </div>
-          <Text tone="muted">
-            Built a <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">_page_header</code> partial and
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">page_header</code> helper with
-            meta/tabs/actions slots, backfilled ~30 pages silently by having the legacy
-            partial delegate to the new helper. Added an environment/account badge in the
-            top bar — an explicit multi-tenant signal at a glance.
-          </Text>
-        </div>
-
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label">Phase 2 &middot; The shell</p>
-          <div class="mt-3 mb-3 flex items-center gap-2">
-            <Icon name="ph:sidebar" size={22} class="text-ink-muted" />
-            <Heading level={3} visual="h3" tone="ink">Two-tier shell</Heading>
-          </div>
-          <Text tone="muted">
-            Replaced a single always-expanded 300 px sidebar with a 56 px product rail + 280
-            px contextual panel keyed off
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">controller_name</code> via a
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">SidebarHelper</code> mapping.
-            Crucially:
-            <strong class="text-ink font-semibold">server-rendered active state</strong>
-            — no client JS decides which section is open on first paint.
-          </Text>
-        </div>
-
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label">Phase 3 &middot; ⌘K</p>
-          <div class="mt-3 mb-3 flex items-center gap-2">
-            <Icon name="ph:magnifying-glass" size={22} class="text-ink-muted" />
-            <Heading level={3} visual="h3" tone="ink">Command palette</Heading>
-          </div>
-          <Text tone="muted">
-            A read-only
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">CommandSearchController#index</code>
-            scoped to <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">current_account</code>,
-            grouped (Custom Rules, Rate Plans, Facilities, Accounts, Jump-to), debounced at
-            150 ms, rendered via a native
-            <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">&lt;dialog&gt;</code> with HTMX.
-            Deliberate constraint: the palette
-            <strong class="text-ink font-semibold">does not replace per-page search</strong>.
-            It's additive.
-          </Text>
-        </div>
-
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label">Phase 4 &middot; Polish</p>
-          <div class="mt-3 mb-3 flex items-center gap-2">
-            <Icon name="ph:sparkle" size={22} class="text-ink-muted" />
-            <Heading level={3} visual="h3" tone="ink">Density, shortcuts, inspector</Heading>
-          </div>
-          <ul class="space-y-2">
-            <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
-              <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
-              <span>Density toggle persisted on the user record, read pre-paint from
-                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">&lt;head&gt;</code> to avoid FOUC.</span>
-            </li>
-            <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
-              <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
-              <span>Shortcut overlay (<code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">?</code>) gated
-                to skip when a form field has focus.</span>
-            </li>
-            <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
-              <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
-              <span>Inspector slide-over built with HTMX to match the rest of the app.</span>
-            </li>
-            <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
-              <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
-              <span>Skeleton loader primitive honoring
-                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">prefers-reduced-motion</code>.</span>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-    <Section id="inventory" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="default">
-      <p class="mono-label mb-3">Step / 01</p>
-      <Heading level={2} visual="display-md" tone="ink">Inventory before invention</Heading>
-
-      <div class="mt-8 space-y-5">
-        <Text size="lg" tone="muted">
-          Before writing a line of new CSS, I cataloged what was there. The result was a
-          <strong class="text-ink font-semibold">~700-line design inventory</strong>
-          covering every one of the 350 ERB templates — roughly 11,800 lines — across the app.
-        </Text>
-        <Text size="lg" tone="muted">
-          The audit wasn't a complaint list. It was the map that told me which problems were
-          cosmetic (fixable during the redesign), which were structural (needed architectural
-          decisions), and which were out of scope (pipeline-adjacent, don't touch). Most of
-          what I found was UI sprawl: the same interaction rendered a dozen different ways
-          across the app, each screen a small argument against the one before it.
-        </Text>
-      </div>
-
-      <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-6 rounded-lg border border-line bg-raised p-7 md:p-8">
-        <Metric value="350" label="ERB templates inventoried" />
-        <Metric value="8+" label="button styles, one concept" />
-        <Metric value="10+" label="form-element styles" />
-        <Metric value="~40" label="views bypassing the tokens" />
-      </div>
-
-      <div class="mt-10 rounded-lg border border-line bg-raised p-7">
-        <p class="mono-label mb-4">A few of the findings</p>
-        <div>
-          {findings.map((f) => (
-            <div class="flex items-start gap-4 py-4 border-b border-line last:border-0">
-              <span class="font-mono text-sm text-accent shrink-0 w-12" aria-hidden="true">{f.count}</span>
-              <div>
-                <Heading level={3} visual="h4" tone="ink" class="mb-1">{f.title}</Heading>
-                <Text size="sm" tone="muted" set:html={f.body} />
-              </div>
+          <div class="mt-10 rounded-lg border border-line p-7">
+            <p class="mono-label mb-4">A few of the findings</p>
+            <div>
+              {findings.map((f) => (
+                <div class="flex items-start gap-4 py-4 border-b border-line last:border-0">
+                  <span class="font-mono text-sm text-accent shrink-0 w-12" aria-hidden="true">{f.count}</span>
+                  <div>
+                    <Heading level={3} visual="h4" tone="ink" class="mb-1">{f.title}</Heading>
+                    <Text size="sm" tone="muted" set:html={f.body} />
+                  </div>
+                </div>
+              ))}
             </div>
-          ))}
+          </div>
         </div>
       </div>
 
@@ -489,7 +309,7 @@ const docket = [
         <p class="mono-label mb-3">What the sprawl actually looked like</p>
         <Text tone="muted" class="mb-10 max-w-2xl">
           Four screens pulled from the same app, on the same day. Each one makes its own
-          decisions about buttons, inputs, labels, and tables — and none of them agree with
+          decisions about buttons, inputs, labels, and tables. None of them agree with
           the others.
         </Text>
 
@@ -511,147 +331,316 @@ const docket = [
         inputs, selects, and labels moved onto shared primitives with consistent padding,
         focus states, and required-field treatment. Tables standardized on one header
         style, one pagination component, one density rule. Each fix cascaded across dozens
-        of views because the semantic token layer was already in place — I just needed the
+        of views because the semantic token layer was already in place. I just needed the
         views to route through it.
       </Text>
 
       <div class="mt-16">
         <p class="mono-label mb-3">What it looks like now</p>
         <Text tone="muted" class="mb-10 max-w-2xl">
-          The same surfaces, rebuilt onto one system — the admin UI playground every screen now
+          The same surfaces, rebuilt onto one system: the admin UI playground every screen now
           inherits from. Scroll any frame to walk the full page.
         </Text>
 
         <div class="space-y-12">
           <ScrollShot
             src="/images/projects/vmspark/playground-overview.webp"
-            alt="VMSpark admin UI playground — the style-guide overview indexing every primitive"
-            label="Style guide — overview"
+            alt="VMSpark admin UI playground: the style-guide overview indexing every primitive"
+            label="Style guide: overview"
             caption="The admin-only style guide: every primitive, button, table, and form pattern documented in one place."
           />
           <ScrollShot
             src="/images/projects/vmspark/playground-primitives.webp"
-            alt="VMSpark UI primitives — color ramps, type scale, spacing, and elevation"
+            alt="VMSpark UI primitives: color ramps, type scale, spacing, and elevation"
             label="Primitives"
-            caption="Color, type, spacing, and elevation — the shared primitives every screen now draws from."
+            caption="Color, type, spacing, and elevation: the shared primitives every screen now draws from."
           />
           <ScrollShot
             src="/images/projects/vmspark/playground-tables.webp"
-            alt="VMSpark table system — one header style, one density rule, one pagination component"
+            alt="VMSpark table system: one header style, one density rule, one pagination component"
             label="Tables"
-            caption="One header style, one density rule, one pagination component — standardized across every table."
+            caption="One header style, one density rule, one pagination component, standardized across every table."
           />
           <ScrollShot
             src="/images/projects/vmspark/playground-buttons.webp"
-            alt="VMSpark button system — variants, sizes, states, and density from one set of classes"
+            alt="VMSpark button system: variants, sizes, states, and density from one set of classes"
             label="Buttons"
-            caption="Eight-plus button styles collapsed into a single set of component classes — every variant, size, and state."
+            caption="Eight-plus button styles collapsed into a single set of component classes: every variant, size, and state."
           />
         </div>
-      </div>
-
-      <div class="mt-16 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-3">Interactive · Audit pass</p>
-        <Text tone="muted" class="mb-6 max-w-2xl">
-          The VMSpark audit was a ~700-line document. Here is the same idea you can poke at: pick a
-          screen, toggle the call-outs on and off, and hover a finding to spotlight the exact drift
-          it flags &mdash; the kind of pass that started this whole redesign.
-        </Text>
-        <Diagnostic />
       </div>
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default">
-    <Container width="default">
-      <p class="mono-label mb-3">The cost of the mess</p>
-      <Heading level={2} visual="h2" tone="ink">What the sprawl was quietly costing</Heading>
-      <Text tone="muted" class="mt-3 max-w-2xl">
-        Ten input styles and forty token-bypassing views never land on one invoice &mdash; which
-        is exactly why they survive. Put a team&rsquo;s shape into the model and watch the drift
-        add up to the figure a disciplined system reclaims.
-      </Text>
-      <div class="mt-8 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-6">Interactive · ROI estimate</p>
-        <RoiCalculator />
+  <Section id="directions" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">Three directions, one chosen</Heading>
+        </div>
+        <div class="case-layout__body">
+          <Text size="lg" tone="muted" class="mt-8 measure">
+            Rather than design in a vacuum, I spec'd three mutually exclusive directions with
+            honest tradeoffs. Writing the options down, with their reasons and risks, is what
+            lets the choice get overturned on evidence later, not preference.
+          </Text>
+
+          <div class="mt-10 grid md:grid-cols-3 gap-6 items-stretch">
+            <div class="rounded-lg border border-line p-6">
+              <div class="mb-2 flex items-center gap-2">
+                <span class="font-mono text-[0.75rem] text-accent">A</span>
+                <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Command Shell</span>
+              </div>
+              <Text size="sm" tone="muted" class="mb-3">Dense &middot; Keyboard-first</Text>
+              <Text size="sm" tone="muted">
+                56 px icon rail, tight 13/14 px type, hairline borders,
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">⌘K</code> palette as the centerpiece,
+                orange reserved for exactly one thing per screen.
+              </Text>
+              <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
+                <Icon name="ph:target" size={15} class="mt-0.5 shrink-0 text-accent" />
+                <span>Signals &ldquo;scales to power users.&rdquo;</span>
+              </p>
+            </div>
+
+            <div class="relative rounded-lg border border-accent p-6">
+              <p class="mono-label !text-accent mb-2">Chosen</p>
+              <div class="mb-2 flex items-center gap-2">
+                <span class="font-mono text-[0.75rem] text-accent">B</span>
+                <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Two-Tier Platform</span>
+              </div>
+              <Text size="sm" tone="muted" class="mb-3">Enterprise-familiar</Text>
+              <Text size="sm" tone="muted">
+                48 px product rail plus 260 px project nav, the real two-tier pattern.
+                App-switcher waffle, breadcrumbed page headers, right-side inspector panel. Brand
+                orange on active rail state, soft navy-tinted elevation.
+              </Text>
+              <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
+                <Icon name="ph:users-three" size={15} class="mt-0.5 shrink-0 text-accent" />
+                <span>Every enterprise buyer has used this pattern before.</span>
+              </p>
+            </div>
+
+            <div class="rounded-lg border border-line p-6">
+              <div class="mb-2 flex items-center gap-2">
+                <span class="font-mono text-[0.75rem] text-accent">C</span>
+                <span class="font-heading text-xs font-semibold uppercase tracking-wider text-ink">Modern Workspace</span>
+              </div>
+              <Text size="sm" tone="muted" class="mb-3">Spacious &middot; Document-forward</Text>
+              <Text size="sm" tone="muted">
+                270 px soft sidebar, no persistent top bar,
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">⌘K</code> by shortcut only, generous spacing.
+              </Text>
+              <p class="mt-4 flex items-start gap-2 text-sm text-ink-muted">
+                <Icon name="ph:warning" size={15} class="mt-0.5 shrink-0 text-accent" />
+                <span>Risk: reads as lightweight for a dense ops tool.</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-10 measure space-y-5">
+            <Text size="lg" tone="muted">
+              I chose B. Not because it was the prettiest (C was), and not because it was the
+              most sophisticated (A was). I chose it because the product's audience was
+              multi-tenant operators, and the lowest-risk path to both user and investor trust
+              was the pattern those operators had already used at every previous job.
+            </Text>
+            <Text size="lg" tone="muted">
+              I also <strong class="text-ink font-semibold">dropped</strong> a feature I'd
+              originally scoped in: a global "Create" button. Most creates in this product are
+              feed-driven, not user-initiated. Adding one would have been copying a convention
+              without earning it.
+            </Text>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              Pattern familiarity compounds trust faster than novelty does.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="rollout" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Phased rollout</Heading>
+        </div>
+        <div class="case-layout__body">
+          <Text size="lg" tone="muted" class="mt-8 measure">
+            Each phase was
+            <strong class="text-ink font-semibold">shippable on its own</strong>, behind no
+            flags, with the previous phase's work still intact if I needed to roll back.
+          </Text>
+
+          <div class="mt-12 grid md:grid-cols-2 gap-6">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label">Phase 1 &middot; Baseline</p>
+              <div class="mt-3 mb-3 flex items-center gap-2">
+                <Icon name="ph:ruler" size={22} class="text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink">Visual baseline</Heading>
+              </div>
+              <Text tone="muted">
+                Built a <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">_page_header</code> partial and
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">page_header</code> helper with
+                meta/tabs/actions slots, backfilled ~30 pages silently by having the legacy
+                partial delegate to the new helper. Added an environment/account badge in the
+                top bar, an explicit multi-tenant signal at a glance.
+              </Text>
+            </div>
+
+            <div class="border-t border-line pt-5">
+              <p class="mono-label">Phase 2 &middot; The shell</p>
+              <div class="mt-3 mb-3 flex items-center gap-2">
+                <Icon name="ph:sidebar" size={22} class="text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink">Two-tier shell</Heading>
+              </div>
+              <Text tone="muted">
+                Replaced a single always-expanded 300 px sidebar with a 56 px product rail + 280
+                px contextual panel keyed off
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">controller_name</code> via a
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">SidebarHelper</code> mapping.
+                Crucially:
+                <strong class="text-ink font-semibold">server-rendered active state</strong>. No client JS decides which section is open on first paint.
+              </Text>
+            </div>
+
+            <div class="border-t border-line pt-5">
+              <p class="mono-label">Phase 3 &middot; ⌘K</p>
+              <div class="mt-3 mb-3 flex items-center gap-2">
+                <Icon name="ph:magnifying-glass" size={22} class="text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink">Command palette</Heading>
+              </div>
+              <Text tone="muted">
+                A read-only
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">CommandSearchController#index</code>
+                scoped to <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">current_account</code>,
+                grouped (Custom Rules, Rate Plans, Facilities, Accounts, Jump-to), debounced at
+                150 ms, rendered via a native
+                <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">&lt;dialog&gt;</code> with HTMX.
+                Deliberate constraint: the palette
+                <strong class="text-ink font-semibold">does not replace per-page search</strong>.
+                It's additive.
+              </Text>
+            </div>
+
+            <div class="border-t border-line pt-5">
+              <p class="mono-label">Phase 4 &middot; Polish</p>
+              <div class="mt-3 mb-3 flex items-center gap-2">
+                <Icon name="ph:sparkle" size={22} class="text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink">Density, shortcuts, inspector</Heading>
+              </div>
+              <ul class="space-y-2">
+                <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
+                  <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
+                  <span>Density toggle persisted on the user record, read pre-paint from
+                    <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">&lt;head&gt;</code> to avoid FOUC.</span>
+                </li>
+                <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
+                  <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
+                  <span>Shortcut overlay (<code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">?</code>) gated
+                    to skip when a form field has focus.</span>
+                </li>
+                <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
+                  <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
+                  <span>Inspector slide-over built with HTMX to match the rest of the app.</span>
+                </li>
+                <li class="flex items-start gap-2 text-ink-muted leading-relaxed">
+                  <Icon name="ph:check-circle" size={18} class="mt-0.5 shrink-0 text-accent" />
+                  <span>Skeleton loader primitive honoring
+                    <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">prefers-reduced-motion</code>.</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
   <Section id="outcome" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="default">
-      <p class="mono-label mb-3">Step / 04</p>
-      <Heading level={2} visual="display-md" tone="ink">Outcome</Heading>
-
-      <div class="mt-8 space-y-5">
-        <Text size="lg" tone="muted">
-          The app now reads as the same caliber product it always was. The pipeline, the
-          rule engine, the ATS integrations, the account scoping — none of that changed. A
-          user who logged in the day of the cutover saw their data, their filters, their
-          scroll position, and their workflows intact. They just saw them inside a shell
-          that looks like it belongs in 2026.
-        </Text>
-        <Text size="lg" tone="muted">
-          That shift paid off on both sides of the business. Operators who spent every
-          working day inside the tool stopped mentally filtering out visual noise — buttons,
-          forms, tables, and labels finally behaved the same from screen to screen, which
-          made the product feel deliberate and trustworthy rather than patched together.
-          Leadership stopped apologizing for the admin UI in investor demos. The audit is
-          what made that possible:
-          <strong class="text-ink font-semibold">a map of every inconsistency first, a disciplined fix second, confidence on
-          both sides of the table third.</strong>
-        </Text>
-      </div>
-
-      <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {outcomeStats.map((s) => (
-          <div class="rounded-lg border border-line bg-raised p-6">
-            <Icon name={s.icon} size={24} class="mb-3 text-ink-muted" />
-            <Heading level={3} visual="h4" tone="ink" class="mb-1">{s.title}</Heading>
-            <Text size="sm" tone="muted">{s.body}</Text>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">Outcome</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5">
+            <Text size="lg" tone="muted">
+              The app now reads as the same caliber product it always was. The pipeline, the
+              rule engine, the ATS integrations, the account scoping. None of that changed. A
+              user who logged in the day of the cutover saw their data, their filters, their
+              scroll position, and their workflows intact. They just saw them inside a shell
+              that looks like it belongs in 2026.
+            </Text>
+            <Text size="lg" tone="muted">
+              That shift paid off on both sides of the business. Operators who spent every
+              working day inside the tool stopped mentally filtering out visual noise: buttons,
+              forms, tables, and labels finally behaved the same from screen to screen, which
+              made the product feel deliberate and trustworthy rather than patched together.
+              Leadership stopped apologizing for the admin UI in investor demos. The audit is
+              what made that possible:
+              <strong class="text-ink font-semibold">a map of every inconsistency first, a disciplined fix second, confidence on
+              both sides of the table third.</strong>
+            </Text>
           </div>
-        ))}
-      </div>
 
-      <div class="mt-12 rounded-lg border border-line bg-raised p-7 md:p-9">
-        <p class="mono-label mb-3">A detail worth calling out</p>
-        <Heading level={3} visual="h3" tone="ink" class="mb-3">Aligning the app with the marketing site</Heading>
-        <Text tone="muted">
-          Partway through Phase 2 I pulled the marketing site's
-          <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">:root</code> custom properties — five
-          brand colors, pinned — and re-pointed the app's semantic token layer at them. The
-          semantic layer didn't change shape; I re-pointed five values and added three new
-          tokens. Every existing consumer got the new look for free. Two non-obvious
-          behaviors made it across intentionally: primary button hover swaps orange to steel
-          blue rather than darkening, and link hover goes near-black instead of lighter —
-          both inherited from the marketing brand.
-        </Text>
-      </div>
+          <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {outcomeStats.map((s) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={s.icon} size={24} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h4" tone="ink" class="mb-1">{s.title}</Heading>
+                <Text size="sm" tone="muted">{s.body}</Text>
+              </div>
+            ))}
+          </div>
 
-      <figure class="mt-14 rounded-lg bg-ink p-8 md:p-12">
-        <Icon name="ph:quotes" size={32} class="mb-3 text-accent" />
-        <blockquote class="font-display text-2xl md:text-3xl text-paper leading-snug">
-          The shell is the surface operators use every day and the one investors see in a
-          demo. The audit is what let me rebuild it without breaking the product underneath.
-        </blockquote>
-      </figure>
+          <div class="mt-12 rounded-lg border border-line p-7 md:p-9">
+            <p class="mono-label mb-3">A detail worth calling out</p>
+            <Heading level={3} visual="h3" tone="ink" class="mb-3">Aligning the app with the marketing site</Heading>
+            <Text tone="muted">
+              Partway through Phase 2 I pulled the marketing site's
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">:root</code> custom properties (five
+              brand colors, pinned) and re-pointed the app's semantic token layer at them. The
+              semantic layer didn't change shape; I re-pointed five values and added three new
+              tokens. Every existing consumer got the new look for free. Two non-obvious
+              behaviors made it across intentionally: primary button hover swaps orange to steel
+              blue rather than darkening, and link hover goes near-black instead of lighter,
+              both inherited from the marketing brand.
+            </Text>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              The shell is the surface operators use every day and the one investors see in a
+              demo. The audit is what let me rebuild it without breaking the product underneath.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
     </Container>
   </Section>
 
   <Section tone="paper" padding="default">
-    <Container width="default">
-      <p class="mono-label mb-3">From the desk of</p>
-      <Heading level={2} visual="h2" tone="ink" class="mb-8">What Jon said</Heading>
-
-      <figure class="rounded-lg border border-line bg-raised p-8 md:p-10">
-        <Icon name="ph:quotes" size={32} class="mb-4 text-accent" />
-        <blockquote class="font-display text-2xl md:text-3xl text-ink leading-snug mb-7">
-          Josh inventoried 350 ERB templates before he wrote a line of new CSS, then turned
-          that audit into a phased rollout we could ship behind no flags. The shell finally
-          reads like the enterprise product the pipeline always was &mdash; and operators
-          didn't lose a single piece of muscle memory in the move.
+    <Container width="content">
+      <p class="mono-label mb-8">What Jon said</p>
+      <figure class="rounded-lg border border-line p-8 md:p-10">
+        <Icon name="ph:quotes" size={32} class="text-accent mb-4" />
+        <blockquote>
+          <Text size="lg" tone="ink" class="font-display tracking-tight leading-snug">
+            Josh inventoried 350 ERB templates before he wrote a line of new CSS, then turned
+            that audit into a phased rollout we could ship behind no flags. The shell finally
+            reads like the enterprise product the pipeline always was, and operators
+            didn't lose a single piece of muscle memory in the move.
+          </Text>
         </blockquote>
-        <figcaption class="flex items-center gap-4 border-t border-line pt-5">
+        <figcaption class="mt-7 flex items-center gap-4 border-t border-line pt-6">
           <img
             src="/images/jon-sturm.jpeg"
             alt="Jon Sturm"
@@ -661,7 +650,7 @@ const docket = [
           />
           <div>
             <p class="font-display font-semibold text-ink">Jon Sturm</p>
-            <Text size="sm" tone="muted">Director of Product &amp; Customer Success &middot; VMSpark</Text>
+            <p class="text-sm text-ink-muted">Director of Product &amp; Customer Success &middot; VMSpark</p>
           </div>
         </figcaption>
       </figure>
@@ -670,24 +659,30 @@ const docket = [
 
   <Section tone="ink" padding="loose">
     <Container width="wide">
-      <p class="mono-label !text-paper/65 mb-4">Got a shell that looks older than the product?</p>
+      <p class="mono-label !text-paper/65 mb-4">Product engineering</p>
       <Heading level={2} visual="display-lg" tone="paper" class="max-w-3xl">
-        Start with an audit. End with a shell that earns the product.
+        I rebuilt the whole platform, and shipped it without a flag.
       </Heading>
-      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-xl">
-        A 2-week UI audit gives you the map. The redesign comes after, not before. Start
-        with a free scorecard, or grab 30 minutes.
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        Inventory first, architecture second, a rollout nobody has to be afraid of, and a product
+        that makes the right output the default. This is how I build: the whole thing, from the
+        data underneath to the UI on top, owned so it ships finished and stays that way.
       </Text>
-      <div class="mt-8 flex flex-col sm:flex-row items-start gap-4">
-        <Button variant="navy" size="lg" iconLeft="ph:clipboard-text" href="/tools/scorecard/" class="js-magnetic">
-          Score your design system
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/" class="js-magnetic">
+          Get in touch
         </Button>
-        <Button variant="secondary" size="lg" iconLeft="ph:calendar-check" href="https://calendly.com/josh-thebrileys/30min/">
-          Book an intro call
-        </Button>
+        <a
+          href="/resume.pdf"
+          class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
+        >
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
       </div>
 
-      <div class="mt-12 border-t border-paper/15 pt-8">
+      <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/americas-test-kitchen/">Flagship: America's Test Kitchen</Link>
         <Link variant="arrow" href="/projects/">Back to all projects</Link>
       </div>
     </Container>

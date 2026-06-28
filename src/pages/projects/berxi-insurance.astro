@@ -7,15 +7,14 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import TokenPlayground from '~/components/islands/TokenPlayground.astro';
 import ScrollShot from '~/components/patterns/ScrollShot.astro';
 
-const title = 'Berxi.com — Joshua Briley';
+const title = 'Berxi.com | Joshua Briley';
 const description =
   'Case study: building a custom design system for Berxi, a direct-to-consumer insurance platform from Berkshire Hathaway. Covers stakeholder alignment, component library, documentation, and cross-team adoption.';
 
 const meta = [
-  { role: 'Role', value: 'UX Engineer' },
+  { role: 'Role', value: 'Product Engineer' },
   { role: 'Client', value: 'Berxi / BHSI' },
   { role: 'Stack', value: 'Vue · Tailwind' },
   { role: 'Focus', value: 'Tokens · A11y' },
@@ -94,7 +93,7 @@ const tokenLayers = [
           <div class="mb-7 flex items-center gap-3">
             <img src="/images/logos/berxi.svg" alt="Berxi logo" class="hero-logo-img" />
             <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
-            <p class="mono-label">Case study / 03</p>
+            <p class="mono-label">Case study</p>
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink">
@@ -125,18 +124,18 @@ const tokenLayers = [
     <Container width="wide">
       <ScrollShot
         src="/images/projects/berxi-live.webp"
-        alt="Berxi — the full live homepage, top to bottom"
+        alt="Berxi: the full live homepage, top to bottom"
         label="berxi.com"
         href="https://www.berxi.com/"
-        caption="The live site, full page — scroll the frame to walk it top to bottom, or open it in a new tab."
+        caption="The live site, full page: scroll the frame to walk it top to bottom, or open it in a new tab."
       />
     </Container>
   </Section>
 
   <!-- RECEIPTS -->
   <Section tone="paper" padding="tight" aria-label="Project receipts">
-    <Container width="default">
-      <p class="mono-label mb-8">Receipts / 02</p>
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
       <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
         {proof.map((group) => (
           <div class="border-t border-line pt-4">
@@ -159,8 +158,8 @@ const tokenLayers = [
 
   <!-- ON THE DOCKET -->
   <Section tone="paper" padding="tight">
-    <Container width="default">
-      <p class="mono-label mb-5">In this case study / 03</p>
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
       <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
         {docket.map((item, i) => (
           <li>
@@ -176,7 +175,7 @@ const tokenLayers = [
         ))}
       </ul>
 
-      <Text size="lg" tone="muted" class="mt-10">
+      <Text size="lg" tone="muted" class="mt-10 measure">
         Berxi is a direct-to-consumer insurance platform built inside Berkshire Hathaway Specialty Insurance. The product was
         expanding quickly, and the frontend was expanding with it, but not in a coordinated way. Engineers were making design
         decisions independently across the codebase. Marketing wanted campaign flexibility they couldn't get. Engineering was
@@ -188,42 +187,47 @@ const tokenLayers = [
 
   <!-- STEP 01 — DRIFT -->
   <Section id="problem" tone="paper" padding="default" class="scroll-mt-24 border-t border-line">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 01</p>
-      <Heading level={2} visual="display-md" tone="ink">The drift problem</Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Color values, spacing, and typography were defined locally inside individual components. Every new feature made
-          another quiet decision about how things should look. With no shared token architecture, those decisions never rolled
-          back up into a system — they just accumulated as subtle differences between pages.
-        </p>
-        <p>
-          The consequences showed up on two sides. Marketing couldn't run campaigns or build landing-page variations quickly
-          because the existing surface wasn't flexible enough to extend without engineering. And engineers kept rebuilding
-          visual primitives slightly differently each time, which is how a growing codebase starts paying a
-          <strong class="text-ink font-semibold">drift tax</strong> on every new feature.
-        </p>
-        <p>
-          Before writing any components, the work was alignment. Getting product, design, marketing, and engineering to agree
-          on a single source of truth so the system we built would actually be the system the platform used.
-        </p>
-      </div>
-
-      <div class="mt-10 grid md:grid-cols-2 gap-6">
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label text-ink-muted mb-3">Symptom A</p>
-          <Heading level={3} visual="h3" tone="ink">Local decisions, global drift</Heading>
-          <Text class="mt-2" tone="muted">
-            Color, spacing, and type defined inside components. Every new feature quietly disagreed with the last one.
-          </Text>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">The drift problem</Heading>
         </div>
-        <div class="rounded-lg border border-line bg-raised p-6">
-          <p class="mono-label text-ink-muted mb-3">Symptom B</p>
-          <Heading level={3} visual="h3" tone="ink">Marketing blocked on engineering</Heading>
-          <Text class="mt-2" tone="muted">
-            Campaigns and landing-page variations needed developer time that engineering didn't have to give.
-          </Text>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Color values, spacing, and typography were defined locally inside individual components. Every new feature made
+              another quiet decision about how things should look. With no shared token architecture, those decisions never rolled
+              back up into a system. They just accumulated as subtle differences between pages.
+            </p>
+            <p>
+              The consequences showed up on two sides. Marketing couldn't run campaigns or build landing-page variations quickly
+              because the existing surface wasn't flexible enough to extend without engineering. And engineers kept rebuilding
+              visual primitives slightly differently each time, which is how a growing codebase starts paying a
+              <strong class="text-ink font-semibold">drift tax</strong> on every new feature.
+            </p>
+            <p>
+              Before writing any components, the work was alignment. Getting product, design, marketing, and engineering to agree
+              on a single source of truth so the system we built would actually be the system the platform used.
+            </p>
+          </div>
+
+          <div class="mt-10 grid md:grid-cols-2 gap-6">
+            <div class="border-t border-line pt-5">
+              <p class="mono-label text-ink-muted mb-3">Symptom A</p>
+              <Heading level={3} visual="h3" tone="ink">Local decisions, global drift</Heading>
+              <Text class="mt-2" tone="muted">
+                Color, spacing, and type defined inside components. Every new feature quietly disagreed with the last one.
+              </Text>
+            </div>
+            <div class="border-t border-line pt-5">
+              <p class="mono-label text-ink-muted mb-3">Symptom B</p>
+              <Heading level={3} visual="h3" tone="ink">Marketing blocked on engineering</Heading>
+              <Text class="mt-2" tone="muted">
+                Campaigns and landing-page variations needed developer time that engineering didn't have to give.
+              </Text>
+            </div>
+          </div>
         </div>
       </div>
     </Container>
@@ -231,124 +235,123 @@ const tokenLayers = [
 
   <!-- STEP 02 — TOKENS -->
   <Section id="tokens" tone="paper" padding="default" class="scroll-mt-24 border-t border-line">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 02</p>
-      <Heading level={2} visual="display-md" tone="ink">A two-tier token architecture</Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Tailwind gave us a utility-first model, expressive but constrained, and Vue's component model cleanly separated
-          accessibility behavior from styling. On top of that, I built a token system in two layers so brand changes could
-          propagate automatically without rewriting components.
-        </p>
-      </div>
-
-      <ul class="mt-8 border-t border-line">
-        {tokenLayers.map((layer) => (
-          <li class="flex gap-4 border-b border-line py-5">
-            <Icon name={layer.icon} size={24} class="text-ink-muted flex-shrink-0 mt-0.5" />
-            <div>
-              <Heading level={3} visual="h3" tone="ink">{layer.title}</Heading>
-              <Text class="mt-1" tone="muted">{layer.body}</Text>
-            </div>
-          </li>
-        ))}
-      </ul>
-
-      <figure class="my-12 border-l-2 border-accent pl-6">
-        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-          The clearest signal that a design system is working is that it stops generating the friction that prompted building it.
-        </blockquote>
-      </figure>
-
-      <!-- Token playground island -->
-      <div class="mt-12 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label mb-4">Try it</p>
-        <Text tone="muted" class="max-w-2xl">
-          That two-tier indirection is hard to picture in prose &mdash; so here it is live. Drag a token and watch every
-          component that references it move at once: one source of truth, no manual sweep. The same mechanic the Berxi system
-          runs on.
-        </Text>
-        <div class="mt-6">
-          <TokenPlayground />
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">A two-tier token architecture</Heading>
         </div>
-        <Text size="sm" tone="muted" class="mt-5 max-w-2xl">
-          Components never reach for primitives. They ask for a role, and the system decides what that role looks like today.
-        </Text>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Tailwind gave us a utility-first model, expressive but constrained, and Vue's component model cleanly separated
+              accessibility behavior from styling. On top of that, I built a token system in two layers so brand changes could
+              propagate automatically without rewriting components.
+            </p>
+          </div>
+
+          <ul class="mt-8 border-t border-line">
+            {tokenLayers.map((layer) => (
+              <li class="flex gap-4 border-b border-line py-5">
+                <Icon name={layer.icon} size={24} class="text-ink-muted flex-shrink-0 mt-0.5" />
+                <div>
+                  <Heading level={3} visual="h3" tone="ink">{layer.title}</Heading>
+                  <Text class="mt-1" tone="muted">{layer.body}</Text>
+                </div>
+              </li>
+            ))}
+          </ul>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              The clearest signal that a design system is working is that it stops generating the friction that prompted building it.
+            </blockquote>
+          </figure>
+        </div>
       </div>
     </Container>
   </Section>
 
   <!-- STEP 03 — ACCESSIBILITY -->
   <Section id="accessibility" tone="paper" padding="default" class="scroll-mt-24 border-t border-line">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 03</p>
-      <Heading level={2} visual="display-md" tone="ink">Accessibility as a system property</Heading>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Accessibility as a system property</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Accessibility requirements were built into each component from the start: keyboard navigation, ARIA attributes,
+              focus management in overlays, color contrast against the token palette. These were properties the components
+              already had, not a checklist feature teams ran afterward.
+            </p>
+            <p>
+              This matters more as a system grows. An accessibility gap in a shared component isn't one gap. It's the same gap
+              across every feature that uses the component. Building accessibility in at the system level meant every feature
+              team shipped accessible UI <em>without having to implement it.</em>
+            </p>
+          </div>
 
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Accessibility requirements were built into each component from the start: keyboard navigation, ARIA attributes,
-          focus management in overlays, color contrast against the token palette. These were properties the components
-          already had, not a checklist feature teams ran afterward.
-        </p>
-        <p>
-          This matters more as a system grows. An accessibility gap in a shared component isn't one gap. It's the same gap
-          across every feature that uses the component. Building accessibility in at the system level meant every feature
-          team shipped accessible UI <em>without having to implement it.</em>
-        </p>
-      </div>
-
-      <div class="mt-10 rounded-lg border border-line bg-raised p-6 md:p-8">
-        <p class="mono-label text-accent mb-5">Built-in, not bolted-on</p>
-        <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-ink">
-          {a11yPoints.map((p) => (
-            <li class="flex items-center gap-3">
-              <Icon name={p.icon} size={20} class="text-ink-muted flex-shrink-0" />
-              {p.label}
-            </li>
-          ))}
-        </ul>
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label text-accent mb-5">Built-in, not bolted-on</p>
+            <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 text-ink">
+              {a11yPoints.map((p) => (
+                <li class="flex items-center gap-3">
+                  <Icon name={p.icon} size={20} class="text-ink-muted flex-shrink-0" />
+                  {p.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
   <!-- STEP 04 — SCALE -->
   <Section id="scale" tone="paper" padding="default" class="scroll-mt-24 border-t border-line">
-    <Container width="narrow">
-      <p class="mono-label mb-4">Step 04</p>
-      <Heading level={2} visual="display-md" tone="ink">What the system changed</Heading>
-
-      <div class="mt-6 space-y-5 text-ink-muted leading-relaxed">
-        <p>
-          Once the system was in place, the friction that had originally prompted the project stopped showing up. Marketing
-          could run campaigns and build landing-page variations without waiting on engineering. Brand updates propagated
-          automatically. Late-cycle visual inconsistency, the kind that used to get caught in review and ship anyway, stopped
-          appearing, because the components no longer let you drift.
-        </p>
-        <p>
-          New engineers came up to speed faster because the library's API was consistent and documented, and because you
-          could learn the system by reading it. The component library stopped being a source of ongoing debate and became
-          part of the platform's quiet infrastructure.
-        </p>
-      </div>
-
-      <div class="mt-12 grid md:grid-cols-3 gap-6">
-        {outcomes.map((o) => (
-          <div class="rounded-lg border border-line bg-raised p-6">
-            <Icon name={o.icon} size={26} class="text-ink-muted mb-3" />
-            <Heading level={3} visual="h3" tone="ink">{o.title}</Heading>
-            <Text size="sm" tone="muted" class="mt-1">{o.body}</Text>
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">What the system changed</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-6 measure space-y-5 text-ink-muted leading-relaxed text-lg">
+            <p>
+              Once the system was in place, the friction that had originally prompted the project stopped showing up. Marketing
+              could run campaigns and build landing-page variations without waiting on engineering. Brand updates propagated
+              automatically. Late-cycle visual inconsistency, the kind that used to get caught in review and ship anyway, stopped
+              appearing, because the components no longer let you drift.
+            </p>
+            <p>
+              New engineers came up to speed faster because the library's API was consistent and documented, and because you
+              could learn the system by reading it. The component library stopped being a source of ongoing debate and became
+              part of the platform's quiet infrastructure.
+            </p>
           </div>
-        ))}
+
+          <div class="mt-12 grid md:grid-cols-3 gap-6">
+            {outcomes.map((o) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={o.icon} size={26} class="text-ink-muted mb-3" />
+                <Heading level={3} visual="h3" tone="ink">{o.title}</Heading>
+                <Text size="sm" tone="muted" class="mt-1">{o.body}</Text>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
     </Container>
   </Section>
 
   <!-- TESTIMONIAL -->
   <Section tone="paper" padding="default" class="border-t border-line">
-    <Container width="narrow">
+    <Container width="content">
       <p class="mono-label mb-8">What Adam said</p>
-      <figure class="rounded-lg border border-line bg-raised p-8 md:p-10">
+      <figure class="rounded-lg border border-line p-8 md:p-10">
         <Icon name="ph:quotes" size={32} class="text-accent mb-4" />
         <blockquote>
           <Text size="lg" tone="ink" class="font-display tracking-tight leading-snug">
@@ -366,8 +369,8 @@ const tokenLayers = [
             decoding="async"
           />
           <div>
-            <p class="font-display text-ink">Adam Yasan</p>
-            <p class="mono-label text-ink-muted mt-0.5">Managing Director &middot; Berxi</p>
+            <p class="font-display font-semibold text-ink">Adam Yasan</p>
+            <p class="text-sm text-ink-muted">Managing Director &middot; Berxi</p>
           </div>
         </figcaption>
       </figure>
@@ -377,24 +380,30 @@ const tokenLayers = [
   <!-- RESULTS / CTA -->
   <Section tone="ink" padding="loose">
     <Container width="wide">
-      <p class="mono-label !text-paper/65 mb-5">Start a design system / 03</p>
+      <p class="mono-label !text-paper/65 mb-5">Product engineering</p>
       <Heading level={2} visual="display-lg" tone="paper" class="max-w-2xl">
-        Component Library Starter, ready in 2–3 weeks.
+        A foundation a whole team can build on.
       </Heading>
-      <Text tone="whiteMuted" class="mt-5 max-w-xl">
-        A production-ready foundation: tokens, core components, accessibility baked in, and documentation your team can
-        actually find. Start with a free scorecard, or grab 30 minutes.
+      <Text tone="whiteMuted" class="mt-5 max-w-2xl">
+        Tokens, core components, accessibility baked in, and documentation cross-team partners can
+        actually find, from stakeholder alignment through adoption. This is how I build: a product
+        layer that holds up as more teams build on it.
       </Text>
-      <div class="mt-8 flex flex-col sm:flex-row gap-4">
-        <Button variant="navy" size="lg" href="/tools/scorecard/" class="js-magnetic">
-          Score your design system
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/" class="js-magnetic">
+          Get in touch
         </Button>
-        <Button variant="secondary" size="lg" href="https://calendly.com/josh-thebrileys/30min/">
-          Book an intro call
-        </Button>
+        <a
+          href="/resume.pdf"
+          class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
+        >
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
       </div>
 
-      <div class="mt-12 border-t border-paper/15 pt-8">
+      <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/americas-test-kitchen/" class="!text-paper hover:!text-paper/70">Flagship: America's Test Kitchen</Link>
         <Link variant="arrow" href="/projects/" class="!text-paper hover:!text-paper/70">Back to all projects</Link>
       </div>
     </Container>

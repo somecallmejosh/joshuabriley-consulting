@@ -1,0 +1,50 @@
+---
+title: What inconsistency actually costs
+description: "Drift never lands on a single invoice, so it stays invisible: a few hours here, a rebuilt component there, adding up across a team and a year to a real annual figure."
+date: 2026-06-24
+category: Design Systems
+tags:
+  - Design Systems
+  - Cost
+  - Stakeholders
+readMinutes: 5
+icon: ph:calculator-duotone
+gradient: from-sage/30 via-lemon/30 to-peach/30
+sticker: sage
+featured: false
+interactive: true
+---
+
+import RoiCalculator from '~/components/islands/RoiCalculator.astro';
+
+<p class="lede">
+  Drift never lands on a single invoice, so it stays invisible. A few hours here,
+  a rebuilt component there, a spacing one-off nobody flags. None of it is big
+  enough to argue about on its own. Add it up across a team and a year, though,
+  and it is a salary. The trick to getting a stakeholder to care is putting that
+  scattered cost in one place, as one figure.
+</p>
+
+That is the whole problem with inconsistency: it never arrives as a line item. It hides inside the work, so it reads like the normal cost of building software rather than a tax you chose to keep paying. The way to make it real is to set your own numbers and watch them land on a single total.
+
+## Set your numbers, see the figure
+
+So instead of describing the math, here is the thing itself. Give it five inputs about your team and the rework you live with, and it shows what a structured system is modelled to reclaim, in hours and dollars, every year.
+
+<div class="not-prose post-tool my-10">
+  <RoiCalculator />
+</div>
+
+Nothing in there is a guess pulled from the air. Each number on the right traces back to an input you set on the left. The point is not the precision of the total. It is watching the small, ignorable scraps of drift compound into a figure large enough that someone with a budget pays attention.
+
+## Defensible beats dramatic
+
+A number you cannot explain is a number a stakeholder ignores. The moment someone asks "where does that come from" and the answer is a shrug, the whole case evaporates, no matter how big the figure looked. So every assumption behind the estimate is shown: the working weeks, the conservative share of rework a system actually reclaims, the way each extra surface nudges that share up. Nothing is hidden in a black box.
+
+The premise underneath all of it (that drift and rework quietly drain real money, and that structure wins a good chunk of it back) is well-trodden ground. You do not have to take my word for it, and you do not need me to invent statistics to make it sound urgent. The pattern is established. What the calculator does is take that established direction and price it against your team instead of someone else's.
+
+## Put a real number behind it
+
+The estimate is the rough shape, not the verdict. It is meant to start the conversation, not end it. A design system audit replaces the estimate with specifics: which patterns are actually drifting, what each one costs you, and the order to fix them in so the cheapest wins come first.
+
+If you want a faster read before that, the [design-system scorecard](/blog/design-system-scorecard/) covers where your system stands today. Either way, you walk in with a number you can defend rather than a feeling you cannot.

@@ -10,10 +10,21 @@ const isDev = process.argv.includes('dev');
 export default defineConfig({
   site: 'https://joshuabriley.com',
   output: 'static',
-  // The scorecard moved under /tools/. Keep old links / SEO working.
+  // Keep old links / SEO working after route moves.
   redirects: {
-    '/scorecard': '/tools/scorecard',
+    // The interactive tools were repurposed as blog posts. The scorecard's
+    // results renderer stays at /tools/scorecard/results/ (its only entry is
+    // the encoded ?r= link from the embedded engine).
+    '/tools': '/blog',
+    '/tools/scorecard': '/blog/design-system-scorecard',
+    '/tools/audit-findings': '/blog/what-an-audit-finds',
+    '/tools/token-playground': '/blog/what-a-design-token-actually-does',
+    '/tools/roi-calculator': '/blog/what-inconsistency-costs',
+    '/scorecard': '/blog/design-system-scorecard',
     '/scorecard/results': '/tools/scorecard/results',
+    // Clempo + Bass Face moved into the personal-projects section.
+    '/projects/clempo': '/personal-projects/clempo',
+    '/projects/bass-face': '/personal-projects/bass-face',
   },
   ...(isDev ? {} : { adapter: netlify() }),
   image: {
@@ -35,12 +46,14 @@ export default defineConfig({
         fallbacks: ['system-ui', 'sans-serif'],
       },
       {
-        // Display serif — the character face. Headlines + oversized numerals only;
-        // body stays Hanken, technical labels stay Geist Mono. Fraunces' high
-        // contrast, ball terminals and optical sizing are what break the
+        // Display serif (the character face). Headlines + oversized numerals only;
+        // body stays Hanken, technical labels stay Geist Mono. Newsreader's
+        // editorial warmth, optical sizing and distinctive italic break the
         // "one-grotesk Tailwind template" read. Italic carries the editorial wink.
+        // The CSS var keeps its historic name so every downstream reference (the
+        // font-display/font-serif tokens, .ink-wink, headings) tracks the swap.
         provider: fontProviders.google(),
-        name: 'Fraunces',
+        name: 'Newsreader',
         cssVariable: '--font-fraunces',
         weights: [400, 500, 600, 700],
         styles: ['normal', 'italic'],

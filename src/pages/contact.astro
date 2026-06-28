@@ -9,13 +9,13 @@ import Icon from '~/components/primitives/Icon.astro';
 import ContactForm from '~/components/islands/ContactForm.astro';
 
 const description =
-  "Whether you're hiring for a design systems or UX engineering role, wrestling with component library debt, or want a second opinion on accessibility, send a note. I reply within one business day.";
+  "Hiring a design- and front-end-focused product engineer? Send a note about the role and the team. I read and reply to everything personally.";
 
 const steps = [
-  { title: 'You send a message', body: "Takes about two minutes. Tell me the rough shape of what you're dealing with." },
-  { title: 'I reply within one business day', body: 'Usually the same day. No templates, no autoresponders.' },
-  { title: 'Free 30-minute consult', body: "We talk through what's actually happening. Zero obligation to go further." },
-  { title: "A clear next step, if we're a fit", body: "For roles, that's a real conversation. For project work, a simple proposal with clear scope and price. Either way, if we're not a fit, I'll point you to someone who is." },
+  { title: 'You send a message', body: 'Takes about two minutes. Tell me about the role and the team.' },
+  { title: 'I reply personally', body: 'Usually the same day. No templates, no autoresponders.' },
+  { title: 'We talk', body: "A real conversation about the work, the product you're building, and whether I'm the right fit." },
+  { title: 'A clear next step', body: "If we're a fit, we keep going. If not, I'll tell you honestly, and probably point you to someone who is." },
 ];
 
 const featuredQuotes = [
@@ -34,33 +34,33 @@ const featuredQuotes = [
 ];
 ---
 
-<BaseLayout title="Contact — Joshua Briley | UX Engineer & Design Systems Consultant" description={description}>
+<BaseLayout title="Contact | Joshua Briley | Product Engineer" description={description}>
 
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <div class="flex items-center justify-between gap-4 mono-label">
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
         <span class="inline-flex items-center gap-2">
           <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-          Open to roles &amp; engagements
+          Open to product engineering roles
         </span>
-        <span class="hidden sm:inline text-ink-muted">Contact · Index 01</span>
+        <span class="hidden sm:inline text-ink-muted">Contact</span>
       </div>
 
       <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-end">
         <div class="lg:col-span-8">
-          <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
             Let's talk about <em class="ink-wink font-normal italic">the work</em>.
           </Heading>
-          <Text size="lg" tone="muted" class="mt-7 max-w-2xl">
-            Whether you're hiring for a design systems or UX engineering role, wrestling with
-            component library debt, or just want a second opinion on an accessibility question,
-            send a note. I'll get back to you within one business day.
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
+            If you're hiring a design- and front-end-focused product engineer, someone who brings
+            the most value at the UI and is full-stack capable behind it, send a note about the role
+            and the team. I read everything and reply personally, usually the same day.
           </Text>
         </div>
-        <div class="lg:col-span-4">
+        <div class="hero-in hero-in-4 lg:col-span-4">
           <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted lg:flex-col lg:gap-y-3">
-            {['~2 minutes', 'No spam, ever', 'Free 30-min call'].map((p) => (
+            {['~2 minutes', 'No spam, ever', 'Personal reply'].map((p) => (
               <li class="flex items-center gap-2">
                 <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
               </li>
@@ -77,9 +77,8 @@ const featuredQuotes = [
       <div class="grid gap-12 lg:grid-cols-12 lg:gap-16 items-start">
 
         <div class="lg:col-span-7">
-          <p class="mono-label">Say hi / 02</p>
-          <Heading level={2} visual="display-md" class="mt-4">
-            Tell me about your project.
+          <Heading level={2} visual="display-md">
+            Tell me about the role.
           </Heading>
           <div class="mt-9 rounded-lg border border-line bg-raised p-7 md:p-9">
             <ContactForm />
@@ -87,12 +86,12 @@ const featuredQuotes = [
         </div>
 
         <aside class="lg:col-span-5 lg:sticky lg:top-28">
-          <p class="mono-label">What happens next / 03</p>
+          <p class="mono-label">What happens next</p>
           <Heading level={2} visual="h2" class="mt-4 max-w-[20ch]">
             A simple, no-pressure path forward.
           </Heading>
 
-          <ol class="mt-8 divide-y divide-line border-y border-line">
+          <ol class="mt-8 divide-y divide-line border-y border-line" data-reveal-stagger>
             {steps.map((step, i) => (
               <li class="flex gap-4 py-5">
                 <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
@@ -112,13 +111,12 @@ const featuredQuotes = [
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="wide">
       <div class="max-w-3xl">
-        <p class="mono-label">Kind words / 04</p>
-        <Heading level={2} visual="display-md" class="mt-4">
-          What folks say after we work together.
+        <Heading level={2} visual="display-md">
+          What people say about working with me.
         </Heading>
       </div>
 
-      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
+      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2" data-reveal-stagger>
         {featuredQuotes.map((q) => (
           <figure class="bg-paper p-7 md:p-9">
             <blockquote>
@@ -141,18 +139,18 @@ const featuredQuotes = [
     <Container width="wide">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-8">
-          <p class="mono-label !text-paper/65">Prefer to skip the form / 05</p>
+          <p class="mono-label !text-paper/65">Prefer to skip the form</p>
           <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[22ch]">
-            Grab a spot on my calendar directly.
+            Email me, or say hi on LinkedIn.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            Book a call, or say hi on LinkedIn. I read everything.
+            However you reach out, it comes straight to me. I read everything.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">
           <div class="flex flex-col items-start gap-3">
-            <Button variant="navy" size="lg" href="https://calendly.com/josh-thebrileys/30min/" iconRight="ph:arrow-right" class="js-magnetic">
-              Book a 30-min call
+            <Button variant="navy" size="lg" href="mailto:josh@thebrileys.com" iconRight="ph:arrow-right" class="js-magnetic">
+              Email me
             </Button>
             <a
               href="https://www.linkedin.com/in/joshuabriley/"
