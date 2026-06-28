@@ -11,6 +11,26 @@ const description =
   'Products Joshua Briley owned end to end: multi-tenant apps, accessible flows, Rails platforms, and the design systems behind them. Each case study doubles as a work sample.';
 
 const projects = [
+    {
+    index: '04',
+    href: '/projects/americas-test-kitchen/',
+    client: "America's Test Kitchen",
+    kind: 'Design system',
+    title: 'When a product needs a system, I build that too',
+    summary:
+      'A shared React and Next.js component library serving three editorial brands with zero brand-fork props, and one accessibility floor every team inherits, built on top of a previously inaccessible CMS.',
+    note: '60+ components',
+  },
+  {
+    index: '05',
+    href: '/projects/berxi-insurance/',
+    client: 'Berxi',
+    kind: 'Design system',
+    title: 'A design system for a growing platform',
+    summary:
+      'A custom design system for a growing insurance platform: from stakeholder alignment through component library, documentation, and cross-team adoption that unblocked marketing to ship campaigns on their own.',
+    note: 'Cross-team adoption',
+  },
   {
     index: '01',
     href: '/projects/ivfcryo/',
@@ -30,36 +50,6 @@ const projects = [
     summary:
       'Rebuilt and shipped in four phases with no feature flags and zero pipeline regressions: a 700-line inventory, 350 templates consolidated onto one component system, routed through a single token layer, with no operator retraining.',
     note: '350 ERB templates',
-  },
-  {
-    index: '03',
-    href: '/projects/west-baton-rouge-presbyterian/',
-    client: 'West Baton Rouge Presbyterian',
-    kind: 'Rails CMS',
-    title: 'A full CMS, built in one weekend',
-    summary:
-      'A custom Rails CMS built end to end over a single weekend: content models for events, galleries, and pages, a Cloudinary media pipeline, staff authentication, and an accessible public site. Proof of range and speed.',
-    note: 'Shipped in a weekend',
-  },
-  {
-    index: '04',
-    href: '/projects/americas-test-kitchen/',
-    client: "America's Test Kitchen",
-    kind: 'Design system',
-    title: 'When a product needs a system, I build that too',
-    summary:
-      'A shared React and Next.js component library serving three editorial brands with zero brand-fork props, and one accessibility floor every team inherits, built on top of a previously inaccessible CMS.',
-    note: '60+ components',
-  },
-  {
-    index: '05',
-    href: '/projects/berxi-insurance/',
-    client: 'Berxi',
-    kind: 'Design system',
-    title: 'A design system for a growing platform',
-    summary:
-      'A custom design system for a growing insurance platform: from stakeholder alignment through component library, documentation, and cross-team adoption that unblocked marketing to ship campaigns on their own.',
-    note: 'Cross-team adoption',
   },
   {
     index: '06',
@@ -197,7 +187,7 @@ const projects = [
           <div class="flex flex-col items-start gap-3">
             <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">Get in touch</Button>
             <a
-              href="/resume.pdf"
+              href="/resume/"
               class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
             >Résumé <Icon name="ph:file-text" size={12} /></a>
           </div>

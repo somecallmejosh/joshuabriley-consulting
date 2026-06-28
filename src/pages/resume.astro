@@ -136,7 +136,7 @@ const skills = [
 
         <div class="hero-in hero-in-4 lg:col-span-4 lg:flex lg:flex-col lg:items-end">
           <div class="flex flex-wrap items-center gap-3 lg:justify-end">
-            <Button variant="primary" size="lg" href="/resume.pdf" iconRight="ph:download-simple" class="js-magnetic">
+            <Button variant="primary" size="lg" href="/resume.pdf" target="_blank" rel="noopener" iconRight="ph:download-simple" class="js-magnetic">
               Download PDF
             </Button>
             <Button variant="ghost" size="lg" href="/contact/">
@@ -263,6 +263,8 @@ const skills = [
             <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
             <a
               href="/resume.pdf"
+              target="_blank"
+              rel="noopener"
               class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-ink"
             >Download PDF <Icon name="ph:download-simple" size={12} /></a>
           </div>

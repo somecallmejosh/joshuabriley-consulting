@@ -19,7 +19,7 @@ export const FOOTER_NAV: { heading: string; links: NavLink[] }[] = [
     links: [
       { href: '/about/', label: 'About' },
       { href: '/projects/', label: 'Projects' },
-      { href: '/resume.pdf', label: 'Résumé' },
+      { href: '/resume/', label: 'Résumé' },
       { href: '/contact/', label: 'Contact' },
     ],
   },
