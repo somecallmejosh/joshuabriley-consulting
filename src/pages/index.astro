@@ -15,12 +15,11 @@ const capabilities = [
   'Design-grade front-end',
   'React · TypeScript · 20 yrs',
   'Accessibility built in',
-  'Full-stack capable',
+  'Design systems',
 ];
 
 // The differentiator band. Why these products feel finished. The lead facet (UI)
-// is the featured cell; full-stack is the supporting capability that lets me own
-// the whole feature.
+// is the featured cell; the rest are the front-end disciplines behind the finish.
 const facets = [
   {
     title: 'The UI is where I bring the most value',
@@ -39,9 +38,9 @@ const facets = [
       'Empty states, recoverable forms, the screen that shows when there is nothing to show yet. Those are the parts that decide whether a product feels finished, and whether it holds up after launch.',
   },
   {
-    title: 'Full-stack enough to own it',
+    title: 'I bring the system, not just the screen',
     body:
-      'A capable full-stack developer in Rails and TypeScript: auth, tenancy, data, API. Not because the backend is the point, but so the UI never stalls waiting on someone else to wire it up.',
+      'When a product needs a real design system, I build that too: one library, one accessibility floor, every brand held to the same standard. It is how the UI stays consistent as the team and the surface area grow.',
   },
 ];
 
@@ -51,7 +50,7 @@ const metrics = [
   { value: '3 → 1', label: 'brands, one library', note: "America's Test Kitchen: one system, three brands" },
 ];
 
-// Products owned end to end. Order follows the positioning doc.
+// Client products where I owned the interface. Order follows the positioning doc.
 const work = [
   {
     href: '/projects/americas-test-kitchen/',
@@ -74,15 +73,15 @@ const work = [
   {
     href: '/projects/vmspark/',
     client: 'VMSpark',
-    kind: 'Rails platform',
-    line: 'A multi-tenant Rails admin platform rebuilt and shipped in four phases, with no feature flags and zero pipeline regressions.',
+    kind: 'Admin platform',
+    line: 'A multi-tenant admin platform rebuilt and shipped in four phases: the operator-facing UI and workflows, delivered with zero pipeline regressions.',
   },
 ];
 ---
 
 <BaseLayout
   title="Joshua Briley | Design & front-end focused Product Engineer"
-  description="Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value: design-grade, accessible, and finished to the last detail, backed by capable full-stack development in Rails and TypeScript."
+  description="Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value: design-grade, accessible, and finished to the last detail."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
@@ -93,66 +92,26 @@ const work = [
         <span class="sr-only">I focus on </span>Design &amp; front-end
       </p>
 
-      <div class="mt-10 grid gap-12 lg:mt-12 lg:grid-cols-12 lg:gap-16 lg:items-center">
-        <div class="lg:col-span-7">
-          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
-            My best work lives at the <em class="ink-wink font-normal italic">interface</em>. I build the stack behind it, too.
-          </Heading>
-          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
-            I'm a design- and front-end-focused product engineer with 20 years in production UI. The
-            interface is where I bring the most value, and I'm full-stack capable enough to own
-            what's behind it.
-          </Text>
+      {/* Full-width editorial hero. No illustration: the headline commands the
+          width and the "Shipped at" credentials strip directly below carries the
+          proof. */}
+      <div class="mt-10 max-w-5xl lg:mt-14">
+        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[24ch]">
+          My best work lives at the <em class="ink-wink font-normal italic">interface</em>, down to the last detail.
+        </Heading>
+        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
+          I'm a design- and front-end-focused product engineer with 20 years in production UI. The
+          interface is where I bring the most value: design-grade, accessible, and finished to the
+          last detail.
+        </Text>
 
-          <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
-            <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
-              See what I've built
-            </Button>
-            <Button variant="ghost" size="lg" href="/about/">
-              Read how I work
-            </Button>
-          </div>
-        </div>
-
-        {/* Interface specimen: the literal thesis, shown not told. One field cycled
-            through its full state set (default → focus → error → done), the states
-            most builds leave blank. Decorative; freezes on the finished state under
-            reduced motion. Transform/opacity/colour only. */}
-        <div class="hero-in hero-in-5 lg:col-span-5" aria-hidden="true">
-          <figure class="spec rounded-lg border border-line bg-raised p-5 md:p-6 shadow-[0_24px_60px_-34px_rgba(27,26,23,0.4)]">
-            <figcaption class="flex items-center justify-between mono-label">
-              <span>one field, every state</span>
-              <span class="inline-flex items-center gap-1.5">
-                <span class="spec-live h-1.5 w-1.5 rounded-full bg-accent"></span>live
-              </span>
-            </figcaption>
-
-            <div class="mt-5">
-              <span class="block font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted">Work email</span>
-              <div class="spec-field mt-2 flex items-center justify-between gap-3 rounded-[8px] border bg-paper px-3.5 py-3">
-                <span class="spec-value inline-grid font-mono text-[0.85rem] leading-none">
-                  <span class="spec-val spec-val-empty text-ink-faint">you@company.com</span>
-                  <span class="spec-val spec-val-typing text-ink">josh@thebr</span>
-                  <span class="spec-val spec-val-done text-ink">josh@thebrileys.com</span>
-                </span>
-                <span class="spec-status relative inline-flex h-4 w-4 shrink-0">
-                  <Icon name="ph:envelope-simple" size={16} class="spec-i spec-i-default absolute inset-0 text-ink-faint" />
-                  <Icon name="ph:warning-circle" size={16} class="spec-i spec-i-error absolute inset-0 text-[#c2603a]" />
-                  <Icon name="ph:check-circle" size={16} class="spec-i spec-i-done absolute inset-0 text-accent" />
-                </span>
-              </div>
-              <span class="spec-msg mt-2 inline-grid text-[0.76rem] leading-snug">
-                <span class="spec-m spec-m-default text-ink-muted">We'll only use this to reply.</span>
-                <span class="spec-m spec-m-focus text-ink-muted">Keep going…</span>
-                <span class="spec-m spec-m-error text-[#c2603a]">That's missing a domain.</span>
-                <span class="spec-m spec-m-done text-accent">Looks good.</span>
-              </span>
-            </div>
-
-            <p class="mt-6 border-t border-line pt-4 text-[0.72rem] leading-relaxed text-ink-muted">
-              The same field, finished: focus ring, live validation, error recovery, success. The states most builds leave blank.
-            </p>
-          </figure>
+        <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
+          <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
+            See what I've built
+          </Button>
+          <Button variant="ghost" size="lg" href="/about/">
+            Read how I work
+          </Button>
         </div>
       </div>
     </Container>
@@ -225,7 +184,7 @@ const work = [
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-6">
           <p class="mono-label !text-paper/65">Selected work</p>
-          <Heading level={2} visual="display-md" tone="paper" class="mt-4">Products I owned end to end.</Heading>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4">Products where I owned the interface.</Heading>
         </div>
         <div class="lg:col-span-6 grid grid-cols-3 gap-6">
           {metrics.map((m) => (
@@ -288,8 +247,7 @@ const work = [
               I started in design and moved into engineering because I wanted to build the things I
               drew, not hand them off. Twenty years later, the front end is where I do my best work:
               design-grade, accessible UI with the judgment most engineering teams have to hire a
-              separate designer to get. I'm also a capable full-stack developer in Rails and
-              TypeScript, so I can carry a product the rest of the way.
+              separate designer to get.
             </p>
             <p>
               I build by feel, fast, and I sweat the finish. Away from the screen, I play bass and
@@ -356,59 +314,11 @@ const work = [
   .hero-in-2 { animation-delay: 0.11s; }
   .hero-in-3 { animation-delay: 0.19s; }
   .hero-in-4 { animation-delay: 0.28s; }
-  .hero-in-5 { animation-delay: 0.36s; }
   @keyframes hero-in {
     to { opacity: 1; transform: none; }
   }
 
-  /* ── Interface specimen. One field, four states, on an 8s loop.
-     Each state's value, message, icon and the field's border/ring are driven by
-     opacity/colour keyframes sharing the same timeline so they stay in sync. */
-  .spec-value, .spec-msg { position: relative; }
-  .spec-val, .spec-m { grid-area: 1 / 1; }
-  .spec-i { opacity: 0; }
-
-  .spec-field { border-color: var(--line-strong); animation: spec-field 8s var(--ease-inout) infinite; }
-  .spec-live { animation: spec-live 2.4s ease-in-out infinite; }
-
-  .spec-val-empty  { animation: spec-A      8s var(--ease-inout) infinite; }
-  .spec-val-typing { animation: spec-typing 8s var(--ease-inout) infinite; }
-  .spec-val-done   { animation: spec-D      8s var(--ease-inout) infinite; }
-  .spec-m-default  { animation: spec-A      8s var(--ease-inout) infinite; }
-  .spec-m-focus    { animation: spec-B      8s var(--ease-inout) infinite; }
-  .spec-m-error    { animation: spec-C      8s var(--ease-inout) infinite; }
-  .spec-m-done     { animation: spec-D      8s var(--ease-inout) infinite; }
-  .spec-i-default  { animation: spec-AB     8s var(--ease-inout) infinite; }
-  .spec-i-error    { animation: spec-C      8s var(--ease-inout) infinite; }
-  .spec-i-done     { animation: spec-D      8s var(--ease-inout) infinite; }
-
-  @keyframes spec-live { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-  @keyframes spec-field {
-    0%, 18%   { border-color: var(--line-strong); box-shadow: 0 0 0 0 rgba(168,65,42,0); }
-    24%, 44%  { border-color: var(--accent);      box-shadow: 0 0 0 3px rgba(168,65,42,0.14); }
-    50%, 68%  { border-color: #c2603a;            box-shadow: 0 0 0 3px rgba(194,96,58,0.13); }
-    74%, 100% { border-color: var(--accent);      box-shadow: 0 0 0 3px rgba(168,65,42,0.10); }
-  }
-
-  /* Visibility windows across the 8s loop: A=default, B=focus, C=error, D=done. */
-  @keyframes spec-A      { 0%, 18% { opacity: 1; } 22%, 100% { opacity: 0; } }
-  @keyframes spec-B      { 0%, 18% { opacity: 0; } 24%, 44% { opacity: 1; } 48%, 100% { opacity: 0; } }
-  @keyframes spec-C      { 0%, 46% { opacity: 0; } 50%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } }
-  @keyframes spec-D      { 0%, 70% { opacity: 0; } 74%, 100% { opacity: 1; } }
-  @keyframes spec-AB     { 0%, 44% { opacity: 1; } 48%, 100% { opacity: 0; } }
-  @keyframes spec-typing { 0%, 18% { opacity: 0; } 24%, 68% { opacity: 1; } 72%, 100% { opacity: 0; } }
-
   @media (prefers-reduced-motion: reduce) {
     .hero-in { animation: none; opacity: 1; transform: none; }
-    .spec-field, .spec-live,
-    .spec-val, .spec-m, .spec-i { animation: none !important; }
-    /* Freeze on the finished state. */
-    .spec-field { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(168,65,42,0.12); }
-    .spec-val-empty, .spec-val-typing,
-    .spec-m-default, .spec-m-focus, .spec-m-error,
-    .spec-i-default, .spec-i-error { opacity: 0; }
-    .spec-val-done, .spec-m-done { opacity: 1; }
-    .spec-i-done { opacity: 1; }
   }
 </style>

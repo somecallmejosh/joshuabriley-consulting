@@ -41,7 +41,7 @@ const TWITTER_HANDLE = '@joshuabriley';
 
 const {
   title,
-  description = 'Joshua Briley: design- and front-end-focused product engineer. Design-grade, accessible UI, backed by capable full-stack development.',
+  description = 'Joshua Briley: design- and front-end-focused product engineer. Design-grade, accessible UI, finished to the last detail.',
   pathname = Astro.url.pathname,
   bare = false,
   image = DEFAULT_OG_IMAGE,
@@ -65,7 +65,7 @@ const personSchema = {
   url: SITE_URL + '/',
   image: new URL('/images/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
   jobTitle: 'Product Engineer',
-  description: 'Design- and front-end-focused product engineer with 20 years in production UI. The interface is where he brings the most value (design-grade, accessible front-end), backed by capable full-stack development in Rails and TypeScript.',
+  description: 'Design- and front-end-focused product engineer with 20 years in production UI. The interface is where he brings the most value: design-grade, accessible front-end, finished to the last detail.',
   sameAs: [
     'https://github.com/somecallmejosh',
     'https://www.linkedin.com/in/joshuabriley/',
@@ -77,7 +77,7 @@ const websiteSchema = {
   '@id': `${SITE_URL}/#website`,
   url: SITE_URL + '/',
   name: SITE_NAME,
-  description: 'Design- and front-end-focused product engineering by Joshua Briley: design-grade, accessible UI, backed by capable full-stack development.',
+  description: 'Design- and front-end-focused product engineering by Joshua Briley: design-grade, accessible UI, finished to the last detail.',
   publisher: { '@id': `${SITE_URL}/#person` },
   inLanguage: 'en-US',
 };
@@ -130,7 +130,7 @@ const jsonLdGraph = {
 ---
 
 <!doctype html>
-<html lang="en" class="bg-cream">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -184,7 +184,7 @@ const jsonLdGraph = {
 
     <slot name="head" />
   </head>
-  <body class="bg-cream text-navy font-body antialiased">
+  <body class="text-navy font-body antialiased">
     <SkipLink />
     {!bare && <Header />}
     <main id="main">
@@ -205,9 +205,9 @@ const jsonLdGraph = {
         const head = 'color:#1b1a17;font:600 22px/1.2 Georgia,serif';
         const body = 'color:#5c5b55;font:400 13px/1.6 ui-monospace,monospace';
         const clay = 'color:#a8412a;font:500 13px/1.6 ui-monospace,monospace';
-        console.log('%cJoshua Briley%c\n\nYou opened the console. Of course you did. 👋', head, body);
+        console.log('%cJoshua Briley%c\n\n👋 Hi there! Welcome to my playground.', head, body);
         console.log(
-          '%cHand-built with Astro: no UI kit, no template. Type, tokens and motion are all deliberate.\n' +
+          '%cBuilt with Astro: no UI kit, no template. Type, tokens and motion are all deliberate.\n' +
           '%cPsst: ↑ ↑ ↓ ↓ ← → ← → B A turns on Inspector Mode.\n' +
           '%c(And yes, the period after my name is breathing. On purpose.)\n' +
           '%cLike what you see under the hood? Let’s talk → /contact',

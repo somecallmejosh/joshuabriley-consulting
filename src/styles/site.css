@@ -1,26 +1,37 @@
 /* ─────────────────────────────────────────────────────────────────────────
    EDITORIAL TECHNICAL — base layer (2026 redesign)
-   Warm paper, near-black ink, one clay accent, Hanken Grotesk + Geist Mono.
-   Legacy font-var names are aliased onto the two new families so any page that
-   still references the old vars renders in-system instead of falling back.
+   Cool slate page, near-black ink, one clay accent, Hanken Grotesk + Geist Mono.
+   The neutral is a cool light grey (not warm cream): terracotta-against-slate,
+   so the clay accent reads hotter and the system stays off the generic-warm
+   palette. Legacy font-var names are aliased onto the two new families so any
+   page that still references the old vars renders in-system, not a fallback.
    ───────────────────────────────────────────────────────────────────────── */
 :root {
-  --paper: #f5f4f1;
+  --paper: #fafbfc;
   --raised: #ffffff;
-  --ink: #1b1a17;
-  --ink-muted: #5c5b55;
-  --ink-faint: #9a9892;
-  --line: #e5e3dc;
-  --line-strong: #d6d3ca;
+  --ink: #1a1b1e;
+  --ink-muted: #565760;
+  --ink-faint: #9a9aa1;
+  --line: #e5e7eb;
+  --line-strong: #d4d7dd;
   /* Accent as RGB channels so it can follow the surface (see surface rules
      below). Default = deep clay for light paper. */
   --accent-rgb: 168 65 42;
   --accent: rgb(var(--accent-rgb));
+  /* Text selection — surface-aware (see overrides in the surface block). Default
+     is a subtle clay tint with ink text on light paper (high contrast). */
+  --selection-bg: rgba(168, 65, 42, 0.16);
+  --selection-fg: var(--ink);
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-inout: cubic-bezier(0.65, 0, 0.35, 1);
 }
 
 html {
+  /* Page background is bound to the --paper token (single source of truth) so a
+     CSS edit hot-reloads instantly. Do NOT reintroduce a `bg-cream`/`bg-paper`
+     Tailwind utility on <html>/<body> for this — config-compiled utilities only
+     refresh on a dev-server restart, which silently hides background changes. */
+  background-color: var(--paper);
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -42,8 +53,12 @@ body {
    the display headlines so they wrap inside that same optical column at every
    breakpoint — CSS `ch` is per-element, so a headline needs a tighter character
    count than body text to land at the same physical width as the prose column. */
-.measure { max-width: 52ch; }
-.measure-head { max-width: 28ch; }
+.measure {
+  max-width: 52ch;
+}
+.measure-head {
+  max-width: 28ch;
+}
 
 :focus {
   outline: none;
@@ -60,8 +75,12 @@ textarea:focus-visible,
 }
 
 ::selection {
-  background: rgba(168, 65, 42, 0.16);
-  color: var(--ink);
+  background: var(--selection-bg);
+  color: var(--selection-fg);
+}
+::-moz-selection {
+  background: var(--selection-bg);
+  color: var(--selection-fg);
 }
 
 /* A clay text caret in every editable field — a small brand tell while you type.
@@ -85,13 +104,27 @@ html {
     brand-dot-breathe 5s ease-in-out 0.9s infinite;
 }
 @keyframes brand-dot-draw {
-  0% { opacity: 0; transform: scale(0); }
-  62% { opacity: 1; transform: scale(1.35); }
-  100% { opacity: 1; transform: scale(1); }
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 @keyframes brand-dot-breathe {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* A clay underline that draws in from the left when you hover an italic "wink"
@@ -127,6 +160,11 @@ html {
 .ix-toast,
 [data-surface='dark'] {
   --accent-rgb: 216 106 74; /* #D86A4A — AA on ink (5.0:1) */
+  /* On dark surfaces the subtle clay tint goes muddy and the ink text vanishes
+     into the background. Use a solid bright-clay highlight with ink text:
+     #1a1b1e on #D86A4A is 5.0:1 → clears WCAG AA for body text. */
+  --selection-bg: #d86a4a;
+  --selection-fg: var(--ink);
 }
 .bg-paper,
 .bg-raised,
@@ -134,6 +172,8 @@ html {
 .bg-white,
 [data-surface='light'] {
   --accent-rgb: 168 65 42; /* #A8412A — deep clay for light paper */
+  --selection-bg: rgba(168, 65, 42, 0.16);
+  --selection-fg: var(--ink);
 }
 
 /* Monospace metadata label — eyebrows, indices, spec rails, kbd. */
@@ -361,8 +401,12 @@ header .mobile-menu a[aria-current='page'] {
   line-height: 1.75;
   letter-spacing: -0.003em;
 }
-.prose-whimsy > :first-child { margin-top: 0; }
-.prose-whimsy > :last-child { margin-bottom: 0; }
+.prose-whimsy > :first-child {
+  margin-top: 0;
+}
+.prose-whimsy > :last-child {
+  margin-bottom: 0;
+}
 
 /* Paragraph rhythm */
 .prose-whimsy :where(p):not(:where(.not-prose, .not-prose *)) {
@@ -393,7 +437,9 @@ header .mobile-menu a[aria-current='page'] {
   padding-top: 1.6em;
   border-top: 1px solid var(--line);
 }
-.prose-whimsy :where(h2 + *) { margin-top: 0; }
+.prose-whimsy :where(h2 + *) {
+  margin-top: 0;
+}
 .prose-whimsy :where(h3):not(:where(.not-prose, .not-prose *)) {
   font-size: 1.22rem;
   margin: 2em 0 0.5em;
@@ -429,7 +475,9 @@ header .mobile-menu a[aria-current='page'] {
   text-decoration-color: rgba(168, 65, 42, 0.45);
   text-decoration-thickness: 1px;
   text-underline-offset: 2.5px;
-  transition: color 0.18s ease, text-decoration-color 0.18s ease;
+  transition:
+    color 0.18s ease,
+    text-decoration-color 0.18s ease;
 }
 .prose-whimsy :where(a):not(:where(.not-prose, .not-prose *)):hover {
   color: var(--accent);
@@ -437,8 +485,13 @@ header .mobile-menu a[aria-current='page'] {
 }
 
 /* Emphasis */
-.prose-whimsy :where(strong, b):not(:where(.not-prose, .not-prose *)) { font-weight: 700; color: var(--ink); }
-.prose-whimsy :where(em, i):not(:where(.not-prose, .not-prose *)) { font-style: italic; }
+.prose-whimsy :where(strong, b):not(:where(.not-prose, .not-prose *)) {
+  font-weight: 700;
+  color: var(--ink);
+}
+.prose-whimsy :where(em, i):not(:where(.not-prose, .not-prose *)) {
+  font-style: italic;
+}
 
 /* Lists — disc bullets get a small clay square; ordered markers go mono. */
 .prose-whimsy :where(ul, ol):not(:where(.not-prose, .not-prose *)) {
@@ -464,13 +517,17 @@ header .mobile-menu a[aria-current='page'] {
   border-radius: 1px;
   background: var(--accent);
 }
-.prose-whimsy :where(ol):not(:where(.not-prose, .not-prose *)) { list-style: decimal; }
+.prose-whimsy :where(ol):not(:where(.not-prose, .not-prose *)) {
+  list-style: decimal;
+}
 .prose-whimsy :where(ol > li):not(:where(.not-prose, .not-prose *))::marker {
   color: var(--ink-muted);
   font-family: var(--font-geist-mono), ui-monospace, monospace;
   font-size: 0.85em;
 }
-.prose-whimsy :where(li > ul, li > ol):not(:where(.not-prose, .not-prose *)) { margin: 0.5em 0; }
+.prose-whimsy :where(li > ul, li > ol):not(:where(.not-prose, .not-prose *)) {
+  margin: 0.5em 0;
+}
 
 /* Blockquote — an accent rule pulls it out of the column. */
 .prose-whimsy :where(blockquote):not(:where(.not-prose, .not-prose *)) {
@@ -482,7 +539,9 @@ header .mobile-menu a[aria-current='page'] {
   color: var(--ink-muted);
   font-style: italic;
 }
-.prose-whimsy :where(blockquote p):not(:where(.not-prose, .not-prose *)) { margin: 0.4em 0; }
+.prose-whimsy :where(blockquote p):not(:where(.not-prose, .not-prose *)) {
+  margin: 0.4em 0;
+}
 
 /* Big centered pull quote (.pullquote) — set in the display serif's italic for
    an editorial flourish that ties back to the headline voice. */
@@ -702,7 +761,7 @@ header .mobile-menu a[aria-current='page'] {
   line-height: 0.8;
   font-size: clamp(9rem, 20vw, 17rem);
   color: transparent;
-  -webkit-text-stroke: 1.5px rgba(27, 26, 23, 0.1);
+  -webkit-text-stroke: 1.5px rgba(26, 27, 30, 0.1);
   pointer-events: none;
   user-select: none;
 }
@@ -835,14 +894,31 @@ header .mobile-menu a[aria-current='page'] {
   transform: translateY(12px);
   animation: hero-in 0.7s var(--ease-out) forwards;
 }
-.hero-in-1 { animation-delay: 0.04s; }
-.hero-in-2 { animation-delay: 0.11s; }
-.hero-in-3 { animation-delay: 0.19s; }
-.hero-in-4 { animation-delay: 0.28s; }
-.hero-in-5 { animation-delay: 0.36s; }
+.hero-in-1 {
+  animation-delay: 0.04s;
+}
+.hero-in-2 {
+  animation-delay: 0.11s;
+}
+.hero-in-3 {
+  animation-delay: 0.19s;
+}
+.hero-in-4 {
+  animation-delay: 0.28s;
+}
+.hero-in-5 {
+  animation-delay: 0.36s;
+}
 @keyframes hero-in {
-  to { opacity: 1; transform: none; }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .hero-in { animation: none; opacity: 1; transform: none; }
+  .hero-in {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
 }

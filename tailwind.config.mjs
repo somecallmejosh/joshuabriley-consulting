@@ -21,17 +21,17 @@ export default {
       },
       colors: {
         // ── New "Editorial Technical" system ──────────────────────────────
-        paper: '#F5F4F1', // page background — warm off-white
-        raised: '#FFFFFF', // cards / raised surfaces
+        paper: '#FAFBFC', // page background — near-white, faint cool cast (terracotta + slate)
+        raised: '#FFFFFF', // cards / raised surfaces (pure white, lifts off paper)
         ink: {
-          DEFAULT: '#1B1A17', // primary text + dark surfaces (warm near-black)
-          soft: '#2A2925',
-          muted: '#5C5B55', // secondary text (~6:1 on paper — AA with margin)
-          faint: '#9A9892', // metadata / disabled
+          DEFAULT: '#1A1B1E', // primary text + dark surfaces (cool near-black)
+          soft: '#292A2E',
+          muted: '#565760', // secondary text (~6:1 on paper — AA with margin)
+          faint: '#9A9AA1', // metadata / disabled
         },
         line: {
-          DEFAULT: '#E5E3DC', // hairline rules / borders
-          strong: '#D6D3CA',
+          DEFAULT: '#E5E7EB', // hairline rules / borders
+          strong: '#D4D7DD',
         },
         accent: {
           // Channel-based so the accent can FOLLOW the surface: deep clay on
@@ -44,20 +44,23 @@ export default {
 
         // ── Legacy tokens remapped to monochrome ──────────────────────────
         // Kept so un-migrated pages render in-system until each is hand-finished.
-        cream: '#F5F4F1',
+        // `cream` is the live page-background class (BaseLayout html/body), so it
+        // tracks `paper`. The near-black + muted text aliases are cooled to match
+        // the new cool-slate ink so body copy doesn't stay warm on a cool page.
+        cream: '#ffffff', // = paper (page background)
         peach: '#EFEDE6',
         coral: 'rgb(var(--accent-rgb) / <alpha-value>)', // legacy alias → follows surface like accent
         sunset: '#8A4B2E',
         'sunset-deep': '#8A4B2E',
-        plum: '#1B1A17',
-        navy: '#1B1A17',
-        charcoal: '#1B1A17',
-        sage: '#5C5B55',
-        'sage-deep': '#44433E',
-        sky: '#5C5B55',
-        'sky-deep': '#44433E',
+        plum: '#1A1B1E',
+        navy: '#1A1B1E',
+        charcoal: '#1A1B1E',
+        sage: '#565760',
+        'sage-deep': '#45464C',
+        sky: '#565760',
+        'sky-deep': '#45464C',
         lemon: '#EAE7DD',
       },
     },
   },
-};
+}
