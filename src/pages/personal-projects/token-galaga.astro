@@ -7,59 +7,148 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
-import SiteShot from '~/components/patterns/SiteShot.astro';
+import LiveEmbed from '~/components/patterns/LiveEmbed.astro';
 
 const title = 'Token Adventure | Joshua Briley';
 const description =
-  'Case study: Token Adventure, a Galaga-style arcade game that teaches the W3C Design Tokens Format spec across eight sectors. A personal project, and a companion to Rudiment UI.';
+  'Case study: Token Adventure, a playable coding arcade that teaches the W3C Design Tokens Format (2025.10). Real CodeMirror editor, sandboxed iframe, and a serializable assertion engine that grades your code across 20 sectors. Companion to Rudiment UI.';
 
 const proof = [
   {
     label: 'Skills proven',
     items: [
-      'Interactive learning design',
-      'Design-token expertise (W3C spec)',
-      'Frontend product development',
-      'Game UI & canvas rendering',
-      'UI/UX Design',
-      'Finishing a product',
+      'Interactive learning & curriculum design',
+      'In-browser code execution & sandboxing',
+      'Test-harness engineering',
+      'Deep W3C design-token expertise',
+      'Accessibility engineering',
+      'Motion design',
     ],
   },
   {
-    // TODO(josh): confirm — Astro + an HTML canvas are confirmed from the deployed
-    // build. Add the game-logic language/libraries (e.g. TypeScript) once verified.
     label: 'Stack',
-    items: ['Astro', 'HTML Canvas', 'Netlify'],
+    items: ['Astro 5', 'React island', 'CodeMirror', 'Sandboxed iframe', 'axe-core', 'Netlify'],
   },
   {
     label: 'Quality',
     items: [
-      'Faithful to the W3C token spec',
-      'Sequenced recruit → expert',
-      'A finished, playable arcade',
+      'Faithful to the stable 2025.10 spec',
+      'Spec-semantic grading, not pattern-matching',
+      'Reduced-motion honored on every effect',
+      'astro check + a clean build, every ship',
     ],
   },
   {
     label: 'Outcomes',
-    items: ['Eight playable sectors', 'Companion to Rudiment UI', 'Personal project · teaching'],
+    items: ['20 sectors across three arcs', 'A serializable assertion engine', 'Companion to Rudiment UI'],
   },
 ];
 
 const docket = [
   { href: '#why', icon: 'ph:game-controller', label: 'Why teach a spec as an arcade' },
-  { href: '#curriculum', icon: 'ph:path', label: 'Eight sectors, recruit to expert' },
-  { href: '#craft', icon: 'ph:sparkle', label: 'A real game, finished end to end' },
+  { href: '#what', icon: 'ph:browsers', label: 'What it actually is' },
+  { href: '#engine', icon: 'ph:test-tube', label: 'The assertion engine' },
+  { href: '#curriculum', icon: 'ph:path', label: 'Twenty sectors, three arcs' },
+  { href: '#a11y', icon: 'ph:heart', label: 'Accessibility, taught and practiced' },
+  { href: '#craft', icon: 'ph:sparkle', label: 'Game feel without a game engine' },
 ];
 
-const sectors = [
-  { num: '01', rank: 'Beginner', title: 'The Hardcoded Hellscape', teaches: 'Why design tokens exist' },
-  { num: '02', rank: 'Beginner', title: 'The Registry Awakens', teaches: 'tokens.json — $value and $type' },
-  { num: '03', rank: 'Beginner', title: 'Forge a Group', teaches: 'Groups, $type inheritance, $description' },
-  { num: '04', rank: 'Intermediate', title: 'Echoes & Aliases', teaches: 'Aliases / token references' },
-  { num: '05', rank: 'Intermediate', title: 'Types of the Realm', teaches: 'W3C token types & canonical value formats' },
-  { num: '06', rank: 'Intermediate', title: 'Composite Constructs', teaches: 'Composite tokens — typography' },
-  { num: '07', rank: 'Expert', title: 'The Translation Pipeline', teaches: 'tokens.json → CSS custom properties' },
-  { num: '08', rank: 'Expert', title: 'Audit the Library', teaches: 'Spotting & fixing W3C-spec violations' },
+// The arc colors describe the product's own difficulty coding (cyan / yellow /
+// magenta in the game). Darkened here so they clear WCAG AA on the paper surface.
+const arcs = [
+  {
+    label: 'Arc I',
+    rank: 'Beginner',
+    blurb: 'The foundations: why tokens exist, the file, naming, color, groups, consuming.',
+    color: '#0E7490',
+    sectors: [
+      { num: '01', title: 'The Hardcoded Hellscape', teaches: 'Why tokens exist: a named decision gets one home' },
+      { num: '02', title: 'The Registry Awakens', teaches: 'tokens.json, $value and $type' },
+      { num: '03', title: "The Cartographer's Codex", teaches: 'Naming and path rules' },
+      { num: '04', title: 'Color the 2025 Way', teaches: 'Object-form color: colorSpace, components, alpha, hex' },
+      { num: '05', title: 'Forge a Group', teaches: 'Groups and $type inheritance' },
+      { num: '06', title: 'Self-Documenting Tokens', teaches: '$description' },
+      { num: '07', title: 'Reading the Registry', teaches: 'Consuming semantic tokens' },
+    ],
+  },
+  {
+    label: 'Arc II',
+    rank: 'Intermediate',
+    blurb: 'Relationships and composites: aliases, layering, types, and the composite shapes.',
+    color: '#B45309',
+    sectors: [
+      { num: '08', title: 'Echoes and Aliases', teaches: 'Alias references' },
+      { num: '09', title: 'Three-Tier Architecture', teaches: 'Global, semantic, and component layers' },
+      { num: '10', title: 'Types of the Realm', teaches: 'Token types and their canonical value shapes' },
+      { num: '11', title: 'Composite Constructs', teaches: 'The typography composite' },
+      { num: '12', title: 'Border Composite', teaches: 'The border composite' },
+      { num: '13', title: 'Shadow Composite', teaches: 'Shadow, including multi-shadow arrays' },
+      { num: '14', title: 'Gradient and Transition', teaches: 'The gradient and transition composites' },
+    ],
+  },
+  {
+    label: 'Arc III',
+    rank: 'Expert',
+    blurb: 'Production, theming, and audit: the pipeline, integrity, color spaces, migration, the boss.',
+    color: '#A21CAF',
+    sectors: [
+      { num: '15', title: 'The Translation Pipeline', teaches: 'tokens.json to CSS custom properties' },
+      { num: '16', title: 'Alias Integrity', teaches: 'Detecting dangling and circular references' },
+      { num: '17', title: 'Color Spaces', teaches: 'Color spaces and wide-gamut output' },
+      { num: '18', title: 'Theming and Modes', teaches: 'Modes as a tooling convention, flagged as not in the spec' },
+      { num: '19', title: 'The Great Reformation', teaches: 'Migrating a legacy file to 2025.10' },
+      { num: '20', title: 'Audit the Library', teaches: 'The final audit boss' },
+    ],
+  },
+];
+
+const loop = [
+  { icon: 'ph:chat-circle-text', title: 'An NPC frames the problem', text: 'A story panel states the real failure the concept prevents: a brand color hardcoded in five places, a dangling alias that locks a team out of a build.' },
+  { icon: 'ph:code', title: 'You write real code', text: 'A CodeMirror editor with the right language modes (JSON for tokens.json, plus CSS, HTML, and JS where the sector calls for it). Only the tabs a sector needs are shown.' },
+  { icon: 'ph:browsers', title: 'It runs in a sandbox', text: 'The host builds an srcdoc document from your editor and loads it with sandbox="allow-scripts" and no same-origin access, so player code is genuinely isolated.' },
+  { icon: 'ph:test-tube', title: 'A test runner grades it', text: 'Assertions are posted into the iframe over postMessage, evaluated against the live DOM and your parsed token tree, then posted back. Pass them all and the wave clears.' },
+  { icon: 'ph:medal', title: 'You are rewarded', text: 'XP, a badge, and a pilot-log entry that distills the lesson into a reusable snippet. Clear a full arc and a celebration interstitial fires.' },
+];
+
+const architecture = [
+  { icon: 'ph:lightning', text: 'Astro 5 renders the static surfaces (star chart, story panels, one route per sector). No client JS ships for these.' },
+  { icon: 'ph:cube', text: 'One React island carries the sector runner: editor, sandbox, and test list. It loads only on quest pages.' },
+  { icon: 'ph:shield-check', text: 'The sandbox is an iframe srcdoc with sandbox="allow-scripts". Player code cannot reach the host page.' },
+  { icon: 'ph:arrows-left-right', text: 'The test runtime speaks to the host over postMessage, with a request-id handshake and a timeout so a broken script cannot hang the grader.' },
+  { icon: 'ph:eye', text: 'axe-core is pulled into the sandbox to run real accessibility audits against the player’s rendered output.' },
+  { icon: 'ph:database', text: 'Progress lives in localStorage. No backend, no account, no server.' },
+];
+
+const domChecks = [
+  { name: 'selectorExists · tagName · notTagName', text: 'Structure and semantics' },
+  { name: 'computedStyle', text: 'Resolved CSS values: exact, regex, or one-of a set' },
+  { name: 'contrast', text: 'WCAG contrast ratios (AA normal, AA large, AAA)' },
+  { name: 'axe', text: 'Runs axe-core, optionally scoped to specific rule ids' },
+  { name: 'keyboardReachable', text: 'Tab-order reachability' },
+  { name: 'hasAttribute · textMatches', text: 'ARIA and content' },
+];
+
+const tokenChecks = [
+  { name: 'tokenJsonValid', text: 'Confirms it parses at all' },
+  { name: 'tokenHasPath · tokenFieldEquals', text: 'Structure and field values' },
+  { name: 'tokenTypeMatches', text: 'Honors $type inheritance from ancestor groups' },
+  { name: 'tokenAliasResolves', text: 'Follows {alias} reference chains to a final value' },
+  { name: 'cssVarFromToken', text: 'Reads a CSS custom property to confirm a token wired through' },
+];
+
+const a11yBuilt = [
+  { icon: 'ph:person-simple-run', text: 'Every motion effect gated behind prefers-reduced-motion' },
+  { icon: 'ph:app-window', text: 'Celebration modal: role="dialog", aria-modal, focus management' },
+  { icon: 'ph:keyboard', text: 'Escape and backdrop dismissal, background scroll lock' },
+  { icon: 'ph:cursor', text: 'Parallax disables itself on coarse and touch pointers' },
+  { icon: 'ph:eye', text: 'Sectors grade output with the same contrast math the app holds itself to' },
+  { icon: 'ph:check-square', text: 'Sectors run axe and keyboardReachable against the player’s UI' },
+];
+
+const feel = [
+  { icon: 'ph:television-simple', title: 'A CRT boot sequence', text: 'A one-shot scanline sweep across the cabinet plus a marquee-title power-on flicker, built in CSS and the Web Animations API.' },
+  { icon: 'ph:sun', title: 'Dual-layer neon glow', text: 'A tight tube core plus a soft bloom, over a corner-vignetted field, so lit elements read like real neon rather than a flat drop shadow.' },
+  { icon: 'ph:rocket-launch', title: 'A world map you fly', text: 'A scout ship follows the mission route via CSS offset-path while a nebula drifts opposite the cursor through a transform-only, rAF-throttled handler.' },
 ];
 ---
 
@@ -82,17 +171,15 @@ const sectors = [
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
-            I turned the design-token spec into an <em class="ink-wink font-normal italic">arcade game</em>.
+            I turned the design-token spec into a <em class="ink-wink font-normal italic">playable</em> coding arcade.
           </Heading>
 
           <p class="mt-8 max-w-xl">
             <Text as="span" size="lg" tone="muted">
-              A Galaga-style coding arcade that teaches the
-              <a href="https://tr.designtokens.org/format/" target="_blank" rel="noopener" class="hero-link">W3C Design Tokens Format</a>
-              spec across eight sectors: from why tokens exist, through groups, aliases, and
-              composite types, to wiring a <code class="font-mono text-[0.85em]">tokens.json</code> into a real UI
-              and auditing a broken library. It's the companion piece to
-              <a href="/personal-projects/rudiment-ui/" class="hero-link">Rudiment UI</a>.
+              You don&rsquo;t read about aliases. You write one in a real editor, run it in a
+              sandbox, and watch the wave clear. Twenty sectors of the
+              <a href="https://www.designtokens.org/tr/drafts/format/" target="_blank" rel="noopener" class="hero-link">W3C Design Tokens Format</a>,
+              graded against the stable 2025.10 spec.
             </Text>
           </p>
 
@@ -118,15 +205,15 @@ const sectors = [
             </div>
             <div>
               <dt>Format</dt>
-              <dd>Arcade · 8 sectors</dd>
+              <dd>Arcade &middot; 20 sectors</dd>
             </div>
             <div>
               <dt>Stack</dt>
-              <dd>Astro &middot; Canvas</dd>
+              <dd>Astro &middot; React &middot; CodeMirror</dd>
             </div>
             <div>
               <dt>Teaches</dt>
-              <dd>W3C tokens spec</dd>
+              <dd>W3C tokens (2025.10)</dd>
             </div>
           </dl>
         </aside>
@@ -138,19 +225,48 @@ const sectors = [
     <Container width="wide">
       <p class="mono-label">Live site / The arcade</p>
       <Heading level={2} visual="h2" class="mt-4 max-w-[24ch]">
-        Insert coin. The whole curriculum is one playable cabinet.
+        Insert coin. The arcade is the skin; the engine underneath is real.
       </Heading>
       <Text tone="muted" class="mt-4 max-w-2xl">
-        Pick a sector from the star chart, clear the wave, log the intel, and level up your rank.
-        It runs in the browser, so you can press start right now.
+        Pick a sector from the star chart, write your tokens, run them in the sandbox, and clear the
+        wave when every assertion passes. Load the live game below and press start right here.
       </Text>
       <div class="mt-9">
-        <SiteShot
-          src="/images/projects/token-galaga.webp"
-          alt="Token Adventure: a retro arcade cabinet UI with a pilot dossier, a high score, and a 'Press Start' to begin the design-tokens curriculum"
+        <LiveEmbed
+          posterSrc="/images/projects/token-galaga.webp"
+          posterAlt="Token Adventure: a retro arcade cabinet UI with a pilot dossier, a high score, and a 'Press Start' to begin the design-tokens curriculum"
+          embedSrc="https://token-galaga.netlify.app/"
           href="https://token-galaga.netlify.app/"
-          label="token-galaga.netlify.app"
+          title="Token Adventure"
+          ratio="1600 / 1005"
+          ctaNote="the live, playable game"
         />
+      </div>
+    </Container>
+  </Section>
+
+  <Section tone="paper" padding="tight" aria-label="What changed since the prototype">
+    <Container width="content">
+      <p class="mono-label mb-5">What changed since the prototype</p>
+      <Text size="lg" tone="muted" class="measure">
+        An earlier version of this write-up called Token Adventure a Galaga-style canvas arcade with
+        eight sectors. That described an early prototype, and it undersold the part that matters most:
+        there is no shoot-em-up rendered to a canvas. The arcade is presentation. The engine underneath
+        is a real in-browser coding environment that grades your actual code against the spec.
+      </Text>
+      <div class="mt-9 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
+        <div class="bg-paper p-5">
+          <p class="mono-label mb-2">Sectors</p>
+          <p class="text-ink"><span class="text-ink-faint line-through">8</span> &rarr; <span class="font-semibold">20</span>, three arcs</p>
+        </div>
+        <div class="bg-paper p-5">
+          <p class="mono-label mb-2">The gameplay</p>
+          <p class="text-ink"><span class="text-ink-faint line-through">Canvas render</span> &rarr; real editor, sandbox, grader</p>
+        </div>
+        <div class="bg-paper p-5">
+          <p class="mono-label mb-2">The spec</p>
+          <p class="text-ink"><span class="text-ink-faint line-through">2024 draft</span> &rarr; stable 2025.10</p>
+        </div>
       </div>
     </Container>
   </Section>
@@ -198,10 +314,10 @@ const sectors = [
 
       <Text size="lg" tone="muted" class="mt-10 measure">
         Token Adventure is a personal project, and the whole point is the framing. The W3C Design
-        Tokens Format is a genuinely useful spec and a genuinely dry read. So instead of writing
-        another explainer, I built the thing I'd actually want to play: a retro arcade where every
-        wave you clear is one more piece of the spec you understand. Nobody asked for it, which
-        meant nobody was around to talk me out of finishing it.
+        Tokens Format is genuinely useful and a genuinely dry read. So instead of writing another
+        explainer, I built the thing I&rsquo;d actually want to play: a coding arcade where every wave
+        you clear is one more piece of the spec you can prove you understand, because your code had to
+        satisfy it. Nobody asked for it, which meant nobody was around to talk me out of finishing it.
       </Text>
     </Container>
   </Section>
@@ -216,41 +332,159 @@ const sectors = [
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Design tokens are one of those topics that everyone agrees matter and almost nobody
-              enjoys learning. The W3C format is precise, which is exactly what makes it dry:
+              Design tokens are table stakes for any serious design system, but the W3C format is hard
+              to internalize from the source material. The spec is precise by necessity:
               <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">$value</code>,
               <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">$type</code>,
-              aliases, composite types. Read straight through, it's a reference, not a journey.
+              group inheritance, aliases, composite types. Precision makes for an excellent reference and
+              a poor teacher. You finish reading and you have a vocabulary, not judgment.
             </p>
             <p>
-              A game fixes the part documentation can't. It gives the material
-              <strong class="text-ink font-semibold">stakes and a sequence</strong>: a sector you
-              haven't cleared yet, a rank you're working toward, a score that tells you you're
-              getting it. The arcade framing isn't decoration over a quiz. It's the mechanism that
-              turns &ldquo;I read about aliases&rdquo; into &ldquo;I used an alias to clear the
-              wave,&rdquo; which is the difference between recognizing the spec and actually
-              knowing it.
+              A game changes the unit of learning from &ldquo;I read about aliases&rdquo; to
+              <strong class="text-ink font-semibold">&ldquo;I used an alias to clear the wave.&rdquo;</strong>
+              Every rule becomes a sector you cannot pass until your code actually applies it. Uncleared
+              sectors create stakes, a fixed sequence creates a path, and pass-or-fail diagnostics create
+              feedback. You leave with the muscle memory of having written spec-correct tokens.
             </p>
           </div>
 
           <div class="mt-10 grid gap-6 md:grid-cols-2">
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">The usual way</p>
-              <Heading level={3} visual="h3" tone="ink" class="mb-2">Read the reference</Heading>
+              <p class="mono-label mb-4">Read the reference</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">You learn the vocabulary</Heading>
               <Text size="sm" tone="muted">
-                A spec page you skim once and bookmark. Accurate, complete, and almost impossible
-                to learn by heart.
+                Spec pages that are accurate, complete, and hard to retain. You skim them once and
+                bookmark them.
               </Text>
             </div>
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">Token Adventure</p>
-              <Heading level={3} visual="h3" tone="ink" class="mb-2">Play the reference</Heading>
+              <p class="mono-label mb-4">Play the reference</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">You build the judgment</Heading>
               <Text size="sm" tone="muted">
-                Each rule becomes a wave you have to clear. You don't move on until you've actually
-                used the concept, not just seen it.
+                Each rule is a clearable sector that requires you to apply it. You don&rsquo;t move on
+                until your code has actually used the concept.
               </Text>
             </div>
           </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="what" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">What it actually is</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Token Adventure looks like a deep-space arcade cabinet. You select sectors from a star
+              chart, clear waves, log intel to a pilot log, and rank up from Recruit to Ace. Under that
+              presentation, every sector is a small coding exercise running on real infrastructure.
+              Nothing is faked: the preview is your code running, and a pass means your tokens actually
+              satisfy the spec, not that you picked the right multiple-choice answer.
+            </p>
+          </div>
+
+          <ol class="mt-10 space-y-4">
+            {loop.map((s, i) => (
+              <li class="flex gap-4 border-t border-line pt-4">
+                <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <div class="flex items-start gap-3">
+                  <Icon name={s.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <div>
+                    <p class="font-medium text-ink">{s.title}</p>
+                    <p class="mt-1 text-sm text-ink-muted leading-relaxed">{s.text}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div class="mt-12 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Architecture at a glance</p>
+            <ul class="grid gap-x-8 gap-y-4 sm:grid-cols-2">
+              {architecture.map((a) => (
+                <li class="flex items-start gap-3 text-sm text-ink-muted leading-relaxed">
+                  <Icon name={a.icon} size={18} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <span>{a.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="engine" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">The assertion engine</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              This is the heart of the project. Grading a coding exercise means inspecting code that runs
+              in an isolated context you deliberately cannot touch from the outside. The solution is a
+              fully <strong class="text-ink font-semibold">serializable assertion DSL</strong>: every
+              check is a plain data object, so it crosses the
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">postMessage</code>
+              boundary into the sandbox, runs there against the live DOM and parsed token tree, and
+              returns a plain result.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-7 md:grid-cols-2">
+            <div class="rounded-lg border border-line p-6">
+              <p class="mono-label mb-1">Family one</p>
+              <Heading level={3} visual="h4" tone="ink" class="mb-4">DOM &amp; accessibility checks</Heading>
+              <ul class="space-y-3">
+                {domChecks.map((c) => (
+                  <li class="border-t border-line pt-3 first:border-t-0 first:pt-0">
+                    <code class="font-mono text-[0.78rem] text-ink">{c.name}</code>
+                    <p class="mt-0.5 text-sm text-ink-muted">{c.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="rounded-lg border border-line p-6">
+              <p class="mono-label mb-1">Family two</p>
+              <Heading level={3} visual="h4" tone="ink" class="mb-4">Design-token checks</Heading>
+              <ul class="space-y-3">
+                {tokenChecks.map((c) => (
+                  <li class="border-t border-line pt-3 first:border-t-0 first:pt-0">
+                    <code class="font-mono text-[0.78rem] text-ink">{c.name}</code>
+                    <p class="mt-0.5 text-sm text-ink-muted">{c.text}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+
+          <div class="mt-10 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              That second family is what makes the game spec-accurate rather than spec-flavored.
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">tokenAliasResolves</code>
+              doesn&rsquo;t look for the string
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">{'{color.brand.primary}'}</code>
+              in your file. It walks the reference chain the way a real translation tool would and
+              asserts on the resolved value. The grader understands the spec&rsquo;s semantics, so the
+              lessons cannot be gamed by pattern-matching.
+            </p>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              The final sector is the boss: a broken tokens.json carrying four realistic 2025.10
+              violations. Find and fix all four. It is the closest the game gets to the actual job.
+            </blockquote>
+          </figure>
         </div>
       </div>
     </Container>
@@ -260,45 +494,93 @@ const sectors = [
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 02</p>
-          <Heading level={2} visual="display-md" tone="ink">Eight sectors, recruit to expert</Heading>
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">Twenty sectors, three arcs</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              The eight sectors are a real curriculum wearing a star chart. They're sequenced the
-              way the spec actually has to be learned: you can't reason about aliases until you can
-              name a single token, and you can't audit a broken library until you understand the
-              types it's supposed to honor. Each sector earns the next one.
-            </p>
-            <p>
-              The arc runs from <strong class="text-ink font-semibold">why tokens exist at all</strong>
-              (escaping the hardcoded hellscape) all the way to wiring a
-              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">tokens.json</code>
-              into CSS custom properties and auditing a library for spec violations: the exact
-              decisions a real design-system engineer makes.
+              The sequence mirrors how the spec has to be learned: foundations first, then the relational
+              and composite machinery, then the real-world build, theming, migration, and audit work. You
+              can&rsquo;t reason about aliases until you can name a single token, and you can&rsquo;t audit
+              a broken library until you understand the types it&rsquo;s supposed to honor.
             </p>
           </div>
 
-          <ul class="mt-10 rounded-lg border border-line">
-            {sectors.map((s) => (
-              <li class="flex items-center gap-4 border-b border-line px-5 py-3.5 last:border-b-0">
-                <span class="font-mono text-[0.75rem] text-accent">{s.num}</span>
-                <span class="w-[7.5rem] shrink-0 font-mono text-[0.6rem] uppercase tracking-[0.12em] text-ink-faint">{s.rank}</span>
-                <span class="flex-1">
-                  <span class="block text-sm font-medium text-ink">{s.title}</span>
-                  <span class="block text-sm text-ink-muted">{s.teaches}</span>
-                </span>
-              </li>
+          <div class="mt-10 space-y-10">
+            {arcs.map((arc) => (
+              <div>
+                <div class="mb-4 flex items-center gap-3">
+                  <span class="h-2.5 w-2.5 rounded-[2px]" style={`background:${arc.color}`} aria-hidden="true"></span>
+                  <span class="font-mono text-[0.7rem] uppercase tracking-[0.16em]" style={`color:${arc.color}`}>{arc.label}</span>
+                  <span class="font-mono text-[0.7rem] uppercase tracking-[0.16em] text-ink-faint">{arc.rank}</span>
+                </div>
+                <p class="mb-4 max-w-2xl text-sm text-ink-muted leading-relaxed">{arc.blurb}</p>
+                <ul class="rounded-lg border border-line">
+                  {arc.sectors.map((s) => (
+                    <li class="flex items-center gap-4 border-b border-line px-5 py-3 last:border-b-0">
+                      <span class="font-mono text-[0.75rem] text-accent">{s.num}</span>
+                      <span class="flex-1">
+                        <span class="block text-sm font-medium text-ink">{s.title}</span>
+                        <span class="block text-sm text-ink-muted">{s.teaches}</span>
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             ))}
-          </ul>
+          </div>
 
           <figure class="my-12 border-l-2 border-accent pl-6">
             <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-              A spec read front to back gives you a reference. Clearing it sector by sector gives
-              you the judgment to use it.
+              A spec read front to back gives you a reference. Clearing it sector by sector gives you the
+              judgment to use it.
             </blockquote>
           </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="a11y" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">Accessibility, taught and practiced</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Most learn-to-code games stop at the happy path. Token Adventure treats accessibility as a
+              first-class concern in both directions. <strong class="text-ink font-semibold">It is built
+              into the product:</strong> every motion effect collapses to a static state under
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">prefers-reduced-motion</code>,
+              and the celebration interstitial is a real dialog with focus management, Escape and backdrop
+              dismissal, and a scroll lock.
+            </p>
+            <p>
+              <strong class="text-ink font-semibold">And it is taught by the product.</strong> Several
+              sectors grade the player&rsquo;s rendered output with
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">axe</code>,
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">contrast</code>, and
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">keyboardReachable</code>
+              assertions, holding the player to the same WCAG AA ratios and axe-core rules the app holds
+              itself to. You learn to ship tokens that produce accessible interfaces.
+            </p>
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Built-in, not bolted-on</p>
+            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
+              {a11yBuilt.map((item) => (
+                <li class="flex items-start gap-3 text-sm leading-relaxed">
+                  <Icon name={item.icon} size={18} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <span>{item.text}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </Container>
@@ -308,48 +590,72 @@ const sectors = [
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 03</p>
-          <Heading level={2} visual="display-md" tone="ink">A real game, finished end to end</Heading>
+          <p class="mono-label mb-3">Step 06</p>
+          <Heading level={2} visual="display-md" tone="ink">Game feel without a game engine</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              An educational game lives or dies on whether it feels like a real game or a worksheet
-              in a costume. So I sweated the arcade itself: the pixel cabinet, the pilot dossier,
-              the high score, the &ldquo;insert coin&rdquo; voice that carries the whole thing.
-              The fiction has to hold, or the learning underneath it never lands.
+              The arcade is built entirely from CSS and the Web Animations API, with no game loop and no
+              canvas. The constraint was deliberate: keep the bundle small and the Core Web Vitals clean
+              while still earning the word arcade. Difficulty is color-coded throughout, cyan for beginner,
+              yellow for intermediate, magenta for expert, and the color encodes the arc rather than
+              decorating it.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            {feel.map((f) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={f.icon} size={28} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h4" tone="ink" class="mb-1">{f.title}</Heading>
+                <Text size="sm" tone="muted">{f.text}</Text>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-12 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The app also eats its own cooking. A game about design tokens is itself built on a real
+              three-tier token system with light, dark, and high-contrast modes, so it practices the
+              architecture sector 9 teaches. A tool that taught token discipline while ignoring it would
+              not be credible.
             </p>
             <p>
-              And it's a true companion to <a href="/personal-projects/rudiment-ui/" class="hero-link">Rudiment UI</a>.
-              Rudiment is the field guide to <em>building</em> a token-driven component library;
-              Token Adventure is where you <em>learn the spec</em> those tokens are written in. Same
-              obsession with design tokens, two very different surfaces, both built for the fun of
-              getting the last ten percent right.
+              Because the refresh was motion-heavy, I built a precision feedback loop instead of eyeballing
+              changes: a headless-Chrome screenshot harness captures every key screen at desktop and mobile
+              for before-and-after diffing, and a
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">?nomotion</code>
+              escape hatch freezes the reveal animations so full-page captures show the settled layout. I
+              also held the source to zero em-dashes and en-dashes anywhere, verified by grep, and shipped
+              only after <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">astro check</code>
+              and a clean build pass.
             </p>
           </div>
 
           <div class="mt-12 grid gap-6 md:grid-cols-3">
             <div class="border-t border-line pt-5">
               <Icon name="ph:game-controller" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Genuinely playable</Heading>
+              <Heading level={3} visual="h4" tone="ink" class="mb-1">A complete product</Heading>
               <Text size="sm" tone="muted">
-                A real arcade loop (waves, score, rank), not a quiz with a spaceship sticker on it.
+                Twenty sectors, three arcs, a full reward loop, and a finale. Finished end to end, not a
+                demo.
               </Text>
             </div>
             <div class="border-t border-line pt-5">
-              <Icon name="ph:check-circle" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Spec-accurate</Heading>
+              <Icon name="ph:test-tube" size={28} class="mb-3 text-ink-muted" />
+              <Heading level={3} visual="h4" tone="ink" class="mb-1">A real test engine</Heading>
               <Text size="sm" tone="muted">
-                Every sector maps to a real part of the W3C Design Tokens Format, taught in the
-                order it has to be learned.
+                A serializable assertion DSL that grades player code across a sandbox boundary, with both
+                a11y and deep token-semantic checks.
               </Text>
             </div>
             <div class="border-t border-line pt-5">
               <Icon name="ph:link" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Part of a set</Heading>
+              <Heading level={3} visual="h4" tone="ink" class="mb-1">Part of a set</Heading>
               <Text size="sm" tone="muted">
-                Learn the spec here, then build the library with Rudiment UI. The two are made to
-                be used together.
+                Token Adventure teaches the spec; <a href="/personal-projects/rudiment-ui/" class="hero-link">Rudiment UI</a>
+                teaches building the library those tokens drive.
               </Text>
             </div>
           </div>
@@ -365,9 +671,10 @@ const sectors = [
         I make hard things worth finishing.
       </Heading>
       <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
-        Token Adventure is what I build when no one's asking: a dry spec turned into a game people
-        actually want to play through. The same instinct (own the idea, sweat the finish) shows up
-        in the products I ship for teams. Let's talk.
+        Token Adventure takes the formal text of a W3C spec, the material almost nobody wants to read, and
+        turns it into something people play to the end. The same instinct carries into product work on a
+        team: take the dry but necessary work, give it an interface worth using, hold it to a real
+        accessibility bar, and ship it polished. Let&rsquo;s talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>

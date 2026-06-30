@@ -22,6 +22,8 @@ interface Props {
   title: string;
   /** CSS aspect-ratio for the stage, matching the poster. */
   ratio?: string;
+  /** Small caps note under the load pill, e.g. "the real Storybook story". */
+  ctaNote?: string;
   class?: string;
 }
 
@@ -32,6 +34,7 @@ const {
   href,
   title,
   ratio = '1600 / 1039',
+  ctaNote = 'the real Storybook story',
   class: className,
 } = Astro.props;
 ---
@@ -45,7 +48,7 @@ const {
       target="_blank"
       rel="noopener noreferrer"
       class="live-embed-open"
-      aria-label={`Open ${title} in Storybook (new tab)`}
+      aria-label={`Open ${title} (new tab)`}
     >open <Icon name="ph:arrow-up-right" size={12} /></a>
   </div>
 
@@ -57,7 +60,7 @@ const {
         <Icon name="ph:play-fill" size={15} />
         Load live demo
       </span>
-      <span class="live-embed-cta-note">the real Storybook story</span>
+      <span class="live-embed-cta-note">{ctaNote}</span>
     </button>
 
     {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}

@@ -7,27 +7,150 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
 
+const title = 'Clempo | Joshua Briley';
 const description =
-  'Case study: Clempo, a multi-tenant personal-finance app owned end to end (authentication, tenancy, data modeling, and the interface), built to keep every household correct and private.';
+  'Case study: Clempo, a multi-tenant personal-finance app real households run their money on. Ruby on Rails 8, PostgreSQL, Hotwire, AI meal planning. Built, owned, and operated end to end by one engineer.';
 
 const proof = [
-  { label: 'Skills proven', items: ['Full-stack ownership', 'Multi-tenant data modeling', 'Authentication & authorization', 'Frontend architecture', 'UI/UX Design', 'Accessibility'] },
-  // TODO(josh): confirm — Stack items below are inferred from the positioning doc ("Rails, likely, plus a JS front end"). Replace with the real stack.
-  { label: 'Stack', items: ['Ruby on Rails', 'PostgreSQL', 'JavaScript front end', 'TailwindCSS'] },
-  { label: 'Quality', items: ['Tenant data isolation', 'Keyboard operability', 'Focus management', 'ARIA semantics'] },
-  { label: 'Outcomes', items: ['Real households in production', 'Multi-tenant data isolation', 'Owned end to end'] },
+  {
+    label: 'Skills proven',
+    items: [
+      'Full-stack product ownership',
+      'Multi-tenant data modeling',
+      'Rails 8 native authentication',
+      'Background jobs & AI integration',
+      'Accessibility engineering',
+      'UI/UX & design systems',
+    ],
+  },
+  {
+    label: 'Stack',
+    items: ['Ruby on Rails 8', 'PostgreSQL (4 DBs)', 'Hotwire (Turbo + Stimulus)', 'ViewComponent', 'Tailwind CSS v4', 'Claude via anthropic gem'],
+  },
+  {
+    label: 'Quality',
+    items: [
+      'Tenant isolation by construction',
+      'A ~32-file RSpec suite',
+      'Brakeman + bundler-audit in CI',
+      'WCAG AA, no color-only meaning',
+    ],
+  },
+  {
+    label: 'Outcomes',
+    items: ['Live in production, paying households', 'An AI feature that degrades gracefully', 'Owned end to end'],
+  },
 ];
 
 const docket = [
-  { href: '#ownership', icon: 'ph:stack', label: 'Owning the whole stack' },
-  { href: '#tenancy', icon: 'ph:lock-key', label: 'Keeping every household separate' },
+  { href: '#problem', icon: 'ph:warning-circle', label: 'Why household finance is hard' },
+  { href: '#features', icon: 'ph:squares-four', label: 'What Clempo does' },
+  { href: '#tenancy', icon: 'ph:lock-key', label: 'Tenant isolation by construction' },
+  { href: '#ai', icon: 'ph:robot', label: 'An AI feature that fails gracefully' },
+  { href: '#infra', icon: 'ph:stack', label: 'The infrastructure I own' },
   { href: '#interface', icon: 'ph:layout', label: 'An interface built with care' },
-  { href: '#production', icon: 'ph:users-three', label: 'Real households, in production' },
 ];
+
+const features = [
+  {
+    icon: 'ph:wallet',
+    title: 'Envelope budgeting',
+    model: 'Envelope · EnvelopeBudget · Expense',
+    text: 'Per-month budgets scoped by year and month. A before_update guard aborts any attempt to rewrite a closed month, so history stays trustworthy. A nightly MonthlyRolloverJob carries budgets forward with a single upsert_all.',
+  },
+  {
+    icon: 'ph:trend-down',
+    title: 'Debt snowball',
+    model: 'Debt · DebtPayment',
+    text: 'Snowball order lives in scopes: everything but the mortgage is sequenced, with the first debt surfaced as the active target. Each payment writes a balance_after, and an after_create callback stamps paid_off_at the moment a balance hits zero.',
+  },
+  {
+    icon: 'ph:cooking-pot',
+    title: 'AI meal planning',
+    model: 'MealPlannerService · MealPlannerJob',
+    text: 'A household uploads pantry photos and types what the week needs. Claude returns a strict-JSON week of meals and a categorized shopping list, with leftovers from dinner becoming the next day’s lunch.',
+  },
+  {
+    icon: 'ph:lunchbox',
+    title: 'Lunch tracking',
+    model: 'LunchLog',
+    text: 'Tap the days you packed lunch on a weekday grid. Each packed day counts a fixed savings figure, ties into the Work Meals envelope when one exists, and updates in place over a Turbo Stream with no full reload.',
+  },
+  {
+    icon: 'ph:users-three',
+    title: 'Households & invitations',
+    model: 'Account · Invitation',
+    text: 'An Account is the tenant root; registration creates the account and its owner in one transaction. Owners send token invitations that expire in seven days. Owners and members carry different powers, enforced at the controller.',
+  },
+];
+
+const aiSteps = [
+  { label: 'Off the request cycle', text: 'MealPlannerJob runs the multimodal Claude call in the background through a pending to processing to ready or failed state machine.' },
+  { label: 'Image conversion', text: 'HEIC and HEIF photos are converted to JPEG with ImageProcessing::MiniMagick before they are base64-encoded into the request.' },
+  { label: 'Strict parsing', text: 'The parser strips markdown code fences before JSON.parse and coerces types, so a chatty model response still lands as clean data.' },
+  { label: 'Friendly degradation', text: 'Timeouts, connection errors, and malformed output resolve to a friendly message and a retry, never a crash mid-plan.' },
+];
+
+const infra = [
+  {
+    icon: 'ph:fingerprint',
+    title: 'Authentication I own',
+    text: 'Rails 8 native: has_secure_password, a Session model recording user agent, IP, and last-active time, and a signed httponly cookie. Logins run through authenticate_by, rate-limited to ten attempts in three minutes. Idle sessions past 24 hours are destroyed on the next request.',
+  },
+  {
+    icon: 'ph:queue',
+    title: 'A real background & AI layer',
+    text: 'SolidQueue runs jobs on a dedicated PostgreSQL queue database. Two operational cron endpoints (monthly rollover and unconfirmed meal-plan purge) are driven by Railway cron and secured with a constant-time token comparison, not a guessable string compare.',
+  },
+  {
+    icon: 'ph:database',
+    title: 'Multi-database from day one',
+    text: 'Production runs four separate PostgreSQL databases following the Rails 8 Solid stack: primary, SolidCache, SolidQueue, and SolidCable. Cache, jobs, and websockets never contend with a household reading its dashboard.',
+  },
+];
+
+const stackGroups = [
+  { label: 'Framework & data', items: ['Ruby on Rails 8.1', 'Ruby 3.2', 'PostgreSQL (primary, cache, queue, cable)'] },
+  { label: 'Background, cache & AI', items: ['SolidQueue · SolidCache · SolidCable', 'Claude claude-sonnet-4-6 (anthropic gem)', 'image_processing + MiniMagick'] },
+  { label: 'Frontend & design system', items: ['Hotwire (Turbo + Stimulus)', 'ViewComponent · Tailwind CSS v4', 'OKLCH tokens · a single UiPresenter', 'Chartkick + Chart.js · Phosphor'] },
+  { label: 'Quality & operations', items: ['RSpec · FactoryBot · Capybara', 'RuboCop · Brakeman · bundler-audit', 'Sentry · Bullet · web-push PWA', 'Railway (containerized + cron)'] },
+];
+
+const a11y = [
+  { icon: 'ph:keyboard', title: 'Keyboard operable throughout', text: 'The modal controller saves the previously focused element, focuses the first control, traps Tab and Shift+Tab, and restores focus on close. Touch targets meet 44px, and a skip link opens every page.' },
+  { icon: 'ph:eye', title: 'Meaning never carried by color alone', text: 'Budget health renders as filled pips wrapped in a role="img" with a text label like "On track" or "Over budget", and an over-budget card says so in words, not just a red tint.' },
+  { icon: 'ph:megaphone', title: 'Live updates announced, not just shown', text: 'The remaining-balance figure on each envelope card sits in an aria-live="polite" region, so a screen reader hears the new balance after an expense without losing its place.' },
+  { icon: 'ph:list-checks', title: 'Every state designed', text: 'The meal-plan view is a full state machine with deliberate loading, error, confirmed, and editable-preview screens. Forms wire invalid fields to their error text with aria-invalid and aria-describedby.' },
+];
+
+// Clempo's own in-app OKLCH palette (described here as small swatches; the case
+// page itself stays on the site's locked clay accent). Hex approximations.
+const palette = [
+  { name: 'Porcelain', hex: '#F4F1EC' },
+  { name: 'Ink', hex: '#1C1B22' },
+  { name: 'Amethyst', hex: '#7C5CBF' },
+  { name: 'Sage', hex: '#5F8A6B' },
+  { name: 'Claret', hex: '#9B2D3A' },
+];
+
+const tenantSnippet = `# No acts_as_tenant gem. No global default_scope. No hidden magic.
+# Every read derives from the current account, visible at the call site.
+
+class AccountScoped < ActiveSupport::Concern
+  def current_account = Current.session.account
+end
+
+# A controller action, the tenant boundary visible right in the line:
+@envelope = current_account.envelopes.find(params[:id])
+@expense  = @envelope.expenses.find(params[:expense_id])
+
+# Forge another household's id and you get RecordNotFound, not a 403:
+# that row was never in your account's scope to begin with.`;
 ---
 
-<BaseLayout title="Clempo | Joshua Briley" description={description}>
+<BaseLayout title={title} description={description}>
 
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
@@ -46,15 +169,28 @@ const docket = [
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink" class="leading-[1.04]">
-            A personal-finance app I own <em class="ink-wink font-normal italic">end to end</em>.
+            A finance app I own <em class="ink-wink font-normal italic">end to end</em>.
           </Heading>
 
-          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
-            A multi-tenant personal-finance app with real households using it.
-            I own the whole stack (authentication, tenancy, data modeling, and
-            the interface), built to keep more than one household's data correct
-            and private at once.
-          </Text>
+          <p class="mt-8 max-w-xl">
+            <Text as="span" size="lg" tone="muted">
+              Real households run their money on it. Multi-tenant budgeting, debt tracking, and
+              AI meal planning, built and operated by one engineer.
+            </Text>
+          </p>
+
+          <div class="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <a href="https://ramsey.thebrileys.com/" target="_blank" rel="noopener" class="hero-cta hero-cta--primary">
+              <Icon name="ph:arrow-square-out" size={18} />
+              View the live app
+              <Icon name="ph:arrow-up-right" size={13} class="hero-cta-arrow" />
+            </a>
+            <a href="#tenancy" class="hero-cta">
+              <Icon name="ph:lock-key" size={18} />
+              How it stays private
+              <Icon name="ph:arrow-right" size={13} class="hero-cta-arrow" />
+            </a>
+          </div>
         </div>
 
         <aside class="hero-rail" aria-label="Project details">
@@ -65,16 +201,15 @@ const docket = [
             </div>
             <div>
               <dt>Domain</dt>
-              <dd>Personal finance</dd>
+              <dd>Household finance</dd>
             </div>
             <div>
               <dt>Stack</dt>
-              {/* TODO(josh): confirm — "Rails · JS" is inferred. Update to match the real stack. */}
-              <dd>Rails &middot; JS</dd>
+              <dd>Rails 8 &middot; Postgres &middot; Hotwire</dd>
             </div>
             <div>
-              <dt>Focus</dt>
-              <dd>Multi-tenant</dd>
+              <dt>Status</dt>
+              <dd>Live in production</dd>
             </div>
           </dl>
         </aside>
@@ -124,61 +259,91 @@ const docket = [
       </ul>
 
       <Text size="lg" tone="muted" class="mt-10 measure">
-        Clempo isn't a client deliverable or a demo. It's a real product with
-        real households relying on it to track their money. That changes what
-        "done" means. Every layer, from the login screen to the database
-        schema, has to hold up for people who'll notice immediately if their
-        numbers are wrong or, worse, if they ever see someone else's. I build
-        and own all of it.
+        Clempo is not a client deliverable or a demo. It is a real product that real households pay to
+        track their actual money with, which sets the bar at correct, private, and dependable every
+        single day, not just on the demo path. A paying user reports a bug the same afternoon they hit
+        it, and that feedback loop is the thing that keeps the product honest. I designed, built, and
+        operate all of it.
       </Text>
     </Container>
   </Section>
 
-  <Section id="ownership" tone="paper" padding="default" class="scroll-mt-24">
+  <Section id="problem" tone="paper" padding="default" class="scroll-mt-24">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
           <p class="mono-label mb-3">Step 01</p>
-          <Heading level={2} visual="display-md" tone="ink">Owning the whole stack</Heading>
+          <Heading level={2} visual="display-md" tone="ink">Why household finance is hard</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              On Clempo there's no team to hand things off to. I'm the product
-              engineer for
-              <strong class="text-ink font-semibold">every layer</strong>:
-              authentication, multi-tenancy, the data model, and the interface
-              people actually touch. The same person who designs how a household
-              gets isolated in the database also designs how the empty state reads
-              when that household first signs in.
+              Most household budgeting tools fall into one of two traps. The polished ones are
+              single-user, so a couple cannot share one financial picture. The shared ones leak: a
+              quick query forgets its tenant filter, and suddenly one household sees another’s
+              balances. A finance product cannot afford either failure.
             </p>
             <p>
-              That end-to-end ownership is the whole point. Decisions that usually
-              get lost in the gap between a backend team and a frontend team
-              (how an error surfaces, what a permission boundary means in the UI,
-              where a piece of data is allowed to appear) are all made by one
-              person who has to live with the consequences.
+              I also wanted the product to do real work for the household, not just record numbers.
+              Budgeting fails when it is pure data entry, so Clempo connects the money to the week:
+              <strong class="text-ink font-semibold">what you spend, what debt you are paying down,
+              what you are eating, and what you save by packing lunch</strong> instead of buying it.
             </p>
           </div>
 
           <div class="mt-10 grid gap-6 md:grid-cols-2">
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">Back end</p>
-              <Heading level={3} visual="h3" tone="ink" class="mb-2">Data &amp; access</Heading>
+              <p class="mono-label mb-4">Trap one</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">Polished, but single-user</Heading>
               <Text size="sm" tone="muted">
-                Authentication, tenancy, and the data model: the rules that decide
-                who can see what, enforced where it counts.
+                Beautiful apps that assume one person owns the money. A household that budgets together
+                is left stitching two views into one by hand.
               </Text>
             </div>
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">Front end</p>
-              <Heading level={3} visual="h3" tone="ink" class="mb-2">The interface</Heading>
+              <p class="mono-label mb-4">Trap two</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">Shared, but leaky</Heading>
               <Text size="sm" tone="muted">
-                The screens households use day to day, designed and built with the
-                same person's hands that shaped the schema underneath.
+                Multi-user apps where a single forgotten condition exposes one family’s balances to
+                another. In finance, that is not a bug. It is a breach of trust.
               </Text>
             </div>
           </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="features" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">What Clempo does</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Five connected tools, each tied back to the same household ledger. The money is never
+              abstract: a budget feeds the meal plan, the meal plan’s leftovers feed tomorrow’s lunch,
+              and a packed lunch feeds the savings log.
+            </p>
+          </div>
+
+          <ul class="mt-10 border-t border-line">
+            {features.map((f) => (
+              <li class="flex gap-4 border-b border-line py-5">
+                <Icon name={f.icon} size={26} class="mt-1 shrink-0 text-ink-muted" />
+                <div>
+                  <div class="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                    <Heading level={3} visual="h4" tone="ink">{f.title}</Heading>
+                    <code class="font-mono text-[0.72rem] text-ink-muted">{f.model}</code>
+                  </div>
+                  <p class="mt-1.5 text-ink-muted leading-relaxed">{f.text}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </Container>
@@ -188,57 +353,153 @@ const docket = [
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 02</p>
-          <Heading level={2} visual="display-md" tone="ink">Keeping every household separate</Heading>
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Tenant isolation by construction</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Multi-tenancy is the hardest promise Clempo makes. More than one
-              household's financial data lives in the same system, and the one
-              thing that can never happen is for a household to see (or affect)
-              data that isn't theirs. There's no graceful degradation on that
-              requirement. It's either correct or it's a breach of trust.
+              Multi-tenancy is the hardest promise Clempo makes, so I treated tenant isolation as a
+              property of the system rather than a filter someone has to remember. There is no
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">acts_as_tenant</code>
+              gem and no global
+              <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">default_scope</code>
+              doing invisible magic. Every query derives from the current account’s associations.
             </p>
             <p>
-              So tenant isolation is treated as a property of the
-              <strong class="text-ink font-semibold">architecture</strong>, not a
-              filter someone has to remember to add to every query. Scoping a
-              household's data is the default path, and stepping outside that scope
-              has to be deliberate and visible: the inverse of the usual setup,
-              where a forgotten condition quietly leaks rows.
+              I chose this over an interception layer on purpose: the tenant boundary is visible at
+              every call site. A reviewer can read a controller action and see exactly which account
+              the data came from, with no hidden middleware to reason about. Nested resources scope
+              through their parent, and even the data-export service joins child tables back to the
+              account id, so bulk reads stay inside the wall too.
             </p>
           </div>
 
-          {/* TODO(josh): confirm — the isolation mechanics below (row-level scoping, default tenant scope) are inferred. Swap in the actual approach (e.g. Rails default_scope, a current_tenant pattern, Postgres RLS, separate schemas). */}
-          <div class="mt-10 rounded-lg border border-line p-7">
-            <p class="mono-label mb-5">Isolation, by construction</p>
-            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
-              <li class="flex items-center gap-3">
-                <Icon name="ph:lock-key" size={20} class="text-ink-muted" />
-                Every record scoped to its household
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:funnel" size={20} class="text-ink-muted" />
-                Tenant scope as the default, not an add-on
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:shield-check" size={20} class="text-ink-muted" />
-                Authorization checked where data is read
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:eye-slash" size={20} class="text-ink-muted" />
-                No path for cross-household exposure
-              </li>
-            </ul>
+          <div class="mt-10">
+            <CodeBlock
+              code={tenantSnippet}
+              filename="app/controllers/concerns/account_scoped.rb"
+              lang="ruby"
+              caption="The boundary is the call site. Hand-craft a request for another household's id and the row simply is not in scope."
+            />
           </div>
 
           <figure class="my-12 border-l-2 border-accent pl-6">
             <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-              Private-by-default isn't a feature you add to a finance app. It's the
-              architecture the rest of the product stands on.
+              Private by default is not a feature bolted onto the finance app. It is the foundation the
+              rest of the product stands on.
             </blockquote>
           </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="ai" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">An AI feature that fails gracefully</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The meal planner calls Claude with a multimodal request: base64 pantry-photo blocks
+              followed by a household-specific system prompt. The prompt knows the family, prefers the
+              cheaper grocery store, injects the current grocery budget remaining, and requires that
+              dinner leftovers become the next day’s lunch. The model returns a strict-JSON week and a
+              categorized shopping list.
+            </p>
+            <p>
+              The real engineering is in the failure handling. An AI call meets a flaky network on an
+              ordinary Tuesday, and the household should never see a stack trace because of it.
+            </p>
+          </div>
+
+          <ol class="mt-10 space-y-4">
+            {aiSteps.map((s, i) => (
+              <li class="flex gap-4 border-t border-line pt-4">
+                <span class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <p class="font-medium text-ink">{s.label}</p>
+                  <p class="mt-1 text-sm text-ink-muted leading-relaxed">{s.text}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div class="mt-8 flex flex-wrap items-center gap-2 font-mono text-[0.72rem] uppercase tracking-[0.1em]">
+            <span class="rounded-[4px] border border-line px-2 py-1 text-ink-muted">pending</span>
+            <Icon name="ph:arrow-right" size={12} class="text-ink-faint" />
+            <span class="rounded-[4px] border border-line px-2 py-1 text-ink-muted">processing</span>
+            <Icon name="ph:arrow-right" size={12} class="text-ink-faint" />
+            <span class="rounded-[4px] border px-2 py-1" style="border-color:#5F8A6B;color:#4a6e54">ready</span>
+            <span class="text-ink-faint">/</span>
+            <span class="rounded-[4px] border px-2 py-1" style="border-color:#9B2D3A;color:#9B2D3A">failed</span>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="infra" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">The infrastructure I own</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              There is no backend team handing off to a frontend team. The auth model, the background
+              jobs, the database topology, and the deploy are all mine, which means the decisions that
+              usually get lost in a handoff are made by the person who lives with them in production.
+            </p>
+          </div>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            {infra.map((item) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={item.icon} size={28} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h4" tone="ink" class="mb-1.5">{item.title}</Heading>
+                <Text size="sm" tone="muted">{item.text}</Text>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-12 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-6">Stack at a glance</p>
+            <dl class="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              {stackGroups.map((g) => (
+                <div>
+                  <dt class="mono-label mb-3">{g.label}</dt>
+                  <dd>
+                    <ul class="space-y-1.5 text-sm text-ink-muted leading-relaxed">
+                      {g.items.map((it) => <li>{it}</li>)}
+                    </ul>
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <div class="mt-8 rounded-lg border border-line p-6 md:p-8">
+            <div class="flex items-center gap-3">
+              <Icon name="ph:flask" size={22} class="text-ink-muted" />
+              <p class="mono-label">Proving it works</p>
+            </div>
+            <p class="mt-4 measure text-ink-muted leading-relaxed">
+              A roughly 32-file RSpec suite spans model, request, component, system, service, job, and
+              query specs, backed by FactoryBot. The AI integration is tested without ever hitting the
+              real API: WebMock stubs the Claude endpoint for success, malformed output, and timeout,
+              and the tests assert that the grocery-budget figure reaches the prompt and that image
+              blocks appear in the request body. System specs drive headless Chrome through logging an
+              expense and the meal-plan chat, and the pipeline runs RuboCop, Brakeman, and a
+              bundler-audit scan on every push.
+            </p>
+          </div>
         </div>
       </div>
     </Container>
@@ -248,116 +509,42 @@ const docket = [
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 03</p>
+          <p class="mono-label mb-3">Step 06</p>
           <Heading level={2} visual="display-md" tone="ink">An interface built with care</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              The same judgment I bring to design systems goes into Clempo's
-              interface. Money is stressful, and a finance app earns trust through
-              clarity: legible numbers, recoverable forms, and states that tell you
-              the truth about what's happening. Design and accessibility aren't a
-              pass at the end. They're built in as the product takes shape.
-            </p>
-            <p>
-              Information is never carried by color alone. Status, errors, and
-              confirmations are expressed through text and structure as well, so
-              the interface stays legible to everyone, including keyboard and
-              screen-reader users. The details most products skip (the empty
-              state before there's data, the focus path through a form) are the
-              ones I deliberately sweat.
+              The frontend is server-rendered Hotwire with ViewComponents, styled in Tailwind v4. A
+              single <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">UiPresenter</code>
+              is the source of truth for the design system in Ruby: one place defines the type scale and
+              returns the class strings for buttons, inputs, cards, badges, and modals, so the visual
+              language stays consistent without copy-pasted utility soup. Turbo Frames scope updates
+              tightly, so submitting an expense re-renders only that one envelope card.
             </p>
           </div>
 
-          <ul class="mt-8 border-t border-line">
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:keyboard" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-              <div>
-                <Heading level={3} visual="h3" tone="ink" class="mb-1">Operable by keyboard</Heading>
-                <Text size="sm" tone="muted">
-                  Every flow is reachable and usable without a mouse, with focus
-                  that goes where you'd expect.
-                </Text>
+          <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
+            {palette.map((c) => (
+              <div class="flex items-center gap-2.5">
+                <span class="h-7 w-7 rounded-full border border-line" style={`background:${c.hex}`} aria-hidden="true"></span>
+                <span class="text-sm text-ink-muted">{c.name}</span>
               </div>
-            </li>
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:eye" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-              <div>
-                <Heading level={3} visual="h3" tone="ink" class="mb-1">Never color alone</Heading>
-                <Text size="sm" tone="muted">
-                  Meaning is carried by text and structure too, so nothing depends
-                  on a user perceiving a single hue.
-                </Text>
-              </div>
-            </li>
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:list-checks" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-              <div>
-                <Heading level={3} visual="h3" tone="ink" class="mb-1">The states that get skipped</Heading>
-                <Text size="sm" tone="muted">
-                  Empty, loading, and error states are designed on purpose: the
-                  parts that decide whether a product feels finished.
-                </Text>
-              </div>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
-  <Section id="production" tone="paper" padding="default" class="scroll-mt-24">
-    <Container width="content">
-      <div class="case-layout">
-        <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 04</p>
-          <Heading level={2} visual="display-md" tone="ink">Real households, in production</Heading>
-        </div>
-        <div class="case-layout__body">
-          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
-            <p>
-              Clempo isn't a portfolio mock-up. Real households use it to keep
-              track of their money, which means it has to be correct, private, and
-              dependable every single day, not just on the demo path. That's a
-              different bar than a side project that only ever has to impress in a
-              screenshot.
-            </p>
-            <p>
-              Running a multi-tenant product with live users is where full-stack
-              ownership stops being a phrase and starts being a discipline. The
-              person who modeled the data is the person who hears about it if the
-              interface is confusing or a number looks off. That tight loop (own
-              it, ship it, live with it) is exactly the kind of product
-              engineering I want to do on a team.
-            </p>
+            ))}
           </div>
+          <p class="mt-3 text-sm text-ink-faint">An OKLCH editorial palette: sage reads positive money, claret reads negative, paired with Instrument Sans and a Newsreader display serif.</p>
 
-          <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:users-three" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Real households</Heading>
-              <Text size="sm" tone="muted">
-                Live users depending on it, not a seeded demo: the product has to
-                actually hold up.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:lock-key" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Private by default</Heading>
-              <Text size="sm" tone="muted">
-                Multi-tenant isolation keeps each household's data correct and
-                separate, every request.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:stack" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" tone="ink" class="mb-1">Owned end to end</Heading>
-              <Text size="sm" tone="muted">
-                One engineer from the data model to the last focus state. No
-                handoffs, no gaps.
-              </Text>
-            </div>
+          <Heading level={3} visual="h3" tone="ink" class="mt-12 mb-6">
+            Accessibility as a constraint, not a cleanup pass
+          </Heading>
+          <div class="grid gap-6 md:grid-cols-2">
+            {a11y.map((item) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={item.icon} size={26} class="mb-3 text-ink-muted" />
+                <Heading level={4} visual="h4" tone="ink" class="mb-1.5">{item.title}</Heading>
+                <Text size="sm" tone="muted">{item.text}</Text>
+              </div>
+            ))}
           </div>
         </div>
       </div>
@@ -368,11 +555,13 @@ const docket = [
     <Container width="wide">
       <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
       <Heading level={2} visual="display-lg" tone="paper">
-        I build complete products, end to end.
+        Most of the work lived in the seams.
       </Heading>
       <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
-        Clempo is one of them, owned from the data model to the last focus
-        state. If that's the kind of engineer your team needs, let's talk.
+        Where the auth model meets the tenant boundary, where the AI call meets a flaky network, where a
+        balance update meets a screen reader. Those seams are exactly where a backend-to-frontend handoff
+        usually drops something. Owning the whole stack meant there was nowhere for those decisions to
+        get lost. If that is the kind of engineer your team needs, let’s talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>
@@ -382,6 +571,7 @@ const docket = [
         </a>
       </div>
       <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="https://ramsey.thebrileys.com/" class="!text-paper hover:!text-paper/70">View the live app</Link>
         <Link variant="arrow" href="/personal-projects/" class="!text-paper hover:!text-paper/70">Back to personal projects</Link>
       </div>
     </Container>

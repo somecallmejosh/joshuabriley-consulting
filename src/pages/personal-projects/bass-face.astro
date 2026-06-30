@@ -7,49 +7,162 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Link from '~/components/primitives/Link.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
 
 const title = 'Bass Face | Joshua Briley';
 const description =
-  'Case study: a bass-practice tool I built for myself in React, with generative backing tracks from Tone.js and reflective feedback through the Claude API. A product engineer wiring live services into a finished product.';
+  'Case study: Bass Face, a bass-practice tool built as a real React product. Claude authors a constrained musical situation, hands the parameters to a Tone.js engine that synthesizes the backing track live, then reads the player’s reflection and pushes one variable. Two live services, one loop.';
 
 const proof = [
   {
     label: 'Skills proven',
     items: [
       'React product development',
-      'Generative audio with Tone.js',
-      'Claude API integration',
-      'Wiring live third-party services',
-      'Shipping a product end to end',
+      'Generative audio synthesis (Tone.js)',
+      'An LLM wired in as a typed service',
+      'Schema-driven UI, not prompt parsing',
+      'Latency, state & failure handling',
+      'Product judgment: what to cut',
     ],
   },
   {
-    // TODO(josh): confirm — only React, Tone.js, and the Claude API are confirmed.
-    // Add the build tool / hosting (e.g. Vite, Netlify) once verified.
     label: 'Stack',
-    items: ['React', 'Tone.js', 'Claude API'],
+    items: ['React 19', 'TypeScript', 'Vite', 'Tailwind v4', 'Tone.js', 'Claude API · Netlify Functions'],
   },
   {
-    // TODO(josh): confirm — these describe the intended engineering/a11y choices.
-    // Verify against the actual implementation before treating them as receipts.
     label: 'Quality',
     items: [
-      'User-initiated audio (no autoplay)',
-      'A real product, not a prototype',
-      'Two live services in one interface',
+      'Structured JSON outputs, five schemas',
+      'User-initiated audio, no autoplay',
+      'API key held server-side',
+      'Governed copy, never grades',
     ],
   },
   {
     label: 'Outcomes',
-    items: ['Built for daily practice', 'Live audio + an LLM in one product', 'Personal project · creative range'],
+    items: ['Shipped end to end', 'Two live services in one loop', 'A tool I use on a Tuesday night'],
   },
 ];
 
 const docket = [
-  { href: '#why', icon: 'ph:guitar', label: 'Why I built my own practice tool' },
-  { href: '#live-services', icon: 'ph:plugs-connected', label: 'Wiring live services into a real product' },
-  { href: '#finish', icon: 'ph:sparkle', label: 'Creative range, and caring about the finish' },
+  { href: '#problem', icon: 'ph:guitar', label: 'The gap: feel and technique, no frame' },
+  { href: '#thesis', icon: 'ph:target', label: 'The thesis, and the session loop' },
+  { href: '#seam', icon: 'ph:plugs-connected', label: 'One seam, two live services' },
+  { href: '#audio', icon: 'ph:waveform', label: 'The audio engine' },
+  { href: '#claude', icon: 'ph:brackets-curly', label: 'The Claude layer' },
+  { href: '#finish', icon: 'ph:scissors', label: 'Finish, and the discipline to subtract' },
 ];
+
+const loop = [
+  { title: 'Situation', sub: 'Claude + live audio set a constrained musical moment' },
+  { title: 'Reflection', sub: 'The player writes what actually happened' },
+  { title: 'Response', sub: 'Claude observes and reframes, never prescribes' },
+  { title: 'Second pass', sub: 'One variable changes, the track re-synthesizes' },
+  { title: 'Vocabulary move', sub: 'One technique, named, with one place to use it' },
+];
+
+const commitments = [
+  { icon: 'ph:lock-key', title: 'Constraints drive decisions', text: 'The more specific the situation, the more the player has to make a real choice instead of filling space. "No more than three pitches" makes noodling impossible.' },
+  { icon: 'ph:pencil-line', title: 'Reflection makes decisions conscious', text: 'Articulating what happened matters as much as playing it. The reflection screens are the product’s real success surface, so they get the most design attention.' },
+  { icon: 'ph:prohibit', title: 'It never grades', text: 'No score, no streak, no progress bar, no correct answer. Every category default (XP, badges, tracked minutes) pulls attention toward the metric and away from the music.' },
+];
+
+const motions = [
+  { name: 'blues-12', text: 'A full twelve-bar blues as dominant sevenths (I7-IV7-V7).' },
+  { name: 'ii-V-I', text: 'The jazz cadence rendered across eight bars.' },
+  { name: 'turnaround', text: 'Branches by quality: i-VI-III-VII minor, I-vi-IV-V major.' },
+  { name: 'static · two-chord', text: 'Drones and vamps for the sparest situations.' },
+];
+
+const audioPoints = [
+  { icon: 'ph:music-notes', title: 'Music theory, generated not hard-coded', text: 'Progressions are built from primitives (minorTriad, majorTriad, dom7) over a tonic resolved from note name to MIDI. The motion parameter selects a real harmonic form.' },
+  { icon: 'ph:sliders', title: 'Feel is real arrangement, not a label', text: 'Each feel reshapes the pad envelope and the drum kit (MembraneSynth kick, MetalSynth hat, NoiseSynth cross-stick). Shuffle turns on transport swing at 0.58 so the ride lays back.' },
+  { icon: 'ph:hand-tap', title: 'It respects the browser and the player', text: 'Tone.start() only runs on an explicit press: the correct AudioContext gesture and the right a11y default. The loop has no scrub bar and no timer, and stopping it disposes every node cleanly.' },
+];
+
+const claudePoints = [
+  { icon: 'ph:brackets-curly', title: 'Structured outputs, five request kinds', text: 'Every call uses output_config with a JSON schema, so the response is always a validated object the front end renders without parsing prose. The LLM behaves like a typed API, not a text box.' },
+  { icon: 'ph:scroll', title: 'One system prompt, role enforced at the model layer', text: 'The voice rules live in the prompt: direct and warm, one idea per sentence, theory only when it serves the moment. The hard prohibitions are explicit, and the block is sent with cache_control: ephemeral.' },
+  { icon: 'ph:key', title: 'The key never touches the browser', text: 'The Anthropic call runs inside a Netlify Function at /api/claude. The client posts a discriminated-union request; the function holds the key server-side and returns the validated JSON.' },
+];
+
+const prohibitions = [
+  'Never grade',
+  'Never say what the player should have played',
+  'Never lead with theory',
+  'Never list vocabulary as a reference',
+];
+
+const decisions = [
+  { title: 'One thing on screen at a time', text: 'The loop has five moments and each gets its own focused view. No dashboard, no sidebar, no next-up teaser. The session is the app.' },
+  { title: 'The constraint is the loudest element', text: 'It is boxed like an index card taped to a monitor, because it is the one thing the player has to hold in their head while playing.' },
+  { title: 'Latency is an emotional problem', text: 'A spinner between playing and Claude’s reply breaks the rehearsal-space spell. Reflection input persists locally on every keystroke, so a failed call never costs the player their words.' },
+  { title: 'Copy is governed', text: 'No exclamation points, no success language. Buttons are verbs of intent (Begin, Send, Second pass), never Submit or Continue. The second pass shows the changed variable as a visible diff.' },
+];
+
+const cuts = [
+  'User accounts and persistent history',
+  'A browsable vocabulary library',
+  'Progress tracking of any kind',
+  'A regenerate-this-situation button',
+];
+
+const onboarding = [
+  {
+    src: '/images/projects/bass-face/01-landing.webp',
+    label: 'Landing',
+    alt: 'Bass Face landing screen: the line “A practice companion for bass players who want to stop noodling and start playing intentional parts,” above a single Begin button.',
+  },
+  {
+    src: '/images/projects/bass-face/02-styles-blues.webp',
+    label: 'Styles',
+    alt: 'Onboarding screen asking “What do you play?” with selectable genre pills; Blues is selected.',
+  },
+  {
+    src: '/images/projects/bass-face/03-feel.webp',
+    label: 'Key & feel',
+    alt: 'Onboarding screen asking “What key or feel are you most comfortable in?” with the answer “A minor at 100bpm” typed in.',
+  },
+  {
+    src: '/images/projects/bass-face/04-wish.webp',
+    label: 'Wish',
+    alt: 'Onboarding screen asking “What’s something you wish you could do that you can’t yet?” answered “I want to play more melodically, and make the music sound like an actual song.”',
+  },
+  {
+    src: '/images/projects/bass-face/05-confirm.webp',
+    label: 'Confirm',
+    alt: 'Onboarding confirm screen: “We’ll use this to shape every session. You can change your answers later,” above a Start your first situation button.',
+  },
+];
+
+const backingSnippet = `// Every situation Claude returns includes a backing object.
+// It is not display text. It is the synthesizer's input.
+
+type Backing = {
+  tonic: string                  // "A", "Bb", "F#"
+  quality: 'major' | 'minor'
+  bpm: number
+  feel: 'slow & sparse' | 'driving' | 'syncopated' | 'shuffle'
+  motion: 'static' | 'two-chord' | 'turnaround' | 'blues-12' | 'ii-V-I'
+}
+
+// Claude composes the situation in language and in parameters at once.
+// Tone.js renders the parameter half live. The model is the composer;
+// the browser is the band.`;
+
+const requestSnippet = `// Five request kinds, one JSON schema each. The front end reads
+// fields, never string-matches prose. A screen change is a schema
+// change, not a parser change.
+
+type ClaudeRequest =
+  | { kind: 'situation' }
+  | { kind: 'situation-update'; variable: BackingKey }
+  | { kind: 'reflection-question'; situation: Situation }
+  | { kind: 'response'; reflection: string }
+  | { kind: 'vocabulary'; situation: Situation }
+
+// feel and motion are enumerated identically on both sides, so the
+// model is free in language and bounded where the synth needs it.`;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -74,12 +187,26 @@ const docket = [
             I built my own bass practice tool, and I <em class="ink-wink font-normal italic">finished</em> it.
           </Heading>
 
-          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
-            A practice tool I built for myself in React: generative backing tracks
-            synthesized live with Tone.js, and reflective feedback wired in through the
-            Claude API. No client, no deadline. Just a real product, built end to end,
-            because I wanted to use it.
-          </Text>
+          <p class="mt-8 max-w-xl">
+            <Text as="span" size="lg" tone="muted">
+              Claude authors a constrained musical situation and hands the parameters to a Tone.js
+              engine that synthesizes the backing track live, then reads your reflection and pushes
+              one variable. Two live services, one loop.
+            </Text>
+          </p>
+
+          <div class="mt-9 flex flex-wrap items-center gap-x-8 gap-y-3">
+            <a href="#thesis" class="hero-cta hero-cta--primary">
+              <Icon name="ph:target" size={18} />
+              The session loop
+              <Icon name="ph:arrow-right" size={13} class="hero-cta-arrow" />
+            </a>
+            <a href="#seam" class="hero-cta">
+              <Icon name="ph:plugs-connected" size={18} />
+              How the seam works
+              <Icon name="ph:arrow-right" size={13} class="hero-cta-arrow" />
+            </a>
+          </div>
         </div>
 
         <aside class="hero-rail" aria-label="Project details">
@@ -89,17 +216,16 @@ const docket = [
               <dd>Product Engineer</dd>
             </div>
             <div>
-              {/* TODO(josh): confirm — domain label. "Music practice" inferred from the tool's purpose. */}
               <dt>Domain</dt>
-              <dd>Music practice</dd>
+              <dd>Generative audio + LLM</dd>
             </div>
             <div>
               <dt>Stack</dt>
-              <dd>React, Tone.js, Claude</dd>
+              <dd>React &middot; Tone.js &middot; Claude</dd>
             </div>
             <div>
-              <dt>Focus</dt>
-              <dd>Live services in a product</dd>
+              <dt>Type</dt>
+              <dd>Personal, shipped</dd>
             </div>
           </dl>
         </aside>
@@ -149,57 +275,76 @@ const docket = [
       </ul>
 
       <Text size="lg" tone="muted" class="mt-10 measure">
-        Bass Face is a personal project, and that's the whole point. I play bass and gig
-        regularly, so I know exactly what I want out of a practice session. Instead of
-        settling for a metronome and a backing-track playlist, I built the thing I wished
-        existed. And because no one was asking for it, no one was around to talk me out of
-        sweating the finish.
+        Most practice tools give a bass player something to play against or something to think about,
+        never both. Backing tracks loop forever and say nothing back. Lesson platforms talk at you and
+        never ask what you actually played. Bass Face closes that loop. The interesting engineering is
+        not Tone.js alone and not the Claude integration alone. It is the seam between them: the model
+        authors the music, and its output is the synthesizer’s input.
       </Text>
     </Container>
   </Section>
 
-  <Section id="why" tone="paper" padding="default" class="scroll-mt-24">
+  <Section tone="paper" padding="tight" aria-label="The product on screen">
+    <Container width="wide">
+      <p class="mono-label mb-6">The session, on screen</p>
+      <figure class="app-shot">
+        <div class="app-shot__frame">
+          <img
+            src="/images/projects/bass-face/06-situation.webp"
+            alt="The Bass Face situation screen: a slow blues in A minor written in prose, a boxed constraint reading “Play only on beats 1 and 3, and never land on the root when a new chord arrives,” the backing spec “A minor · 100 bpm · shuffle · blues-12,” and a single play button."
+            width="1600"
+            height="1075"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
+        <figcaption class="app-shot__cap mono-label">
+          <span>The situation</span>
+          <span>Constraint, backing spec, one play button</span>
+        </figcaption>
+      </figure>
+    </Container>
+  </Section>
+
+  <Section id="problem" tone="paper" padding="default" class="scroll-mt-24">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
           <p class="mono-label mb-3">Step 01</p>
-          <Heading level={2} visual="display-md" tone="ink">
-            Why I built my own practice tool
-          </Heading>
+          <Heading level={2} visual="display-md" tone="ink">The gap: feel and technique, no frame</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Practicing bass well takes two things most tools give you only one of: something
-              to play <em>against</em>, and an honest read on how it went. Backing tracks are
-              static: the same loop every time, in the same key, at the same tempo. And nothing
-              tells you what to work on next except your own memory of a session you were busy
-              playing through.
+              This is for an intermediate bass player, mostly self-taught, who knows their pentatonic
+              shapes cold and can find the root of any chord. What they cannot do is
+              <em>apply</em> it. They know the shapes but not the moves, the alphabet but not the
+              sentences. When someone at rehearsal says &ldquo;just feel it out,&rdquo; they default to
+              a busy sixteenth-note thing that fills the space without saying anything.
             </p>
             <p>
-              So I built Bass Face for myself, as a real React product rather than a weekend
-              throwaway. Building for an audience of one is a strange kind of freedom: there was
-              no spec to satisfy and no deadline to cut against, which meant the only thing
-              deciding when it was &ldquo;done&rdquo; was whether <em>I</em> actually wanted to
-              open it every day. That's a higher bar than most briefs set.
+              That gap has a name: <strong class="text-ink font-semibold">noodling</strong>, what
+              happens when a player has feel and technique but no constraints and no frame. The market
+              sells the two halves that would fix it separately, so neither one closes the loop between
+              playing and thinking. That missing question is the entire product.
             </p>
           </div>
 
           <div class="mt-10 grid gap-6 md:grid-cols-2">
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">What it needed</p>
-              <Heading level={3} visual="h3" class="mb-2">Something to play against</Heading>
+              <p class="mono-label mb-4">Something to play against</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">Static backing tracks</Heading>
               <Text size="sm" tone="muted">
-                Backing tracks that change instead of repeating, generated live, so practice
-                never collapses into muscle memory of one fixed loop.
+                Same loop, same key, same tempo, every time. Practice collapses into muscle memory
+                because nothing ever changes the situation.
               </Text>
             </div>
             <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">What it needed</p>
-              <Heading level={3} visual="h3" class="mb-2">An honest read</Heading>
+              <p class="mono-label mb-4">An honest read</p>
+              <Heading level={3} visual="h3" tone="ink" class="mb-2">One-way lessons</Heading>
               <Text size="sm" tone="muted">
-                Reflective feedback on a session, so the next one has a direction instead of
-                starting from a blank page every time.
+                Genuinely well made, but nobody on the other end ever asks what you actually played
+                just now, and why. So you watch, nod, and noodle anyway.
               </Text>
             </div>
           </div>
@@ -208,70 +353,219 @@ const docket = [
     </Container>
   </Section>
 
-  <Section id="live-services" tone="paper" padding="default" class="scroll-mt-24">
+  <Section id="thesis" tone="paper" padding="default" class="scroll-mt-24">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
           <p class="mono-label mb-3">Step 02</p>
-          <Heading level={2} visual="display-md" tone="ink">
-            Wiring live services into a real product
-          </Heading>
+          <Heading level={2} visual="display-md" tone="ink">The thesis, and the session loop</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Bass Face leans on two live services, each doing something a static app can't.
-              <strong class="text-ink font-semibold">Tone.js</strong> synthesizes the backing
-              tracks in the browser in real time. This is generated audio, not a file being
-              played back, so the accompaniment can shift instead of looping. Audio is always
-              <em>user-initiated</em>: you press play. That's both the natural interaction and
-              the right accessibility default: nothing blasts out of the speakers the moment the
-              page loads.
+              Bass Face is deliberately the opposite of a practice app. Every dominant pattern in the
+              category (streaks, XP, badges, tracked minutes, leaderboards) pulls attention toward the
+              metric and away from the music, so the product rules all of them out and commits to three
+              things instead.
             </p>
-            <p>
-              The second service is the <strong class="text-ink font-semibold">Claude API</strong>,
-              wired in for reflective feedback, turning a practice session into a short,
-              useful read on what to work on next. The interesting engineering isn't either
-              service on its own; it's making real-time audio synthesis and an LLM live together
-              in one coherent interface, with the latency, state, and failure modes of both
-              handled gracefully. That integration work is exactly what product engineering is.
-            </p>
-            {/* TODO(josh): confirm — what the Claude feedback is based on (e.g. notes/settings the user enters about a session). Claude doesn't process raw audio, so describe the actual input if you want this more concrete. */}
           </div>
 
-          <div class="mt-10 border-t border-line">
-            <div class="border-b border-line py-5">
-              <div class="flex items-start gap-4">
-                <Icon name="ph:waveform" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-                <div>
-                  <Heading level={3} visual="h4" tone="ink">Tone.js · generative backing tracks</Heading>
-                  <p class="mt-1 text-ink-muted leading-relaxed">
-                    Audio synthesized live in the browser, user-initiated by design: practice
-                    accompaniment that changes instead of repeating.
-                  </p>
-                </div>
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            {commitments.map((c) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={c.icon} size={28} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h4" tone="ink" class="mb-1.5">{c.title}</Heading>
+                <Text size="sm" tone="muted">{c.text}</Text>
               </div>
-            </div>
-            <div class="border-b border-line py-5">
-              <div class="flex items-start gap-4">
-                <Icon name="ph:chat-circle-dots" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-                <div>
-                  <Heading level={3} visual="h4" tone="ink">Claude API · reflective feedback</Heading>
-                  <p class="mt-1 text-ink-muted leading-relaxed">
-                    An LLM wired into the practice loop to reflect a session back and point at
-                    what to work on next.
-                  </p>
-                </div>
-              </div>
-            </div>
+            ))}
+          </div>
+
+          <Heading level={3} visual="h3" tone="ink" class="mt-14 mb-2">One session, one situation, worked deeply</Heading>
+          <Text tone="muted" class="mb-6 measure">
+            Fifteen to twenty minutes. One situation worked on deeply, not many things touched lightly.
+          </Text>
+          <ol class="grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-5">
+            {loop.map((m, i) => (
+              <li class="bg-paper p-5">
+                <span class="font-mono text-[0.7rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
+                <p class="mt-2 font-medium text-ink">{m.title}</p>
+                <p class="mt-1 text-sm text-ink-muted leading-relaxed">{m.sub}</p>
+              </li>
+            ))}
+          </ol>
+          <p class="mt-4 text-sm text-ink-faint">
+            The only success metric is whether the player describes their playing differently at the end
+            than they did at the start.
+          </p>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="seam" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">One seam, two live services</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              It would be easy to build this as two features bolted together: an audio toy on one
+              screen, a chatbot on another. That version is a demo. The real product needs the model and
+              the synthesizer to be the same loop, and they connect at a single seam. Every situation
+              Claude returns includes a <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 py-0.5 rounded-[4px]">backing</code>
+              object that is fed straight into the Tone.js engine.
+            </p>
+          </div>
+
+          <div class="mt-10">
+            <CodeBlock
+              code={backingSnippet}
+              filename="src/types/backing.ts"
+              lang="ts"
+              caption="When Claude tightens the second pass by moving the chord, the same data flow re-synthesizes a new backing track."
+            />
           </div>
 
           <figure class="my-12 border-l-2 border-accent pl-6">
             <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-              The hard part isn't either service alone. It's making real-time audio and an LLM
-              feel like one finished product.
+              Making that feel like one finished product, rather than two services taking turns, is where
+              the engineering actually lives.
             </blockquote>
           </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="audio" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">The audio engine</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The engine is a single module that takes a backing spec and produces a looping groove.
+              There is no bass voice in the mix. <strong class="text-ink font-semibold">The player is
+              the bass.</strong>
+            </p>
+          </div>
+
+          <div class="mt-10 space-y-8">
+            {audioPoints.map((p) => (
+              <div class="flex gap-4 border-t border-line pt-5">
+                <Icon name={p.icon} size={26} class="mt-0.5 shrink-0 text-ink-muted" />
+                <div>
+                  <Heading level={3} visual="h4" tone="ink" class="mb-1.5">{p.title}</Heading>
+                  <Text size="sm" tone="muted">{p.text}</Text>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">The motion parameter renders real harmony</p>
+            <dl class="space-y-3">
+              {motions.map((m) => (
+                <div class="flex flex-col gap-1 border-t border-line pt-3 first:border-t-0 first:pt-0 sm:flex-row sm:gap-4">
+                  <dt class="w-44 shrink-0 font-mono text-[0.8rem] text-ink">{m.name}</dt>
+                  <dd class="text-sm text-ink-muted">{m.text}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <Section id="claude" tone="paper" padding="default" class="scroll-mt-24">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">The Claude layer</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Claude does not free-form chat. It returns typed JSON that drives both the interface and
+              the audio engine. Treating the model as a typed API removed an entire class of fragility:
+              the front end reads fields, it never string-matches model prose.
+            </p>
+          </div>
+
+          <div class="mt-10">
+            <CodeBlock
+              code={requestSnippet}
+              filename="src/api/claude.ts"
+              lang="ts"
+              caption="The audio types and the schema enums are the same closed set, so the model can be creative in language and deterministic where the synth needs it."
+            />
+          </div>
+
+          <div class="mt-10 space-y-8">
+            {claudePoints.map((p) => (
+              <div class="flex gap-4 border-t border-line pt-5">
+                <Icon name={p.icon} size={26} class="mt-0.5 shrink-0 text-ink-muted" />
+                <div>
+                  <Heading level={3} visual="h4" tone="ink" class="mb-1.5">{p.title}</Heading>
+                  <Text size="sm" tone="muted">{p.text}</Text>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <figure class="app-shot mt-12">
+            <p class="mono-label mb-5">The player writes, Claude reframes</p>
+            <div class="grid gap-5 sm:grid-cols-2">
+              <div class="app-shot__frame">
+                <img
+                  src="/images/projects/bass-face/07-reflection.webp"
+                  alt="The Bass Face reflection screen: a question about which notes the player reached for, and the player’s own typed answer below it."
+                  width="1600"
+                  height="1075"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <div class="app-shot__frame">
+                <img
+                  src="/images/projects/bass-face/08-response.webp"
+                  alt="The Bass Face response screen: the player’s reflection quoted at top, Claude’s reframing below it, and a “next pass” instruction that names the single variable to change, above a Second pass button."
+                  width="1600"
+                  height="1075"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            </div>
+            <figcaption class="app-shot__cap mono-label">
+              <span>Reflection, then response</span>
+              <span>The reply ends in one change for the second pass</span>
+            </figcaption>
+          </figure>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">The prohibitions, baked into the prompt</p>
+            <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {prohibitions.map((p) => (
+                <li class="flex items-center gap-3 text-sm text-ink-muted">
+                  <Icon name="ph:x" size={15} class="shrink-0 text-accent" />
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 text-sm text-ink-faint">
+              A constraint that allows noodling is not a constraint. That definition is part of the
+              system prompt, not UI copy.
+            </p>
+          </div>
         </div>
       </div>
     </Container>
@@ -281,56 +575,71 @@ const docket = [
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 03</p>
-          <Heading level={2} visual="display-md" tone="ink">
-            Creative range, and caring about the finish
-          </Heading>
+          <p class="mono-label mb-3">Step 06</p>
+          <Heading level={2} visual="display-md" tone="ink">Finish, and the discipline to subtract</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Bass Face covers a lot of distance for a personal project: live audio synthesis on
-              one side, an LLM integration on the other, and a real interface holding both
-              together. That range (comfortable wiring up DSP-style audio one moment and a
-              language model the next) is the part I'm proud of. It's the same instinct that
-              lets me move across a stack instead of staying in one lane.
-            </p>
-            <p>
-              And because I built it for myself, nothing forced me to cut the last ten percent:
-              the empty states, the play/stop interaction, the moment when there's nothing to
-              reflect on yet. That's the same finish I bring to the products I ship for teams. A
-              personal tool is just the clearest place to show it, because there's no one else to
-              blame for the parts that aren't done.
+              The product is a constraint, a question, and a reply. Typography and copy do the work;
+              chrome stays out of the way. The aesthetic is a well-worn rehearsal space, not a blank
+              productivity tool: warm off-white, deep ink, one marked-up-score accent for primary
+              actions and the constraint card.
             </p>
           </div>
 
-          <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:arrows-out" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">Creative range</Heading>
-              <Text size="sm" tone="muted">
-                Real-time audio and an LLM in one build: comfort moving across very different
-                parts of a stack.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:plugs-connected" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">Live services, wired well</Heading>
-              <Text size="sm" tone="muted">
-                Third-party services integrated into a coherent product, not bolted on as a demo.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:sparkle" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">A finished feel</Heading>
-              <Text size="sm" tone="muted">
-                The last ten percent (empty states, interactions, defaults) treated as the
-                point, not the afterthought.
-              </Text>
-            </div>
+          <div class="mt-10 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+            {decisions.map((d) => (
+              <div class="border-t border-line pt-5">
+                <Heading level={3} visual="h4" tone="ink" class="mb-1.5">{d.title}</Heading>
+                <Text size="sm" tone="muted">{d.text}</Text>
+              </div>
+            ))}
           </div>
 
-          {/* TODO(josh): confirm — there's no live demo / repo link on this page because I can't confirm one exists. If Bass Face is deployed or on GitHub, add hero CTAs (like rudiment-ui.astro) linking to it. */}
+          <figure class="app-shot mt-12">
+            <p class="mono-label mb-5">One screen at a time, landing to the loop</p>
+            <div class="app-strip" role="group" aria-label="Bass Face onboarding, screen by screen">
+              {onboarding.map((screen) => (
+                <div class="app-strip__slide">
+                  <div class="app-shot__frame">
+                    <img
+                      src={screen.src}
+                      alt={screen.alt}
+                      width="1600"
+                      height="1075"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <p class="app-strip__cap mono-label">{screen.label}</p>
+                </div>
+              ))}
+            </div>
+          </figure>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
+              The hardest calls were subtractions. Knowing what not to build, and defending each cut
+              against the thesis, is the part that transfers directly to shipping for a team.
+            </blockquote>
+          </figure>
+
+          <div class="rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Cut on purpose</p>
+            <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {cuts.map((c) => (
+                <li class="flex items-center gap-3 text-sm text-ink-muted">
+                  <Icon name="ph:scissors" size={15} class="shrink-0 text-ink-faint" />
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+            <p class="mt-5 text-sm text-ink-faint">
+              Each cut traces back to the thesis. Every one, added, would have pulled the player’s
+              attention from the music toward a metric or a collection.
+            </p>
+          </div>
         </div>
       </div>
     </Container>
@@ -340,10 +649,13 @@ const docket = [
     <Container width="wide">
       <p class="mono-label !text-paper/65 mb-6">Product engineering</p>
       <Heading level={2} visual="display-lg" tone="paper">
-        I build complete products, end to end.
+        One loop, not two demos.
       </Heading>
       <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
-        Bass Face is what I build when no one's asking: live audio, an LLM, and a finished interface, wired together for the fun of it. The same instinct shows up in the products I ship for teams. Let's talk.
+        Bass Face is what I build when no one is asking: live audio, an LLM, and a finished interface,
+        wired together for the fun of it. The success bar was whether I actually wanted to use it on a
+        Tuesday night with twenty minutes and the bass already in hand. The same instinct shows up in
+        the products I ship for teams. Let’s talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/">Get in touch</Button>
@@ -353,8 +665,67 @@ const docket = [
         </a>
       </div>
       <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/personal-projects/clempo/" class="!text-paper hover:!text-paper/70">More live services: Clempo</Link>
         <Link variant="arrow" href="/personal-projects/" class="!text-paper hover:!text-paper/70">Back to personal projects</Link>
       </div>
     </Container>
   </Section>
+
 </BaseLayout>
+
+<style>
+  /* App screenshots: a quiet hairline frame matching the SiteShot voice,
+     no browser chrome and no outbound link (these are interface stills, not a live site). */
+  .app-shot { margin: 0; }
+
+  .app-shot__frame {
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -30px rgba(27, 26, 23, 0.28);
+  }
+  .app-shot__frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .app-shot__cap {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  /* Onboarding filmstrip: horizontal scroll-snap so five near-identical
+     screens read as breadth without a tiny five-up grid. */
+  .app-strip {
+    display: flex;
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 0.5rem;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+  .app-strip__slide {
+    flex: 0 0 auto;
+    width: 80%;
+    scroll-snap-align: start;
+  }
+  .app-strip__cap {
+    margin-top: 0.7rem;
+    color: var(--ink-faint);
+  }
+
+  @media (min-width: 768px) {
+    .app-strip__slide { width: 44%; }
+  }
+  @media (min-width: 1024px) {
+    .app-strip__slide { width: 31%; }
+  }
+</style>
