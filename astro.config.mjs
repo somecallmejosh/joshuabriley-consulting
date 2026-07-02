@@ -82,6 +82,7 @@ export default defineConfig({
       filter: (page) =>
         !page.includes('/dev/') &&
         !page.includes('/component-inventory') &&
+        !page.includes('/og-render') &&
         !page.includes('/tools/scorecard/results'),
     }),
   ],

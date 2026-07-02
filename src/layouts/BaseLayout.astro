@@ -6,6 +6,7 @@ import Header from '~/components/chrome/Header.astro';
 import Footer from '~/components/chrome/Footer.astro';
 import InspectorMode from '~/components/islands/InspectorMode.astro';
 import ViewSource from '~/components/islands/ViewSource.astro';
+import { ogImageForPath } from '~/lib/og-pages.mjs';
 
 interface ArticleMeta {
   publishedTime: Date | string;
@@ -36,7 +37,7 @@ interface Props {
 
 const SITE_NAME = 'Joshua Briley';
 const SITE_URL = (Astro.site ?? new URL('https://joshuabriley.com')).toString().replace(/\/$/, '');
-const DEFAULT_OG_IMAGE = '/images/og-image-2026.png';
+const DEFAULT_OG_IMAGE = '/images/social/og-image-2026.png';
 const TWITTER_HANDLE = '@joshuabriley';
 
 const {
@@ -44,12 +45,16 @@ const {
   description = 'Joshua Briley: design- and front-end-focused product engineer. Design-grade, accessible UI, finished to the last detail.',
   pathname = Astro.url.pathname,
   bare = false,
-  image = DEFAULT_OG_IMAGE,
+  image: imageProp,
   ogType,
   article,
   jsonLd,
   noindex = false,
 } = Astro.props;
+
+// An explicit `image` prop wins; otherwise use this route's dedicated OG card
+// (src/lib/og-pages.mjs), falling back to the site default for unmapped routes.
+const image = imageProp ?? ogImageForPath(pathname) ?? DEFAULT_OG_IMAGE;
 
 const canonical = new URL(pathname, SITE_URL + '/').toString();
 const absoluteImage = new URL(image, SITE_URL + '/').toString();
@@ -63,7 +68,7 @@ const personSchema = {
   '@id': `${SITE_URL}/#person`,
   name: 'Joshua Briley',
   url: SITE_URL + '/',
-  image: new URL('/images/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
+  image: new URL('/images/about/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
   jobTitle: 'Product Engineer',
   description: 'Design- and front-end-focused product engineer with 20 years in production UI. The interface is where he brings the most value: design-grade, accessible front-end, finished to the last detail.',
   sameAs: [

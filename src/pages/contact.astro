@@ -24,12 +24,14 @@ const featuredQuotes = [
     name: 'Rebecca Cachia, PMP',
     role: 'Web Product & Project Manager',
     company: 'Publicis Sapient',
+    image: '/images/testimonials/rebecca-cachia.jpeg',
   },
   {
     quote: 'Josh delivered assignments as planned, and his work quality allowed him bandwidth for additional responsibilities.',
     name: 'Gabriel Bressi',
     role: 'QA Lead',
     company: 'Kopius, Inc.',
+    image: '/images/testimonials/gabriel-bressi.jpeg',
   },
 ];
 ---
@@ -116,17 +118,26 @@ const featuredQuotes = [
         </Heading>
       </div>
 
-      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2" data-reveal-stagger>
+      <div class="mt-12 grid gap-10 sm:grid-cols-2 sm:gap-12 lg:gap-16" data-reveal-stagger>
         {featuredQuotes.map((q) => (
-          <figure class="bg-paper p-7 md:p-9">
+          <figure>
             <blockquote>
               <p class="font-display text-xl leading-snug tracking-[-0.015em] text-ink max-w-[42ch]">
                 {q.quote}
               </p>
             </blockquote>
-            <figcaption class="mt-6 border-t border-line pt-5">
-              <p class="font-display text-base font-medium tracking-tight text-ink">{q.name}</p>
-              <p class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">{q.role} · {q.company}</p>
+            <figcaption class="mt-6 flex items-center gap-4">
+              <img
+                src={q.image}
+                alt={q.name}
+                class="h-12 w-12 rounded-full border border-line object-cover"
+                loading="lazy"
+                decoding="async"
+              />
+              <div>
+                <p class="font-display text-base font-medium tracking-tight text-ink">{q.name}</p>
+                <p class="mt-1 font-mono text-[0.65rem] uppercase tracking-[0.1em] text-ink-muted">{q.role} · {q.company}</p>
+              </div>
             </figcaption>
           </figure>
         ))}

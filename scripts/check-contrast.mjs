@@ -1,38 +1,31 @@
 #!/usr/bin/env node
 /**
- * WCAG contrast audit for the design system.
+ * WCAG contrast audit for the Editorial-Technical design system.
  *
- * Walks every text-on-surface pair the components actually use, composites
- * any alpha-channel text colors over their surface, and reports the
- * resulting contrast ratio against AA (4.5 normal / 3.0 large) and AAA
- * (7.0 normal / 4.5 large) thresholds.
+ * Walks the text-on-surface pairs the current components actually use (see
+ * src/styles/site.css tokens + the primitives), composites any alpha-channel
+ * colors over their surface, and reports the resulting contrast ratio against
+ * AA (4.5 normal / 3.0 large) and AAA (7.0 normal / 4.5 large).
  *
- * Run: `node scripts/check-contrast.mjs`
- * Exit code: 1 if any AA combination fails.
+ * The system is monochrome + one surface-aware accent: cool paper/ink neutrals
+ * with a denim-navy accent that brightens to sky-denim on ink surfaces.
+ *
+ * Run: `node scripts/check-contrast.mjs`  (or `npm run audit:contrast`)
+ * Exit code: 1 if any AA / non-text combination fails.
  */
 
 const TOKENS = {
-  cream:        '#FFFBF5',
-  peach:        '#FFE8D6',
-  coral:        '#E8573D',
-  sunset:       '#FF8E53',
-  'sunset-deep':'#A24818',
-  plum:         '#6C4AB6',
-  navy:         '#2D2B55',
-  charcoal:     '#2E2E30',
-  sage:         '#7BB47A',
-  'sage-deep':  '#3E6E3D',
-  sky:          '#5DADE2',
-  'sky-deep':   '#1B6FA1',
-  lemon:        '#FDE68A',
-  white:        '#FFFFFF',
+  paper:         '#fafbfc', // page background
+  raised:        '#ffffff', // cards / raised surfaces
+  ink:           '#1a1b1e', // primary text, dark surfaces
+  'ink-muted':   '#565760', // secondary text (AA min on paper)
+  'ink-faint':   '#9a9aa1', // decorative only, never body text
+  line:          '#e5e7eb', // hairline dividers
+  'line-strong': '#d4d7dd', // emphasised hairline
+  accent:        '#2e5c8a', // denim navy — accent on LIGHT surfaces
+  'accent-dark': '#6ba6d8', // sky denim — accent on INK/dark surfaces
+  'accent-ink':  '#234a70', // pressed accent (light-surface press state)
 };
-
-// Sticky-note gradients used in components.
-const STICKY_LEMON_TOP = '#FEF3C7';
-const STICKY_LEMON_BOT = '#FDE68A';
-const STICKY_PEACH_TOP = '#FFE8D6';
-const STICKY_PEACH_BOT = '#FFD4B0';
 
 /* ─── color math (sRGB → relative luminance → contrast ratio) ─── */
 
@@ -70,92 +63,63 @@ const contrast = (a, b) => {
 
 /* ─── audit cases ───
  *
- * Each case: { context, fg, bg, alpha?, large? }
- *   context — where this combination appears
- *   fg      — token name or hex (text color)
- *   bg      — token name or hex (surface, after compositing if alpha)
- *   alpha   — optional opacity on the foreground (e.g. /70 → 0.7)
- *   large   — true for ≥18pt (24px) text or ≥14pt bold
+ * Each case: { context, fg, bg, alpha?, role? }
+ *   fg / bg — token name or hex (bg is the surface, composited if alpha given)
+ *   alpha   — optional opacity on the foreground (e.g. paper/60 → 0.6)
+ *   role    — 'text' (default, AA 4.5 / large 3.0), 'large' (>=24px or >=18.66 bold),
+ *             'nonText' (icons/focus rings/UI boundaries, >=3.0),
+ *             'decorative' (informational only, never fails — e.g. ink-faint,
+ *             hairline dividers whose control is identified by text + focus ring)
  */
 
 const T = TOKENS;
 
 const cases = [
-  // body / page chrome
-  { context: 'body text on cream',                    fg: T.charcoal, bg: T.cream },
-  { context: 'muted body (charcoal/70) on cream',     fg: T.charcoal, bg: T.cream, alpha: 0.7 },
-  { context: 'navy heading on cream',                 fg: T.navy,     bg: T.cream },
+  // ── Text on light surfaces (paper / raised white cards) ──
+  { context: 'body / heading (ink) on paper',            fg: T.ink,           bg: T.paper },
+  { context: 'body / heading (ink) on raised card',      fg: T.ink,           bg: T.raised },
+  { context: 'secondary text (ink-muted) on paper',      fg: T['ink-muted'],  bg: T.paper },
+  { context: 'secondary text (ink-muted) on raised',     fg: T['ink-muted'],  bg: T.raised },
+  { context: 'mono-label (ink-muted) on paper',          fg: T['ink-muted'],  bg: T.paper },
+  { context: 'ink-faint decorative text on paper',       fg: T['ink-faint'],  bg: T.paper, role: 'decorative' },
 
-  // body text on white card
-  { context: 'navy heading on white card',            fg: T.navy,     bg: T.white },
-  { context: 'charcoal body on white card',           fg: T.charcoal, bg: T.white },
-  { context: 'muted text (charcoal/70) on white',     fg: T.charcoal, bg: T.white, alpha: 0.7 },
-  { context: 'navy/70 nav link on cream',             fg: T.navy,     bg: T.cream, alpha: 0.7 },
+  // ── Accent text on light surfaces (links, hero CTA, nav) ──
+  { context: 'accent link / text on paper',              fg: T.accent,        bg: T.paper },
+  { context: 'accent link / text on raised',             fg: T.accent,        bg: T.raised },
+  { context: 'accent pressed (accent-ink) on raised',    fg: T['accent-ink'], bg: T.raised },
 
-  // navy surface (footer, CTABanner, reveal card)
-  { context: 'white text on navy',                    fg: T.white,    bg: T.navy },
-  { context: 'white/70 muted on navy',                fg: T.white,    bg: T.navy, alpha: 0.7 },
-  { context: 'white/60 footer text on navy',          fg: T.white,    bg: T.navy, alpha: 0.6 },
-  { context: 'white/50 footer copyright on navy',     fg: T.white,    bg: T.navy, alpha: 0.5 },
-  { context: 'lemon hover on navy footer',            fg: T.lemon,    bg: T.navy },
+  // ── Buttons / badges (monochrome) ──
+  { context: 'primary button (paper on ink)',            fg: T.paper,         bg: T.ink },
+  { context: 'ghost button label (ink on paper)',        fg: T.ink,           bg: T.paper },
+  { context: 'solid badge (paper on ink)',               fg: T.paper,         bg: T.ink },
+  { context: 'outlined badge (ink-muted on raised)',     fg: T['ink-muted'],  bg: T.raised },
 
-  // links / accent text  (after fixes: switched to *-deep)
-  { context: 'plum link on cream',              fg: T['plum'], bg: T.cream },
-  { context: 'plum link on white',              fg: T['plum'], bg: T.white },
-  { context: 'plum eyebrow text on white',            fg: T.plum,     bg: T.white },
-  { context: 'plum text on plum/10 (badge)',          fg: T.plum,             bg: compositeOver(T.plum, 0.10, T.white) },
-  { context: 'plum text on coral/10 (badge)',   fg: T['plum'],    bg: compositeOver(T.coral, 0.10, T.white) },
-  { context: 'sage-deep text on sage/10 (badge)',     fg: T['sage-deep'],     bg: compositeOver(T.sage, 0.10, T.white) },
-  { context: 'sunset-deep text on sunset/10 (badge)', fg: T['sunset-deep'],   bg: compositeOver(T.sunset, 0.10, T.white) },
-  { context: 'navy on lemon/40 (lemon badge)',        fg: T.navy,     bg: compositeOver(T.lemon, 0.40, T.white) },
-  { context: 'navy on peach/60 (peach badge)',        fg: T.navy,     bg: compositeOver(T.peach, 0.60, T.white) },
+  // ── Text on ink / dark surfaces (footer, reveal card, CTA) ──
+  { context: 'body (paper) on ink',                      fg: T.paper,         bg: T.ink },
+  { context: 'footer link (paper/70) on ink',            fg: T.paper,         bg: T.ink, alpha: 0.70 },
+  { context: 'footer muted (paper/60) on ink',           fg: T.paper,         bg: T.ink, alpha: 0.60 },
+  { context: 'footer small mono (paper/55) on ink',      fg: T.paper,         bg: T.ink, alpha: 0.55 },
+  { context: 'accent link (accent-dark) on ink',         fg: T['accent-dark'],bg: T.ink },
 
-  // primary button (coral surface, white text)
-  { context: 'white on coral (primary button)',       fg: T.white,    bg: T.coral, large: true },
-  { context: 'white on coral/90 (primary hover)',     fg: T.white,    bg: compositeOver(T.coral, 0.90, T.white), large: true },
+  // ── Text selection highlight (surface-aware) ──
+  { context: 'selection: ink on navy/16 tint over paper', fg: T.ink,          bg: compositeOver(T.accent, 0.16, T.paper) },
+  { context: 'selection: ink on accent-dark (on ink)',    fg: T.ink,          bg: T['accent-dark'] },
 
-  // secondary button (white/10 on navy)
-  { context: 'white text on navy + white/10 button',  fg: T.white,    bg: compositeOver(T.white, 0.10, T.navy), large: true },
+  // ── Non-text: focus rings + UI boundaries (WCAG 1.4.11, >=3.0) ──
+  { context: 'focus ring (accent) on paper',             fg: T.accent,        bg: T.paper,   role: 'nonText' },
+  { context: 'focus ring (accent) on raised',            fg: T.accent,        bg: T.raised,  role: 'nonText' },
+  { context: 'meter fill (ink) vs track (line)',         fg: T.ink,           bg: T.line,    role: 'nonText' },
 
-  // form inputs (after fixes)
-  { context: 'input text (charcoal) on white',        fg: T.charcoal, bg: T.white },
-  { context: 'placeholder (charcoal/70) on white',    fg: T.charcoal, bg: T.white, alpha: 0.7 },
-  { context: 'input border (charcoal/60) on white',   fg: T.charcoal, bg: T.white, alpha: 0.60, nonText: true },
-  { context: 'focus border (plum) on white',    fg: T['plum'], bg: T.white, nonText: true },
-  { context: 'focus ring (coral) on cream',           fg: T.coral,    bg: T.cream, nonText: true },
-
-  // sticky-note testimonial cards (gradients)
-  { context: 'navy quote on lemon sticky (top)',      fg: T.navy,     bg: STICKY_LEMON_TOP },
-  { context: 'navy quote on lemon sticky (bottom)',   fg: T.navy,     bg: STICKY_LEMON_BOT },
-  { context: 'navy/70 attribution on lemon sticky',   fg: T.navy,     bg: STICKY_LEMON_BOT, alpha: 0.7 },
-  { context: 'navy quote on peach sticky (top)',      fg: T.navy,     bg: STICKY_PEACH_TOP },
-  { context: 'navy quote on peach sticky (bottom)',   fg: T.navy,     bg: STICKY_PEACH_BOT },
-
-  // alerts (after fixes)
-  { context: 'navy text on sage/10 success alert',    fg: T.navy,     bg: compositeOver(T.sage, 0.10, T.white) },
-  { context: 'navy text on coral/10 error alert',     fg: T.navy,     bg: compositeOver(T.coral, 0.10, T.white) },
-  { context: 'sage-deep icon on sage/10 alert',       fg: T['sage-deep'],   bg: compositeOver(T.sage, 0.10, T.white), nonText: true },
-  { context: 'plum icon on coral/10 alert',     fg: T['plum'],  bg: compositeOver(T.coral, 0.10, T.white), nonText: true },
-
-  // "active" radio pill (sage-deep surface, after fix)
-  { context: 'white on sage-deep (active choice pill)', fg: T.white,  bg: T['sage-deep'], large: true },
-
-  // skip link
-  { context: 'white text on plum (skip link)',        fg: T.white,    bg: T.plum },
-
-  // page header logo + nav
-  { context: 'navy nav link on cream/90',             fg: T.navy,     bg: compositeOver(T.cream, 0.90, T.white) },
-
-  // form error text (after fix)
-  { context: 'plum error text on white',        fg: T['plum'], bg: T.white },
+  // ── Decorative hairlines (dividers; controls carry text + focus affordance) ──
+  { context: 'hairline divider (line) on paper',         fg: T.line,          bg: T.paper,   role: 'decorative' },
+  { context: 'emphasis hairline (line-strong) on raised', fg: T['line-strong'], bg: T.raised, role: 'decorative' },
 ];
 
 /* ─── thresholds & evaluation ─── */
 
-const aaPass = (ratio, large) => ratio >= (large ? 3.0 : 4.5);
-const aaaPass = (ratio, large) => ratio >= (large ? 4.5 : 7.0);
-// Non-text contrast (icons, borders, focus rings) needs 3:1 per WCAG 1.4.11.
-const nonTextPass = (ratio) => ratio >= 3.0;
+const isText = (role) => role == null || role === 'text' || role === 'large';
+const aaFloor = (role) => (role === 'large' ? 3.0 : 4.5);
+const aaaFloor = (role) => (role === 'large' ? 4.5 : 7.0);
 
 const fmt = (n) => n.toFixed(2);
 const pad = (s, n) => (s + ' '.repeat(n)).slice(0, n);
@@ -167,22 +131,26 @@ const GRN = '\x1b[32m';
 const DIM = '\x1b[2m';
 
 const rows = [];
-let aaFailures = 0;
+let failures = 0;
 
 for (const c of cases) {
   const fgEffective = c.alpha != null ? compositeOver(c.fg, c.alpha, c.bg) : c.fg;
   const ratio = contrast(fgEffective, c.bg);
 
   let standard, status, color;
-  if (c.nonText) {
-    standard = '≥ 3.0 (non-text)';
-    if (nonTextPass(ratio)) { status = 'PASS'; color = GRN; }
-    else { status = 'FAIL'; color = RED; aaFailures++; }
+  if (c.role === 'decorative') {
+    standard = 'decorative';
+    status = 'INFO';
+    color = DIM;
+  } else if (c.role === 'nonText') {
+    standard = '>= 3.0 (non-text)';
+    if (ratio >= 3.0) { status = 'PASS'; color = GRN; }
+    else { status = 'FAIL'; color = RED; failures++; }
   } else {
-    standard = c.large ? 'AA large (≥3.0)' : 'AA normal (≥4.5)';
-    if (aaaPass(ratio, c.large)) { status = 'PASS AAA'; color = GRN; }
-    else if (aaPass(ratio, c.large)) { status = 'PASS AA'; color = YEL; }
-    else { status = 'FAIL'; color = RED; aaFailures++; }
+    standard = c.role === 'large' ? 'AA large (>=3.0)' : 'AA normal (>=4.5)';
+    if (ratio >= aaaFloor(c.role)) { status = 'PASS AAA'; color = GRN; }
+    else if (ratio >= aaFloor(c.role)) { status = 'PASS AA'; color = YEL; }
+    else { status = 'FAIL'; color = RED; failures++; }
   }
 
   rows.push({
@@ -197,11 +165,11 @@ for (const c of cases) {
 }
 
 const headers = ['Context', 'Text', 'Surface', 'Ratio', 'Standard', 'Status'];
-const widths = [54, 9, 9, 7, 18, 10];
+const widths = [40, 9, 9, 8, 20, 10];
 
 console.log();
 console.log(headers.map((h, i) => pad(h, widths[i])).join(' '));
-console.log(widths.map((w) => '─'.repeat(w)).join(' '));
+console.log(widths.map((w) => '-'.repeat(w)).join(' '));
 
 for (const r of rows) {
   const line = [
@@ -217,13 +185,18 @@ for (const r of rows) {
 
 console.log();
 const total = rows.length;
-const fails = rows.filter((r) => r.status === 'FAIL').length;
-const aaOnly = rows.filter((r) => r.status === 'PASS AA').length;
 const aaa = rows.filter((r) => r.status === 'PASS AAA').length;
-const passNonText = rows.filter((r) => r.status === 'PASS' && r.standard.includes('non-text')).length;
+const aaOnly = rows.filter((r) => r.status === 'PASS AA').length;
+const nonText = rows.filter((r) => r.status === 'PASS').length;
+const info = rows.filter((r) => r.status === 'INFO').length;
+const fails = rows.filter((r) => r.status === 'FAIL').length;
 
 console.log(`${DIM}${total} combinations checked${RESET}`);
-console.log(`${GRN}${aaa} pass AAA${RESET}, ${YEL}${aaOnly} pass AA only${RESET}, ${GRN}${passNonText} non-text pass${RESET}, ${fails ? RED : GRN}${fails} fail${RESET}`);
+console.log(
+  `${GRN}${aaa} pass AAA${RESET}, ${YEL}${aaOnly} pass AA only${RESET}, ` +
+  `${GRN}${nonText} non-text pass${RESET}, ${DIM}${info} decorative${RESET}, ` +
+  `${fails ? RED : GRN}${fails} fail${RESET}`,
+);
 console.log();
 
-process.exit(aaFailures > 0 ? 1 : 0);
+process.exit(failures > 0 ? 1 : 0);

@@ -3,6 +3,7 @@ Allow: /
 
 Disallow: /dev/
 Disallow: /component-inventory
-Disallow: /scorecard/results
+Disallow: /og-render/
+Disallow: /tools/scorecard/results
 
 Sitemap: https://joshuabriley.com/sitemap-index.xml

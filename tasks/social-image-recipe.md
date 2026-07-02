@@ -8,13 +8,50 @@ guesses), so they match the live brand exactly.
 
 | File | Dimensions | Where it's used | Wired in code? |
 |---|---|---|---|
-| `og-image-2026.png` | 1200x630 | Open Graph / X summary_large_image / LinkedIn link unfurl | Yes: `DEFAULT_OG_IMAGE` in `src/layouts/BaseLayout.astro` |
-| `linkedin-cover-2026.png` | 1584x396 | LinkedIn personal profile cover (background image) | No: manual upload |
-| `x-cover-2026.png` | 1500x500 | X / Twitter profile header | No: manual upload |
-| `github-banner-2026.png` | 1280x320 | GitHub profile README top banner | No: manual upload |
+| `og/<slug>.png` (27 of them) | 1200x630 | Per-page Open Graph / X summary_large_image / LinkedIn unfurl | Yes: auto-selected by pathname (see "Per-page OG" below) |
+| `social/og-image-2026.png` | 1200x630 | Fallback OG for any route with no dedicated card | Yes: `DEFAULT_OG_IMAGE` in `src/layouts/BaseLayout.astro` |
+| `social/linkedin-cover-2026.png` | 1584x396 | LinkedIn personal profile cover (background image) | No: manual upload |
+| `social/x-cover-2026.png` | 1500x500 | X / Twitter profile header | No: manual upload |
+| `social/github-banner-2026.png` | 1280x320 | GitHub profile README top banner | No: manual upload |
+
+## Per-page OG (the whole-site set)
+
+Every page gets its own OG card in the same style, generated from a manifest.
+
+- **Manifest / single source of truth:** `src/lib/og-pages.mjs` (`OG_PAGES` = one
+  entry per page: `slug`, `path`, `eyebrow`, `headline`, optional `wink` word set
+  in navy italic). Same file exports `ogImageForPath(pathname)`.
+- **Wiring:** `src/layouts/BaseLayout.astro` computes
+  `image = imageProp ?? ogImageForPath(pathname) ?? DEFAULT_OG_IMAGE`. So a page's
+  OG is chosen automatically by its route; an explicit `image` prop still wins;
+  unmapped routes fall back to `social/og-image-2026.png` (never a broken link).
+- **Renderer:** `src/pages/og-render/[slug].astro` renders one card per manifest
+  slug. `getStaticPaths` only emits during `astro dev` (returns `[]` in prod), so
+  the internal renderer never ships. noindex + excluded from the sitemap.
+- **Generate:** start `astro dev`, then `npm run og:generate`
+  (`scripts/generate-og.mjs`). It screenshots each `/og-render/<slug>/` at 2x and
+  writes `public/images/og/<slug>.png`.
+- **Headline auto-sizing:** the renderer scales font-size by headline length
+  (92px for short names down to 50px for long lines), so titles fill the card
+  without overflowing.
+
+**Adding / editing a static page's OG:** edit the entry in `src/lib/og-pages.mjs`,
+run `npm run og:generate`. A brand-new route with no entry keeps the default until
+you add one.
+
+**Blog posts are automatic.** They are NOT in the manifest. Each non-draft post is
+derived from its frontmatter via `postToOgEntry()` in `src/lib/og-pages.mjs`
+(eyebrow = `category`, headline = `title`, wink = last word of the title). All
+three consumers use it:
+- render route (`getStaticPaths`) reads the posts collection via `astro:content`
+- generator (`scripts/generate-og.mjs`) parses post frontmatter directly
+- `ogImageForPath()` maps any `/blog/<slug>/` → `og/blog-<slug>.png` by pattern
+So publishing a post is: write the `.mdx`, run `npm run og:generate`. No manifest
+edit. (Until you regenerate, the post's `og:image` points at a not-yet-created
+file, so run the script as part of publishing.)
 
 Note: no separate 1200x628 "X card" is needed. X reads the `og:image`
-(`og-image-2026.png`) for its large summary card automatically, so a second file
+(`social/og-image-2026.png`) for its large summary card automatically, so a second file
 would be a near-duplicate that nothing references.
 
 ## Brand tokens (hardcoded in each render so it never depends on surface classes)
@@ -55,8 +92,28 @@ would be a near-duplicate that nothing references.
    await b.close();
    ```
 4. Supersample-downscale the 2x shot to exact dimensions (sharper text than a 1x
-   render): `magick /tmp/cover-li.png -resize 1584x396 -strip -quality 92 public/images/linkedin-cover-2026.png`
+   render): `magick /tmp/cover-li.png -resize 1584x396 -strip -quality 92 public/images/social/linkedin-cover-2026.png`
 5. Delete the temp route, kill the dev server, remove temp PNGs.
+
+## Automatic regeneration (pre-commit hook)
+
+A git pre-commit hook regenerates the per-page cards when their inputs change, so
+you rarely run `npm run og:generate` by hand.
+
+- **Hook:** `.githooks/pre-commit`. Enabled via `core.hooksPath`, which the
+  `prepare` npm script sets on `npm install` (so fresh clones get it too).
+- **Smart trigger:** it only runs when a staged file matches
+  `src/lib/og-pages.mjs`, `src/pages/og-render/`, or `src/content/posts/`.
+  Ordinary commits skip it in ~50ms. When it does fire it boots a throwaway
+  `astro dev` on port 4399, runs the generator against it, and `git add`s
+  `public/images/og/` into the commit (~30-45s).
+- **Requires:** the toolchain the generator needs (Node, Playwright's chromium,
+  ImageMagick's `magick`). If the dev server can't start, the hook blocks the
+  commit with a message; bypass once with `git commit --no-verify`.
+- **Not covered:** the hook regenerates existing cards but does not delete the
+  card for a *removed* post. Delete `public/images/og/blog-<slug>.png` by hand if
+  you unpublish a post. It also does not fire for pure font/CSS token changes
+  (rare); run `npm run og:generate` manually after a brand refresh.
 
 ## Safe zones (why the covers are not just cropped OG cards)
 

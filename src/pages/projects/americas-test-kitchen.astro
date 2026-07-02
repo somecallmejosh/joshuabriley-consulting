@@ -397,29 +397,31 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
 
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
-      <p class="mono-label mb-8">What Fran said</p>
-      <figure class="rounded-lg border border-line p-8 md:p-10">
-        <Icon name="ph:quotes" size={32} class="text-accent mb-4" />
-        <blockquote>
-          <Text size="lg" tone="ink" class="font-display tracking-tight leading-snug">
+      <figure class="grid gap-x-10 gap-y-10 md:grid-cols-12 md:items-start lg:gap-x-16">
+        <figcaption class="md:col-span-4">
+          <p class="mono-label mb-6">What Fran said</p>
+          <div class="flex items-center gap-4 md:flex-col md:items-start md:gap-5">
+            <img
+              src="/images/testimonials/fran-middleton.jpeg"
+              alt="Fran Middleton"
+              class="h-14 w-14 rounded-full border border-line object-cover md:h-16 md:w-16"
+              loading="lazy"
+              decoding="async"
+            />
+            <div>
+              <p class="font-display font-semibold text-ink">Fran Middleton</p>
+              <p class="mt-1 text-sm text-ink-muted leading-snug">Chief Digital Officer &middot; America's Test Kitchen</p>
+            </div>
+          </div>
+        </figcaption>
+        <blockquote class="md:col-span-8">
+          <Icon name="ph:quotes" size={48} class="mb-5 text-accent opacity-25" />
+          <p class="max-w-[46ch] font-display text-2xl md:text-3xl tracking-tight leading-snug text-ink">
             Josh built the component library that finally let our brands stop fighting in code. Cook's Country, Cook's
             Illustrated, and ATK all share the same primitives now: the visual difference comes from tokens, not parallel
             implementations. He raised the floor on accessibility for every team that touches the system.
-          </Text>
+          </p>
         </blockquote>
-        <figcaption class="mt-7 flex items-center gap-4 border-t border-line pt-6">
-          <img
-            src="/images/fran-middleton.jpeg"
-            alt="Fran Middleton"
-            class="h-12 w-12 rounded-full border border-line object-cover"
-            loading="lazy"
-            decoding="async"
-          />
-          <div>
-            <p class="font-display font-semibold text-ink">Fran Middleton</p>
-            <p class="text-sm text-ink-muted">Chief Digital Officer &middot; America's Test Kitchen</p>
-          </div>
-        </figcaption>
       </figure>
     </Container>
   </Section>

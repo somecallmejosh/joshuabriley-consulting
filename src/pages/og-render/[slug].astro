@@ -1,0 +1,219 @@
+---
+// Internal OG card renderer, one static page per manifest slug. Route params
+// (not query strings) so it works under `output: 'static'`. noindex + excluded
+// from the sitemap; not linked anywhere. scripts/generate-og.mjs screenshots
+// each /og-render/<slug>/ into public/images/og/<slug>.png.
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import { OG_PAGES, postToOgEntry } from '~/lib/og-pages.mjs';
+
+export async function getStaticPaths() {
+  // Only emit these render pages during `astro dev` (where the generator
+  // screenshots them). Return nothing for production builds so the internal
+  // renderer never ships. The generated PNGs live in public/images/og/.
+  if (!import.meta.env.DEV) return [];
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const postEntries = posts.map((p) =>
+    postToOgEntry({ id: p.id, title: p.data.title, category: p.data.category }),
+  );
+  return [...OG_PAGES, ...postEntries].map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { eyebrow, headline, wink } = entry;
+
+// Split the headline around the wink word (last, case-insensitive occurrence),
+// so the card sets just that word in navy italic without markup in the data.
+let pre = headline;
+let winkText = '';
+let post = '';
+if (wink) {
+  const idx = headline.toLowerCase().lastIndexOf(wink.toLowerCase());
+  if (idx !== -1) {
+    pre = headline.slice(0, idx);
+    winkText = headline.slice(idx, idx + wink.length);
+    post = headline.slice(idx + wink.length);
+  }
+}
+
+// Font scale planned around length so short titles read big and long lines fit.
+const len = headline.length;
+const size = len <= 14 ? 92 : len <= 26 ? 80 : len <= 44 ? 68 : len <= 60 ? 58 : 50;
+---
+
+<BaseLayout title="OG render" bare={true} noindex={true}>
+  <div class="og-card" style={`--og-headline-size:${size}px`}>
+    <div class="og-grid" aria-hidden="true"></div>
+    <span class="og-watermark" aria-hidden="true">&amp;</span>
+
+    <header class="og-top">
+      <div class="og-brand">
+        <span class="og-mono">JB</span>
+        <span class="og-wordmark">Joshua Briley<span class="og-dot">.</span></span>
+      </div>
+      <p class="og-eyebrow">{eyebrow}</p>
+    </header>
+
+    <h1 class="og-headline">
+      {pre}{winkText && <em>{winkText}</em>}{post}<span class="og-dot">.</span>
+    </h1>
+
+    <footer class="og-bottom">
+      <span class="og-url">joshuabriley.com</span>
+      <ul class="og-tags">
+        <li><span class="og-tick" aria-hidden="true"></span>Front-end</li>
+        <li><span class="og-tick" aria-hidden="true"></span>TypeScript</li>
+        <li><span class="og-tick" aria-hidden="true"></span>Accessibility</li>
+      </ul>
+    </footer>
+  </div>
+
+  <style>
+    .og-card {
+      --og-paper: #fafbfc;
+      --og-ink: #1a1b1e;
+      --og-muted: #565760;
+      --og-line: #e5e7eb;
+      --og-accent: #2e5c8a; /* denim navy, the site's light-surface accent */
+      position: relative;
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: var(--og-paper);
+      color: var(--og-ink);
+      padding: 64px 72px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-sizing: border-box;
+      font-family: var(--font-hanken), system-ui, sans-serif;
+    }
+
+    .og-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(26, 27, 30, 0.045) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(26, 27, 30, 0.045) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .og-watermark {
+      position: absolute;
+      right: -40px;
+      bottom: -180px;
+      font-family: var(--font-fraunces), Georgia, serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: 620px;
+      line-height: 0.8;
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(26, 27, 30, 0.07);
+      pointer-events: none;
+      user-select: none;
+    }
+
+    .og-top,
+    .og-bottom {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .og-brand {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+    }
+    .og-mono {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 12px;
+      background: var(--og-ink);
+      color: var(--og-paper);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.02em;
+    }
+    .og-wordmark {
+      font-weight: 600;
+      font-size: 31px;
+      letter-spacing: -0.02em;
+      color: var(--og-ink);
+    }
+    .og-dot {
+      color: var(--og-accent);
+    }
+
+    .og-eyebrow {
+      font-family: var(--font-geist-mono), ui-monospace, monospace;
+      font-weight: 500;
+      font-size: 15px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--og-muted);
+      margin: 0;
+      text-align: right;
+      max-width: 44%;
+    }
+
+    .og-headline {
+      position: relative;
+      z-index: 1;
+      font-family: var(--font-fraunces), Georgia, serif;
+      font-weight: 500;
+      font-size: var(--og-headline-size, 76px);
+      line-height: 1.08;
+      letter-spacing: -0.02em;
+      color: var(--og-ink);
+      max-width: 1000px;
+      margin: 0;
+      text-wrap: balance;
+    }
+    .og-headline em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--og-accent);
+    }
+
+    .og-url {
+      font-family: var(--font-geist-mono), ui-monospace, monospace;
+      font-size: 17px;
+      letter-spacing: 0.01em;
+      color: var(--og-muted);
+    }
+    .og-tags {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .og-tags li {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-family: var(--font-geist-mono), ui-monospace, monospace;
+      font-size: 13.5px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--og-muted);
+    }
+    .og-tick {
+      width: 5px;
+      height: 5px;
+      border-radius: 1px;
+      background: var(--og-accent);
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,54 @@
+#!/bin/sh
+# Regenerate per-page OG cards when their inputs change, then stage the results.
+#
+# Runs ONLY when OG-affecting files are staged (the manifest, the render route,
+# or a blog post), so ordinary commits pay nothing. When it does run it boots a
+# throwaway `astro dev` on a dedicated port, regenerates public/images/og/, and
+# `git add`s the changes into this commit.
+#
+# Enabled via `core.hooksPath` (the `prepare` npm script sets this on install).
+# Bypass a single commit with `git commit --no-verify`.
+set -e
+
+# 1. Skip fast unless an OG input is staged.
+STAGED=$(git diff --cached --name-only --diff-filter=ACMR)
+if ! printf '%s\n' "$STAGED" | grep -qE '^(src/lib/og-pages\.mjs|src/pages/og-render/|src/content/posts/)'; then
+  exit 0
+fi
+
+echo "[og] OG inputs changed — regenerating cards..."
+
+PORT=4399
+BASE_URL="http://localhost:$PORT"
+
+# Free the port if a previous run left something behind (best-effort).
+lsof -ti:"$PORT" 2>/dev/null | xargs kill -9 2>/dev/null || true
+
+# 2. Boot a throwaway dev server (the /og-render/* renderer is dev-only).
+npx astro dev --port "$PORT" >/tmp/og-hook-dev.log 2>&1 &
+DEV_PID=$!
+cleanup() {
+  kill "$DEV_PID" 2>/dev/null || true
+  lsof -ti:"$PORT" 2>/dev/null | xargs kill -9 2>/dev/null || true
+}
+trap cleanup EXIT
+
+# 3. Wait for it to answer (up to ~25s).
+READY=0
+i=0
+while [ "$i" -lt 50 ]; do
+  if curl -sf "$BASE_URL/" >/dev/null 2>&1; then READY=1; break; fi
+  sleep 0.5
+  i=$((i + 1))
+done
+if [ "$READY" -ne 1 ]; then
+  echo "[og] ERROR: dev server did not start (see /tmp/og-hook-dev.log). Commit blocked." >&2
+  echo "[og] Fix the toolchain or bypass once with: git commit --no-verify" >&2
+  exit 1
+fi
+
+# 4. Generate and stage.
+OG_BASE_URL="$BASE_URL/og-render" node scripts/generate-og.mjs
+git add public/images/og
+
+echo "[og] OG cards regenerated and staged."
