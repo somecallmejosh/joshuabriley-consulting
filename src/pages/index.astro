@@ -92,26 +92,28 @@ const work = [
         <span class="sr-only">I focus on </span>Design &amp; front-end
       </p>
 
-      {/* Full-width editorial hero. No illustration: the headline commands the
-          width and the "Shipped at" credentials strip directly below carries the
-          proof. */}
-      <div class="mt-10 max-w-5xl lg:mt-14">
-        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[24ch]">
-          My best work lives at the <em class="ink-wink font-normal italic">interface</em>, down to the last detail.
-        </Heading>
-        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-          I'm a design- and front-end-focused product engineer with 20 years in production UI. The
-          interface is where I bring the most value: design-grade, accessible, and finished to the
-          last detail.
-        </Text>
+      {/* Editorial hero on the shared 12-col grid, so its measure matches the
+          about/resume heroes. No illustration: the "Shipped at" credentials strip
+          directly below carries the proof. */}
+      <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-8">
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[19ch]">
+            My best work lives at the <em class="ink-wink font-normal italic">interface</em>, down to the last detail.
+          </Heading>
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
+            I'm a design- and front-end-focused product engineer with 20 years in production UI. The
+            interface is where I bring the most value: design-grade, accessible, and finished to the
+            last detail.
+          </Text>
 
-        <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
-          <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
-            See what I've built
-          </Button>
-          <Button variant="ghost" size="lg" href="/about/">
-            Read how I work
-          </Button>
+          <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
+            <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
+              See what I've built
+            </Button>
+            <Button variant="ghost" size="lg" href="/about/">
+              Read how I work
+            </Button>
+          </div>
         </div>
       </div>
     </Container>
@@ -235,7 +237,10 @@ const work = [
       <div class="grid items-start gap-10 md:grid-cols-12 md:gap-14">
         <div class="md:col-span-4">
           <div class="overflow-hidden rounded-lg border border-line">
-            <img src="/images/josh-biz-cazsh.jpg" alt="Joshua Briley, product engineer" class="aspect-[4/5] w-full object-cover" loading="lazy" width="640" height="800" />
+            <picture>
+              <source srcset="/images/josh-biz-cazsh.webp" type="image/webp" />
+              <img src="/images/josh-biz-cazsh.jpg" alt="Joshua Briley, product engineer" class="aspect-[4/5] w-full object-cover" loading="lazy" width="640" height="800" />
+            </picture>
           </div>
         </div>
         <div class="md:col-span-8">

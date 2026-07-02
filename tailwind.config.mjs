@@ -34,12 +34,12 @@ export default {
           strong: '#D4D7DD',
         },
         accent: {
-          // Channel-based so the accent can FOLLOW the surface: deep clay on
-          // light paper (AA 5.5:1), a brightened clay on dark ink (AA 5.0:1 vs
-          // the old 2.9:1 which was muddy/illegible). --accent-rgb is overridden
-          // per-surface in site.css; <alpha-value> keeps `accent/NN` working.
+          // Channel-based so the accent can FOLLOW the surface: deep denim navy
+          // on light paper (AA 6.7:1), a brightened sky-denim on dark ink (AA
+          // 6.6:1). --accent-rgb is overridden per-surface in site.css;
+          // <alpha-value> keeps `accent/NN` working.
           DEFAULT: 'rgb(var(--accent-rgb) / <alpha-value>)',
-          ink: '#8F3722', // pressed / darker (light-surface press state)
+          ink: '#234A70', // pressed / darker (light-surface press state)
         },
 
         // ── Legacy tokens remapped to monochrome ──────────────────────────

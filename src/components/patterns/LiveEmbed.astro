@@ -39,10 +39,22 @@ const {
 } = Astro.props;
 ---
 
-<figure class={cx('live-embed', className)} data-live-embed>
+<figure class={cx('live-embed', className)} data-live-embed data-view="desktop">
   <div class="live-embed-bar">
     <span class="live-embed-dots" aria-hidden="true"><span></span><span></span><span></span></span>
     <span class="live-embed-title">{title}: interactive</span>
+
+    {/* Viewport switch — desktop default, mobile on demand. Hidden below md
+        (Section 4: on a real phone the frame is already the mobile rendering). */}
+    <div class="live-embed-views" role="group" aria-label="Preview size">
+      <button type="button" class="live-embed-view" data-view-btn="desktop" aria-pressed="true">
+        <Icon name="ph:monitor" size={13} /><span>Desktop</span>
+      </button>
+      <button type="button" class="live-embed-view" data-view-btn="mobile" aria-pressed="false">
+        <Icon name="ph:device-mobile" size={13} /><span>Mobile</span>
+      </button>
+    </div>
+
     <a
       href={href}
       target="_blank"
@@ -52,27 +64,29 @@ const {
     >open <Icon name="ph:arrow-up-right" size={12} /></a>
   </div>
 
-  <div class="live-embed-stage" style={`aspect-ratio:${ratio}`}>
-    <img class="live-embed-poster" src={posterSrc} alt={posterAlt} loading="lazy" decoding="async" />
+  <div class="live-embed-stage" style={`--ratio:${ratio}`}>
+    <div class="live-embed-viewport">
+      <img class="live-embed-poster" src={posterSrc} alt={posterAlt} loading="lazy" decoding="async" />
 
-    <button type="button" class="live-embed-cta" data-embed-trigger aria-label={`Load the interactive ${title} demo`}>
-      <span class="live-embed-cta-pill">
-        <Icon name="ph:play-fill" size={15} />
-        Load live demo
-      </span>
-      <span class="live-embed-cta-note">{ctaNote}</span>
-    </button>
+      <button type="button" class="live-embed-cta" data-embed-trigger aria-label={`Load the interactive ${title} demo`}>
+        <span class="live-embed-cta-pill">
+          <Icon name="ph:play-fill" size={15} />
+          Load live demo
+        </span>
+        <span class="live-embed-cta-note">{ctaNote}</span>
+      </button>
 
-    {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
-    <iframe
-      class="live-embed-iframe"
-      data-embed-frame
-      data-src={embedSrc}
-      title={`${title}: live interactive demo`}
-      loading="lazy"
-      sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-      allow="fullscreen"
-    ></iframe>
+      {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
+      <iframe
+        class="live-embed-iframe"
+        data-embed-frame
+        data-src={embedSrc}
+        title={`${title}: live interactive demo`}
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+        allow="fullscreen"
+      ></iframe>
+    </div>
   </div>
 </figure>
 
@@ -118,6 +132,38 @@ const {
   }
   .live-embed-open:hover { color: var(--accent); }
 
+  /* Viewport switch — a small mono-caps segmented control. Hidden below md. */
+  .live-embed-views { display: none; }
+  @media (min-width: 768px) {
+    .live-embed-views {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      padding: 2px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--raised);
+    }
+  }
+  .live-embed-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  }
+  .live-embed-view:hover { color: var(--ink); }
+  .live-embed-view[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
   .live-embed-stage {
     position: relative;
     overflow: hidden;
@@ -127,6 +173,12 @@ const {
     box-shadow:
       0 1px 2px rgba(27, 26, 23, 0.04),
       0 18px 50px -28px rgba(27, 26, 23, 0.3);
+    aspect-ratio: var(--ratio, 1600 / 1039);
+  }
+
+  .live-embed-viewport {
+    position: absolute;
+    inset: 0;
   }
 
   .live-embed-poster,
@@ -195,6 +247,32 @@ const {
   .live-embed[data-loaded] .live-embed-cta { display: none; }
   .live-embed[data-loaded] .live-embed-iframe { opacity: 1; pointer-events: auto; }
 
+  /* Mobile preview — the stage becomes a device backdrop holding a centered
+     phone. The iframe renders at ~phone width, so the live site shows its own
+     mobile layout. Instant switch (no size tween) to avoid iframe reflow jank. */
+  .live-embed[data-view='mobile'] .live-embed-stage {
+    aspect-ratio: auto;
+    height: clamp(560px, 78vh, 760px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.75rem 1rem;
+    background:
+      radial-gradient(120% 120% at 50% 0%, rgba(27, 26, 23, 0.05), transparent 60%),
+      var(--raised);
+  }
+  .live-embed[data-view='mobile'] .live-embed-viewport {
+    position: relative;
+    inset: auto;
+    height: 100%;
+    aspect-ratio: 390 / 760;
+    max-width: 100%;
+    border-radius: 30px;
+    overflow: hidden;
+    border: 1px solid var(--line-strong);
+    box-shadow: 0 22px 60px -24px rgba(27, 26, 23, 0.5);
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .live-embed-poster, .live-embed-iframe, .live-embed-cta-pill { transition: none; }
   }
@@ -210,6 +288,19 @@ const {
       if (!root || !frame || root.dataset.loaded) return;
       if (frame.dataset.src) frame.src = frame.dataset.src;
       root.dataset.loaded = 'true';
+    });
+  });
+
+  // Viewport switch: flip the figure's data-view (CSS reflows the frame). No
+  // network — an already-loaded iframe just re-renders at the new width.
+  document.querySelectorAll('[data-live-embed]').forEach((root) => {
+    const host = root as HTMLElement;
+    const btns = host.querySelectorAll<HTMLButtonElement>('[data-view-btn]');
+    btns.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        host.dataset.view = btn.dataset.viewBtn ?? 'desktop';
+        btns.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      });
     });
   });
 </script>

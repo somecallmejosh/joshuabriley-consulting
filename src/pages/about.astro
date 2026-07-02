@@ -108,14 +108,17 @@ const learning = [
 
         <div class="hero-in hero-in-5 lg:col-span-5">
           <figure class="overflow-hidden rounded-lg border border-line">
-            <img
-              src="/images/josh-biz-cazsh.jpg"
-              alt="Joshua Briley, product engineer"
-              class="aspect-[4/5] w-full object-cover"
-              loading="lazy"
-              width="640"
-              height="800"
-            />
+            <picture>
+              <source srcset="/images/josh-biz-cazsh.webp" type="image/webp" />
+              <img
+                src="/images/josh-biz-cazsh.jpg"
+                alt="Joshua Briley, product engineer"
+                class="aspect-[4/5] w-full object-cover"
+                loading="lazy"
+                width="640"
+                height="800"
+              />
+            </picture>
           </figure>
         </div>
       </div>

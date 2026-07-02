@@ -35,7 +35,7 @@ const tokens = [
   { name: 'ink-faint',   token: '--ink-faint',   hex: '#9A9AA1', note: 'Decorative only, never body text', fill: 'bg-[#9A9AA1]', border: 'border-[#9A9AA1]' },
   { name: 'line',        token: '--line',        hex: '#E5E7EB', note: 'Hairline borders, dividers', fill: 'bg-line', border: 'border-line-strong' },
   { name: 'line-strong', token: '--line-strong', hex: '#D4D7DD', note: 'Emphasised hairline', fill: 'bg-line-strong', border: 'border-line-strong' },
-  { name: 'accent',      token: '--accent',      hex: '#A8412A', note: 'One clay accent, used sparingly', fill: 'bg-accent', border: 'border-accent' },
+  { name: 'accent',      token: '--accent',      hex: '#2E5C8A', note: 'One denim-navy accent, used sparingly', fill: 'bg-accent', border: 'border-accent' },
 ];
 
 // Live in-section nav for the editorial rail.
@@ -68,7 +68,7 @@ const metrics = [
 
 <BaseLayout
   title="Design system: Editorial-Technical reference | Joshua Briley"
-  description="The Editorial-Technical design system: warm paper, near-black ink, one clay accent, Hanken Grotesk and Geist Mono. Colour tokens, type scale, primitives, patterns, and accessible form components."
+  description="The Editorial-Technical design system: cool paper, near-black ink, one denim-navy accent, Hanken Grotesk and Geist Mono. Colour tokens, type scale, primitives, patterns, and accessible form components."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
@@ -83,7 +83,7 @@ const metrics = [
           The Editorial-Technical system.
         </Heading>
         <Text size="lg" tone="muted" class="mt-7">
-          Warm paper, near-black ink, and a single clay accent. Hanken Grotesk for
+          Cool paper, near-black ink, and a single denim-navy accent. Hanken Grotesk for
           headings, Geist Mono for labels. Small radii, hairline borders, heavy
           whitespace. Every page on the site composes from the tokens and
           components documented here.
@@ -106,7 +106,7 @@ const metrics = [
         <Heading level={2} visual="display-md">Colour tokens.</Heading>
         <Text tone="muted" class="mt-4">
           The full palette is eight tokens. There are no bright fills, no gradients.
-          Contrast and rhythm come from ink on paper, with the clay accent reserved
+          Contrast and rhythm come from ink on paper, with the navy accent reserved
           for one mark per view. Every value is a CSS custom property in
           <code class="font-mono text-[0.9em] text-accent"> :root</code>.
         </Text>
@@ -260,7 +260,7 @@ const metrics = [
           <div class="mt-5 space-y-3 text-sm">
             <p class="text-ink-muted">
               Read <Link href="/about/" variant="inline">the approach</Link>. Inline links
-              carry a quiet clay underline.
+              carry a quiet navy underline.
             </p>
             <p><Link href="/projects/" variant="arrow">Selected work</Link></p>
             <p class="flex gap-5">
@@ -373,7 +373,7 @@ const metrics = [
         <p class="mono-label mb-2">FAQ: native details/summary, zero JS</p>
         <FAQ class="mt-4">
           <FAQItem question="Why only one accent colour?" open>
-            Restraint reads as deliberate. A single clay mark per view keeps attention
+            Restraint reads as deliberate. A single navy mark per view keeps attention
             where it belongs and never competes with content.
           </FAQItem>
           <FAQItem question="How is accessibility handled?">
