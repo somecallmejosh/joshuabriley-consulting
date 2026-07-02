@@ -4,7 +4,7 @@
  * Used by the /tools/scorecard/ entry page; the future results page will import the same source.
  */
 
-export interface ScorecardItem {
+interface ScorecardItem {
   id: string;
   label: string;
 }
@@ -99,12 +99,6 @@ export const VALID_PARAM_RE = new RegExp(`^[012]{${TOTAL_ITEMS}}$`);
 
 // ─── URL param helpers ───────────────────────────────────────────────────────
 
-export function encodeRatings(ratings: Ratings): string {
-  return SECTIONS.flatMap((s) =>
-    s.items.map((item) => String(ratings[item.id] ?? 0)),
-  ).join('');
-}
-
 export function decodeRatings(param: string): Ratings {
   const result: Ratings = {};
   let i = 0;
@@ -116,23 +110,13 @@ export function decodeRatings(param: string): Ratings {
   return result;
 }
 
-export function emptyRatings(): Ratings {
-  const result: Ratings = {};
-  for (const section of SECTIONS) {
-    for (const item of section.items) {
-      result[item.id] = null;
-    }
-  }
-  return result;
-}
-
 // ─── Scoring functions ───────────────────────────────────────────────────────
 
 export function sectionScore(section: ScorecardSection, ratings: Ratings): number {
   return section.items.reduce((sum, item) => sum + (ratings[item.id] ?? 0), 0);
 }
 
-export function sectionComplete(section: ScorecardSection, ratings: Ratings): boolean {
+function sectionComplete(section: ScorecardSection, ratings: Ratings): boolean {
   return section.items.every((item) => ratings[item.id] !== null);
 }
 

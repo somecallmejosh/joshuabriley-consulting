@@ -25,19 +25,19 @@ const fmtDate = (d: Date) =>
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <div class="flex items-center justify-between gap-4 mono-label">
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
         <span>Writing</span>
         <span class="hidden sm:inline text-ink-muted">{posts.length} essays</span>
       </div>
 
       <div class="mt-10 max-w-3xl lg:mt-14">
-        <Heading level={1} visual="display-xl" class="max-w-[18ch]">
+        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
           Writing on <em class="ink-wink font-normal italic">front-end</em> and design systems.
         </Heading>
-        <Text size="lg" tone="muted" class="mt-7 max-w-xl">
+        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
           Practical notes from 20 years of building accessible, design-grade products. No theory for its own sake.
         </Text>
-        <ul class="mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+        <ul class="hero-in hero-in-4 mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
           {['Design systems', 'Accessibility', 'Front-end architecture'].map((t) => (
             <li class="flex items-center gap-2">
               <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{t}

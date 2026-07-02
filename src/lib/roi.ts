@@ -21,7 +21,7 @@ export interface RoiInputs {
 
 export type InconsistencyLevel = 'low' | 'medium' | 'high';
 
-export interface RoiResult {
+interface RoiResult {
   /** Recoverable engineer/designer hours per year across the whole team. */
   hoursSavedPerYear: number;
   /** Dollar value of those recovered hours per year. */
@@ -38,14 +38,14 @@ export interface RoiResult {
 // Conservative, documented assumptions. Surfaced verbatim on the page.
 
 /** Working weeks per year (52 minus ~6 for holiday/PTO/ramp). */
-export const WEEKS_PER_YEAR = 46;
+const WEEKS_PER_YEAR = 46;
 
 /**
  * Fraction of current UI-rework time a structured system is modelled to reclaim,
  * by how inconsistent things are today. More drift today → more to recover.
  * Deliberately well under 100%: a system removes avoidable rework, not all of it.
  */
-export const RECLAIM_BY_LEVEL: Record<InconsistencyLevel, number> = {
+const RECLAIM_BY_LEVEL: Record<InconsistencyLevel, number> = {
   low: 0.2,
   medium: 0.4,
   high: 0.6,
@@ -55,8 +55,8 @@ export const RECLAIM_BY_LEVEL: Record<InconsistencyLevel, number> = {
  * Per-surface drag: each additional product/surface multiplies reconciliation
  * cost slightly (keeping N systems in sync). Capped so it never runs away.
  */
-export const SURFACE_DRAG = 0.05;
-export const SURFACE_DRAG_CAP = 0.5;
+const SURFACE_DRAG = 0.05;
+const SURFACE_DRAG_CAP = 0.5;
 
 export const INCONSISTENCY_LEVELS: { id: InconsistencyLevel; label: string; hint: string }[] = [
   { id: 'low', label: 'Mostly consistent', hint: 'Occasional drift, shared components exist' },
@@ -87,7 +87,7 @@ function clamp(n: number, min: number, max: number): number {
 }
 
 /** Normalise raw (possibly user-typed) inputs into safe bounds. */
-export function normalize(inputs: RoiInputs): RoiInputs {
+function normalize(inputs: RoiInputs): RoiInputs {
   return {
     team: Math.round(clamp(inputs.team, BOUNDS.team.min, BOUNDS.team.max)),
     surfaces: Math.round(clamp(inputs.surfaces, BOUNDS.surfaces.min, BOUNDS.surfaces.max)),
@@ -154,10 +154,4 @@ export function decodeInputs(param: string): RoiInputs | null {
 
 export function formatCurrency(n: number): string {
   return '$' + Math.round(n).toLocaleString('en-US');
-}
-
-export function formatCompactCurrency(n: number): string {
-  if (n >= 1_000_000) return '$' + (n / 1_000_000).toFixed(n >= 10_000_000 ? 0 : 1) + 'M';
-  if (n >= 1_000) return '$' + Math.round(n / 1_000) + 'k';
-  return '$' + Math.round(n).toString();
 }

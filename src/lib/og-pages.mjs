@@ -49,7 +49,7 @@ export const OG_PAGES = [
 ];
 
 /** Last word of a string with any trailing punctuation stripped (for winks). */
-export function lastWord(str) {
+function lastWord(str) {
   const words = String(str).trim().split(/\s+/);
   const last = words[words.length - 1] ?? '';
   return last.replace(/[.,;:!?"')\]]+$/, '');

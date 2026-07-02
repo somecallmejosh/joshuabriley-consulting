@@ -82,11 +82,11 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <div class="max-w-3xl">
-        <Link href="/blog/" variant="arrow" iconRight="ph:arrow-left" class="flex-row-reverse">
+        <Link href="/blog/" variant="arrow" iconRight="ph:arrow-left" class="hero-in hero-in-1 flex-row-reverse">
           Back to blog
         </Link>
 
-        <div class="mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.65rem] uppercase tracking-[0.12em]">
+        <div class="hero-in hero-in-2 mt-8 flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.65rem] uppercase tracking-[0.12em]">
           <span class="text-accent">{category}</span>
           <span class="text-ink-faint" aria-hidden="true">·</span>
           <time datetime={isoDate} class="text-ink-muted">{formattedDate}</time>
@@ -96,11 +96,11 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
           </span>
         </div>
 
-        <Heading level={1} visual="display-lg" balance class="mt-6">
+        <Heading level={1} visual="display-lg" balance class="hero-in hero-in-3 mt-6">
           {title}
         </Heading>
 
-        <Text size="lg" tone="muted" class="mt-6">
+        <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-6">
           {description}
         </Text>
       </div>

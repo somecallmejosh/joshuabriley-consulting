@@ -82,7 +82,7 @@ const proof = [
 
 // Illustrates the architecture this study describes: one API, no `brand` prop,
 // appearance resolved from the active token context.
-const apiSnippet = `// Button.tsx — one API, every ATK brand.
+const apiSnippet = `// Button.tsx: one API, every ATK brand.
 // No \`brand\` prop. Appearance resolves from the active token context.
 export function Button({ variant = 'primary', ...props }: ButtonProps) {
   return (
@@ -100,7 +100,7 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
 <BaseLayout title={title} description={description}>
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
-      <nav class="mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
+      <nav class="hero-in hero-in-1 mb-12 flex items-center gap-2 text-sm text-ink-muted" aria-label="Breadcrumb">
         <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
         <Icon name="ph:caret-right" size={12} />
         <span class="text-ink">America's Test Kitchen</span>
@@ -108,22 +108,22 @@ export function Button({ variant = 'primary', ...props }: ButtonProps) {
 
       <div class="hero-grid">
         <div class="hero-main">
-          <div class="mb-7 flex items-center gap-3">
+          <div class="hero-in hero-in-2 mb-7 flex items-center gap-3">
             <img src="/images/logos/atk.svg" alt="America's Test Kitchen logo" class="hero-logo-img" />
             <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
             <p class="mono-label">Case study</p>
           </div>
 
-          <Heading level={1} visual="display-xl" tone="ink">
+          <Heading level={1} visual="display-xl" tone="ink" class="hero-in hero-in-3">
             One component library, many brands, <em class="ink-wink font-normal italic">no fragmenting</em>.
           </Heading>
 
-          <Text size="lg" tone="muted" class="mt-8 max-w-xl">
+          <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-8 max-w-xl">
             Improving an inaccessible CMS and building a shared React + Next.js component library for one of the most recognized cooking brands in the US.
           </Text>
         </div>
 
-        <aside class="hero-rail" aria-label="Project details">
+        <aside class="hero-in hero-in-5 hero-rail" aria-label="Project details">
           <dl>
             {recipeMeta.map((m) => (
               <div>
