@@ -3,22 +3,24 @@ import Icon from '~/components/primitives/Icon.astro';
 import { cx } from '~/lib/cx';
 
 /**
- * LiveEmbed — a poster screenshot in the editorial browser-frame, that swaps to
- * a real interactive <iframe> on demand. The iframe is pre-rendered with NO src
- * (zero network until clicked) so it loads lazily AND keeps Astro's scoped
- * styles — runtime-injected nodes would miss them. Click "Load live demo" and
- * the poster fades out, the live story fades in.
+ * LiveEmbed — a *live viewfinder*, deliberately unlike the static editorial plates
+ * (SiteShot / ScrollShot). Where a plate is a calm mounted specimen, this signals
+ * "alive and interactive": four corner registration brackets frame the stage, a
+ * pulsing LIVE · INTERACTIVE tag sits over it, and the controls live in a spec
+ * rail below. A poster screenshot swaps to a real <iframe> on demand. The iframe
+ * is pre-rendered with NO src (zero network until clicked) so it loads lazily AND
+ * keeps Astro's scoped styles — runtime-injected nodes would miss them.
  */
 
 interface Props {
   /** Poster screenshot, root-relative. */
   posterSrc: string;
   posterAlt: string;
-  /** The iframe (story canvas) URL — loaded only on activation. */
+  /** The iframe URL — loaded only on activation. */
   embedSrc: string;
   /** Full URL for the "open" affordance (opens in a new tab). */
   href: string;
-  /** Short title shown in the frame bar + used for the iframe a11y title. */
+  /** Short title shown in the spec rail + used for the iframe a11y title. */
   title: string;
   /** CSS aspect-ratio for the stage, matching the poster. */
   ratio?: string;
@@ -40,135 +42,141 @@ const {
 ---
 
 <figure class={cx('live-embed', className)} data-live-embed data-view="desktop">
-  <div class="live-embed-bar">
-    <span class="live-embed-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-    <span class="live-embed-title">{title}: interactive</span>
+  <div class="live-embed-frame">
+    {/* Corner registration brackets — the viewfinder signature. */}
+    <span class="live-embed-corner live-embed-corner--tl" aria-hidden="true"></span>
+    <span class="live-embed-corner live-embed-corner--tr" aria-hidden="true"></span>
+    <span class="live-embed-corner live-embed-corner--bl" aria-hidden="true"></span>
+    <span class="live-embed-corner live-embed-corner--br" aria-hidden="true"></span>
 
-    {/* Viewport switch — desktop default, mobile on demand. Hidden below md
-        (Section 4: on a real phone the frame is already the mobile rendering). */}
-    <div class="live-embed-views" role="group" aria-label="Preview size">
-      <button type="button" class="live-embed-view" data-view-btn="desktop" aria-pressed="true">
-        <Icon name="ph:monitor" size={13} /><span>Desktop</span>
-      </button>
-      <button type="button" class="live-embed-view" data-view-btn="mobile" aria-pressed="false">
-        <Icon name="ph:device-mobile" size={13} /><span>Mobile</span>
-      </button>
-    </div>
+    {/* Persistent live tag — reads as a real-time feed, not a screenshot. */}
+    <span class="live-embed-tag">
+      <span class="live-embed-tag-dot" aria-hidden="true"></span>
+      live <span class="live-embed-tag-sep" aria-hidden="true">·</span> interactive
+    </span>
 
-    <a
-      href={href}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="live-embed-open"
-      aria-label={`Open ${title} (new tab)`}
-    >open <Icon name="ph:arrow-up-right" size={12} /></a>
-  </div>
+    <div class="live-embed-stage" style={`--ratio:${ratio}`}>
+      <div class="live-embed-viewport">
+        <img class="live-embed-poster" src={posterSrc} alt={posterAlt} loading="lazy" decoding="async" />
 
-  <div class="live-embed-stage" style={`--ratio:${ratio}`}>
-    <div class="live-embed-viewport">
-      <img class="live-embed-poster" src={posterSrc} alt={posterAlt} loading="lazy" decoding="async" />
+        <button type="button" class="live-embed-cta" data-embed-trigger aria-label={`Load the interactive ${title} demo`}>
+          <span class="live-embed-cta-pill">
+            <Icon name="ph:play-fill" size={15} />
+            Load live demo
+          </span>
+          <span class="live-embed-cta-note">{ctaNote}</span>
+        </button>
 
-      <button type="button" class="live-embed-cta" data-embed-trigger aria-label={`Load the interactive ${title} demo`}>
-        <span class="live-embed-cta-pill">
-          <Icon name="ph:play-fill" size={15} />
-          Load live demo
-        </span>
-        <span class="live-embed-cta-note">{ctaNote}</span>
-      </button>
-
-      {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
-      <iframe
-        class="live-embed-iframe"
-        data-embed-frame
-        data-src={embedSrc}
-        title={`${title}: live interactive demo`}
-        loading="lazy"
-        sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
-        allow="fullscreen"
-      ></iframe>
+        {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
+        <iframe
+          class="live-embed-iframe"
+          data-embed-frame
+          data-src={embedSrc}
+          title={`${title}: live interactive demo`}
+          loading="lazy"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          allow="fullscreen"
+        ></iframe>
+      </div>
     </div>
   </div>
+
+  {/* Spec rail — title left, viewport switch + open affordance right. */}
+  <figcaption class="live-embed-rail">
+    <span class="live-embed-title">{title}</span>
+
+    <div class="live-embed-controls">
+      <div class="live-embed-views" role="group" aria-label="Preview size">
+        <button type="button" class="live-embed-view" data-view-btn="desktop" aria-pressed="true">
+          <Icon name="ph:monitor" size={13} /><span>Desktop</span>
+        </button>
+        <button type="button" class="live-embed-view" data-view-btn="mobile" aria-pressed="false">
+          <Icon name="ph:device-mobile" size={13} /><span>Mobile</span>
+        </button>
+      </div>
+
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="live-embed-open"
+        aria-label={`Open ${title} (new tab)`}
+      >open <Icon name="ph:arrow-up-right" size={12} /></a>
+    </div>
+  </figcaption>
 </figure>
 
 <style>
   .live-embed { margin: 0; }
 
-  .live-embed-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.95rem;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    border-bottom: 0;
-    border-radius: 16px 16px 0 0;
+  /* Viewfinder frame — holds the stage and the four registration brackets. The
+     brackets sit just outside the stage's rounded corners. */
+  .live-embed-frame {
+    position: relative;
+    padding: 10px;
   }
-  .live-embed-dots { display: inline-flex; gap: 6px; }
-  .live-embed-dots span {
-    width: 8px; height: 8px; border-radius: 50%;
-    border: 1px solid var(--line-strong);
-  }
-  .live-embed-title {
-    flex: 1;
-    text-align: center;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  .live-embed-open {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.25rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-    transition: color 0.2s var(--ease-out);
-  }
-  .live-embed-open:hover { color: var(--accent); }
 
-  /* Viewport switch — a small mono-caps segmented control. Hidden below md. */
-  .live-embed-views { display: none; }
-  @media (min-width: 768px) {
-    .live-embed-views {
-      display: inline-flex;
-      align-items: center;
-      gap: 2px;
-      padding: 2px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--raised);
+  .live-embed-corner {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 1.5px solid var(--accent);
+    pointer-events: none;
+    opacity: 0.85;
+  }
+  .live-embed-corner--tl { top: 0; left: 0; border-right: 0; border-bottom: 0; border-radius: 4px 0 0 0; }
+  .live-embed-corner--tr { top: 0; right: 0; border-left: 0; border-bottom: 0; border-radius: 0 4px 0 0; }
+  .live-embed-corner--bl { bottom: 0; left: 0; border-right: 0; border-top: 0; border-radius: 0 0 0 4px; }
+  .live-embed-corner--br { bottom: 0; right: 0; border-left: 0; border-top: 0; border-radius: 0 0 4px 0; }
+
+  /* Before load, the brackets breathe to invite interaction; they settle once
+     the live frame is up. */
+  @media (prefers-reduced-motion: no-preference) {
+    .live-embed:not([data-loaded]) .live-embed-corner {
+      animation: live-embed-bracket 3s ease-in-out infinite;
     }
   }
-  .live-embed-view {
+  @keyframes live-embed-bracket {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.95; }
+  }
+
+  .live-embed-tag {
+    position: absolute;
+    top: 1.15rem;
+    left: 1.15rem;
+    z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 0.3rem;
-    padding: 0.28rem 0.6rem;
+    gap: 0.42rem;
+    padding: 0.34rem 0.7rem;
     border-radius: 999px;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: var(--ink-muted);
-    transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
-  }
-  .live-embed-view:hover { color: var(--ink); }
-  .live-embed-view[aria-pressed='true'] {
     background: var(--ink);
     color: var(--paper);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+  }
+  .live-embed-tag-sep { opacity: 0.55; }
+  .live-embed-tag-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.55);
+    animation: live-embed-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes live-embed-pulse {
+    0% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0.5); }
+    70% { box-shadow: 0 0 0 7px rgba(var(--accent-rgb), 0); }
+    100% { box-shadow: 0 0 0 0 rgba(var(--accent-rgb), 0); }
   }
 
   .live-embed-stage {
     position: relative;
     overflow: hidden;
-    border: 1px solid var(--line);
-    border-radius: 0 0 16px 16px;
+    border-radius: 10px;
     background: var(--raised);
     box-shadow:
       0 1px 2px rgba(27, 26, 23, 0.04),
@@ -176,10 +184,7 @@ const {
     aspect-ratio: var(--ratio, 1600 / 1039);
   }
 
-  .live-embed-viewport {
-    position: absolute;
-    inset: 0;
-  }
+  .live-embed-viewport { position: absolute; inset: 0; }
 
   .live-embed-poster,
   .live-embed-iframe {
@@ -205,6 +210,7 @@ const {
   .live-embed-cta {
     position: absolute;
     inset: 0;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -247,9 +253,72 @@ const {
   .live-embed[data-loaded] .live-embed-cta { display: none; }
   .live-embed[data-loaded] .live-embed-iframe { opacity: 1; pointer-events: auto; }
 
+  /* Spec rail — beneath the viewfinder. Title left; controls right. */
+  .live-embed-rail {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-top: 0.85rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+  }
+  .live-embed-title {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-faint);
+  }
+  .live-embed-controls { display: inline-flex; align-items: center; gap: 0.85rem; }
+
+  .live-embed-views {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+    padding: 2px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--raised);
+  }
+  .live-embed-view {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.28rem 0.6rem;
+    border-radius: 999px;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease-out), background 0.2s var(--ease-out);
+  }
+  .live-embed-view span { display: none; }
+  @media (min-width: 480px) { .live-embed-view span { display: inline; } }
+  .live-embed-view:hover { color: var(--ink); }
+  .live-embed-view[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .live-embed-open {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+    transition: color 0.2s var(--ease-out);
+  }
+  .live-embed-open:hover { color: var(--accent); }
+
   /* Mobile preview — the stage becomes a device backdrop holding a centered
-     phone. The iframe renders at ~phone width, so the live site shows its own
-     mobile layout. Instant switch (no size tween) to avoid iframe reflow jank. */
+     phone. Brackets step aside so the phone reads cleanly. */
+  .live-embed[data-view='mobile'] .live-embed-corner { opacity: 0; }
   .live-embed[data-view='mobile'] .live-embed-stage {
     aspect-ratio: auto;
     height: clamp(560px, 78vh, 760px);
@@ -275,6 +344,7 @@ const {
 
   @media (prefers-reduced-motion: reduce) {
     .live-embed-poster, .live-embed-iframe, .live-embed-cta-pill { transition: none; }
+    .live-embed-tag-dot { animation: none; }
   }
 </style>
 

@@ -9,11 +9,14 @@
  * pulse plays on change. Dependency-free, single-instance, reduced-motion aware.
  */
 
+// Keyed to the site's own palette so this demo reads as native, not a dropped-in
+// widget: the denim-navy accent leads, with editorial cousins that stay in-key.
+// Matches the swatch set in TokenPlayground so both token demos feel like one system.
 const palette = [
-  { id: 'blue',   label: 'Blue',   token: 'color.blue.500',   hex: '#2563EB' },
-  { id: 'plum',   label: 'Plum',   token: 'color.plum.500',   hex: '#6C4AB6' },
-  { id: 'coral',  label: 'Coral',  token: 'color.coral.500',  hex: '#E8573D' },
-  { id: 'sage',   label: 'Sage',   token: 'color.sage.500',   hex: '#3E6E3D' },
+  { id: 'denim',     label: 'Denim',     token: 'color.denim.500',     hex: '#2E5C8A' },
+  { id: 'teal',      label: 'Teal',      token: 'color.teal.500',      hex: '#2C6A62' },
+  { id: 'aubergine', label: 'Aubergine', token: 'color.aubergine.500', hex: '#5E4472' },
+  { id: 'clay',      label: 'Clay',      token: 'color.clay.500',      hex: '#A8412A' },
 ] as const;
 ---
 
@@ -171,7 +174,7 @@ const palette = [
       if (ctrl) apply(ctrl, t.value);
     });
 
-    syncChips(getComputedStyle(root).getPropertyValue('--tcn-color').trim() || '#3B82F6');
+    syncChips(getComputedStyle(root).getPropertyValue('--tcn-color').trim() || '#2E5C8A');
     fillTrack(radiusInput);
     primed = true;
   }
@@ -179,7 +182,7 @@ const palette = [
 
 <style>
   .tcn {
-    --tcn-color: #2563eb;
+    --tcn-color: #2e5c8a;
     --tcn-radius: 10px;
     background: var(--raised);
     border: 1px solid var(--line);
@@ -236,7 +239,7 @@ const palette = [
 
   .tcn-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tcn-chip {
-    --chip: #6c4ab6; position: relative; display: inline-flex; align-items: center; gap: 0.5rem;
+    --chip: #2e5c8a; position: relative; display: inline-flex; align-items: center; gap: 0.5rem;
     padding: 0.45rem 0.85rem; border-radius: 8px; background: var(--paper);
     border: 1px solid var(--line);
     font-family: var(--font-hanken), system-ui, sans-serif; font-size: 0.78rem; font-weight: 600;

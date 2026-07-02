@@ -25,7 +25,7 @@ const labels = [
 ---
 
 <div
-  class="rounded-lg border border-line p-6 md:p-7 mb-12"
+  class="rounded-lg border border-line p-6 md:p-7 mb-12 bg-white"
   data-scorecard-totals
 >
   <div class="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
@@ -50,12 +50,12 @@ const labels = [
 <form id="scorecardForm" class="space-y-10" onsubmit="return false">
   {SECTIONS.map((section, idx) => (
     <article
-      class="subject-card"
+      class="subject-card overflow-hidden"
       data-subject={section.id}
       data-total={section.max}
       data-count={section.items.length}
     >
-      <div class="p-6 md:p-8">
+      <div class="p-6 md:p-8 bg-white">
         <header class="mb-7 flex items-start justify-between gap-5">
           <div class="max-w-md">
             <p class="mono-label mb-2">Subject {String(idx + 1).padStart(2, '0')}</p>

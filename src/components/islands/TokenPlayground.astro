@@ -10,12 +10,16 @@ import Icon from '~/components/primitives/Icon.astro';
  * All control state lives on a single wrapper as CSS custom properties.
  */
 
+// Curated to the site's own world: the denim-navy accent leads (so the demo
+// opens in the brand, not a foreign hue), with four editorial cousins that stay
+// in-key with the cool-slate palette. Every swatch clears WCAG AA as a
+// white-on-color button and as body text on paper.
 const palettes = [
-  { id: 'plum',   label: 'Plum',   hex: '#6C4AB6' },
-  { id: 'coral',  label: 'Coral',  hex: '#E8573D' },
-  { id: 'sky',    label: 'Sky',    hex: '#1B6FA1' },
-  { id: 'sage',   label: 'Sage',   hex: '#3E6E3D' },
-  { id: 'sunset', label: 'Sunset', hex: '#A24818' },
+  { id: 'denim',     label: 'Denim',     hex: '#2E5C8A' },
+  { id: 'teal',      label: 'Teal',      hex: '#2C6A62' },
+  { id: 'aubergine', label: 'Aubergine', hex: '#5E4472' },
+  { id: 'clay',      label: 'Clay',      hex: '#A8412A' },
+  { id: 'forest',    label: 'Forest',    hex: '#3B6438' },
 ] as const;
 
 const densities = [
@@ -250,7 +254,7 @@ const densities = [
     const defaults = {
       radius: '14',
       spacing: '1',
-      palette: '#6C4AB6',
+      palette: '#2E5C8A',
       density: 'default',
     };
 
@@ -376,7 +380,7 @@ const densities = [
   .tp-root {
     --tp-radius: 14px;
     --tp-spacing: 1;
-    --tp-primary: #6c4ab6;
+    --tp-primary: #2e5c8a;
     /* density base — modulated by [data-density] below */
     --tp-pad: calc(1.25rem * var(--tp-spacing));
     --tp-gap: calc(0.75rem * var(--tp-spacing));
@@ -469,7 +473,7 @@ const densities = [
 
   .tp-chip-row { display: flex; flex-wrap: wrap; gap: 0.5rem; }
   .tp-chip {
-    --chip: #6c4ab6;
+    --chip: #2e5c8a;
     position: relative;
     display: inline-flex;
     align-items: center;

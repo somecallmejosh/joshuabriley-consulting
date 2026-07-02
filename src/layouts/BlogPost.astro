@@ -14,12 +14,9 @@ interface TocHeading {
   text: string;
 }
 
-interface MorePost {
+interface PostLink {
   id: string;
   title: string;
-  description: string;
-  category: string;
-  readMinutes: number;
 }
 
 interface Props {
@@ -31,7 +28,8 @@ interface Props {
   readMinutes: number;
   pathname?: string;
   headings?: TocHeading[];
-  morePosts?: MorePost[];
+  prevPost?: PostLink | null;
+  nextPost?: PostLink | null;
   /** Interactive post: single column, no TOC rail, tool widgets break out wide. */
   wide?: boolean;
 }
@@ -45,7 +43,8 @@ const {
   readMinutes,
   pathname,
   headings = [],
-  morePosts = [],
+  prevPost = null,
+  nextPost = null,
   wide = false,
 } = Astro.props;
 
@@ -170,47 +169,74 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
             </div>
           )}
 
-          {/* Author block */}
-          <div class="mt-16 rounded-lg border border-line p-7 md:p-9">
-            <p class="mono-label">Written by</p>
-            <Heading level={2} visual="h2" class="mt-3">Joshua Briley</Heading>
-            <Text tone="muted" class="mt-3 max-w-xl">
-              Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value (design-grade, accessible front-end), backed by capable full-stack development in Rails and TypeScript.
-            </Text>
-            <div class="mt-6 flex flex-wrap items-center gap-3">
-              <Button variant="primary" size="sm" iconRight="ph:arrow-right" href="/contact/">
-                Get in touch
-              </Button>
-              <Button variant="ghost" size="sm" href="/blog/">
-                More essays
-              </Button>
-            </div>
-          </div>
+          {/* Author endnote — headshot anchors the byline, hairline rule sets it
+              apart from the article without a boxed card (site de-card pattern). */}
+          <aside class="mt-16 border-t border-line pt-10" aria-label="About the author">
+            <div class="flex flex-col gap-6 sm:flex-row sm:gap-7">
+              <a href="/about/" class="group shrink-0" aria-label="More about Joshua Briley">
+                <picture>
+                  <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
+                  <img
+                    src="/images/about/josh-biz-cazsh.jpg"
+                    alt="Joshua Briley"
+                    class="h-[4.5rem] w-[4.5rem] rounded-lg border border-line object-cover transition duration-300 ease-out group-hover:-translate-y-0.5 group-hover:border-line-strong sm:h-24 sm:w-24"
+                    loading="lazy"
+                    width="96"
+                    height="96"
+                  />
+                </picture>
+              </a>
 
-          {/* Keep reading */}
-          {morePosts.length > 0 && (
-            <section class="mt-16 border-t border-line pt-10" aria-label="More essays">
-              <p class="mono-label">Keep reading / next</p>
-              <ul class="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2">
-                {morePosts.map((p) => (
-                  <li class="bg-paper">
-                    <a href={`/blog/${p.id}/`} class="group flex h-full flex-col p-6 transition-colors hover:bg-ink/[0.02]">
-                      <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">{p.category}</span>
-                      <Heading level={3} visual="h3" class="mt-2 transition-colors group-hover:text-accent">
-                        {p.title}
-                      </Heading>
-                      <Text size="sm" tone="muted" class="mt-2 line-clamp-2">
-                        {p.description}
-                      </Text>
-                      <span class="mt-4 inline-flex items-center gap-1.5 font-sans text-[0.85rem] font-medium text-ink transition-colors group-hover:text-accent">
-                        Read essay
-                        <Icon name="ph:arrow-right" size={14} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
-                      </span>
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </section>
+              <div class="min-w-0">
+                <p class="mono-label">Written by</p>
+                <div class="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+                  <Heading level={2} visual="h4">Joshua Briley</Heading>
+                  <span class="text-sm text-ink-muted">Product engineer</span>
+                </div>
+                <Text tone="muted" class="mt-3 max-w-xl text-sm">
+                  Design- and front-end-focused product engineer with 20 years in production UI. The interface is where I bring the most value (design-grade, accessible front-end), backed by capable full-stack development in Rails and TypeScript.
+                </Text>
+                <div class="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3">
+                  <Button variant="primary" size="sm" iconRight="ph:arrow-right" href="/contact/">
+                    Get in touch
+                  </Button>
+                  <Link href="/about/" variant="arrow" iconRight="ph:arrow-right">
+                    More about me
+                  </Link>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          {/* Previous / next pager */}
+          {(prevPost || nextPost) && (
+            <nav class="mt-16 grid gap-8 border-t border-line pt-10 sm:grid-cols-2" aria-label="More essays">
+              {prevPost ? (
+                <a href={`/blog/${prevPost.id}/`} class="group flex flex-col gap-2.5">
+                  <span class="mono-label inline-flex items-center gap-1.5 transition-colors group-hover:text-accent">
+                    <Icon name="ph:arrow-left" size={13} class="transition-transform duration-300 ease-out group-hover:-translate-x-1" />
+                    Previous
+                  </span>
+                  <Heading level={3} visual="h3" class="transition-colors group-hover:text-accent text-balance">
+                    {prevPost.title}
+                  </Heading>
+                </a>
+              ) : (
+                <div aria-hidden="true"></div>
+              )}
+
+              {nextPost && (
+                <a href={`/blog/${nextPost.id}/`} class="group flex flex-col gap-2.5 sm:items-end sm:text-right">
+                  <span class="mono-label inline-flex items-center gap-1.5 transition-colors group-hover:text-accent">
+                    Next
+                    <Icon name="ph:arrow-right" size={13} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
+                  </span>
+                  <Heading level={3} visual="h3" class="transition-colors group-hover:text-accent text-balance">
+                    {nextPost.title}
+                  </Heading>
+                </a>
+              )}
+            </nav>
           )}
         </div>
 

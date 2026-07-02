@@ -13,18 +13,14 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
 
-// Sibling posts for the "keep reading" footer — most recent, excluding this one.
-const morePosts = (await getCollection('posts', ({ data }) => !data.draft))
-  .filter((p) => p.id !== post.id)
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .slice(0, 2)
-  .map((p) => ({
-    id: p.id,
-    title: p.data.title,
-    description: p.data.description,
-    category: p.data.category,
-    readMinutes: p.data.readMinutes,
-  }));
+// Chronological neighbours for the footer pager. Newest-first ordering, so the
+// older post (previous) sits one index later and the newer post (next) one earlier.
+const orderedPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const currentIndex = orderedPosts.findIndex((p) => p.id === post.id);
+const toLink = (p) => (p ? { id: p.id, title: p.data.title } : null);
+const prevPost = toLink(orderedPosts[currentIndex + 1]);
+const nextPost = toLink(orderedPosts[currentIndex - 1]);
 ---
 
 <BlogPost
@@ -36,7 +32,8 @@ const morePosts = (await getCollection('posts', ({ data }) => !data.draft))
   readMinutes={post.data.readMinutes}
   pathname={`/blog/${post.id}/`}
   headings={headings}
-  morePosts={morePosts}
+  prevPost={prevPost}
+  nextPost={nextPost}
   wide={post.data.interactive}
 >
   <Content />

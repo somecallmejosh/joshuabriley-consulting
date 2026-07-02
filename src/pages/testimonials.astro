@@ -67,17 +67,17 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
         </Heading>
       </div>
 
-      <div class="mt-12 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-2 lg:grid-cols-3" data-reveal-stagger>
-        {sorted.map((t, i) => (
-          <figure class="flex flex-col bg-paper p-7 md:p-8">
-            <span aria-hidden="true" class="font-mono text-[0.75rem] text-accent">{String(i + 1).padStart(2, '0')}</span>
-            <blockquote class="mt-4 flex-1 shrink-0">
-
+      {/* A quiet, uniform wall. CSS columns let each quote sit at its natural
+          height (organic stagger) while every voice is weighted the same. */}
+      <div class="mt-12 columns-1 [column-gap:2.5rem] sm:columns-2 lg:mt-14 lg:columns-3 lg:[column-gap:3rem]" data-reveal-stagger>
+        {sorted.map((t) => (
+          <figure class="mb-12 break-inside-avoid lg:mb-14">
+            <blockquote>
               <p class="font-display text-lg leading-snug tracking-[-0.01em] text-ink">
                 {t.data.quote}
               </p>
             </blockquote>
-            <figcaption class="mt-6 flex items-center gap-3 border-t border-line pt-5">
+            <figcaption class="mt-5 flex items-center gap-3">
               {t.data.image ? (
                 <img
                   src={t.data.image}
@@ -107,7 +107,7 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
         <div class="lg:col-span-8">
           <p class="mono-label !text-paper/65">References</p>
-          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[22ch]">
+          <Heading level={2} visual="display-lg" tone="paper" class="mt-4 max-w-[22ch] text-balance">
             Most of these folks will take a call.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">

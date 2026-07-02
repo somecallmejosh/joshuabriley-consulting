@@ -3,39 +3,45 @@ import Icon from '~/components/primitives/Icon.astro';
 import { cx } from '~/lib/cx';
 
 /**
- * SiteShot — a screenshot of a live site presented as a quiet browser window.
- * Editorial-Technical: hairline frame, a mono URL rail (spec-sheet voice), and
- * a soft ambient lift. The whole frame links out to the real site, so a gentle
- * hover is earned — a "Visit site" tab slides up and the frame settles up a hair.
+ * SiteShot — a screenshot of a live site presented as an *editorial plate*, not a
+ * browser window. No traffic-light chrome: the capture is mounted inside a
+ * hairline paper frame (a mounted specimen), tagged with an optional plate index
+ * above, and captioned by a mono spec rail below (LIVE SITE ...... domain ↗).
+ * The whole plate links out to the real site; a gentle hover lifts the mount and
+ * slides up a "Visit site" tab. This reads as an archival figure — deliberately
+ * distinct from the live, interactive <iframe> in LiveEmbed.
  */
 
 interface Props {
-  /** Root-relative screenshot path, e.g. /images/projects/atk-live.webp */
+  /** Root-relative screenshot path, e.g. /images/projects/americas-test-kitchen/atk-live.webp */
   src: string;
   alt: string;
   /** Live URL the frame links to. */
   href: string;
-  /** Display URL shown in the address rail, e.g. americastestkitchen.com */
+  /** Display URL shown in the caption rail, e.g. americastestkitchen.com */
   label: string;
+  /** Optional plate index, e.g. "01" — renders a "Plate / 01" figure tag above. */
+  index?: string;
+  /** Kind label shown at the caption rail's left, e.g. "Live site". */
+  kind?: string;
   class?: string;
 }
 
-const { src, alt, href, label, class: className } = Astro.props;
+const { src, alt, href, label, index, kind = 'Live site', class: className } = Astro.props;
 ---
 
 <figure class={cx('site-shot', className)}>
+  {index && (
+    <p class="site-shot-index">Plate <span aria-hidden="true">/</span> {index}</p>
+  )}
+
   <a
     href={href}
     target="_blank"
     rel="noopener noreferrer"
-    class="site-shot-link group/shot"
+    class="site-shot-mount group/shot"
     aria-label={`Visit ${label} (opens in a new tab)`}
   >
-    <span class="site-shot-bar">
-      <span class="site-shot-dots" aria-hidden="true"><span></span><span></span><span></span></span>
-      <span class="site-shot-url">{label}</span>
-      <span class="site-shot-live"><span class="site-shot-live-dot" aria-hidden="true"></span>live</span>
-    </span>
     <span class="site-shot-stage">
       <img src={src} alt={alt} width="1600" height="1005" loading="lazy" decoding="async" />
       <span class="site-shot-visit" aria-hidden="true">
@@ -43,18 +49,35 @@ const { src, alt, href, label, class: className } = Astro.props;
       </span>
     </span>
   </a>
-  <figcaption class="site-shot-cap mono-label">
-    <span>Live site</span><span>{label}</span>
+
+  <figcaption class="site-shot-cap">
+    <span class="site-shot-kind">{kind}</span>
+    <span class="site-shot-url">
+      {label} <Icon name="ph:arrow-up-right" size={12} />
+    </span>
   </figcaption>
 </figure>
 
 <style>
   .site-shot { margin: 0; }
 
-  .site-shot-link {
+  /* Figure tag — a quiet plate index above the mount. */
+  .site-shot-index {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .site-shot-index span { margin: 0 0.35em; opacity: 0.6; }
+
+  /* Mount — a mounted specimen: hairline paper frame with a small margin so the
+     capture reads as a plated figure, not a raw image or a browser window. */
+  .site-shot-mount {
     display: block;
+    padding: 8px;
     border-radius: 16px;
-    overflow: hidden;
     background: var(--raised);
     border: 1px solid var(--line);
     box-shadow:
@@ -66,69 +89,27 @@ const { src, alt, href, label, class: className } = Astro.props;
       box-shadow 0.5s var(--ease-out);
     will-change: transform;
   }
-  .site-shot-link:hover {
+  .site-shot-mount:hover {
     transform: translateY(-3px);
     box-shadow:
       0 1px 2px rgba(27, 26, 23, 0.05),
       0 28px 60px -26px rgba(27, 26, 23, 0.38);
   }
 
-  /* Address rail — the spec-sheet voice. Mono URL, hairline dots, a live tick. */
-  .site-shot-bar {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding: 0.6rem 0.95rem;
-    background: var(--paper);
-    border-bottom: 1px solid var(--line);
-  }
-  .site-shot-dots { display: inline-flex; gap: 6px; }
-  .site-shot-dots span {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    border: 1px solid var(--line-strong);
-  }
-  .site-shot-url {
-    flex: 1;
-    text-align: center;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-muted);
-    white-space: nowrap;
+  .site-shot-stage {
+    position: relative;
+    display: block;
+    line-height: 0;
+    border-radius: 9px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    border: 1px solid var(--line);
   }
-  .site-shot-live {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.62rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--ink-muted);
-  }
-  .site-shot-live-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--accent);
-    animation: site-shot-pulse 2.6s ease-in-out infinite;
-  }
-  @keyframes site-shot-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.35; }
-  }
-
-  /* Stage — the screenshot itself, with a hover "Visit site" tab. */
-  .site-shot-stage { position: relative; display: block; line-height: 0; }
   .site-shot-stage img { width: 100%; height: auto; display: block; }
+
   .site-shot-visit {
     position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+    right: 0.85rem;
+    bottom: 0.85rem;
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -152,16 +133,36 @@ const { src, alt, href, label, class: className } = Astro.props;
     transform: translateY(0);
   }
 
+  /* Caption rail — a spec-sheet line under the plate. Kind label left, source
+     domain right; the whole plate is the link, so this is a printed echo. */
   .site-shot-cap {
     display: flex;
+    align-items: baseline;
     justify-content: space-between;
+    gap: 1rem;
     margin-top: 0.85rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.06em;
+  }
+  .site-shot-kind {
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
     color: var(--ink-faint);
   }
+  .site-shot-url {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--ink-muted);
+    transition: color 0.25s var(--ease-out);
+  }
+  .site-shot:hover .site-shot-url { color: var(--accent); }
 
   @media (prefers-reduced-motion: reduce) {
-    .site-shot-link, .site-shot-link:hover { transform: none; }
+    .site-shot-mount, .site-shot-mount:hover { transform: none; }
     .site-shot-visit { transition: none; }
-    .site-shot-live-dot { animation: none; }
   }
 </style>
