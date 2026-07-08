@@ -11,6 +11,10 @@
 :root {
   --paper: #fafbfc;
   --raised: #ffffff;
+  /* Warm paper — the "about me" surface. Reserved for sections whose content is
+     personal (author bios, personal projects, first-person intros), so the
+     warmth reads as an intentional voice, not a stray tint. */
+  --surface-warm: #f7f5f0;
   --ink: #1a1b1e;
   --ink-muted: #565760;
   --ink-faint: #9a9aa1;

@@ -9,7 +9,7 @@ import Icon from '~/components/primitives/Icon.astro';
 import ContactForm from '~/components/islands/ContactForm.astro';
 
 const description =
-  "Hiring a design- and front-end-focused product engineer? Send a note about the role and the team. I read and reply to everything personally.";
+  "Hiring a design- and front-end-focused product design engineer? Send a note about the role and the team. I read and reply to everything personally.";
 
 const steps = [
   { title: 'You send a message', body: 'Takes about two minutes. Tell me about the role and the team.' },
@@ -36,7 +36,7 @@ const featuredQuotes = [
 ];
 ---
 
-<BaseLayout title="Contact | Joshua Briley | Product Engineer" description={description}>
+<BaseLayout title="Contact | Joshua Briley | Product Design Engineer" description={description}>
 
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
@@ -44,7 +44,7 @@ const featuredQuotes = [
       <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
         <span class="inline-flex items-center gap-2">
           <span class="h-1.5 w-1.5 rounded-full bg-accent" aria-hidden="true"></span>
-          Open to product engineering roles
+          Open to product design engineering roles
         </span>
         <span class="hidden sm:inline text-ink-muted">Contact</span>
       </div>
@@ -55,7 +55,7 @@ const featuredQuotes = [
             Let's talk about <em class="ink-wink font-normal italic">the work</em>.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-            If you're hiring a design- and front-end-focused product engineer, someone who brings
+            If you're hiring a design- and front-end-focused product design engineer, someone who brings
             the most value at the UI and sweats the finish, send a note about the role
             and the team. I read everything and reply personally, usually the same day.
           </Text>
@@ -109,8 +109,8 @@ const featuredQuotes = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── KIND WORDS ───────────────────────── */}
-  <Section tone="paper" padding="default" class="border-t border-line">
+  {/* ───────────────────────── KIND WORDS (warm — personal) ───────────────────────── */}
+  <Section tone="surface-warm" padding="default" class="border-t border-line">
     <Container width="wide">
       <div class="max-w-3xl">
         <Heading level={2} visual="display-md">

@@ -23,31 +23,32 @@ const isResumePage = Astro.url.pathname.replace(/\/$/, '') === '/resume';
   )}
 >
   <Container as="div" width="wide" class="flex items-center justify-between gap-6 py-3.5 relative">
-    <Logo href="/" variant="lockup" size="md" />
+    <Logo href="/" variant="lockup" size="md" class="shrink-0" />
 
-    <nav class="hidden md:flex items-center gap-7" aria-label="Primary">
+    <nav class="hidden md:flex items-center gap-7 shrink-0" aria-label="Primary">
       {PRIMARY_NAV.filter((l) => l.href !== '/contact/').map((link) => (
-        <Link href={link.href} variant="nav">{link.label}</Link>
+        <Link href={link.href} variant="nav" class="whitespace-nowrap">{link.label}</Link>
       ))}
     </nav>
 
-    <div class="hidden md:flex items-center gap-5">
-      <span class="mono-label inline-flex items-center gap-1.5">
+    <div class="hidden md:flex items-center gap-5 shrink-0">
+      {/* Availability signal is informational; only surfaced at xl where it fits without crowding the CTA. */}
+      <span class="mono-label hidden xl:inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
         <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
           <span class="absolute inline-flex h-full w-full rounded-full bg-accent/60 motion-safe:animate-ping"></span>
           <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
         </span>
-        Open to product engineering roles
+        Open to product design engineering roles
       </span>
       {!isResumePage && (
         <a
           href="/resume/"
-          class="mono-label transition-colors hover:text-ink hover:underline underline-offset-4"
+          class="mono-label hidden lg:inline-block shrink-0 whitespace-nowrap transition-colors hover:text-ink hover:underline underline-offset-4"
         >Résumé</a>
       )}
       <a
         href="/contact/"
-        class="inline-flex items-center gap-2 rounded-[5px] bg-ink px-4 py-2 font-sans text-[0.85rem] font-medium tracking-tight text-paper transition-[background-color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-ink-soft hover:-translate-y-px active:scale-[0.97] active:translate-y-0"
+        class="inline-flex shrink-0 items-center gap-2 whitespace-nowrap rounded-[5px] bg-ink px-4 py-2 font-sans text-[0.85rem] font-medium tracking-tight text-paper transition-[background-color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-ink-soft hover:-translate-y-px active:scale-[0.97] active:translate-y-0"
       >Get in touch</a>
     </div>
 

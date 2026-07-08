@@ -44,7 +44,7 @@ const posts = defineCollection({
     readMinutes: z.number(),
     /** Iconify name for the gradient hero block on the index card. */
     icon: z.string(),
-    /** Tailwind classes for the index card's gradient block (e.g. "from-peach via-lemon/70 to-coral/30"). */
+    /** Tailwind classes for the index card's gradient block (e.g. "from-lemon via-coral/40 to-sky/30"). */
     gradient: z.string(),
     /** Tone applied to the corner sticker on the index card. */
     sticker: z.enum(['coral', 'plum', 'sage', 'sky', 'sunset', 'lemon']),

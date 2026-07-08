@@ -30,12 +30,22 @@ import SubmitButton from '~/components/form/SubmitButton.astro';
 const tokens = [
   { name: 'paper',       token: '--paper',       hex: '#FAFBFC', note: 'Page background (near-white cool)', fill: 'bg-paper', border: 'border-line-strong' },
   { name: 'raised',      token: '--raised',      hex: '#FFFFFF', note: 'Cards, inputs', fill: 'bg-raised', border: 'border-line-strong' },
+  { name: 'surface-warm', token: '--surface-warm', hex: '#F7F5F0', note: 'Warm "about me" surface, personal sections only', fill: 'bg-surface-warm', border: 'border-line-strong' },
   { name: 'ink',         token: '--ink',         hex: '#1A1B1E', note: 'Headings, body, dark sections', fill: 'bg-ink', border: 'border-ink' },
   { name: 'ink-muted',   token: '--ink-muted',   hex: '#565760', note: 'Body min on paper (AA)', fill: 'bg-[#565760]', border: 'border-[#565760]' },
   { name: 'ink-faint',   token: '--ink-faint',   hex: '#9A9AA1', note: 'Decorative only, never body text', fill: 'bg-[#9A9AA1]', border: 'border-[#9A9AA1]' },
   { name: 'line',        token: '--line',        hex: '#E5E7EB', note: 'Hairline borders, dividers', fill: 'bg-line', border: 'border-line-strong' },
   { name: 'line-strong', token: '--line-strong', hex: '#D4D7DD', note: 'Emphasised hairline', fill: 'bg-line-strong', border: 'border-line-strong' },
   { name: 'accent',      token: '--accent',      hex: '#2E5C8A', note: 'One denim-navy accent, used sparingly', fill: 'bg-accent', border: 'border-accent' },
+];
+
+// ── Palette origin: the token set is sampled from one portrait, not a
+// generator. Each row maps a token back to where it lives in the photograph.
+const originMap = [
+  { token: '--paper',        fill: 'bg-paper',        border: 'border-line-strong', from: 'Cool daylight across the walls and windows' },
+  { token: '--surface-warm', fill: 'bg-surface-warm', border: 'border-line-strong', from: 'The knit throw and warm wood shelving' },
+  { token: '--ink',          fill: 'bg-ink',          border: 'border-ink',         from: 'Frame edges and the deepest shadow' },
+  { token: '--accent',       fill: 'bg-accent',       border: 'border-accent',      from: 'Denim-navy woven through the blanket' },
 ];
 
 // Live in-section nav for the editorial rail.
@@ -59,7 +69,7 @@ const describedBy =
 
 // Illustrative metric figures — replace with real numbers in production.
 const metrics = [
-  { value: '8', label: 'colour tokens drive everything' },
+  { value: '9', label: 'colour tokens drive everything' },
   { value: '2', label: 'typefaces: Hanken + Geist Mono' },
   { value: '100%', label: 'components keyboard-operable' },
   { before: '6', value: '1', label: 'button implementations' },
@@ -105,11 +115,51 @@ const metrics = [
       <div class="mt-4 max-w-2xl">
         <Heading level={2} visual="display-md">Colour tokens.</Heading>
         <Text tone="muted" class="mt-4">
-          The full palette is eight tokens. There are no bright fills, no gradients.
+          The full palette is nine tokens. There are no bright fills, no gradients.
           Contrast and rhythm come from ink on paper, with the navy accent reserved
           for one mark per view. Every value is a CSS custom property in
           <code class="font-mono text-[0.9em] text-accent"> :root</code>.
         </Text>
+      </div>
+
+      <div class="mt-12 grid gap-8 md:grid-cols-5 md:items-center">
+        <figure class="overflow-hidden rounded-lg border border-line md:col-span-2">
+          <picture>
+            <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
+            <img
+              src="/images/about/josh-biz-cazsh.jpg"
+              alt="Joshua Briley seated in a sunlit room, the source photograph the palette was sampled from"
+              class="aspect-[4/5] w-full object-cover"
+              loading="lazy"
+              width="640"
+              height="800"
+            />
+          </picture>
+        </figure>
+
+        <div class="md:col-span-3">
+          <p class="mono-label">Palette origin</p>
+          <Heading level={3} visual="h3" class="mt-4">Pulled from a photograph, not a generator.</Heading>
+          <Text tone="muted" class="mt-4">
+            Before the tokens were tokens, they were a room. The palette is sampled from
+            a single portrait of me: the cool near-white of daylight became
+            <code class="font-mono text-[0.9em] text-ink"> paper</code>, the warm knit throw
+            and wood shelving became <code class="font-mono text-[0.9em] text-ink">surface-warm</code>,
+            and the denim-navy in the blanket weave became the one accent the whole site leans on.
+          </Text>
+
+          <dl class="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line">
+            {originMap.map((m) => (
+              <div class="flex items-center gap-4 bg-raised px-4 py-3">
+                <span class={`h-9 w-9 shrink-0 rounded-[5px] border ${m.fill} ${m.border}`} aria-hidden="true"></span>
+                <div>
+                  <dt class="font-mono text-[0.7rem] uppercase tracking-[0.06em] text-accent">{m.token}</dt>
+                  <dd class="text-sm leading-snug text-ink-muted">{m.from}</dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
 
       <Grid cols={4} gap="md" class="mt-12">

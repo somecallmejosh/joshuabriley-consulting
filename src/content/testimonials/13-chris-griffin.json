@@ -9,6 +9,6 @@
   "variant": "polaroid",
   "tilt": "rot-3",
   "tape": "left-coral",
-  "slabGradient": "from-lemon/50 via-peach/40 to-coral/20",
+  "slabGradient": "from-lemon/50 to-coral/20",
   "image": "/images/testimonials/chris-griffin.jpeg"
 }

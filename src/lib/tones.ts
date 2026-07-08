@@ -14,7 +14,6 @@ export const TONES = [
   'navy',
   'sky',
   'lemon',
-  'peach',
   'cream',
 ] as const;
 

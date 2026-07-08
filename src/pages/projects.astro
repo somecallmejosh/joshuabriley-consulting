@@ -52,6 +52,16 @@ const projects = [
     note: '350 ERB templates',
   },
 ];
+
+// Personal work — surfaced as its own band so it reads as a distinct body of
+// work, not a footnote to the client case studies. Names mirror the index page.
+const personalProjects = [
+  { href: '/personal-projects/rudiment-ui/', name: 'Rudiment UI' },
+  { href: '/personal-projects/clempo/', name: 'Clempo' },
+  { href: '/personal-projects/bass-face/', name: 'Bass Face' },
+  { href: '/personal-projects/token-galaga/', name: 'Token Adventure' },
+  { href: '/personal-projects/west-baton-rouge-presbyterian/', name: 'West Baton Rouge Presbyterian' },
+];
 ---
 
 <BaseLayout title="Projects | Joshua Briley" description={description}>
@@ -110,24 +120,47 @@ const projects = [
           </li>
         ))}
       </ul>
+    </Container>
+  </Section>
 
-      <a
-        href="/personal-projects/"
-        class="group mt-4 flex items-center justify-between gap-4 border-b border-line py-8 transition-colors hover:bg-ink/[0.02] md:py-9"
-      >
-        <span class="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:gap-4">
-          <span class="font-display text-lg font-medium tracking-tight text-ink md:text-xl">Personal projects</span>
-          <span class="text-sm leading-relaxed text-ink-muted">The things I build when no one's asking: Clempo and Bass Face.</span>
-        </span>
-        <span class="inline-flex shrink-0 items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted transition-colors group-hover:text-accent">
-          View
-          <Icon
-            name="ph:arrow-right"
-            size={16}
-            class="transition-transform duration-300 ease-out group-hover:translate-x-1"
-          />
-        </span>
-      </a>
+  {/* ───────────────────────── PERSONAL PROJECTS (warm band) ───────────────────────── */}
+  <Section tone="surface-warm" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+        <div class="max-w-2xl">
+          <Heading level={2} visual="display-md" class="max-w-[14ch]">
+            Personal projects
+          </Heading>
+          <Text size="lg" tone="muted" class="mt-5 max-w-xl">
+            Five things I build when no one's asking, from open-source component primitives to a
+            finance app real households run their money on. No client, no brief, same finish.
+          </Text>
+        </div>
+        <Button
+          variant="ghost"
+          href="/personal-projects/"
+          iconRight="ph:arrow-right"
+          class="shrink-0 self-start sm:self-auto"
+        >All personal projects</Button>
+      </div>
+
+      <ul class="mt-10 flex flex-wrap gap-2.5" data-reveal-stagger>
+        {personalProjects.map((p) => (
+          <li>
+            <a
+              href={p.href}
+              class="group inline-flex items-center gap-2 rounded-[5px] border border-line-strong bg-paper/60 px-4 py-2.5 font-display text-[0.95rem] font-medium tracking-tight text-ink transition-[background-color,border-color,transform] duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-px hover:border-ink/40 hover:bg-paper"
+            >
+              {p.name}
+              <Icon
+                name="ph:arrow-up-right"
+                size={14}
+                class="text-ink-faint transition-colors duration-300 group-hover:text-accent"
+              />
+            </a>
+          </li>
+        ))}
+      </ul>
     </Container>
   </Section>
 
@@ -168,7 +201,7 @@ const projects = [
             Every case study doubles as a work sample.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            If you're evaluating me for a product engineering role, this is the level of craft and
+            If you're evaluating me for a product design engineering role, this is the level of craft and
             finish to expect at the interface. Questions about any of it, send a note.
           </Text>
         </div>

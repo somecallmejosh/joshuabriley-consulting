@@ -23,6 +23,7 @@ export default {
         // ── New "Editorial Technical" system ──────────────────────────────
         paper: '#FAFBFC', // page background — near-white, faint cool cast (terracotta + slate)
         raised: '#FFFFFF', // cards / raised surfaces (pure white, lifts off paper)
+        'surface-warm': 'var(--surface-warm)', // warm "about me" surface — personal/first-person sections only
         ink: {
           DEFAULT: '#1A1B1E', // primary text + dark surfaces (cool near-black)
           soft: '#292A2E',
@@ -48,18 +49,15 @@ export default {
         // tracks `paper`. The near-black + muted text aliases are cooled to match
         // the new cool-slate ink so body copy doesn't stay warm on a cool page.
         cream: '#ffffff', // = paper (page background)
-        peach: '#EFEDE6',
         coral: 'rgb(var(--accent-rgb) / <alpha-value>)', // legacy alias → follows surface like accent
-        sunset: '#8A4B2E',
-        'sunset-deep': '#8A4B2E',
+        sunset: '#8A4B2E', // decorative gradient stop (blog cards, testimonial slabs)
         plum: '#1A1B1E',
         navy: '#1A1B1E',
         charcoal: '#1A1B1E',
         sage: '#565760',
-        'sage-deep': '#45464C',
+        'sage-deep': '#45464C', // Choice checked-state fill
         sky: '#565760',
-        'sky-deep': '#45464C',
-        lemon: '#EAE7DD',
+        lemon: '#EAE7DD', // decorative gradient stop (blog cards, testimonial slabs)
       },
     },
   },
