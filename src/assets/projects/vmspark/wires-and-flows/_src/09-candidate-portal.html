@@ -1,0 +1,347 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Candidate Portal — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Two artwork blocks, stacked. A phone beside a desktop frame would put every
+     leader from the left device across the right one, and discs number by
+     vertical position, so the reasoning would stop reading in order. */
+  .block + .block { margin-top: 34px; }
+  .cap { margin: 0 0 10px; font-size: 11.5px; color: var(--muted); }
+  .cap b { color: var(--ink); font-weight: 700; margin-right: 6px; }
+
+  .split { display: flex; align-items: flex-start; gap: 30px; width: var(--art-w); }
+  .col-left { width: 596px; flex: none; padding-top: 6px; }
+
+  /* Column-order comparison. Deliberately no colour: this is about which fields
+     lead, and tinting it would claim a product state it does not have. */
+  .strip { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0 0; }
+  .strip span {
+    padding: 4px 8px;
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+    background: var(--fill-2);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.07em;
+    color: var(--faint);
+  }
+  .strip span.lead {
+    border-color: var(--ink);
+    background: var(--paper);
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  /* Phone. 390px is the working width the portal was designed against. */
+  .phone { width: 390px; flex: none; }
+  .phone-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--fill-2);
+  }
+  .phone-bar .brandmark {
+    width: 18px; height: 18px; flex: none;
+    border-radius: 4px;
+    background: var(--fill-4);
+  }
+  .phone-bar .nm { font-size: 12.5px; font-weight: 700; }
+  /* Column flex rather than block flow: it forces the search field and the
+     cards to the same measure, which block widths were missing by a few px. */
+  .phone-body { display: flex; flex-direction: column; align-items: stretch; padding: 13px 14px 16px; }
+  .jobcard {
+    padding: 12px 13px 13px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+  }
+  .jobcard + .jobcard { margin-top: 10px; }
+  .rate { font-size: 21px; font-weight: 700; letter-spacing: -0.01em; line-height: 1.1; }
+  .jt { margin: 5px 0 0; font-size: 13.5px; font-weight: 600; }
+  .jm { margin: 3px 0 0; font-size: 11.5px; color: var(--muted); }
+  .facts { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 9px; }
+  /* 44px tap target, full bleed inside the card. Applying is the one write. */
+  .apply {
+    display: flex; align-items: center; justify-content: center;
+    height: 44px; margin-top: 11px;
+    border-radius: var(--r);
+    background: var(--accent);
+    font-size: 13.5px; font-weight: 600; color: #fff;
+  }
+  .applied {
+    display: flex; align-items: center; gap: 8px;
+    height: 44px; margin-top: 11px; padding: 0 12px;
+    border: 1px solid var(--accent);
+    border-radius: var(--r);
+    background: var(--accent-tint);
+    font-size: 12px; color: var(--accent); font-weight: 600;
+  }
+
+  /* Desktop portal shell: a top bar and tabs, no operator rail or sidebar. */
+  .topbar {
+    display: flex; align-items: center; gap: 26px;
+    padding: 10px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .topbar .nm { font-size: 13.5px; font-weight: 700; }
+  .topbar .tabs { border: none; gap: 22px; }
+  .topbar .tab { padding: 0; }
+  .topbar .tab.on { box-shadow: none; }
+
+  /* Application stepper — dated, because "did that go through" is the question. */
+  .steps { display: flex; align-items: flex-start; margin: 4px 0 0; }
+  .step { flex: 1; text-align: center; position: relative; }
+  .step .d {
+    position: relative;
+    display: block;
+    width: 15px; height: 15px; margin: 0 auto;
+    border: 2px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+  }
+  .step.done .d { border-color: var(--accent); background: var(--accent); }
+  .step.now .d { border-color: var(--accent); background: var(--paper); box-shadow: 0 0 0 3px var(--accent-tint); }
+  .step .l { display: block; margin-top: 9px; font-size: 11.5px; color: var(--muted); }
+  .step.done .l, .step.now .l { color: var(--ink); }
+  .step.now .l { color: var(--accent); font-weight: 600; }
+  .step .w { display: block; margin-top: 3px; font-size: 10.5px; color: var(--faint); }
+  .step::before {
+    content: ""; position: absolute; top: 7px; left: -50%; width: 100%;
+    height: 2px; background: var(--fill-4);
+  }
+  .step:first-child::before { display: none; }
+  .step.done::before, .step.now::before { background: var(--accent); }
+
+  table.apps { table-layout: fixed; width: 100%; }
+  table.apps th, table.apps td { white-space: nowrap; overflow: hidden; }
+  table.apps td { font-size: 11.5px; }
+  .btn.focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); color: var(--accent); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Candidate Portal</h1>
+      <p class="sub">The one surface a non-employee sees. Browse open assignments, apply, and find out afterwards whether it went through.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+
+      <div class="block">
+        <p class="cap"><b>(a)</b> Browse and apply — public, no sign-in, 390px</p>
+        <div class="split">
+          <div class="col-left">
+            <p class="eyebrow">FIELD ORDER — OPERATOR GRID</p>
+            <div class="strip">
+              <span>JOB ID</span><span>POSITION TITLE</span><span>FACILITY</span>
+              <span>PROFESSION</span><span>SPECIALTY</span><span>STATUS</span>
+              <span class="lead">START</span><span class="lead">SHIFT</span>
+              <span class="lead">BILL RATE</span><span class="lead">CITY</span>
+              <span>VMS SOURCE</span><span>MAPPED BY</span>
+            </div>
+            <p class="eyebrow" style="margin-top:20px">FIELD ORDER — CANDIDATE PORTAL</p>
+            <div class="strip">
+              <span class="lead">PAY RATE</span><span class="lead">CITY</span>
+              <span class="lead">SHIFT</span><span class="lead">START</span>
+              <span>POSITION TITLE</span><span>FACILITY</span><span>DURATION</span>
+            </div>
+            <div class="aside" style="margin-top:20px">
+              <span class="t">Same records, opposite priority</span>
+              The four fields a travelling clinician decides on are columns seven
+              through ten of the operator grid, and the four the operator triages
+              on — job ID, status, VMS source, mapped by — do not appear here at
+              all. That is why this is a rebuilt layout rather than a responsive
+              pass over the grid.
+            </div>
+            <div class="aside" style="margin-top:12px">
+              <span class="t">Sign-in is optional until it is not</span>
+              Browsing, filtering and the first apply are anonymous. An account is
+              created from the application, not before it.
+            </div>
+            <div class="aside" style="margin-top:12px">
+              <span class="t">Designed at 390px, then widened</span>
+              Single column, one card per assignment, nothing below 44px. The
+              wider layout underneath is the same page and the same components at
+              a larger breakpoint — a table appears only once there is room for
+              one, and it is a comparison table, not a triage grid.
+            </div>
+          </div>
+
+          <div class="device phone">
+            <div class="phone-bar" data-note="1">
+              <span class="brandmark"></span>
+              <span class="nm">Mercy Staffing Partners</span>
+              <span class="btn sm quiet" style="margin-left:auto">Sign in</span>
+            </div>
+            <div class="phone-body">
+              <span class="field placeholder" style="display:block">ICU, Sacramento</span>
+              <div class="facts" style="margin-top:9px">
+                <span class="chip sm">ICU ×</span>
+                <span class="chip sm">Sacramento, CA ×</span>
+                <span class="chip sm">Nights ×</span>
+                <span class="chip sm">Filters</span>
+              </div>
+              <p class="sub-line" style="margin:11px 0 9px" data-note="2">
+                18 assignments · highest pay first
+              </p>
+
+              <div class="jobcard" data-note="3">
+                <p class="rate">$64.50<span class="sub-line" style="display:inline;margin-left:3px">/hr</span></p>
+                <p class="jt">Registered Nurse — ICU</p>
+                <p class="jm">Mercy General · Sacramento, CA</p>
+                <div class="facts">
+                  <span class="chip sm">Nights · 7:00p–7:30a</span>
+                  <span class="chip sm">13 weeks</span>
+                  <span class="chip sm">Starts 18 Aug</span>
+                </div>
+                <span class="apply" data-note="4">Apply — about two minutes</span>
+              </div>
+
+              <div class="jobcard">
+                <p class="rate">$52.75<span class="sub-line" style="display:inline;margin-left:3px">/hr</span></p>
+                <p class="jt">Travel RN — Med/Surg</p>
+                <p class="jm">St. Luke's Medical Center · Boise, ID</p>
+                <div class="facts">
+                  <span class="chip sm">Days · 12h</span>
+                  <span class="chip sm">13 weeks</span>
+                  <span class="chip sm">Starts 11 Aug</span>
+                </div>
+                <span class="applied">Applied 12 Jun · Under review</span>
+              </div>
+
+              <div class="jobcard">
+                <p class="rate">$41.00<span class="sub-line" style="display:inline;margin-left:3px">/hr</span></p>
+                <p class="jt">Surgical Technologist</p>
+                <p class="jm">Baptist Health · Jacksonville, FL</p>
+                <div class="facts">
+                  <span class="chip sm">Days · 10h</span>
+                  <span class="chip sm">26 weeks</span>
+                  <span class="chip sm">Starts 18 Aug</span>
+                </div>
+                <span class="apply">Apply — about two minutes</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="block">
+        <p class="cap"><b>(b)</b> After applying — the same portal, signed in</p>
+        <div class="browser" style="width:var(--art-w)">
+          <div class="browser-bar">
+            <i></i><i></i><i></i>
+            <span class="url">mercystaffing-jobs.com — /applications</span>
+          </div>
+
+          <div class="topbar">
+            <span class="brandmark" style="width:20px;height:20px;border-radius:4px;background:var(--fill-4);display:inline-block"></span>
+            <span class="nm">Mercy Staffing Partners</span>
+            <span class="tabs">
+              <span class="tab">Open assignments</span>
+              <span class="tab on">My applications</span>
+              <span class="tab">My profile</span>
+            </span>
+            <span class="row" style="margin-left:auto;gap:8px">
+              <span class="sub-line">A. Reyes</span>
+              <span class="avatar sm"></span>
+            </span>
+          </div>
+
+          <div class="pane stack-12">
+            <div class="between">
+              <div>
+                <p class="h">My applications</p>
+                <p class="sub-line">4 applications · Registered Nurse, ICU · licensed CA · OR · NV</p>
+              </div>
+              <span class="btn sm">Email me new ICU assignments</span>
+            </div>
+
+            <div class="panel" data-note="5">
+              <div class="between" style="margin-bottom:14px">
+                <div>
+                  <p class="h-sm">Travel RN — Med/Surg · St. Luke's Medical Center</p>
+                  <p class="sub-line">$52.75/hr · Days · starts 11 Aug 2026 · 13 weeks</p>
+                </div>
+                <span class="chip on">Under review</span>
+              </div>
+              <div class="steps">
+                <div class="step done"><span class="d"></span><span class="l">Application sent</span><span class="w">12 Jun, 8:41pm</span></div>
+                <div class="step now"><span class="d"></span><span class="l">Recruiter reviewing</span><span class="w">since 14 Jun</span></div>
+                <div class="step"><span class="d"></span><span class="l">Submitted to facility</span><span class="w">—</span></div>
+                <div class="step"><span class="d"></span><span class="l">Interview</span><span class="w">—</span></div>
+                <div class="step"><span class="d"></span><span class="l">Offer</span><span class="w">—</span></div>
+              </div>
+            </div>
+
+            <div class="panel" style="padding:0;overflow:hidden">
+              <table class="wire apps">
+                <colgroup>
+                  <col style="width:236px"><col style="width:206px"><col style="width:86px">
+                  <col style="width:78px"><col style="width:96px"><col style="width:104px">
+                  <col style="width:154px">
+                </colgroup>
+                <thead>
+                  <tr>
+                    <th>POSITION</th><th>FACILITY</th><th>PAY RATE</th>
+                    <th>SHIFT</th><th>STARTS</th><th class="sorted">APPLIED ▼</th>
+                    <th>WHERE IT IS</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="sel">
+                    <td>Travel RN — Med/Surg</td><td>St. Luke's Medical Center</td>
+                    <td class="num">$52.75/hr</td><td>Days</td><td>11 Aug 2026</td>
+                    <td>12 Jun 2026</td><td><span class="chip on">Under review</span></td>
+                  </tr>
+                  <tr>
+                    <td>Registered Nurse — ICU</td><td>Mercy General</td>
+                    <td class="num">$64.50/hr</td><td>Nights</td><td>18 Aug 2026</td>
+                    <td>03 Jun 2026</td><td><span class="chip">Submitted to facility</span></td>
+                  </tr>
+                  <tr>
+                    <td>Telemetry RN — Days</td><td>Providence Regional</td>
+                    <td class="num">$58.00/hr</td><td>Days</td><td>21 May 2026</td>
+                    <td>21 May 2026</td><td><span class="chip ok">Placed · starts 21 May</span></td>
+                  </tr>
+                  <tr>
+                    <td>Surgical Technologist</td><td>Baptist Health</td>
+                    <td class="num">$41.00/hr</td><td>Days</td><td>02 May 2026</td>
+                    <td>02 May 2026</td><td><span class="chip">Not selected</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="between">
+              <p class="sub-line">Something look wrong on an application? Message your recruiter.</p>
+              <span class="btn sm focus" data-note="6">Update availability</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">This is the only screen a non-employee sees, and it carries the agency's name rather than VMSpark's. Everything internal comes off with it: no VMS source, no requisition ID, no processing state. A candidate has no use for the fact that a listing arrived from Medefis, and telling her would leak which agencies share which facilities.</li>
+      <li data-for="2">The count is honest about what it excludes and silent about why. A listing reaches this page only once its profession and specialty resolve to mapped values, so an unmapped profession is not an error a candidate ever sees — it is an assignment that was never advertised. That is the clearest way mapping debt turns into a lost placement, and it is invisible from this side of the product.</li>
+      <li data-for="3">Pay rate leads at the largest size on the card, then city, shift and start date. Those are the four fields the operator grid pushes out to columns seven through ten, because an operator triages on identity and state while a clinician decides on money and logistics. Same records, opposite priority, so the layout is rebuilt rather than reskinned.</li>
+      <li data-for="4">Candidates browse on a phone between shifts, so the one write on the surface gets a 44px full-bleed target and a plain estimate of what it costs them. There is no account wall in front of it — the account is created from the application. Once applied, the button is replaced in place by the dated state, because the card is where she will look first.</li>
+      <li data-for="5">"Did that go through" is the commonest thing a candidate rings her recruiter about, and every one of those calls is a support cost created by a portal that cannot answer it. The stepper is dated at each step, and the labels describe where the application physically is, not what the pipeline calls that stage.</li>
+      <li data-for="6">This surface is public, so accessibility is an acceptance criterion rather than a later pass: full keyboard operability, a visible focus ring that survives the token layer, focus moved deliberately after an apply, and contrast checked at the token level so no future theme can quietly fail it.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

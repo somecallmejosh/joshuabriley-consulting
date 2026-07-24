@@ -1,0 +1,350 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Check-in kiosk — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* The kiosk is the only dark surface in the product, so the light-on-dark
+     vocabulary lives here rather than in sheet.css. Everything below is scoped
+     to .kd — the shared classes keep their normal meaning everywhere else. */
+  /* Two states of one screen, stacked. Side by side would interleave the
+     callout discs between the columns, so the reasoning would stop reading in
+     order — and a leader from the left device has to cross the right one. */
+  .kcol { width: 560px; margin: 0 auto; }
+  .kcol + .kcol { margin-top: 34px; }
+
+  .kd { color: #f2f3f5; }
+  .kd .pad { padding: 24px; height: 100%; display: flex; flex-direction: column; }
+
+  .kd .eb {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.14em;
+    color: #9aa0a8;
+  }
+  .kd .tag {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 12px;
+    border: 1.5px solid #6b717a;
+    border-radius: 12px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    color: #cdd1d6;
+    white-space: nowrap;
+  }
+  .kd .hairline { height: 1.5px; background: #4a4f57; margin: 16px 0; }
+
+  .kd .logo-slot {
+    height: 56px;
+    border: 1.5px dashed #6b717a;
+    border-radius: 3px;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.16em;
+    line-height: 54px;
+    text-align: center;
+    color: #9aa0a8;
+  }
+
+  .kd .title { margin: 0; font-size: 22px; font-weight: bold; }
+  .kd .lead { margin: 6px 0 0; font-size: 12.5px; color: #b6bbc1; }
+  .kd .ask { margin: 0; font-size: 14px; text-align: center; color: #dfe2e6; }
+  .kd .foot { font-size: 11.5px; text-align: center; color: #9aa0a8; }
+
+  /* 96px tall with 48px type — the spec the case study actually names. */
+  .kd .pin {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    height: 96px;
+    border: 2px solid #7d838b;
+    border-radius: 4px;
+  }
+  .kd .pin b {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: #f2f3f5;
+  }
+  .kd .pin i {
+    width: 3px;
+    height: 46px;
+    background: #f2f3f5;
+  }
+  .kd .pin s {
+    width: 26px;
+    height: 3px;
+    background: #6b717a;
+  }
+  .kd .spec {
+    margin-top: 7px;
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-align: right;
+    color: #8d939b;
+  }
+
+  .kd .keys { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .kd .key {
+    height: 58px;
+    border: 1.5px solid #575d65;
+    border-radius: 4px;
+    background: #3b4047;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 55px;
+    text-align: center;
+  }
+  .kd .key.act {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: normal;
+    letter-spacing: 0.12em;
+    color: #b6bbc1;
+    background: none;
+    border-style: dashed;
+  }
+  .kd .key.blank { border: none; background: none; }
+
+  .kd .card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    border: 1.5px solid #575d65;
+    border-radius: 4px;
+    background: #3b4047;
+  }
+  .kd .card .av {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 50%;
+    background: #565c64;
+  }
+  .kd .card .ln { height: 9px; border-radius: 4px; background: #6f757d; }
+  .kd .card .st { margin-top: 7px; font-size: 11.5px; color: #b6bbc1; }
+  .kd .act-btn {
+    flex: none;
+    height: 38px;
+    padding: 0 18px;
+    border-radius: 3px;
+    background: #f2f3f5;
+    color: #2b2f34;
+    font-size: 12.5px;
+    font-weight: bold;
+    line-height: 38px;
+  }
+  .kd .act-btn.out { background: none; border: 1.5px solid #f2f3f5; color: #f2f3f5; line-height: 35px; }
+
+  .kd .canvas {
+    height: 104px;
+    border: 1.5px dashed #6b717a;
+    border-radius: 4px;
+    position: relative;
+  }
+  .kd .canvas .ph {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.16em;
+    color: #7d838b;
+  }
+  .kd .canvas .base {
+    position: absolute;
+    left: 18px;
+    right: 18px;
+    bottom: 18px;
+    height: 1.5px;
+    background: #6b717a;
+  }
+  .kd .confirm {
+    height: 46px;
+    border-radius: 4px;
+    background: #f2f3f5;
+    color: #2b2f34;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 46px;
+    text-align: center;
+  }
+
+  .kd .note-box {
+    padding: 11px 13px;
+    border: 1.5px dashed #6b717a;
+    border-radius: 3px;
+    font-size: 11px;
+    line-height: 1.5;
+    color: #b6bbc1;
+  }
+  .kd .note-box b { color: #f2f3f5; }
+
+  .state-label {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  .state-label .n {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    font-weight: bold;
+    letter-spacing: 0.14em;
+    color: var(--rust);
+  }
+  .state-label .t { font-size: 12px; font-weight: bold; }
+  .state-label .w { margin-left: auto; font-size: 11px; color: var(--faint); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Check-in kiosk</h1>
+      <p class="sub">The tablet handed across the doorway. There is nowhere to go because there should be nowhere to go.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div>
+
+        <div class="kcol">
+          <div class="state-label">
+            <span class="n">01</span>
+            <span class="t">PIN entry</span>
+            <span class="w">Anyone may see this</span>
+          </div>
+
+          <div class="device dark kd">
+            <div class="pad">
+              <div class="between">
+                <span class="eb">BRIGHT START FAMILY CARE</span>
+                <span class="tag" data-note="1">NO SESSION · ACCOUNT ID ONLY</span>
+              </div>
+
+              <div class="hairline"></div>
+
+              <div class="logo-slot">DAYCARE LOGO</div>
+
+              <div style="height:20px"></div>
+              <p class="ask">Enter your 4-digit PIN</p>
+              <div style="height:12px"></div>
+
+              <div>
+                <div class="pin" data-note="2"><b></b><b></b><i></i><s></s></div>
+                <div class="spec">96PX TALL · 48PX TYPE · NO SUBMIT BUTTON</div>
+              </div>
+
+              <div style="height:16px"></div>
+
+              <div class="keys" data-note="3">
+                <div class="key">1</div><div class="key">2</div><div class="key">3</div>
+                <div class="key">4</div><div class="key">5</div><div class="key">6</div>
+                <div class="key">7</div><div class="key">8</div><div class="key">9</div>
+                <div class="key blank"></div><div class="key">0</div><div class="key act">DELETE</div>
+              </div>
+
+              <div style="height:18px"></div>
+              <p class="foot" style="margin:auto 0 0">Forgot your PIN? Hand the tablet back to your provider.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="kcol">
+          <div class="state-label">
+            <span class="n">02</span>
+            <span class="t">Children, then signature</span>
+            <span class="w">Scoped to one PIN</span>
+          </div>
+
+          <div class="device dark kd">
+            <div class="pad">
+              <div class="between">
+                <span class="eb">BRIGHT START FAMILY CARE</span>
+                <span class="tag">NOT YOU? START OVER</span>
+              </div>
+
+              <div class="hairline"></div>
+
+              <p class="title">Hi, <span style="display:inline-block;width:110px;height:13px;border-radius:6px;background:#6f757d;vertical-align:middle"></span></p>
+              <p class="lead">Monday, July 20 · 3:34 pm — tap a child to check in or out.</p>
+
+              <div style="height:16px"></div>
+
+              <div class="stack-8" data-note="4">
+                <div class="card">
+                  <span class="av"></span>
+                  <span class="grow">
+                    <span class="ln" style="display:block;width:132px"></span>
+                    <span class="st" style="display:block">Checked in 7:42a · here 7h 52m</span>
+                  </span>
+                  <span class="act-btn out">Check out</span>
+                </div>
+                <div class="card">
+                  <span class="av"></span>
+                  <span class="grow">
+                    <span class="ln" style="display:block;width:104px"></span>
+                    <span class="st" style="display:block">Not here yet · expected 8:30a</span>
+                  </span>
+                  <span class="act-btn">Check in</span>
+                </div>
+              </div>
+
+              <div style="height:18px"></div>
+
+              <div>
+                <div class="between" style="margin-bottom:7px">
+                  <span class="eb">SIGNATURE — RELEASED TO THIS PIN</span>
+                  <span class="eb" style="text-decoration:underline">CLEAR</span>
+                </div>
+                <div class="canvas" data-note="5">
+                  <div class="ph">SIGN HERE</div>
+                  <div class="base"></div>
+                </div>
+              </div>
+
+              <div style="height:12px"></div>
+              <div class="confirm">Confirm check-out</div>
+              <p class="foot" style="margin:9px 0 0">Signed at 3:34 pm and stored on this attendance event.</p>
+
+              <div style="height:16px"></div>
+              <div class="note-box" data-note="6" style="margin-top:auto">
+                <b>Authorized pickup.</b> A grandparent or neighbour holds their own PIN and sees only the children they are cleared for — never the whole roster.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="design-note" style="width:560px;margin:26px auto 0">
+        No navigation, no back control, no account switcher — a single full-bleed card. The only exits are finishing, timing out, or handing the tablet back.
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Handing the tablet over signs the provider out and clears the session, keeping only the account id. A “kiosk mode” layered inside a live session is one stray back-gesture away from a parent reading another family's notes; teardown means there is no session left to escape into. The surviving account id is what lets her sign back in with one tap rather than a full login.</li>
+      <li data-for="2">A PIN, not a password. The parent is in a doorway with a car seat on one arm — four digits is the most authentication this moment can carry, and anything asking for an email field gets abandoned and handed back.</li>
+      <li data-for="3">There is no submit button. The list appears as the fourth digit lands, so the parent never has to find a second target while holding a child. A wrong PIN simply fails to resolve to anyone, which is also why it leaks nothing about which PINs exist.</li>
+      <li data-for="4">The list is filtered to that PIN's children before it renders, not scrolled past other families. A neighbour collecting one child sees one child, so the screen itself never discloses who else attends.</li>
+      <li data-for="5">The signature is drawn here, at the moment of handoff, and attached to this single attendance event. Most states require a signed record of who released a child and when — a stack of signatures collected at close of day proves nothing about any particular release.</li>
+      <li data-for="6">Authorized pickups are a first-class record with their own credential and their own permitted children. Custody rules belong in a data model that can be audited, not in the provider remembering who may take whom.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

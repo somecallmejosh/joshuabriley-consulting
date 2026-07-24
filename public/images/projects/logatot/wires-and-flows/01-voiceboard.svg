@@ -1,0 +1,187 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1000" viewBox="0 0 1400 1000">
+  <rect x="0" y="0" width="1400" height="1000" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="46" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">Voiceboard</text>
+  <line x1="40" y1="68" x2="1360" y2="68" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Browser frame -->
+  <rect x="40" y="95" width="1320" height="865" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Browser chrome -->
+  <rect x="40" y="95" width="1320" height="50" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="66" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="84" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="102" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="125" y="107" width="440" height="26" rx="13" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="141" y="124" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">app.logatot.com/voiceboard</text>
+
+  <!-- App header bar -->
+  <line x1="40" y1="200" x2="1360" y2="200" stroke="#333333" stroke-width="1.5"/>
+  <rect x="65" y="160" width="26" height="26" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="101" y="181" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Bright Start Family Care</text>
+  <rect x="1180" y="160" width="110" height="28" rx="14" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="1202" cy="174" r="4" fill="#333333"/>
+  <text x="1216" y="179" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333">Listening</text>
+  <circle cx="1312" cy="174" r="14" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- Sidebar -->
+  <line x1="280" y1="200" x2="280" y2="960" stroke="#333333" stroke-width="1.5"/>
+  <rect x="65" y="222" width="190" height="34" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5" stroke-dasharray="5 4"/>
+  <text x="160" y="244" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#999999" text-anchor="middle">LOGO</text>
+
+  <rect x="56" y="276" width="208" height="34" fill="#e8e8e8"/>
+  <rect x="56" y="276" width="4" height="34" fill="#333333"/>
+  <rect x="72" y="286" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="298" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Voiceboard</text>
+
+  <rect x="72" y="326" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="338" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Children</text>
+  <rect x="72" y="362" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="374" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Logged Events</text>
+  <circle cx="242" cy="369" r="10" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="242" y="373" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">3</text>
+  <rect x="72" y="398" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="410" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Meals</text>
+
+  <text x="72" y="452" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">MODULES</text>
+  <rect x="72" y="468" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="480" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Calendar</text>
+  <rect x="72" y="504" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="516" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Chat</text>
+  <rect x="72" y="540" width="14" height="14" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="98" y="552" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#999999">Custom Forms</text>
+  <rect x="72" y="576" width="14" height="14" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="98" y="588" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#999999">Documents</text>
+
+  <text x="72" y="630" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">RESOURCES</text>
+  <rect x="72" y="646" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="658" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Photo Gallery</text>
+  <rect x="72" y="682" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="98" y="694" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Reports</text>
+
+  <!-- Pane heading -->
+  <text x="312" y="248" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#333333">Today at a glance</text>
+  <text x="312" y="270" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">Monday, July 20 · 12 children enrolled</text>
+  <rect x="1180" y="230" width="150" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1255" y="251" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Jul 20, 2026</text>
+
+  <!-- Watch-item tiles -->
+  <rect x="312" y="292" width="245" height="76" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="434" y="332" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="bold" fill="#333333" text-anchor="middle">12</text>
+  <text x="434" y="352" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="middle">EXPECTED</text>
+
+  <rect x="569" y="292" width="245" height="76" rx="2" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
+  <text x="691" y="332" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="bold" fill="#333333" text-anchor="middle">8</text>
+  <text x="691" y="352" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="middle">PRESENT</text>
+
+  <rect x="826" y="292" width="245" height="76" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="948" y="332" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="bold" fill="#333333" text-anchor="middle">3</text>
+  <text x="948" y="352" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="middle">CHECKED OUT</text>
+
+  <rect x="1083" y="292" width="247" height="76" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1206" y="332" font-family="Helvetica, Arial, sans-serif" font-size="26" font-weight="bold" fill="#333333" text-anchor="middle">1</text>
+  <text x="1206" y="352" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="middle">ABSENT</text>
+
+  <!-- Accordion detail panel -->
+  <rect x="312" y="386" width="1018" height="86" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="332" y="412" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">PRESENT NOW — 8</text>
+  <line x1="332" y1="424" x2="1310" y2="424" stroke="#cccccc" stroke-width="1"/>
+  <circle cx="350" cy="448" r="14" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="374" y="443" width="150" height="10" rx="5" fill="#e8e8e8"/>
+  <circle cx="590" cy="448" r="14" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="614" y="443" width="150" height="10" rx="5" fill="#e8e8e8"/>
+  <circle cx="830" cy="448" r="14" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="854" y="443" width="150" height="10" rx="5" fill="#e8e8e8"/>
+  <circle cx="1070" cy="448" r="14" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="1094" y="443" width="150" height="10" rx="5" fill="#e8e8e8"/>
+
+  <!-- Reminder strips -->
+  <rect x="312" y="488" width="500" height="44" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="328" y="500" width="94" height="20" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="375" y="514" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">Diaper due</text>
+  <rect x="694" y="498" width="100" height="24" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="744" y="514" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Log now</text>
+
+  <rect x="830" y="488" width="500" height="44" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="846" y="500" width="120" height="20" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="906" y="514" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">Health check due</text>
+  <rect x="1212" y="498" width="100" height="24" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1262" y="514" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Log now</text>
+
+  <!-- Toolbar -->
+  <rect x="312" y="550" width="120" height="30" rx="15" fill="#333333" stroke="#333333" stroke-width="1.5"/>
+  <text x="372" y="570" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#ffffff" text-anchor="middle">All children</text>
+  <rect x="442" y="550" width="120" height="30" rx="15" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="502" y="570" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Present only</text>
+  <rect x="1080" y="550" width="250" height="30" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1205" y="570" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="middle">Show all columns (2 hidden)</text>
+
+  <!-- The grid -->
+  <rect x="312" y="598" width="1018" height="330" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="312" y1="638" x2="1330" y2="638" stroke="#333333" stroke-width="1.5"/>
+  <text x="330" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">CHILD</text>
+  <text x="500" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">CHECK IN</text>
+  <text x="620" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">CHECK OUT</text>
+  <text x="750" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">HEALTH</text>
+  <text x="860" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">NAPS</text>
+  <text x="990" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">MEALS</text>
+  <text x="1120" y="623" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">LEARNED TODAY</text>
+
+  <!-- Row 1 -->
+  <circle cx="344" cy="668" r="12" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="366" y="663" width="96" height="10" rx="5" fill="#e8e8e8"/>
+  <rect x="496" y="656" width="60" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="526" y="672" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">7:42a</text>
+  <text x="640" y="672" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#999999">—</text>
+  <rect x="746" y="656" width="60" height="24" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="776" y="672" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">8:00a</text>
+  <rect x="856" y="656" width="92" height="24" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="902" y="672" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">12:30–2:10</text>
+  <rect x="986" y="656" width="26" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="999" y="672" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">B</text>
+  <rect x="1018" y="656" width="26" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="1031" y="672" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">L</text>
+  <rect x="1120" y="663" width="120" height="10" rx="5" fill="#e8e8e8"/>
+  <line x1="312" y1="700" x2="1330" y2="700" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Row 2 -->
+  <circle cx="344" cy="730" r="12" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="366" y="725" width="82" height="10" rx="5" fill="#e8e8e8"/>
+  <rect x="496" y="718" width="60" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="526" y="734" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">7:55a</text>
+  <text x="640" y="734" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#999999">—</text>
+  <rect x="746" y="718" width="60" height="24" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="776" y="734" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">8:05a</text>
+  <text x="880" y="734" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#999999">—</text>
+  <rect x="986" y="718" width="26" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="999" y="734" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">B</text>
+  <rect x="1120" y="725" width="94" height="10" rx="5" fill="#e8e8e8"/>
+  <line x1="312" y1="762" x2="1330" y2="762" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Row 3 -->
+  <circle cx="344" cy="792" r="12" fill="#e8e8e8" stroke="#999999" stroke-width="1.5"/>
+  <rect x="366" y="787" width="104" height="10" rx="5" fill="#e8e8e8"/>
+  <rect x="496" y="780" width="60" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="526" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">8:10a</text>
+  <rect x="616" y="780" width="60" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="646" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">3:30p</text>
+  <rect x="746" y="780" width="60" height="24" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="776" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">8:20a</text>
+  <rect x="856" y="780" width="92" height="24" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="902" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">1:00–2:30</text>
+  <rect x="986" y="780" width="26" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="999" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">B</text>
+  <rect x="1018" y="780" width="26" height="24" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="1031" y="796" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">L</text>
+  <rect x="1120" y="787" width="132" height="10" rx="5" fill="#e8e8e8"/>
+  <line x1="312" y1="824" x2="1330" y2="824" stroke="#e0e0e0" stroke-width="1"/>
+
+  <!-- Empty placeholder row -->
+  <text x="330" y="860" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#999999">Empty row placeholder — filled in place when an event arrives</text>
+
+  <!-- Wake-word capture -->
+  <rect x="560" y="890" width="520" height="46" rx="23" fill="#333333" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="600" cy="913" r="5" fill="#ffffff"/>
+  <text x="828" y="918" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#ffffff" text-anchor="middle">“Hey Logatot” — listening for wake word</text>
+</svg>

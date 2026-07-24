@@ -1,35 +1,36 @@
 // @ts-check
-import { defineConfig, fontProviders, passthroughImageService } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import mdx from '@astrojs/mdx';
-import sitemap from '@astrojs/sitemap';
-import netlify from '@astrojs/netlify';
+import { defineConfig, fontProviders } from 'astro/config'
+import tailwind from '@astrojs/tailwind'
+import mdx from '@astrojs/mdx'
+import sitemap from '@astrojs/sitemap'
+import netlify from '@astrojs/netlify'
 
-const isDev = process.argv.includes('dev');
+const isDev = process.argv.includes('dev')
 
 export default defineConfig({
   site: 'https://joshuabriley.com',
   output: 'static',
   // Keep old links / SEO working after route moves.
   redirects: {
-    // The interactive tools were repurposed as blog posts. The scorecard's
-    // results renderer stays at /tools/scorecard/results/ (its only entry is
-    // the encoded ?r= link from the embedded engine).
-    '/tools': '/blog',
-    '/tools/scorecard': '/blog/design-system-scorecard',
-    '/tools/audit-findings': '/blog/what-an-audit-finds',
-    '/tools/token-playground': '/blog/what-a-design-token-actually-does',
-    '/tools/roi-calculator': '/blog/what-inconsistency-costs',
-    '/scorecard': '/blog/design-system-scorecard',
+    // The four interactive tools were briefly published as blog posts, where
+    // the essay index gave them no visual distinction and buried them. They
+    // now live under /tools/ at their original slugs, so these carry the
+    // blog-era URLs forward. The scorecard's results renderer never moved.
+    '/blog/design-system-scorecard': '/tools/scorecard',
+    '/blog/what-an-audit-finds': '/tools/audit-findings',
+    '/blog/what-a-design-token-actually-does': '/tools/token-playground',
+    '/blog/what-inconsistency-costs': '/tools/roi-calculator',
+    '/scorecard': '/tools/scorecard',
     '/scorecard/results': '/tools/scorecard/results',
     // Clempo + Bass Face moved into the personal-projects section.
     '/projects/clempo': '/personal-projects/clempo',
     '/projects/bass-face': '/personal-projects/bass-face',
   },
   ...(isDev ? {} : { adapter: netlify() }),
-  image: {
-    service: passthroughImageService(),
-  },
+  // Default (sharp) image service. The passthrough service was carried in at the
+  // original Astro migration and silently disabled all optimization, so `<Image>`
+  // would have shipped source bytes untouched. Nothing outside src/assets is
+  // affected: images still in public/ are never processed either way.
   experimental: {
     // Editorial-Technical type system: one warm grotesk does all the work,
     // one mono carries every technical/metadata moment. Legacy CSS-var names
@@ -89,4 +90,4 @@ export default defineConfig({
   build: {
     inlineStylesheets: 'auto',
   },
-});
+})

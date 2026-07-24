@@ -1,0 +1,1187 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Link from '~/components/primitives/Link.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import Metric from '~/components/patterns/Metric.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
+import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+const title = 'Logatot | Joshua Briley';
+const description =
+  "Case study: designing a voice-first operations platform for home-based child care providers, and building the front end and much of the Rails domain underneath it, from the wake word running on-device to a repair queue that teaches the parser a child's name.";
+
+const meta = [
+  { role: 'Role', value: 'Product Design Engineer' },
+  { role: 'Domain', value: 'Home-based child care' },
+  { role: 'Scope', value: 'Design system + platform' },
+  { role: 'Build', value: 'Rails 7.1 · Postgres' },
+  { role: 'Dates', value: 'Sept 2023 - June 2025' },
+];
+
+const proof = [
+  { label: 'Product design', items: ['Voice-first interaction design', 'Two-sided information architecture', 'Failure and repair flows', 'Print-first compliance documents', 'Fifteen annotated design sheets'] },
+  { label: 'Engineering', items: ['21-module design-system helper layer', '21 ViewComponents, 9 namespaces', 'HTMX + 74 Alpine islands', 'Rails 7.1 domain, 51 tables', 'Deterministic voice parser'] },
+  { label: 'Platform', items: ['Picovoice Porcupine (on-device)', 'Web Speech API', 'OpenAI phonetic aliases', 'Pusher real-time', 'Stripe + association billing'] },
+  { label: 'Contribution', items: ['Lead front-end on a 3-dev team', '~1,100 of 1,939 commits', 'English + Spanish at parity', 'Shipped as a paid product', 'Sold direct and via associations'] },
+];
+
+const docket = [
+  { href: '#hands', icon: 'ph:hand-waving', label: 'Designing for a user with no free hands' },
+  { href: '#shapes', icon: 'ph:squares-four', label: 'Two shapes for the same day' },
+  { href: '#failure', icon: 'ph:arrow-counter-clockwise', label: 'Making failure a normal state' },
+  { href: '#pipeline', icon: 'ph:microphone', label: 'The voice pipeline, and where the model goes' },
+  { href: '#outcomes', icon: 'ph:trend-up', label: 'What shipping it changed' },
+];
+
+// Three separate regulatory regimes, all of which are visible in the data model.
+const regimes = [
+  { icon: 'ph:fork-knife', title: 'CACFP', body: 'The federal food program reimburses a meal only if it met component requirements for the child’s age group, and only if you can prove it.' },
+  { icon: 'ph:certificate', title: 'State licensing', body: 'Signed attendance records, fire drill and shelter-in-place logs, allergy and medication rosters.' },
+  { icon: 'ph:calculator', title: 'Tax', body: 'The IRS home-daycare time-space percentage, which needs both business hours and the square footage used for them.' },
+];
+
+// Why 8pm-from-memory is a product problem and not a habit problem.
+const problems = [
+  { icon: 'ph:brain', title: 'Recall degrades', body: 'A nap logged from memory at 8pm is an estimate. A diaper change is a guess. The records that matter most legally are the ones reconstructed with the least accuracy.' },
+  { icon: 'ph:door-open', title: 'The burden is a career problem', body: 'Providers leave this profession over the paperwork, which is why the mission statement talks about sustainability rather than efficiency. The goal was giving evenings back, not a tidier form.' },
+  { icon: 'ph:clock-countdown', title: 'Failures surface too late', body: 'Finding out at month end that a Wednesday lunch was short a vegetable means the food is eaten, the money is spent, and nothing can be done.' },
+];
+
+// The four roles that share one Devise user table and one polymorphic meta association.
+const users = [
+  { icon: 'ph:user-focus', name: 'The provider', role: 'Primary user, and the hardest to design for. Mobile, interrupted, often one-handed, twelve-hour day.' },
+  { icon: 'ph:users', name: 'Parents', role: 'A dozen sessions a year at most. Mobile-first, passwordless by necessity, usually in a car park at 5pm.' },
+  { icon: 'ph:identification-badge', name: 'Authorized pickups', role: 'A first-class record with its own PIN and its own permitted children, because custody rules belong in an auditable model.' },
+  { icon: 'ph:clock-user', name: 'Employees', role: 'In multi-staff accounts, clocking shifts through the same event pipeline as everything else.' },
+];
+
+// The design decisions that only hold because they were built once, in the system.
+const structural = [
+  { icon: 'ph:arrows-left-right', label: 'Rows scroll horizontally in sync' },
+  { icon: 'ph:function', label: 'Attendance derived, never stored' },
+  { icon: 'ph:calendar-check', label: 'Enrolment status derived from dates' },
+  { icon: 'ph:trash-simple', label: 'Soft delete: removal is a display decision' },
+  { icon: 'ph:columns', label: 'Column visibility per device, persistent' },
+  { icon: 'ph:placeholder', label: 'Empty rows pre-rendered for live updates' },
+];
+
+// The real service boundaries behind the voice product.
+const integrations = [
+  { icon: 'ph:waveform', name: 'Picovoice Porcupine', role: 'Custom wake word, WebAssembly, on-device' },
+  { icon: 'ph:microphone', name: 'Web Speech API', role: 'Transcription, silence-timer endpointing' },
+  { icon: 'ph:sparkle', name: 'OpenAI', role: 'Phonetic name variants, at child creation' },
+  { icon: 'ph:broadcast', name: 'Pusher', role: 'Per-account channels for live board updates' },
+  { icon: 'ph:queue', name: 'Sidekiq', role: '29 jobs, 4 scheduled reminder workers' },
+  { icon: 'ph:credit-card', name: 'Stripe + union API', role: 'Direct billing and association membership' },
+];
+
+const outcomes = [
+  {
+    icon: 'ph:moon-stars',
+    title: 'The evenings came back',
+    body: 'Documentation moved from after-the-fact and from memory to during the moment and hands-free. Providers reported saving over two hours a day on data entry.',
+  },
+  {
+    icon: 'ph:files',
+    title: 'Compliance stopped being separate work',
+    body: 'Attendance records, signed releases, CACFP claims, and drill logs all generate from events captured for another reason. Month end became a review step.',
+  },
+  {
+    icon: 'ph:storefront',
+    title: 'It reached market',
+    body: 'Shipped as a paid subscription, sold direct and through child care associations, with landing pages tuned per channel.',
+  },
+];
+
+const quotes = [
+  {
+    body: 'It is truly remarkable to be completing a physical task and talking to the voice assistant to record it simultaneously! Now I do not have to do my data entry outside of business hours. Each day I am saving over 2 hours on data entry!!!',
+    name: 'President',
+    role: 'CSEA/VOICE Local 100A',
+  },
+  {
+    body: 'I never realized how much time I had to spend filling in paperwork until I didn’t have to. Logatot has given me my evenings back.',
+    name: 'Margaret Balko',
+    role: 'Home-based provider',
+  },
+];
+
+// The edges, stated plainly. A case study that only lists wins is a brochure.
+const edges = [
+  { icon: 'ph:list-magnifying-glass', title: 'ARIA on the densest screen', body: 'The Voiceboard’s expand/collapse and column controls drive state without aria-expanded. The pattern was established correctly in the component layer and then not carried into the hardest screen. First thing I would fix.' },
+  { icon: 'ph:device-tablet', title: 'A two-state responsive strategy', body: '783 lg: utilities against a single hinge at 1024px, which under-serves the 640-1024px tablet band. That matters here more than elsewhere, because the kiosk is a tablet.' },
+  { icon: 'ph:globe-hemisphere-west', title: 'Timezones were contained, not solved', body: 'Five of the last six commits on the project are timezone churn. The oscillation is the honest record of a problem I bounded rather than closed.' },
+  { icon: 'ph:cloud-slash', title: 'No offline queue', body: 'A web manifest exists but is never linked, with no service worker. For tablets in homes with unreliable WiFi, offline capture is the highest-value thing that is not built.' },
+];
+
+// The event log as the thing every write path already agrees on: voice, kiosk,
+// board, and API. Attendance is read from it rather than stored beside it, and a
+// failed parse is written with its diagnostics rather than dropped.
+const modelSnippet = `# app/models/logged_event.rb
+# Voice, kiosk, board, and API all write here, so this is the only
+# record all four already agree on. Attendance is read, not stored.
+class LoggedEvent < ApplicationRecord
+  enum status: { processed: 0, pending: 1, failed: 2, unknown: 3 }
+
+  belongs_to :child, optional: true   # a failed parse may match no one
+  has_one_attached :audio             # kept, so a human can repair it
+
+  # A parse that fails is written, not dropped. The diagnostics say
+  # which half broke; the raw utterance is what the repair screen
+  # renders as tappable word chips.
+  scope :needs_repair, -> { where(status: :failed) }
+
+  # occurred_at is the SPOKEN time, not the processed time, so a
+  # batch logged at 3pm still reads accurately in a parent's feed.
+  def self.attendance_for(child, date)
+    where(child:, occurred_on: date)
+      .where(event_type: %i[check_in check_out absent])
+      .order(:occurred_at)
+      .last&.event_type || :expected
+  end
+end`;
+
+// The sheets render from src/ so Astro can actually process them (anything under
+// public/ is copied verbatim, never optimized). Sources are 2x headless-Chrome
+// PNGs; `<Image>` emits sized WebP from these at build time.
+const sheets = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projects/logatot/wires-and-flows/*.png',
+  { eager: true },
+);
+const sheet = (slug: string) =>
+  sheets[`../../assets/projects/logatot/wires-and-flows/${slug}.png`].default;
+
+// Sketch and clean-wireframe passes live in public/ because they are SVG and
+// need no processing. The sketch is generated from the wireframe by
+// src/assets/projects/logatot/wires-and-flows/sketchify.mjs.
+const art = (file: string) => `/images/projects/logatot/wires-and-flows/${file}`;
+
+// Four screens carry the argument, so they get full mounts. The note is the
+// claim the sheet is making, not a fresh gloss on the picture.
+const keyScreens = [
+  {
+    slug: '01-voiceboard',
+    index: '01',
+    title: 'Voiceboard',
+    note: 'One row per child, one column per event type, one day. A grid, because the provider is scanning twelve children at once.',
+    alt: 'Annotated wireframe of the Voiceboard: live attendance tiles across the top, reminder rails for diaper changes and health checks, then a child-by-event-type grid, with callouts explaining synchronised horizontal row scrolling, per-device column visibility, and pre-rendered empty rows.',
+  },
+  {
+    slug: '04-logged-events',
+    index: '04',
+    title: 'Logged events: review and repair',
+    note: 'Where the product’s honesty lives. A failed parse renders as clickable word chips that write back into the name vocabulary.',
+    alt: 'Annotated wireframe of the logged-events review screen: a queue of failed voice captures, each showing the raw utterance as selectable word chips, the partially understood fields, and the retained audio, with callouts explaining the two diagnostic flags and how a correction improves recognition permanently.',
+  },
+  {
+    slug: '05-checkin-kiosk',
+    index: '05',
+    title: 'Check-in kiosk',
+    note: 'Handing over the tablet signs the provider out entirely. There is nowhere to go because there should be nowhere to go.',
+    alt: 'Annotated wireframe of the parent-facing check-in kiosk: a 96-pixel PIN field with no submit button, a filtered child list, and an inline signature canvas, on a dark full-bleed card with no navigation, with callouts on session teardown and per-PIN child filtering.',
+  },
+  {
+    slug: '06-parent-portal',
+    index: '06',
+    title: 'Parent portal',
+    note: 'The same events as the Voiceboard, as a timeline. Same data, opposite affordance, and exactly one write surface.',
+    alt: 'Annotated wireframe of the parent portal in desktop and mobile widths: a chronological day timeline for one child with photos and milestones weighted heavier than counts, and a single message-the-provider action, with callouts on why the portal is read-mostly.',
+  },
+];
+
+// The rest of the system, at a glance, without repeating the device.
+const restOfSystem = [
+  { slug: '02-children-roster', title: 'Children roster' },
+  { slug: '03-child-form', title: 'Child record' },
+  { slug: '07-cacfp-menu', title: 'CACFP menu planner' },
+  { slug: '08-calendar', title: 'Calendar and drills' },
+  { slug: '09-reports', title: 'Reports' },
+  { slug: '10-dashboard-lat5', title: 'Manual-entry dashboard' },
+];
+
+const flows = [
+  {
+    slug: '11-flow-voice-logging',
+    title: 'Voice event logging',
+    note: 'Utterance to structured event, including the failure and repair path. The branch that fails is drawn at the same weight as the one that works.',
+    alt: 'Flow diagram of voice event logging. An on-device wake word opens transcription, which runs through a ladder of phrase matchers and roster name matching, forking into a single-child inline write, a multi-child background job, or a failed parse that lands in the repair queue with its audio attached.',
+  },
+  {
+    slug: '12-flow-onboarding',
+    title: 'Provider onboarding',
+    note: 'The empty board is the real churn risk, not the signup form. Which is why CSV import sits beside "Add child" rather than in settings.',
+    alt: 'Flow diagram of provider onboarding, from first visit through account creation, roster population by manual entry or CSV import, and first voice capture, with the empty-board drop-off marked as the critical failure point.',
+  },
+  {
+    slug: '13-flow-checkin',
+    title: 'Check in and out',
+    note: 'Handing the tablet to a parent and taking it back, with the session torn down in between.',
+    alt: 'Flow diagram of the kiosk check-in and check-out path: provider enters kiosk mode, the session is destroyed leaving only the account id, a parent enters a PIN, selects their children, signs on canvas, and the provider signs back in with one tap.',
+  },
+  {
+    slug: '14-flow-parent-access',
+    title: 'Parent access',
+    note: 'Passwordless entry and the daily loop. The email is the product; the portal is the destination.',
+    alt: 'Flow diagram of parent access: a passwordless magic-link request that returns an identical screen for known and unknown addresses, a fifteen-minute single-use token, role resolution at the shared sign-in, and the automatic end-of-day summary email that drives the daily loop.',
+  },
+  {
+    slug: '15-flow-food-program',
+    title: 'Food program',
+    note: 'Plan a compliant menu, serve it, claim it. Validation moves to plan time, where a mistake is still an edit.',
+    alt: 'Flow diagram of the CACFP food program: building a menu validated per meal against the age-group component matrix, duplicating a week, generating a shopping list, serving meals through the shared event pipeline, and reconciling the month-end claim from records that already exist.',
+  },
+];
+
+// Screens and flows are placed beside the argument they support rather than
+// collected into one gallery, so these look them up by slug at the point of use.
+const screen = (slug: string) => keyScreens.find((s) => s.slug === slug)!;
+const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slug === s)!);
+---
+
+<BaseLayout title={title} description={description}>
+
+  <!-- HERO -->
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <nav
+        class="hero-in hero-in-1 mb-12 flex items-center gap-2 text-sm text-ink-muted"
+        aria-label="Breadcrumb"
+      >
+        <a href="/projects/" class="transition-colors hover:text-accent">Projects</a>
+        <Icon name="ph:caret-right" size={12} />
+        <span class="text-ink">Logatot</span>
+      </nav>
+
+      <div class="hero-grid">
+        <div class="hero-main">
+          <div class="hero-in hero-in-2 mb-7 flex items-center gap-3">
+            <p class="font-display text-2xl font-semibold tracking-tight text-ink">Logatot</p>
+            <span class="h-4 w-px bg-line-strong" aria-hidden="true"></span>
+            <p class="mono-label">Case study</p>
+          </div>
+
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-3">
+            The interface has to work when nobody can <em class="ink-wink font-normal italic">look at it</em>.
+          </Heading>
+
+          <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-8 max-w-xl">
+            A voice-controlled operations platform for home-based child care providers,
+            built so a provider holding a toddler can log a nap, a meal, or a diaper
+            change without touching a device, and have the licensing and reimbursement
+            paperwork fall out of that record instead of costing an evening.
+          </Text>
+        </div>
+
+        <aside class="hero-in hero-in-5 hero-rail" aria-label="Project details">
+          <dl>
+            {meta.map((m) => (
+              <div>
+                <dt>{m.role}</dt>
+                <dd set:html={m.value.replace(/·/g, '&middot;')}></dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- RECEIPTS -->
+  <Section tone="paper" padding="tight" aria-label="Project receipts">
+    <Container width="content">
+      <p class="mono-label mb-8">Receipts</p>
+      <dl class="grid gap-x-8 gap-y-10 sm:grid-cols-2 lg:grid-cols-4">
+        {proof.map((group) => (
+          <div class="border-t border-line pt-4">
+            <dt class="mono-label mb-3">{group.label}</dt>
+            <dd>
+              <ul class="space-y-1.5">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2 text-sm text-ink-muted leading-relaxed">
+                    <Icon name="ph:check" size={14} class="mt-0.5 shrink-0 text-accent" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </Container>
+  </Section>
+
+  <!-- ON THE DOCKET -->
+  <Section tone="paper" padding="tight">
+    <Container width="content">
+      <p class="mono-label mb-5">On the docket</p>
+      <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+        {docket.map((item, i) => (
+          <li>
+            <a href={item.href} class="group inline-flex items-center gap-3 text-ink transition-colors hover:text-accent">
+              <span class="font-mono text-sm text-accent">0{i + 1}</span>
+              {item.icon && (
+                <Icon name={item.icon} size={16} class="shrink-0 text-ink-muted transition-colors group-hover:text-accent" />
+              )}
+              <span class="font-medium">{item.label}</span>
+              <Icon name="ph:arrow-right" size={15} class="shrink-0 transition-transform group-hover:translate-x-1" />
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <Text size="lg" tone="muted" class="mt-10 measure">
+        Logatot shipped as &ldquo;child care&rsquo;s only voice-controlled assistant.&rdquo;
+        The user underneath that line is one person running a licensed daycare out of a
+        private home: caregiver, cook, janitor, bookkeeper, and compliance officer, caring
+        for six to twelve children alone and legally required to document everything that
+        happens to each of them. I was the lead front-end contributor on a three-developer
+        team, responsible for the design system, the interface and flow design, and a
+        substantial share of the Rails domain, across roughly 1,100 of the project&rsquo;s
+        1,939 commits.
+      </Text>
+    </Container>
+  </Section>
+
+  <!-- STEP 01 — THE USER WITH NO FREE HANDS -->
+  <Section tone="paper" padding="default" id="hands" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 01</p>
+          <Heading level={2} visual="display-md" tone="ink">Designing for a user with no free hands</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Most software assumes a user with free hands and spare attention. This user
+              has neither. The provider is holding a toddler, and answers to three separate
+              regulatory regimes, all of which are visible in the product&rsquo;s data
+              model.
+            </p>
+            <p>
+              Every one of those obligations produces paperwork, and none of them happen at
+              a desk. So the paperwork happens <em>after</em>: at 8pm, from memory, on
+              paper. The whole product exists to move documentation from
+              <strong class="text-ink font-semibold">after the fact and from memory</strong>
+              to <strong class="text-ink font-semibold">during the moment and hands-free</strong>,
+              and to make the compliance artifacts fall out of that record rather than being
+              assembled separately.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <p class="mono-label mb-6">Three regimes, all of them in the schema</p>
+            <ol class="grid gap-x-8 gap-y-8 sm:grid-cols-3">
+              {regimes.map((r, i) => (
+                <li class="border-t border-line pt-5">
+                  <div class="mb-3 flex items-center gap-3">
+                    <span class="font-mono text-sm text-accent">0{i + 1}</span>
+                    <Icon name={r.icon} size={20} class="text-ink-muted" />
+                  </div>
+                  <Heading level={3} visual="h3" tone="ink" class="mb-1.5">{r.title}</Heading>
+                  <Text size="sm" tone="muted">{r.body}</Text>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          <div class="mt-12">
+            <p class="mono-label mb-6">Why that is a product problem, not a habit problem</p>
+            <ul class="grid gap-x-8 gap-y-8 sm:grid-cols-3">
+              {problems.map((p) => (
+                <li class="border-t border-line pt-5">
+                  <Icon name={p.icon} size={24} class="mb-3 text-ink-muted" />
+                  <Heading level={3} visual="h3" tone="ink" class="mb-1.5">{p.title}</Heading>
+                  <Text size="sm" tone="muted">{p.body}</Text>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="mt-12">
+            <p class="mono-label mb-6">Four roles, one authentication surface</p>
+            <ul class="grid gap-x-10 gap-y-1 md:grid-cols-2">
+              {users.map((u) => (
+                <li class="flex gap-3.5 border-b border-line py-4">
+                  <Icon name={u.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <div>
+                    <p class="font-medium text-ink leading-snug">{u.name}</p>
+                    <p class="mt-0.5 text-sm text-ink-muted leading-snug">{u.role}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <Text size="sm" tone="muted" class="mt-5 measure">
+              All four are one Devise <code>User</code> table with a polymorphic
+              <code>meta</code> association pointing at <code>Employee</code>,
+              <code>Caregiver</code>, or <code>AuthorizedPickup</code>. One authentication
+              surface, three role shapes.
+            </Text>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              Error recovery was a first-class goal, not a polish item. In a voice product
+              recognition <em>will</em> fail, and a design that treats failure as
+              exceptional silently loses a nap the parent later asks about.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- STEP 02 — TWO SHAPES FOR THE SAME DAY -->
+  <Section tone="paper" padding="default" id="shapes" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 02</p>
+          <Heading level={2} visual="display-md" tone="ink">Two shapes for the same day</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The signature screen is the Voiceboard: one row per child, one column per
+              event type, for a single day. Live attendance tiles across the top, reminder
+              rails for diaper changes and health checks, then the grid. The interaction
+              detail that took longest to get right is the least visible.
+              <strong class="text-ink font-semibold">Rows scroll horizontally in sync</strong>,
+              so a provider scanning right stays on the same time axis across all twelve
+              children. Without it, the grid is twelve unrelated timelines that happen to
+              be stacked.
+            </p>
+          </div>
+
+          {/* First sheet on the page, so the reading instructions live here rather
+              than in a gallery preamble the reader meets before any artwork. */}
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-4">How to read the sheets</p>
+            <div class="space-y-4 text-ink-muted leading-relaxed">
+              <p>
+                Every screen went through three passes: a crude sketch to argue about the
+                shape, a clean wireframe to fix it, and that same wireframe with the
+                reasoning written onto it. The third pass is the one that did the work.
+                Writing down <em>why</em> the grid scrolls in sync, or why a failed parse
+                keeps its audio, is what turned a picture of a screen into a decision
+                someone could push back on. Switch any plate to walk the three passes.
+              </p>
+              <p>
+                One caveat worth stating plainly: the annotated sheets are retrospective.
+                The decisions they record are real and verifiable in the shipped code,
+                including derived enrolment status, kiosk session teardown, the
+                failed-event queue, and the phonetic name vocabulary. The sheets were
+                drawn after the build to document that reasoning rather than to drive it.
+              </p>
+            </div>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={screen('01-voiceboard').index}
+              title={screen('01-voiceboard').title}
+              caption={screen('01-voiceboard').note}
+              sketch={art('01-voiceboard-sketch.svg')}
+              wire={art('01-voiceboard.svg')}
+              annotated={sheet('01-voiceboard')}
+              annotatedAlt={screen('01-voiceboard').alt}
+            />
+          </div>
+
+          <div class="mt-12 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The parent portal shows exactly the same events as a
+              <strong class="text-ink font-semibold">timeline</strong>: time down the left,
+              one child at a time. The provider is scanning twelve children at once, so the
+              provider gets a grid. A parent is reading about one child in order, so the
+              parent gets a chronology. Same data, opposite affordance. The portal is
+              read-mostly with exactly one write, messaging the provider, because every
+              extra write surface becomes one more thing to triage during the day.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={screen('06-parent-portal').index}
+              title={screen('06-parent-portal').title}
+              caption={screen('06-parent-portal').note}
+              sketch={art('06-parent-portal-sketch.svg')}
+              wire={art('06-parent-portal.svg')}
+              annotated={sheet('06-parent-portal')}
+              annotatedAlt={screen('06-parent-portal').alt}
+            />
+          </div>
+
+          <div class="mt-12 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Underneath both, attendance is <em>derived</em> from the event log rather than
+              stored as state. That costs query complexity and buys correctness: a stored
+              flag drifts the moment any write path forgets to update it, and the write paths
+              here include voice, the kiosk, the board, and the API. The same reasoning
+              produced the rule that enrolment status is derived from start and end dates and
+              never toggled, so a provider can never leave a child marked Active six months
+              after they left. A wrong headcount is a licensing problem, not a display bug.
+            </p>
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Decisions that live in the system, not the screen</p>
+            <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {structural.map((item) => (
+                <li class="flex items-center gap-3 text-ink">
+                  <Icon name={item.icon} size={20} class="shrink-0 text-ink-muted" />
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div class="mt-10">
+            <CodeBlock
+              filename="logged_event.rb"
+              lang="ruby"
+              code={modelSnippet}
+              caption="The event log as the one record every write path already agrees on, with the failure diagnostics that make repair possible."
+            />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- THE HANDOFF — kiosk screen with the two flows that explain it -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Alongside</p>
+          <Heading level={2} visual="display-md" tone="ink">Handing the tablet to a parent</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Check-in is the one moment the provider&rsquo;s own device leaves the
+              provider&rsquo;s hands. Kiosk mode destroys the session and keeps only the
+              account id, so a parent holding the tablet has nothing to navigate to and no
+              record to reach that is not their own. There is nowhere to go because there
+              should be nowhere to go.
+            </p>
+            <p>
+              Parents get in the same way: a passwordless magic link, because a family
+              signs in a dozen times a year and a forgotten password at 5pm in a car park
+              is a support call the provider has to take.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={screen('05-checkin-kiosk').index}
+              title={screen('05-checkin-kiosk').title}
+              caption={screen('05-checkin-kiosk').note}
+              sketch={art('05-checkin-kiosk-sketch.svg')}
+              wire={art('05-checkin-kiosk.svg')}
+              annotated={sheet('05-checkin-kiosk')}
+              annotatedAlt={screen('05-checkin-kiosk').alt}
+            />
+          </div>
+
+          <div class="mt-14 grid gap-10 lg:grid-cols-2">
+            {flowSet('13-flow-checkin', '14-flow-parent-access').map((flow) => (
+              <figure class="sheet-plate">
+                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
+                <div class="sheet-plate__mount">
+                  <div
+                    class="sheet-plate__stage"
+                    tabindex="0"
+                    role="group"
+                    aria-label={`${flow.title}: flow diagram, scrollable`}
+                  >
+                    <Image
+                      src={sheet(flow.slug)}
+                      alt={flow.alt}
+                      width={1120}
+                      widths={[560, 840, 1120]}
+                      sizes="(min-width: 1024px) 560px, 100vw"
+                      format="webp"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <span class="sheet-plate__fade" aria-hidden="true"></span>
+                </div>
+                <figcaption>
+                  <p class="sheet-plate__title">{flow.title}</p>
+                  <p class="sheet-plate__note">{flow.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- STEP 03 — FAILURE IS A NORMAL STATE -->
+  <Section tone="paper" padding="default" id="failure" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Making failure a normal state</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              When a parse fails the event is <strong class="text-ink font-semibold">not
+              discarded</strong>. It is written with <code>status: failed</code> and two
+              diagnostic flags, <code>failed_name</code> when no child could be matched and
+              <code>failed_event_type</code> when the action could not be categorised, plus
+              the raw utterance, its translation, and the original audio. A badge surfaces
+              the count in the sidebar.
+            </p>
+            <p>
+              On the review screen the failed utterance renders as
+              <strong class="text-ink font-semibold">clickable word chips</strong>. Tapping
+              the word that <em>was</em> the child&rsquo;s name appends it to that
+              child&rsquo;s stored phonetic alias list, and the same mishearing then routes
+              correctly forever. Repair work compounds instead of repeating: a correction is
+              not a fix to one record, it is a permanent improvement to recognition for
+              that name.
+            </p>
+            <p>
+              Two supporting decisions matter as much. Partial understanding is shown rather
+              than discarded, so the provider fills one gap instead of re-entering the
+              event, and the spoken time carries through untouched rather than being replaced
+              with the moment of correction. And spoken confirmation hedges rather than
+              errors: a failed parse says <em>&ldquo;processing unknown event for
+              unrecognized child&rdquo;</em> rather than announcing a failure. What the
+              provider hears is that something was captured and needs attention, which is
+              true, without an error sound in a room full of children.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={screen('04-logged-events').index}
+              title={screen('04-logged-events').title}
+              caption={screen('04-logged-events').note}
+              sketch={art('04-logged-events-sketch.svg')}
+              wire={art('04-logged-events.svg')}
+              annotated={sheet('04-logged-events')}
+              annotatedAlt={screen('04-logged-events').alt}
+            />
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              We couldn&rsquo;t spot the child&rsquo;s name in this event. Help us by
+              selecting a word below that sounds like the name. If there&rsquo;s no match,
+              no worries, just ignore this step!
+            </blockquote>
+            <figcaption class="mono-label mt-5">The repair screen, verbatim</figcaption>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- STEP 04 — THE VOICE PIPELINE -->
+  <Section tone="paper" padding="default" id="pipeline" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">The voice pipeline, and where the model goes</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              This is where design and engineering stopped being separable, and the reason
+              the role was product design engineering rather than either half. A custom
+              Picovoice Porcupine model runs in WebAssembly in the browser listening for
+              &ldquo;log a tot,&rdquo; so
+              <strong class="text-ink font-semibold">no audio leaves the device to detect
+              the wake word</strong>. In a product whose microphone is live in a room full
+              of other people&rsquo;s children, that is not a performance optimisation. It
+              is the difference between an assistant and a surveillance device, and it is
+              the answer to the first question every provider asked.
+            </p>
+            <p>
+              Parsing is a <strong class="text-ink font-semibold">deterministic rules
+              engine, not a language model</strong>. The transcript runs through an ordered
+              ladder of 22 phrase matchers, and child names are matched against the roster
+              plus each child&rsquo;s phonetic alias list, so one utterance can fan out to
+              several children. A language model in the parse path would be slower,
+              non-deterministic, and worst of all confidently wrong: a hallucinated category
+              writes a nap that never happened into a record a parent reads and a licensor
+              may audit. The rules engine either matches or does not, and what it does not
+              match goes to a human queue with the audio attached.
+              <code>unknown</code> is a first-class outcome, not a failure mode.
+            </p>
+            <p>
+              The language model sits <em>ahead</em> of the problem instead. When a child is
+              added, a background job asks an LLM for all variations, pronunciations, and
+              likely mishearings of that name, and stores them as phonetic aliases that feed
+              the matcher. Recognition failure on toddler names, which are short, similar,
+              and frequently non-English, is the product&rsquo;s binding constraint. Rather
+              than correct mistakes after they happen, the system pre-computes the ways a
+              name is likely to be misheard and teaches the matcher to accept them. Human
+              corrections in the repair queue append to the same field, so the vocabulary
+              improves from both directions.
+            </p>
+            <p>
+              The rest is shape and latency. Spanish is translated <em>before</em> matching
+              rather than parsed separately, so one phrase library serves two languages
+              instead of a second parser drifting out of sync. A single-child utterance
+              processes inline so the row fills immediately; a multi-child one goes to a
+              background job; audio uploads in a separate second request so the critical
+              path carries a short string rather than a media blob. The row then updates
+              over Pusher into a placeholder slot that was already rendered.
+            </p>
+          </div>
+
+          {/* The pipeline this step describes, drawn end to end. Given the full
+              column rather than a half, because the failure branch is the point. */}
+          <div class="mt-12">
+            {flowSet('11-flow-voice-logging').map((flow) => (
+              <figure class="sheet-plate">
+                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
+                <div class="sheet-plate__mount">
+                  <div
+                    class="sheet-plate__stage"
+                    tabindex="0"
+                    role="group"
+                    aria-label={`${flow.title}: flow diagram, scrollable`}
+                  >
+                    <Image
+                      src={sheet(flow.slug)}
+                      alt={flow.alt}
+                      width={1400}
+                      widths={[700, 1050, 1400]}
+                      sizes="(min-width: 1024px) 720px, 100vw"
+                      format="webp"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <span class="sheet-plate__fade" aria-hidden="true"></span>
+                </div>
+                <figcaption>
+                  <p class="sheet-plate__title">{flow.title}</p>
+                  <p class="sheet-plate__note">{flow.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-6">The services that made it real</p>
+            <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {integrations.map((svc) => (
+                <li class="flex gap-3.5">
+                  <Icon name={svc.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <div>
+                    <p class="font-medium text-ink leading-snug">{svc.name}</p>
+                    <p class="mt-0.5 text-sm text-ink-muted leading-snug">{svc.role}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              Keeping the language model out of the parse path and putting it in front of
+              the roster instead is a product decision about what kind of wrongness is
+              acceptable in a record a licensor may read, expressed as an architecture.
+            </blockquote>
+          </figure>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- ACCESSIBILITY -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Alongside</p>
+          <Heading level={2} visual="display-md" tone="ink">Accessibility, running in both directions</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Voice is itself an accessibility feature: hands-free capture serves a provider
+              holding a child the same way it serves anyone who cannot comfortably use a
+              keyboard mid-task. But a voice product must not be voice-only, so every event
+              capturable by speech is capturable by hand, and the repair queue means a failed
+              recognition always has a manual path to resolution.
+            </p>
+            <p>
+              On the interface side, the decisions that held up best were structural. The base
+              focus style is inherited by the base button style, so every button in the
+              application gets a visible focus ring
+              <strong class="text-ink font-semibold">by construction rather than by
+              remembering</strong>. The modal restores focus on close to the element that
+              opened it. Voice status sits in an assertive live region, so the state a sighted
+              user reads from a pulsing dot reaches a screen reader user too, and the pulse
+              itself is wrapped in <code>motion-safe:</code>. The calendar differentiates event
+              types with solid, dashed, and dotted bars rather than colour, which survives a
+              month sheet printed in black and white and taped to the fridge. And
+              <code>dark:print:text-black</code> means a provider printing a compliance report
+              from a dark screen still gets black on white, which is exactly the class of bug
+              that never appears in design review.
+            </p>
+            <p>
+              Localisation goes deeper than string files. English and Spanish sit at parity,
+              roughly 1,220 lines each, covering marketing, app chrome, enums, and error
+              messages, with resolution running user preference to URL to session to
+              <code>Accept-Language</code>. Date formatting branches on language, spoken
+              announcements translate per listener, and the voice pipeline translates before
+              matching. A meaningful share of providers in this market work primarily in
+              Spanish, and a half-translated interface is arguably worse than an untranslated
+              one.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- STEP 05 — OUTCOMES -->
+  <Section tone="paper" padding="default" id="outcomes" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">What shipping it changed</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              Logatot reached market as a paid subscription, sold direct and through child
+              care associations, with a <code>#UseYourVoice</code> campaign and landing pages
+              tuned per channel. The structural outcome is the one I would point at in a
+              review:
+              <strong class="text-ink font-semibold">the compliance artifacts stopped being
+              separate work</strong>. Attendance records, signed releases, CACFP claims, and
+              fire-drill logs are all generated from events that were already captured for
+              another reason. Month end became a review step instead of an evening.
+            </p>
+          </div>
+
+          <div class="mt-12 grid grid-cols-2 gap-8 border-y border-line py-8">
+            <Metric value="2+ hrs" label="a day of data entry removed" caption="reported by a provider association president" />
+            <Metric value="~1,100" label="of the project's 1,939 commits" caption="lead front-end on a three-developer team" />
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            {outcomes.map((o) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={o.icon} size={26} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink" class="mb-1">{o.title}</Heading>
+                <Text size="sm" tone="muted">{o.body}</Text>
+              </div>
+            ))}
+          </div>
+          {/* The two flows that carry the outcome claims: onboarding is where the
+              product is won or lost, and the food program is compliance falling out
+              of records captured for another reason. */}
+          <div class="mt-14 grid gap-10 lg:grid-cols-2">
+            {flowSet('12-flow-onboarding', '15-flow-food-program').map((flow) => (
+              <figure class="sheet-plate">
+                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
+                <div class="sheet-plate__mount">
+                  <div
+                    class="sheet-plate__stage"
+                    tabindex="0"
+                    role="group"
+                    aria-label={`${flow.title}: flow diagram, scrollable`}
+                  >
+                    <Image
+                      src={sheet(flow.slug)}
+                      alt={flow.alt}
+                      width={1120}
+                      widths={[560, 840, 1120]}
+                      sizes="(min-width: 1024px) 560px, 100vw"
+                      format="webp"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <span class="sheet-plate__fade" aria-hidden="true"></span>
+                </div>
+                <figcaption>
+                  <p class="sheet-plate__title">{flow.title}</p>
+                  <p class="sheet-plate__note">{flow.note}</p>
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- THE REST OF THE SYSTEM -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-3">The rest of the system</p>
+      <Text size="lg" tone="muted" class="measure mb-10">
+        Six more sheets round out the product without repeating the device: the roster
+        and its two independent axes, the tabbed child record, plan-time CACFP
+        validation, drills as their own task type, print-first reports, and the
+        manual-entry tier that shipped with its own home screen.
+      </Text>
+      <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        {restOfSystem.map((s) => (
+          <li>
+            <figure class="rest-shot">
+              {/* Cropped to the head of each sheet: the title band and the top
+                  of the layout, which is the part that reads at this size. */}
+              <div class="rest-shot__frame">
+                <Image
+                  src={sheet(s.slug)}
+                  alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
+                  width={640}
+                  widths={[320, 480, 640]}
+                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                  format="webp"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <figcaption class="rest-shot__label">{s.title}</figcaption>
+            </figure>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- TESTIMONIALS -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-10">What providers said</p>
+      <div class="grid gap-10 md:grid-cols-2 lg:gap-16">
+        {quotes.map((q) => (
+          <figure>
+            <Icon name="ph:quotes" size={40} class="mb-5 text-accent opacity-25" />
+            <blockquote class="font-display text-xl md:text-2xl tracking-tight leading-snug text-ink">
+              {q.body}
+            </blockquote>
+            <figcaption class="mt-6 border-t border-line pt-4">
+              <p class="font-display font-semibold text-ink">{q.name}</p>
+              <p class="mt-1 text-sm text-ink-muted leading-snug">{q.role}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  <!-- THE EDGES -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-3">The edges</p>
+      <Text size="lg" tone="muted" class="measure mb-10">
+        The design system&rsquo;s focus behaviour is genuinely inherited; the
+        Voiceboard&rsquo;s ARIA annotation did not keep pace with its complexity. The print
+        layer is unusually well-considered; the responsive strategy is two-state where a
+        kiosk product needed three. These are the four I would work on first.
+      </Text>
+      <ul class="grid gap-x-10 gap-y-10 md:grid-cols-2">
+        {edges.map((e) => (
+          <li class="border-t border-line pt-5">
+            <Icon name={e.icon} size={24} class="mb-3 text-ink-muted" />
+            <Heading level={3} visual="h3" tone="ink" class="mb-1.5">{e.title}</Heading>
+            <Text size="sm" tone="muted">{e.body}</Text>
+          </li>
+        ))}
+      </ul>
+    </Container>
+  </Section>
+
+  <!-- CTA -->
+  <Section tone="ink" padding="loose">
+    <Container width="wide">
+      <p class="mono-label !text-paper/65 mb-6">Product design engineering</p>
+      <Heading level={2} visual="display-lg" tone="paper" class="max-w-3xl">
+        Some decisions don&rsquo;t survive a spec boundary.
+      </Heading>
+      <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
+        &ldquo;Failure is expected, not exceptional&rdquo; is a screen, a queue, a status
+        enum, a pair of diagnostic flags, and a retained audio file. &ldquo;Names are the
+        hard part&rdquo; is a form field, a background job, a regex matcher, and a set of
+        clickable word chips writing back into the same column. Those only work when the
+        person drawing the screen and the person choosing what the parser returns are the
+        same person. If that&rsquo;s the bar you&rsquo;re hiring for, let&rsquo;s talk.
+      </Text>
+      <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
+        <Button
+          variant="navy"
+          size="lg"
+          iconLeft="ph:envelope"
+          href="/contact/"
+          class="js-magnetic"
+        >
+          Get in touch
+        </Button>
+        <a
+          href="/resume/"
+          class="inline-flex items-center gap-2 font-sans text-sm font-medium text-paper/70 transition-colors hover:text-paper"
+        >
+          <Icon name="ph:file-text" size={18} />
+          Résumé
+        </a>
+      </div>
+
+      <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
+        <Link variant="arrow" href="/projects/ivfcryo/" class="!text-paper hover:!text-accent">Next: IVFCRYO</Link>
+        <Link variant="arrow" href="/projects/" class="!text-paper hover:!text-accent">Back to all projects</Link>
+      </div>
+    </Container>
+  </Section>
+</BaseLayout>
+
+<script>
+  // Sheet mounts only claim "more below" when the artwork really is cut off.
+  document.querySelectorAll<HTMLElement>('.sheet-plate__mount').forEach((mount) => {
+    const stage = mount.querySelector<HTMLElement>('.sheet-plate__stage');
+    if (!stage) return;
+    const sync = () => {
+      mount.dataset.overflow = String(stage.scrollHeight > stage.clientHeight + 4);
+    };
+    stage.querySelectorAll('img').forEach((img) => {
+      if (img.complete) sync();
+      else img.addEventListener('load', sync, { once: true });
+    });
+    new ResizeObserver(sync).observe(mount);
+    sync();
+  });
+</script>
+
+<style>
+  /* Sheet plate — the same mounted-specimen language as ScrollShot and
+     FidelityPlate, at half width. Logatot's sheets are a single annotated pass
+     (no sketch/wireframe variants), so there is no tab rail: just the mount.
+     The artwork is tall, so the mount is a scroll window. */
+  /* Column layout so plates in a row share a height and the captions land on the
+     same baseline, whatever the artwork's natural aspect ratio is. */
+  .sheet-plate {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .sheet-plate__mount { flex: 1; }
+
+  .sheet-plate__index {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .sheet-plate__index span { margin: 0 0.35em; opacity: 0.6; }
+
+  .sheet-plate__mount {
+    position: relative;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+  }
+
+  .sheet-plate__stage {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    height: 100%;
+    max-height: 620px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    /* Fixed light stage: the sheets are dark-on-white line work and do not
+       invert, so the mount stays a lightbox in either theme. */
+    background: #ffffff;
+    scrollbar-width: thin;
+  }
+  .sheet-plate__stage:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .sheet-plate__stage :global(img) { width: 100%; height: auto; display: block; }
+
+  /* Shown only when the artwork is actually taller than its window. */
+  .sheet-plate__fade {
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    bottom: 9px;
+    height: 56px;
+    border-radius: 0 0 9px 9px;
+    background: linear-gradient(to bottom, transparent, #ffffff);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-out);
+  }
+  .sheet-plate__mount[data-overflow='true'] .sheet-plate__fade { opacity: 1; }
+
+  .sheet-plate__title {
+    margin: 1rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .sheet-plate__note {
+    margin: 0.6rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  /* Rest-of-system rail — cropped heads of the remaining sheets. Uniform 4:3
+     crops anchored to the top, so the grid stays even however tall the sheet is. */
+  .rest-shot { margin: 0; }
+
+  .rest-shot__frame {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    aspect-ratio: 4 / 3;
+  }
+  .rest-shot__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .rest-shot__label {
+    display: block;
+    margin-top: 0.7rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+  }
+</style>

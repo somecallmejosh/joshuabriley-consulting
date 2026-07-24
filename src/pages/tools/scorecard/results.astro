@@ -590,7 +590,7 @@ const description =
   const raw = params.get('r');
 
   if (!raw || !VALID_PARAM_RE.test(raw)) {
-    window.location.replace('/blog/design-system-scorecard/');
+    window.location.replace('/tools/scorecard/');
   } else {
     const ratings = decodeRatings(raw);
     const score = getTotalScore(ratings);
@@ -707,7 +707,7 @@ const description =
                 <iconify-icon icon="ph:link-duotone" width="18"></iconify-icon>
                 <span id="shareBtnText">Share these results</span>
               </button>
-              <a href="/blog/design-system-scorecard/?r=${raw}" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
+              <a href="/tools/scorecard/?r=${raw}" class="${BTN_BASE} ${BTN_LG} ${BTN_SECONDARY}">
                 <iconify-icon icon="ph:arrow-counter-clockwise-duotone" width="18"></iconify-icon>
                 Retake scorecard
               </a>

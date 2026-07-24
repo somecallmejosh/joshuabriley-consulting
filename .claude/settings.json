@@ -1,5 +1,11 @@
 {
   "permissions": {
+    "allow": [
+      "Bash(npx astro *)",
+      "Bash(lsof -ti:4321)",
+      "Bash(xargs kill -9)",
+      "Bash(node ./_shot.mjs)"
+    ],
     "additionalDirectories": [
       "/tmp",
       "/private/tmp"

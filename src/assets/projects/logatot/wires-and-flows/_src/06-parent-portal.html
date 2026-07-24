@@ -1,0 +1,474 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Parent portal — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* The portal is the Voiceboard's data turned ninety degrees, so this sheet
+     needs a timeline rail the grid sheets do not. Time down the left, a rail of
+     nodes, and a card per event. */
+  .tl-row {
+    display: grid;
+    grid-template-columns: 54px 16px 1fr;
+    align-items: start;
+  }
+  .tl-time {
+    padding: 11px 10px 0 0;
+    font-size: 11px;
+    line-height: 1;
+    text-align: right;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .tl-rail { position: relative; align-self: stretch; }
+  .tl-rail::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    margin-left: -0.75px;
+    background: var(--line-soft);
+  }
+  .tl-row:first-child .tl-rail::before { top: 14px; }
+  .tl-row:last-child .tl-rail::before { bottom: auto; height: 14px; }
+  .tl-node {
+    position: absolute;
+    left: 50%;
+    top: 14px;
+    width: 7px;
+    height: 7px;
+    margin: -3.5px 0 0 -3.5px;
+    border-radius: 50%;
+    background: var(--line);
+  }
+  /* A photo or a milestone gets a filled, larger node and a heavier card — the
+     rail itself has to signal which entries are worth stopping on. */
+  .tl-node.key {
+    width: 12px;
+    height: 12px;
+    margin: -6px 0 0 -6px;
+    background: var(--paper);
+    border: 2.5px solid var(--ink);
+  }
+  .tl-card {
+    margin-bottom: 8px;
+    padding: 8px 12px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--paper);
+  }
+  .tl-card.key { padding: 11px 13px; border: 2px solid var(--ink); }
+  .tl-card .t { font-size: 12.5px; font-weight: bold; }
+
+  .thumb {
+    flex: 1;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line-soft);
+    border-radius: 2px;
+    background: var(--fill-3);
+  }
+  .thumb i {
+    width: 13px;
+    height: 13px;
+    border: 1.5px solid var(--line);
+    border-radius: 2px;
+  }
+
+  /* The child switcher swaps the whole page, so it reads as a set of tabs
+     rather than a list of links. */
+  .kid {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 6px 15px 6px 8px;
+    border: 1.5px solid var(--line);
+    border-radius: 22px;
+  }
+  .kid.on { border-color: var(--ink); border-width: 2px; padding: 5.5px 14.5px 5.5px 7.5px; }
+  .kid .nm { font-size: 12.5px; font-weight: bold; line-height: 1.1; }
+  .rm { font-size: 10px; color: var(--muted); line-height: 1.3; }
+  .kid .rm { margin-top: 3px; line-height: 1; }
+
+  .tabbar { display: flex; border-top: 1.5px solid var(--line); }
+  .tabbar div {
+    flex: 1;
+    padding: 8px 0 9px;
+    text-align: center;
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .tabbar div.on { color: var(--ink); font-weight: bold; }
+  .tabbar i {
+    display: block;
+    width: 11px;
+    height: 11px;
+    margin: 0 auto 5px;
+    border: 1.5px solid var(--line);
+    border-radius: 2px;
+  }
+  .tabbar div.on i { background: var(--ink); border-color: var(--ink); }
+
+  .fade {
+    height: 26px;
+    background: linear-gradient(to bottom, rgba(255,255,255,0), #fff);
+    margin-top: -26px;
+    position: relative;
+  }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Parent portal</h1>
+      <p class="sub">The same events as the Voiceboard, shaped for the opposite affordance — a chronology, not a grid.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage stack-16">
+
+      <div>
+        <p class="eyebrow" style="margin-bottom:9px">DESKTOP / TABLET — 1024PX AND UP</p>
+        <div class="browser">
+          <div class="browser-bar">
+            <i></i><i></i><i></i>
+            <span class="url">app.logatot.com/parents/dashboard</span>
+          </div>
+
+          <div class="app">
+            <nav class="side">
+              <div class="logo">LOGO</div>
+              <div class="nav-item on"><span class="box"></span> My Children</div>
+              <div class="nav-item"><span class="box"></span> Chat <span class="count">1</span></div>
+              <div class="nav-item"><span class="box"></span> Reports</div>
+            </nav>
+
+            <div class="main">
+              <div class="appbar">
+                <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+                <span class="title">Bright Start Family Care</span>
+                <div class="right">
+                  <span class="pill">Parent view</span>
+                  <span class="avatar sm"></span>
+                </div>
+              </div>
+
+              <div class="pane stack-12">
+                <div class="between">
+                  <div>
+                    <p class="h">Good afternoon</p>
+                    <p class="sub-line">Monday, July 20 · Ivy is here today</p>
+                  </div>
+                  <div class="row">
+                    <span class="btn sm quiet">‹</span>
+                    <span class="field" style="width:120px;text-align:center">Today · Jul 20</span>
+                    <span class="btn sm quiet">›</span>
+                  </div>
+                </div>
+
+                <div class="row" style="gap:10px" data-note="1">
+                  <div class="kid on">
+                    <span class="avatar sm"></span>
+                    <span><span class="nm">Ivy</span><span class="rm" style="display:block">Toddler room</span></span>
+                  </div>
+                  <div class="kid">
+                    <span class="avatar sm"></span>
+                    <span><span class="nm">Theo</span><span class="rm" style="display:block">Infant room</span></span>
+                  </div>
+                  <div class="kid">
+                    <span class="avatar sm"></span>
+                    <span><span class="nm">Nora</span><span class="rm" style="display:block">Pre-K</span></span>
+                  </div>
+                </div>
+
+                <div class="row" style="gap:10px" data-note="2">
+                  <div class="tile"><div class="n">7:42a</div><div class="k">ARRIVED</div></div>
+                  <div class="tile"><div class="n">3 of 3</div><div class="k">MEALS</div></div>
+                  <div class="tile"><div class="n">1h 40m</div><div class="k">NAPS</div></div>
+                  <div class="tile"><div class="n">2</div><div class="k">DIAPERS</div></div>
+                </div>
+
+                <div class="panel" style="padding:10px 14px">
+                  <div class="row" style="gap:16px">
+                    <span class="eyebrow" style="flex:none">AUTHORIZED<br>PICKUPS</span>
+                    <div class="row grow" style="gap:8px">
+                      <span class="avatar sm"></span>
+                      <span class="grow"><span class="bar sm" style="display:block;width:70%"></span><span class="rm" style="display:block;margin-top:4px">Mother · primary</span></span>
+                    </div>
+                    <div class="row grow" style="gap:8px">
+                      <span class="avatar sm"></span>
+                      <span class="grow"><span class="bar sm" style="display:block;width:80%"></span><span class="rm" style="display:block;margin-top:4px">Father</span></span>
+                    </div>
+                    <div class="row grow" style="gap:8px">
+                      <span class="avatar sm"></span>
+                      <span class="grow"><span class="bar sm" style="display:block;width:62%"></span><span class="rm" style="display:block;margin-top:4px">Grandmother · emergency</span></span>
+                    </div>
+                    <span class="faint" style="flex:none;font-size:10.5px;text-align:right;line-height:1.4">Read-only<br>set by your provider</span>
+                  </div>
+                </div>
+
+                <div class="between" data-note="3">
+                  <span class="eyebrow">IVY’S DAY — 8 ENTRIES</span>
+                  <span class="faint" style="font-size:10.5px">Voiceboard events, in time order&nbsp;&nbsp;</span>
+                </div>
+
+                <div class="row" style="gap:16px;align-items:flex-start">
+                  <div class="grow">
+                    <div class="tl-row">
+                      <div class="tl-time">7:42a</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="t">Checked in</span>
+                        <span class="bar sm" style="display:block;width:64%;margin-top:6px"></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">8:20a</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="row" style="gap:8px"><span class="t">Breakfast</span><span class="chip">Ate most</span></span>
+                        <span class="bar sm" style="display:block;width:78%;margin-top:6px"></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">9:55a</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="row" style="gap:8px"><span class="t">Diaper change</span><span class="chip">Wet</span></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">10:30a</div>
+                      <div class="tl-rail"><span class="tl-node key"></span></div>
+                      <div class="tl-card key" data-note="4">
+                        <span class="row" style="gap:8px"><span class="t">Photos — water table play</span><span class="chip">3</span></span>
+                        <span class="row" style="gap:8px;margin-top:9px">
+                          <span class="thumb"><i></i></span>
+                          <span class="thumb"><i></i></span>
+                          <span class="thumb"><i></i></span>
+                        </span>
+                        <span class="bar sm" style="display:block;width:86%;margin-top:9px"></span>
+                        <span class="bar sm" style="display:block;width:44%;margin-top:5px"></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">12:35p</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="row" style="gap:8px"><span class="t">Nap</span><span class="chip">12:35p – 2:15p</span><span class="grow"></span><span class="faint" style="font-size:11px">1h 40m</span></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">2:40p</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="row" style="gap:8px"><span class="t">Diaper change</span><span class="chip">Soiled</span></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">3:05p</div>
+                      <div class="tl-rail"><span class="tl-node key"></span></div>
+                      <div class="tl-card key">
+                        <span class="t">Learned today</span>
+                        <span class="bar sm" style="display:block;width:94%;margin-top:7px"></span>
+                        <span class="bar sm" style="display:block;width:88%;margin-top:5px"></span>
+                        <span class="bar sm" style="display:block;width:52%;margin-top:5px"></span>
+                      </div>
+                    </div>
+                    <div class="tl-row">
+                      <div class="tl-time">3:20p</div>
+                      <div class="tl-rail"><span class="tl-node"></span></div>
+                      <div class="tl-card">
+                        <span class="row" style="gap:8px"><span class="chip">Items needed</span><span class="bar sm grow" style="max-width:230px"></span></span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style="width:206px;flex:none">
+                    <div class="panel" data-note="5">
+                      <p class="eyebrow">MESSAGE PROVIDER</p>
+                      <div class="rule" style="margin:8px 0 10px"></div>
+                      <div class="field tall" style="line-height:1.4;padding-top:9px">Ask about Ivy’s day…</div>
+                      <div style="margin-top:9px"><span class="btn solid sm" style="width:100%">Send</span></div>
+                      <p class="sub-line" style="font-size:10.5px">Usually answered after 4:00p.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row" style="gap:20px;align-items:flex-start">
+        <div style="width:276px;flex:none">
+          <p class="eyebrow" style="margin-bottom:9px">PHONE — 375PX</p>
+          <div class="device">
+            <div class="browser-bar" style="height:32px;padding:0 10px">
+              <i></i>
+              <span class="url" style="height:19px;line-height:17px;font-size:9.5px">app.logatot.com/parents</span>
+            </div>
+            <div class="appbar" style="padding:9px 12px">
+              <span class="box" style="width:12px;height:12px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title" style="font-size:12px">Bright Start</span>
+            </div>
+            <div style="padding:12px">
+              <p class="h" style="font-size:14px">Good afternoon</p>
+              <p class="sub-line" style="font-size:10.5px">Monday, July 20</p>
+
+              <div class="row" style="gap:7px;margin-top:10px;overflow:hidden">
+                <div class="kid on" style="flex:none;padding:4px 11px 4px 5px">
+                  <span class="avatar sm" style="width:18px;height:18px"></span>
+                  <span class="nm" style="font-size:11.5px">Ivy</span>
+                </div>
+                <div class="kid" style="flex:none;padding:5px 12px 5px 6px">
+                  <span class="avatar sm" style="width:18px;height:18px"></span>
+                  <span class="nm" style="font-size:11.5px;font-weight:normal">Theo</span>
+                </div>
+                <div class="kid" style="flex:none;padding:5px 12px 5px 6px">
+                  <span class="avatar sm" style="width:18px;height:18px"></span>
+                  <span class="nm" style="font-size:11.5px;font-weight:normal">Nora</span>
+                </div>
+              </div>
+
+              <div class="row" style="gap:7px;margin-top:10px">
+                <div class="tile" style="padding:8px 6px"><div class="n" style="font-size:15px">7:42a</div><div class="k" style="font-size:8px">ARRIVED</div></div>
+                <div class="tile" style="padding:8px 6px"><div class="n" style="font-size:15px">3 of 3</div><div class="k" style="font-size:8px">MEALS</div></div>
+              </div>
+              <div class="row" style="gap:7px;margin-top:7px">
+                <div class="tile" style="padding:8px 6px"><div class="n" style="font-size:15px">1h 40m</div><div class="k" style="font-size:8px">NAPS</div></div>
+                <div class="tile" style="padding:8px 6px"><div class="n" style="font-size:15px">2</div><div class="k" style="font-size:8px">DIAPERS</div></div>
+              </div>
+
+              <p class="eyebrow" style="margin:13px 0 8px">IVY’S DAY</p>
+
+              <div style="font-size:0">
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">7:42a</div>
+                  <div class="tl-rail"><span class="tl-node"></span></div>
+                  <div class="tl-card" style="padding:7px 10px">
+                    <span class="t" style="font-size:11.5px">Checked in</span>
+                  </div>
+                </div>
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">8:20a</div>
+                  <div class="tl-rail"><span class="tl-node"></span></div>
+                  <div class="tl-card" style="padding:7px 10px">
+                    <span class="t" style="font-size:11.5px">Breakfast · ate most</span>
+                  </div>
+                </div>
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">9:55a</div>
+                  <div class="tl-rail"><span class="tl-node"></span></div>
+                  <div class="tl-card" style="padding:7px 10px">
+                    <span class="t" style="font-size:11.5px">Diaper change · wet</span>
+                  </div>
+                </div>
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">10:30a</div>
+                  <div class="tl-rail"><span class="tl-node key"></span></div>
+                  <div class="tl-card key" style="padding:9px 10px">
+                    <span class="t" style="font-size:11.5px">Photos — water table</span>
+                    <span class="row" style="gap:6px;margin-top:8px">
+                      <span class="thumb" style="height:44px"><i></i></span>
+                      <span class="thumb" style="height:44px"><i></i></span>
+                      <span class="thumb" style="height:44px"><i></i></span>
+                    </span>
+                    <span class="bar sm" style="display:block;width:82%;margin-top:8px"></span>
+                  </div>
+                </div>
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">12:35p</div>
+                  <div class="tl-rail"><span class="tl-node"></span></div>
+                  <div class="tl-card" style="padding:7px 10px">
+                    <span class="t" style="font-size:11.5px">Nap · 1h 40m</span>
+                  </div>
+                </div>
+                <div class="tl-row" style="grid-template-columns:42px 14px 1fr">
+                  <div class="tl-time" style="font-size:10px;padding:10px 8px 0 0">3:05p</div>
+                  <div class="tl-rail"><span class="tl-node key"></span></div>
+                  <div class="tl-card key" style="padding:9px 10px">
+                    <span class="t" style="font-size:11.5px">Learned today</span>
+                    <span class="bar sm" style="display:block;width:92%;margin-top:7px"></span>
+                    <span class="bar sm" style="display:block;width:60%;margin-top:5px"></span>
+                  </div>
+                </div>
+              </div>
+              <div class="fade"></div>
+              <div style="margin-top:4px"><span class="btn sm quiet" style="width:100%">Message provider</span></div>
+            </div>
+            <div class="tabbar">
+              <div class="on"><i></i>Children</div>
+              <div><i></i>Chat</div>
+              <div><i></i>Reports</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="grow">
+          <p class="eyebrow" style="margin-bottom:9px">WHAT ACTUALLY REACHES THE PARENT</p>
+
+          <div class="panel" data-note="6">
+            <div class="between">
+              <span class="eyebrow">END-OF-DAY SUMMARY — MAILED ON CHECK-OUT</span>
+              <span class="chip">5:31p</span>
+            </div>
+            <div class="rule" style="margin:9px 0 12px"></div>
+            <div class="row" style="gap:12px;align-items:flex-start">
+              <span class="avatar"></span>
+              <div class="grow">
+                <p class="h-sm">Ivy’s day at Bright Start — Monday, July 20</p>
+                <p class="sub-line">3 photos · learned to count to seven · 1h 40m nap · needs wipes</p>
+                <div class="row" style="gap:8px;margin-top:10px">
+                  <span class="thumb" style="flex:none;width:86px;height:56px"><i></i></span>
+                  <span class="thumb" style="flex:none;width:86px;height:56px"><i></i></span>
+                  <span class="thumb" style="flex:none;width:86px;height:56px"><i></i></span>
+                  <span class="grow" style="padding-left:6px">
+                    <span class="bar sm" style="display:block;width:92%"></span>
+                    <span class="bar sm" style="display:block;width:84%;margin-top:6px"></span>
+                    <span class="bar sm" style="display:block;width:58%;margin-top:6px"></span>
+                  </span>
+                </div>
+                <div class="row" style="gap:12px;margin-top:12px">
+                  <span class="btn solid sm">Open Ivy’s day</span>
+                  <span class="faint" style="font-size:10.5px">Signs in without a password · link is single-use and expires in 15 minutes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="design-note" style="margin-top:12px">
+            The email is the product. The portal is the destination.
+          </div>
+
+          <div class="aside" style="margin-top:12px">
+            <span class="t">Session shape</span>
+            A parent signs in perhaps a dozen times a year, one-handed, in a car park at five o’clock. The portal is designed for the visit that is already rare rather than for the habit nobody forms.
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">A switcher, not a list of children. About a third of enrolled families have more than one child in care, and a parent checks both in the same half minute — so switching swaps the whole page rather than costing a navigation step and a scroll back.</li>
+      <li data-for="2">The counts sit above the timeline and stay deliberately small. Arrival, meals, naps and diapers are what a parent needs to plan dinner and bedtime; they are reference, and reference should not outweigh the day itself.</li>
+      <li data-for="3">Exactly the events the Voiceboard renders, turned ninety degrees. She is scanning twelve children at once, so she gets a grid; a parent is reading about one child in order, so they get a chronology with time down the left. Same query, opposite affordance.</li>
+      <li data-for="4">Photos and milestones get a heavier border and a filled node on the rail, so they survive a thumb-scroll. A diaper count is a compliance record; a photo is the entry a parent screenshots and sends to a grandparent, and it is why they opened the app at all.</li>
+      <li data-for="5">Read-mostly, with exactly one write. Messaging is the only action a parent can take here — no editing, no logging, no reactions — because every extra write surface becomes something the provider has to triage during the day, and she is already holding a toddler.</li>
+      <li data-for="6">Nobody forms a habit of opening a web app for a toddler's nap times, so the summary mails itself on check-out and carries the day's photos in the preview. Tapping through is a bonus. The link is also the sign-in: a password set in March is forgotten by June, so the reset flow became the only flow.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

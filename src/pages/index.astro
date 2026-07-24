@@ -1,4 +1,5 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '~/layouts/BaseLayout.astro';
 import Section from '~/components/layout/Section.astro';
 import Container from '~/components/layout/Container.astro';
@@ -53,22 +54,16 @@ const metrics = [
 // Client products where I owned the interface. Order follows the positioning doc.
 const work = [
   {
-    href: '/projects/americas-test-kitchen/',
-    client: "America's Test Kitchen",
-    kind: 'Design system',
-    line: 'When a product needs a real design system, I build that too: one library serving three editorial brands, one accessibility floor.',
-  },
-  {
-    href: '/projects/berxi-insurance/',
-    client: 'Berxi',
-    kind: 'Design system',
-    line: 'A design system for a growing insurance platform, from stakeholder alignment through component library, documentation, and cross-team adoption.',
-  },
-  {
     href: '/projects/ivfcryo/',
     client: 'IVFCRYO',
     kind: 'Accessible flows',
     line: 'Recoverable specimen-shipping flows for a fertility logistics product. Accessibility was the mechanism that moved the numbers.',
+  },
+    {
+    href: '/projects/logatot/',
+    client: 'Logatot',
+    kind: 'Voice driven interface',
+    line: 'A voice-driven interface for the Logatot platform, enabling hands-free interaction and improved accessibility.',
   },
   {
     href: '/projects/vmspark/',
@@ -77,6 +72,17 @@ const work = [
     line: 'A multi-tenant admin platform rebuilt and shipped in four phases: the operator-facing UI and workflows, delivered with zero pipeline regressions.',
   },
 ];
+
+// The tools band reads straight from the collection, so the home page cannot
+// drift out of sync with /tools/.
+const tools = (await getCollection('tools', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((t) => ({
+    href: `/tools/${t.id}/`,
+    kind: t.data.kind,
+    name: t.data.title,
+    line: t.data.takeaway,
+  }));
 ---
 
 <BaseLayout
@@ -218,15 +224,54 @@ const work = [
         ))}
       </ul>
 
-      <div class="mt-8 flex flex-wrap items-center gap-x-8 gap-y-3">
+      <div class="mt-8">
         <a href="/projects/" class="inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-paper transition-colors hover:text-accent">
           View all projects <Icon name="ph:arrow-right" size={15} />
         </a>
-        <p class="text-sm text-paper/55 max-w-xl">
-          And the tooling that enforces the quality: a
-          <a href="/blog/what-an-audit-finds/" class="text-paper/80 underline decoration-paper/30 underline-offset-2 transition-colors hover:text-paper hover:decoration-paper">design-system drift auditor</a>
-          that measures UI debt in counts and hours, plus a decision guide for accessible interface patterns.
-        </p>
+      </div>
+
+      {/* ── Tools. Same ink surface, same row grammar as the work list above,
+             so the two read as one body of work rather than a sidebar. ── */}
+      <div class="mt-20 border-t border-paper/15 pt-14">
+        <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
+          <div class="lg:col-span-7">
+            <p class="mono-label !text-paper/65">Tools</p>
+            <Heading level={2} visual="display-md" tone="paper" class="mt-4 text-balance">
+              And things you can actually use.
+            </Heading>
+          </div>
+          <div class="lg:col-span-5">
+            <Text size="sm" tone="whiteMuted" class="max-w-md">
+              Four working instruments for design-system teams. Each runs in your browser. No
+              signup, nothing saved, nothing sent anywhere.
+            </Text>
+          </div>
+        </div>
+
+        <ul class="mt-12 border-t border-paper/10" data-reveal-stagger>
+          {tools.map((t) => (
+            <li>
+              <a href={t.href} class="group grid grid-cols-12 items-center gap-4 border-b border-paper/10 py-5 transition-colors hover:bg-paper/[0.03]">
+                <span class="col-span-12 flex items-center gap-3 sm:col-span-4">
+                  <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{t.kind}</span>
+                </span>
+                <span class="col-span-10 sm:col-span-7">
+                  <span class="font-display text-lg font-medium tracking-tight text-paper">{t.name}</span>
+                  <span class="mt-0.5 block text-sm text-paper/55">{t.line}</span>
+                </span>
+                <span class="col-span-2 flex justify-end sm:col-span-1">
+                  <Icon name="ph:arrow-right" size={18} class="text-paper/50 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-paper" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div class="mt-8">
+          <a href="/tools/" class="inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-paper transition-colors hover:text-accent">
+            View all tools <Icon name="ph:arrow-right" size={15} />
+          </a>
+        </div>
       </div>
     </Container>
   </Section>

@@ -1,0 +1,205 @@
+---
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+
+import ScorecardEngine from '~/components/islands/ScorecardEngine.astro';
+import RoiCalculator from '~/components/islands/RoiCalculator.astro';
+import TokenPlayground from '~/components/islands/TokenPlayground.astro';
+import Diagnostic from '~/components/islands/Diagnostic.astro';
+
+/**
+ * Shell for a /tools/ page. The island is the payload and leads; the essay
+ * follows underneath at reading measure. Structure mirrors
+ * /tools/scorecard/results.astro (paper hero → work → paper body → close) so
+ * the two scorecard surfaces read as one product.
+ */
+
+interface RelatedTool {
+  href: string;
+  kind: string;
+  title: string;
+  takeaway: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  kind: string;
+  tool: 'ScorecardEngine' | 'RoiCalculator' | 'TokenPlayground' | 'Diagnostic';
+  props?: string[];
+  instructions: string;
+  pathname: string;
+  date: Date;
+  related?: RelatedTool[];
+}
+
+const {
+  title,
+  description,
+  kind,
+  tool,
+  props: toolProps = [],
+  instructions,
+  pathname,
+  date,
+  related = [],
+} = Astro.props;
+
+// Astro resolves component imports at build time, so the island is selected
+// from a static map rather than a dynamic import.
+const ISLANDS = { ScorecardEngine, RoiCalculator, TokenPlayground, Diagnostic };
+const Island = ISLANDS[tool];
+
+const shareUrl = new URL(pathname, Astro.site ?? 'https://joshuabriley.com').toString();
+const xShare = `https://twitter.com/intent/tweet?text=${encodeURIComponent(title)}&url=${encodeURIComponent(shareUrl)}`;
+const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`;
+---
+
+<BaseLayout
+  title={`${title} · Joshua Briley`}
+  description={description}
+  pathname={pathname}
+  article={{ publishedTime: date, section: 'Tools', author: 'Joshua Briley' }}
+>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="tight" class="pt-12 md:pt-16">
+    <Container width="wide">
+      <div class="flex items-center justify-between gap-4 mono-label">
+        <span><a href="/tools/" class="transition-colors hover:text-accent">Tools</a> / {kind}</span>
+        <span class="hidden sm:inline text-ink-muted">Free to use</span>
+      </div>
+
+      <div class="mt-10 max-w-3xl lg:mt-12">
+        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
+          {title}
+        </Heading>
+        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
+          {description}
+        </Text>
+
+        {toolProps.length > 0 && (
+          <ul class="hero-in hero-in-4 mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+            {toolProps.map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── THE TOOL ─────────────────────────
+      Instructions sit directly above the island, so nothing in the copy
+      has to point "below" at something the reader has already scrolled past. */}
+  <Section tone="paper" padding="default" class="!pt-10 md:!pt-12">
+    <Container width="wide">
+      <div class="tool-stage">
+        {/* Left-aligned to the island's own edge, so it reads as that thing's
+            caption rather than floating between the hero and the tool. */}
+        <p class="tool-instructions max-w-2xl text-ink-muted leading-relaxed">
+          {instructions}
+        </p>
+
+        <div class="mt-8">
+          <Island />
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── THE ESSAY ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="wide">
+      <div class="mx-auto max-w-2xl">
+        <article class="prose-whimsy">
+          <slot />
+        </article>
+
+        <div class="mt-12 flex items-center gap-4 border-t border-line pt-6">
+          <span class="mono-label">Share</span>
+          <div class="flex items-center gap-2">
+            <a href={xShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on X">
+              <Icon name="ph:x-logo" size={17} />
+            </a>
+            <a href={liShare} target="_blank" rel="noopener noreferrer" class="share-btn" aria-label="Share on LinkedIn">
+              <Icon name="ph:linkedin-logo" size={17} />
+            </a>
+            <button type="button" class="share-btn" data-copy-link aria-label="Copy link">
+              <Icon name="ph:link" size={17} />
+            </button>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── RELATED TOOLS (ink) ───────────────────────── */}
+  {related.length > 0 && (
+    <Section tone="ink" padding="default">
+      <Container width="wide">
+        <p class="mono-label !text-paper/65">The rest of the set</p>
+        <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[20ch] text-balance">
+          Other things you can run right now.
+        </Heading>
+
+        <ul class="mt-12 border-t border-paper/10" data-reveal-stagger>
+          {related.map((r) => (
+            <li>
+              <a href={r.href} class="group grid grid-cols-12 items-center gap-4 border-b border-paper/10 py-5 transition-colors hover:bg-paper/[0.03]">
+                <span class="col-span-12 sm:col-span-3">
+                  <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{r.kind}</span>
+                </span>
+                <span class="col-span-10 sm:col-span-8">
+                  <span class="font-display text-lg font-medium tracking-tight text-paper">{r.title}</span>
+                  <span class="mt-0.5 block text-sm text-paper/55">{r.takeaway}</span>
+                </span>
+                <span class="col-span-2 flex justify-end sm:col-span-1">
+                  <Icon name="ph:arrow-right" size={18} class="text-paper/50 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-paper" />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </Section>
+  )}
+
+  {/* ───────────────────────── CLOSE ───────────────────────── */}
+  <CTABanner
+    eyebrow="Past the self-assessment"
+    title="Want the version with your name on it?"
+    lead="These tools give you the shape of the problem. An audit gives you the specifics: which patterns are drifting, what each one costs, and the order to fix them in."
+  >
+    <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
+      Get in touch
+    </Button>
+    <Button variant="ghost" size="lg" href="/tools/">
+      See all four tools
+    </Button>
+  </CTABanner>
+</BaseLayout>
+
+<style>
+  /* ── Matches the 72rem the island had as a `.post-tool` block inside an
+     interactive post (BlogPost.astro), so the tools read exactly as they did
+     before the move. The original needed `94vw` to break out of a narrow prose
+     column; this one already sits in a wide container, so it caps against the
+     container instead. Viewport units here would overhang the container's own
+     padding by a sub-pixel on small screens. */
+  .tool-stage {
+    width: min(72rem, 100%);
+    margin-inline: auto;
+  }
+
+  .tool-instructions {
+    font-size: 1.05rem;
+  }
+</style>

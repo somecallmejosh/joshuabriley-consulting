@@ -1,0 +1,363 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Child record — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* Tab strip. Not in sheet.css — only the record screens are tabbed. */
+  .tabs {
+    display: flex;
+    align-items: flex-end;
+    gap: 2px;
+    border-bottom: 1.5px solid var(--line);
+  }
+  .tab {
+    padding: 9px 15px;
+    border: 1.5px solid transparent;
+    border-bottom: none;
+    border-radius: 3px 3px 0 0;
+    margin-bottom: -1.5px;
+    font-size: 12px;
+    color: var(--muted);
+    white-space: nowrap;
+  }
+  .tab.on {
+    border-color: var(--line);
+    background: var(--paper);
+    font-weight: bold;
+    color: var(--ink);
+  }
+  .tab .dotm {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    margin-left: 6px;
+    border-radius: 50%;
+    background: var(--line);
+    vertical-align: middle;
+  }
+
+  /* Equal-width field columns inside a panel. */
+  .cols { display: flex; gap: 14px; align-items: flex-start; }
+  .cols > * { flex: 1; min-width: 0; }
+  .cols .field { display: block; }
+
+  /* A checkbox square — the shared kit only has .nav-item .box, which carries
+     nav spacing with it. */
+  .cb {
+    display: inline-block;
+    width: 13px;
+    height: 13px;
+    flex: none;
+    border: 1.5px solid var(--line);
+    border-radius: 2px;
+    vertical-align: -2px;
+  }
+  .cb.on { border-color: var(--ink); background: var(--ink); }
+
+  /* The seven weekday booleans, drawn as the toggle row they are in the UI. */
+  .day {
+    flex: 1;
+    padding: 6px 0 7px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .day.on { border-color: var(--ink); border-width: 2px; background: var(--fill-3); color: var(--ink); font-weight: bold; }
+
+  /* The alias field. It is a token input, not a text box, so it gets its own
+     box rather than a .field — the chips are the value. */
+  .alias {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 9px 10px;
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    background: var(--fill-1);
+  }
+  .mono-label {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.02em;
+    color: var(--ink);
+  }
+  .subform {
+    padding: 13px;
+    border: 1.5px dashed var(--line);
+    border-radius: 3px;
+    background: var(--fill-1);
+  }
+  .formfoot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 14px;
+    padding-top: 13px;
+    border-top: 1.5px solid var(--line);
+  }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Child record</h1>
+      <p class="sub">A five-tab form whose most important field is the one the speech parser reads.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/children/8f2c/edit</span>
+        </div>
+
+        <div class="app">
+          <nav class="side">
+            <div class="logo">LOGO</div>
+            <div class="nav-item"><span class="box"></span> Voiceboard</div>
+            <div class="nav-item on"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Logged Events <span class="count">3</span></div>
+            <div class="nav-item"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item"><span class="box"></span> Calendar <span class="count">2</span></div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms</div>
+            <div class="nav-item locked"><span class="box"></span> Documents</div>
+            <div class="nav-item locked"><span class="box"></span> Expenses</div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Bright Start Family Care</span>
+              <div class="right">
+                <span class="pill"><span class="dot"></span> Listening</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div class="row" style="gap:12px">
+                  <span class="avatar"></span>
+                  <div>
+                    <p class="h">Edit child record</p>
+                    <div class="row" style="gap:7px;margin-top:6px">
+                      <span class="bar" style="width:110px"></span>
+                      <span class="chip fill">Active</span>
+                      <span class="chip">Enrolled Feb 3, 2026</span>
+                    </div>
+                  </div>
+                </div>
+                <span class="btn quiet">View on Voiceboard</span>
+              </div>
+
+              <div class="tabs" data-note="1">
+                <span class="tab on">Personal Info</span>
+                <span class="tab">Attendance</span>
+                <span class="tab">Health <span class="dotm"></span></span>
+                <span class="tab">Accounting <span class="dotm"></span></span>
+                <span class="tab">Linked Application</span>
+              </div>
+
+              <div class="panel stack-12">
+                <p class="eyebrow">1 — NAME &amp; PRONUNCIATION</p>
+
+                <div class="cols">
+                  <div>
+                    <span class="label">FIRST NAME</span>
+                    <span class="field" style="color:var(--ink)">Amara</span>
+                  </div>
+                  <div>
+                    <span class="label">LAST NAME</span>
+                    <span class="field"><span class="bar" style="width:76px;display:inline-block;vertical-align:middle"></span></span>
+                  </div>
+                  <div>
+                    <span class="label">PREFERRED NAME</span>
+                    <span class="field"><span class="bar" style="width:58px;display:inline-block;vertical-align:middle"></span></span>
+                  </div>
+                  <div>
+                    <span class="label">DATE OF BIRTH</span>
+                    <span class="field faint">mm / dd / yyyy</span>
+                  </div>
+                </div>
+
+                <div data-note="2">
+                  <div class="between" style="margin-bottom:5px">
+                    <span class="mono-label">first_name_sounds_like</span>
+                    <div class="row" style="gap:7px">
+                      <span class="chip">6 generated</span>
+                      <span class="chip rust">2 from corrections</span>
+                    </div>
+                  </div>
+                  <div class="alias">
+                    <span class="chip fill">uh-MAR-uh</span>
+                    <span class="chip fill">Amira</span>
+                    <span class="chip fill">Omara</span>
+                    <span class="chip fill">a Mara</span>
+                    <span class="chip fill">Emara</span>
+                    <span class="chip fill">Amaro</span>
+                    <span class="chip rust">Tamara</span>
+                    <span class="chip rust">and Mara</span>
+                    <span class="chip" style="border-style:dashed;color:var(--muted)">+ add</span>
+                  </div>
+                  <div class="design-note" style="margin-top:10px;text-align:left">
+                    Everything else on this tab is a display detail. This field is the vocabulary the voice
+                    parser matches a spoken name against, so it is the one field on the form with behaviour
+                    attached to it.
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel stack-12" data-note="3">
+                <p class="eyebrow">2 — ENROLMENT DATES</p>
+                <div class="cols">
+                  <div>
+                    <span class="label">START DATE</span>
+                    <span class="field" style="color:var(--ink)">02 / 03 / 2026</span>
+                  </div>
+                  <div>
+                    <span class="label">END DATE <span class="faint">(optional)</span></span>
+                    <span class="field faint">mm / dd / yyyy</span>
+                  </div>
+                  <div style="flex:2">
+                    <span class="label">STATUS</span>
+                    <span class="field" style="background:var(--fill-3)">Active — derived, not editable</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel stack-12" data-note="4">
+                <p class="eyebrow">3 — CAREGIVERS &amp; AUTHORISED PICKUP</p>
+
+                <div class="row" style="gap:10px;padding:8px 10px;border:1.5px solid var(--line-soft);border-radius:3px">
+                  <span class="avatar sm"></span>
+                  <span class="bar" style="width:120px"></span>
+                  <span class="chip">Mother</span>
+                  <span class="chip fill">Primary contact</span>
+                  <span class="grow"></span>
+                  <span class="btn sm quiet">Edit</span>
+                  <span class="btn sm quiet">Remove</span>
+                </div>
+
+                <div class="subform stack-12">
+                  <div class="row" style="gap:8px">
+                    <span class="h-sm">New caregiver</span>
+                    <span class="chip">Unsaved</span>
+                    <span class="grow"></span>
+                    <span class="faint" style="font-size:11px">Saves with the child, not before it</span>
+                  </div>
+                  <div class="cols">
+                    <div>
+                      <span class="label">FULL NAME</span>
+                      <span class="field"></span>
+                    </div>
+                    <div>
+                      <span class="label">RELATIONSHIP</span>
+                      <span class="field faint">Select…</span>
+                    </div>
+                    <div>
+                      <span class="label">PHONE</span>
+                      <span class="field faint">( ) —</span>
+                    </div>
+                    <div>
+                      <span class="label">EMAIL</span>
+                      <span class="field"></span>
+                    </div>
+                  </div>
+                  <div class="between">
+                    <span class="row" style="gap:8px;font-size:11.5px"><span class="cb on"></span> Authorised for pickup</span>
+                    <span class="faint" style="font-size:11px">Invited to the parent app after save</span>
+                  </div>
+                </div>
+
+                <span class="btn ghost sm">+ Add another caregiver</span>
+              </div>
+
+              <div class="panel stack-12" data-note="5">
+                <p class="eyebrow">4 — HELD ON THE OTHER FOUR TABS</p>
+
+                <div>
+                  <span class="label">ATTENDANCE — DAYS ATTENDING <span class="faint">(seven booleans, not a text field)</span></span>
+                  <div class="row" style="gap:6px">
+                    <span class="day">Sun</span>
+                    <span class="day on">Mon</span>
+                    <span class="day on">Tue</span>
+                    <span class="day on">Wed</span>
+                    <span class="day">Thu</span>
+                    <span class="day on">Fri</span>
+                    <span class="day">Sat</span>
+                  </div>
+                </div>
+
+                <div class="cols">
+                  <div>
+                    <span class="label">HEALTH</span>
+                    <div class="row" style="gap:6px;flex-wrap:wrap">
+                      <span class="chip">Allergies</span>
+                      <span class="chip">Medications</span>
+                      <span class="chip">Diaper interval</span>
+                      <span class="chip">Immunisations</span>
+                    </div>
+                  </div>
+                  <div style="flex:1.15">
+                    <span class="label">ACCOUNTING</span>
+                    <div class="row" style="gap:6px;flex-wrap:wrap">
+                      <span class="chip">Rate</span>
+                      <span class="chip">Billing cycle</span>
+                      <span class="chip">Subsidy</span>
+                      <span class="chip">CACFP demographics</span>
+                    </div>
+                  </div>
+                  <div style="flex:0.7">
+                    <span class="label">LINKED APPLICATION</span>
+                    <div class="row" style="gap:6px;flex-wrap:wrap">
+                      <span class="chip">Match by parent email</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="formfoot" data-note="6">
+                <span class="muted" style="font-size:11.5px">Draft autosaved 12 seconds ago — safe to close</span>
+                <div class="row" style="gap:8px">
+                  <span class="btn quiet">Cancel</span>
+                  <span class="btn solid">Save child</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Tabs rather than one long scroll. A complete record spans five unrelated concerns, and a provider enrolling a child today does not have the billing terms to hand — she has the parent in front of her. Tabs let her finish enrolment now and come back for accounting next week without scrolling past forty fields she has already answered.</li>
+      <li data-for="2">Toddler names are short, similar and frequently non-English, and recognition accuracy across a roster of twelve of them is the ceiling on the whole product. So name capture is treated as a first-class concern rather than a display detail: what the parser hears is matched against this list, not against the spelling in the field above it.</li>
+      <li data-for="3">Two dates decide the status, and a validation callback derives it — there is no Active toggle anywhere in the product. A toggle is a second source of truth, and the commonest way to get a wrong headcount is a child still marked Active six months after they left.</li>
+      <li data-for="4">Caregivers are created inline. Enrolment usually happens with the parent standing in the doorway, so navigating away to a separate caregiver form loses the half-typed child. The sub-form nests and saves with the parent record instead.</li>
+      <li data-for="5">The schedule is seven booleans rather than free text because the roster reads the same seven columns back, and health lives apart from billing because it is the tab read under pressure. Splitting the model this way costs a join on almost every screen; it buys a form nobody has to scroll to answer one question.</li>
+      <li data-for="6">Saving a new child queues a background job that asks a language model for the variations, pronunciations and common speech-to-text misreadings of the name, and writes them to the alias field. Corrections made in the repair queue append to the same field, so the vocabulary improves from both ends — the model guesses on day one, the provider's own mishearings refine it after that.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

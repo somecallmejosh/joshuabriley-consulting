@@ -1,0 +1,561 @@
+/* Wireframe sheet — shared chrome and wireframe vocabulary.
+ *
+ * Matches the IVFCRYO sheet standard: white sheet, title band with a brand mark
+ * and a kind label, the artwork in a left stage, and the design reasoning in a
+ * right-hand gutter joined to the artwork by dashed leader lines.
+ *
+ * Sheets are authored at 1600px and rendered at 2x (3200px) by render.mjs.
+ * Palette is sampled from the IVFCRYO renders so the two projects sit together.
+ */
+
+:root {
+  --paper: #ffffff;
+  --fill-1: #fcfcfd;
+  --fill-2: #f7f8fa;
+  --fill-3: #f4f5f7;
+  --fill-4: #e6e8eb;
+  --line: #bfc4ca;
+  --line-soft: #d2d6db;
+  --hair: #eeeff1;
+  --ink: #33373d;
+  --muted: #6c737c;
+  --faint: #9aa0a8;
+  --rust: #c8552f;
+  --rust-tint: #fbede8;
+
+  --sans: Helvetica, Arial, "Helvetica Neue", sans-serif;
+  --mono: "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* The stage/gutter split. Every sheet uses the same geometry so the callout
+     column lands in the same place on all fifteen. These x-offsets are measured
+     from the left edge of the stage, not the page, because that is the box the
+     gutter is positioned inside. */
+  --sheet-w: 1600px;
+  --pad: 40px;
+  --stage-w: 1080px;
+  /* Artwork width. Narrower than the stage on purpose: a callout whose disc
+     sits below its anchor jogs vertically ~30px left of the disc, and at a
+     full-bleed 1080 that jog lands inside the frame and crosses content. The
+     reserve keeps it in the margin. Full-bleed artwork is fine on a sheet whose
+     callouts all run dead straight. */
+  --art-w: 1036px;
+  --dot-x: 1089px;
+  --note-x: 1139px;
+  --note-w: 305px;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; padding: 0; }
+
+body {
+  width: var(--sheet-w);
+  background: var(--paper);
+  font-family: var(--sans);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+.sheet {
+  position: relative;
+  padding: 34px var(--pad) 56px;
+}
+
+/* ---------------------------------------------------------------- title band */
+
+.sheet-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--hair);
+}
+
+.sheet-head h1 {
+  margin: 0;
+  font-size: 23px;
+  font-weight: bold;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.sheet-head .sub {
+  margin: 7px 0 0;
+  font-size: 13px;
+  color: var(--muted);
+}
+
+.mark {
+  flex: none;
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+  line-height: 1.55;
+}
+.mark .brand { display: block; color: var(--faint); }
+.mark .kind { display: block; color: var(--rust); }
+
+/* -------------------------------------------------------------- stage/gutter */
+
+.sheet-body {
+  position: relative;
+  margin-top: 28px;
+}
+
+.stage { width: var(--stage-w); }
+
+/* Leader lines are drawn into this overlay by sheet.js after layout, so the
+   author only marks an element and writes a note — the geometry is derived. */
+.leaders {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: visible;
+}
+
+.notes {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notes li {
+  position: absolute;
+  left: var(--note-x);
+  width: var(--note-w);
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink);
+}
+
+/* The numbered disc. Positioned by the script to sit on the first text line. */
+.note-dot {
+  position: absolute;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: var(--rust);
+  color: #fff;
+  font-size: 11.5px;
+  font-weight: bold;
+  line-height: 21px;
+  text-align: center;
+}
+
+/* --------------------------------------------------------------- browser frame */
+
+.browser {
+  border: 1.5px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  height: 40px;
+  padding: 0 14px;
+  background: var(--fill-2);
+  border-bottom: 1.5px solid var(--line);
+}
+.browser-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--line);
+}
+.browser-bar .url {
+  flex: 1;
+  margin-left: 8px;
+  height: 22px;
+  padding: 0 12px;
+  border: 1.5px solid var(--line-soft);
+  border-radius: 11px;
+  background: var(--paper);
+  font-size: 10.5px;
+  line-height: 20px;
+  color: var(--muted);
+}
+
+/* A tablet/phone device, for the kiosk and parent-portal sheets. */
+.device {
+  border: 1.5px solid var(--line);
+  border-radius: 14px;
+  background: var(--paper);
+  overflow: hidden;
+}
+.device.dark { background: #33373d; border-color: #33373d; }
+
+/* ------------------------------------------------------------------ app shell */
+
+.app { display: flex; min-height: 200px; }
+
+.side {
+  width: 210px;
+  flex: none;
+  padding: 14px 0;
+  border-right: 1.5px solid var(--line);
+  background: var(--fill-1);
+}
+
+.side .logo {
+  margin: 0 14px 14px;
+  height: 30px;
+  border: 1.5px dashed var(--line);
+  border-radius: 3px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.16em;
+  line-height: 28px;
+  text-align: center;
+  color: var(--faint);
+}
+
+.side .group {
+  margin: 16px 14px 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  color: var(--faint);
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 14px;
+  font-size: 12.5px;
+  color: var(--ink);
+}
+.nav-item .box {
+  width: 12px;
+  height: 12px;
+  flex: none;
+  border: 1.5px solid var(--line);
+  border-radius: 2px;
+}
+.nav-item .count {
+  margin-left: auto;
+  min-width: 18px;
+  height: 16px;
+  padding: 0 5px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  font-size: 10px;
+  line-height: 14px;
+  text-align: center;
+  color: var(--muted);
+}
+.nav-item.on {
+  background: var(--fill-4);
+  font-weight: bold;
+  box-shadow: inset 3px 0 0 var(--ink);
+}
+.nav-item.locked { color: var(--faint); }
+
+.main { flex: 1; min-width: 0; }
+
+.appbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px;
+  border-bottom: 1.5px solid var(--line);
+}
+.appbar .title { font-size: 13.5px; font-weight: bold; }
+.appbar .right { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+
+.pane { padding: 18px; }
+
+/* ----------------------------------------------------------------- primitives */
+
+.h { margin: 0; font-size: 17px; font-weight: bold; }
+.h-sm { margin: 0; font-size: 13px; font-weight: bold; }
+.sub-line { margin: 4px 0 0; font-size: 11.5px; color: var(--muted); }
+.eyebrow {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.row { display: flex; align-items: center; gap: 10px; }
+.between { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.grow { flex: 1; min-width: 0; }
+.stack-8 > * + * { margin-top: 8px; }
+.stack-12 > * + * { margin-top: 12px; }
+.stack-16 > * + * { margin-top: 16px; }
+
+/* Greeked text — the wireframe's stand-in for real copy. */
+.bar {
+  height: 8px;
+  border-radius: 4px;
+  background: var(--fill-4);
+}
+.bar.sm { height: 6px; }
+.bar.dark { background: var(--line-soft); }
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--fill-4);
+}
+.avatar.sm { width: 22px; height: 22px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 14px;
+  border: 1.5px solid var(--ink);
+  border-radius: 3px;
+  background: var(--paper);
+  font-size: 12px;
+  font-weight: bold;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.btn.solid { background: var(--ink); color: #fff; }
+.btn.quiet { border-color: var(--line); font-weight: normal; color: var(--muted); }
+.btn.ghost { border-style: dashed; border-color: var(--line); font-weight: normal; }
+.btn.sm { height: 24px; padding: 0 10px; font-size: 11px; }
+.btn.lg { height: 38px; padding: 0 20px; font-size: 13.5px; }
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 12px;
+  border: 1.5px solid var(--line);
+  border-radius: 13px;
+  background: var(--paper);
+  font-size: 11.5px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.pill.on { background: var(--ink); border-color: var(--ink); color: #fff; font-weight: bold; }
+.pill.dashed { border-style: dashed; }
+.pill .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  height: 22px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+  font-size: 11px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+.chip.fill { background: var(--fill-3); }
+.chip.rust { border-color: var(--rust); color: var(--rust); background: var(--rust-tint); }
+
+.field {
+  height: 32px;
+  padding: 0 10px;
+  border: 1.5px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+  font-size: 11.5px;
+  line-height: 29px;
+  color: var(--muted);
+}
+.field.tall { height: 56px; line-height: 54px; }
+.label { display: block; margin-bottom: 5px; font-size: 11px; color: var(--muted); }
+
+.panel {
+  border: 1.5px solid var(--line);
+  border-radius: 3px;
+  background: var(--paper);
+  padding: 14px;
+}
+.panel.fill { background: var(--fill-2); }
+.panel.flat { border-radius: 0; }
+
+.tile {
+  flex: 1;
+  padding: 14px;
+  border: 1.5px solid var(--line);
+  border-radius: 3px;
+  text-align: center;
+  background: var(--paper);
+}
+.tile.on { background: var(--fill-3); border-color: var(--ink); border-width: 2px; }
+.tile .n { font-size: 26px; font-weight: bold; line-height: 1.1; }
+.tile .k {
+  margin-top: 4px;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.12em;
+  color: var(--muted);
+}
+
+/* ---------------------------------------------------------------------- table */
+
+table.wire {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11.5px;
+}
+table.wire th {
+  padding: 8px 10px;
+  border-bottom: 1.5px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 9.5px;
+  font-weight: normal;
+  letter-spacing: 0.1em;
+  text-align: left;
+  color: var(--muted);
+  white-space: nowrap;
+}
+table.wire td {
+  padding: 9px 10px;
+  border-bottom: 1px solid var(--hair);
+  vertical-align: middle;
+}
+table.wire tr.empty td {
+  font-style: italic;
+  color: var(--faint);
+  font-size: 11px;
+}
+.muted { color: var(--muted); }
+.faint { color: var(--faint); }
+.rust { color: var(--rust); }
+.b { font-weight: bold; }
+
+/* Annotation-free spec notes drawn onto the artwork itself, as on the IVFCRYO
+   flow sheets: a quiet grey aside, or a rust "design note". */
+.aside {
+  padding: 10px 12px;
+  border: 1.5px dashed var(--line);
+  border-radius: 3px;
+  background: var(--fill-2);
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.aside .t { display: block; margin-bottom: 3px; font-weight: bold; color: var(--ink); }
+
+.design-note {
+  padding: 11px 13px;
+  border: 1.5px dashed var(--rust);
+  border-radius: 3px;
+  background: var(--rust-tint);
+  font-size: 11.5px;
+  line-height: 1.5;
+  font-weight: bold;
+  color: var(--rust);
+  text-align: center;
+}
+
+/* ------------------------------------------------------------- flow diagrams */
+
+.flow { position: relative; width: var(--stage-w); }
+
+/* Flow nodes are absolutely positioned on a coordinate grid; connectors are
+   drawn into a single SVG behind them so arrowheads and elbows stay crisp. */
+.flow svg.wires,
+.flow svg.wire-labels {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.node {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 12px;
+  border: 1.5px solid var(--muted);
+  border-radius: 3px;
+  background: var(--paper);
+  text-align: center;
+}
+.node .t { font-size: 12.5px; font-weight: bold; line-height: 1.3; }
+.node .s { margin-top: 3px; font-size: 10.5px; line-height: 1.35; color: var(--muted); }
+
+/* Stadiums and rectangles are CSS borders — crisper at 2x than a stroked path.
+   The diamond, parallelogram and wavy-bottom shapes cannot be, so flow.js draws
+   those into the wire layer and the div carries only the text. */
+.node.entry { border-radius: 24px; background: var(--fill-4); }
+.node.exit { border-radius: 24px; }
+.node.terminal { border-radius: 24px; background: var(--fill-4); }
+.node.dashed { border-style: dashed; }
+
+.node.branch,
+.node.choice,
+.node.msg {
+  border: none;
+  background: none;
+}
+.node.branch { padding: 16px 26px; }
+.node.msg { padding: 9px 12px 15px; }
+
+/* Node text sits above the drawn shape. */
+.node .t, .node .s { position: relative; }
+
+.flow-legend {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+  margin-top: 30px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair);
+  font-size: 11.5px;
+  color: var(--ink);
+}
+.flow-legend .item { display: flex; align-items: center; gap: 8px; }
+.flow-legend .key {
+  width: 26px;
+  height: 17px;
+  flex: none;
+  border: 1.5px solid var(--muted);
+  border-radius: 3px;
+  background: var(--paper);
+}
+.flow-legend .key.entry { border-radius: 9px; background: var(--fill-4); }
+.flow-legend .key.exit { border-radius: 9px; }
+.flow-legend .key.sys { border-style: dashed; }
+.flow-legend .key.branch {
+  border: none;
+  background: var(--paper);
+  transform: rotate(45deg) scale(0.72);
+  border: 1.5px solid var(--muted);
+  border-radius: 2px;
+  width: 17px;
+}
+.flow-legend .key.choice {
+  background: var(--fill-3);
+  transform: skewX(-16deg);
+}
+.flow-legend .key.note {
+  border-style: dashed;
+  border-color: var(--rust);
+  background: var(--rust-tint);
+}
+
+.lane-title {
+  margin: 0 0 10px;
+  font-size: 12.5px;
+  font-weight: bold;
+}
+.rule { height: 1px; background: var(--hair); margin: 8px 0 16px; }

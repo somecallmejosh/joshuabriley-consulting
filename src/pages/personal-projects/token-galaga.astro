@@ -174,7 +174,11 @@ const feel = [
             I turned the design-token spec into a <em class="ink-wink font-normal italic">playable</em> coding arcade.
           </Heading>
 
-          <p class="mt-8 max-w-xl">
+          <p class="mt-6 max-w-xl font-display text-lg italic text-ink-muted">
+            The short version: I was better at Galaga than at design tokens. So I fixed that the hard way.
+          </p>
+
+          <p class="mt-6 max-w-xl">
             <Text as="span" size="lg" tone="muted">
               You don&rsquo;t read about aliases. You write one in a real editor, run it in a
               sandbox, and watch the wave clear. Twenty sectors of the
@@ -245,32 +249,6 @@ const feel = [
     </Container>
   </Section>
 
-  <Section tone="paper" padding="tight" aria-label="What changed since the prototype">
-    <Container width="content">
-      <p class="mono-label mb-5">What changed since the prototype</p>
-      <Text size="lg" tone="muted" class="measure">
-        An earlier version of this write-up called Token Adventure a Galaga-style canvas arcade with
-        eight sectors. That described an early prototype, and it undersold the part that matters most:
-        there is no shoot-em-up rendered to a canvas. The arcade is presentation. The engine underneath
-        is a real in-browser coding environment that grades your actual code against the spec.
-      </Text>
-      <div class="mt-9 grid gap-px overflow-hidden rounded-lg border border-line bg-line sm:grid-cols-3">
-        <div class="bg-paper p-5">
-          <p class="mono-label mb-2">Sectors</p>
-          <p class="text-ink"><span class="text-ink-faint line-through">8</span> &rarr; <span class="font-semibold">20</span>, three arcs</p>
-        </div>
-        <div class="bg-paper p-5">
-          <p class="mono-label mb-2">The gameplay</p>
-          <p class="text-ink"><span class="text-ink-faint line-through">Canvas render</span> &rarr; real editor, sandbox, grader</p>
-        </div>
-        <div class="bg-paper p-5">
-          <p class="mono-label mb-2">The spec</p>
-          <p class="text-ink"><span class="text-ink-faint line-through">2024 draft</span> &rarr; stable 2025.10</p>
-        </div>
-      </div>
-    </Container>
-  </Section>
-
   <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="content">
       <p class="mono-label mb-8">Receipts</p>
@@ -313,11 +291,18 @@ const feel = [
       </ul>
 
       <Text size="lg" tone="muted" class="mt-10 measure">
-        Token Adventure is a personal project, and the whole point is the framing. The W3C Design
-        Tokens Format is genuinely useful and a genuinely dry read. So instead of writing another
-        explainer, I built the thing I&rsquo;d actually want to play: a coding arcade where every wave
-        you clear is one more piece of the spec you can prove you understand, because your code had to
-        satisfy it. Nobody asked for it, which meant nobody was around to talk me out of finishing it.
+        Here is the honest origin story. I was on the couch playing Galaga Wars on my phone, watching a
+        little ship rank up wave after wave, and it hit me that I should be leveling up on the W3C
+        Design Tokens Format instead. It had just gone stable at 2025.10, I&rsquo;d been meaning to
+        actually internalize it rather than skim it, and the spec is genuinely useful and a genuinely
+        dry read. So I did what any reasonable person would do. I built a game around it. Duh.
+      </Text>
+      <Text size="lg" tone="muted" class="mt-6 measure">
+        That is the product-design-engineering instinct in miniature: I don&rsquo;t separate the design
+        idea from the thing that has to run. So instead of writing another explainer, I built the thing
+        I&rsquo;d actually want to play. A coding arcade where every wave you clear is one more piece of
+        the spec you can prove you understand, because your code had to satisfy a real grader to pass.
+        Nobody asked for it, which meant nobody was around to talk me out of finishing it.
       </Text>
     </Container>
   </Section>

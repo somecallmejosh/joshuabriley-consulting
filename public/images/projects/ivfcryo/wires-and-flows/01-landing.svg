@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1410" viewBox="0 0 1400 1410">
+  <rect x="0" y="0" width="1400" height="1410" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="52" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">Landing &amp; Registration</text>
+  <line x1="40" y1="76" x2="1360" y2="76" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- ============ FRAME 1: Marketing landing ============ -->
+  <text x="40" y="102" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Marketing landing</text>
+
+  <rect x="40" y="112" width="1320" height="538" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- browser chrome -->
+  <rect x="40" y="112" width="1320" height="40" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="66" cy="132" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="84" cy="132" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="102" cy="132" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="126" y="120" width="340" height="24" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="138" y="136" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com</text>
+
+  <!-- site header -->
+  <rect x="70" y="166" width="28" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="108" y="186" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <rect x="1128" y="165" width="90" height="30" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1173" y="185" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Login</text>
+  <rect x="1230" y="165" width="100" height="30" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1280" y="185" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Register</text>
+  <line x1="40" y1="210" x2="1360" y2="210" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- hero: image placeholder -->
+  <rect x="70" y="232" width="560" height="330" rx="2" fill="#ffffff" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <line x1="70" y1="232" x2="630" y2="562" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <line x1="630" y1="232" x2="70" y2="562" stroke="#cccccc" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <rect x="200" y="382" width="300" height="30" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="350" y="401" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Hero photograph</text>
+
+  <!-- hero: copy column -->
+  <text x="680" y="270" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">EYEBROW — POSITIONING LINE</text>
+  <text x="680" y="322" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="bold" fill="#333333">Headline — value proposition,</text>
+  <text x="680" y="350" font-family="Helvetica, Arial, sans-serif" font-size="20" font-weight="bold" fill="#333333">two lines</text>
+
+  <rect x="680" y="398" width="160" height="44" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="760" y="425" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Login</text>
+  <rect x="860" y="398" width="160" height="44" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="940" y="425" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Register</text>
+
+  <line x1="680" y1="492" x2="1330" y2="492" stroke="#cccccc" stroke-width="1"/>
+  <text x="680" y="524" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Proof / credibility statement</text>
+
+  <!-- footer -->
+  <line x1="40" y1="580" x2="1360" y2="580" stroke="#999999" stroke-width="1.5"/>
+  <rect x="70" y="602" width="24" height="24" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="104" y="619" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <text x="250" y="619" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">How It Works · Packaging · Coverage Levels · Contact</text>
+  <text x="1330" y="619" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="end">Copyright line</text>
+
+  <!-- ============ FRAME 2: Registration ============ -->
+  <text x="40" y="706" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Registration</text>
+
+  <rect x="40" y="716" width="1320" height="654" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- browser chrome -->
+  <rect x="40" y="716" width="1320" height="40" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="66" cy="736" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="84" cy="736" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="102" cy="736" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="126" y="724" width="340" height="24" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="138" y="740" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com/users/sign_up</text>
+
+  <!-- site header -->
+  <rect x="70" y="770" width="28" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="108" y="790" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <rect x="1230" y="769" width="100" height="30" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1280" y="789" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Login</text>
+  <line x1="40" y1="814" x2="1360" y2="814" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- signup card -->
+  <rect x="440" y="860" width="520" height="460" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="470" y="900" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Create your account</text>
+  <text x="470" y="922" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Already have an account? Log in</text>
+
+  <text x="470" y="954" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">First Name</text>
+  <rect x="470" y="962" width="230" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="720" y="954" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Last Name</text>
+  <rect x="720" y="962" width="230" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <text x="470" y="1032" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Email</text>
+  <rect x="470" y="1040" width="480" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <text x="470" y="1110" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Password</text>
+  <rect x="470" y="1118" width="480" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <text x="470" y="1188" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Password Confirmation</text>
+  <rect x="470" y="1196" width="480" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="470" y="1256" width="480" height="42" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="710" y="1282" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Sign up</text>
+</svg>

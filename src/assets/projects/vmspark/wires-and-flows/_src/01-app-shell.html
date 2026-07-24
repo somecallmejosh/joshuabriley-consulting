@@ -1,0 +1,238 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Application Shell — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* The real shell is a 56px product rail plus a 280px contextual panel. The
+     rail carries labels here because the labels are the reason it works as a
+     switcher rather than a mystery-meat strip. */
+  .app { min-height: 596px; }
+  .rail { width: 64px; gap: 14px; padding: 12px 0 14px; }
+  .rail .it {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    text-align: center;
+  }
+  .rail .it b { font-size: 8px; font-weight: 500; color: var(--faint); letter-spacing: 0.01em; }
+  .rail .it.on i { background: var(--accent); }
+  .rail .it.on b { color: var(--accent); font-weight: 700; }
+  .rail .it .sub { display: block; font-size: 7px; color: var(--faint); }
+  .rail .sp { margin-top: auto; }
+  .rail .hr { width: 24px; height: 1px; background: var(--line-soft); }
+
+  .side { width: 280px; }
+  .side .eyebrow { padding: 0 16px 2px; }
+  .side .title { padding-top: 2px; }
+
+  /* Narrower than theme default so the appbar's three regions fit at 690px.
+     Everything in the bar is nowrap — a wrapped workspace name changes the
+     height of the frame every screen sits in. */
+  .omnibox { width: 232px; flex: none; }
+  .workspace { flex: none; }
+  .workspace .v { white-space: nowrap; }
+  .who { font-size: 11.5px; color: var(--muted); white-space: nowrap; }
+
+  /* The page-content region. Dashed because it is the one part of the frame
+     this sheet is not making a claim about. */
+  .region {
+    min-height: 452px;
+    padding: 26px 22px 22px;
+    border: 1px dashed var(--line-soft);
+    border-radius: var(--r);
+    background: var(--fill-1);
+    display: flex;
+    flex-direction: column;
+  }
+  .region .cap { text-align: center; margin-top: 96px; }
+
+  /* The audit, as a ledger. Counts are the evidence the shell argument rests
+     on, so they are on the artwork rather than only in the gutter. */
+  .inv { margin-top: auto; }
+  .inv .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 9px 20px;
+    margin-top: 9px;
+  }
+  .inv .cell { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+  .inv .cell .k { font-size: 10.5px; color: var(--muted); }
+  .inv .cell .v { font-family: var(--mono); font-size: 10px; color: var(--ink); white-space: nowrap; }
+  .inv .cell .v s { color: var(--faint); text-decoration: none; }
+
+  /* Variant strip. Three panels, one callout — a leader per panel would cross
+     the two beside it. */
+  .variants { display: flex; gap: 14px; }
+  .variants .v { flex: 1; padding: 12px; }
+  .variants .vt { font-family: var(--mono); font-size: 9px; letter-spacing: 0.12em; color: var(--muted); }
+  .mini { display: flex; gap: 7px; height: 116px; margin-top: 10px; }
+  .mini .m-rail { width: 16px; border: 1px solid var(--line-soft); border-radius: 3px; background: var(--fill-2); }
+  .mini .m-rail span { display: block; width: 8px; height: 8px; margin: 6px auto 0; border-radius: 2px; background: var(--fill-4); }
+  .mini .m-rail span.on { background: var(--accent); }
+  .mini .m-side { width: 78px; border: 1px solid var(--line-soft); border-radius: 3px; background: var(--paper); padding: 7px 6px; }
+  .mini .m-side .chip { height: 15px; padding: 0 5px; font-size: 8px; letter-spacing: 0.04em; }
+  .mini .m-body {
+    flex: 1;
+    border: 1px dashed var(--line-soft);
+    border-radius: 3px;
+    background: var(--fill-1);
+    padding: 8px;
+    font-size: 9.5px;
+    line-height: 1.45;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .mini .ln { height: 5px; border-radius: 3px; background: var(--fill-4); }
+  .mini .ln + .ln { margin-top: 6px; }
+  .m-top { display: flex; align-items: center; gap: 8px; padding: 5px 7px; border: 1px solid var(--line-soft); border-radius: 3px; background: var(--paper); font-size: 9px; color: var(--muted); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Application Shell</h1>
+      <p class="sub">One shell, applied to every authenticated screen, replacing per-view improvisation.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage stack-16">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /jobs/job_listings</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <span class="it on"><i></i><b>Jobs</b></span>
+            <span class="it"><i></i><b>Mapping</b></span>
+            <span class="it"><i></i><b>Rate Plans</b></span>
+            <span class="it"><i></i><b>Settings</b></span>
+            <span class="it"><i></i><b>Admin</b><span class="sub">owner only</span></span>
+            <span class="sp"></span>
+            <span class="hr"></span>
+            <span class="it"><i></i><b>Density</b></span>
+            <span class="it"><i></i><b>Help</b></span>
+          </nav>
+
+          <nav class="side">
+            <p class="eyebrow">AREA</p>
+            <div class="title">Job Listings</div>
+            <div class="nav-item on" data-note="3">Job Listings <span class="count">12</span></div>
+            <div class="nav-item">Manual Jobs</div>
+            <div class="nav-item">Direct Client Jobs</div>
+            <div class="nav-item">Candidates</div>
+            <div class="nav-item">Candidate Profiles</div>
+            <div class="nav-item locked">Applications &amp; Matches</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar" data-note="2" data-note-dy="20">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right" data-note="1" data-note-dy="-10">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+                <span class="who">J. Briley</span>
+              </div>
+            </div>
+
+            <div class="pane">
+              <div class="region" data-note="4" data-note-dy="60">
+                <div class="cap">
+                  <p class="h-sm">Page content — see sheets 02–10</p>
+                  <p class="sub-line">Every screen renders inside this region. The shell around it never re-mounts.</p>
+                </div>
+
+                <div class="inv">
+                  <div class="aside" data-note="5">
+                    <span class="t">What the audit found, and what the shell absorbs</span>
+                    <div class="grid">
+                      <span class="cell"><span class="k">Button styles</span><span class="v"><s>8+</s> → 1</span></span>
+                      <span class="cell"><span class="k">Form elements</span><span class="v"><s>10+</s> → 1</span></span>
+                      <span class="cell"><span class="k">Form patterns</span><span class="v"><s>5</s> → 1</span></span>
+                      <span class="cell"><span class="k">Table conventions</span><span class="v"><s>6+</s> → 1</span></span>
+                      <span class="cell"><span class="k">Labelling rules</span><span class="v"><s>4+</s> → 1</span></span>
+                      <span class="cell"><span class="k">Views off-token</span><span class="v"><s>~40</s> → 0</span></span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="row" style="gap:12px;margin-bottom:9px">
+          <span class="eyebrow">STATE VARIANTS</span>
+          <span class="sub-line" style="margin:0">the same frame, re-shaped by role and preference</span>
+        </div>
+
+        <div class="variants" data-note="6">
+          <div class="panel v">
+            <p class="vt">A · RAIL COLLAPSED</p>
+            <div class="mini">
+              <div class="m-rail"><span class="on"></span><span></span><span></span><span></span></div>
+              <div class="m-body">Panel hidden — content gains 280px.<br>Hover re-opens it as an overlay.</div>
+            </div>
+          </div>
+
+          <div class="panel v">
+            <p class="vt">B · READ-ONLY USER</p>
+            <div class="mini">
+              <div class="m-rail"><span class="on"></span><span></span><span></span><span></span></div>
+              <div class="m-side">
+                <span class="chip sm">READ ONLY</span>
+                <div class="ln" style="width:100%;margin-top:8px"></div>
+                <div class="ln" style="width:78%"></div>
+                <div class="ln" style="width:88%"></div>
+              </div>
+              <div class="m-body">Write actions removed,<br>not just disabled.</div>
+            </div>
+          </div>
+
+          <div class="panel v">
+            <p class="vt">C · CANDIDATE USER</p>
+            <div class="mini" style="flex-direction:column;gap:8px">
+              <div class="m-top">
+                <span style="color:var(--accent);font-weight:600">My Jobs</span>
+                <span>Profile</span>
+                <span>Documents</span>
+                <span class="avatar sm" style="margin-left:auto"></span>
+              </div>
+              <div class="m-body" style="flex:1">No rail, no panel — candidates get a<br>top-nav consumer shell on the same app.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">An internal operator can be looking at any client's data, so tenant identity belongs in the chrome rather than behind a settings page. The workspace name and the amber return-to-owner control stay visible for the whole session someone is impersonating — the mistake worth engineering against is acting on the wrong account and not noticing.</li>
+      <li data-for="2">⌘K belongs to the shell but not to first paint. Its markup and its account-scoped search load on demand, so putting a global search surface on every page cost nothing on the hot path. It is additive rather than a replacement: per-page search stays, because the palette is for jumping across the app, not for filtering the screen you are on.</li>
+      <li data-for="3">The active state here is a semantic token, not a hex literal. A token system already existed in <code>_color_tokens.scss</code> — the failure was roughly forty views ignoring it. The shell's job was never to introduce tokens; it was to make the token path the shortest one, so a view has no reason to hand-roll a colour.</li>
+      <li data-for="4">Which section is open is decided server-side from the controller, so first paint is already correct and no client JS re-arranges the nav afterwards. This was Phase 2 of four, and it shipped without touching the ingestion pipeline underneath — that constraint is the reason this is a shell and not a rewrite.</li>
+      <li data-for="5">The sprawl was not caused by an absent system, so a style guide would not have fixed it. It was caused by every screen having somewhere of its own to decide. Navigation, page header, workspace context and search now come from one place — the counts are what the shell removes, not what it renames.</li>
+      <li data-for="6">Collapsed rail, read-only operator, candidate: one frame re-shaped by role and preference rather than three layouts maintained in parallel. Forked layouts drift within a quarter and the drift stays invisible until someone reports it. Density and rail state persist per user, so the choice survives a shift change.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

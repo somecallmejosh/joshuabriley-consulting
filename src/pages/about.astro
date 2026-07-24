@@ -11,27 +11,6 @@ import Icon from '~/components/primitives/Icon.astro';
 const description =
   'Design- and front-end-focused product design engineer. 20 years in production UI: design-grade, accessible interfaces with the judgment most teams have to hire a separate designer to get.';
 
-const currentWork = [
-  {
-    company: 'Travelers',
-    stack: 'Web Components · React',
-    body:
-      'Accessible product UI that crosses framework boundaries: built so the right markup is the only markup you can ship.',
-  },
-  {
-    company: 'Berkshire Hathaway Specialty',
-    stack: 'Vue.js · Nuxt.js',
-    body:
-      "Product surfaces for an insurance platform where consistency isn't aesthetic: it's regulatory.",
-  },
-  {
-    company: "America's Test Kitchen",
-    stack: 'React · Next.js',
-    body:
-      'When a product needs a real design system, I build that too: one shared library unifying three editorial brands.',
-  },
-];
-
 const principles = [
   {
     index: '01',
@@ -164,35 +143,6 @@ const learning = [
           </div>
         ))}
       </div>
-    </Container>
-  </Section>
-
-  {/* ───────────────────────── CURRENT WORK (ink) ───────────────────────── */}
-  <Section tone="ink" padding="default">
-    <Container width="wide">
-      <div class="max-w-3xl">
-        <Heading level={2} visual="display-md" tone="paper">
-          Products in production, not slideware.
-        </Heading>
-        <Text size="lg" tone="whiteMuted" class="mt-5">
-          The work shows up in places where the details carry weight: across frameworks,
-          across brands, and under regulatory scrutiny.
-        </Text>
-      </div>
-
-      <ul class="mt-14 border-t border-paper/10" data-reveal-stagger>
-        {currentWork.map((w) => (
-          <li>
-            <div class="grid grid-cols-12 items-baseline gap-4 border-b border-paper/10 py-5">
-              <span class="col-span-12 sm:col-span-4 font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{w.stack}</span>
-              <span class="col-span-12 sm:col-span-8">
-                <span class="font-display text-lg font-medium tracking-tight text-paper">{w.company}</span>
-                <span class="mt-1 block text-sm text-paper/55 max-w-2xl">{w.body}</span>
-              </span>
-            </div>
-          </li>
-        ))}
-      </ul>
     </Container>
   </Section>
 

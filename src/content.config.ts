@@ -58,4 +58,32 @@ const posts = defineCollection({
   }),
 });
 
-export const collections = { testimonials, posts };
+const tools = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/tools' }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string(),
+    date: z.coerce.date(),
+    /** Which island renders above the essay. Must be a key of ISLANDS in ToolPage.astro. */
+    tool: z.enum(['ScorecardEngine', 'RoiCalculator', 'TokenPlayground', 'Diagnostic']),
+    /** Shown in the hero mono-label ("Tools / Self-assessment") and on index rows. */
+    kind: z.string(),
+    /** Ordering on the /tools/ index. Lower runs first. */
+    order: z.number(),
+    /** One line describing what you get out of it. Index rows + home band. */
+    takeaway: z.string(),
+    /** Link text on the index. Verb-first and specific to this tool, so the
+     *  four links stay distinguishable when read on their own. */
+    action: z.string(),
+    /** Hero pill list: the tool's properties, not topics ("No signup", "Nothing saved"). */
+    props: z.array(z.string()).default([]),
+    /** How to drive the tool. Renders directly above it, so it never says "below". */
+    instructions: z.string(),
+    /** Iconify name, used on the index bento. */
+    icon: z.string(),
+    tags: z.array(z.string()).default([]),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { testimonials, posts, tools };

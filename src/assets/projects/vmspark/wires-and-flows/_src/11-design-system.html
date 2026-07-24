@@ -1,0 +1,654 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The Design System — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* This sheet is the style guide as it actually ships — a page inside the admin
+     app, not a document beside it. So it keeps the browser frame but drops the
+     rail and nav: the inventory needs the full pane, and the shell is already
+     documented on the screen sheets. */
+  .pane.board { padding: 18px 16px 20px; background: var(--fill-2); }
+
+  /* Section band. The heading carries the rule; the specimens below only prove
+     it. Left label reads as a section, right text states what collapsed. */
+  .sec + .sec { margin-top: 20px; }
+  .sec-h {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sec-h .n {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .sec-h .r { font-size: 10.5px; color: var(--muted); text-align: right; }
+  .sec-body { margin-top: 10px; }
+
+  /* Specimen grid. Fixed columns rather than auto-fit, so the cell rhythm is the
+     same in every section and the eye can compare across bands. */
+  .g { display: grid; gap: 8px; }
+  .g6 { grid-template-columns: repeat(6, 1fr); }
+  .g4 { grid-template-columns: repeat(4, 1fr); }
+  .g11 { grid-template-columns: repeat(11, 1fr); gap: 7px; }
+
+  .cl {
+    display: block;
+    margin-bottom: 4px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+  .box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 58px;
+    padding: 10px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r);
+    background: var(--paper);
+  }
+  .box.tl { justify-content: flex-start; align-items: flex-start; flex-direction: column; }
+  .box .field { display: block; width: 100%; }
+
+  /* Token swatch. The chip is the token; everything under it is the contract —
+     name, value, and the one job it is allowed to do. */
+  .tok { text-align: left; }
+  .tok .sw {
+    height: 34px;
+    border: 1px solid var(--line-soft);
+    border-radius: 4px;
+  }
+  .tok .nm {
+    display: block;
+    margin-top: 5px;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+  .tok .hx {
+    display: block;
+    font-family: var(--mono);
+    font-size: 8px;
+    color: var(--faint);
+  }
+  .tok .ro { display: block; margin-top: 3px; font-size: 8.5px; line-height: 1.3; color: var(--muted); }
+  .tok .cr { display: block; font-size: 8px; color: var(--ok); font-weight: 600; }
+
+  .foot { margin-top: 9px; font-size: 10.5px; line-height: 1.5; color: var(--muted); }
+  .foot code {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    padding: 1px 4px;
+    border-radius: 3px;
+    background: var(--fill-3);
+    color: var(--ink);
+  }
+
+  /* Disabled is a state of the one button, so it is styled here rather than
+     given its own class in the product. */
+  .btn.off {
+    background: var(--fill-3);
+    border-color: var(--line-soft);
+    color: var(--faint);
+    font-weight: 500;
+  }
+  .swtch {
+    width: 30px;
+    height: 17px;
+    flex: none;
+    border-radius: 999px;
+    background: var(--fill-4);
+    position: relative;
+  }
+  .swtch i {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: var(--paper);
+  }
+  .swtch.on { background: var(--accent); }
+  .swtch.on i { left: 15px; }
+  .rd {
+    width: 13px;
+    height: 13px;
+    flex: none;
+    border: 1px solid var(--line);
+    border-radius: 50%;
+    background: var(--paper);
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .rd.on { border: 4px solid var(--accent); }
+  .err { border-color: var(--warn); }
+  .errtext { display: block; margin-top: 4px; font-size: 9.5px; color: var(--warn); }
+  .req { color: var(--warn); font-weight: 700; }
+
+  /* Labelling. The rejected forms stay neutral grey — they are wrong, not
+     dangerous, and warn amber is reserved for failure states. */
+  .rule-list { margin: 0; padding: 0; list-style: none; }
+  .rule-list li {
+    display: flex;
+    gap: 8px;
+    padding: 5px 0;
+    font-size: 11px;
+    line-height: 1.45;
+    color: var(--ink);
+    border-bottom: 1px solid var(--hair);
+  }
+  .rule-list li:last-child { border-bottom: none; }
+  .rule-list .y { flex: none; width: 12px; color: var(--ok); font-weight: 700; }
+  .rej { color: var(--faint); text-decoration: line-through; }
+
+  table.nm { width: 100%; border-collapse: collapse; table-layout: fixed; }
+  table.nm th {
+    padding: 5px 8px;
+    border-bottom: 1px solid var(--line);
+    background: var(--fill-2);
+    font-family: var(--sans);
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    text-align: left;
+    color: var(--muted);
+  }
+  table.nm td {
+    padding: 6px 8px;
+    border-bottom: 1px solid var(--hair);
+    font-size: 10.5px;
+    color: var(--ink);
+  }
+  table.nm td.was { color: var(--faint); font-size: 10px; }
+
+  /* Table anatomy specimen. Fixed columns or the facility string pushes the
+     status column off the specimen and the density claim stops being legible. */
+  table.spec { table-layout: fixed; width: 100%; }
+  table.spec th, table.spec td { padding: 0 8px; white-space: nowrap; overflow: hidden; }
+  table.spec th { font-size: 8.5px; padding-top: 6px; padding-bottom: 6px; }
+  table.spec td { font-size: 10.5px; padding-top: 7px; padding-bottom: 7px; }
+  tr.filt td { padding-top: 3px; padding-bottom: 5px; border-bottom: 1px solid var(--line); }
+  tr.filt .field { height: 20px; line-height: 18px; font-size: 9.5px; padding: 0 5px; display: block; }
+
+  .anat { margin: 0; padding: 0; list-style: none; }
+  .anat li {
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    padding: 4px 0;
+    font-size: 10.5px;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+  .key {
+    flex: none;
+    width: 11px;
+    height: 11px;
+    margin-top: 2px;
+    border: 1px solid var(--line-soft);
+    border-radius: 2px;
+    background: var(--paper);
+  }
+  .key.a { background: var(--accent-tint); border-color: var(--accent); }
+  .key.w { background: var(--warn-tint); border-color: var(--warn); }
+  .key.h { background: var(--fill-2); }
+  .key.s { background: var(--accent); border-color: var(--accent); }
+
+  .a11y { margin: 0; padding: 0; list-style: none; }
+  .a11y li {
+    padding: 5px 0;
+    font-size: 10.5px;
+    line-height: 1.45;
+    color: var(--ink);
+    border-bottom: 1px solid var(--hair);
+  }
+  .a11y li:last-child { border-bottom: none; }
+  .a11y code {
+    font-family: var(--mono);
+    font-size: 9.5px;
+    color: var(--accent);
+  }
+  .keys { display: flex; flex-wrap: wrap; gap: 5px 6px; }
+  .keys .kbd { font-size: 9.5px; padding: 2px 5px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>The Design System</h1>
+      <p class="sub">One button, one field, one table, one set of tokens — shipped as a page inside the app so the system is the shortest path, not a document beside it.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SYSTEM</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /admin/ui</span>
+        </div>
+
+        <div class="app">
+          <div class="main">
+            <div class="pane board">
+
+              <!-- ---------------------------------------------------- tokens -->
+              <section class="sec" data-note="1">
+                <div class="sec-h">
+                  <span class="n">Colour tokens</span>
+                  <span class="r">Eleven semantic values. ~40 views were bypassing the layer that already existed — the work was adoption, not invention.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="g g11">
+                    <div class="tok">
+                      <div class="sw" style="background:#ffffff"></div>
+                      <span class="nm">--surface</span><span class="hx">#FFFFFF</span>
+                      <span class="ro">Page and panel</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#f7f8fa"></div>
+                      <span class="nm">--surface-alt</span><span class="hx">#F7F8FA</span>
+                      <span class="ro">Canvas, thead</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#eef0f4"></div>
+                      <span class="nm">--fill</span><span class="hx">#EEF0F4</span>
+                      <span class="ro">Neutral chip</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#c9cfd8"></div>
+                      <span class="nm">--line</span><span class="hx">#C9CFD8</span>
+                      <span class="ro">Border, hairline</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#1f2937"></div>
+                      <span class="nm">--ink</span><span class="hx">#1F2937</span>
+                      <span class="ro">Body text</span>
+                      <span class="cr">14.7:1</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#6b7280"></div>
+                      <span class="nm">--ink-muted</span><span class="hx">#6B7280</span>
+                      <span class="ro">Secondary text</span>
+                      <span class="cr">4.8:1</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#2d6cdf"></div>
+                      <span class="nm">--accent</span><span class="hx">#2D6CDF</span>
+                      <span class="ro">Primary action, focus, sort</span>
+                      <span class="cr">4.9:1</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#dde7fa"></div>
+                      <span class="nm">--accent-soft</span><span class="hx">#DDE7FA</span>
+                      <span class="ro">Selected row</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#15803d"></div>
+                      <span class="nm">--ok</span><span class="hx">#15803D</span>
+                      <span class="ro">Processed, resolved</span>
+                      <span class="cr">5.0:1</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#b45309"></div>
+                      <span class="nm">--warn</span><span class="hx">#B45309</span>
+                      <span class="ro">Failed, impersonating</span>
+                      <span class="cr">5.0:1</span>
+                    </div>
+                    <div class="tok">
+                      <div class="sw" style="background:#fdf0dc"></div>
+                      <span class="nm">--warn-soft</span><span class="hx">#FDF0DC</span>
+                      <span class="ro">Failed row tint</span>
+                    </div>
+                  </div>
+                  <p class="foot">
+                    Colour carries three meanings and no others: <span class="b" style="color:var(--accent)">accent</span> is the primary action and the current thing,
+                    <span class="b" style="color:var(--ok)">ok</span> is a terminal success, <span class="b" style="color:var(--warn)">warn</span> is a failure or an impersonated session. Everything else is neutral.
+                    A raw hex in a view is a lint failure, so <code>background: #f7f8fa</code> no longer compiles — <code>--surface-alt</code> is the only way to say it.
+                  </p>
+                </div>
+              </section>
+
+              <!-- --------------------------------------------------- buttons -->
+              <section class="sec" data-note="2">
+                <div class="sec-h">
+                  <span class="n">Buttons</span>
+                  <span class="r">8+ competing styles → one component, six variants. Size is a modifier, never a new button.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="g g6">
+                    <div>
+                      <span class="cl">Primary</span>
+                      <div class="box"><span class="btn solid">Save changes</span></div>
+                    </div>
+                    <div>
+                      <span class="cl">Secondary</span>
+                      <div class="box"><span class="btn">Cancel</span></div>
+                    </div>
+                    <div>
+                      <span class="cl">Destructive</span>
+                      <div class="box"><span class="btn warn">Delete rule</span></div>
+                    </div>
+                    <div>
+                      <span class="cl">Disabled</span>
+                      <div class="box"><span class="btn off">Reprocess</span></div>
+                    </div>
+                    <div>
+                      <span class="cl">Icon only</span>
+                      <div class="box"><span class="btn icon">⋯</span> <span class="btn sm icon">‹</span></div>
+                    </div>
+                    <div>
+                      <span class="cl">With count</span>
+                      <div class="box"><span class="btn">Failed <span class="chip sm warn">12</span></span></div>
+                    </div>
+                  </div>
+                  <p class="foot">
+                    One primary per view, and it names its verb — <span class="b">Save changes</span>, not <span class="b">Submit</span>. Destructive is an outline rather than a filled red, because a filled red button on a dense operator screen reads as an alert the moment it appears twice.
+                  </p>
+                </div>
+              </section>
+
+              <!-- ---------------------------------------------- form controls -->
+              <section class="sec" data-note="3">
+                <div class="sec-h">
+                  <span class="n">Form controls</span>
+                  <span class="r">10+ input styles and five rendering patterns → one set of primitives with one focus ring and one disabled treatment.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="g g6">
+                    <div>
+                      <span class="cl">Text · default</span>
+                      <div class="box tl">
+                        <span class="label">Facility</span>
+                        <span class="field placeholder">Search facility</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Text · focused</span>
+                      <div class="box tl">
+                        <span class="label">Facility</span>
+                        <span class="field focus">Mercy Gen<span style="color:var(--accent)">|</span></span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Text · invalid</span>
+                      <div class="box tl">
+                        <span class="label">Contact phone <span class="req">*</span></span>
+                        <span class="field err">916-555</span>
+                        <span class="errtext">Enter a 10-digit number</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Select</span>
+                      <div class="box tl">
+                        <span class="label">VMS source</span>
+                        <span class="field">HealthTrust ⌄</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Disabled</span>
+                      <div class="box tl">
+                        <span class="label" style="color:var(--faint)">Bill rate</span>
+                        <span class="field" style="background:var(--fill-3);color:var(--faint);border-color:var(--line-soft)">$64.50/hr</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Multi-select</span>
+                      <div class="box tl">
+                        <span class="label">Specialty</span>
+                        <span class="row" style="flex-wrap:wrap;gap:4px">
+                          <span class="chip sm">ICU ×</span>
+                          <span class="chip sm">Med/Surg ×</span>
+                          <span class="chip sm">Telemetry ×</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="g g4" style="margin-top:8px">
+                    <div>
+                      <span class="cl">Checkbox</span>
+                      <div class="box tl" style="gap:6px">
+                        <span style="font-size:11px"><span class="cb on"></span> Include closed listings</span>
+                        <span style="font-size:11px;color:var(--muted)"><span class="cb"></span> Only my accounts</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Radio group</span>
+                      <div class="box tl" style="gap:6px">
+                        <span style="font-size:11px"><span class="rd on"></span> All accounts</span>
+                        <span style="font-size:11px;color:var(--muted)"><span class="rd"></span> Current account only</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Toggle</span>
+                      <div class="box tl" style="gap:7px">
+                        <span class="row" style="gap:8px;font-size:11px"><span class="swtch on"><i></i></span> Auto-reprocess on save</span>
+                        <span class="row" style="gap:8px;font-size:11px;color:var(--muted)"><span class="swtch"><i></i></span> Notify on failure</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Search · with shortcut</span>
+                      <div class="box tl">
+                        <span class="label">Global search</span>
+                        <span class="omnibox" style="width:100%;height:26px;font-size:11px">Find a requisition… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- -------------------------------------------------- labelling -->
+              <section class="sec" data-note="4">
+                <div class="sec-h">
+                  <span class="n">Labelling</span>
+                  <span class="r">4+ strategies coexisting → one rule, plus a reconciled name for every field concept.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="row" style="align-items:stretch;gap:14px">
+                    <div class="panel" style="flex:1;background:var(--paper);padding:10px 12px">
+                      <ul class="rule-list">
+                        <li><span class="y">✓</span><span>Sentence case, always. <span class="rej">Title Case</span> · <span class="rej">ALL CAPS</span> · <span class="rej">placeholder-as-label</span></span></li>
+                        <li><span class="y">✓</span><span>Label sits above the field, never below it and never inside it — a placeholder disappears the moment someone types, and the field is then unlabelled for the rest of the session.</span></li>
+                        <li><span class="y">✓</span><span>Required is a single <span class="req">*</span> after the label text, and the form states what it means once. <span class="rej">(required)</span> · <span class="rej">no marker</span></span></li>
+                        <li><span class="y">✓</span><span>The error message replaces the hint text under the field. It names the fix, not the failure.</span></li>
+                      </ul>
+                    </div>
+                    <div style="width:392px;flex:none">
+                      <table class="nm">
+                        <colgroup><col style="width:120px"><col><col style="width:78px"></colgroup>
+                        <thead>
+                          <tr><th>Canonical</th><th>Was called</th><th>Views</th></tr>
+                        </thead>
+                        <tbody>
+                          <tr><td>Bill rate</td><td class="was">Rate · Pay Rate · BillRate</td><td>14</td></tr>
+                          <tr><td>Facility</td><td class="was">Client · Hospital · Location</td><td>22</td></tr>
+                          <tr><td>Job ID</td><td class="was">REQ # · Req Id · External ID</td><td>17</td></tr>
+                          <tr><td>VMS source</td><td class="was">Source · Vendor · Portal</td><td>9</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ----------------------------------------------------- tables -->
+              <section class="sec" data-note="5">
+                <div class="sec-h">
+                  <span class="n">Tables</span>
+                  <span class="r">6+ conventions → one header, one density, one pagination component, one row-state vocabulary.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="row" style="align-items:flex-start;gap:14px">
+                    <div style="flex:1;min-width:0">
+                      <div class="panel" style="padding:0;overflow:hidden;background:var(--paper)">
+                        <table class="wire spec">
+                          <colgroup>
+                            <col style="width:22px"><col style="width:82px"><col style="width:150px">
+                            <col style="width:84px"><col style="width:74px"><col style="width:66px">
+                            <col style="width:80px">
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th><span class="cb"></span></th>
+                              <th>JOB ID</th><th>FACILITY</th>
+                              <th class="sorted">SPECIALTY ▲</th><th>STATUS</th><th>SOURCE</th><th>UPDATED</th>
+                            </tr>
+                            <tr class="filt">
+                              <td></td>
+                              <td><span class="field placeholder">REQ-</span></td>
+                              <td><span class="field placeholder">contains…</span></td>
+                              <td><span class="field placeholder">any</span></td>
+                              <td><span class="field placeholder">any</span></td>
+                              <td><span class="field placeholder">any</span></td>
+                              <td></td>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><span class="cb"></span></td>
+                              <td>REQ-88214</td><td>Mercy General – Sac</td><td>ICU</td>
+                              <td><span class="chip">Open</span></td><td>AMN</td><td>Jun 14, 09:12</td>
+                            </tr>
+                            <tr class="sel">
+                              <td><span class="cb on"></span></td>
+                              <td>REQ-88061</td><td>Sutter Roseville</td><td>Med/Surg</td>
+                              <td><span class="chip ok">Processed</span></td><td>Aya</td><td>Jun 14, 08:47</td>
+                            </tr>
+                            <tr class="bad">
+                              <td><span class="cb"></span></td>
+                              <td>REQ-87904</td><td class="k">Kaiser Vacaville</td><td>Telemetry</td>
+                              <td><span class="chip warn">FAILED</span></td><td>Medefis</td><td>Jun 13, 22:05</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="row" style="gap:5px;margin-top:8px">
+                        <span class="btn sm icon">‹</span>
+                        <span class="btn sm solid" style="width:24px;padding:0">1</span>
+                        <span class="btn sm icon">2</span>
+                        <span class="btn sm icon">3</span>
+                        <span class="sub-line">…</span>
+                        <span class="btn sm icon">›</span>
+                        <span class="sub-line" style="margin-left:6px">1–25 of 3,418</span>
+                        <span class="field" style="margin-left:auto;width:96px;font-size:10.5px">25 per page ⌄</span>
+                      </div>
+                    </div>
+
+                    <div style="width:330px;flex:none">
+                      <ul class="anat">
+                        <li><span class="key h"></span><span>Header band on <span class="b">--surface-alt</span>, 10px uppercase. One header treatment, not four.</span></li>
+                        <li><span class="key s"></span><span>Sorted column carries the caret and the accent; the sort persists per user.</span></li>
+                        <li><span class="key"></span><span>Filter row is always visible, never behind a toggle. No striping — the hairline does the work and striping fights the row states.</span></li>
+                        <li><span class="key a"></span><span>Selected row: accent-soft fill. The one blue on the row.</span></li>
+                        <li><span class="key w"></span><span>Failed row: warn tint, the offending cell in warn ink. It stays in the list.</span></li>
+                      </ul>
+                      <p class="foot" style="margin-top:6px">
+                        One density: 30px rows, 10.5px cells. Chosen for scanning three thousand rows, not for looking roomy on a settings page.
+                      </p>
+                      <div class="row" style="flex-wrap:wrap;gap:5px;margin-top:8px">
+                        <span class="chip sm">Open</span>
+                        <span class="chip sm">Closed</span>
+                        <span class="chip sm ok">Processed</span>
+                        <span class="chip sm warn">FAILED</span>
+                        <span class="chip sm">Skipped</span>
+                        <span class="chip sm on">AI</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- --------------------------------------------- focus/keyboard -->
+              <section class="sec" data-note="6">
+                <div class="sec-h">
+                  <span class="n">Focus, keyboard and semantics</span>
+                  <span class="r">Built into the primitives, so a view author gets it without opting in.</span>
+                </div>
+                <div class="sec-body">
+                  <div class="g g4">
+                    <div>
+                      <span class="cl">Focus ring · one token</span>
+                      <div class="box tl" style="gap:7px">
+                        <span class="field focus" style="width:100%">Text input</span>
+                        <span class="row" style="gap:7px">
+                          <span class="btn sm solid" style="box-shadow:0 0 0 3px var(--accent-tint)">Save</span>
+                          <span class="cb on" style="box-shadow:0 0 0 3px var(--accent-tint)"></span>
+                          <span class="chip sm on">Tab</span>
+                        </span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Keyboard</span>
+                      <div class="box tl" style="gap:6px">
+                        <span class="keys">
+                          <span class="kbd">Tab</span><span class="kbd">⇧Tab</span><span class="kbd">↵</span>
+                          <span class="kbd">Esc</span><span class="kbd">⌘K</span><span class="kbd">⌘⇧S</span>
+                        </span>
+                        <span style="font-size:10px;line-height:1.4;color:var(--muted)">Every action reachable without a pointer. Esc closes the topmost layer only, and focus returns to the control that opened it.</span>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Semantics</span>
+                      <div class="box tl">
+                        <ul class="a11y">
+                          <li><code>aria-sort</code> on the sorted header</li>
+                          <li><code>aria-invalid</code> + <code>aria-describedby</code> wire the field to its error</li>
+                          <li><code>aria-live="polite"</code> on the reprocess counter</li>
+                          <li><code>&lt;th scope&gt;</code> on every header cell</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div>
+                      <span class="cl">Contrast · checked at the token</span>
+                      <div class="box tl" style="gap:5px">
+                        <span style="font-size:10.5px;line-height:1.4">Every ink and accent pair is measured against <span class="b">--surface</span> and <span class="b">--surface-alt</span> before it enters the palette.</span>
+                        <span class="row" style="gap:6px;flex-wrap:wrap">
+                          <span class="chip sm ok">ink 14.7:1</span>
+                          <span class="chip sm ok">muted 4.8:1</span>
+                          <span class="chip sm ok">accent 4.9:1</span>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The token layer was not missing. <code style="font-family:var(--mono);font-size:11px">_color_tokens.scss</code> already defined semantic colour, and roughly forty views ignored it in favour of inline styles and hex literals. So the fix was not another abstraction — it was making the token the shortest path to the result, and making the raw hex fail the build. A system nobody reaches for is indistinguishable from no system.</li>
+      <li data-for="2">Eight button styles were not eight decisions; they were the same decision made eight times by people who could not find the previous one. Collapsing to one component with variants means the question a screen author asks changes from “what should this button look like” to “is this the primary action here” — which is a question they are actually qualified to answer.</li>
+      <li data-for="3">Five ways to render a form and ten ways to style an input all resolved to the same concept: pick one from a list. The primitives take the choice away, and the focus ring in particular is a single token — the moment focus styling is per-view, it gets deleted by whoever finds it ugly, and keyboard users lose the app.</li>
+      <li data-for="4">The expensive half of the labelling work was not the CSS, it was agreeing that <span class="b">Bill Rate</span>, <span class="b">Rate</span> and <span class="b">Pay Rate</span> were one field. Casing is a rule you can write down in an afternoon; reconciling the vocabulary meant sitting with operators and finding out which name they actually used out loud, then changing every screen to match it.</li>
+      <li data-for="5">Density was the one table decision worth arguing about. Six conventions existed because each screen picked a density in isolation, so the system picks once and picks for the hardest case — an operator scanning three thousand requisitions, not an admin editing six rows. Row state stays a tint rather than an icon column, because tinting survives being read at speed.</li>
+      <li data-for="6">Accessibility is in the primitives rather than in a checklist at the end. Contrast is proven when a token enters the palette, focus and keyboard behaviour ship with the component, and the ARIA lives in the shared partial. That way the default path is the accessible one and a screen author has to work at it to ship something broken — the retrofit alternative means auditing every new view forever.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

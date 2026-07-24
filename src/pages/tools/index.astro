@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '~/layouts/BaseLayout.astro';
+import Section from '~/components/layout/Section.astro';
+import Container from '~/components/layout/Container.astro';
+import Heading from '~/components/primitives/Heading.astro';
+import Text from '~/components/primitives/Text.astro';
+import Button from '~/components/primitives/Button.astro';
+import Icon from '~/components/primitives/Icon.astro';
+import CTABanner from '~/components/patterns/CTABanner.astro';
+
+const tools = (await getCollection('tools', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+// The scorecard leads: it is the deepest of the four and the only one with a
+// dedicated results surface. It takes the featured cell; the rest stack beside it.
+const [featured, ...rest] = tools;
+
+const description =
+  'Four working tools for design-system teams: score your system, price the cost of drift, watch a design token propagate, and read an audit the way it gets delivered. No signup, nothing saved.';
+---
+
+<BaseLayout title="Tools | Joshua Briley" description={description}>
+  {/* ───────────────────────── HERO ───────────────────────── */}
+  <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
+    <Container width="wide">
+      <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
+        <span>Tools</span>
+        <span class="hidden sm:inline text-ink-muted">{tools.length} of them, all free</span>
+      </div>
+
+      <div class="mt-10 max-w-4xl lg:mt-14">
+        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[19ch]">
+          Small instruments for <em class="ink-wink font-normal italic">design-system</em> problems.
+        </Heading>
+        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
+          Each one answers a question teams keep asking me, and each one runs entirely in your
+          browser. Nothing to install, nothing to sign up for, nothing sent anywhere.
+        </Text>
+
+        <ul class="hero-in hero-in-4 mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+          {['No signup', 'Nothing saved', 'Built by hand'].map((p) => (
+            <li class="flex items-center gap-2">
+              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── THE FOUR ─────────────────────────
+      Hairline-divided grid, matching the differentiator band on the home page.
+      Four items, four cells: the featured one spans two columns and both rows. */}
+  <Section tone="paper" padding="default">
+    <Container width="wide">
+      <div
+        class="grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3"
+        data-reveal-stagger
+      >
+        <a
+          href={`/tools/${featured.id}/`}
+          class="group tool-cell p-7 md:p-10 lg:col-span-2 lg:row-span-3 lg:flex lg:flex-col lg:justify-center transition-colors"
+        >
+          <span class="flex items-center gap-3">
+            <Icon name={featured.data.icon} size={20} class="text-accent" />
+            <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{featured.data.kind}</span>
+          </span>
+          <Heading level={2} visual="h2" class="mt-5 max-w-[16ch] transition-colors group-hover:text-accent">
+            {featured.data.title}
+          </Heading>
+          <Text tone="muted" class="mt-4 max-w-lg">{featured.data.description}</Text>
+
+          {/* The featured cell is as tall as the three stacked beside it, so it
+              carries the tool's spec line rather than centering on empty space. */}
+          <ul class="mt-7 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.68rem] uppercase tracking-[0.1em] text-ink-muted">
+            {featured.data.props.map((p) => (
+              <li class="flex items-center gap-2">
+                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+              </li>
+            ))}
+          </ul>
+
+          <span class="mt-8 inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-ink">
+            {featured.data.action}
+            <Icon
+              name="ph:arrow-right"
+              size={16}
+              class="text-ink-faint transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent"
+            />
+          </span>
+        </a>
+
+        {rest.map((t) => (
+          <a
+            href={`/tools/${t.id}/`}
+            class="group tool-cell p-7 md:p-8 transition-colors"
+          >
+            <span class="flex items-center gap-3">
+              <Icon name={t.data.icon} size={17} class="text-accent" />
+              <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">{t.data.kind}</span>
+            </span>
+            <Heading level={2} visual="h3" class="mt-4 transition-colors group-hover:text-accent">
+              {t.data.title}
+            </Heading>
+            <Text tone="muted" size="sm" class="mt-3">{t.data.takeaway}</Text>
+            <span class="mt-5 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-ink-muted">
+              {t.data.action}
+              <Icon
+                name="ph:arrow-right"
+                size={13}
+                class="transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent"
+              />
+            </span>
+          </a>
+        ))}
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── WHY THESE EXIST (ink) ───────────────────────── */}
+  <Section tone="ink" padding="default">
+    <Container width="wide">
+      <div class="grid gap-10 lg:grid-cols-12 lg:gap-16">
+        <div class="lg:col-span-5">
+          <p class="mono-label !text-paper/65">Why these are here</p>
+          <Heading level={2} visual="display-md" tone="paper" class="mt-4 max-w-[16ch] text-balance">
+            Every one of these is also a work sample.
+          </Heading>
+        </div>
+        <div class="lg:col-span-7">
+          <div class="space-y-4 text-paper/70 leading-relaxed">
+            <p class="text-[1.15rem] leading-snug text-paper">
+              They are built the way I build production work:
+              <span class="text-accent">accessible controls, live state, no frameworks under the hood, the same tokens as the rest of this site.</span>
+            </p>
+            <p>
+              The scorecard uses real radio groups, so tab through it and the keyboard path is
+              genuinely there. The results radar is hand-drawn SVG rather than a charting library.
+              The calculator shows every assumption behind its total instead of hiding the math.
+              That is the point: a tool that argues for careful interface work should survive being
+              inspected as one.
+            </p>
+            <p>
+              If you would rather read than click, the same thinking runs through the
+              <a href="/blog/" class="text-paper/90 underline decoration-paper/30 underline-offset-2 transition-colors hover:text-paper hover:decoration-paper">writing</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  {/* ───────────────────────── CLOSE ───────────────────────── */}
+  <CTABanner
+    eyebrow="Past the self-assessment"
+    title="The tools give you the shape. An audit gives you the specifics."
+    lead="Which patterns are actually drifting, what each one costs your team, and the order to fix them in so the cheapest wins land first."
+  >
+    <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
+      Get in touch
+    </Button>
+    <Button variant="ghost" size="lg" href="/projects/">
+      See the client work
+    </Button>
+  </CTABanner>
+</BaseLayout>
+
+<style>
+  /* ── Bento cells sit on a `bg-line` grid, so they must stay opaque. The
+     usual `hover:bg-ink/[0.02]` used on the blog and project rows REPLACES the
+     cell's background rather than layering on it, which exposes the grey grid
+     gap underneath and reads far darker than the same hover does elsewhere.
+     Mixing the tint into paper keeps the cell opaque and lands on exactly the
+     colour those other rows composite to. */
+  .tool-cell {
+    background: var(--paper);
+  }
+  .tool-cell:hover {
+    background: color-mix(in srgb, var(--ink) 2%, var(--paper));
+  }
+
+  /* Hero load-in, matching the other index pages. Transform/opacity only. */
+  .hero-in {
+    opacity: 0;
+    transform: translateY(12px);
+    animation: hero-in 0.7s var(--ease-out) forwards;
+  }
+  .hero-in-1 { animation-delay: 0.04s; }
+  .hero-in-2 { animation-delay: 0.11s; }
+  .hero-in-3 { animation-delay: 0.19s; }
+  .hero-in-4 { animation-delay: 0.28s; }
+  @keyframes hero-in {
+    to { opacity: 1; transform: none; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-in { animation: none; opacity: 1; transform: none; }
+  }
+</style>

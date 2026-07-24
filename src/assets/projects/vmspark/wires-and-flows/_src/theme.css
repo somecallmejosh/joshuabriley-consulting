@@ -1,0 +1,432 @@
+/* VMSpark sheet theme — high-fidelity.
+ *
+ * Loaded after the shared kit, which supplies the sheet chrome (title band,
+ * callout gutter, leader lines) and a lo-fi greyscale wireframe vocabulary.
+ * This file repoints that vocabulary at VMSpark's real product language.
+ *
+ * Why this project renders in colour when IVFCRYO and Logatot are greyscale:
+ * VMSpark's case study is *about* visual-system work — eight competing button
+ * styles, six table conventions, forty views bypassing the token system. A
+ * greyscale wireframe would delete the evidence the argument rests on. So the
+ * artwork stays high-fidelity and only the annotation layer is standardised.
+ *
+ * The annotation layer deliberately keeps the kit's rust, not VMSpark's blue.
+ * The callouts are commentary *about* the product, so they must not read as
+ * part of it — and the same rust across all three case studies is what makes
+ * the annotation layer legible as a consistent thing.
+ *
+ * Palette sampled from the previous renders so this set sits with them.
+ */
+
+:root {
+  /* Product neutrals */
+  --ink: #1f2937;
+  --muted: #6b7280;
+  --faint: #8a93a0;
+  --line: #c9cfd8;
+  --line-soft: #d4d9e0;
+  --hair: #eef0f4;
+  --fill-1: #fcfcfd;
+  --fill-2: #f7f8fa;
+  --fill-3: #eef0f4;
+  --fill-4: #e4e8ee;
+
+  /* Product accents */
+  --accent: #2d6cdf;
+  --accent-tint: #dde7fa;
+  --warn: #b45309;
+  --warn-tint: #fdf0dc;
+  --ok: #15803d;
+  --ok-tint: #dcf3e4;
+
+  /* Real product chrome sits on a system stack, not the wireframe's Helvetica. */
+  --sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+
+  --r: 6px;
+}
+
+/* The sheet itself stays on the kit's white so the annotation layer reads the
+   same as every other case study; only the artwork carries the product canvas. */
+.stage .browser,
+.stage .device { border-radius: 10px; box-shadow: 0 1px 3px rgba(31, 41, 55, 0.06); }
+
+/* ------------------------------------------------------------- app chrome */
+
+.browser-bar {
+  height: 38px;
+  background: var(--fill-2);
+  border-bottom: 1px solid var(--line);
+}
+.browser-bar i { border-color: var(--line-soft); }
+.browser-bar .url {
+  border: none;
+  background: none;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.browser, .device { border-width: 1px; }
+.app { min-height: 0; }
+
+/* An icon rail sits left of the nav in the real app. */
+.rail {
+  width: 46px;
+  flex: none;
+  padding: 12px 0;
+  border-right: 1px solid var(--line);
+  background: var(--fill-2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+.rail i {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  background: var(--fill-4);
+  display: block;
+}
+.rail i.on { background: var(--accent); }
+
+.side {
+  width: 186px;
+  padding: 14px 0;
+  border-right: 1px solid var(--line);
+  background: var(--paper);
+}
+.side .title {
+  padding: 0 16px 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+.nav-item {
+  padding: 7px 16px;
+  font-size: 13px;
+  color: var(--muted);
+  gap: 0;
+}
+.nav-item .box { display: none; }
+.nav-item.on {
+  background: var(--accent-tint);
+  box-shadow: inset 3px 0 0 var(--accent);
+  color: var(--accent);
+  font-weight: 600;
+}
+.nav-item.locked { color: var(--faint); }
+.nav-item .count {
+  margin-left: auto;
+  min-width: 22px;
+  height: 18px;
+  padding: 0 6px;
+  border: none;
+  border-radius: 9px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 10.5px;
+  font-weight: 700;
+  line-height: 18px;
+}
+
+.appbar {
+  padding: 9px 16px;
+  border-bottom: 1px solid var(--line);
+  gap: 14px;
+}
+.appbar .title { font-size: 13px; font-weight: 600; }
+
+/* Workspace switcher — the multi-tenant tell, so it stays prominent. */
+.workspace { line-height: 1.25; }
+.workspace .k {
+  display: block;
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.workspace .v { font-size: 13px; font-weight: 700; color: var(--ink); }
+
+.omnibox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 330px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--fill-2);
+  font-size: 12px;
+  color: var(--faint);
+}
+.kbd {
+  padding: 2px 6px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--muted);
+}
+
+.pane { padding: 16px; }
+
+/* ------------------------------------------------------------- primitives */
+
+.h { font-size: 19px; font-weight: 700; letter-spacing: -0.01em; }
+.h-sm { font-size: 13px; font-weight: 600; }
+.sub-line { font-size: 11.5px; color: var(--muted); }
+
+.btn {
+  height: 30px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--paper);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink);
+}
+.btn.solid {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 600;
+}
+.btn.warn {
+  background: var(--paper);
+  border-color: var(--warn);
+  color: var(--warn);
+  font-weight: 600;
+}
+.btn.quiet { border-color: var(--line); color: var(--muted); font-weight: 400; }
+.btn.ghost { border: 1px dashed var(--line); color: var(--muted); font-weight: 400; }
+.btn.sm { height: 26px; padding: 0 9px; font-size: 11.5px; }
+.btn.lg { height: 36px; padding: 0 18px; font-size: 13.5px; }
+.btn.icon { width: 26px; padding: 0; }
+
+/* Status pills carry state, so they are the one place colour is load-bearing. */
+.chip {
+  height: 21px;
+  padding: 0 9px;
+  border: none;
+  border-radius: 999px;
+  background: var(--fill-3);
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.chip.on { background: var(--accent-tint); color: var(--accent); font-weight: 600; }
+.chip.ok { background: var(--ok-tint); color: var(--ok); font-weight: 600; }
+.chip.warn {
+  background: var(--warn-tint);
+  color: var(--warn);
+  font-weight: 700;
+  border: 1px solid var(--warn);
+}
+.chip.sq { border-radius: 4px; }
+.chip.sm { height: 17px; padding: 0 6px; font-size: 10px; }
+
+.pill {
+  height: 27px;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  font-size: 12px;
+  color: var(--muted);
+}
+.pill.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+.field {
+  height: 28px;
+  padding: 0 8px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 11.5px;
+  line-height: 26px;
+  color: var(--ink);
+}
+.field.placeholder { color: var(--faint); }
+.field.focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-tint); }
+.label { font-size: 11px; font-weight: 500; color: var(--muted); }
+
+.panel {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 14px;
+}
+.panel.fill { background: var(--fill-2); }
+
+/* Underlined tab strip — the app's own convention, and used on most screens. */
+.tabs {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 0 8px;
+  font-size: 12.5px;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tab.on {
+  color: var(--accent);
+  font-weight: 600;
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+
+/* ------------------------------------------------------------------ table */
+
+table.wire { font-size: 11.5px; }
+table.wire th {
+  padding: 7px 8px;
+  border-bottom: 1px solid var(--line);
+  background: var(--fill-2);
+  font-family: var(--sans);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+table.wire th.sorted { color: var(--accent); }
+table.wire td {
+  padding: 8px;
+  border-bottom: 1px solid var(--hair);
+  color: var(--ink);
+}
+table.wire tr.sel td { background: var(--accent-tint); }
+table.wire tr.bad td { background: var(--warn-tint); }
+table.wire tr.bad td.k { color: var(--warn); font-weight: 600; }
+table.wire td.num { text-align: right; font-variant-numeric: tabular-nums; }
+/* Pairs with td.num — without it a numeric column's header sits left while its
+   values sit right, which is the kind of small disagreement this whole case
+   study is about. */
+table.wire th.r { text-align: right; }
+
+.cb {
+  width: 13px;
+  height: 13px;
+  flex: none;
+  display: inline-block;
+  border: 1px solid var(--line-soft);
+  border-radius: 3px;
+  background: var(--paper);
+  vertical-align: middle;
+}
+.cb.on { background: var(--accent); border-color: var(--accent); }
+
+/* Promoted after three sheets each hand-rolled their own. A boolean switch is
+   the commonest control in this product — custom rules, settings, and the
+   design-system inventory all need one, and three authors produced three
+   different toggles before this existed. */
+.tog {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 17px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--accent);
+  vertical-align: middle;
+}
+.tog::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 15px;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: #fff;
+}
+.tog.off { background: var(--line); }
+.tog.off::after { left: 2px; }
+
+/* Every sheet that puts a field in a table cell or a form grid was writing
+   `style="display:block;width:100%"` inline. */
+.field.fill { display: block; width: 100%; }
+
+/* A disabled control is a real state of a real component, and the inventory
+   sheet has to be able to show it. */
+.btn.off,
+.field.off {
+  background: var(--fill-3);
+  border-color: var(--line-soft);
+  color: var(--faint);
+}
+.field.err { border-color: var(--warn); box-shadow: 0 0 0 3px var(--warn-tint); }
+
+/* Annotation-on-artwork. The kit's grey aside is right for a spec note; the
+   design-note keeps the kit's rust because it is commentary, not product. */
+.aside {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--fill-2);
+  font-size: 11px;
+  color: var(--muted);
+}
+.aside .t { color: var(--ink); }
+
+/* ------------------------------------------------------------------ flows */
+
+.node {
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  box-shadow: 0 1px 2px rgba(31, 41, 55, 0.04);
+}
+.node .t { font-size: 12.5px; font-weight: 600; }
+.node .s { font-size: 10.5px; color: var(--muted); }
+.node.entry { background: var(--fill-3); border-radius: 22px; box-shadow: none; }
+.node.exit { border-radius: 22px; }
+.node.terminal { border-radius: 22px; background: var(--fill-3); }
+.node.dashed { border-style: dashed; background: var(--fill-1); box-shadow: none; }
+
+/* Three outcome colours, matching how the app itself signals state. */
+.node.commit { background: var(--accent); border-color: var(--accent); }
+.node.commit .t { color: #fff; }
+.node.commit .s { color: rgba(255, 255, 255, 0.82); }
+.node.good { background: var(--ok-tint); border-color: var(--ok); }
+.node.good .t { color: var(--ok); }
+.node.good .s { color: var(--ok); opacity: 0.85; }
+.node.bad { background: var(--warn-tint); border-color: var(--warn); }
+.node.bad .t { color: var(--warn); }
+.node.bad .s { color: var(--warn); opacity: 0.85; }
+
+.node .async {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  font-family: var(--mono);
+  font-size: 8px;
+  letter-spacing: 0.1em;
+  color: var(--faint);
+}
+
+/* Swimlane heading, for flows split into operator vs system halves. */
+.lane {
+  position: absolute;
+  left: 0;
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+}
+.lane .s {
+  display: block;
+  margin-top: 3px;
+  font-family: var(--sans);
+  font-size: 10.5px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+.flow-legend .key { border-color: var(--line); border-radius: 4px; }
+.flow-legend .key.entry { background: var(--fill-3); border-radius: 9px; }
+.flow-legend .key.commit { background: var(--accent); border-color: var(--accent); }
+.flow-legend .key.good { background: var(--ok-tint); border-color: var(--ok); }
+.flow-legend .key.bad { background: var(--warn-tint); border-color: var(--warn); }

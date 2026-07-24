@@ -8,11 +8,11 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  'Personal projects Joshua Briley built for himself: a multi-tenant personal-finance app, a bass-practice tool wiring live audio and an LLM into one product, and an arcade game that teaches the W3C design-tokens spec. No client, no brief, just the finish for its own sake.';
+  'Personal projects by Joshua Briley: an open-source accessible React component library, a playable arcade game that teaches the W3C design-tokens spec, and a custom Rails CMS shipped in a weekend. Built without a client, finished to the same standard as the client work.';
 
 const projects = [
     {
-    index: '00',
+    index: '01',
     href: '/personal-projects/rudiment-ui/',
     client: 'Rudiment UI',
     kind: 'Open source',
@@ -22,7 +22,7 @@ const projects = [
     note: '3-tier token system',
   },
     {
-    index: '03',
+    index: '02',
     href: '/personal-projects/token-galaga/',
     client: 'Token Adventure',
     kind: 'Arcade game · Teaching tool',
@@ -32,28 +32,7 @@ const projects = [
     note: 'Real sandbox + assertion engine',
   },
   {
-    index: '01',
-    href: '/personal-projects/clempo/',
-    client: 'Clempo',
-    kind: 'Full-stack product',
-    title: 'A personal-finance app, owned end to end',
-    summary:
-      'A multi-tenant personal-finance app real households run their money on: Rails 8, four PostgreSQL databases, envelope budgeting, a debt-snowball tracker, and AI meal planning. Authentication, tenancy, background jobs, and the interface, all mine, all in production.',
-    note: 'Live, multi-tenant, AI-assisted',
-  },
-  {
-    index: '02',
-    href: '/personal-projects/bass-face/',
-    client: 'Bass Face',
-    kind: 'React · live services',
-    title: 'Live audio and an LLM in one product',
-    summary:
-      'A bass-practice tool built in React: Claude authors a constrained musical situation and hands the parameters to a Tone.js engine that synthesizes the backing track live, then reads the player’s reflection and pushes one variable. Two live services wired into one loop, not two demos.',
-    note: 'Tone.js + Claude, one seam',
-  },
-
-  {
-    index: '04',
+    index: '03',
     href: '/personal-projects/west-baton-rouge-presbyterian/',
     client: 'West Baton Rouge Presbyterian',
     kind: 'Rails CMS',
@@ -83,9 +62,9 @@ const projects = [
           What I build when <em class="ink-wink font-normal italic">no one's asking</em>.
         </Heading>
         <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-          No client, no brief, no deadline to cut against. These are the projects where the only
-          bar is whether I actually want to use the thing, which turns out to be a higher bar than
-          most briefs set. The same finish I bring to the work I ship for teams.
+          Without a client or a deadline, the only bar left is whether I actually want to use the
+          thing, which turns out to be a higher bar than most briefs set. These get the same finish
+          I bring to the work I ship for teams.
         </Text>
       </div>
     </Container>
@@ -149,10 +128,11 @@ const projects = [
               <span class="text-accent">nobody is around to talk you out of sweating the last ten percent.</span>
             </p>
             <p>
-              The empty states, the play/stop interaction, the tenancy boundary that has to hold for
-              real households. That last ten percent is the work most people skip, and it is exactly
-              the part I bring to the products I ship for teams. Want the professional case studies
-              instead? They live on the <a href="/projects/" class="hero-link">projects page</a>.
+              The empty states, the focus order nobody will notice until it is wrong, the assertion
+              engine that has to grade a spec honestly instead of generously. That last ten percent
+              is the work most people skip, and it is exactly the part I bring to the products I
+              ship for teams. Want the client case studies instead? They live on the
+              <a href="/projects/" class="hero-link">projects page</a>.
             </p>
           </div>
         </div>

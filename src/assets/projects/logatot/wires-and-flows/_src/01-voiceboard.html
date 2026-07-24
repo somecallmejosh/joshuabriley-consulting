@@ -1,0 +1,257 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Voiceboard — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* The board is the densest table in the product, so it gets tighter cells
+     than the shared table style. */
+  /* Nine columns in an 828px pane: fixed widths so nothing wraps and nothing
+     runs past the frame edge. */
+  table.board { table-layout: fixed; width: 100%; }
+  table.board td, table.board th {
+    padding-left: 6px;
+    padding-right: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.board th { font-size: 9px; letter-spacing: 0.06em; }
+  table.board th:first-child, table.board td:first-child { padding-left: 10px; }
+  table.board th:first-child, table.board td:first-child { padding-left: 10px; }
+  .strip {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    padding: 8px 10px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+  }
+  .wake {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 22px;
+    border-radius: 24px;
+    background: var(--ink);
+    color: #fff;
+    font-size: 13px;
+    font-weight: bold;
+  }
+  .wake .dot { width: 8px; height: 8px; border-radius: 50%; background: #fff; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Voiceboard</h1>
+      <p class="sub">The primary operational screen. A grid, because she is scanning twelve children at once.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/voiceboard?date=2026-07-20</span>
+        </div>
+
+        <div class="app">
+          <nav class="side">
+            <div class="logo">LOGO</div>
+            <div class="nav-item on"><span class="box"></span> Voiceboard</div>
+            <div class="nav-item"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Logged Events <span class="count">3</span></div>
+            <div class="nav-item"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item"><span class="box"></span> Calendar <span class="count">2</span></div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms</div>
+            <div class="nav-item locked"><span class="box"></span> Documents</div>
+            <div class="nav-item locked"><span class="box"></span> Expenses</div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Bright Start Family Care</span>
+              <div class="right">
+                <span class="pill"><span class="dot"></span> Listening</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Today at a glance</p>
+                  <p class="sub-line">Monday, July 20 · 12 children enrolled</p>
+                </div>
+                <div class="row">
+                  <span class="btn sm quiet">‹</span>
+                  <span class="field" style="width:120px;text-align:center">Jul 20, 2026</span>
+                  <span class="btn sm quiet">›</span>
+                </div>
+              </div>
+
+              <div class="row" style="gap:10px" data-note="1">
+                <div class="tile"><div class="n">12</div><div class="k">EXPECTED</div></div>
+                <div class="tile on"><div class="n">8</div><div class="k">PRESENT</div></div>
+                <div class="tile"><div class="n">3</div><div class="k">CHECKED OUT</div></div>
+                <div class="tile"><div class="n">1</div><div class="k">ABSENT</div></div>
+              </div>
+
+              <div class="panel" data-note="2">
+                <p class="eyebrow">PRESENT NOW — 8</p>
+                <div class="rule"></div>
+                <div class="row" style="gap:22px">
+                  <div class="row grow" style="gap:9px"><span class="avatar"></span><span class="bar grow"></span></div>
+                  <div class="row grow" style="gap:9px"><span class="avatar"></span><span class="bar grow"></span></div>
+                  <div class="row grow" style="gap:9px"><span class="avatar"></span><span class="bar grow"></span></div>
+                  <div class="row grow" style="gap:9px"><span class="avatar"></span><span class="bar grow"></span></div>
+                </div>
+              </div>
+
+              <div class="row" style="gap:10px" data-note="3">
+                <div class="strip">
+                  <span class="chip fill">Diaper due</span>
+                  <span class="bar grow"></span>
+                  <span class="btn sm">Log now</span>
+                </div>
+                <div class="strip">
+                  <span class="chip fill">Health check due</span>
+                  <span class="bar grow"></span>
+                  <span class="btn sm">Log now</span>
+                </div>
+              </div>
+
+              <div class="between" data-note="4">
+                <div class="row" style="gap:7px">
+                  <span class="pill on">All children</span>
+                  <span class="pill">Present only</span>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm quiet">Show all columns (2 hidden)</span>
+                  <span class="btn sm quiet">Expand all</span>
+                </div>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden" data-note="5">
+                <table class="wire board">
+                  <colgroup>
+                    <col style="width:130px"><col style="width:74px"><col style="width:82px">
+                    <col style="width:68px"><col style="width:84px"><col style="width:94px">
+                    <col style="width:80px"><col style="width:106px"><col style="width:104px">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>CHILD</th>
+                      <th>CHECK IN ×</th>
+                      <th>CHECK OUT ×</th>
+                      <th>HEALTH ×</th>
+                      <th>BATHROOM ×</th>
+                      <th>NAPS ×</th>
+                      <th>MEALS ×</th>
+                      <th>LEARNED TODAY ×</th>
+                      <th>ITEMS NEEDED ×</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <div class="row" style="gap:9px">
+                          <span class="avatar sm"></span>
+                          <span style="display:block;width:74px">
+                            <span class="bar sm" style="display:block"></span>
+                            <span class="bar sm" style="display:block;width:60%;margin-top:4px"></span>
+                          </span>
+                        </div>
+                      </td>
+                      <td><span class="chip">7:42a</span></td>
+                      <td class="faint">—</td>
+                      <td><span class="chip fill">8:00a</span></td>
+                      <td><span class="chip fill">2</span></td>
+                      <td><span class="chip fill">12:30–2:10</span></td>
+                      <td><span class="chip">B</span> <span class="chip">L</span></td>
+                      <td><span class="bar sm" style="display:block;width:88px"></span></td>
+                      <td class="faint">—</td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="row" style="gap:9px">
+                          <span class="avatar sm"></span>
+                          <span style="display:block;width:74px">
+                            <span class="bar sm" style="display:block"></span>
+                            <span class="bar sm" style="display:block;width:52%;margin-top:4px"></span>
+                          </span>
+                        </div>
+                      </td>
+                      <td><span class="chip">7:55a</span></td>
+                      <td class="faint">—</td>
+                      <td><span class="chip fill">8:05a</span></td>
+                      <td><span class="chip fill">1</span></td>
+                      <td class="faint">—</td>
+                      <td><span class="chip">B</span></td>
+                      <td><span class="bar sm" style="display:block;width:70px"></span></td>
+                      <td><span class="chip">Wipes</span></td>
+                    </tr>
+                    <tr>
+                      <td>
+                        <div class="row" style="gap:9px">
+                          <span class="avatar sm"></span>
+                          <span style="display:block;width:74px">
+                            <span class="bar sm" style="display:block"></span>
+                            <span class="bar sm" style="display:block;width:66%;margin-top:4px"></span>
+                          </span>
+                        </div>
+                      </td>
+                      <td><span class="chip">8:10a</span></td>
+                      <td><span class="chip">3:30p</span></td>
+                      <td><span class="chip fill">8:20a</span></td>
+                      <td><span class="chip fill">3</span></td>
+                      <td><span class="chip fill">1:00–2:30</span></td>
+                      <td><span class="chip">B</span> <span class="chip">L</span> <span class="chip">S</span></td>
+                      <td><span class="bar sm" style="display:block;width:94px"></span></td>
+                      <td class="faint">—</td>
+                    </tr>
+                    <tr class="empty">
+                      <td colspan="9">Empty row placeholder — child has no events yet today; filled in place when an event arrives</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div style="text-align:center;padding:6px 0 2px">
+                <span class="wake" data-note="6"><span class="dot"></span> “Hey Logatot” — listening for wake word</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Four live counts, each derived from the child's schedule against today's events rather than stored anywhere. Tapping one opens the detail panel below it, and only one is ever open — a provider glancing at this screen is answering one question, not comparing four.</li>
+      <li data-for="2">The panel loads its roster as a fragment on click rather than up front, so the grid paints immediately on a tablet running on domestic WiFi.</li>
+      <li data-for="3">Diaper-change and health-check alerts are computed from per-account intervals against each child's last logged event. They render empty and fill after load, so a slow reminder query never delays the grid behind it.</li>
+      <li data-for="4">Every event column can be hidden, and the choice persists per device — meals and “learned today” start hidden. The show-all control only appears once something is hidden, so the toolbar stays quiet for the provider who never changed anything.</li>
+      <li data-for="5">One row per child, one column per event type, one day. Rows scroll horizontally in sync, so a provider scanning right stays on the same time axis across all twelve children — without that, the grid is twelve unrelated timelines that happen to be stacked.</li>
+      <li data-for="6">The wake word is detected on-device: no audio leaves the browser to trigger it. Speech is transcribed, parsed into a structured event, and the affected row updates in place over a live socket — nothing to refresh, and her hands stay where they are.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

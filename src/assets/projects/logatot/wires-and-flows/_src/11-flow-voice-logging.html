@@ -1,0 +1,167 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User flow — Voice event logging — Logatot</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>User Flow — Voice Event Logging</h1>
+      <p class="sub">Spoken utterance to structured event on the board. Failure is a branch, not an exception.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="60" data-rowh="92"
+           data-edges='[
+             {"from":"n1","to":"n2"},
+             {"from":"n2","to":"n3"},
+             {"from":"n3","to":"n4"},
+             {"from":"n4","to":"n5"},
+             {"from":"n5","to":"d1"},
+             {"from":"a1","to":"n2","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"a2","to":"n4","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"d1","to":"f1","fromSide":"r","toSide":"l","label":"no match"},
+             {"from":"d1","to":"d2","label":"yes"},
+             {"from":"d2","to":"f1","fromSide":"r","toSide":"l","label":"no match"},
+             {"from":"d2","to":"n6","label":"yes"},
+             {"from":"n6","to":"n7"},
+             {"from":"n7","to":"n8"},
+             {"from":"n8","to":"n9"},
+             {"from":"f1","to":"f2"},
+             {"from":"f2","to":"f3"},
+             {"from":"f3","to":"f4"},
+             {"from":"f4","to":"f5"},
+             {"from":"f5","to":"n9","fromSide":"b","toSide":"r","label":"rejoins the board","dashed":true}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="node entry" id="n1" data-cell="0,1">
+          <span class="t">Provider is holding a toddler</span>
+          <span class="s">Hands full, mid-task, not at a desk</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="1,1" data-note="1">
+          <span class="t">Says “Hey Logatot”</span>
+          <span class="s">Wake word matched on-device in WebAssembly</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="1,0" data-dy="6">
+          <span class="t">No audio leaves the device</span>
+          The wake-word model runs in the browser. Nothing is transmitted until
+          the provider has actually addressed the assistant.
+        </div>
+
+        <div class="node msg" id="n3" data-cell="2,1">
+          <span class="t">Capture opens</span>
+          <span class="s">Browser speech recognition, endpointed by a rolling silence timer</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="3,1" data-note="2">
+          <span class="t">Utterance</span>
+          <span class="s">“Maya had a wet diaper at ten fifteen”</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="3,0" data-dy="6">
+          <span class="t">Spanish is translated first</span>
+          A Spanish utterance is translated to English, then run through the same
+          22 matchers — one phrase library, two languages.
+        </div>
+
+        <div class="node dashed" id="n5" data-cell="4,1" data-note="3">
+          <span class="t">Parse — 22 ordered phrase matchers</span>
+          <span class="s">A deterministic rules engine. Names are matched against the roster plus each child's phonetic aliases.</span>
+        </div>
+
+        <div class="design-note" data-cell="5,0" data-dy="18">
+          A language model here would be confidently wrong. <code>unknown</code>
+          is a first-class outcome, not a failure mode.
+        </div>
+
+        <div class="node branch" id="d1" data-cell="5,1" data-dy="10">
+          <span class="t">Child matched?</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="6,1" data-dy="20">
+          <span class="t">Event type matched?</span>
+        </div>
+
+        <div class="node" id="n6" data-cell="7,1" data-dy="30">
+          <span class="t">Resolve the spoken time</span>
+          <span class="s">“ten fifteen” in the account's timezone, stored UTC — not the moment of processing</span>
+        </div>
+
+        <div class="node" id="n7" data-cell="8,1" data-dy="36">
+          <span class="t">Write the LoggedEvent</span>
+          <span class="s">Single child inline; multi-child to a background job</span>
+        </div>
+
+        <div class="node msg" id="n8" data-cell="9,1" data-dy="36">
+          <span class="t">Row updates over Pusher</span>
+          <span class="s">Fills the placeholder slot already rendered — no re-render, no refresh</span>
+        </div>
+
+        <div class="node exit" id="n9" data-cell="10,1" data-dy="36">
+          <span class="t">On the board, hands never left the child</span>
+        </div>
+
+        <!-- Failure path -->
+        <div class="node dashed" id="f1" data-cell="5,2" data-dy="10" data-note="4">
+          <span class="t">status: failed</span>
+          <span class="s">Written, never discarded — with failed_name / failed_event_type, the raw utterance and the original audio</span>
+        </div>
+
+        <div class="node" id="f2" data-cell="6,2" data-dy="40">
+          <span class="t">Badge counts up in the sidebar</span>
+        </div>
+
+        <div class="node" id="f3" data-cell="7,2" data-dy="40">
+          <span class="t">Review &amp; repair screen</span>
+          <span class="s">Understood fields shown beside the gap, audio replayable</span>
+        </div>
+
+        <div class="node choice" id="f4" data-cell="8,2" data-dy="44">
+          <span class="t">Tap the word that was the name</span>
+        </div>
+
+        <div class="node terminal" id="f5" data-cell="9,2" data-dy="48" data-note="5">
+          <span class="t">Appended to that child's phonetic aliases</span>
+          <span class="s">The same mishearing routes correctly forever</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key choice"></span> User choice</span>
+        <span class="item">
+          <svg width="26" height="17" viewBox="0 0 26 17" aria-hidden="true">
+            <path d="M0.75 0.75 H25.25 V12.5 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 Z"
+                  fill="#fff" stroke="#6c737c" stroke-width="1.5"/>
+          </svg> System message
+        </span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The wake word is the whole product. A button would mean picking up a tablet, unlocking it and finding a form — which is the 8pm-from-memory behaviour this exists to replace. Detecting it on-device is also the answer to the first question every provider asks about a live microphone in a room full of other people's children.</li>
+      <li data-for="2">A meaningful share of providers in this market work primarily in Spanish. Translating ahead of the matchers rather than running a second parser means one phrase library to maintain, and no drift between the two languages.</li>
+      <li data-for="3">The parse path is deterministic on purpose. A hallucinated category writes a nap that never happened into a record a parent reads and a licensor may audit — so the rules engine either matches or does not, and what it does not match goes to a human. The language model sits ahead of this instead: when a child is added, it pre-computes the ways their name is likely to be misheard.</li>
+      <li data-for="4">Recognition will miss, so a miss is modelled rather than mourned. The event is still written, carrying the two diagnostic flags, the raw utterance and the audio — which is what makes repair take seconds instead of re-remembering the moment.</li>
+      <li data-for="5">Correcting a name does not just fix one record. The tapped word is appended to that child's alias list, so repair work compounds — the vocabulary improves from human correction and from the model's pre-computation at the same time.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

@@ -1,0 +1,388 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Candidate Profiles — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Same narrowed nav as the listings grid — the roster carries ten columns of
+     real staffing text and needs every pixel the nav will give up. */
+  .side { width: 150px; }
+
+  table.roster { table-layout: fixed; width: 100%; }
+  table.roster th, table.roster td {
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.roster th { font-size: 8.5px; letter-spacing: 0.03em; }
+  table.roster td { font-size: 10.5px; padding-top: 7px; padding-bottom: 7px; }
+  table.roster th:first-child, table.roster td:first-child { padding-left: 8px; }
+  tr.filters td { padding-top: 4px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  tr.filters .field { height: 22px; line-height: 20px; font-size: 10px; padding: 0 5px; }
+
+  /* Detail view: form on the left, the two read-only sidecars on the right. */
+  .detail { display: flex; gap: 14px; align-items: flex-start; }
+  .detail .form { flex: 1; min-width: 0; }
+  .detail .rail-col { width: 214px; flex: none; }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 12px; }
+  .grid3 .field { display: block; width: 100%; }
+  .fl {
+    display: flex;
+    align-items: baseline;
+    gap: 5px;
+    margin-bottom: 4px;
+    font-size: 9.5px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  /* Provenance tag. Deliberately mono and quiet — it is metadata about the
+     value, not a second value competing with it. */
+  .src {
+    margin-left: auto;
+    padding: 0 4px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--fill-2);
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.08em;
+    color: var(--faint);
+  }
+  .tok {
+    display: inline-block;
+    margin-right: 4px;
+    padding: 1px 5px;
+    border: 1px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--fill-2);
+    font-size: 10px;
+    color: var(--ink);
+  }
+
+  /* Credential expiry reads as a state on the record, not a field inside a tab. */
+  .flag {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 11px;
+    border: 1px solid var(--warn);
+    border-radius: var(--r);
+    background: var(--warn-tint);
+    font-size: 11.5px;
+    color: var(--warn);
+  }
+
+  .card { padding: 11px; }
+  .card .ct {
+    display: block;
+    margin-bottom: 7px;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.12em;
+    color: var(--faint);
+  }
+  .card .line {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 4px 0;
+    font-size: 10.5px;
+    color: var(--ink);
+  }
+  .card .line + .line { border-top: 1px solid var(--hair); }
+  .card .line .w { color: var(--faint); font-size: 9.5px; }
+  .card .lnk { color: var(--accent); font-size: 10.5px; font-weight: 600; }
+
+  .crumb { font-size: 11.5px; color: var(--muted); }
+  .crumb .a { color: var(--accent); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Candidate Profiles</h1>
+      <p class="sub">One assembled record per travelling clinician — credentials, availability and match history, with the ATS still the system of record.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /candidates/candidate_profiles/48812</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i></i><i class="on"></i><i></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Candidates</div>
+            <div class="nav-item">Job Listings</div>
+            <div class="nav-item">Manual Jobs</div>
+            <div class="nav-item">Candidates <span class="count">1,048</span></div>
+            <div class="nav-item on">Candidate Profiles</div>
+            <div class="nav-item">Saved Views</div>
+            <div class="nav-item locked">Applications &amp; Matches</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Candidate Profiles</p>
+                  <p class="sub-line">1,048 records · 2 selected · synced from ATS 04:12</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm">Merge Selected</span>
+                  <span class="btn sm">Import Candidates</span>
+                  <span class="btn sm solid">New Candidate</span>
+                </div>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden">
+                <table class="wire roster">
+                  <colgroup>
+                    <col style="width:20px"><col style="width:84px"><col style="width:74px">
+                    <col style="width:98px"><col style="width:90px"><col style="width:80px">
+                    <col style="width:74px"><col style="width:118px"><col style="width:92px">
+                    <col style="width:76px">
+                  </colgroup>
+                  <thead>
+                    <tr data-note="1">
+                      <th><span class="cb"></span></th>
+                      <th>LAST NAME</th><th>FIRST NAME</th>
+                      <th>PROFESSION</th><th>SPECIALTIES</th><th>LIC. STATES</th>
+                      <th class="sorted">AVAILABLE ▲</th><th>CREDENTIALS</th>
+                      <th>RECORD SOURCE</th><th>MODIFIED</th>
+                    </tr>
+                    <tr class="filters">
+                      <td></td>
+                      <td><span class="field placeholder" style="display:block">search</span></td>
+                      <td><span class="field placeholder" style="display:block">search</span></td>
+                      <td><span class="field" style="display:block">Reg. Nurse ⌄</span></td>
+                      <td><span class="field focus" style="display:block">ICU ⌄</span></td>
+                      <td><span class="field placeholder" style="display:block">any ⌄</span></td>
+                      <td><span class="field placeholder" style="display:block">any ⌄</span></td>
+                      <td><span class="field" style="display:block">Expiring ⌄</span></td>
+                      <td><span class="field placeholder" style="display:block">any ⌄</span></td>
+                      <td><span class="field placeholder" style="display:block">any ⌄</span></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="sel">
+                      <td><span class="cb on"></span></td>
+                      <td>Reyes</td><td>Marisol</td>
+                      <td>Registered Nurse</td><td>ICU, Telemetry</td><td>CA, TX, AZ</td>
+                      <td>08/04/2026</td>
+                      <td><span class="chip warn">BLS EXPIRED</span></td>
+                      <td>Bullhorn ATS</td><td>Jul 18</td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td>Okafor</td><td>Chidi</td>
+                      <td>Allied</td><td>Respiratory</td><td>TX, LA</td>
+                      <td>07/28/2026</td>
+                      <td><span class="chip ok">Current</span></td>
+                      <td>Kamana upload</td><td>Jul 16</td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td>Lindqvist</td><td>Johan</td>
+                      <td>Registered Nurse</td><td>PACU</td><td>MN, WI, IL</td>
+                      <td>09/01/2026</td>
+                      <td><span class="chip ok">Current</span></td>
+                      <td>Bullhorn ATS</td><td>Jul 15</td>
+                    </tr>
+                    <tr class="bad" data-note="2">
+                      <td><span class="cb on"></span></td>
+                      <td>Nakamura</td><td>Emi</td>
+                      <td>Registered Nurse</td><td>ICU, Med/Surg</td><td class="k">WA</td>
+                      <td>08/18/2026</td>
+                      <td><span class="chip warn">LICENCE LAPSED</span></td>
+                      <td>Bullhorn ATS</td><td>Jul 14</td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td>Whitfield</td><td>Tamara</td>
+                      <td>Registered Nurse</td><td>L&amp;D, Nursery</td><td>GA, FL</td>
+                      <td>10/06/2026</td>
+                      <td><span class="chip">Expires 30d</span></td>
+                      <td>Public apply</td><td>Jul 11</td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td>Delacruz</td><td>Rafael</td>
+                      <td>Allied</td><td>CT, MRI</td><td>FL</td>
+                      <td>08/25/2026</td>
+                      <td><span class="chip ok">Current</span></td>
+                      <td>Kamana upload</td><td>Jul 09</td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td>Abernathy</td><td>Grace</td>
+                      <td>Registered Nurse</td><td>Telemetry</td><td>TN, KY, VA</td>
+                      <td>11/02/2026</td>
+                      <td><span class="chip ok">Current</span></td>
+                      <td>Bullhorn ATS</td><td>Jul 07</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p class="crumb" style="margin:2px 0 0"><span class="a">Candidates</span> / <span class="b">Marisol Reyes</span> · RN · Sacramento, CA</p>
+
+              <div class="panel" style="padding:0;overflow:hidden">
+                <div style="padding:12px 14px 0">
+                  <div class="tabs" data-note="3">
+                    <span class="tab on">Profile</span>
+                    <span class="tab">Credentials <span class="chip sm warn">1</span></span>
+                    <span class="tab">Availability</span>
+                    <span class="tab">Documents <span class="chip sm">9</span></span>
+                    <span class="tab">Match History <span class="chip sm on">12</span></span>
+                    <span class="tab">Notes</span>
+                  </div>
+                </div>
+
+                <div style="padding:12px 14px 14px">
+                  <div class="flag" style="margin-bottom:12px">
+                    <span class="chip warn">UNPLACEABLE</span>
+                    <span>BLS certification expired 12 Jul 2026. Marisol is excluded from auto-match until a renewal document is uploaded.</span>
+                  </div>
+
+                  <div class="detail">
+                    <div class="form stack-12">
+                      <div class="grid3">
+                        <div>
+                          <span class="fl">First name <span class="src">ATS</span></span>
+                          <span class="field">Marisol</span>
+                        </div>
+                        <div>
+                          <span class="fl">Last name <span class="src">ATS</span></span>
+                          <span class="field">Reyes</span>
+                        </div>
+                        <div>
+                          <span class="fl">Profession <span class="src">MAPPED</span></span>
+                          <span class="field">Registered Nurse</span>
+                        </div>
+                        <div>
+                          <span class="fl">Email <span class="src">ATS</span></span>
+                          <span class="field">mreyes@gmail.com</span>
+                        </div>
+                        <div>
+                          <span class="fl">Phone <span class="src">ATS</span></span>
+                          <span class="field">(916) 555-0142</span>
+                        </div>
+                        <div>
+                          <span class="fl">Specialties <span class="src">MAPPED</span></span>
+                          <span class="field"><span class="tok">ICU</span><span class="tok">Telemetry</span></span>
+                        </div>
+                        <div>
+                          <span class="fl">Licensed states <span class="src">UPLOAD</span></span>
+                          <span class="field"><span class="tok">CA</span><span class="tok">TX</span><span class="tok">AZ</span></span>
+                        </div>
+                        <div>
+                          <span class="fl">Preferred states <span class="src">VMSPARK</span></span>
+                          <span class="field"><span class="tok">CA</span><span class="tok">NV</span></span>
+                        </div>
+                        <div>
+                          <span class="fl">Compact licence <span class="src">UPLOAD</span></span>
+                          <span class="field">NLC multistate — yes</span>
+                        </div>
+                        <div>
+                          <span class="fl">Available on <span class="src">VMSPARK</span></span>
+                          <span class="field">04 Aug 2026</span>
+                        </div>
+                        <div>
+                          <span class="fl">Shift preference <span class="src">VMSPARK</span></span>
+                          <span class="field">Nights · 12 hours</span>
+                        </div>
+                        <div>
+                          <span class="fl">Candidate status <span class="src">ATS</span></span>
+                          <span class="field">Active — travelling</span>
+                        </div>
+                        <div>
+                          <span class="fl">Recruiter <span class="src">ATS</span></span>
+                          <span class="field">j.briley</span>
+                        </div>
+                        <div>
+                          <span class="fl">Candidate source <span class="src">ATS</span></span>
+                          <span class="field">Job board — Indeed</span>
+                        </div>
+                        <div>
+                          <span class="fl">Last contacted <span class="src">ATS</span></span>
+                          <span class="field">16 Jul 2026</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="rail-col stack-12">
+                      <div class="panel fill card" data-note="4">
+                        <span class="ct">RECORD SOURCES</span>
+                        <div class="line"><span>Bullhorn ATS</span><span class="w">04:12 today</span></div>
+                        <div class="line"><span>Kamana documents</span><span class="w">02 Jun</span></div>
+                        <div class="line"><span>VMSpark matching</span><span class="w">live</span></div>
+                        <span class="lnk" style="display:block;margin-top:8px">Field-level history →</span>
+                      </div>
+
+                      <div class="panel fill card" data-note="5">
+                        <span class="ct">MATCH HISTORY</span>
+                        <div class="line"><span>Open matches</span><span class="chip sm on">12</span></div>
+                        <div class="line"><span>Submitted</span><span class="w">3 · REQ-88217</span></div>
+                        <div class="line"><span>Placed</span><span class="w">1 · Mercy General</span></div>
+                        <div class="line"><span>Auto-match</span><span class="chip sm warn">Held</span></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="between" style="margin-top:14px" data-note="6">
+                    <span class="sub-line">Read-only. Edits to name, contact and status are made in Bullhorn and land here on the next sync.</span>
+                    <div class="row" style="gap:7px">
+                      <span class="btn sm">Upload document</span>
+                      <span class="btn sm solid">Open in ATS ↗</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Profession and specialty here are the same mapped vocabulary the job listings grid uses, not free text copied off a CV. Matching a nurse to a requisition is only possible because both sides were normalised upstream, which is why the mapping work sits before every screen in this product rather than beside them.</li>
+      <li data-for="2">Credential expiry is a state on the record, not a field inside a tab. A lapsed licence makes someone unplaceable, so it belongs in the roster column an operator already scans — the alternative is discovering it when a submission is rejected, which costs the placement and the relationship.</li>
+      <li data-for="3">Tabs split the record by how often each part changes: credentials monthly, availability weekly, match history continuously. One long scroll would make a recruiter re-read the parts that never move to reach the part that always does.</li>
+      <li data-for="4">A profile is assembled from the ATS, from uploaded documents and from VMSpark's own matching, so every value carries where it came from. An operator on the phone needs to know whether a licence expiry is what the ATS believes or what the candidate actually sent, because those disagree often enough to matter.</li>
+      <li data-for="5">Match history lives on the person rather than only on the requisition. Recruiters ask "where have we put her forward already" far more often than they ask the reverse, and without it the same candidate gets submitted twice to the same facility.</li>
+      <li data-for="6">The ATS stays the system of record and this view is read-mostly. Making VMSpark a second place to edit the same person would guarantee two versions of a phone number, so writes are pushed back rather than kept — the exceptions are the fields the ATS has no column for, like preferred states.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

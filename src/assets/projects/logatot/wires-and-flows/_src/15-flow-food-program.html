@@ -1,0 +1,184 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User flow — Food program (CACFP) — Logatot</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+
+<style>
+  /* sheet.css has no legend key for a dashed system step or a white exit
+     stadium — both shapes this sheet uses. Scoped, not added to the shared file. */
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>User Flow — Food Program (CACFP)</h1>
+      <p class="sub">Compliance is checked when the menu is built, so month end is a reconciliation rather than an evening of data entry.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="60" data-rowh="104"
+           data-edges='[
+             {"from":"n1","to":"d1"},
+             {"from":"d1","to":"n2","fromSide":"r","toSide":"l","label":"yes"},
+             {"from":"d1","to":"n3","label":"no"},
+             {"from":"n2","to":"n4","fromSide":"b","toSide":"r","label":"days already filled"},
+             {"from":"n3","to":"n4"},
+             {"from":"n4","to":"n5"},
+             {"from":"a1","to":"n5","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n5","to":"d2"},
+             {"from":"d2","to":"f1","fromSide":"r","toSide":"l","label":"no","labelDx":-18,"labelDy":-3},
+             {"from":"d2","to":"n6","label":"yes"},
+             {"from":"f1","to":"f2"},
+             {"from":"f2","to":"n5","fromSide":"l","toSide":"r"},
+             {"from":"n6","to":"n8","fromSide":"r","toSide":"l","dashed":true},
+             {"from":"n6","to":"n9"},
+             {"from":"n9","to":"n10"},
+             {"from":"a2","to":"n10","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n10","to":"n11"},
+             {"from":"n11","to":"n12"},
+             {"from":"n12","to":"n13"},
+             {"from":"n13","to":"n14"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="node entry" id="n1" data-cell="0,1">
+          <span class="t">Provider plans next week</span>
+          <span class="s">Sunday evening, before the shopping</span>
+        </div>
+
+        <div class="node branch" id="d1" data-cell="1,1" data-dy="12">
+          <span class="t">Reuse a recent week?</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="1,2" data-note="1">
+          <span class="t">Duplicate week</span>
+          <span class="s">A proven week copied forward, a dish or two swapped out</span>
+        </div>
+
+        <div class="node" id="n3" data-cell="2,1" data-dy="14">
+          <span class="t">Build from the meal library</span>
+          <span class="s">Saved meals, picked by type</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="3,1" data-dy="10">
+          <span class="t">Drop meals into the day's slots</span>
+          <span class="s">Breakfast, AM snack, lunch, PM snack</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="4,0" data-dy="4">
+          <span class="t">The requirement is a real matrix</span>
+          Age group × meal type × ingredient type × minimum amount × unit. A
+          toddler lunch needs milk, a grain, a meat or alternate, and two
+          fruit/veg — modelled, not approximated.
+        </div>
+
+        <div class="node dashed" id="n5" data-cell="4,1" data-note="2" data-note-side="top">
+          <span class="t">Score the meal as it is placed</span>
+          <span class="s">Each meal checked against the components required for the age group</span>
+        </div>
+
+        <div class="design-note" data-cell="5,0" data-dy="34">
+          Catching a gap at plan time costs thirty seconds. Catching it at claim
+          time costs the meal — the food is eaten, the money is spent, and
+          nothing can be done.
+        </div>
+
+        <div class="node branch" id="d2" data-cell="5,1" data-dy="24">
+          <span class="t">All components present?</span>
+        </div>
+
+        <div class="node msg" id="f1" data-cell="5,2" data-dy="14" data-note="3">
+          <span class="t">“Missing: 2nd fruit/veg”</span>
+          <span class="s">The flag names the gap and suggests a qualifying food</span>
+        </div>
+
+        <div class="node" id="f2" data-cell="6,2" data-dy="26">
+          <span class="t">Add the component in the cell</span>
+          <span class="s">One addition — the week revalidates in place</span>
+        </div>
+
+        <div class="node" id="n6" data-cell="7,1" data-dy="8">
+          <span class="t">Meal saved with its component count</span>
+          <span class="s">A reusable object — the week is claim-ready before it is cooked</span>
+        </div>
+
+        <div class="node dashed" id="n8" data-cell="7,2" data-dy="15" data-note="4">
+          <span class="t">Shopping list falls out of the plan</span>
+          <span class="s">Grouped by aisle, from the week she already built</span>
+        </div>
+
+        <div class="node" id="n9" data-cell="8,1" data-dy="14">
+          <span class="t">Serve the meal</span>
+          <span class="s">Lunch goes on the table</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="9,0" data-dy="10">
+          <span class="t">No food-only workflow</span>
+          A served meal is a LoggedEvent like any other. The Meals column is a
+          view of the same events, not a second system to keep up to date.
+        </div>
+
+        <div class="node" id="n10" data-cell="9,1" data-dy="10" data-note="5">
+          <span class="t">Log it the way everything else is logged</span>
+          <span class="s">“Everyone had lunch” by voice, or a tap on the Meals column</span>
+        </div>
+
+        <div class="node dashed" id="n11" data-cell="10,1" data-dy="18">
+          <span class="t">Served meal attaches to each child present</span>
+          <span class="s">Same event pipeline as a nap or a diaper change</span>
+        </div>
+
+        <div class="node" id="n12" data-cell="11,1" data-dy="24">
+          <span class="t">Month closes</span>
+          <span class="s">The claim period ends</span>
+        </div>
+
+        <div class="node dashed" id="n13" data-cell="12,1" data-dy="20" data-note="6">
+          <span class="t">Claim joins two tables that already exist</span>
+          <span class="s">The planned week and the served-meal events — counts by meal type and age group</span>
+        </div>
+
+        <div class="node exit" id="n14" data-cell="13,1" data-dy="28">
+          <span class="t">Filed as a reconciliation</span>
+          <span class="s">A review step, not an evening of data entry</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item">
+          <svg width="26" height="17" viewBox="0 0 26 17" aria-hidden="true">
+            <path d="M0.75 0.75 H25.25 V12.5 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 Z"
+                  fill="#fff" stroke="#6c737c" stroke-width="1.5"/>
+          </svg> System message
+        </span>
+        <span class="item"><span class="key exit"></span> Exit</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Real menus rotate on a two-to-four week cycle, so the quickest way to plan a compliant week is to copy one that already was. The duplicate carries its validation with it — those meals were scored when they were first planned — so she starts green and spends her time on the one dish she wants to swap. It is the single biggest time saver in the feature, and it is barely a feature.</li>
+      <li data-for="2">Requirements are modelled as an actual matrix — age group × meal type × ingredient type × minimum amount × unit — rather than approximated with a checklist. That is the only reason the check can run here, at plan time. An approximation would still have to be reconciled against the real rule eventually, which puts the truth back at claim time and defeats the point.</li>
+      <li data-for="3">The flag names the gap. “Missing: 2nd fruit/veg” is one addition; “invalid meal” is a research task, and providers are not nutritionists. The short meal also stays on the calendar rather than being refused — planning happens in one sitting, so the week tolerates being incomplete and the gaps get cleared at the end.</li>
+      <li data-for="4">The shopping list is a by-product of a plan that already exists, which is what makes planning worth doing in a month she was not going to claim at all. Utility this week buys the data needed at month end — the feature earns its own adoption instead of depending on the discipline of someone already behind.</li>
+      <li data-for="5">A served meal rides the same pipeline as a nap or a diaper change, including by voice. There is no food-only habit to remember, which matters because the CACFP habit has to survive a bad week — and a habit that only pays off at month end is the first one to lapse.</li>
+      <li data-for="6">Month end joins two tables that already exist: the planned week and the events logged as meals were served. Nothing is transcribed, so the claim becomes a report she reviews rather than a month of lunches reconstructed from memory. Compliance falls out of the record instead of being separate work.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

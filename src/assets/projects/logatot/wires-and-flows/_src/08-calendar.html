@@ -1,0 +1,322 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Calendar and drills — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* The month grid. Seven equal columns in the 828px content pane, so a day
+     cell is ~118px and an event bar has ~104px of usable width — enough for a
+     title and a time before it truncates. */
+  .month {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 1.5px solid var(--ink);
+  }
+  .month .dow {
+    padding: 6px 8px;
+    border-bottom: 1.5px solid var(--line);
+    border-right: 1px solid var(--hair);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.12em;
+    color: var(--muted);
+  }
+  .month .day {
+    min-height: 74px;
+    padding: 6px 7px 7px;
+    border-bottom: 1px solid var(--hair);
+    border-right: 1px solid var(--hair);
+  }
+  .month .dow:nth-child(7n), .month .day:nth-child(7n) { border-right: none; }
+  .month .day.out { background: var(--fill-1); }
+  .month .day.today { box-shadow: inset 0 0 0 2px var(--ink); }
+  .month .num { font-size: 11px; font-weight: bold; color: var(--ink); }
+  .month .day.out .num { color: var(--faint); font-weight: normal; }
+  .month .today-tag {
+    margin-left: 5px;
+    font-family: var(--mono);
+    font-size: 8px;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+  }
+  .month .more { margin-top: 4px; font-size: 9px; color: var(--faint); }
+
+  /* Event type is carried by border style, never by colour — the same three
+     line styles the shipped calendar uses, so a black-and-white print of this
+     month still distinguishes an outing from a drill. */
+  .ev {
+    display: block;
+    margin-top: 4px;
+    padding: 2px 5px;
+    border: 1.25px solid var(--ink);
+    border-radius: 2px;
+    background: var(--fill-3);
+    font-size: 9px;
+    line-height: 1.5;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .ev.drill { border-style: dashed; background: var(--paper); }
+  .ev.sip { border-style: dotted; background: var(--paper); }
+
+  .key-strip { display: flex; align-items: center; gap: 26px; }
+  .key-strip .item { display: flex; align-items: center; gap: 8px; font-size: 11px; }
+  .key-strip .swatch {
+    width: 34px;
+    height: 15px;
+    flex: none;
+    border: 1.25px solid var(--ink);
+    border-radius: 2px;
+    background: var(--fill-3);
+  }
+  .key-strip .swatch.drill { border-style: dashed; background: var(--paper); }
+  .key-strip .swatch.sip { border-style: dotted; background: var(--paper); }
+  .key-strip .n { margin-left: 2px; font-size: 10.5px; color: var(--faint); }
+
+  /* The typed drill record. This is the point of the sheet, so it gets the
+     lower half of the screen rather than a modal that covers the grid. */
+  .rec { border: 1.5px solid var(--ink); border-radius: 3px; }
+  .rec-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 14px;
+    border-bottom: 1.5px solid var(--line);
+    background: var(--fill-2);
+  }
+  .rec-sec { padding: 12px 14px; border-bottom: 1px solid var(--hair); }
+  .rec-sec:last-child { border-bottom: none; }
+
+  .roster { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px 16px; }
+  .who { display: flex; align-items: center; gap: 8px; }
+  .tick {
+    width: 12px;
+    height: 12px;
+    flex: none;
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    background: var(--ink);
+  }
+  .tick.off { background: var(--paper); border-color: var(--line); }
+
+  .stopwatch {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+  }
+  .stopwatch .val { font-family: var(--mono); font-size: 20px; font-weight: bold; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Calendar and drills</h1>
+      <p class="sub">Drills are their own task type, so logging the drill and proving the drill are the same action.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/calendar_events?month=2026-07</span>
+        </div>
+
+        <div class="app">
+          <nav class="side">
+            <div class="logo">LOGO</div>
+            <div class="nav-item"><span class="box"></span> Voiceboard</div>
+            <div class="nav-item"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Logged Events <span class="count">3</span></div>
+            <div class="nav-item"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item on"><span class="box"></span> Calendar <span class="count">2</span></div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms</div>
+            <div class="nav-item locked"><span class="box"></span> Documents</div>
+            <div class="nav-item locked"><span class="box"></span> Expenses</div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Bright Start Family Care</span>
+              <div class="right">
+                <span class="pill dashed">2 drills due this month</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between" data-note="1">
+                <div>
+                  <p class="h">Calendar</p>
+                  <p class="sub-line">Closures, drills and recurring schedules</p>
+                </div>
+                <div class="row" style="gap:8px">
+                  <span class="pill on">Month</span>
+                  <span class="pill">Week</span>
+                  <span class="btn sm quiet">‹</span>
+                  <span class="field" style="width:104px;text-align:center">July 2026</span>
+                  <span class="btn sm quiet">›</span>
+                  <span class="btn solid sm">+ Add event</span>
+                </div>
+              </div>
+
+              <div class="month">
+                <div class="dow">SUN</div><div class="dow">MON</div><div class="dow">TUE</div>
+                <div class="dow">WED</div><div class="dow">THU</div><div class="dow">FRI</div>
+                <div class="dow">SAT</div>
+
+                <div class="day out"><span class="num">28</span></div>
+                <div class="day out"><span class="num">29</span></div>
+                <div class="day out"><span class="num">30</span></div>
+                <div class="day"><span class="num">1</span><span class="ev">Tuition due</span></div>
+                <div class="day"><span class="num">2</span></div>
+                <div class="day"><span class="num">3</span><span class="ev">Closed — holiday</span></div>
+                <div class="day"><span class="num">4</span></div>
+
+                <div class="day"><span class="num">5</span></div>
+                <div class="day"><span class="num">6</span></div>
+                <div class="day"><span class="num">7</span><span class="ev drill">Fire drill · 9:30a</span></div>
+                <div class="day"><span class="num">8</span><span class="ev sip">Shelter-in-place</span></div>
+                <div class="day"><span class="num">9</span></div>
+                <div class="day"><span class="num">10</span><span class="ev">Parent night</span></div>
+                <div class="day"><span class="num">11</span></div>
+
+                <div class="day"><span class="num">12</span></div>
+                <div class="day"><span class="num">13</span><span class="ev">Water play day</span></div>
+                <div class="day"><span class="num">14</span></div>
+                <div class="day"><span class="num">15</span><span class="ev">Licensing visit</span></div>
+                <div class="day"><span class="num">16</span></div>
+                <div class="day"><span class="num">17</span></div>
+                <div class="day"><span class="num">18</span></div>
+
+                <div class="day"><span class="num">19</span></div>
+                <div class="day today">
+                  <span class="num">20</span><span class="today-tag">TODAY</span>
+                  <span class="ev drill">Fire drill · 9:30a</span>
+                  <span class="ev">Water play day</span>
+                  <span class="more">+2 more</span>
+                </div>
+                <div class="day"><span class="num">21</span></div>
+                <div class="day"><span class="num">22</span><span class="ev sip">Shelter-in-place · 2:00p</span></div>
+                <div class="day"><span class="num">23</span></div>
+                <div class="day"><span class="num">24</span><span class="ev">Enrolment ends</span></div>
+                <div class="day"><span class="num">25</span></div>
+
+                <div class="day"><span class="num">26</span></div>
+                <div class="day"><span class="num">27</span><span class="ev">Field trip — nature walk</span></div>
+                <div class="day"><span class="num">28</span></div>
+                <div class="day"><span class="num">29</span><span class="ev">Tuition due</span></div>
+                <div class="day"><span class="num">30</span></div>
+                <div class="day"><span class="num">31</span></div>
+                <div class="day out"><span class="num">1</span></div>
+              </div>
+
+              <div class="between" data-note="2">
+                <div class="key-strip">
+                  <span class="item"><span class="swatch"></span> Event <span class="n">9 this month</span></span>
+                  <span class="item"><span class="swatch drill"></span> Fire drill <span class="n">3 this month</span></span>
+                  <span class="item"><span class="swatch sip"></span> Shelter-in-place <span class="n">2 this month</span></span>
+                </div>
+                <span class="btn sm quiet">Print month</span>
+              </div>
+
+              <div class="rec">
+                <div class="rec-head" data-note="3">
+                  <span class="chip fill">TASK TYPE</span>
+                  <span class="h-sm">Fire drill — Mon, July 20, 9:30a</span>
+                  <span class="muted" style="font-size:11px">Quarterly requirement · logged by</span>
+                  <span class="avatar sm"></span>
+                  <span style="margin-left:auto" class="pill dashed">Draft — not yet saved</span>
+                </div>
+
+                <div class="rec-sec" data-note="4">
+                  <div class="between" style="margin-bottom:9px">
+                    <span class="eyebrow">PARTICIPANTS — 8 OF 8 PRESENT, 1 STAFF</span>
+                    <span class="btn sm quiet">Tick all present</span>
+                  </div>
+                  <div class="roster">
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick"></span><span class="avatar sm"></span><span class="bar grow"></span></span>
+                    <span class="who"><span class="tick off"></span><span class="avatar sm"></span><span class="bar grow" style="opacity:.5"></span> <span class="faint" style="font-size:10px">absent</span></span>
+                  </div>
+                </div>
+
+                <div class="rec-sec" data-note="5">
+                  <div class="row" style="gap:18px;align-items:flex-start">
+                    <div style="width:250px;flex:none">
+                      <span class="label">TIME TO FULL EXIT</span>
+                      <div class="stopwatch">
+                        <span class="val">2:14</span>
+                        <span class="muted" style="font-size:11px">min:sec</span>
+                        <span class="btn sm" style="margin-left:auto">Stop</span>
+                      </div>
+                      <p class="sub-line">Timer starts on the alarm, or type it in.</p>
+                    </div>
+                    <div class="grow">
+                      <span class="label">WHAT WENT WRONG — REQUIRED IF OVER 3:00</span>
+                      <div class="field tall" style="height:66px;line-height:1.6;padding:9px 10px">
+                        <span class="bar sm" style="display:block;width:96%"></span>
+                        <span class="bar sm" style="display:block;width:88%;margin-top:6px"></span>
+                        <span class="bar sm" style="display:block;width:46%;margin-top:6px"></span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="rec-sec" data-note="6">
+                  <div class="row" style="gap:14px;align-items:flex-start">
+                    <div class="aside grow">
+                      <span class="t">Where this record goes</span>
+                      Rolls up into Reports → Fire drill log, twelve months per page, one row per drill with participants, time to exit and notes. Nothing is retyped. Print styles neutralise the theme — <span class="rust">dark:print:text-black</span> — so a report printed from a dark screen still hands over black on white.
+                    </div>
+                    <div class="row" style="gap:8px;flex:none">
+                      <span class="btn quiet">Cancel</span>
+                      <span class="btn solid">Save drill record</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">A home daycare is planned around closures — holidays, vacation weeks, a licensing visit — so month is the default view and week is the exception. Nobody opens a calendar to find out what today is; they open it to answer a parent asking whether they are open the week of the 20th.</li>
+      <li data-for="2">Event type is carried by line style rather than colour: solid for an ordinary event, dashed for a fire drill, dotted for shelter-in-place. It reads on a month sheet printed and taped to the fridge, and it survives the fact that plenty of providers print in black and white. The legend earns its place because line style is learned, where colour is guessed.</li>
+      <li data-for="3">A fire drill is not an appointment, so <span class="b">fire_drill</span> and <span class="b">shelter_in_place</span> are distinct task types with their own typed detail records. The fields a drill carries — who took part, how long it took to get everyone out, what went wrong — are exactly what a licensor asks for, and a plain calendar event has nowhere to put them.</li>
+      <li data-for="4">Participants are the roster ticked off, not a free-text list of names. The question a year later is whether one specific child was in the building for one specific drill, and only a structured record answers it. Ticking all present is one control because that is the true case nine times out of ten.</li>
+      <li data-for="5">Time to full exit is a field with a timer beside it rather than a line in a notes box, and the notes field becomes required once the time crosses the limit. Logging the drill and proving the drill are the same action here — the alternative is a provider reconstructing the number from memory the week the licensor is due.</li>
+      <li data-for="6">The compliance report is assembled from these records rather than typed, so print is a designed surface rather than a media-query afterthought. Getting a licensing document wrong because of a theme preference is the class of bug that never turns up in design review.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

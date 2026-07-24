@@ -1,0 +1,181 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Mapping resolution &amp; fan-out — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* The flow splits into two bands: what one person does, and what their single
+     save costs downstream. The divider is the sheet's whole argument. */
+  .band {
+    width: 100% !important;
+    border-top: 1px solid var(--line);
+  }
+  .lane { width: 300px !important; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Mapping Resolution &amp; Fan-Out</h1>
+      <p class="sub">How an operator clears mapping debt — and what one mapping change costs downstream.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="56" data-rowh="92"
+           data-edges='[
+             {"from":"n1","to":"n2"},
+             {"from":"n2","to":"n3"},
+             {"from":"a1","to":"n3","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n3","to":"d1"},
+             {"from":"d1","to":"n4","label":"yes"},
+             {"from":"d1","to":"n5","fromSide":"r","toSide":"l","label":"no"},
+             {"from":"n4","to":"n6"},
+             {"from":"n5","to":"n6","fromSide":"b","toSide":"r"},
+             {"from":"n6","to":"n7"},
+             {"from":"n7","to":"n3","fromSide":"l","toSide":"l","label":"batch loop","labelDx":-72,"offset":34,"dashed":true},
+             {"from":"n7","to":"s1","dashed":true,"label":"one save → system fan-out","labelDx":10},
+             {"from":"s1","to":"s2"},
+             {"from":"s2","to":"s3"},
+             {"from":"s3","to":"s4"},
+             {"from":"s4","to":"d2"},
+             {"from":"d2","to":"s5","label":"yes"},
+             {"from":"d2","to":"s6","fromSide":"r","toSide":"l","label":"no"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="lane" data-cell="0,0" data-dy="-4">
+          OPERATOR TASK FLOW
+          <span class="s">what a person actually does to clear one unmapped facility</span>
+        </div>
+
+        <div class="node entry" id="n1" data-cell="1,1">
+          <span class="t">Sees the badge count</span>
+          <span class="s">Sidebar · 47 unmapped</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="2,1">
+          <span class="t">Opens the Unmapped tab</span>
+          <span class="s">Data Mapping → Facilities</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="3,0" data-dy="8">
+          <span class="t">Auto-map runs first</span>
+          Exact match on name + street + city + state + zip, so the list a human
+          sees is only what the rules could not settle.
+        </div>
+
+        <div class="node" id="n3" data-cell="3,1" data-note="1">
+          <span class="t">Reviews the imported values</span>
+          <span class="s">Each row shown against its ATS suggestions</span>
+        </div>
+
+        <div class="node branch" id="d1" data-cell="4,1" data-dy="6">
+          <span class="t">Valid ATS match?</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="5,1" data-dy="14">
+          <span class="t">Selects the match</span>
+          <span class="s">From the ATS typeahead</span>
+        </div>
+
+        <div class="design-note" data-cell="5,0" data-dy="18" data-note="2">
+          Ignore is a real decision, not a skip.
+        </div>
+
+        <div class="node" id="n5" data-cell="5,2" data-dy="14">
+          <span class="t">Ignore</span>
+          <span class="s">Records that this value has no ATS counterpart</span>
+        </div>
+
+        <div class="node commit" id="n6" data-cell="6,1" data-dy="22">
+          <span class="t">Update commits the mapping</span>
+          <span class="s">Writes the AccountFacility row</span>
+        </div>
+
+        <div class="node" id="n7" data-cell="7,1" data-dy="30" data-note="3">
+          <span class="t">Focus auto-advances</span>
+          <span class="s">Cursor lands on the next unmapped row</span>
+        </div>
+
+        <!-- System band -->
+        <div class="band" data-cell="9,0" data-dy="-6"></div>
+        <div class="lane" data-cell="9,0" data-dy="14">
+          SYSTEM FAN-OUT
+          <span class="s">what that one save costs downstream</span>
+        </div>
+
+        <div class="node dashed" id="s1" data-cell="10,1" data-dy="8">
+          <span class="async">ASYNC</span>
+          <span class="t">MappingUpdateJob</span>
+          <span class="s">Enqueued on save — the controller never does this inline</span>
+        </div>
+
+        <div class="aside" data-cell="11,0" data-dy="14">
+          <span class="t">Blast radius</span>
+          A single facility mapping can touch thousands of listings at once.
+        </div>
+
+        <div class="node" id="s2" data-cell="11,1" data-dy="14" data-note="4">
+          <span class="t">Query the affected listings</span>
+          <span class="s">Every listing using this source value</span>
+        </div>
+
+        <div class="node dashed" id="s3" data-cell="12,1" data-dy="20">
+          <span class="async">ASYNC</span>
+          <span class="t">High-priority reprocess</span>
+          <span class="s">One job per affected listing</span>
+        </div>
+
+        <div class="node" id="s4" data-cell="13,1" data-dy="26">
+          <span class="t">Re-run the pipeline</span>
+          <span class="s">Spark::ProcessJobListing</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="14,1" data-dy="32">
+          <span class="t">Now resolves?</span>
+        </div>
+
+        <div class="node good" id="s5" data-cell="15,1" data-dy="40">
+          <span class="t">state = processed</span>
+          <span class="s">Re-syncs to the ATS</span>
+        </div>
+
+        <div class="node bad" id="s6" data-cell="14,2" data-dy="32" data-note="5">
+          <span class="t">Stays failed</span>
+          <span class="s">Remains in the mapping queue</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key commit"></span> Commit</span>
+        <span class="item"><span class="key good"></span> Resolved</span>
+        <span class="item"><span class="key bad"></span> Still failed</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Unmatched rows sort first, so the list shrinks toward empty as the work is done. A queue that visibly empties is the difference between a chore with an end and a screen an operator stops opening — and the auto-map rules run before any of it, so a human only ever sees what the rules could not settle.</li>
+      <li data-for="2">Ignoring a value writes a record that it has no ATS counterpart, which is what stops it from re-queueing tomorrow. Without that, the queue never empties and the operator learns to distrust the count — a skip that silently returns is worse than no queue at all.</li>
+      <li data-for="3">The cursor lands on the next unmapped row rather than returning to the top of the list. Mapping debt is cleared in batches of forty, not one at a time, so the design optimises for the fortieth row rather than the first.</li>
+      <li data-for="4">A single facility mapping can touch thousands of listings, so nothing here happens in the request. The save returns instantly and the queue absorbs the fan-out — the alternative is an operator watching a spinner and deciding the tool is broken.</li>
+      <li data-for="5">A listing that still fails after a remap is information, not a bad fix. It points at a second missing mapping, so it stays in the queue rather than being marked resolved — the failure state has to survive the fix for the second problem to ever be found.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

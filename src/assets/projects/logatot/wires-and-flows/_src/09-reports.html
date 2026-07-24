@@ -1,0 +1,389 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Reports — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* Two columns inside the pane: the situation-grouped list, and the printed
+     page at something close to its real proportions. */
+  .cols { display: flex; align-items: flex-start; gap: 18px; }
+  .col-list { width: 236px; flex: none; }
+  /* The page column starts a little lower than the list so the leader line
+     leaving the first situation heading passes through open space rather than
+     across the print toolbar. */
+  .col-page { width: 538px; flex: none; margin-top: 17px; }
+
+  .rep-group { margin-top: 14px; }
+  .rep-group:first-child { margin-top: 0; }
+  .rep-group .g {
+    display: block;
+    margin-bottom: 6px;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.11em;
+    line-height: 1.5;
+    color: var(--faint);
+  }
+  .rep {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 9px;
+    border: 1px solid var(--hair);
+    border-radius: 3px;
+    font-size: 11.5px;
+    color: var(--ink);
+  }
+  .rep + .rep { margin-top: 4px; }
+  .rep .sq {
+    width: 10px; height: 12px; flex: none;
+    border: 1px solid var(--line);
+    border-radius: 1px;
+  }
+  .rep.on { border-color: var(--ink); border-width: 1.5px; font-weight: bold; background: var(--fill-3); }
+  .rep .chip { margin-left: auto; height: 17px; padding: 0 6px; font-size: 9.5px; color: var(--muted); }
+
+  /* The printed page. Landscape US Letter, drawn at its real ratio, with the
+     second page showing behind it so pagination is visible rather than implied. */
+  .page-wrap { position: relative; }
+  .page-ghost {
+    position: absolute;
+    left: 9px; top: 9px;
+    width: 538px; height: 416px;
+    border: 1.5px solid var(--line-soft);
+    border-radius: 2px;
+    background: var(--paper);
+  }
+  .page {
+    position: relative;
+    width: 538px;
+    height: 416px;
+    border: 1.5px solid var(--ink);
+    border-radius: 2px;
+    background: var(--paper);
+    padding: 27px 26px;
+  }
+  .page .margin {
+    position: absolute;
+    inset: 18px;
+    border: 1px dashed var(--line);
+    pointer-events: none;
+  }
+
+  .continues {
+    margin-top: 14px;
+    padding-top: 9px;
+    border-top: 1px dashed var(--line-soft);
+    font-size: 8.5px;
+    letter-spacing: 0.04em;
+    color: var(--faint);
+    text-align: center;
+  }
+  .page .inner { position: relative; height: 100%; display: flex; flex-direction: column; }
+
+  .letterhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; }
+  .letterhead .biz { font-size: 13px; font-weight: bold; line-height: 1.3; }
+  .letterhead .meta { margin-top: 4px; font-size: 9.5px; line-height: 1.55; color: var(--muted); }
+  .letterhead .doc { text-align: right; flex: none; }
+  .letterhead .doc .t {
+    font-family: var(--mono);
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 0.11em;
+  }
+  .letterhead .doc .meta { margin-top: 5px; }
+  .head-rule { height: 1.5px; background: var(--ink); margin: 11px 0 0; }
+
+  table.print { table-layout: fixed; width: 100%; font-size: 10px; }
+  table.print th {
+    padding: 7px 5px;
+    font-size: 8px;
+    letter-spacing: 0.09em;
+    border-bottom: 1px solid var(--line);
+  }
+  table.print td {
+    padding: 6px 5px;
+    border-bottom: 1px solid var(--hair);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.print th:first-child, table.print td:first-child { padding-left: 0; }
+  table.print th:last-child, table.print td:last-child { padding-right: 0; }
+  table.print .chip { height: 17px; padding: 0 5px; font-size: 9px; }
+  table.print tr.total td {
+    border-bottom: none;
+    border-top: 1.5px solid var(--ink);
+    font-weight: bold;
+    padding-top: 7px;
+  }
+
+  .page-foot {
+    margin-top: auto;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    font-size: 8.5px;
+    line-height: 1.6;
+    color: var(--muted);
+  }
+  .sig { width: 190px; }
+  .sig .line { height: 1px; background: var(--ink); margin-bottom: 4px; }
+  .page-foot .right { text-align: right; }
+
+  .aside .k {
+    display: block;
+    font-family: var(--mono);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    color: var(--ink);
+  }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Reports</h1>
+      <p class="sub">These documents end up in a binder or a licensor's hand, so the screen shows the printed page rather than a layout that gets reflowed at print time.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/reports/attendance</span>
+        </div>
+
+        <div class="app">
+          <nav class="side">
+            <div class="logo">LOGO</div>
+            <div class="nav-item"><span class="box"></span> Voiceboard</div>
+            <div class="nav-item"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Logged Events <span class="count">3</span></div>
+            <div class="nav-item"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item"><span class="box"></span> Calendar <span class="count">2</span></div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms</div>
+            <div class="nav-item locked"><span class="box"></span> Documents</div>
+            <div class="nav-item locked"><span class="box"></span> Expenses</div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item on"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Bright Start Family Care</span>
+              <div class="right">
+                <span class="pill">Starter plan</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Reports</p>
+                  <p class="sub-line">Documents you can hand to a licensor, a parent, or the food program</p>
+                </div>
+                <div class="row">
+                  <span class="field" style="width:150px;text-align:center">Jul 1 – Jul 20, 2026</span>
+                  <span class="btn sm quiet">All children</span>
+                </div>
+              </div>
+
+              <div class="cols">
+                <div class="col-list">
+                  <div class="rep-group" data-note="1" data-note-side="top">
+                    <span class="g">A LICENSOR IS IN THE DOORWAY</span>
+                    <div class="rep on"><span class="sq"></span> Attendance record</div>
+                    <div class="rep"><span class="sq"></span> Emergency cards</div>
+                    <div class="rep"><span class="sq"></span> Medication log</div>
+                    <div class="rep"><span class="sq"></span> Fire-drill log <span class="chip">Pro</span></div>
+                  </div>
+
+                  <div class="rep-group">
+                    <span class="g">A SUBSIDY CLAIM IS DUE</span>
+                    <div class="rep"><span class="sq"></span> CACFP meal counts</div>
+                    <div class="rep"><span class="sq"></span> Hours by child</div>
+                    <div class="rep"><span class="sq"></span> Provider time</div>
+                  </div>
+
+                  <div class="rep-group">
+                    <span class="g">A PARENT IS DISPUTING HOURS</span>
+                    <div class="rep"><span class="sq"></span> Signed sign-in / out</div>
+                    <div class="rep"><span class="sq"></span> Timeclock detail</div>
+                    <div class="rep"><span class="sq"></span> Daily activity</div>
+                  </div>
+                </div>
+
+                <div class="col-page stack-8">
+                  <div class="between">
+                    <span class="eyebrow">PRINT PREVIEW — US LETTER, LANDSCAPE</span>
+                    <div class="row" style="gap:7px">
+                      <span class="btn sm quiet">Export CSV</span>
+                      <span class="btn sm solid">Print</span>
+                    </div>
+                  </div>
+
+                  <div class="page-wrap">
+                    <div class="page-ghost"></div>
+                    <div class="page" data-note="2" data-note-side="top">
+                      <div class="margin"></div>
+                      <div class="inner">
+                        <div class="letterhead" data-note="3">
+                          <div>
+                            <div class="biz">Bright Start Family Care</div>
+                            <div class="meta">
+                              418 Maplewood Lane, Greenville, SC 29601 · (864) 555-0142<br>
+                              Licence #DC-11482 · Capacity 12
+                            </div>
+                          </div>
+                          <div class="doc">
+                            <div class="t">ATTENDANCE RECORD</div>
+                            <div class="meta">
+                              Jul 1 – Jul 20, 2026<br>
+                              Generated Jul 20, 2026 · 4:12 PM<br>
+                              Page 1 of 3
+                            </div>
+                          </div>
+                        </div>
+                        <div class="head-rule"></div>
+
+                        <table class="wire print" data-note="4">
+                          <colgroup>
+                            <col style="width:126px"><col style="width:66px"><col style="width:50px">
+                            <col style="width:50px"><col style="width:48px"><col style="width:92px">
+                            <col style="width:54px">
+                          </colgroup>
+                          <thead>
+                            <tr>
+                              <th>CHILD</th>
+                              <th>DATE</th>
+                              <th>IN</th>
+                              <th>OUT</th>
+                              <th>HOURS</th>
+                              <th>SIGNED BY</th>
+                              <th>METHOD</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td><span class="bar sm" style="display:block;width:104px"></span></td>
+                              <td>Jul 20, 2026</td>
+                              <td><span class="chip">7:42a</span></td>
+                              <td><span class="chip">4:05p</span></td>
+                              <td>8.38</td>
+                              <td><span class="bar sm" style="display:block;width:80px"></span></td>
+                              <td class="muted">PIN</td>
+                            </tr>
+                            <tr>
+                              <td><span class="bar sm" style="display:block;width:88px"></span></td>
+                              <td>Jul 20, 2026</td>
+                              <td><span class="chip">7:55a</span></td>
+                              <td><span class="chip">3:30p</span></td>
+                              <td>7.58</td>
+                              <td><span class="bar sm" style="display:block;width:72px"></span></td>
+                              <td class="muted">PIN</td>
+                            </tr>
+                            <tr>
+                              <td><span class="bar sm" style="display:block;width:96px"></span></td>
+                              <td>Jul 17, 2026</td>
+                              <td><span class="chip">8:10a</span></td>
+                              <td><span class="chip">5:02p</span></td>
+                              <td>8.87</td>
+                              <td><span class="bar sm" style="display:block;width:84px"></span></td>
+                              <td class="muted">Signature</td>
+                            </tr>
+                            <tr>
+                              <td><span class="bar sm" style="display:block;width:82px"></span></td>
+                              <td>Jul 17, 2026</td>
+                              <td class="faint">Absent</td>
+                              <td class="faint">—</td>
+                              <td>0.00</td>
+                              <td class="muted">Parent notified</td>
+                              <td class="faint">—</td>
+                            </tr>
+                            <tr>
+                              <td><span class="bar sm" style="display:block;width:100px"></span></td>
+                              <td>Jul 16, 2026</td>
+                              <td><span class="chip">7:38a</span></td>
+                              <td><span class="chip">4:44p</span></td>
+                              <td>9.10</td>
+                              <td><span class="bar sm" style="display:block;width:78px"></span></td>
+                              <td class="muted">Signature</td>
+                            </tr>
+                            <tr class="total">
+                              <td>Totals — 7 records</td>
+                              <td></td>
+                              <td></td>
+                              <td></td>
+                              <td>50.60</td>
+                              <td>6 signed</td>
+                              <td>1 absence</td>
+                            </tr>
+                          </tbody>
+                        </table>
+
+                        <div class="continues">Continued on page 2 of 3 — the break falls between children, never inside one</div>
+
+                        <div class="page-foot">
+                          <div class="sig">
+                            <div class="line"></div>
+                            Provider signature &amp; date
+                          </div>
+                          <div class="right">
+                            Bright Start Family Care · Attendance · Jul 1–20, 2026<br>
+                            Generated by Logatot · app.logatot.com
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="aside" data-note="5">
+                    <span class="k">@media print</span>
+                    Landscape page size · table scaled to fit the compliance columns ·
+                    <span class="b">page-break-inside: avoid</span> on every child block ·
+                    <span class="b">dark:print:text-black</span> on every printed surface.
+                  </div>
+
+                  <div class="aside" data-note="6">
+                    <span class="k">SOURCE OF EVERY ROW</span>
+                    Kiosk check-ins and PIN signatures · spoken and tapped meal logs ·
+                    drill and medication events. Nothing on this page was entered for the
+                    sake of this page.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Reports are grouped by the situation that sends someone here, not alphabetically. Nobody opens this screen wanting “the A report” — they open it because a licensor is in the doorway, a subsidy claim is due, or a parent is disputing hours. The three headings are those three moments, so she scans for her situation rather than for a filename.</li>
+      <li data-for="2">The screen shows the page, outlined and margined, at the proportions it will actually print at. These documents end up in a three-ring binder, in a licensor's hand, or stapled to a subsidy claim, so the printed artifact is the deliverable and the screen is only a preview of it. A screen layout that gets reflowed at print time would mean nobody ever sees the thing they are handing over until it is already in someone else's hand.</li>
+      <li data-for="3">Letterhead is generated from the account — business name, licence number, date range, generated timestamp, page numbering. A provider should never open a word processor to make a document look official, because the moment she does, the official-looking version and the true version start to drift apart.</li>
+      <li data-for="4">The print layer is designed rather than inherited: landscape page sizing so the compliance columns fit, the table scaled to the page rather than clipped, and <span class="b">page-break-inside: avoid</span> so a child's record never splits across two sheets. A record broken over a page turn is the one an inspector reads as missing.</li>
+      <li data-for="5">Dark mode is neutralised for print. A provider printing from a dark screen still gets black on white, because getting a licensing document wrong on account of a theme preference is exactly the class of bug that never shows up in a design review and always shows up on paper.</li>
+      <li data-for="6">The compliance artifacts stopped being separate work. Attendance records, signed releases, CACFP claims and fire-drill logs are all generated from events already captured for another reason — she logged a check-in, not a report line. That is the whole argument for capturing events at the moment they happen rather than reconstructing them at month end.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

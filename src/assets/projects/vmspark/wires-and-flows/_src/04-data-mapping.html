@@ -1,0 +1,285 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Data Mapping — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* A narrower nav buys the pane ~18px. The resolution card is two columns —
+     the value as the VMS sent it, and the ATS record it has to become — and
+     both sides need enough width to show a full address without wrapping. */
+  .side { width: 168px; }
+
+  .map-card { padding: 0; display: flex; overflow: hidden; }
+  .mc-l { width: 306px; flex: none; padding: 13px 15px; border-right: 1px solid var(--line); }
+  .mc-r { flex: 1; min-width: 0; padding: 13px 15px; background: var(--fill-1); }
+  .mc-r.plain { background: var(--paper); }
+
+  .addr { margin: 5px 0 0; font-size: 11.5px; line-height: 1.45; color: var(--muted); }
+  .lnk { font-size: 11px; color: var(--accent); }
+
+  /* Suggestions carry a confidence score, so the meter has to be readable at a
+     glance without being read as a progress bar. Short, and only the leading
+     candidate takes the accent. */
+  .sugg { border: 1px solid var(--line); border-radius: var(--r); background: var(--paper); overflow: hidden; }
+  .sugg .s-row { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-bottom: 1px solid var(--hair); }
+  .sugg .s-row:last-child { border-bottom: none; }
+  .sugg .s-row.pick { background: var(--accent-tint); }
+  .sugg .s-txt { flex: 1; min-width: 0; }
+  .sugg .n { display: block; font-size: 11.5px; font-weight: 600; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .sugg .m { display: block; margin-top: 2px; font-size: 10.5px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .meter { width: 72px; flex: none; height: 5px; border-radius: 3px; background: var(--fill-3); overflow: hidden; }
+  .meter i { display: block; height: 100%; background: var(--fill-4); }
+  .meter i.hi { background: var(--accent); }
+  .pct { width: 30px; flex: none; text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .pct.hi { color: var(--accent); font-weight: 600; }
+
+  .matched { border: 1px solid var(--line); border-radius: var(--r); background: var(--paper); padding: 10px 12px; }
+  .matched.gone { border-color: var(--warn); background: var(--warn-tint); }
+  .acts { display: flex; justify-content: flex-end; gap: 8px; margin-top: 12px; }
+  .note-l { margin: 6px 0 0; font-size: 11.5px; line-height: 1.5; color: var(--muted); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Data Mapping</h1>
+      <p class="sub">Where an operator resolves inbound VMS vocabulary against the account's ATS reference data.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /data_mapping/facilities?state=unmapped</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i></i><i class="on"></i><i></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Data Mapping</div>
+            <div class="nav-item on">Facilities <span class="count">24</span></div>
+            <div class="nav-item">Professions <span class="count">7</span></div>
+            <div class="nav-item">Specialties <span class="count">31</span></div>
+            <div class="nav-item">Job Types <span class="count">2</span></div>
+            <div class="nav-item">Shift Details <span class="count">5</span></div>
+            <div class="nav-item">Departments</div>
+            <div class="nav-item">VMS Sources</div>
+            <div class="group">ATS REFERENCE</div>
+            <div class="nav-item">ATS Facilities</div>
+            <div class="nav-item">ATS Professions</div>
+            <div class="nav-item locked">Payload Viewer</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search facilities, professions, specialties… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Facilities</p>
+                  <p class="sub-line">24 unmapped · 1,203 mapped · last auto-map run 06:14</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm">Re-run Auto-Map</span>
+                  <span class="btn sm">Sync with ATS</span>
+                </div>
+              </div>
+
+              <div class="tabs" data-note="1">
+                <span class="tab on">Facilities <span class="chip sm on">24</span></span>
+                <span class="tab">Professions <span class="chip sm">7</span></span>
+                <span class="tab">Specialties <span class="chip sm">31</span></span>
+                <span class="tab">Job Types <span class="chip sm">2</span></span>
+              </div>
+
+              <div class="between" data-note="2">
+                <div class="row" style="gap:8px">
+                  <span class="chip on">Unmapped 24</span>
+                  <span class="chip">Mapped 1,203</span>
+                  <span class="chip">Ignored 38</span>
+                </div>
+                <div class="row" style="gap:8px">
+                  <span class="sub-line">Sort</span>
+                  <span class="field" style="width:186px">Unmatched first, then oldest ⌄</span>
+                </div>
+              </div>
+
+              <div class="panel map-card">
+                <div class="mc-l">
+                  <div class="between">
+                    <span class="eyebrow">IMPORTED FROM VMS</span>
+                    <span class="sub-line">AMN</span>
+                  </div>
+                  <p class="h-sm" style="margin-top:9px">Mercy Genl - Sac</p>
+                  <p class="addr">4001 J St<br>Sacramento, CA 95819</p>
+                  <div class="row" style="gap:9px;margin-top:11px">
+                    <span class="lnk">raw payload ⌄</span>
+                    <span class="chip sm warn">12 listings blocked</span>
+                  </div>
+                  <p class="note-l">Auto-map skipped: street, city, state and zip matched an ATS record, the facility name did not. All five fields have to agree before a mapping is written without a person.</p>
+                </div>
+                <div class="mc-r">
+                  <span class="eyebrow">MATCHED TO ATS</span>
+                  <div style="margin-top:8px"><span class="field focus" style="display:block">Mercy General|</span></div>
+                  <div class="sugg" style="margin-top:8px" data-note="3">
+                    <div class="s-row pick">
+                      <span class="s-txt">
+                        <span class="n">Mercy General Hospital — Sacramento, CA</span>
+                        <span class="m">ATS #44812 · 4001 J Street · WorkSite</span>
+                      </span>
+                      <span class="meter"><i class="hi" style="width:92%"></i></span>
+                      <span class="pct hi">92%</span>
+                    </div>
+                    <div class="s-row">
+                      <span class="s-txt">
+                        <span class="n">Mercy General Surgery Center — Sacramento, CA</span>
+                        <span class="m">ATS #44907 · 3941 J Street</span>
+                      </span>
+                      <span class="meter"><i style="width:71%"></i></span>
+                      <span class="pct">71%</span>
+                    </div>
+                    <div class="s-row">
+                      <span class="s-txt">
+                        <span class="n">Mercy San Juan Medical Center — Carmichael, CA</span>
+                        <span class="m">ATS #44520 · 6501 Coyle Avenue</span>
+                      </span>
+                      <span class="meter"><i style="width:54%"></i></span>
+                      <span class="pct">54%</span>
+                    </div>
+                  </div>
+                  <div class="acts" data-note="4">
+                    <span class="btn sm">Ignore</span>
+                    <span class="btn sm solid">Update</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel map-card">
+                <div class="mc-l">
+                  <div class="between">
+                    <span class="eyebrow">IMPORTED FROM VMS</span>
+                    <span class="sub-line">Aya</span>
+                  </div>
+                  <p class="h-sm" style="margin-top:9px">MERCY GENERAL HOSP (SACRAMENTO)</p>
+                  <p class="addr">4001 J STREET<br>SACRAMENTO CA 95819</p>
+                  <div class="row" style="gap:9px;margin-top:11px">
+                    <span class="lnk">raw payload ⌄</span>
+                    <span class="chip sm warn">6 listings blocked</span>
+                  </div>
+                </div>
+                <div class="mc-r plain">
+                  <span class="eyebrow">MATCHED TO ATS</span>
+                  <div style="margin-top:8px"><span class="field placeholder" style="display:block">Search ATS facilities…</span></div>
+                  <p class="note-l">Same site as the row above, spelled differently by a second VMS. Exact-match auto-map cannot join them, and no fuzzy candidate cleared the 60% floor.</p>
+                  <div class="acts" data-note="5">
+                    <span class="btn sm">Ignore</span>
+                    <span class="btn sm solid">Update</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel map-card">
+                <div class="mc-l">
+                  <div class="between">
+                    <span class="eyebrow">IMPORTED FROM VMS</span>
+                    <span class="sub-line">HealthTrust</span>
+                  </div>
+                  <p class="h-sm" style="margin-top:9px">St. Josephs Med Ctr - Stockton</p>
+                  <p class="addr">1800 N California St<br>Stockton, CA 95204</p>
+                  <div class="row" style="gap:9px;margin-top:11px">
+                    <span class="lnk">raw payload ⌄</span>
+                    <span class="chip sm ok">9 listings unblocked</span>
+                  </div>
+                </div>
+                <div class="mc-r plain">
+                  <span class="eyebrow">MATCHED TO ATS</span>
+                  <div class="matched" style="margin-top:8px">
+                    <div class="between">
+                      <span class="h-sm">St. Joseph's Medical Center</span>
+                      <span class="sub-line">saved 2 days ago</span>
+                    </div>
+                    <p class="addr">ATS #44903 · Bullhorn · 1800 N California St, Stockton, CA 95204</p>
+                    <div class="between" style="margin-top:9px">
+                      <span class="row" style="gap:6px">
+                        <span class="chip sm ok">WorkSite</span>
+                        <span class="chip sm ok">BillTo</span>
+                      </span>
+                      <span class="lnk">change match</span>
+                    </div>
+                  </div>
+                  <div class="acts" data-note="6">
+                    <span class="btn sm quiet">Ignore</span>
+                    <span class="btn sm solid">Update</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel map-card">
+                <div class="mc-l">
+                  <div class="between">
+                    <span class="eyebrow">IMPORTED FROM VMS</span>
+                    <span class="sub-line">Medefis</span>
+                  </div>
+                  <p class="h-sm" style="margin-top:9px">UC Davis Med Ctr</p>
+                  <p class="addr">2315 Stockton Blvd<br>Sacramento, CA 95817</p>
+                  <div class="row" style="gap:9px;margin-top:11px">
+                    <span class="lnk">raw payload ⌄</span>
+                    <span class="chip sm warn">4 listings blocked</span>
+                  </div>
+                </div>
+                <div class="mc-r plain">
+                  <span class="eyebrow">MATCHED TO ATS</span>
+                  <div class="matched gone" style="margin-top:8px">
+                    <div class="between">
+                      <span class="chip sm warn">DELETED IN ATS</span>
+                      <span class="sub-line">detected 14/07/2026</span>
+                    </div>
+                    <p class="h-sm" style="margin-top:8px">UC Davis Medical Center</p>
+                    <p class="addr">ATS #44117 no longer returned by the Bullhorn reference pull.</p>
+                  </div>
+                  <div class="acts">
+                    <span class="btn sm">Ignore</span>
+                    <span class="btn sm solid">Update</span>
+                  </div>
+                </div>
+              </div>
+
+              <p class="sub-line" style="text-align:center">4 of 24 unmapped facilities shown · load 20 more</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The queue is partitioned by entity type, because facilities, professions and specialties are settled by different people with different reference knowledge. Each tab carries its own unmapped count, and the same numbers sit in the sidebar badges — that badge is how anyone arrives here at all, from whichever screen they were on.</li>
+      <li data-for="2">Unmatched rows sort first by default, so the list visibly shrinks toward empty as the work is done. A queue with a visible end is the difference between a chore someone finishes and a screen they stop opening; sorting alphabetically would hide the end and cost nothing to fix later.</li>
+      <li data-for="3">Auto-map has already run before anyone sees this — exact match on name, street, city, state and zip — so what is left is only what the rules could not settle. The fuzzy candidates below that are ranked but never applied: a 92% guess is worth showing and not worth writing on the operator's behalf.</li>
+      <li data-for="4">Saving moves focus to the next unmapped row rather than returning to the top. Mapping debt is cleared in batches of forty, not one at a time, so this optimises for the fortieth row rather than the first — and the write itself is queued, because one facility mapping fans out to potentially thousands of listings and a synchronous save would leave someone watching a spinner.</li>
+      <li data-for="5">Ignore is a real decision, not a skip. It writes a record that this value has no ATS counterpart, which is what stops it re-queueing tomorrow morning. A skip that silently returns is worse than no queue at all — the count stops meaning anything and the operator learns to distrust it.</li>
+      <li data-for="6">A resolved row shows what the fix bought: nine listings unblocked, and which ATS roles the facility now fills. The cost of leaving a row alone is on the unresolved cards as blocked-listing counts, so triage order is a judgement about throughput rather than about which name looks easiest.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

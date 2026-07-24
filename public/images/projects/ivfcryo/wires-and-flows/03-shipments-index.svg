@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1090" viewBox="0 0 1400 1090">
+  <rect x="0" y="0" width="1400" height="1090" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="46" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">Shipments Index</text>
+  <line x1="40" y1="68" x2="1360" y2="68" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Browser frame -->
+  <rect x="40" y="95" width="1320" height="955" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Browser chrome -->
+  <rect x="40" y="95" width="1320" height="50" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="66" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="84" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="102" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="125" y="107" width="440" height="26" rx="13" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="141" y="124" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com/shipments/status/pending</text>
+
+  <!-- App header bar -->
+  <line x1="40" y1="200" x2="1360" y2="200" stroke="#333333" stroke-width="1.5"/>
+  <rect x="65" y="160" width="26" height="26" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="101" y="181" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <rect x="1250" y="158" width="90" height="30" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1295" y="178" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Logout</text>
+
+  <!-- Sidebar -->
+  <line x1="280" y1="200" x2="280" y2="1050" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="55" y="258" width="210" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="70" y="228" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="240" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">New Shipment</text>
+
+  <rect x="70" y="268" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="280" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Shipments</text>
+
+  <rect x="70" y="308" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="320" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Package Types</text>
+
+  <rect x="70" y="348" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="360" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Senseaware Trackers</text>
+
+  <rect x="70" y="388" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="400" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Dry Shippers</text>
+
+  <line x1="70" y1="425" x2="265" y2="425" stroke="#cccccc" stroke-width="1"/>
+
+  <rect x="70" y="448" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="460" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Address Book</text>
+
+  <rect x="70" y="488" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="500" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Users</text>
+
+  <rect x="70" y="528" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="540" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Admin Settings</text>
+
+  <rect x="70" y="568" width="14" height="14" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="96" y="580" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment Feedbacks</text>
+
+  <!-- Main: page heading + primary actions -->
+  <text x="305" y="242" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">My Shipments</text>
+  <rect x="1085" y="218" width="100" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1135" y="238" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Export</text>
+  <rect x="1200" y="218" width="135" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1267" y="238" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">New Shipment</text>
+
+  <!-- Filter panel -->
+  <rect x="305" y="262" width="1030" height="170" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <text x="325" y="292" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Start Date</text>
+  <rect x="325" y="300" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="525" y="292" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">End Date</text>
+  <rect x="525" y="300" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="725" y="292" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Shipping Company</text>
+  <rect x="725" y="300" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="925" y="292" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Delivery Company</text>
+  <rect x="925" y="300" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1125" y="292" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Client Type</text>
+  <rect x="1125" y="300" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <text x="325" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Pickup Date</text>
+  <rect x="325" y="375" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="525" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Ship Date</text>
+  <rect x="525" y="375" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="725" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Search</text>
+  <rect x="725" y="375" width="180" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="925" y="375" width="140" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="995" y="396" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Filter</text>
+
+  <!-- Status tabs -->
+  <rect x="305" y="447" width="90" height="30" rx="15" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="350" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Pending</text>
+  <rect x="405" y="447" width="90" height="30" rx="15" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="450" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Active</text>
+  <rect x="505" y="447" width="100" height="30" rx="15" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="555" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Complete</text>
+  <rect x="615" y="447" width="100" height="30" rx="15" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="665" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Show All</text>
+  <text x="1335" y="466" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="end">Total Shipments</text>
+
+  <!-- Shipment card 1 -->
+  <rect x="305" y="492" width="1030" height="150" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="305" y="492" width="455" height="150" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="330" y="520" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Origin Clinic &#8250; Destination Clinic</text>
+  <text x="330" y="544" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Pickup Date</text>
+  <text x="330" y="562" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Ship Date</text>
+  <rect x="330" y="578" width="90" height="24" rx="12" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="375" y="594" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Status</text>
+  <text x="790" y="518" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Shipment ID</text>
+  <line x1="790" y1="532" x2="870" y2="532" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="518" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Reference ID</text>
+  <line x1="990" y1="532" x2="1070" y2="532" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="562" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Temperature</text>
+  <line x1="790" y1="576" x2="870" y2="576" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="562" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Quoted Price</text>
+  <line x1="990" y1="576" x2="1070" y2="576" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="606" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Initiator</text>
+  <line x1="790" y1="620" x2="870" y2="620" stroke="#333333" stroke-width="1.5"/>
+  <rect x="1205" y="505" width="110" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="523" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">View</text>
+  <rect x="1205" y="545" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="563" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1205" y="585" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1260" y="603" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Delete</text>
+
+  <!-- Shipment card 2 -->
+  <rect x="305" y="658" width="1030" height="150" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="305" y="658" width="455" height="150" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="330" y="686" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Origin Clinic &#8250; Destination Clinic</text>
+  <text x="330" y="710" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Pickup Date</text>
+  <text x="330" y="728" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Ship Date</text>
+  <rect x="330" y="744" width="90" height="24" rx="12" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="375" y="760" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Status</text>
+  <text x="790" y="684" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Shipment ID</text>
+  <line x1="790" y1="698" x2="870" y2="698" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="684" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Reference ID</text>
+  <line x1="990" y1="698" x2="1070" y2="698" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="728" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Temperature</text>
+  <line x1="790" y1="742" x2="870" y2="742" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="728" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Quoted Price</text>
+  <line x1="990" y1="742" x2="1070" y2="742" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="772" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Initiator</text>
+  <line x1="790" y1="786" x2="870" y2="786" stroke="#333333" stroke-width="1.5"/>
+  <rect x="1205" y="671" width="110" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="689" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">View</text>
+  <rect x="1205" y="711" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="729" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1205" y="751" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1260" y="769" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Delete</text>
+
+  <!-- Shipment card 3 -->
+  <rect x="305" y="824" width="1030" height="150" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="305" y="824" width="455" height="150" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="330" y="852" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Origin Clinic &#8250; Destination Clinic</text>
+  <text x="330" y="876" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Pickup Date</text>
+  <text x="330" y="894" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Ship Date</text>
+  <rect x="330" y="910" width="90" height="24" rx="12" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="375" y="926" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Status</text>
+  <text x="790" y="850" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Shipment ID</text>
+  <line x1="790" y1="864" x2="870" y2="864" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="850" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Reference ID</text>
+  <line x1="990" y1="864" x2="1070" y2="864" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="894" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Temperature</text>
+  <line x1="790" y1="908" x2="870" y2="908" stroke="#333333" stroke-width="1.5"/>
+  <text x="990" y="894" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Quoted Price</text>
+  <line x1="990" y1="908" x2="1070" y2="908" stroke="#333333" stroke-width="1.5"/>
+  <text x="790" y="938" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Initiator</text>
+  <line x1="790" y1="952" x2="870" y2="952" stroke="#333333" stroke-width="1.5"/>
+  <rect x="1205" y="837" width="110" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">View</text>
+  <rect x="1205" y="877" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="895" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1205" y="917" width="110" height="28" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1260" y="935" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Delete</text>
+
+  <!-- Pagination + repeated primary action -->
+  <text x="305" y="1013" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">&#8249; 1 2 3 4 &#8250;</text>
+  <rect x="1200" y="994" width="135" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1267" y="1014" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">New Shipment</text>
+</svg>

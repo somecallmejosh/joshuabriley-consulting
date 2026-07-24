@@ -1,0 +1,188 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Candidate matching — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Two bands, because the argument of the sheet is the seam between them: the
+     system only ever proposes, and every irreversible thing happens below the
+     rule, where a person is holding it. */
+  .band {
+    width: 100% !important;
+    border-top: 1px solid var(--line);
+  }
+  .lane { width: 300px !important; }
+
+  /* The kit has no legend key for the wavy-bottomed .msg shape. Approximated
+     here rather than added to theme.css while other sheets are in flight. */
+  .flow-legend .key.msg { border-bottom-style: dotted; border-bottom-width: 2px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Candidate Matching</h1>
+      <p class="sub">How a candidate and a requisition get proposed to each other — and why only a recruiter closes the loop.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="56" data-rowh="92"
+           data-edges='[
+             {"from":"n1","to":"d1"},
+             {"from":"d1","to":"n2","label":"yes"},
+             {"from":"d1","to":"x1","fromSide":"r","toSide":"l","label":"no","labelDy":-4},
+             {"from":"a1","to":"n2","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n2","to":"d2"},
+             {"from":"d2","to":"n3","label":"current"},
+             {"from":"d2","to":"x2","fromSide":"r","toSide":"l","label":"lapsed","labelDy":-4},
+             {"from":"n3","to":"n4"},
+             {"from":"n4","to":"s1","dashed":true,"label":"proposed, not placed","labelDx":10,"labelDy":90},
+             {"from":"s1","to":"s2"},
+             {"from":"s2","to":"c1"},
+             {"from":"c1","to":"s3","label":"submit"},
+             {"from":"c1","to":"r1","fromSide":"r","toSide":"l","label":"reject","labelDy":-4},
+             {"from":"a2","to":"s3","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"s3","to":"s4"},
+             {"from":"s4","to":"s5"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="lane" data-cell="0,0" data-dy="-4">
+          SYSTEM PROPOSES
+          <span class="s">what has to be true before a match is worth showing anyone</span>
+        </div>
+
+        <div class="node entry" id="n1" data-cell="1,1">
+          <span class="t">Nightly automatch run</span>
+          <span class="s">Per account · candidates × open requisitions</span>
+        </div>
+
+        <div class="node branch" id="d1" data-cell="2,1" data-dy="6">
+          <span class="t">Profession &amp; specialty mapped?</span>
+        </div>
+
+        <div class="node bad" id="x1" data-cell="2,2" data-dy="10" data-note="1">
+          <span class="t">Never enters the pool</span>
+          <span class="s">“Reg Nurse — I.C.U.” unresolved, so there is nothing to compare</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="3,0" data-dy="18">
+          <span class="t">Matching runs on mapped values</span>
+          Both sides carry a flattened copy of profession, specialty and licensed
+          states — one SQL scan of the roster rather than a walk per candidate.
+        </div>
+
+        <div class="node" id="n2" data-cell="3,1" data-dy="18">
+          <span class="t">Compare the mapped vocabulary</span>
+          <span class="s">Profession, specialty, licensed states, shift, bill rate</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="4,1" data-dy="26">
+          <span class="t">Licence current in that state?</span>
+        </div>
+
+        <div class="node bad" id="x2" data-cell="4,2" data-dy="30" data-note="2">
+          <span class="t">Held back from matching</span>
+          <span class="s">TX RN licence lapsed 12 Mar · unplaceable however well she fits</span>
+        </div>
+
+        <div class="node dashed" id="n3" data-cell="5,1" data-dy="34" data-note="3">
+          <span class="async">ASYNC</span>
+          <span class="t">Score, and record the working</span>
+          <span class="s">Which criteria met, which missed — stored, not just totalled</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="6,1" data-dy="42">
+          <span class="t">JobApplicationMatch created</span>
+          <span class="s">REQ-48812 · Baylor Scott &amp; White · Telemetry · 3 of 4</span>
+        </div>
+
+        <!-- Human band -->
+        <div class="band" data-cell="8,0" data-dy="-6"></div>
+        <div class="lane" data-cell="8,0" data-dy="14">
+          RECRUITER DISPOSES
+          <span class="s">the only place a match turns into a commitment</span>
+        </div>
+
+        <div class="node" id="s1" data-cell="9,1" data-dy="10" data-note="4">
+          <span class="t">Lands in the recruiter queue</span>
+          <span class="s">Same table as inbound applications · status New</span>
+        </div>
+
+        <div class="node" id="s2" data-cell="10,1" data-dy="16">
+          <span class="t">Reads the breakdown, not the number</span>
+          <span class="s">Specialty, state, shift met · bill rate $8 over the cap</span>
+        </div>
+
+        <div class="node choice" id="c1" data-cell="11,1" data-dy="24">
+          <span class="t">Recruiter decides</span>
+        </div>
+
+        <div class="node exit" id="r1" data-cell="11,2" data-dy="26" data-note="5">
+          <span class="t">Rejected</span>
+          <span class="s">Returns to the pool · re-matchable on tonight’s run</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="12,0" data-dy="34">
+          <span class="t">The confirm is specific</span>
+          It names the candidate, the requisition and the facility, so the one
+          thing it can prevent is submitting against the wrong REQ.
+        </div>
+
+        <div class="node msg" id="s3" data-cell="12,1" data-dy="34">
+          <span class="t">Confirm submission</span>
+          <span class="s">“Submit A. Reyes to REQ-48812 at Baylor Scott &amp; White?”</span>
+        </div>
+
+        <div class="design-note" data-cell="13,0" data-dy="44">
+          The correct path is the easy one; the expensive path is the one that asks.
+        </div>
+
+        <div class="node commit" id="s4" data-cell="13,1" data-dy="44" data-note="6">
+          <span class="t">Writes back to the ATS</span>
+          <span class="s">Externally visible · no in-app undo</span>
+        </div>
+
+        <div class="node good" id="s5" data-cell="14,1" data-dy="52">
+          <span class="t">Submitted · REQ-48812</span>
+          <span class="s">The ATS owns the record from here</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key choice"></span> User decision</span>
+        <span class="item"><span class="key msg"></span> Confirm</span>
+        <span class="item"><span class="key commit"></span> Commit</span>
+        <span class="item"><span class="key good"></span> Submitted</span>
+        <span class="item"><span class="key bad"></span> Blocked</span>
+        <span class="item"><span class="key exit"></span> Reversible exit</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">An unmapped profession or specialty is not a tidiness problem, it is a lost placement. The candidate and the requisition are never compared at all, so nobody sees a gap — the match simply does not exist, and no recruiter can miss what was never proposed. This is the clearest place mapping debt shows up as revenue.</li>
+      <li data-for="2">Credential state is checked before a match is proposed rather than at submission. A lapsed licence makes a candidate unplaceable however well she fits, and the expensive version of that discovery is a recruiter who has already made the call, sold the shift and then finds out.</li>
+      <li data-for="3">The run stores which criteria matched and which did not, not just a total. A bare score gives a recruiter nothing to act on; “bill rate $8 over the cap” tells her whether to argue the rate or move on, which is what turns a ranked list into a work queue.</li>
+      <li data-for="4">A match arrives at status New in the same queue as a human application, and nothing advances it on its own. The system is allowed to have an opinion about who fits — it is not allowed to act on one, because the cost of a wrong submission lands on the facility relationship rather than on the algorithm.</li>
+      <li data-for="5">Rejecting is deliberately cheap: it costs one click, writes nothing outward, and the candidate is back in tonight’s run. Making the reversible action as light as possible is what stops a recruiter treating submission as the safe default when she is working forty matches.</li>
+      <li data-for="6">Submission is the only step here that is visible outside the product and cannot be taken back in-app, so it is the only one that asks. Everything before it stays one click, which is the rule the whole flow is built on — make the correct path easier than the incorrect one rather than warning about both equally.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

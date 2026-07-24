@@ -1,0 +1,185 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2220" viewBox="0 0 1400 2220">
+  <defs>
+    <marker id="arw" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#333333"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="2220" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="40" y="48" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">User Flow — Creating a Shipment</text>
+  <line x1="40" y1="72" x2="1360" y2="72" stroke="#cccccc" stroke-width="1"/>
+
+  <g stroke="#333333" stroke-width="1.5" fill="#ffffff">
+    <!-- A entry terminal -->
+    <rect x="420" y="120" width="280" height="52" rx="18"/>
+    <!-- B -->
+    <rect x="440" y="225" width="240" height="52" rx="2"/>
+    <!-- D1 decision -->
+    <polygon points="430,375 560,330 690,375 560,420"/>
+    <!-- L1 -->
+    <rect x="90" y="345" width="250" height="60" rx="2"/>
+    <!-- R1 -->
+    <rect x="800" y="345" width="240" height="60" rx="2"/>
+    <!-- C -->
+    <rect x="440" y="480" width="240" height="60" rx="2"/>
+    <!-- E -->
+    <rect x="440" y="610" width="240" height="52" rx="2"/>
+    <!-- F -->
+    <rect x="440" y="720" width="240" height="52" rx="2"/>
+    <!-- D2 decision -->
+    <polygon points="410,880 560,832 710,880 560,928"/>
+    <!-- R2 -->
+    <rect x="800" y="850" width="240" height="60" rx="2"/>
+    <!-- G -->
+    <rect x="440" y="1000" width="240" height="90" rx="2"/>
+    <!-- L2 -->
+    <rect x="110" y="997" width="220" height="56" rx="2"/>
+    <!-- H user choice parallelogram -->
+    <polygon points="460,1140 700,1140 680,1196 440,1196"/>
+    <!-- I -->
+    <rect x="440" y="1290" width="240" height="58" rx="2"/>
+    <!-- J -->
+    <rect x="440" y="1440" width="240" height="52" rx="2"/>
+    <!-- D3 decision -->
+    <polygon points="430,1600 560,1555 690,1600 560,1645"/>
+    <!-- R3 -->
+    <rect x="800" y="1568" width="240" height="64" rx="2"/>
+    <!-- K -->
+    <rect x="440" y="1720" width="240" height="60" rx="2"/>
+    <!-- M system message (document) -->
+    <path d="M150,1870 H400 V1942 C358,1962 316,1922 275,1942 C234,1962 192,1922 150,1942 Z"/>
+    <!-- N -->
+    <rect x="800" y="1875" width="240" height="56" rx="2"/>
+    <!-- O exit terminal -->
+    <rect x="420" y="2020" width="280" height="64" rx="18"/>
+  </g>
+
+  <!-- emphasis fills -->
+  <rect x="420" y="120" width="280" height="52" rx="18" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <rect x="420" y="2020" width="280" height="64" rx="18" fill="#e0e0e0" stroke="#333333" stroke-width="1.5"/>
+  <polygon points="460,1140 700,1140 680,1196 440,1196" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+
+  <!-- node labels -->
+  <g font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">
+    <text x="560" y="150">Client opens New Shipment</text>
+    <text x="560" y="255">Select service type</text>
+    <text x="560" y="379">Ground or International?</text>
+    <text x="215" y="368">Show “Contact IVF CRYO</text>
+    <text x="215" y="386">for Quote”</text>
+    <text x="920" y="368">Live price quote</text>
+    <text x="920" y="386">calculated</text>
+    <text x="560" y="503">Choose pickup + delivery</text>
+    <text x="560" y="521">dates</text>
+    <text x="560" y="640">Select package type</text>
+    <text x="560" y="750">Choose pickup contact</text>
+    <text x="560" y="884">Contact in Address Book?</text>
+    <text x="920" y="875">Add contact inline</text>
+    <text x="920" y="895" font-size="11" fill="#666666">Modal over the form</text>
+    <text x="560" y="1030">Choose delivery contact</text>
+    <text x="560" y="1052" font-size="11" fill="#666666">Same book, same inline add</text>
+    <text x="220" y="1019">Add contact inline</text>
+    <text x="220" y="1039" font-size="11" fill="#666666">Same modal</text>
+    <text x="565" y="1163">Set notification</text>
+    <text x="565" y="1181">preferences</text>
+    <text x="560" y="1313">Add insurance + tissue</text>
+    <text x="560" y="1331">type</text>
+    <text x="560" y="1470">Accept agreement</text>
+    <text x="560" y="1604">Validation passes?</text>
+    <text x="920" y="1592">Errors shown inline at</text>
+    <text x="920" y="1610">the field</text>
+    <text x="920" y="1628" font-size="11" fill="#666666">Form state preserved</text>
+    <text x="560" y="1746">Shipment created</text>
+    <text x="560" y="1766" font-size="11" fill="#666666">Status: Pending</text>
+    <text x="275" y="1901">Confirmation email to</text>
+    <text x="275" y="1919">initiator</text>
+    <text x="920" y="1907">Appears in admin queue</text>
+    <text x="560" y="2048">Awaiting admin fulfilment</text>
+    <text x="560" y="2068" font-size="11" fill="#666666">see flow 13</text>
+  </g>
+
+  <!-- connectors -->
+  <g stroke="#333333" stroke-width="1.5" fill="none">
+    <line x1="560" y1="172" x2="560" y2="225" marker-end="url(#arw)"/>
+    <line x1="560" y1="277" x2="560" y2="330" marker-end="url(#arw)"/>
+
+    <!-- D1 branches -->
+    <line x1="430" y1="375" x2="340" y2="375" marker-end="url(#arw)"/>
+    <line x1="690" y1="375" x2="800" y2="375" marker-end="url(#arw)"/>
+
+    <!-- merge to C -->
+    <polyline points="215,405 215,450 560,450"/>
+    <polyline points="920,405 920,450 560,450"/>
+    <line x1="560" y1="450" x2="560" y2="480" marker-end="url(#arw)"/>
+
+    <line x1="560" y1="540" x2="560" y2="610" marker-end="url(#arw)"/>
+    <line x1="560" y1="662" x2="560" y2="720" marker-end="url(#arw)"/>
+    <line x1="560" y1="772" x2="560" y2="832" marker-end="url(#arw)"/>
+
+    <!-- D2 branches -->
+    <line x1="710" y1="880" x2="800" y2="880" marker-end="url(#arw)"/>
+    <polyline points="920,850 920,746 680,746" marker-end="url(#arw)"/>
+    <line x1="560" y1="928" x2="560" y2="1000" marker-end="url(#arw)"/>
+
+    <!-- G side branch -->
+    <line x1="440" y1="1025" x2="330" y2="1025" marker-end="url(#arw)"/>
+    <polyline points="220,1053 220,1070 440,1070" marker-end="url(#arw)"/>
+
+    <line x1="560" y1="1090" x2="560" y2="1140" marker-end="url(#arw)"/>
+    <line x1="560" y1="1196" x2="560" y2="1290" marker-end="url(#arw)"/>
+    <line x1="560" y1="1348" x2="560" y2="1440" marker-end="url(#arw)"/>
+    <line x1="560" y1="1492" x2="560" y2="1555" marker-end="url(#arw)"/>
+
+    <!-- D3 branches -->
+    <line x1="690" y1="1600" x2="800" y2="1600" marker-end="url(#arw)"/>
+    <line x1="560" y1="1645" x2="560" y2="1720" marker-end="url(#arw)"/>
+
+    <!-- validation loop back to dates section -->
+    <polyline points="1040,1600 1120,1600 1120,510 680,510" marker-end="url(#arw)"/>
+
+    <!-- K fan-out -->
+    <polyline points="560,1780 560,1820 275,1820 275,1870" marker-end="url(#arw)"/>
+    <polyline points="560,1820 920,1820 920,1875" marker-end="url(#arw)"/>
+
+    <!-- merge to exit -->
+    <polyline points="275,1952 275,1980 560,1980"/>
+    <polyline points="920,1931 920,1980 560,1980"/>
+    <line x1="560" y1="1980" x2="560" y2="2020" marker-end="url(#arw)"/>
+  </g>
+
+  <!-- branch + edge labels -->
+  <g font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333">
+    <text x="385" y="367" text-anchor="middle">Yes</text>
+    <text x="745" y="367" text-anchor="middle">No</text>
+    <text x="755" y="871">No</text>
+    <text x="572" y="965">Yes</text>
+    <text x="385" y="1017" text-anchor="middle">No</text>
+    <text x="300" y="1063" text-anchor="middle">returns selected</text>
+    <text x="800" y="738" text-anchor="middle">returns selected</text>
+    <text x="745" y="1592" text-anchor="middle">No</text>
+    <text x="572" y="1688">Yes</text>
+    <text x="900" y="502" text-anchor="middle">returns to the failing section — nothing re-typed</text>
+  </g>
+
+  <!-- legend -->
+  <g>
+    <line x1="40" y1="2130" x2="1360" y2="2130" stroke="#cccccc" stroke-width="1"/>
+    <g stroke="#333333" stroke-width="1.5" fill="#ffffff">
+      <rect x="60" y="2158" width="34" height="20" rx="10" fill="#f2f2f2"/>
+      <rect x="180" y="2158" width="34" height="20" rx="2"/>
+      <polygon points="300,2168 317,2158 334,2168 317,2178"/>
+      <polygon points="425,2158 459,2158 452,2178 418,2178" fill="#f2f2f2"/>
+      <path d="M600,2158 H634 V2172 C628,2180 622,2166 617,2172 C612,2178 606,2166 600,2172 Z"/>
+      <rect x="770" y="2158" width="34" height="20" rx="10" fill="#e0e0e0"/>
+    </g>
+    <g font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">
+      <text x="104" y="2172">Entry</text>
+      <text x="224" y="2172">Step</text>
+      <text x="344" y="2172">Branch</text>
+      <text x="469" y="2172">User choice</text>
+      <text x="644" y="2172">System message</text>
+      <text x="814" y="2172">Exit</text>
+    </g>
+  </g>
+</svg>

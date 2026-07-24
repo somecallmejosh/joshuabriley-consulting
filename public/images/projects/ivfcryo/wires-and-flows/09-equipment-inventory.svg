@@ -1,0 +1,231 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1230" viewBox="0 0 1400 1230">
+  <rect x="0" y="0" width="1400" height="1230" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="46" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">Equipment &amp; Inventory</text>
+  <line x1="40" y1="68" x2="1360" y2="68" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Browser frame -->
+  <rect x="40" y="100" width="1320" height="1090" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <line x1="40" y1="140" x2="1360" y2="140" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="62" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="80" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="98" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="120" y="109" width="300" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="132" y="124" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com/package_types</text>
+
+  <!-- App header -->
+  <line x1="40" y1="190" x2="1360" y2="190" stroke="#999999" stroke-width="1.5"/>
+  <rect x="62" y="155" width="20" height="20" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="92" y="171" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <rect x="1268" y="152" width="72" height="26" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1304" y="169" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Logout</text>
+
+  <!-- Sidebar -->
+  <line x1="260" y1="190" x2="260" y2="1190" stroke="#999999" stroke-width="1.5"/>
+
+  <rect x="52" y="298" width="196" height="30" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="64" y="220" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="231" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">New Shipment</text>
+  <rect x="64" y="258" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="269" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipments</text>
+  <rect x="64" y="307" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="318" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Package Types</text>
+  <rect x="64" y="352" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="363" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Senseaware Trackers</text>
+  <rect x="64" y="390" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="401" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Dry Shippers</text>
+
+  <line x1="64" y1="428" x2="248" y2="428" stroke="#cccccc" stroke-width="1"/>
+
+  <rect x="64" y="450" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="461" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Address Book</text>
+  <rect x="64" y="488" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="499" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Users</text>
+  <rect x="64" y="526" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="537" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Admin Settings</text>
+  <rect x="64" y="564" width="12" height="12" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="88" y="575" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment Feedbacks</text>
+
+  <!-- ================= SECTION 1: Package Definitions ================= -->
+  <text x="290" y="232" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Package Definitions</text>
+  <rect x="1200" y="214" width="130" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1265" y="232" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">New Package</text>
+  <line x1="290" y1="258" x2="1330" y2="258" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Card 1 -->
+  <rect x="290" y="278" width="334" height="250" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="308" y="304" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Package type name</text>
+  <text x="308" y="326" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dimensions</text>
+  <text x="308" y="344" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dry weight</text>
+  <text x="308" y="362" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Max containers</text>
+  <line x1="308" y1="378" x2="606" y2="378" stroke="#cccccc" stroke-width="1"/>
+  <text x="308" y="398" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#666666">Price by service</text>
+  <text x="308" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="606" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="308" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="606" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="308" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="606" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Quote</text>
+  <rect x="308" y="484" width="64" height="26" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="340" y="501" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+
+  <!-- Card 2 -->
+  <rect x="643" y="278" width="334" height="250" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="661" y="304" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Package type name</text>
+  <text x="661" y="326" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dimensions</text>
+  <text x="661" y="344" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dry weight</text>
+  <text x="661" y="362" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Max containers</text>
+  <line x1="661" y1="378" x2="959" y2="378" stroke="#cccccc" stroke-width="1"/>
+  <text x="661" y="398" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#666666">Price by service</text>
+  <text x="661" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="959" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="661" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="959" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="661" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="959" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Quote</text>
+  <rect x="661" y="484" width="64" height="26" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="693" y="501" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+
+  <!-- Card 3 -->
+  <rect x="996" y="278" width="334" height="250" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1014" y="304" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Package type name</text>
+  <text x="1014" y="326" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dimensions</text>
+  <text x="1014" y="344" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Dry weight</text>
+  <text x="1014" y="362" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Max containers</text>
+  <line x1="1014" y1="378" x2="1312" y2="378" stroke="#cccccc" stroke-width="1"/>
+  <text x="1014" y="398" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#666666">Price by service</text>
+  <text x="1014" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="1312" y="422" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="1014" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="1312" y="444" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Price</text>
+  <text x="1014" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Service</text>
+  <text x="1312" y="466" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="end">Quote</text>
+  <rect x="1014" y="484" width="64" height="26" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1046" y="501" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">Edit</text>
+
+  <!-- ================= SECTION 2: Senseaware Trackers ================= -->
+  <text x="290" y="562" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com/senseaware_trackers</text>
+
+  <text x="290" y="600" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Senseaware Trackers</text>
+  <rect x="1170" y="582" width="160" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1250" y="600" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">New Shipment Tracker</text>
+  <line x1="290" y1="620" x2="1330" y2="620" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Active trackers table -->
+  <text x="290" y="646" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#666666">Active Trackers</text>
+  <rect x="290" y="658" width="1040" height="128" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="290" y="658" width="1040" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="304" y="679" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Device ID</text>
+  <text x="480" y="679" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Assigned To</text>
+  <text x="700" y="679" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Last Reading</text>
+  <text x="900" y="679" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Battery</text>
+  <text x="1020" y="679" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Actions</text>
+
+  <line x1="290" y1="722" x2="1330" y2="722" stroke="#cccccc" stroke-width="1"/>
+  <line x1="290" y1="754" x2="1330" y2="754" stroke="#cccccc" stroke-width="1"/>
+
+  <text x="304" y="711" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Device</text>
+  <text x="480" y="711" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment</text>
+  <text x="700" y="711" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Timestamp</text>
+  <text x="900" y="711" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">%</text>
+  <rect x="1020" y="698" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="713" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="698" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="713" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <text x="304" y="743" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Device</text>
+  <text x="480" y="743" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment</text>
+  <text x="700" y="743" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Timestamp</text>
+  <text x="900" y="743" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">%</text>
+  <rect x="1020" y="730" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="745" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="730" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="745" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <text x="304" y="775" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Device</text>
+  <text x="480" y="775" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment</text>
+  <text x="700" y="775" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Timestamp</text>
+  <text x="900" y="775" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">%</text>
+  <rect x="1020" y="762" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="777" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="762" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="777" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <!-- Unused trackers table -->
+  <text x="290" y="822" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#666666">Unused Trackers</text>
+  <rect x="290" y="834" width="1040" height="96" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="290" y="834" width="1040" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="304" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Device ID</text>
+  <text x="480" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Assigned To</text>
+  <text x="700" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Last Reading</text>
+  <text x="900" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Battery</text>
+  <text x="1020" y="855" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Actions</text>
+
+  <line x1="290" y1="898" x2="1330" y2="898" stroke="#cccccc" stroke-width="1"/>
+
+  <text x="304" y="887" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Device</text>
+  <text x="480" y="887" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Available</text>
+  <text x="700" y="887" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Timestamp</text>
+  <text x="900" y="887" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">%</text>
+  <rect x="1020" y="874" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="889" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="874" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="889" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <text x="304" y="919" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Device</text>
+  <text x="480" y="919" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Returned</text>
+  <text x="700" y="919" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Timestamp</text>
+  <text x="900" y="919" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">%</text>
+  <rect x="1020" y="906" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="921" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="906" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="921" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <!-- ================= SECTION 3: Dry Shippers ================= -->
+  <text x="290" y="966" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">ivfcryo.com/dry_shippers</text>
+
+  <text x="290" y="1004" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Dry Shippers</text>
+  <rect x="1190" y="986" width="140" height="28" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1260" y="1004" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333" text-anchor="middle">New Dry Shipper</text>
+  <line x1="290" y1="1024" x2="1330" y2="1024" stroke="#cccccc" stroke-width="1"/>
+
+  <rect x="290" y="1044" width="1040" height="128" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="290" y="1044" width="1040" height="32" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="304" y="1065" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Device Name</text>
+  <text x="470" y="1065" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Manufacturer</text>
+  <text x="650" y="1065" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Model</text>
+  <text x="830" y="1065" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Assigned Shipment</text>
+  <text x="1020" y="1065" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Actions</text>
+
+  <line x1="290" y1="1108" x2="1330" y2="1108" stroke="#cccccc" stroke-width="1"/>
+  <line x1="290" y1="1140" x2="1330" y2="1140" stroke="#cccccc" stroke-width="1"/>
+
+  <text x="304" y="1097" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vault</text>
+  <text x="470" y="1097" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vendor</text>
+  <text x="650" y="1097" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Model</text>
+  <text x="830" y="1097" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment</text>
+  <rect x="1020" y="1084" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="1099" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="1084" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="1099" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <text x="304" y="1129" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vault</text>
+  <text x="470" y="1129" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vendor</text>
+  <text x="650" y="1129" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Model</text>
+  <text x="830" y="1129" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shipment</text>
+  <rect x="1020" y="1116" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="1131" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="1116" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="1131" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+
+  <text x="304" y="1161" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vault</text>
+  <text x="470" y="1161" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Vendor</text>
+  <text x="650" y="1161" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Model</text>
+  <text x="830" y="1161" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">In depot</text>
+  <rect x="1020" y="1148" width="56" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="1048" y="1163" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Edit</text>
+  <rect x="1086" y="1148" width="66" height="22" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5" stroke-dasharray="4 3"/>
+  <text x="1119" y="1163" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333" text-anchor="middle">Delete</text>
+</svg>

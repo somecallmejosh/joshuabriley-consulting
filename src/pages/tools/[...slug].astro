@@ -1,0 +1,42 @@
+---
+import { getCollection, render } from 'astro:content';
+import ToolPage from '~/layouts/ToolPage.astro';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools', ({ data }) => !data.draft);
+  const ordered = tools.sort((a, b) => a.data.order - b.data.order);
+
+  return ordered.map((tool) => ({
+    params: { slug: tool.id },
+    props: {
+      tool,
+      // Every other tool, in index order, for the footer rail.
+      related: ordered
+        .filter((t) => t.id !== tool.id)
+        .map((t) => ({
+          href: `/tools/${t.id}/`,
+          kind: t.data.kind,
+          title: t.data.title,
+          takeaway: t.data.takeaway,
+        })),
+    },
+  }));
+}
+
+const { tool, related } = Astro.props;
+const { Content } = await render(tool);
+---
+
+<ToolPage
+  title={tool.data.title}
+  description={tool.data.description}
+  kind={tool.data.kind}
+  tool={tool.data.tool}
+  props={tool.data.props}
+  instructions={tool.data.instructions}
+  pathname={`/tools/${tool.id}/`}
+  date={tool.data.date}
+  related={related}
+>
+  <Content />
+</ToolPage>

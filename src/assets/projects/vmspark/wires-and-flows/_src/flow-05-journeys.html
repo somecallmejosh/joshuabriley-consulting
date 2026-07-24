@@ -1,0 +1,189 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User journeys — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Three journeys stacked as bands, and a fourth lane on the right that all
+     three end in. The band rules stop short of column 3 on purpose: the ATS is
+     not inside anybody's band, it is what every band arrives at. */
+  .band {
+    width: 764px !important;
+    border-top: 1px solid var(--line);
+  }
+  .lane { width: 500px !important; }
+  .lane.right { width: 228px !important; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>User Journeys</h1>
+      <p class="sub">Three people with opposite needs on the same records — and the one place they all end.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="4" data-colw="228" data-gutter="40" data-rowh="92"
+           data-edges='[
+             {"from":"m1","to":"m2"},
+             {"from":"m2","to":"o2","fromSide":"b","toSide":"t","dashed":true,"label":"lands in the queue","labelDx":6,"labelDy":-6},
+             {"from":"o1","to":"o2"},
+             {"from":"o2","to":"o3"},
+             {"from":"o1","to":"o5","fromSide":"b","toSide":"t"},
+             {"from":"o5","to":"o6"},
+             {"from":"o6","to":"o2","fromSide":"t","toSide":"b","label":"same screens, tenant’s data","labelDy":4},
+             {"from":"r1","to":"r2"},
+             {"from":"r2","to":"r3"},
+             {"from":"c1","to":"c2"},
+             {"from":"c2","to":"c3"},
+             {"from":"o3","to":"x1","fromSide":"r","toSide":"t","label":"processed listing","labelDy":-2},
+             {"from":"r3","to":"x1","fromSide":"r","toSide":"t","label":"submission","labelDy":-2},
+             {"from":"c3","to":"x1","fromSide":"r","toSide":"b","label":"application","labelDy":-2}
+           ]'>
+        <svg class="wires"></svg>
+
+        <!-- Shared precondition ------------------------------------------- -->
+        <div class="lane" data-cell="0,0" data-dy="-4">
+          UPSTREAM OF ALL THREE
+          <span class="s">the mapping queue every journey quietly depends on</span>
+        </div>
+
+        <div class="lane right" data-cell="0,3" data-dy="-4">
+          WHERE THEY ALL END
+          <span class="s">the customer’s ATS</span>
+        </div>
+
+        <div class="node dashed" id="m1" data-cell="1,0" data-span="2">
+          <span class="t">Mapping current for this account</span>
+          <span class="s">Every VMS facility, profession and specialty resolved to its ATS counterpart</span>
+        </div>
+
+        <div class="node bad" id="m2" data-cell="1,2" data-note="1">
+          <span class="t">One unmapped value</span>
+          <span class="s">Does not match, does not reach a candidate, does not place</span>
+        </div>
+
+        <!-- Internal operator ---------------------------------------------- -->
+        <div class="band" data-cell="2,0" data-dy="6"></div>
+        <div class="lane" data-cell="2,0" data-dy="22">
+          INTERNAL OPERATOR
+          <span class="s">triaging thousands of listings on a wide screen</span>
+        </div>
+
+        <div class="node entry" id="o1" data-cell="3,0">
+          <span class="t">Operations specialist</span>
+          <span class="s">VMSpark staff, in the internal shell</span>
+        </div>
+
+        <div class="node" id="o2" data-cell="3,1">
+          <span class="t">Works the failed queue</span>
+          <span class="s">Job Listings → Failed, inspector open beside the row</span>
+        </div>
+
+        <div class="node good" id="o3" data-cell="3,2" data-note="2">
+          <span class="t">Listing reprocesses</span>
+          <span class="s">state = processed</span>
+        </div>
+
+        <div class="node choice" id="o5" data-cell="4,0" data-dy="4">
+          <span class="t">Switch workspace</span>
+          <span class="s">Acts as any tenant</span>
+        </div>
+
+        <div class="node bad" id="o6" data-cell="4,1" data-dy="4" data-note="3">
+          <span class="t">Amber banner, every screen</span>
+          <span class="s">Return to owner is always one click away</span>
+        </div>
+
+        <!-- Recruiter ------------------------------------------------------ -->
+        <div class="band" data-cell="5,0" data-dy="24"></div>
+        <div class="lane" data-cell="5,0" data-dy="40">
+          RECRUITER
+          <span class="s">a tenant’s own staff, working candidates rather than listings</span>
+        </div>
+
+        <div class="node entry" id="r1" data-cell="6,0" data-dy="16">
+          <span class="t">Recruiter</span>
+          <span class="s">Scoped to their own account</span>
+        </div>
+
+        <div class="node" id="r2" data-cell="6,1" data-dy="16">
+          <span class="t">Filters matches, reads the candidate</span>
+          <span class="s">Specialty, licensed state, documents on file</span>
+        </div>
+
+        <div class="node commit" id="r3" data-cell="6,2" data-dy="16" data-note="4">
+          <span class="t">Submits to the facility</span>
+          <span class="s">Written back against the requisition</span>
+        </div>
+
+        <!-- Travelling clinician ------------------------------------------- -->
+        <div class="band" data-cell="7,0" data-dy="34"></div>
+        <div class="lane" data-cell="7,0" data-dy="50">
+          TRAVELLING CLINICIAN
+          <span class="s">on a phone, between shifts, with no login and no shell</span>
+        </div>
+
+        <div class="node entry" id="c1" data-cell="8,0" data-dy="22">
+          <span class="t">Registered Nurse, ICU</span>
+          <span class="s">Arrives from a job board or an RSS feed</span>
+        </div>
+
+        <div class="node" id="c2" data-cell="8,1" data-dy="22">
+          <span class="t">Reads one assignment</span>
+          <span class="s">Bill rate, facility, shift pattern, start date</span>
+        </div>
+
+        <div class="node commit" id="c3" data-cell="8,2" data-dy="22" data-note="6">
+          <span class="t">Applies and uploads</span>
+          <span class="s">Licence and BLS filed against the application</span>
+        </div>
+
+        <!-- The shared destination ----------------------------------------- -->
+        <div class="node exit" id="x1" data-cell="7,3" data-dy="-6" data-note="5">
+          <span class="t">The customer’s ATS</span>
+          <span class="s">Not VMSpark — every journey’s terminal state is something reflected back into the system of record</span>
+        </div>
+
+        <div class="design-note" data-cell="9,0" data-span="2" data-dy="62">
+          Four phases, zero pipeline regressions. The shell, the palette and the
+          component system are what changed; the pipeline all three journeys ride
+          never moved.
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System state</span>
+        <span class="item"><span class="key choice"></span> User choice</span>
+        <span class="item"><span class="key bad"></span> Blocked / impersonating</span>
+        <span class="item"><span class="key good"></span> Processed</span>
+        <span class="item"><span class="key commit"></span> Commit</span>
+        <span class="item"><span class="key exit"></span> Leaves VMSpark</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">None of the three journeys below survives a stale mapping, and an unmapped value never fails loudly — the listing simply does not match, so nobody is ever told the assignment existed. That is why the mapping queue sits above this sheet rather than inside one band: it is a precondition on all three, not a task belonging to any of them.</li>
+      <li data-for="2">The operator's unit of work is a queue, not a record. She is triaging thousands of listings across a dozen VMS sources on a wide screen, so her grid earns density, keyboard operation and an inspector that opens beside the row instead of replacing it. Every affordance here is bought with screen width she actually has.</li>
+      <li data-for="3">Impersonation is a first-class journey, not an admin escape hatch — VMSpark staff spend real hours inside customer accounts. So the workspace switcher and the amber return-to-owner control live in the app shell on every screen rather than on an admin page. A mode you can enter and then forget you are in is worse than no mode at all.</li>
+      <li data-for="4">The recruiter works people, not listings. Same records, different verbs: she filters, reads and submits, and never sees the failed queue that fills the operator's day. Scoping her to her own tenant is what lets both live in one application instead of two, and it is the only reason the shell can be shared at all.</li>
+      <li data-for="5">Every journey ends in the ATS rather than in VMSpark. The product is a pipeline between two systems of record, so "done" is never a saved form here — it is a state, a submission or an application that has landed somewhere else and can be seen there by someone who never logs into this product.</li>
+      <li data-for="6">The clinician is the operator's opposite: one assignment at a time, on a phone, between shifts, with no login and no shell around her. Serving her from the same dense grid would have compromised both of them, which is why the candidate portal is rebuilt rather than reskinned from the operator's tables.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

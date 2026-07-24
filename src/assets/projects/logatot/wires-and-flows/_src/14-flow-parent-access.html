@@ -1,0 +1,179 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User flow — Parent access — Logatot</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+
+<style>
+  /* Two legend keys the shared sheet does not carry: an exit stadium and a
+     dashed system step. Scoped here rather than added to sheet.css. */
+  .flow-legend { gap: 22px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>User Flow — Parent Access</h1>
+      <p class="sub">There is no password to forget, because the reset flow became the only flow.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="60" data-rowh="104"
+           data-edges='[
+             {"from":"n1","to":"c1"},
+             {"from":"c1","to":"x0","fromSide":"r","toSide":"l","label":"reads it"},
+             {"from":"c1","to":"n2","label":"taps through"},
+             {"from":"n2","to":"n3"},
+             {"from":"dn","to":"n2","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n3","to":"d1"},
+             {"from":"d1","to":"m0","fromSide":"r","toSide":"l","label":"no user"},
+             {"from":"d1","to":"m1","label":"user exists"},
+             {"from":"a1","to":"m1","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"m1","to":"n4"},
+             {"from":"m0","to":"n4","fromSide":"b","toSide":"r","label":"same screen either way","labelDy":-6},
+             {"from":"n4","to":"n5"},
+             {"from":"n5","to":"d2"},
+             {"from":"d2","to":"e1","fromSide":"r","toSide":"l","label":"expired / used","labelDx":-16},
+             {"from":"d2","to":"n6","label":"still live"},
+             {"from":"e1","to":"m1","fromSide":"l","toSide":"r","dashed":true,"label":"resend","labelDx":26,"labelDy":-152},
+             {"from":"n6","to":"d3"},
+             {"from":"a2","to":"d3","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"d3","to":"z1","label":"caregiver or authorized pickup"},
+             {"from":"d3","to":"z2","fromSide":"r","toSide":"l","label":"employee"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="node entry" id="n1" data-cell="0,1">
+          <span class="t">Check-out mails the day's summary</span>
+          <span class="s">Automatic, unprompted — the photo and the nap times sit in the preview line</span>
+        </div>
+
+        <div class="node choice" id="c1" data-cell="1,1" data-dy="10">
+          <span class="t">Open the full day?</span>
+        </div>
+
+        <div class="node exit" id="x0" data-cell="1,2" data-dy="4" data-note="1">
+          <span class="t">Read in the inbox, app never opened</span>
+          <span class="s">The common ending, and an acceptable one</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="2,1" data-dy="14" data-note="2">
+          <span class="t">/family — one field</span>
+          <span class="s">Email address. There is no password field to get wrong.</span>
+        </div>
+
+        <div class="design-note" id="dn" data-cell="2,0" data-dy="20">
+          A parent signs in perhaps a dozen times a year. A password set in
+          March is gone by June, and the reset was a magic link anyway — so
+          the reset flow became the only flow.
+        </div>
+
+        <div class="node dashed" id="n3" data-cell="3,1" data-dy="18">
+          <span class="t">Look the address up across all users</span>
+          <span class="s">One Devise table — parents and staff sit in it together</span>
+        </div>
+
+        <div class="node branch" id="d1" data-cell="4,1" data-dy="22">
+          <span class="t">Address on file?</span>
+        </div>
+
+        <div class="node dashed" id="m0" data-cell="4,2" data-dy="18">
+          <span class="t">Mailer is never called</span>
+          <span class="s">Nothing sent, nothing written, nothing said about it</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="5,0" data-dy="26">
+          <span class="t">Why the token dies on use</span>
+          It is signed against the user's <code>last_sign_in_at</code>. Signing
+          in touches that column, so the link that opened the session can never
+          open a second one.
+        </div>
+
+        <div class="node msg" id="m1" data-cell="5,1" data-dy="26">
+          <span class="t">Magic link mailed</span>
+          <span class="s">Signed token, valid 15 minutes, good for exactly one use</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="6,1" data-dy="30" data-note="3">
+          <span class="t">“Check your email to login.”</span>
+          <span class="s">Unconditional flash — known and unknown addresses get the identical screen</span>
+        </div>
+
+        <div class="node" id="n5" data-cell="7,1" data-dy="34">
+          <span class="t">Opens the link, usually on a phone</span>
+          <span class="s">From the mail app, at pickup or on the sofa</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="8,1" data-dy="38">
+          <span class="t">Token still live?</span>
+        </div>
+
+        <div class="node" id="e1" data-cell="8,2" data-dy="34" data-note="4">
+          <span class="t">Expired screen is a resend button</span>
+          <span class="s">One tap sends a fresh link. Not an error page, and no re-typing.</span>
+        </div>
+
+        <div class="node dashed" id="n6" data-cell="9,1" data-dy="44">
+          <span class="t">Session opened, token burned</span>
+          <span class="s">Sign-in writes <code>last_sign_in_at</code>, which is what invalidates the link</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="10,0" data-dy="46">
+          <span class="t">One table, three role shapes</span>
+          Every user is one Devise record with a polymorphic <code>meta</code>
+          association pointing at an <code>Employee</code>,
+          <code>Caregiver</code> or <code>AuthorizedPickup</code>.
+        </div>
+
+        <div class="node branch" id="d3" data-cell="10,1" data-dy="50" data-note="5">
+          <span class="t">What did the token match?</span>
+        </div>
+
+        <div class="node exit" id="z1" data-cell="11,1" data-dy="56">
+          <span class="t">Parent portal</span>
+          <span class="s">Their own children only, read-mostly</span>
+        </div>
+
+        <div class="node exit" id="z2" data-cell="11,2" data-dy="52">
+          <span class="t">Voiceboard</span>
+          <span class="s">Full roster, logging enabled</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key choice"></span> User choice</span>
+        <span class="item">
+          <svg width="26" height="17" viewBox="0 0 26 17" aria-hidden="true">
+            <path d="M0.75 0.75 H25.25 V12.5 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 q-3.06 -2.6 -6.12 0 q-3.06 2.6 -6.13 0 Z"
+                  fill="#fff" stroke="#6c737c" stroke-width="1.5"/>
+          </svg> System message
+        </span>
+        <span class="item"><span class="key exit"></span> Exit</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The email is the product and the portal is the destination. Nobody forms a habit of opening a web app to check a toddler's nap times, so the summary mails itself on check-out and carries the day's emotional payload in the preview — the photo, the long nap, the fact that she ate everything. A parent who reads it and never taps through has still had the whole experience, which is why this branch is drawn as an ending rather than a drop-off.</li>
+      <li data-for="2">A parent signs in perhaps a dozen times a year, and at that frequency a password is a support ticket waiting to happen. Since the reset path was going to be a mailed link regardless, keeping a password field as well would mean maintaining two credentials where one of them is never remembered. Email possession is the credential, and the form shrinks to a single field.</li>
+      <li data-for="3">Both branches land on the same screen, and that convergence is the security property rather than a layout convenience. A form that says “no account found” is a free tool for testing whether a particular family attends a particular daycare — the mailer is called only when a user exists, but the response never lets on either way.</li>
+      <li data-for="4">Fifteen minutes and one use is strict enough to survive a forwarded email or a shared inbox, and strictness like that is only tolerable if recovery is trivial. So the expired state is a button rather than an apology, it does not ask for the address again, and it loops straight back into the flow — which is the difference between a security decision and a lockout.</li>
+      <li data-for="5">One door, routed by whatever the token resolved to. Two login pages guarantees that a parent eventually arrives at the staff one and bounces off it, and a member of staff whose own child attends would need two habits and two addresses. The destination is a consequence of the matched record, not something the person has to know before they start.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

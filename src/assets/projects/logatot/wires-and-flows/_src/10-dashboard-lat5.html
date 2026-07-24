@@ -1,0 +1,412 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Dashboard — manual entry tier — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* The artwork stops 44px short of the 1080px stage. sheet.js jogs its leader
+     lines 30px left of the disc, and that vertical would otherwise run down
+     through the right-hand column of the screen. */
+  .browser, .detail, .design-note { width: 1036px; }
+
+  /* Three columns in a 787px pane, sized so the busiest one (child activity)
+     gets the room and nothing wraps inside a cell. */
+  .cols { display: flex; align-items: stretch; gap: 16px; }
+  .col-a { width: 302px; flex: none; }
+  .col-b { width: 202px; flex: none; }
+  .col-c { width: 251px; flex: none; }
+
+  .card { display: flex; flex-direction: column; }
+  .card .body { padding: 14px; }
+  .card .head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 11px 14px 9px;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  /* The action cards at the top: a dashed icon slot, a claim, and one button. */
+  .icon-slot {
+    width: 34px;
+    height: 34px;
+    flex: none;
+    border: 1.5px dashed var(--line);
+    border-radius: 3px;
+  }
+  .btn.block { width: 100%; }
+
+  /* Padlocks on the add-on modules. Drawn rather than typed so the glyph does
+     not depend on an emoji font being present in the renderer. */
+  .lock {
+    position: relative;
+    margin-left: auto;
+    width: 10px;
+    height: 8px;
+    flex: none;
+    border: 1.5px solid var(--faint);
+    border-radius: 1.5px;
+  }
+  .lock::before {
+    content: "";
+    position: absolute;
+    left: 1.5px;
+    top: -5.5px;
+    width: 7px;
+    height: 6px;
+    border: 1.5px solid var(--faint);
+    border-bottom: none;
+    border-radius: 4px 4px 0 0;
+  }
+
+  table.tight { table-layout: fixed; width: 100%; }
+  table.tight th, table.tight td {
+    padding-left: 7px;
+    padding-right: 7px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.tight th { font-size: 9px; letter-spacing: 0.08em; }
+  table.tight td { padding-top: 8px; padding-bottom: 8px; }
+  .edit { font-size: 10.5px; color: var(--muted); }
+
+  /* The running entry. Deliberately not a table row — it has no end time. */
+  .open-entry {
+    border: 2px solid var(--ink);
+    border-radius: 3px;
+    padding: 11px 12px 12px;
+    text-align: center;
+  }
+  .open-entry .clock {
+    font-family: var(--mono);
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1.15;
+    margin: 6px 0 9px;
+  }
+
+  /* The create/edit dialog, drawn beside the screen rather than floating over
+     it so the leader lines have clean air to cross. */
+  .detail { display: flex; align-items: flex-start; gap: 24px; margin-top: 18px; }
+  .dialog {
+    width: 520px;
+    flex: none;
+    border: 1.5px solid var(--ink);
+    border-radius: 3px;
+    background: var(--paper);
+  }
+  .dialog .bar-top,
+  .dialog .bar-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 12px 18px;
+  }
+  .dialog .bar-top { border-bottom: 1.5px solid var(--line); }
+  .dialog .bar-foot { border-top: 1.5px solid var(--line); background: var(--fill-1); }
+  .dialog .form { padding: 16px 18px; }
+  .two-up { display: flex; gap: 16px; }
+  .two-up > * { flex: 1; min-width: 0; }
+  .select { display: flex; align-items: center; justify-content: space-between; }
+  .caret {
+    width: 0;
+    height: 0;
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+    border-top: 5px solid var(--muted);
+  }
+  .note-area {
+    height: 62px;
+    padding: 9px 10px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    font-size: 11.5px;
+    color: var(--faint);
+  }
+  .req { color: var(--rust); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Dashboard — Manual Entry Tier</h1>
+      <p class="sub">The home screen of the cheaper plan. A separate screen in its own right, not the Voiceboard with the microphone taken out.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/dashboard?date=2026-07-20</span>
+        </div>
+
+        <div class="app">
+          <nav class="side" data-note="2" data-note-side="top">
+            <div class="logo">LOGO</div>
+            <div class="nav-item on"><span class="box"></span> Dashboard</div>
+            <div class="nav-item"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms <span class="lock"></span></div>
+            <div class="nav-item locked"><span class="box"></span> Documents <span class="lock"></span></div>
+            <div class="nav-item locked"><span class="box"></span> Expenses <span class="lock"></span></div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Little Acorns Home Daycare</span>
+              <div class="right">
+                <span class="pill">Manual entry plan</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-16">
+              <div class="between">
+                <div>
+                  <p class="h">Today</p>
+                  <p class="sub-line">Monday, July 20 · 6 children enrolled · 2 staff on shift</p>
+                </div>
+                <div class="row">
+                  <span class="btn sm quiet">‹</span>
+                  <span class="field" style="width:120px;text-align:center">Jul 20, 2026</span>
+                  <span class="btn sm quiet">›</span>
+                </div>
+              </div>
+
+              <div class="cols" data-note="1">
+                <div class="panel col-a stack-12">
+                  <div class="row" style="gap:12px">
+                    <span class="icon-slot"></span>
+                    <div>
+                      <p class="h-sm">Log child activity</p>
+                      <p class="sub-line">Meals, naps, diapers, health checks, notes</p>
+                    </div>
+                  </div>
+                  <span class="btn solid block">+ New entry</span>
+                </div>
+                <div class="panel col-b stack-12">
+                  <div class="row" style="gap:12px">
+                    <span class="icon-slot"></span>
+                    <div>
+                      <p class="h-sm">Log provider time</p>
+                      <p class="sub-line">Your own hours, plus training</p>
+                    </div>
+                  </div>
+                  <span class="btn solid block">+ Clock in</span>
+                </div>
+                <div class="panel col-c stack-12">
+                  <div class="row" style="gap:12px">
+                    <span class="icon-slot"></span>
+                    <div>
+                      <p class="h-sm">Log employee shift</p>
+                      <p class="sub-line">Clock an assistant in or out</p>
+                    </div>
+                  </div>
+                  <span class="btn solid block">+ New shift</span>
+                </div>
+              </div>
+
+              <div class="cols">
+                <div class="panel col-a card" style="padding:0">
+                  <div class="head">
+                    <span class="eyebrow">CHILD ACTIVITY — 9 TODAY</span>
+                  </div>
+                  <table class="wire tight" data-note="3" data-note-side="top">
+                    <colgroup>
+                      <col style="width:62px"><col style="width:64px">
+                      <col style="width:114px"><col style="width:59px">
+                    </colgroup>
+                    <tbody>
+                      <tr>
+                        <td><span class="chip">7:45a</span></td>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip fill">Check in</span></td>
+                        <td class="edit">Edit · ×</td>
+                      </tr>
+                      <tr>
+                        <td><span class="chip">9:10a</span></td>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip fill">Diaper</span></td>
+                        <td class="edit">Edit · ×</td>
+                      </tr>
+                      <tr>
+                        <td><span class="chip">11:30a</span></td>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip fill">Meal — lunch</span></td>
+                        <td class="edit">Edit · ×</td>
+                      </tr>
+                      <tr>
+                        <td><span class="chip">12:40p</span></td>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip fill">Nap</span></td>
+                        <td class="edit">Edit · ×</td>
+                      </tr>
+                      <tr>
+                        <td><span class="chip">1:55p</span></td>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip fill">Health check</span></td>
+                        <td class="edit">Edit · ×</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="body" style="padding-top:12px">
+                    <span class="btn sm quiet">View all 9</span>
+                  </div>
+                </div>
+
+                <div class="panel col-b card" style="padding:0">
+                  <div class="head">
+                    <span class="eyebrow">PROVIDER TIME</span>
+                  </div>
+                  <div class="body stack-12">
+                    <div class="open-entry">
+                      <span class="eyebrow">OPEN — IN AT 7:00A</span>
+                      <div class="clock">6:14:08</div>
+                      <span class="btn solid block sm">Complete</span>
+                    </div>
+                    <table class="wire tight">
+                      <colgroup><col style="width:105px"><col style="width:66px"></colgroup>
+                      <tbody>
+                        <tr>
+                          <td><span class="chip">7:02a–12:35p</span></td>
+                          <td style="text-align:right">5.58</td>
+                        </tr>
+                        <tr>
+                          <td><span class="chip">Training</span></td>
+                          <td style="text-align:right">1.00</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <p class="sub-line" style="margin:0" data-note="4">5.58 hrs closed · 1 open</p>
+                  </div>
+                </div>
+
+                <div class="panel col-c card" style="padding:0">
+                  <div class="head">
+                    <span class="eyebrow">EMPLOYEE SHIFTS — 2 TODAY</span>
+                  </div>
+                  <table class="wire tight">
+                    <colgroup>
+                      <col style="width:88px"><col style="width:104px"><col style="width:56px">
+                    </colgroup>
+                    <thead>
+                      <tr><th>EMPLOYEE</th><th>SHIFT</th><th style="text-align:right">HRS</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip">7:00a–3:00p</span></td>
+                        <td style="text-align:right">8.00</td>
+                      </tr>
+                      <tr>
+                        <td><div class="row" style="gap:6px"><span class="avatar sm"></span><span class="bar sm grow"></span></div></td>
+                        <td><span class="chip">9:00a—</span></td>
+                        <td style="text-align:right" class="faint">—</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div class="body stack-12">
+                    <p class="sub-line" style="margin:0;font-style:italic">Second row is clocked in but not out — the same open state as provider time, in a second place.</p>
+                    <span class="btn sm quiet">Shift report</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="detail">
+        <div class="grow stack-16">
+          <div class="aside">
+            <span class="t">One dialog, every verb</span>
+            All three buttons above open this same dialog with a different form
+            loaded into it, and so does every row-level Edit beneath them. One
+            dismissal behaviour, one save path, one place validation errors appear.
+            Time defaults to now and date to the day being viewed, so a provider
+            logging as she goes touches neither.
+          </div>
+          <div class="aside">
+            <span class="t">Never rendered on this plan</span>
+            The Voiceboard, the wake word, the Logged Events review queue and the
+            Calendar module. Not disabled, not padlocked, not routed to an upgrade
+            page — absent from the navigation and from the router, so an account on
+            this plan has no surface on which to meet them.
+          </div>
+        </div>
+
+        <div class="dialog" data-note="5">
+          <div class="bar-top">
+            <span class="h-sm">Log child activity</span>
+            <span class="faint">×</span>
+          </div>
+          <div class="form stack-16">
+            <div>
+              <span class="label">CHILD <span class="req">·  required</span></span>
+              <div class="field select">Choose child — 6 enrolled <span class="caret"></span></div>
+            </div>
+            <div>
+              <span class="label">EVENT TYPE <span class="req">·  required</span></span>
+              <div class="field select">Check in · Meal · Nap · Diaper · Health check <span class="caret"></span></div>
+            </div>
+            <div class="two-up">
+              <div>
+                <span class="label">TIME</span>
+                <div class="field select">2:20 PM <span class="caret"></span></div>
+              </div>
+              <div>
+                <span class="label">DATE</span>
+                <div class="field select">Jul 20, 2026 <span class="caret"></span></div>
+              </div>
+            </div>
+            <div>
+              <span class="label">NOTES <span class="muted">· optional</span></span>
+              <div class="note-area">What a parent would want to know</div>
+            </div>
+          </div>
+          <div class="bar-foot">
+            <span class="faint" style="font-size:11px">Saves to the same events table the voice tier writes to</span>
+            <div class="row" style="gap:8px">
+              <span class="btn sm quiet">Cancel</span>
+              <span class="btn sm solid">Save entry</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="design-note" style="margin-top:18px" data-note="6">
+        This tier was retired in the project’s final commit. The screen shipped, sold, and is no longer live.
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">A cheaper manual-entry plan was given its own home screen rather than the Voiceboard with the microphone taken out. What this plan sells is a clean daily record with almost no setup, not the absence of voice, so the screen opens on the three things a provider actually does — and the columns beneath repeat those three verbs in the same order, so whatever she just logged appears directly under the button she pressed.</li>
+      <li data-for="2">Voiceboard, Logged Events and Calendar are absent from the navigation rather than padlocked. A padlock is honest for Custom Forms or Expenses, which this account can buy this afternoon; holding the flagship feature up in front of an account whose plan cannot include it at all just reads as a nag.</li>
+      <li data-for="3">Every event the full product captures by speech is capturable by hand here — same event types, same table, same rows feeding attendance and the CACFP claim at month end. The data model and the compliance outputs are identical across the two tiers, and only the capture surface differs.</li>
+      <li data-for="4">A running entry has no end time, so it cannot be a row like the ones below it. It gets a live counter and a single Complete button pinned above the closed rows, because the failure manual entry invites is a day that quietly never got closed and is noticed a fortnight later.</li>
+      <li data-for="5">This has to beat a paper notebook, not the voice tier. Two required choices, a time already filled in, and a save — anything longer and she writes it on the back of an envelope and enters it at 8pm from memory, which is the exact habit the product exists to end.</li>
+      <li data-for="6">Drawing a retired screen is deliberate. The tier proved the record rather than the microphone was the thing being bought, and it is the case study's clearest example of a pricing idea that did not hold — worth saying plainly rather than presenting the plan as though it were still on sale.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

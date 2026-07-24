@@ -1,0 +1,301 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>AI Usage — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* A 168px nav leaves ~788px of pane. Five columns is generous by VMSpark
+     standards, so this table runs at the system's default density rather than
+     the squeezed 10.5px the twelve-column job grid needs. */
+  .side { width: 168px; }
+
+  .side .area {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 0 14px 12px;
+  }
+  .side .area .k {
+    display: block;
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+  }
+  .side .area .v { font-size: 15px; font-weight: 700; color: var(--ink); }
+
+  /* Stat tiles read left-aligned here — the label is scanned first, then the
+     figure. The kit's centred default is for a lo-fi count, not a currency. */
+  .stats { display: flex; gap: 10px; }
+  .stats .tile { text-align: left; padding: 11px 12px; }
+  .stats .tile .k { margin: 0 0 5px; font-size: 8.5px; letter-spacing: 0.13em; }
+  .stats .tile .n { font-size: 22px; font-variant-numeric: tabular-nums; }
+  .stats .tile .d { margin-top: 5px; font-size: 10px; color: var(--muted); }
+  .spark { display: block; margin-left: auto; }
+
+  .sect {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--faint);
+  }
+
+  table.usage { table-layout: fixed; width: 100%; }
+  table.usage th, table.usage td { white-space: nowrap; overflow: hidden; }
+  table.usage td { font-size: 11.5px; padding-top: 8px; padding-bottom: 8px; }
+  /* Row striping, header treatment and density all come from the table
+     component now. Nothing on this page sets them locally. */
+  table.usage tbody tr:nth-child(even) td { background: var(--fill-2); }
+  table.usage tr.zero td { color: var(--faint); }
+  table.usage tr.tot td {
+    border-top: 2px solid var(--line);
+    border-bottom: none;
+    background: var(--fill-3);
+    font-weight: 700;
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+  table.usage tbody tr.tot td { background: var(--fill-3); }
+  td.tokens { font-variant-numeric: tabular-nums; text-align: right; color: var(--muted); }
+  td.num.total { font-weight: 600; color: var(--ink); }
+  th.r { text-align: right; }
+
+  /* Cost by account. Bars are neutral: magnitude is not a state, and colour on
+     this project is reserved for the four things that are. */
+  .chart { display: flex; flex-direction: column; gap: 7px; padding-left: 2px; }
+  .chart .r {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11px;
+  }
+  .chart .lab { width: 158px; text-align: right; color: var(--ink); white-space: nowrap; }
+  .chart .track { flex: 1; border-left: 1px solid var(--line); padding-left: 0; display: flex; align-items: center; gap: 8px; }
+  .chart .b2 { height: 11px; border-radius: 0 2px 2px 0; background: var(--fill-4); }
+  .chart .v { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 10.5px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>AI Usage</h1>
+      <p class="sub">Per-account OpenAI consumption and cost, on the app's one table convention.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /admin/ai_usage?month=2026-03</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i></i><i></i><i></i><i></i><i class="on"></i>
+          </nav>
+
+          <nav class="side">
+            <div class="area">
+              <div>
+                <span class="k">AREA</span>
+                <span class="v">Admin</span>
+              </div>
+              <span class="chip sm warn">OWNER ONLY</span>
+            </div>
+            <div class="nav-item on">AI Usage</div>
+            <div class="nav-item">Announcements</div>
+            <div class="nav-item">Terms &amp; Conditions</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="sect">Usage</p>
+                  <p class="h" style="margin-top:3px">OpenAI Usage — March 2026</p>
+                  <p class="sub-line">Metered from AiUsageLog, rolled up nightly into OpenaiUsageRollup</p>
+                </div>
+                <div class="row" style="gap:7px" data-note="1">
+                  <span class="btn sm">Export CSV</span>
+                  <span class="field" style="width:104px">2026-03 ⌄</span>
+                </div>
+              </div>
+
+              <div class="stats" data-note="2">
+                <div class="tile">
+                  <span class="k">TOTAL TOKENS</span>
+                  <div class="row" style="gap:6px">
+                    <span class="n">41.2M</span>
+                    <svg class="spark" width="52" height="20" viewBox="0 0 52 20" fill="none">
+                      <polyline points="0,15 9,13 17,15 25,9 33,10 41,5 51,3" stroke="#c9cfd8" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <p class="d">+18% vs February</p>
+                </div>
+                <div class="tile">
+                  <span class="k">EST. COST</span>
+                  <div class="row" style="gap:6px">
+                    <span class="n">$312.84</span>
+                    <svg class="spark" width="52" height="20" viewBox="0 0 52 20" fill="none">
+                      <polyline points="0,16 9,14 17,12 25,12 33,8 41,6 51,3" stroke="#c9cfd8" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <p class="d">+$47.10 vs February</p>
+                </div>
+                <div class="tile">
+                  <span class="k">ACCOUNTS USING AI</span>
+                  <div class="row" style="gap:6px">
+                    <span class="n">18 of 44</span>
+                    <svg class="spark" width="52" height="20" viewBox="0 0 52 20" fill="none">
+                      <polyline points="0,15 9,15 17,12 25,11 33,11 41,7 51,5" stroke="#c9cfd8" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <p class="d">3 onboarded this month</p>
+                </div>
+                <div class="tile">
+                  <span class="k">CACHE HIT RATE</span>
+                  <div class="row" style="gap:6px">
+                    <span class="n">63%</span>
+                    <svg class="spark" width="52" height="20" viewBox="0 0 52 20" fill="none">
+                      <polyline points="0,5 9,7 17,6 25,10 33,9 41,13 51,15" stroke="#c9cfd8" stroke-width="1.5"/>
+                    </svg>
+                  </div>
+                  <p class="d">avoided ≈ $181 in calls</p>
+                </div>
+              </div>
+
+              <div class="between" style="margin-top:2px">
+                <p class="sect">Per-account breakdown</p>
+                <p class="sub-line">Showing top 10 of 18 accounts with usage</p>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden;margin-top:-4px">
+                <table class="wire usage">
+                  <colgroup>
+                    <col style="width:250px"><col style="width:134px"><col style="width:146px">
+                    <col style="width:130px"><col style="width:128px">
+                  </colgroup>
+                  <thead>
+                    <tr data-note="3">
+                      <th>ACCOUNT</th>
+                      <th class="r">PROMPT TOKENS</th>
+                      <th class="r">COMPLETION TOKENS</th>
+                      <th class="r">TOTAL TOKENS</th>
+                      <th class="r sorted">EST. TOTAL COST ▼</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr data-note="4">
+                      <td>Sierra Health Staffing</td>
+                      <td class="tokens">7,412,880</td><td class="tokens">1,983,220</td>
+                      <td class="num total">9,396,100</td><td class="num total">$71.40</td>
+                    </tr>
+                    <tr>
+                      <td>Meridian Travel Nursing</td>
+                      <td class="tokens">6,120,455</td><td class="tokens">1,644,900</td>
+                      <td class="num total">7,765,355</td><td class="num total">$59.02</td>
+                    </tr>
+                    <tr>
+                      <td>Cascade Allied Partners</td>
+                      <td class="tokens">4,880,210</td><td class="tokens">1,301,775</td>
+                      <td class="num total">6,181,985</td><td class="num total">$46.98</td>
+                    </tr>
+                    <tr>
+                      <td>Gulf Coast Medical Group</td>
+                      <td class="tokens">3,944,610</td><td class="tokens">1,055,300</td>
+                      <td class="num total">4,999,910</td><td class="num total">$38.00</td>
+                    </tr>
+                    <tr>
+                      <td>Northstar Locums</td>
+                      <td class="tokens">2,870,140</td><td class="tokens">764,880</td>
+                      <td class="num total">3,635,020</td><td class="num total">$27.63</td>
+                    </tr>
+                    <tr>
+                      <td>Harbor Point Staffing</td>
+                      <td class="tokens">2,101,330</td><td class="tokens">559,410</td>
+                      <td class="num total">2,660,740</td><td class="num total">$20.22</td>
+                    </tr>
+                    <tr>
+                      <td>Redwood Clinical Staffing</td>
+                      <td class="tokens">1,640,905</td><td class="tokens">438,220</td>
+                      <td class="num total">2,079,125</td><td class="num total">$15.80</td>
+                    </tr>
+                    <tr>
+                      <td>Bluegrass Nurse Network</td>
+                      <td class="tokens">1,203,470</td><td class="tokens">320,115</td>
+                      <td class="num total">1,523,585</td><td class="num total">$11.58</td>
+                    </tr>
+                    <tr>
+                      <td>Ironwood Allied</td>
+                      <td class="tokens">902,660</td><td class="tokens">240,330</td>
+                      <td class="num total">1,142,990</td><td class="num total">$8.69</td>
+                    </tr>
+                    <tr class="zero">
+                      <td>Lakeshore Per Diem</td>
+                      <td class="tokens">0</td><td class="tokens">0</td>
+                      <td class="num">0</td><td class="num">$0.00</td>
+                    </tr>
+                    <tr class="tot" data-note="5">
+                      <td>Totals · 18 accounts</td>
+                      <td class="num">32,540,110</td><td class="num">8,657,890</td>
+                      <td class="num">41,198,000</td><td class="num">$312.84</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="between" style="margin-top:4px">
+                <p class="sect">Cost by account</p>
+                <p class="sub-line">March 2026 · estimated USD</p>
+              </div>
+
+              <div class="chart" data-note="6" style="margin-top:-2px">
+                <div class="r"><span class="lab">Sierra Health Staffing</span><span class="track"><span class="b2" style="width:430px"></span><span class="v">$71.40</span></span></div>
+                <div class="r"><span class="lab">Meridian Travel Nursing</span><span class="track"><span class="b2" style="width:356px"></span><span class="v">$59.02</span></span></div>
+                <div class="r"><span class="lab">Cascade Allied Partners</span><span class="track"><span class="b2" style="width:283px"></span><span class="v">$46.98</span></span></div>
+                <div class="r"><span class="lab">Gulf Coast Medical Group</span><span class="track"><span class="b2" style="width:229px"></span><span class="v">$38.00</span></span></div>
+                <div class="r"><span class="lab">Northstar Locums</span><span class="track"><span class="b2" style="width:166px"></span><span class="v">$27.63</span></span></div>
+                <div class="r"><span class="lab">Harbor Point Staffing</span><span class="track"><span class="b2" style="width:122px"></span><span class="v">$20.22</span></span></div>
+                <div class="r"><span class="lab">Redwood Clinical Staffing</span><span class="track"><span class="b2" style="width:95px"></span><span class="v">$15.80</span></span></div>
+                <div class="r"><span class="lab">Bluegrass Nurse Network</span><span class="track"><span class="b2" style="width:70px"></span><span class="v">$11.58</span></span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Usage is a finance surface before it is a dashboard: it answers what we spent and on whom, and both answers get argued about later against an OpenAI invoice. So the month is a first-class control and the export is the point of the page, not a courtesy — a number you cannot take into a spreadsheet cannot be reconciled.</li>
+      <li data-for="2">Cache hit rate sits beside the cost it suppresses rather than in an engineering view. It is the only lever on this page anyone can actually pull, and separating the lever from the number it moves is how a cost dashboard becomes something people read once a quarter.</li>
+      <li data-for="3">The original of this screen had a solid dark-navy header when every other table in the app used light grey — one view, built at a different moment by a different hand, with no shared convention to fall back on. The audit found six. The fix was not restyling this table; it was that header treatment, density, striping and numeric alignment now come from one table component, so no screen gets to decide them again.</li>
+      <li data-for="4">Numeric columns are right-aligned with tabular figures. That is a convention rather than a preference: costs are read down the column, not across the row, and ragged decimal points make the comparison the page exists for impossible to do by eye.</li>
+      <li data-for="5">A totals row that reconciles against the summary cards above it. Two independently derived figures agreeing is the cheapest trust signal a finance table has, and it is also how a rollup bug gets caught by whoever reads the page rather than by nobody.</li>
+      <li data-for="6">Cost is attributed per account because this is a multi-tenant pipeline and AI spend bills through to clients. An aggregate figure is unactionable — knowing March cost $312 tells you nothing; knowing one client generated a quarter of it tells you where to look. Bars stay neutral: magnitude is not a state, and colour here is reserved for the ones that are.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

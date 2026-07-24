@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="840" viewBox="0 0 1400 840" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#333333"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="840" fill="#ffffff"/>
+
+  <text x="40" y="52" font-size="22" font-weight="bold" fill="#333333">Authentication &amp; Two-Factor</text>
+  <line x1="40" y1="72" x2="1360" y2="72" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- ============ STEP 1 : CREDENTIALS ============ -->
+  <text x="40" y="112" font-size="14" font-weight="bold" fill="#333333">STEP 1 &#183; CREDENTIALS</text>
+  <rect x="40" y="130" width="360" height="660" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- browser chrome -->
+  <rect x="40" y="130" width="360" height="40" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="60" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="74" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="88" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <rect x="108" y="140" width="272" height="20" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="244" y="154" font-size="11" fill="#666666" text-anchor="middle">/users/sign_in</text>
+
+  <!-- app header -->
+  <rect x="40" y="170" width="360" height="46" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="60" y="182" width="22" height="22" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="92" y="199" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+  <rect x="298" y="180" width="82" height="26" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="339" y="197" font-size="11" fill="#333333" text-anchor="middle">Register</text>
+
+  <text x="64" y="256" font-size="14" font-weight="bold" fill="#333333">Sign in</text>
+  <text x="64" y="276" font-size="11" fill="#666666">Access your shipments.</text>
+
+  <text x="64" y="308" font-size="11" fill="#666666">Email</text>
+  <rect x="64" y="316" width="312" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <text x="64" y="378" font-size="11" fill="#666666">Password</text>
+  <rect x="64" y="386" width="312" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="64" y="442" width="16" height="16" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="90" y="455" font-size="13" fill="#333333">Remember me</text>
+
+  <rect x="64" y="482" width="312" height="40" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="220" y="507" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Log in</text>
+
+  <text x="64" y="556" font-size="13" fill="#333333">Forgot your password?</text>
+  <text x="64" y="580" font-size="13" fill="#333333">Didn't receive confirmation instructions?</text>
+
+  <!-- arrow 1 -->
+  <line x1="410" y1="500" x2="490" y2="500" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="450" y="492" font-size="11" fill="#666666" text-anchor="middle">Log in</text>
+
+  <!-- ============ STEP 2 : CHANNEL ============ -->
+  <text x="500" y="112" font-size="14" font-weight="bold" fill="#333333">STEP 2 &#183; CHANNEL</text>
+  <rect x="500" y="130" width="360" height="660" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <rect x="500" y="130" width="360" height="40" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="520" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="534" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="548" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <rect x="568" y="140" width="272" height="20" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="704" y="154" font-size="11" fill="#666666" text-anchor="middle">/two_factor/method</text>
+
+  <rect x="500" y="170" width="360" height="46" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="520" y="182" width="22" height="22" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="552" y="199" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+
+  <text x="524" y="252" font-size="14" font-weight="bold" fill="#333333">How would you like to receive</text>
+  <text x="524" y="272" font-size="14" font-weight="bold" fill="#333333">your security code?</text>
+  <text x="524" y="300" font-size="11" fill="#666666">Signed in as [user]</text>
+
+  <!-- radio group -->
+  <rect x="524" y="320" width="312" height="180" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="524" y1="380" x2="836" y2="380" stroke="#999999" stroke-width="1"/>
+  <line x1="524" y1="440" x2="836" y2="440" stroke="#999999" stroke-width="1"/>
+
+  <circle cx="548" cy="348" r="8" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="548" cy="348" r="3.5" fill="#333333"/>
+  <text x="570" y="345" font-size="13" fill="#333333">[masked address]</text>
+  <text x="570" y="363" font-size="11" fill="#666666">Email</text>
+
+  <circle cx="548" cy="408" r="8" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="570" y="405" font-size="13" fill="#333333">[masked number]</text>
+  <text x="570" y="423" font-size="11" fill="#666666">Text message</text>
+
+  <circle cx="548" cy="468" r="8" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="570" y="465" font-size="13" fill="#333333">[masked number]</text>
+  <text x="570" y="483" font-size="11" fill="#666666">Phone call</text>
+
+  <rect x="524" y="524" width="312" height="40" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="680" y="549" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Get The Code</text>
+
+  <text x="524" y="598" font-size="13" fill="#333333">Use a backup code instead</text>
+
+  <!-- arrow 2 -->
+  <line x1="870" y1="500" x2="950" y2="500" stroke="#333333" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="910" y="492" font-size="11" fill="#666666" text-anchor="middle">Send</text>
+
+  <!-- ============ STEP 3 : CODE ============ -->
+  <text x="960" y="112" font-size="14" font-weight="bold" fill="#333333">STEP 3 &#183; CODE</text>
+  <rect x="960" y="130" width="360" height="660" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <rect x="960" y="130" width="360" height="40" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="980" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="994" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <circle cx="1008" cy="150" r="4" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <rect x="1028" y="140" width="272" height="20" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="1164" y="154" font-size="11" fill="#666666" text-anchor="middle">/users/two_factor</text>
+
+  <rect x="960" y="170" width="360" height="46" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="980" y="182" width="22" height="22" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1012" y="199" font-size="13" font-weight="bold" fill="#333333">IVFCRYO</text>
+
+  <text x="984" y="256" font-size="14" font-weight="bold" fill="#333333">Two-Factor Authentication</text>
+  <text x="984" y="280" font-size="11" fill="#666666">We sent a 6-digit code to the chosen</text>
+  <text x="984" y="296" font-size="11" fill="#666666">destination. It expires in 10 minutes.</text>
+
+  <text x="984" y="336" font-size="11" fill="#666666">Verification Code</text>
+  <rect x="984" y="344" width="312" height="34" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+
+  <rect x="984" y="410" width="312" height="40" rx="2" fill="#f2f2f2" stroke="#333333" stroke-width="1.5"/>
+  <text x="1140" y="435" font-size="13" font-weight="bold" fill="#333333" text-anchor="middle">Log in</text>
+
+  <text x="984" y="486" font-size="13" fill="#333333">Didn't receive the code? Click here</text>
+  <text x="984" y="510" font-size="13" fill="#333333">Use a backup code</text>
+  <text x="984" y="534" font-size="13" fill="#333333">Return to sign in</text>
+</svg>

@@ -8,48 +8,40 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  'Front-end and design-system work led by Joshua Briley: accessible product UI, multi-brand design systems, and the interfaces behind products in production. Each case study doubles as a work sample.';
+  'Product design engineering by Joshua Briley: a fertility logistics platform, a multi-tenant Rails admin app rebuilt in place, and a voice-controlled operations product for home-based child care. Each case study shows the reasoning behind the interface, not just the outcome.';
 
+// Each teaser reads the same way: what it is, what I owned, and the number the
+// case study actually substantiates. Kinds name the product type, not the craft.
 const projects = [
-    {
-    index: '04',
-    href: '/projects/americas-test-kitchen/',
-    client: "America's Test Kitchen",
-    kind: 'Design system',
-    title: 'When a product needs a system, I build that too',
-    summary:
-      'A shared React and Next.js component library serving three editorial brands with zero brand-fork props, and one accessibility floor every team inherits, built on top of a previously inaccessible CMS.',
-    note: '60+ components',
-  },
-  {
-    index: '05',
-    href: '/projects/berxi-insurance/',
-    client: 'Berxi',
-    kind: 'Design system',
-    title: 'A design system for a growing platform',
-    summary:
-      'A custom design system for a growing insurance platform: from stakeholder alignment through component library, documentation, and cross-team adoption that unblocked marketing to ship campaigns on their own.',
-    note: 'Cross-team adoption',
-  },
   {
     index: '01',
     href: '/projects/ivfcryo/',
     client: 'IVFCRYO',
-    kind: 'Accessible product',
-    title: 'Accessibility built in from the start',
+    kind: 'Logistics platform',
+    title: 'Shipping something irreplaceable, self-service',
     summary:
-      'A self-service shipping application for a fertility specimen logistics provider, with real-time environmental tracking, multi-carrier label printing, and accessibility built in from day one: the mechanism that moved the numbers.',
+      'A self-service platform for cryogenic fertility shipments, replacing a paper process where a single mistake is unrecoverable. I designed the two-sided product and built the Rails domain and the carrier, telemetry, and alerting services underneath it.',
     note: '75% fewer support calls',
   },
   {
     index: '02',
     href: '/projects/vmspark/',
     client: 'VMSpark',
-    kind: 'Rails platform',
-    title: 'A multi-tenant Rails platform, rebuilt',
+    kind: 'Admin platform',
+    title: 'A multi-tenant Rails admin app, rebuilt in place',
     summary:
-      'Rebuilt and shipped in four phases with no feature flags and zero pipeline regressions: a 700-line inventory, 350 templates consolidated onto one component system, routed through a single token layer, with no operator retraining.',
-    note: '350 ERB templates',
+      'An audit of 350 ERB templates turned into a four-phase rebuild of the operator-facing app, shipped with no feature flags onto a live pipeline. I owned the inventory, the design direction, and the engineering.',
+    note: 'Zero pipeline regressions',
+  },
+  {
+    index: '03',
+    href: '/projects/logatot/',
+    client: 'Logatot',
+    kind: 'Voice platform',
+    title: 'An interface that works when nobody can look at it',
+    summary:
+      'A voice-controlled operations platform for home-based child care, where the user is holding a toddler and answers to three regulatory regimes. I led the front end on a three-developer team and built much of the Rails domain.',
+    note: '~1,100 of 1,939 commits',
   },
 ];
 
@@ -57,8 +49,6 @@ const projects = [
 // work, not a footnote to the client case studies. Names mirror the index page.
 const personalProjects = [
   { href: '/personal-projects/rudiment-ui/', name: 'Rudiment UI' },
-  { href: '/personal-projects/clempo/', name: 'Clempo' },
-  { href: '/personal-projects/bass-face/', name: 'Bass Face' },
   { href: '/personal-projects/token-galaga/', name: 'Token Adventure' },
   { href: '/personal-projects/west-baton-rouge-presbyterian/', name: 'West Baton Rouge Presbyterian' },
 ];
@@ -75,8 +65,9 @@ const personalProjects = [
           Products where I owned the <em class="ink-wink font-normal italic">interface</em>.
         </Heading>
         <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-          Built for teams with real constraints: messy timelines, mixed stacks, and real humans
-          using them on the other side. Each case study doubles as a work sample.
+          Three products in production, built for teams with real constraints: messy timelines,
+          mixed stacks, and people depending on the result. Each case study shows the reasoning,
+          not just the outcome.
         </Text>
       </div>
     </Container>
@@ -132,8 +123,8 @@ const personalProjects = [
             Personal projects
           </Heading>
           <Text size="lg" tone="muted" class="mt-5 max-w-xl">
-            Five things I build when no one's asking, from open-source component primitives to a
-            finance app real households run their money on. No client, no brief, same finish.
+            What I build when no one is asking, from open-source component primitives to a
+            playable teaching tool for the W3C design-tokens spec. Same finish as the client work.
           </Text>
         </div>
         <Button
@@ -201,8 +192,8 @@ const personalProjects = [
             Every case study doubles as a work sample.
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            If you're evaluating me for a product design engineering role, this is the level of craft and
-            finish to expect at the interface. Questions about any of it, send a note.
+            If you're evaluating me for a product design engineering role, this is the level of craft
+            and finish to expect at the interface. Questions about any of it, send a note.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">

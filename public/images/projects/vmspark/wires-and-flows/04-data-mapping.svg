@@ -1,0 +1,229 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="1290" viewBox="0 0 1400 1290">
+  <rect x="0" y="0" width="1400" height="1290" fill="#ffffff"/>
+
+  <!-- Title -->
+  <text x="40" y="46" font-family="Helvetica, Arial, sans-serif" font-size="22" font-weight="bold" fill="#333333">Data Mapping</text>
+  <line x1="40" y1="68" x2="1360" y2="68" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- Browser frame -->
+  <rect x="40" y="95" width="1320" height="1155" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Browser chrome -->
+  <rect x="40" y="95" width="1320" height="50" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <circle cx="66" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="84" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <circle cx="102" cy="120" r="5" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <rect x="125" y="107" width="440" height="26" rx="13" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="141" y="124" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">VMSpark — /data_mapping/facilities?state=unmapped</text>
+
+  <!-- Workspace header bar -->
+  <line x1="280" y1="200" x2="1360" y2="200" stroke="#333333" stroke-width="1.5"/>
+  <text x="312" y="168" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">WORKSPACE</text>
+  <text x="312" y="190" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Cascade Staffing Group</text>
+  <rect x="560" y="161" width="420" height="30" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="576" y="181" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#999999">Search facilities, professions, specialties…</text>
+  <rect x="940" y="167" width="28" height="18" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="954" y="180" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#666666" text-anchor="middle">⌘K</text>
+  <circle cx="1312" cy="176" r="14" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Icon rail -->
+  <line x1="104" y1="200" x2="104" y2="1250" stroke="#999999" stroke-width="1.5"/>
+  <rect x="62" y="222" width="22" height="22" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <rect x="62" y="258" width="22" height="22" rx="2" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
+  <rect x="62" y="294" width="22" height="22" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <rect x="62" y="330" width="22" height="22" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+
+  <!-- Sidebar -->
+  <line x1="280" y1="200" x2="280" y2="1250" stroke="#333333" stroke-width="1.5"/>
+  <text x="124" y="238" font-family="Helvetica, Arial, sans-serif" font-size="15" font-weight="bold" fill="#333333">Data Mapping</text>
+
+  <rect x="112" y="254" width="160" height="32" fill="#e8e8e8"/>
+  <rect x="112" y="254" width="4" height="32" fill="#333333"/>
+  <text x="130" y="275" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Facilities</text>
+  <rect x="234" y="261" width="32" height="18" rx="9" fill="#333333"/>
+  <text x="250" y="274" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">24</text>
+
+  <text x="130" y="313" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Professions</text>
+  <rect x="234" y="299" width="32" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="250" y="312" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">7</text>
+
+  <text x="130" y="349" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Specialties</text>
+  <rect x="234" y="335" width="32" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="250" y="348" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">31</text>
+
+  <text x="130" y="385" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Job Types</text>
+  <rect x="234" y="371" width="32" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="250" y="384" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">2</text>
+
+  <text x="130" y="421" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Shift Details</text>
+  <rect x="234" y="407" width="32" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="250" y="420" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">5</text>
+
+  <text x="130" y="457" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">Departments</text>
+  <text x="130" y="493" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">VMS Sources</text>
+
+  <text x="130" y="541" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">ATS REFERENCE</text>
+  <text x="130" y="573" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">ATS Facilities</text>
+  <text x="130" y="609" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#333333">ATS Professions</text>
+  <text x="130" y="645" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#999999">Payload Viewer</text>
+
+  <!-- Pane heading -->
+  <text x="312" y="250" font-family="Helvetica, Arial, sans-serif" font-size="18" font-weight="bold" fill="#333333">Facilities</text>
+  <text x="312" y="274" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">24 unmapped · 1,203 mapped · last auto-map run 06:14</text>
+  <rect x="1030" y="234" width="146" height="32" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1103" y="255" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Re-run Auto-Map</text>
+  <rect x="1188" y="234" width="142" height="32" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1259" y="255" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333" text-anchor="middle">Sync with ATS</text>
+
+  <!-- Entity-type tabs -->
+  <line x1="312" y1="326" x2="1330" y2="326" stroke="#cccccc" stroke-width="1"/>
+  <text x="312" y="310" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">Facilities</text>
+  <rect x="374" y="296" width="32" height="18" rx="9" fill="#333333"/>
+  <text x="390" y="309" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">24</text>
+  <rect x="312" y="323" width="94" height="4" fill="#333333"/>
+
+  <text x="430" y="310" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#666666">Professions</text>
+  <rect x="506" y="296" width="32" height="18" rx="9" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="522" y="309" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">7</text>
+
+  <text x="562" y="310" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#666666">Specialties</text>
+  <rect x="634" y="296" width="32" height="18" rx="9" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="650" y="309" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">31</text>
+
+  <text x="690" y="310" font-family="Helvetica, Arial, sans-serif" font-size="13" fill="#666666">Job Types</text>
+  <rect x="756" y="296" width="32" height="18" rx="9" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="772" y="309" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">2</text>
+
+  <!-- Filter chips and sort -->
+  <rect x="312" y="348" width="116" height="28" rx="14" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
+  <text x="370" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333333" text-anchor="middle">Unmapped 24</text>
+  <rect x="440" y="348" width="116" height="28" rx="14" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="498" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="middle">Mapped 1,203</text>
+  <rect x="568" y="348" width="100" height="28" rx="14" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="618" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="middle">Ignored 38</text>
+  <text x="1024" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">Sort</text>
+  <rect x="1060" y="348" width="270" height="28" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1076" y="367" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#333333">Unmatched first, then oldest</text>
+
+  <!-- Card 1 — leading fuzzy suggestion -->
+  <rect x="312" y="392" width="1018" height="260" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="702" y1="392" x2="702" y2="652" stroke="#999999" stroke-width="1"/>
+  <text x="330" y="418" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">IMPORTED FROM VMS</text>
+  <text x="686" y="418" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">AMN</text>
+  <text x="330" y="444" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">Mercy Genl - Sac</text>
+  <text x="330" y="466" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">4001 J St</text>
+  <text x="330" y="484" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">Sacramento, CA 95819</text>
+  <text x="330" y="515" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">raw payload</text>
+  <rect x="406" y="502" width="132" height="20" rx="10" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="472" y="516" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">12 listings blocked</text>
+  <rect x="330" y="540" width="340" height="8" rx="4" fill="#e8e8e8"/>
+  <rect x="330" y="558" width="340" height="8" rx="4" fill="#e8e8e8"/>
+  <rect x="330" y="576" width="296" height="8" rx="4" fill="#e8e8e8"/>
+  <rect x="330" y="594" width="238" height="8" rx="4" fill="#e8e8e8"/>
+
+  <text x="722" y="418" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">MATCHED TO ATS</text>
+  <rect x="722" y="430" width="590" height="32" rx="2" fill="#ffffff" stroke="#333333" stroke-width="2"/>
+  <text x="738" y="451" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333">Mercy General</text>
+
+  <rect x="722" y="472" width="590" height="44" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
+  <text x="738" y="491" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#333333">Mercy General Hospital — Sacramento, CA</text>
+  <text x="738" y="507" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">ATS #44812 · 4001 J Street · WorkSite</text>
+  <line x1="1156" y1="494" x2="1246" y2="494" stroke="#333333" stroke-width="2"/>
+  <text x="1298" y="498" font-family="Helvetica, Arial, sans-serif" font-size="11" font-weight="bold" fill="#333333" text-anchor="end">92%</text>
+
+  <rect x="722" y="516" width="590" height="44" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="738" y="535" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333">Mercy General Surgery Center — Sacramento, CA</text>
+  <text x="738" y="551" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">ATS #44907 · 3941 J Street</text>
+  <line x1="1156" y1="538" x2="1220" y2="538" stroke="#999999" stroke-width="2"/>
+  <text x="1298" y="542" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="end">71%</text>
+
+  <rect x="722" y="560" width="590" height="44" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="738" y="579" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#333333">Mercy San Juan Medical Center — Carmichael, CA</text>
+  <text x="738" y="595" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">ATS #44520 · 6501 Coyle Avenue</text>
+  <line x1="1156" y1="582" x2="1204" y2="582" stroke="#999999" stroke-width="2"/>
+  <text x="1298" y="586" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="end">54%</text>
+
+  <rect x="1094" y="612" width="92" height="28" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1140" y="631" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666" text-anchor="middle">Ignore</text>
+  <rect x="1196" y="612" width="116" height="28" rx="2" fill="#333333" stroke="#333333" stroke-width="2"/>
+  <text x="1254" y="631" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Update</text>
+
+  <!-- Card 2 — no candidate cleared the floor -->
+  <rect x="312" y="672" width="1018" height="150" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="702" y1="672" x2="702" y2="822" stroke="#999999" stroke-width="1"/>
+  <text x="330" y="698" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">IMPORTED FROM VMS</text>
+  <text x="686" y="698" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">Aya</text>
+  <text x="330" y="724" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">MERCY GENERAL HOSP (SACRAMENTO)</text>
+  <text x="330" y="746" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">4001 J STREET</text>
+  <text x="330" y="764" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">SACRAMENTO CA 95819</text>
+  <text x="330" y="795" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">raw payload</text>
+  <rect x="406" y="782" width="126" height="20" rx="10" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="469" y="796" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">6 listings blocked</text>
+
+  <text x="722" y="698" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">MATCHED TO ATS</text>
+  <rect x="722" y="710" width="590" height="32" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="738" y="731" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#999999">Search ATS facilities…</text>
+  <rect x="722" y="758" width="356" height="8" rx="4" fill="#e8e8e8"/>
+  <rect x="722" y="776" width="290" height="8" rx="4" fill="#e8e8e8"/>
+
+  <rect x="1094" y="782" width="92" height="28" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1140" y="801" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666" text-anchor="middle">Ignore</text>
+  <rect x="1196" y="782" width="116" height="28" rx="2" fill="#333333" stroke="#333333" stroke-width="2"/>
+  <text x="1254" y="801" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Update</text>
+
+  <!-- Card 3 — already resolved -->
+  <rect x="312" y="842" width="1018" height="170" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="702" y1="842" x2="702" y2="1012" stroke="#999999" stroke-width="1"/>
+  <text x="330" y="868" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">IMPORTED FROM VMS</text>
+  <text x="686" y="868" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">HealthTrust</text>
+  <text x="330" y="894" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">St. Josephs Med Ctr - Stockton</text>
+  <text x="330" y="916" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">1800 N California St</text>
+  <text x="330" y="934" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">Stockton, CA 95204</text>
+  <text x="330" y="965" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">raw payload</text>
+  <rect x="406" y="952" width="140" height="20" rx="10" fill="#e8e8e8" stroke="#999999" stroke-width="1"/>
+  <text x="476" y="966" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">9 listings unblocked</text>
+
+  <text x="722" y="868" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">MATCHED TO ATS</text>
+  <rect x="722" y="880" width="590" height="80" rx="2" fill="#f2f2f2" stroke="#999999" stroke-width="1.5"/>
+  <text x="738" y="906" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">St. Joseph's Medical Center</text>
+  <text x="1296" y="906" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">saved 2 days ago</text>
+  <text x="738" y="925" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">ATS #44903 · Bullhorn · 1800 N California St, Stockton, CA 95204</text>
+  <rect x="738" y="934" width="76" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="776" y="947" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#333333" text-anchor="middle">WorkSite</text>
+  <rect x="822" y="934" width="56" height="18" rx="9" fill="#ffffff" stroke="#999999" stroke-width="1"/>
+  <text x="850" y="947" font-family="Helvetica, Arial, sans-serif" font-size="9" fill="#333333" text-anchor="middle">BillTo</text>
+  <text x="1296" y="948" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="end">change match</text>
+
+  <rect x="1094" y="970" width="92" height="28" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1140" y="989" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#999999" text-anchor="middle">Ignore</text>
+  <rect x="1196" y="970" width="116" height="28" rx="2" fill="#333333" stroke="#333333" stroke-width="2"/>
+  <text x="1254" y="989" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Update</text>
+
+  <!-- Card 4 — reference record deleted in ATS -->
+  <rect x="312" y="1032" width="1018" height="160" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <line x1="702" y1="1032" x2="702" y2="1192" stroke="#999999" stroke-width="1"/>
+  <text x="330" y="1058" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">IMPORTED FROM VMS</text>
+  <text x="686" y="1058" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">Medefis</text>
+  <text x="330" y="1084" font-family="Helvetica, Arial, sans-serif" font-size="14" font-weight="bold" fill="#333333">UC Davis Med Ctr</text>
+  <text x="330" y="1106" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">2315 Stockton Blvd</text>
+  <text x="330" y="1124" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666">Sacramento, CA 95817</text>
+  <text x="330" y="1155" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666">raw payload</text>
+  <rect x="406" y="1142" width="126" height="20" rx="10" fill="#f2f2f2" stroke="#999999" stroke-width="1"/>
+  <text x="469" y="1156" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#333333" text-anchor="middle">4 listings blocked</text>
+
+  <text x="722" y="1058" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#999999">MATCHED TO ATS</text>
+  <rect x="722" y="1070" width="590" height="76" rx="2" fill="#e8e8e8" stroke="#333333" stroke-width="2"/>
+  <rect x="738" y="1082" width="124" height="20" rx="2" fill="#ffffff" stroke="#333333" stroke-width="1.5"/>
+  <text x="800" y="1096" font-family="Helvetica, Arial, sans-serif" font-size="9" font-weight="bold" fill="#333333" text-anchor="middle">DELETED IN ATS</text>
+  <text x="1296" y="1096" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666" text-anchor="end">detected 14/07/2026</text>
+  <text x="738" y="1122" font-family="Helvetica, Arial, sans-serif" font-size="13" font-weight="bold" fill="#333333">UC Davis Medical Center</text>
+  <text x="738" y="1139" font-family="Helvetica, Arial, sans-serif" font-size="10" fill="#666666">ATS #44117 no longer returned by the Bullhorn reference pull.</text>
+
+  <rect x="1094" y="1156" width="92" height="28" rx="2" fill="#ffffff" stroke="#999999" stroke-width="1.5"/>
+  <text x="1140" y="1175" font-family="Helvetica, Arial, sans-serif" font-size="12" fill="#666666" text-anchor="middle">Ignore</text>
+  <rect x="1196" y="1156" width="116" height="28" rx="2" fill="#333333" stroke="#333333" stroke-width="2"/>
+  <text x="1254" y="1175" font-family="Helvetica, Arial, sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">Update</text>
+
+  <!-- Queue footer -->
+  <text x="821" y="1226" font-family="Helvetica, Arial, sans-serif" font-size="11" fill="#666666" text-anchor="middle">4 of 24 unmapped facilities shown · load 20 more</text>
+</svg>

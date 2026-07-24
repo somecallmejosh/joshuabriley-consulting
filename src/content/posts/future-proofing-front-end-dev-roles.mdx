@@ -7,7 +7,7 @@ tags:
   - Design Systems
   - Contribution
   - Developer Experience
-readMinutes: 23
+readMinutes: 19
 icon: ph:robot-duotone
 gradient: from-sky/30 via-plum/30 to-coral/30
 sticker: plum
@@ -29,6 +29,8 @@ Second, productivity research is bimodal. GitHub's 2022 controlled experiment ([
 
 Third, the productivity gap **widens** with AI. McKinsey's [CIO/CTO guide](https://www.mckinsey.com/capabilities/tech-and-ai/our-insights/technologys-generational-moment-with-generative-ai-a-cio-and-cto-guide) found highly skilled developers gained 50-80%, while developers with less than a year of experience saw a **7-10% decline in speed**. They struggle to critique, validate, and improve AI output. The "10x developer" idea is dissolving into a different shape: senior engineers who can orchestrate AI become disproportionately valuable; juniors without the judgment to evaluate AI output fall further behind.
 
+Read those numbers together rather than separately. The headline gains come from greenfield and lab settings; the losses come from mature codebases and inexperienced developers. The honest summary is that AI accelerates greenfield work for senior engineers, slows complex work in codebases with deep implicit context, and actively hurts juniors who can't yet evaluate what it produces. No single figure survives without that framing.
+
 The combination pushes the role decisively toward review, quality control, architecture, and systems thinking, not pure code production.
 
 ## How hiring patterns are shifting
@@ -37,9 +39,9 @@ Front-end-specific labor data is harsher than the headline tech numbers. [IEEE S
 
 [Indeed Hiring Lab data](https://www.hiringlab.org/2025/07/30/the-us-tech-hiring-freeze-continues/) shows tech postings 36% below the February 2020 baseline as of October 2025. Postings open to candidates with 2-4 years of experience fell from 46% in mid-2022 to 40% in mid-2025, while postings requiring 5+ years rose from 37% to 42%. Junior tech postings are now under 2% of total openings. SignalFire's [State of Tech Talent 2025](https://www.signalfire.com/blog/signalfire-state-of-talent-report-2025) reports new-grad hiring at the seven largest U.S. tech firms is down more than 50% since 2022.
 
-[Bloomberry's analysis of 20 million postings](https://bloomberry.com/blog/how-ai-is-disrupting-the-tech-job-market-data-from-20m-job-postings/) shows AI-scientist postings up 80% year over year while front-end, mobile, and data-engineering postings each dropped more than 20%. [Indeed's 2025 AI at Work report](https://recruit-holdings.com/en/blog/post_20251218_0001/) finds 81% of skills mentioned in a typical software-development job posting fall into "hybrid transformation" categories, with humans shifting from doing the work to directing it.
+[Bloomberry's analysis of 20 million postings](https://bloomberry.com/blog/how-ai-is-disrupting-the-tech-job-market-data-from-20m-job-postings/) shows AI-scientist postings up 80% year over year while front-end, mobile, and data-engineering postings each dropped more than 20%. That is not a contradiction of the BLS growth projection above, though it is easy to read as one: BLS measures total employment across a decade, Bloomberry measures new posting volume during a hiring freeze. The directional signal is consistent either way. Total demand grows slowly while its composition shifts away from generic front-end roles toward design engineers, AI engineers, and senior specialists. [Indeed's 2025 AI at Work report](https://recruit-holdings.com/en/blog/post_20251218_0001/) finds 81% of skills mentioned in a typical software-development job posting fall into "hybrid transformation" categories, with humans shifting from doing the work to directing it.
 
-Adoption is settling at high rates that effectively erase any "competitive advantage" of merely using AI. Gartner now projects [90% of enterprise software engineers will use AI code assistants by 2028](https://www.gartner.com/en/newsroom/press-releases/2025-07-01-gartner-identifies-the-top-strategic-trends-in-software-engineering-for-2025-and-beyond), up from less than 14% in early 2024. The [2025 Octoverse](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/) reports roughly 80% of new GitHub users tried Copilot within their first week and that TypeScript overtook JavaScript and Python as the most-used language on the platform, a shift GitHub attributes directly to AI coding workflows. Strong typing makes agent-assisted coding more reliable in production.
+Adoption is settling at high rates that effectively erase any "competitive advantage" of merely using AI. Gartner now projects [90% of enterprise software engineers will use AI code assistants by 2028](https://www.gartner.com/en/newsroom/press-releases/2025-07-01-gartner-identifies-the-top-strategic-trends-in-software-engineering-for-2025-and-beyond), up from less than 14% in early 2024. Treat that as a moving target: Gartner's April 2024 forecast for the same year was 75%, revised upward by 15 points in 15 months. The [2025 Octoverse](https://github.blog/news-insights/octoverse/octoverse-a-new-developer-joins-github-every-second-as-ai-leads-typescript-to-1/) reports roughly 80% of new GitHub users tried Copilot within their first week and that TypeScript overtook JavaScript and Python as the most-used language on the platform, a shift GitHub attributes directly to AI coding workflows. Strong typing makes agent-assisted coding more reliable in production.
 
 ## The evolution of the front-end identity
 
@@ -135,7 +137,7 @@ The traditional skills have not become less important. They have become more dia
 
 ## Security and governance in the age of autonomous agents
 
-The increased autonomy of AI agents introduces critical security challenges. The [Veracode 2025 GenAI Code Security Report](https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/) tested 100+ LLMs across Java, Python, C#, and JavaScript and found 45% of AI-generated code samples introduced OWASP Top 10 vulnerabilities; cross-site scripting failure rates hit 86%. Pass rates have remained roughly flat at 55% across two years of model releases. AI-assisted commits have shown a 3.2% secret-leak rate, more than double the 1.5% baseline for human-only commits.
+The increased autonomy of AI agents introduces critical security challenges. The [Veracode 2025 GenAI Code Security Report](https://www.veracode.com/resources/analyst-reports/2025-genai-code-security-report/) tested 100+ LLMs across Java, Python, C#, and JavaScript and found 45% of AI-generated code samples introduced OWASP Top 10 vulnerabilities; cross-site scripting failure rates hit 86%. Pass rates have remained roughly flat at 55% across two years of model releases. Methodology drives the spread here, so cite it: the 40-45% figures come from security-relevant or adversarially-tested contexts, while the 15-25% rates quoted elsewhere cover all suggestions generically, most of which never touch a security boundary. Both are true of different questions. AI-assisted commits have shown a 3.2% secret-leak rate, more than double the 1.5% baseline for human-only commits.
 
 The industry has responded with the **OWASP Top 10 for Agentic Applications** (released in late 2025):
 
@@ -149,6 +151,8 @@ The industry has responded with the **OWASP Top 10 for Agentic Applications** (r
 Treat AI agents as untrusted third parties, applying Zero Trust architecture: real-time authentication, ephemeral credentials, and micro-segmentation so a compromised agent cannot move laterally. Thoughtworks' [Technology Radar entry on "Complacency with AI-generated code"](https://www.thoughtworks.com/en-us/radar/techniques/complacency-with-ai-generated-code) is the cleanest published guidance, citing GitClear's data and Microsoft research showing "AI-driven confidence often comes at the expense of critical thinking."
 
 ## What engineering leaders should do
+
+**Budget for a trough, not a curve.** Aggregate spending and project-level ROI are moving in opposite directions. Gartner forecast $644B in GenAI spending for 2025 while also placing GenAI in its Trough of Disillusionment, with at least 30% of projects abandoned after proof of concept. Those are compatible facts, and a plan that only accounts for one of them will be wrong in a predictable direction.
 
 **Plan for capability, not headcount.** Tobi Lütke's [April 2025 internal memo](https://x.com/tobi/status/1909251946235437514) is the most-discussed example: before requesting more headcount, Shopify teams must demonstrate why AI cannot deliver the work. Shopify's headcount fell from roughly 11,600 in 2022 to 8,100 at the end of 2024 while revenue grew 26%. Shopify has since [ordered roughly 3,000 Cursor licenses](https://www.firstround.com/ai/shopify) and reframed the memo internally as "show you can use AI more and you'll get more resources."
 
@@ -168,21 +172,11 @@ Treat AI agents as untrusted third parties, applying Zero Trust architecture: re
 
 - **Now through 2027, agents are mainstream.** Daily use is the norm; GitHub ships cloud and IDE agents; Anthropic supports subagents and MCP-connected tools; Microsoft's Work Trend Index argues "human-agent teams" are a defining organizational pattern. The work is learning to collaborate with codebase-aware agents while retaining human control over requirements, review, and release quality.
 - **2027 to 2028, enterprise consolidation.** Vendor patterns converge on the same building blocks: reusable instructions, prompt files, custom agents/skills, MCP-connected tools, evaluation harnesses. Enterprises move from informal "ask the copilot" usage to governed workflows with approved tool access and systematic evaluation.
-- **2028 to 2030, role recomposition.** The World Economic Forum reports employers expect 39% of key skills to change by 2030. The role fragments into higher-value specializations: product UI engineers owning complex interaction quality, design-system and platform engineers creating reusable constraints, and AI-enabled engineers spanning frontend, tooling, and workflow automation. The common denominator isn't writing JSX quickly. It's making a socio-technical system produce reliable user value.
+- **2028 to 2030, role recomposition.** The World Economic Forum's [Future of Jobs Report 2025](https://www.weforum.org/publications/the-future-of-jobs-report-2025/) finds employers expect 39% of key skills to change by 2030. The role fragments into higher-value specializations: product UI engineers owning complex interaction quality, design-system and platform engineers creating reusable constraints, and AI-enabled engineers spanning frontend, tooling, and workflow automation. The common denominator isn't writing JSX quickly. It's making a socio-technical system produce reliable user value.
 
 ## Where to learn this
 
-**Courses.** [Frontend Masters](https://frontendmasters.com/) (broad catalog, including the [Coding with AI Learning Path](https://frontendmasters.com/learn/ai/)), [Epic React](https://www.epicreact.dev/) and [Epic Web](https://www.epicweb.dev/) (Kent C. Dodds), [Total TypeScript](https://www.totaltypescript.com/) (Matt Pocock), [CSS for JS Developers](https://css-for-js.dev/) and [The Joy of React](https://www.joyofreact.com/) (Josh Comeau), [web.dev/learn](https://web.dev/learn/), [MDN Learn Web Development](https://developer.mozilla.org/en-US/docs/Learn_web_development), [Refactoring UI](https://www.refactoringui.com/), [Practical Accessibility](https://practical-accessibility.today/) (Sara Soueidan), [Build UI](https://buildui.com/), [AI and Design Systems](https://aianddesign.systems/) (Brad Frost), [DeepLearning.AI short courses](https://www.deeplearning.ai/courses/).
-
-**Books.** [Refactoring UI](https://www.refactoringui.com/), [Inclusive Components](https://book.inclusive-components.design/) (Heydon Pickering), [Atomic Design](https://atomicdesign.bradfrost.com/) (Brad Frost, free), [Eloquent JavaScript](https://eloquentjavascript.net/) (free), Addy Osmani's [Beyond Vibe Coding](https://beyond.addy.ie/).
-
-**Newsletters and blogs.** [Smashing Magazine](https://www.smashingmagazine.com/), [JavaScript Weekly](https://javascriptweekly.com/), [Frontend Focus](https://frontendfoc.us/), [Bytes](https://bytes.dev/), [web.dev](https://web.dev/), [Chrome for Developers](https://developer.chrome.com/blog/), [The Pragmatic Engineer](https://newsletter.pragmaticengineer.com/), [Simon Willison's Weblog](https://simonwillison.net/), Addy Osmani, Josh Comeau, Una Kravets, Adam Argyle, Stephanie Eckles, Brad Frost, Adrian Roselli, Sara Soueidan.
-
-**Podcasts.** [Syntax](https://syntax.fm/), [ShopTalk Show](https://shoptalkshow.com/), [Front End Happy Hour](https://www.frontendhappyhour.com/), [devtools.fm](https://www.devtools.fm/), [Latent Space](https://www.latent.space/).
-
-**AI-specific resources.** [Anthropic Build with Claude](https://www.anthropic.com/learn/build-with-claude), [Anthropic Cookbook](https://github.com/anthropics/anthropic-cookbook), [Anthropic Prompt Engineering Interactive Tutorial](https://github.com/anthropics/prompt-eng-interactive-tutorial), [OpenAI Cookbook](https://cookbook.openai.com/), [Vercel AI SDK docs](https://ai-sdk.dev/docs/introduction), [LangChain.js docs](https://js.langchain.com/), [Model Context Protocol docs](https://modelcontextprotocol.io/), [Claude Code overview](https://code.claude.com/docs/en/overview), GitHub Copilot enterprise documentation, OpenAI Codex docs and evals guides.
-
-**Recurring industry signal.** Stack Overflow Annual Developer Survey, GitHub's Octoverse and Copilot docs, Microsoft's Work Trend Index, DORA research, the World Economic Forum's Future of Jobs research, and the Codex changelog.
+The reading list behind this piece — courses, books, newsletters, podcasts, and AI-specific documentation — lives in a companion post: [Where to learn modern front-end](/blog/where-to-learn-modern-front-end).
 
 ## Conclusion
 
@@ -191,64 +185,3 @@ The front-end role is not disappearing. It is being unbundled and recombined. Bo
 The senior engineers who will be most valuable in three years are the ones treating AI as an instrument they can play, not a replacement for the craft they spent a decade building. The leaders who do best will be the ones who keep hiring and developing juniors anyway, even when the short-term math says otherwise, because the senior pipeline of 2029 is being decided in 2026.
 
 Master the protocol standards (MCP), the conductorship of context engineering, and the governance of agentic systems. Run the linter. Write the test. Read the diff. Then ship.
-
----
-
-## Notes on inconsistencies across source reports
-
-This synthesis combines three independently researched reports. Where the sources diverged on facts or framing, the discrepancies are recorded here rather than papered over.
-
-1. **Rate of vulnerabilities in AI-generated code.** Estimates vary substantially depending on methodology. The Pearce et al. study ([arXiv 2108.09293](https://arxiv.org/abs/2108.09293)) found ~40% of Copilot completions in security-relevant contexts contained CWE-classified vulnerabilities. The Veracode 2025 GenAI Code Security Report found 45% of samples introduced OWASP Top 10 vulnerabilities, with XSS failure rates at 86%. Other industry sources cite 15-25% across "AI-generated code suggestions" generically. The lower number likely reflects all suggestions (most of which are non-security-sensitive); the higher numbers reflect security-relevant or adversarially-tested contexts. Both can be true; cite the methodology when using either.
-
-2. **Anthropic's internal AI-authored code share.** One source asserts that "most" of Anthropic's internal code is now Claude-authored. Another notes Dario Amodei's March 2025 prediction that AI would write 90% of code within six months has been publicly flagged by analysts (e.g., [LessWrong](https://www.lesswrong.com/posts/prSnGGAgfWtZexYLp/is-90-of-code-at-anthropic-being-written-by-ais)) as not having materialized at industry scale. Treat all CEO percentages on AI-authored code (Pichai's "more than 25%", Nadella's "20-30%", Amodei's "90%") as directional climate, not measured weather; none are independently audited.
-
-3. **Productivity gains.** Headline numbers (GitHub's 55%, McKinsey's 45-50%) come from greenfield/lab settings. METR's 2025 RCT found senior developers in mature codebases were 19% _slower_ with AI, while McKinsey reports juniors were 7-10% slower. The honest summary is that AI accelerates greenfield work for senior engineers, slows complex work in mature codebases, and actively hurts juniors who can't yet evaluate output. Avoid citing any single number without that context.
-
-4. **Front-end employment outlook.** BLS projects 7% growth for web developers and digital designers (2024-2034). Bloomberry's posting analysis shows front-end postings down >20% YoY. These are not contradictory (BLS measures total employment over a decade, Bloomberry measures new posting volume in a hiring freeze), but they are easy to confuse. The directional signal is consistent: total demand grows slowly while composition shifts away from generic front-end roles toward design engineers, AI engineers, and senior specialists.
-
-5. **Gartner forecasts on AI assistant adoption.** Gartner's April 2024 forecast called for 75% of enterprise software engineers using AI code assistants by 2028; Gartner revised that upward to 90% in July 2025. Use the most recent figure (90%) and flag that it is a forecast revised within 15 months; these projections are themselves volatile.
-
-6. **Gartner GenAI spending and "Trough of Disillusionment" framing.** One source emphasizes that GenAI has entered Gartner's Trough of Disillusionment with ≥30% of projects abandoned post-POC; the others do not engage with the hype-cycle framing. The two views are compatible: aggregate spending is rising sharply ($644B forecast for 2025) even as individual project ROI disappoints. Both belong in any serious enterprise plan.
-
-## Combined sources and references
-
-- Anthropic. _Effective context engineering for AI agents._ https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents
-- Anthropic. _Claude 4 prompting best practices._ https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/claude-4-best-practices
-- Anthropic. _Candidate AI guidance._ https://www.anthropic.com/candidate-ai-guidance
-- Anthropic. _Claude Code product page._ https://www.anthropic.com/product/claude-code
-- Brynjolfsson, E., Chandar, B., Chen, R. _Canaries in the Coal Mine?_ Stanford Digital Economy Lab, November 2025.
-- Bureau of Labor Statistics. _Occupational Outlook Handbook._ https://www.bls.gov/ooh/computer-and-information-technology/
-- Canva Engineering. _Yes, you can use AI in our interviews._ June 2025.
-- DORA. _2024 Accelerate State of DevOps Report._ https://dora.dev/research/2024/dora-report/
-- Fournier, C. _Things I currently believe about AI and tech employment._ May 2025.
-- Gartner. _Worldwide GenAI spending forecast 2025._ March 2025.
-- Gartner. _30% of GenAI projects will be abandoned after POC._ July 2024.
-- Gartner. _AI code assistants press release._ July 2025.
-- GitClear. _AI Copilot Code Quality 2025._
-- GitHub. _Octoverse 2025._
-- GitHub. _Quantifying GitHub Copilot's impact._ arXiv 2302.06590.
-- HTTP Archive. _Web Almanac 2024 Performance chapter._
-- Indeed Hiring Lab. _Tech hiring freeze and experience requirements analyses._ 2025.
-- JetBrains. _State of the Developer Ecosystem 2024._
-- Levels.fyi. _AI engineer compensation trends, Q3 2025._
-- Lütke, T. _Internal AI memo._ April 2025.
-- McKinsey. _Unleashing developer productivity with generative AI._ June 2023.
-- McKinsey. _Technology's generational moment with generative AI._ 2024.
-- METR. _Measuring the Impact of Early-2025 AI on Experienced Open-Source Developer Productivity._ arXiv 2507.09089.
-- Model Context Protocol. _Specification 2025-11-25._
-- Osmani, A. _The 70% Problem; The 80% Problem; Code Review in the Age of AI._
-- OWASP. _Top 10:2025._ https://owasp.org/Top10/
-- OWASP Gen AI Security Project. _LLM Top 10 and Top 10 for Agentic Applications._ 2025.
-- Pearce, H. et al. _Asleep at the Keyboard?_ arXiv 2108.09293.
-- Perry, N. et al. _Do Users Write More Insecure Code with AI Assistants?_ arXiv 2211.03622.
-- SignalFire. _State of Tech Talent Report 2025._
-- Stack Overflow. _2024 and 2025 Developer Surveys._
-- Suh, J. and Malek, S. _On the accessibility of LLM-generated web code._ arXiv 2503.15885.
-- Thoughtworks. _Technology Radar Vol. 33; Complacency with AI-generated code._ 2025.
-- Veracode. _2025 GenAI Code Security Report._
-- Vercel. _Design engineering at Vercel; v0 documentation; AI SDK documentation._
-- W3C. _Web Content Accessibility Guidelines (WCAG) 2.2._
-- W3C Design Tokens Community Group. _Design Tokens Format Module specification._ 2025.
-- WebAIM. _The WebAIM Million 2025 / 2026._
-- web.dev. _INP becomes a Core Web Vital; Baseline reports._
-- World Economic Forum. _Future of Jobs Report 2025._

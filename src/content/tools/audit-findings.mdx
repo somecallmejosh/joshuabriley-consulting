@@ -1,0 +1,40 @@
+---
+title: What an audit actually finds
+description: "Every finding ranked by severity, each paired with a specific fix. This is a working sample of the real audit deliverable: inspect a specimen, then read the findings the way you would read the report."
+date: 2026-06-26
+tool: Diagnostic
+kind: Inspector
+order: 4
+takeaway: Inspect a real specimen and read the findings the way an audit ranks them.
+action: Inspect a specimen
+props:
+  - Two specimens
+  - Ranked by severity
+  - A fix attached to each
+instructions: "The exhibits all shipped to production somewhere. They look fine at a glance, which is exactly the problem. Pick a screen, toggle the issues on, and the inconsistencies surface: the small drift that quietly costs a team sprint velocity, ranked the way a real audit pass would rank it."
+icon: ph:magnifying-glass-duotone
+tags:
+  - Design Systems
+  - Audits
+  - Accessibility
+---
+
+<p class="lede">
+  Every audit ends in a report. Not a vibe, not a list of complaints: every
+  finding ranked by severity, each one paired with a specific, actionable fix.
+  Describing that deliverable in the abstract never lands, so this page is the
+  thing itself. Run the inspection on a specimen, then read the findings the way
+  you would read the real report.
+</p>
+
+The point of an audit is not to tell you your system is messy. You already suspect that. The point is to make the mess legible: to separate the issue that breaks accessibility from the issue that is merely untidy, and to attach a concrete remediation to each so the work is obvious once you sit down to do it.
+
+Notice that the findings sort themselves. High severity is the stuff that breaks accessibility or erodes trust. Medium is drift that compounds over time. Low is polish and consistency. Reading the report is less about counting problems and more about knowing which three to fix first.
+
+## What you walk away with
+
+The Design System Audit reviews your library across all five dimensions in five business days. You receive a PDF report with every finding ranked by severity and a specific remediation for each, followed by a 60-minute debrief call to map what to fix first and why. No prep required on your end: send a Storybook URL, a Figma file, or a GitHub repo, whatever you already have. No specific format necessary.
+
+## The checklist I build against
+
+The audit exists as a service, but those same five dimensions are not just something I sell. They are the standard my own work is held to: every system I ship gets reviewed against the same list before it goes out. If you want to run a quick self-assessment first, the [design-system scorecard](/tools/scorecard/) walks the same dimensions in about ten minutes.

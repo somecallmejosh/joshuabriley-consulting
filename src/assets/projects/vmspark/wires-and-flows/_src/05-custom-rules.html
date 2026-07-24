@@ -1,0 +1,416 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Custom Rules — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Same narrow nav as the listings sheet — the rule table needs the width and
+     the nav labels are short. */
+  .side { width: 150px; }
+
+  /* Six columns in a ~805px pane. The two that carry the sentence (conditions,
+     result) get the room; everything else is an identifier or a control. */
+  table.rules { table-layout: fixed; width: 100%; }
+  table.rules th, table.rules td {
+    padding-left: 6px;
+    padding-right: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.rules th { font-size: 8.5px; letter-spacing: 0.03em; }
+  table.rules td { font-size: 10.5px; padding-top: 8px; padding-bottom: 8px; }
+  table.rules th:first-child, table.rules td:first-child { padding-left: 8px; padding-right: 0; }
+  table.rules td.cond, table.rules td.res { color: var(--muted); }
+  table.rules td.name { font-weight: 600; }
+  /* An off rule is legible but visibly stood down — greyed, not struck out. */
+  table.rules tr.off td { color: var(--faint); }
+  table.rules tr.off td.name { font-weight: 500; color: var(--faint); }
+
+  /* Drag grip. Six dots, because a two-column grip reads as draggable where a
+     single line of dots reads as a divider. */
+  .grip {
+    display: inline-block;
+    width: 8px;
+    height: 13px;
+    vertical-align: middle;
+    background-image: radial-gradient(circle, var(--line) 1px, transparent 1.2px);
+    background-size: 4px 4.5px;
+    opacity: 0.9;
+  }
+
+  /* Toggle. Blue when on, because active is a selected state. */
+  .tog {
+    display: inline-block;
+    width: 30px;
+    height: 17px;
+    border-radius: 9px;
+    background: var(--accent);
+    position: relative;
+    vertical-align: middle;
+  }
+  .tog::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    width: 13px;
+    height: 13px;
+    border-radius: 50%;
+    background: #fff;
+  }
+  .tog.off { background: var(--fill-4); }
+  .tog.off::after { right: auto; left: 2px; }
+
+  /* The row an operator is dragging: a blue insertion line where it will land. */
+  .drop td {
+    padding: 0;
+    border-bottom: none;
+    height: 3px;
+    line-height: 3px;
+    font-size: 0;
+    background: var(--accent);
+  }
+
+  .order-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--fill-2);
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .order-strip .b { color: var(--ink); font-weight: 600; }
+
+  /* Builder: conditions left, results right, split by a hairline. Both halves
+     read top-to-bottom as one sentence. */
+  .builder { padding: 0; overflow: hidden; }
+  .builder-head {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--line);
+    background: var(--fill-2);
+  }
+  .builder-cols { display: flex; align-items: stretch; }
+  .col-when { width: 400px; flex: none; padding: 12px 14px; border-right: 1px solid var(--line); }
+  .col-then { flex: 1; min-width: 0; padding: 12px 14px; }
+  .col-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .col-head .k {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+  }
+  .col-head .n { font-size: 10.5px; color: var(--muted); }
+
+  .cond-row { display: flex; align-items: center; gap: 6px; }
+  .cond-row .field { display: block; }
+  .sel-f { width: 118px; }
+  .sel-o { width: 104px; }
+  .sel-v { flex: 1; min-width: 0; }
+  .x { width: 14px; text-align: center; font-size: 12px; color: var(--faint); }
+  /* AND / OR sit between rows, so the join is a value an operator sets rather
+     than a rule they have to infer from row order. */
+  .join {
+    display: inline-block;
+    margin: 5px 0 5px 6px;
+    padding: 1px 7px;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--fill-2);
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+  }
+  .add {
+    margin-top: 8px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--accent);
+  }
+  .hint { margin-top: 8px; font-size: 10.5px; color: var(--faint); }
+
+  .res-block {
+    padding: 10px;
+    border: 1px solid var(--line-soft);
+    border-radius: var(--r);
+    background: var(--fill-1);
+  }
+  .res-block + .res-block { margin-top: 9px; }
+  .seg { display: flex; border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+  .seg span {
+    padding: 0 9px;
+    font-size: 10.5px;
+    line-height: 24px;
+    color: var(--muted);
+    border-right: 1px solid var(--line);
+  }
+  .seg span:last-child { border-right: none; }
+  .seg span.on { background: var(--accent); color: #fff; font-weight: 600; }
+  .mono-f {
+    display: block;
+    margin-top: 8px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    color: var(--ink);
+  }
+
+  /* Preview readout. It reports scope before the save, which is the whole point
+     of the control, so it sits beside the button rather than in a toast. */
+  .preview {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 14px;
+    border-top: 1px solid var(--line);
+    background: var(--fill-2);
+  }
+  .preview .n { font-size: 11px; color: var(--muted); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Custom Rules</h1>
+      <p class="sub">Per-account transforms that rewrite ingested listings before they reach the ATS.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /customize/custom_rules</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i></i><i></i><i class="on"></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Customize</div>
+            <div class="nav-item">Custom Fields</div>
+            <div class="nav-item on">Custom Rules <span class="count">6</span></div>
+            <div class="nav-item">Rate Plans</div>
+            <div class="nav-item">Field Mapping</div>
+            <div class="nav-item">Integrations</div>
+            <div class="nav-item locked">Rule Templates</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Aya Healthcare ⌄</span>
+              </div>
+              <span class="omnibox">Search rules, fields, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between" data-note="1">
+                <div>
+                  <p class="h">Custom Rules</p>
+                  <p class="sub-line">6 rules · 5 active · applies to Aya Healthcare only</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm">Copy from account ⌄</span>
+                  <span class="btn sm solid">New Rule</span>
+                </div>
+              </div>
+
+              <div class="order-strip" data-note="2">
+                <span>Evaluated <span class="b">top to bottom</span> after rate plans. A later rule overwrites an earlier one on the same field.</span>
+                <span class="row" style="gap:7px">
+                  <span class="btn sm quiet">Sort by name</span>
+                  <span class="chip sm on">Drag to reorder</span>
+                </span>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden">
+                <table class="wire rules">
+                  <colgroup>
+                    <col style="width:22px"><col style="width:196px"><col style="width:208px">
+                    <col style="width:204px"><col style="width:44px"><col style="width:68px">
+                    <col style="width:50px">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th></th>
+                      <th>ORDER · NAME</th><th>WHEN</th><th>THEN</th>
+                      <th>ACTIVE</th><th>UPDATED</th><th>ACTIONS</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="grip"></span></td>
+                      <td class="name">1 · ICU night differential</td>
+                      <td class="cond">specialty is ICU and shift is Night</td>
+                      <td class="res">raise bill rate by 15%</td>
+                      <td><span class="tog"></span></td>
+                      <td>14 Jul 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="grip"></span></td>
+                      <td class="name">2 · Suppress non-compact states</td>
+                      <td class="cond">state is not CA, TX or AZ</td>
+                      <td class="res">skip the listing</td>
+                      <td><span class="tog"></span></td>
+                      <td>09 Jul 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                    <tr class="drop"><td colspan="7"></td></tr>
+                    <tr class="sel" data-note="3">
+                      <td><span class="grip"></span></td>
+                      <td class="name">3 · Normalise Aya shift codes</td>
+                      <td class="cond">source is Aya and shift code starts D12</td>
+                      <td class="res">set shift to Day, length to 12</td>
+                      <td><span class="tog"></span></td>
+                      <td>18 Jul 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="grip"></span></td>
+                      <td class="name">4 · Summarise long descriptions</td>
+                      <td class="cond">description is over 400 characters</td>
+                      <td class="res">write position summary <span class="chip sm on">AI</span></td>
+                      <td><span class="tog"></span></td>
+                      <td>02 Jul 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="grip"></span></td>
+                      <td class="name">5 · HealthTrust dept → Med/Surg</td>
+                      <td class="cond">source is HealthTrust and dept is MS3</td>
+                      <td class="res">set specialty to Med/Surg</td>
+                      <td><span class="tog"></span></td>
+                      <td>21 Jun 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                    <tr class="off" data-note="4">
+                      <td><span class="grip"></span></td>
+                      <td class="name">6 · Block rates under $45/hr</td>
+                      <td class="cond">bill rate is under $45.00</td>
+                      <td class="res">skip the listing</td>
+                      <td><span class="tog off"></span></td>
+                      <td>28 Jun 2026</td>
+                      <td><span class="chip sm sq">⋯</span> <span class="chip sm sq">⧉</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="panel builder">
+                <div class="builder-head between" data-note="5">
+                  <span class="h-sm">Rule 3 · Normalise Aya shift codes</span>
+                  <span class="sub-line" style="margin:0">Runs third of six · after Rate Plan “Aya 2026 standard”</span>
+                </div>
+
+                <div class="builder-cols">
+                  <div class="col-when">
+                    <div class="col-head">
+                      <span class="k">WHEN</span>
+                      <span class="n">all conditions must pass</span>
+                    </div>
+                    <div class="stack-8">
+                      <div class="cond-row">
+                        <span class="field sel-f">VMS source ⌄</span>
+                        <span class="field sel-o">is exactly ⌄</span>
+                        <span class="field sel-v">Aya</span>
+                        <span class="x">×</span>
+                      </div>
+                      <div><span class="join">AND</span></div>
+                      <div class="cond-row">
+                        <span class="field sel-f">Shift code ⌄</span>
+                        <span class="field sel-o">starts with ⌄</span>
+                        <span class="field sel-v">D12</span>
+                        <span class="x">×</span>
+                      </div>
+                      <div><span class="join">OR</span></div>
+                      <div class="cond-row">
+                        <span class="field sel-f">Shift code ⌄</span>
+                        <span class="field sel-o">is exactly ⌄</span>
+                        <span class="field sel-v focus">12D</span>
+                        <span class="x">×</span>
+                      </div>
+                    </div>
+                    <p class="add">+ Add condition</p>
+                    <p class="hint">Values are cast to the field’s type before comparison, so “12” and “12.0” match.</p>
+                  </div>
+
+                  <div class="col-then">
+                    <div class="col-head">
+                      <span class="k">THEN</span>
+                      <span class="n">applied in order, top to bottom</span>
+                    </div>
+
+                    <div class="res-block">
+                      <div class="row" style="gap:8px">
+                        <span class="field grow">Shift type ⌄</span>
+                        <span class="seg"><span class="on">Fixed</span><span>Template</span><span>AI</span></span>
+                        <span class="x">×</span>
+                      </div>
+                      <span class="field mono-f">Day</span>
+                    </div>
+
+                    <div class="res-block">
+                      <div class="row" style="gap:8px">
+                        <span class="field grow">Shift length ⌄</span>
+                        <span class="seg"><span>Fixed</span><span class="on">Template</span><span>AI</span></span>
+                        <span class="x">×</span>
+                      </div>
+                      <span class="field mono-f">{{ shift_code | digits }}</span>
+                      <p class="hint">Rendered per listing against that account’s mapped fields.</p>
+                    </div>
+
+                    <p class="add">+ Add result</p>
+                  </div>
+                </div>
+
+                <div class="preview between" data-note="6">
+                  <span class="n">Last preview: <span class="b">1,284 of 3,418 listings</span> would change · 3 conflict with rule 1</span>
+                  <span class="row" style="gap:7px">
+                    <span class="btn sm">Preview on 25 listings</span>
+                    <span class="btn sm">Discard</span>
+                    <span class="btn sm solid">Save &amp; queue reprocess</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Rules belong to one account, never to the pipeline. Every client wants something different out of the same inbound feed, and the alternative — special-casing the processor per client — is how an ingestion codebase becomes unmaintainable. This screen is the escape hatch that keeps that logic out of the pipeline and in the hands of the person who wants it.</li>
+      <li data-for="2">Order is meaningful, so the interface has to say so rather than leave precedence implied by creation date. The rules are numbered, dragged into position, and the strip states the one thing that bites: a later rule overwrites an earlier one writing the same field.</li>
+      <li data-for="3">A rule reads as a sentence — when this, then that — instead of as a query builder. The people writing these are operators, not engineers, and a rule they cannot read at a glance is a rule they will not trust enough to switch on.</li>
+      <li data-for="4">A rule can be switched off without being deleted, and stays in the list greyed rather than moving to an archive. “Turn this one off and see whether the complaints stop” is the actual debugging move, and it only works if the rule keeps its position in the order.</li>
+      <li data-for="5">The builder names the rule’s position and what ran before it, because a rule is never evaluated alone. Conditions and results are two columns rather than one long form so the join between them stays visible — the mistake we saw most often was an operator editing a result without rereading the condition that triggers it.</li>
+      <li data-for="6">Preview runs against real listings and reports the blast radius before anything is saved, including conflicts with earlier rules. A rule that silently rewrites a thousand records is the exact failure this screen exists to prevent, which is also why the save queues a reprocess rather than doing it inline.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

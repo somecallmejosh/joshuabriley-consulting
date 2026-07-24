@@ -8,28 +8,208 @@ import Link from '~/components/primitives/Link.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
+import CodeBlock from '~/components/patterns/CodeBlock.astro';
+import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 const title = 'IVFCRYO | Joshua Briley';
-const description: string =
-  'Case study: building a self-service fertility logistics app with accessibility wired into the architecture from day one.';
+const description =
+  'Case study: designing a self-service logistics platform for high-stakes fertility shipments, and building the full-stack system underneath it, from workflow modeling and two-sided user flows to a Rails 7.2 domain model wired to carrier, telemetry, and notification services.';
+
+const meta = [
+  { role: 'Role', value: 'Product Design Engineer' },
+  { role: 'Domain', value: 'Fertility logistics' },
+  { role: 'Scope', value: 'Product + platform' },
+  { role: 'Build', value: 'Rails 7.2 · Postgres' },
+];
 
 const proof = [
-  { label: 'Skills proven', tone: 'plum' as const, items: ['Headless CMS', 'Accessible component APIs', 'Frontend architecture', 'UI/UX Design', 'Documentation', 'Training', 'User testing'] },
-  { label: 'Stack', tone: 'navy' as const, items: ['Vue', 'Nuxt.js', 'TypeScript', 'Design tokens', 'TailwindCSS'] },
-  { label: 'Quality', tone: 'sage' as const, items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
-  { label: 'Outcomes', tone: 'coral' as const, items: ['75% fewer support calls', '55% decrease in shipping errors', 'Quicker customer onboarding'] },
+  { label: 'Product design', items: ['Workflow & service modeling', 'Information architecture', 'Two-sided user flows', 'Forms as a recovery system', 'UI/UX design'] },
+  { label: 'Engineering', items: ['Rails 7.2 + Postgres domain model', 'Enforced lifecycle state', 'Service-object integrations', 'Sidekiq background jobs', 'Front-end component system'] },
+  { label: 'Integrations', items: ['SenseAware', 'ShipEngine', 'Airspace', 'SendGrid', 'Twilio', 'Devise 2FA'] },
+  { label: 'Outcomes', items: ['75% fewer support calls', '55% fewer shipping errors', 'Faster onboarding', 'Reusable accessible base'] },
 ];
 
 const docket = [
-  { href: '#stakes', icon: 'ph:warning-circle', label: 'The stakes behind the product' },
-  { href: '#collaborator', icon: 'ph:users-three', label: 'A blind user in the room' },
-  { href: '#architecture', icon: 'ph:stack', label: 'Accessibility in the architecture' },
-  { href: '#scale', icon: 'ph:trend-up', label: 'Why this compounds at scale' },
+  { href: '#stakes', icon: 'ph:package', label: 'Modeling the workflow as a system' },
+  { href: '#flows', icon: 'ph:squares-four', label: 'Designing both sides of the shipment' },
+  { href: '#recovery', icon: 'ph:shield-check', label: 'Making the interface a recovery system' },
+  { href: '#architecture', icon: 'ph:stack', label: 'Architecting the system underneath' },
+  { href: '#outcomes', icon: 'ph:trend-up', label: 'What shipping it changed' },
 ];
+
+// The physical chain of custody the software had to mirror, one leg at a time.
+const custody = [
+  { icon: 'ph:package', title: 'Outbound', body: 'IVFCryo FedExes the kit to the shipping customer two business days out, with a SenseAware cold-chain tracker inside.' },
+  { icon: 'ph:airplane-tilt', title: 'Courier pickup', body: 'An Airspace medical courier collects the specimen and tracker from the shipping customer and hand-carries it.' },
+  { icon: 'ph:map-pin', title: 'Delivery', body: 'The courier hands off to the receiving customer, who confirms the specimen and its temperature on arrival.' },
+  { icon: 'ph:arrow-u-up-left', title: 'Return & close', body: 'The tracker FedExes back to IVFCryo, the excursion log is checked, and the shipment record closes.' },
+];
+
+// The information architecture forked by role off one shared home (the shipping list).
+const customerFlow = [
+  { label: 'Shipping list', note: 'Home. Active + past shipments, overdue alerts.' },
+  { label: 'New shipment', note: 'Sender, receiver, specimen, live carrier pricing.' },
+  { label: 'Payment', note: 'Confirmation, then routes into tracking.' },
+  { label: 'Active shipment', note: 'Read-only tracking and sensor telemetry.' },
+  { label: 'Receiving customers', note: 'Saved delivery contacts.' },
+  { label: 'Profile', note: 'Billing, address, cancel account.' },
+];
+
+const adminFlow = [
+  { label: 'Shipping list', note: 'Every active + past shipment across clients.' },
+  { label: 'Active shipment', note: 'Edit, cancel, change status, notify.' },
+  { label: 'Customer list', note: 'Filter, sort, open a client.' },
+  { label: 'Customer detail', note: 'All orders for one client.' },
+  { label: 'Add customer', note: 'Creates the account, emails credentials.' },
+  { label: 'Profile', note: 'Account and billing.' },
+];
+
+// Design decisions that made the correct path easier than the incorrect one.
+const recovery = [
+  { icon: 'ph:list-checks', label: 'Structured records over free text' },
+  { icon: 'ph:map-pin', label: 'Geocoded address validation' },
+  { icon: 'ph:warning-circle', label: 'Inline validation, recoverable errors' },
+  { icon: 'ph:eye', label: 'Text, icon, and shape, never color alone' },
+  { icon: 'ph:target', label: 'Focus managed on visibility change' },
+  { icon: 'ph:megaphone', label: 'Live-region status announcements' },
+];
+
+// The real integration boundaries, each isolated behind its own service object.
+const integrations = [
+  { icon: 'ph:thermometer-cold', name: 'SenseAware', role: 'Real-time temperature + GPS telemetry' },
+  { icon: 'ph:barcode', name: 'ShipEngine', role: 'Multi-carrier rates and labels' },
+  { icon: 'ph:airplane-tilt', name: 'Airspace', role: 'White-glove medical courier' },
+  { icon: 'ph:envelope-simple', name: 'SendGrid', role: 'Email notifications' },
+  { icon: 'ph:device-mobile', name: 'Twilio', role: 'SMS alerts, off-screen' },
+  { icon: 'ph:lock-key', name: 'Devise + 2FA', role: 'Auth for medical logistics' },
+];
+
+const outcomes = [
+  {
+    icon: 'ph:phone-x',
+    title: 'The call queue emptied',
+    body: 'Self-service status and tracking answered the questions clients used to phone in for. Support calls fell by three quarters.',
+  },
+  {
+    icon: 'ph:seal-check',
+    title: 'Errors caught at the source',
+    body: 'Structured records, geocoded addresses, and recoverable forms stopped mistakes at entry instead of downstream. Shipping errors fell by more than half.',
+  },
+  {
+    icon: 'ph:stack',
+    title: 'A foundation, not a finish',
+    body: 'Accessible, reusable patterns became the baseline every future customer and admin workflow inherits.',
+  },
+];
+
+// The shipment lifecycle as an enforced state model, grounded in the real domain:
+// a shipment moves Pending -> Active -> Complete (Removed for cancellations), with
+// the cold-chain records hanging off it. The data model IS the workflow, made durable.
+const modelSnippet = `# app/models/shipment.rb
+# Every screen, notification, and admin action is anchored to this state.
+class Shipment < ApplicationRecord
+  enum status: { pending: 0, active: 1, complete: 2, removed: 3 }
+
+  has_many :shippable_packages
+  has_one  :shipping_information
+  has_one  :shipping_label
+  has_one  :shipment_tracker     # SenseAware: temperature + GPS
+  has_many :sensor_readings
+  has_many :notifications
+
+  # Cold-chain guarantee: a reading out of range pages the right
+  # people off-screen (SendGrid + Twilio), not just inside the app.
+  def record(reading)
+    sensor_readings << reading
+    TemperatureAlertJob.perform_async(id) if reading.out_of_range?
+  end
+end`;
+
+// The annotated wireframe renders live in src/ so Astro can actually process
+// them (anything under public/ is copied verbatim, never optimized). The source
+// files are 3200px PNGs; `<Image>` emits sized WebP from these at build time.
+const annotatedShots = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projects/ivfcryo/wires-and-flows/*.png',
+  { eager: true },
+);
+const annotated = (slug: string) =>
+  annotatedShots[`../../assets/projects/ivfcryo/wires-and-flows/${slug}.png`].default;
+
+// The bare sketch + wireframe SVGs stay in public/: Astro passes SVGs through
+// untransformed either way, so moving them would buy nothing.
+const art = (slug: string) => `/images/projects/ivfcryo/wires-and-flows/${slug}`;
+
+// Four screens carry the argument, so they get full plates. The `note` is the
+// subtitle written on the artwork itself, not a fresh gloss on it.
+const plates = [
+  {
+    slug: '03-shipments-index',
+    index: '03',
+    title: 'Shipments index',
+    note: 'The primary workspace. Status is the top-level filter, not a column.',
+    alt: 'Annotated wireframe of the shipments index: a filter bar, status tabs, and a list of shipment cards, with six numbered callouts explaining why status lives in the URL and why cards replaced table rows.',
+  },
+  {
+    slug: '04-new-shipment',
+    index: '04',
+    title: 'New shipment',
+    note: 'A forty-control form made survivable: numbered sections, live cost, and no dead ends.',
+    alt: 'Annotated wireframe of the new-shipment form, broken into seven numbered sections from service selection to insurance, with a live price quote pinned beside it and six callouts covering quote recalculation, contact reuse, and notification defaults.',
+  },
+  {
+    slug: '05-shipment-detail',
+    index: '05',
+    title: 'Shipment detail',
+    note: 'One page that answers the only two questions anyone has: where is it, and is it still cold.',
+    alt: 'Annotated wireframe of the shipment detail page: a live position map above sensor readings for temperature, humidity, and battery, then two parallel tracking timelines, with callouts explaining why telemetry outranks logistics and why the two legs stay unmerged.',
+  },
+  {
+    slug: '06-public-tracking',
+    index: '06',
+    title: 'Public tracking',
+    note: 'The unauthenticated view sent to recipients in notification email and SMS. No account, no sidebar, no telemetry.',
+    alt: 'Annotated wireframe of the public tracking page: a plain-language status line, a four-step progress track, a live position map, and a staffed phone number in the footer, with callouts explaining why there is no login and why raw telemetry is withheld.',
+  },
+];
+
+// The remaining screens round out the system without repeating the device.
+const restOfSystem = [
+  { slug: '01-landing', title: 'Landing' },
+  { slug: '02-auth-two-factor', title: 'Auth + two-factor' },
+  { slug: '07-address-book', title: 'Address book' },
+  { slug: '08-users-admin', title: 'Users admin' },
+  { slug: '09-equipment-inventory', title: 'Equipment inventory' },
+  { slug: '10-admin-settings-feedback', title: 'Admin settings' },
+];
+
+const flows = [
+  {
+    slug: '11-flow-authentication',
+    title: 'Authentication and account recovery',
+    note: 'A security gate that must not become a support ticket. Every dead end has a way out.',
+    alt: 'Flow diagram of authentication and account recovery. A visitor branches on whether they have an account, through sign-in, admin activation, a user-chosen email or SMS verification channel, and six-digit code entry. A failed code offers resend, backup code, or password reset, and a final admin check routes to either the admin or client view. Five numbered design notes sit alongside, and password recovery runs as a separate track underneath.',
+  },
+  {
+    slug: '12-flow-create-shipment',
+    title: 'Creating a shipment',
+    note: 'The highest-consequence path in the product. Nine sections, one submit, no way to make an impossible booking.',
+    alt: 'Flow diagram of the shipment creation path. Service selection resolves a live price quote or a contact-for-quote branch, then runs through date, package, pickup and delivery contacts, notification preferences, insurance, and agreement. Failed validation returns to the offending field with form state preserved, and a successful submit forks into a confirmation email and the admin fulfillment queue. Six numbered design notes sit alongside.',
+  },
+];
+
+// Plates and flows are placed beside the argument they support rather than
+// collected into one gallery, so these look them up by slug at the point of use.
+const plate = (slug: string) => plates.find((p) => p.slug === slug)!;
+const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
+
+
 ---
 
 <BaseLayout title={title} description={description}>
 
+  <!-- HERO -->
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <nav
@@ -50,38 +230,32 @@ const docket = [
           </div>
 
           <Heading level={1} visual="display-xl" class="hero-in hero-in-3">
-            What it looks like when <em class="ink-wink font-normal italic">accessibility</em> is built in from the start.
+            One shipment, two sides, and the whole <em class="ink-wink font-normal italic">system</em> underneath.
           </Heading>
 
           <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-8 max-w-xl">
-            A self-service shipping application for fertility specimen logistics, with real-time environmental tracking, multi-carrier labels, and a legally blind collaborator in the room from day one.
+            A self-service platform for high-stakes fertility shipments that retired
+            IVFCryo's paper-based process, from the customer and admin user flows down
+            to the Rails domain model and the carrier, telemetry, and notification
+            services wired beneath them.
           </Text>
         </div>
 
         <aside class="hero-in hero-in-5 hero-rail" aria-label="Project details">
           <dl>
-            <div>
-              <dt>Role</dt>
-              <dd>Product Design Engineer</dd>
-            </div>
-            <div>
-              <dt>Domain</dt>
-              <dd>Fertility logistics</dd>
-            </div>
-            <div>
-              <dt>Stack</dt>
-              <dd>Web &middot; Sensors</dd>
-            </div>
-            <div>
-              <dt>Focus</dt>
-              <dd>A11y-first arch.</dd>
-            </div>
+            {meta.map((m) => (
+              <div>
+                <dt>{m.role}</dt>
+                <dd set:html={m.value.replace(/·/g, '&middot;')}></dd>
+              </div>
+            ))}
           </dl>
         </aside>
       </div>
     </Container>
   </Section>
 
+  <!-- RECEIPTS -->
   <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="content">
       <p class="mono-label mb-8">Receipts</p>
@@ -105,6 +279,7 @@ const docket = [
     </Container>
   </Section>
 
+  <!-- ON THE DOCKET -->
   <Section tone="paper" padding="tight">
     <Container width="content">
       <p class="mono-label mb-5">On the docket</p>
@@ -124,136 +299,331 @@ const docket = [
       </ul>
 
       <Text size="lg" tone="muted" class="mt-10 measure">
-        IVFCRYO replaced a manual, paper-based shipping process with a web
-        application that handles shipment requests, label generation across
-        multiple carriers, and real-time specimen tracking from integrated
-        sensor data. The people using it are usually in the middle of
-        something high-stakes and emotionally sensitive. Clarity and
-        reliability aren't nice-to-haves here. They're features of the
-        product, and accessibility is how that clarity reaches everyone.
+        IVFCryo ships cryogenically preserved embryos and reproductive tissue:
+        material that is, quite literally, irreplaceable. The process it replaced was
+        manual and paper-based, spread across forms, phone calls, labels, and status
+        updates where a single mistake could become a serious operational problem. The
+        job was to design the product that replaced it and build the full-stack system
+        underneath, so a clinician, a patient, or a courier could move a specimen
+        across the country and always know exactly where it was, and that it was still
+        cold.
       </Text>
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24">
+
+  <!-- STEP 01 — MODEL THE WORKFLOW -->
+  <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24 border-t border-line space-y-24">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
           <p class="mono-label mb-3">Step 01</p>
-          <Heading level={2} visual="display-md" tone="ink">The stakes behind the product</Heading>
+          <Heading level={2} visual="display-md" tone="ink">Modeling the workflow as a system</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Fertility logistics has a narrow margin for error. A mislabeled
-              shipment, a missed temperature excursion, or an ambiguous status
-              update isn't just a workflow annoyance. It can have irreversible
-              consequences for someone's family. The people using this tool are
-              often clinicians working under time pressure, or patients and
-              couriers navigating a process they've never touched before, during
-              one of the most stressful weeks of their lives.
+              Before a single screen, I mapped the shipping workflow as a system: a
+              fragile, temperature-controlled specimen changing hands four times,
+              across two carriers and a courier, on a fixed clinical timeline. A
+              mislabeled box, a missed temperature excursion, or an ambiguous status
+              isn't a workflow annoyance here. It can be irreversible for someone's
+              family.
             </p>
             <p>
-              That reframes what accessibility means here. It isn't a compliance
-              checkbox to satisfy at the end of the build. It's part of how the
-              product communicates <em>at all</em>: whether status updates
-              reach the person who needs to act on them, whether form errors are
-              recoverable, whether a screen reader user can trust what the page
-              is telling them.
+              So the first design artifact wasn't a wireframe. It was a map of the
+              real-world chain of custody, because the software could only be as
+              trustworthy as its model of what was actually happening to the box. Every
+              leg below became a state the app had to hold, surface, and recover from.
+              In the application that became an enforced lifecycle: a shipment moves
+              from <strong class="text-ink font-semibold">Pending</strong> to
+              <strong class="text-ink font-semibold">Active</strong> to
+              <strong class="text-ink font-semibold">Complete</strong>, with a Removed
+              state for cancellations.
             </p>
           </div>
 
-          <div class="mt-10 grid gap-6 md:grid-cols-2">
-            <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">High-stakes input</p>
-              <Heading level={3} visual="h3" class="mb-2">Specimens &amp; sensors</Heading>
-              <Text size="sm" tone="muted">
-                Temperature data, chain-of-custody details, carrier handoffs,
-                all flowing through forms people may be filling out under
-                duress.
-              </Text>
+          <div class="mt-12">
+            <p class="mono-label mb-6">The physical chain of custody</p>
+            <ol class="grid gap-x-8 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              {custody.map((node, i) => (
+                <li class="relative border-t border-line pt-5">
+                  <div class="mb-3 flex items-center gap-3">
+                    <span class="font-mono text-sm text-accent">0{i + 1}</span>
+                    <Icon name={node.icon} size={20} class="text-ink-muted" />
+                  </div>
+                  <Heading level={3} visual="h3" tone="ink" class="mb-1.5">{node.title}</Heading>
+                  <Text size="sm" tone="muted">{node.body}</Text>
+                </li>
+              ))}
+            </ol>
+          </div>
+
+          {/* First plate on the page, so the reading instructions live here rather
+              than in a gallery preamble the reader meets before any artwork. */}
+          <div class="mt-12 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-4">How to read the plates</p>
+            <div class="space-y-4 text-ink-muted leading-relaxed">
+              <p>
+                Every screen went through the same three passes. A crude sketch to settle
+                what the page is for, a clean wireframe to settle where things go, and then
+                the same wireframe with the decisions written onto it.
+              </p>
+              <p>
+                That third pass is the one that did the work. Writing down <em>why</em>
+                status lives in the URL, or why a half-filled form is never abandoned, is
+                what turned a picture of a screen into a decision anyone on the project
+                could check. Switch any plate to walk the three passes.
+              </p>
             </div>
-            <div class="border-t border-line pt-5">
-              <p class="mono-label mb-4">High-stakes output</p>
-              <Heading level={3} visual="h3" class="mb-2">Status &amp; recovery</Heading>
-              <Text size="sm" tone="muted">
-                A shipment that has moved, a label that has printed, an error
-                that needs correcting. The app has to surface all of it,
-                reliably, to every user.
-              </Text>
-            </div>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={plate('05-shipment-detail').index}
+              title={plate('05-shipment-detail').title}
+              caption={plate('05-shipment-detail').note}
+              sketch={art('05-shipment-detail-sketch.svg')}
+              wire={art('05-shipment-detail.svg')}
+              annotated={annotated('05-shipment-detail')}
+              annotatedAlt={plate('05-shipment-detail').alt}
+            />
           </div>
         </div>
       </div>
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default" id="collaborator" class="scroll-mt-24">
+  <!-- STEP 02 — TWO-SIDED PRODUCT DESIGN -->
+  <Section tone="paper" padding="default" id="flows" class="scroll-mt-24 border-t border-line space-y-12">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
           <p class="mono-label mb-3">Step 02</p>
-          <Heading level={2} visual="display-md" tone="ink">A blind user in the room, from day one</Heading>
+          <Heading level={2} visual="display-md" tone="ink">Designing both sides of the shipment</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              The most consequential decision on this project wasn't technical.
-              Instead of treating accessibility as an end-of-project audit, the
-              team brought in a legally blind customer as an ongoing
-              collaborator. He reviewed interface decisions as they were being
-              made, tested with a screen reader while components were still
-              being built, and kept offering feedback as features shipped.
+              One shipment has two very different users. The customer, often a clinic
+              moving fast or a patient touching an emotionally loaded process for the
+              first time, needs a short, reassuring path from request to tracking. The
+              IVFCryo admin lives in the tool all day and needs range: every shipment,
+              every client, and enough control to resolve the exceptions.
             </p>
             <p>
-              That changes what you build, not just what you fix. Problems that
-              would have surfaced as a long list of bugs at the end (the kind
-              that usually get triaged, downgraded, and half-addressed) instead
-              showed up as design conversations while the design was still cheap
-              to change. The output wasn't a remediation report. It was
-              different decisions.
+              Rather than build two apps, I mapped two sitemaps off one shared home,
+              the shipping list, and let the information architecture fork from there.
+              The page maps made the split explicit before a line of markup was written:
+              which details belong in a focused customer experience, and which belong
+              in a denser admin one. Same spine, different reach.
             </p>
           </div>
 
-          <ul class="mt-8 border-t border-line">
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:megaphone" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+          <div class="mt-12">
+            <p class="mono-label mb-6">Two roles, one shared home</p>
+            <div class="grid gap-x-10 gap-y-10 md:grid-cols-2">
               <div>
-                <Heading level={3} visual="h3" class="mb-1">Real-time form validation</Heading>
-                <Text size="sm" tone="muted">
-                  Errors announced to a screen reader the moment they happen,
-                  not buried in a summary at the top of the page after submit.
-                </Text>
+                <div class="mb-5 flex items-center gap-3 border-b border-line-strong pb-3">
+                  <Icon name="ph:user" size={18} class="text-accent" />
+                  <p class="font-display font-semibold text-ink">Customer</p>
+                </div>
+                <ul>
+                  {customerFlow.map((p, i) => (
+                    <li class="flex gap-4 border-b border-line py-3.5 last:border-b-0">
+                      <span class="mt-0.5 font-mono text-xs text-ink-faint">0{i + 1}</span>
+                      <div>
+                        <p class="font-medium text-ink leading-snug">{p.label}</p>
+                        <p class="mt-0.5 text-sm text-ink-muted leading-snug">{p.note}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </li>
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:broadcast" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
+
               <div>
-                <Heading level={3} visual="h3" class="mb-1">Status updates that reach you</Heading>
-                <Text size="sm" tone="muted">
-                  Shipment state changes are announced automatically, so a user
-                  doesn't have to go hunting through the page to learn that
-                  something moved.
-                </Text>
+                <div class="mb-5 flex items-center gap-3 border-b border-line-strong pb-3">
+                  <Icon name="ph:users-three" size={18} class="text-accent" />
+                  <p class="font-display font-semibold text-ink">Admin &middot; IVFCryo staff</p>
+                </div>
+                <ul>
+                  {adminFlow.map((p, i) => (
+                    <li class="flex gap-4 border-b border-line py-3.5 last:border-b-0">
+                      <span class="mt-0.5 font-mono text-xs text-ink-faint">0{i + 1}</span>
+                      <div>
+                        <p class="font-medium text-ink leading-snug">{p.label}</p>
+                        <p class="mt-0.5 text-sm text-ink-muted leading-snug">{p.note}</p>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
               </div>
-            </li>
-            <li class="flex gap-4 border-b border-line py-5 last:border-b-0">
-              <Icon name="ph:compass" size={26} class="mt-1 flex-shrink-0 text-ink-muted" />
-              <div>
-                <Heading level={3} visual="h3" class="mb-1">Navigation you can learn once</Heading>
-                <Text size="sm" tone="muted">
-                  Consistent, predictable patterns across the app. The kind of
-                  thing a sighted user takes for granted and a screen reader
-                  user notices immediately when it's missing.
-                </Text>
+            </div>
+          </div>
+
+          {/* The shared home the two sitemaps fork off, then the flow that does
+              the forking, then the third audience neither sitemap covers. */}
+          <div class="mt-12">
+            <FidelityPlate
+              index={plate('03-shipments-index').index}
+              title={plate('03-shipments-index').title}
+              caption={plate('03-shipments-index').note}
+              sketch={art('03-shipments-index-sketch.svg')}
+              wire={art('03-shipments-index.svg')}
+              annotated={annotated('03-shipments-index')}
+              annotatedAlt={plate('03-shipments-index').alt}
+            />
+          </div>
+
+          <div class="mt-14">
+            <figure class="flow-plate">
+              <p class="flow-plate__index">Flow <span aria-hidden="true">/</span> 11</p>
+              <div class="flow-plate__mount">
+                <div
+                  class="flow-plate__stage"
+                  tabindex="0"
+                  role="group"
+                  aria-label={`${flow('11-flow-authentication').title}: flow diagram, scrollable`}
+                >
+                  <Image
+                    src={annotated('11-flow-authentication')}
+                    alt={flow('11-flow-authentication').alt}
+                    width={1400}
+                    widths={[700, 1050, 1400]}
+                    sizes="(min-width: 1024px) 720px, 100vw"
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="flow-plate__fade" aria-hidden="true"></span>
               </div>
-            </li>
-          </ul>
+              <figcaption>
+                <p class="flow-plate__title">{flow('11-flow-authentication').title}</p>
+                <p class="flow-plate__note">{flow('11-flow-authentication').note}</p>
+              </figcaption>
+            </figure>
+          </div>
+
+          <div class="mt-14 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              A third audience never signs in at all. The receiving clinic or family
+              gets a link by email and SMS, and needs one question answered without an
+              account, a password, or a sidebar. That view withholds raw telemetry on
+              purpose: a temperature graph is reassuring to an operator and alarming to
+              someone waiting on a specimen, so the public page speaks in plain status
+              and puts a staffed phone number in the footer.
+            </p>
+          </div>
+
+          <div class="mt-12">
+            <FidelityPlate
+              index={plate('06-public-tracking').index}
+              title={plate('06-public-tracking').title}
+              caption={plate('06-public-tracking').note}
+              sketch={art('06-public-tracking-sketch.svg')}
+              wire={art('06-public-tracking.svg')}
+              annotated={annotated('06-public-tracking')}
+              annotatedAlt={plate('06-public-tracking').alt}
+            />
+          </div>
+        </div>
+      </div>
+    </Container>
+  </Section>
+
+  <!-- STEP 03 — RECOVERY SYSTEM + ACCESSIBILITY -->
+  <Section tone="paper" padding="default" id="recovery" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <div class="case-layout">
+        <div class="case-layout__head">
+          <p class="mono-label mb-3">Step 03</p>
+          <Heading level={2} visual="display-md" tone="ink">Making the interface a recovery system</Heading>
+        </div>
+        <div class="case-layout__body">
+          <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
+            <p>
+              The old process created too many chances for human error. So I treated the
+              interface as a recovery system, not just a form system: it had to help
+              users avoid errors, understand them when they happened, and move forward
+              without calling support for every correction. Specimen and package details
+              were captured as structured records instead of free text, addresses were
+              geocoded and validated rather than trusted blindly, and critical actions
+              got a confirmation point. The rule was simple:
+              <strong class="text-ink font-semibold">make the correct path easier than the incorrect one.</strong>
+            </p>
+            <p>
+              Accessibility was part of that same strategy, not a later pass. A legally
+              blind customer collaborated from the beginning, testing flows with a screen
+              reader while the product was still being shaped. That turned accessibility
+              issues into design inputs instead of end-of-project defects. Status, errors,
+              and alerts carried text, icon, and shape, never color alone. Components that
+              changed visibility managed their own focus. Dynamic updates announced
+              themselves through live regions.
+            </p>
+          </div>
+
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-5">Built-in, not bolted-on</p>
+            <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+              {recovery.map((item) => (
+                <li class="flex items-center gap-3 text-ink">
+                  <Icon name={item.icon} size={20} class="shrink-0 text-ink-muted" />
+                  {item.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* The screen and the path where all of the above is load-bearing: the
+              highest-consequence form in the product, and what happens when it fails. */}
+          <div class="mt-12">
+            <FidelityPlate
+              index={plate('04-new-shipment').index}
+              title={plate('04-new-shipment').title}
+              caption={plate('04-new-shipment').note}
+              sketch={art('04-new-shipment-sketch.svg')}
+              wire={art('04-new-shipment.svg')}
+              annotated={annotated('04-new-shipment')}
+              annotatedAlt={plate('04-new-shipment').alt}
+            />
+          </div>
+
+          <div class="mt-14">
+            <figure class="flow-plate">
+              <p class="flow-plate__index">Flow <span aria-hidden="true">/</span> 12</p>
+              <div class="flow-plate__mount">
+                <div
+                  class="flow-plate__stage"
+                  tabindex="0"
+                  role="group"
+                  aria-label={`${flow('12-flow-create-shipment').title}: flow diagram, scrollable`}
+                >
+                  <Image
+                    src={annotated('12-flow-create-shipment')}
+                    alt={flow('12-flow-create-shipment').alt}
+                    width={1400}
+                    widths={[700, 1050, 1400]}
+                    sizes="(min-width: 1024px) 720px, 100vw"
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <span class="flow-plate__fade" aria-hidden="true"></span>
+              </div>
+              <figcaption>
+                <p class="flow-plate__title">{flow('12-flow-create-shipment').title}</p>
+                <p class="flow-plate__note">{flow('12-flow-create-shipment').note}</p>
+              </figcaption>
+            </figure>
+          </div>
 
           <figure class="my-12 border-l-2 border-accent pl-6">
-            <blockquote class="font-display text-2xl tracking-tight text-ink leading-snug md:text-3xl">
-              Accessible output at scale comes from accessible architecture,
-              not from accessible intent.
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              Every tension a screen reader exposed, an unlabeled control, a silent status
+              change, a color-only signal, was a tension every stressed user was quietly
+              hitting too.
             </blockquote>
           </figure>
         </div>
@@ -261,124 +631,155 @@ const docket = [
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default" id="architecture" class="scroll-mt-24">
+  <!-- STEP 04 — ARCHITECTURE -->
+  <Section tone="paper" padding="default" id="architecture" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 03</p>
-          <Heading level={2} visual="display-md" tone="ink">Accessibility in the architecture</Heading>
+          <p class="mono-label mb-3">Step 04</p>
+          <Heading level={2} visual="display-md" tone="ink">Architecting the system underneath</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Collaboration gave us the right instincts. Architecture made those
-              instincts load-bearing. Interactive components were built with
-              keyboard operability and ARIA as
-              <strong class="text-ink font-semibold">primary requirements</strong>, not
-              post-hoc additions. Components that controlled visibility managed
-              their own focus internally, so the user never lost their place.
-              Dynamic content (the part of the app that changes while you're
-              looking at it) announced itself to assistive tech instead of
-              silently updating the DOM.
+              A logistics product's front end can only promise what the backend can
+              deliver. An early serverless sketch gave way to a single Rails 7.2 and
+              Postgres domain model organized around the shipment and everything that
+              hangs off it: packages, shipping information, labels, trackers, sensors,
+              and notifications. The front end is a component system, shared partials
+              progressively enhanced with Alpine.js and Turbolinks, so a new screen
+              composes already-accessible pieces instead of reinventing them.
             </p>
             <p>
-              Every piece of information in the UI was expressed through more
-              than one channel: text <em>and</em> icon <em>and</em> color, never
-              color alone. That rule is small, almost boring, and it prevents an
-              enormous class of failures that would otherwise quietly ship.
+              Each carrier lives behind its own service object, so vendor quirks never
+              leak into the interface. Sidekiq runs the work that keeps status honest:
+              pulling tracking updates, rendering carrier labels to PDF off the request
+              path so the customer gets an instant confirmation, and, critically for a
+              cold chain, firing temperature alerts the moment a sensor reading drifts
+              out of range. That is the trade a
+              <strong class="text-ink font-semibold">product design engineer</strong> is
+              positioned to make: choosing the architecture that keeps the interface's
+              promises, not the one that pads a résumé.
             </p>
           </div>
 
-          <div class="mt-10 rounded-lg border border-line p-7">
-            <p class="mono-label mb-5">Built-in, not bolted-on</p>
-            <ul class="grid gap-x-8 gap-y-3 text-ink-muted sm:grid-cols-2">
-              <li class="flex items-center gap-3">
-                <Icon name="ph:keyboard" size={20} class="text-ink-muted" />
-                Full keyboard operability
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:target" size={20} class="text-ink-muted" />
-                Internal focus management
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:megaphone" size={20} class="text-ink-muted" />
-                Live regions for dynamic updates
-              </li>
-              <li class="flex items-center gap-3">
-                <Icon name="ph:eye" size={20} class="text-ink-muted" />
-                Multi-channel information design
-              </li>
+          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+            <p class="mono-label mb-6">The integrations that made it real</p>
+            <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+              {integrations.map((svc) => (
+                <li class="flex gap-3.5">
+                  <Icon name={svc.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
+                  <div>
+                    <p class="font-medium text-ink leading-snug">{svc.name}</p>
+                    <p class="mt-0.5 text-sm text-ink-muted leading-snug">{svc.role}</p>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
+
+          <div class="mt-10">
+            <CodeBlock
+              filename="shipment.rb"
+              lang="ruby"
+              code={modelSnippet}
+              caption="The shipment lifecycle as an enforced state model, with the cold-chain records that hang off it."
+            />
+          </div>
+
+          <figure class="my-12 border-l-2 border-accent pl-6">
+            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+              The data model isn't a place the workflow is stored. The data model is the
+              workflow, made durable.
+            </blockquote>
+          </figure>
         </div>
       </div>
     </Container>
   </Section>
 
-  <Section tone="paper" padding="default" id="scale" class="scroll-mt-24">
+  <!-- STEP 05 — OUTCOMES -->
+  <Section tone="paper" padding="default" id="outcomes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
-          <p class="mono-label mb-3">Step 04</p>
-          <Heading level={2} visual="display-md" tone="ink">Why this compounds at scale</Heading>
+          <p class="mono-label mb-3">Step 05</p>
+          <Heading level={2} visual="display-md" tone="ink">What shipping it changed</Heading>
         </div>
         <div class="case-layout__body">
           <div class="mt-8 measure space-y-5 leading-relaxed text-ink-muted text-lg">
             <p>
-              Once the component library has the right behaviors baked in, every
-              feature built on top of it inherits them. A developer shipping a
-              new shipment form doesn't have to remember to wire up live
-              regions, or decide how focus should move when a dialog opens, or
-              check contrast against the palette. Those decisions have already
-              been made, correctly, once.
+              IVFCryo moved from a manual, support-heavy workflow to a clearer
+              self-service product. Clients stopped calling to ask where a shipment was
+              because the app told them, in real time, with the temperature log attached.
+              Admins stopped chasing status by phone because they could change it, and
+              notify, in one place. Clearer, more guided flows also shortened the time to
+              a customer's first shipment.
             </p>
             <p>
-              That's the structural benefit of putting accessibility at the
-              architectural level: it stops being a discipline individual
-              developers have to sustain, and starts being a property of the
-              system they're building inside. The ceiling of accessibility in
-              the product is no longer the ceiling of any one engineer's
-              attention.
+              The deeper outcome was structural. Accessibility, clarity, and workflow
+              logic were built into the product system, not left to individual screens or
+              a last-minute QA pass, which is the cheapest time to get them right and the
+              only time they actually shape the build.
             </p>
           </div>
 
           <div class="mt-12 grid grid-cols-2 gap-8 border-y border-line py-8">
             <Metric value="75%" label="fewer support calls" caption="self-service replaced the call queue" />
-            <Metric value="55%" label="fewer shipping errors" caption="clear, recoverable forms at the source" />
+            <Metric value="55%" label="fewer shipping errors" caption="prevented at entry, not caught downstream" />
           </div>
 
           <div class="mt-12 grid gap-6 md:grid-cols-3">
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:shield-check" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">Inherited by default</Heading>
-              <Text size="sm" tone="muted">
-                New features get accessible behavior without anyone having to
-                remember to add it.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:chat-circle-dots" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">Clarity for every user</Heading>
-              <Text size="sm" tone="muted">
-                Status changes, errors, and recovery paths reach the person who
-                needs to act on them.
-              </Text>
-            </div>
-            <div class="border-t border-line pt-5">
-              <Icon name="ph:infinity" size={28} class="mb-3 text-ink-muted" />
-              <Heading level={3} visual="h3" class="mb-1">Costs that don't snowball</Heading>
-              <Text size="sm" tone="muted">
-                No remediation backlog waiting at the end of the project,
-                because the backlog was never created.
-              </Text>
-            </div>
+            {outcomes.map((o) => (
+              <div class="border-t border-line pt-5">
+                <Icon name={o.icon} size={26} class="mb-3 text-ink-muted" />
+                <Heading level={3} visual="h3" tone="ink" class="mb-1">{o.title}</Heading>
+                <Text size="sm" tone="muted">{o.body}</Text>
+              </div>
+            ))}
           </div>
         </div>
       </div>
     </Container>
   </Section>
+  <!-- THE REST OF THE SYSTEM -->
+  <Section tone="paper" padding="default" class="border-t border-line" data-rest-of-system>
+    <Container width="content">
+      <div>
+        <p class="mono-label mb-3">The rest of the system</p>
+        <Text tone="muted" class="measure mb-8">
+          Six more screens went through the same three passes. These are the
+          annotated pass, at a glance.
+        </Text>
+        <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          {restOfSystem.map((s) => (
+            <li>
+              <figure class="rest-shot">
+                {/* Cropped to the head of each sheet: the title band and the top
+                    of the layout, which is the part that reads at this size. */}
+                <div class="rest-shot__frame">
+                  <Image
+                    src={annotated(s.slug)}
+                    alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
+                    width={640}
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption class="rest-shot__label">{s.title}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </Container>
+  </Section>
 
-  <Section tone="paper" padding="default">
+  <!-- TESTIMONIAL -->
+  <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <figure class="grid gap-x-10 gap-y-10 md:grid-cols-12 md:items-start lg:gap-x-16">
         <figcaption class="md:col-span-4">
@@ -400,24 +801,29 @@ const docket = [
         <blockquote class="md:col-span-8">
           <Icon name="ph:quotes" size={48} class="mb-5 text-accent opacity-25" />
           <p class="max-w-[46ch] font-display text-2xl md:text-3xl tracking-tight leading-snug text-ink">
-            What Josh did at IVFCRYO wasn't a typical build. He insisted we put a blind user in the room from week one, and
-            that decision changed the product. We didn't pass an accessibility audit at the end. We shipped a tool that was
-            accessible because it was built that way.
+            Josh didn't just design screens for us. The work started by mapping how our
+            shipments actually move, then building the Rails system to match and wiring up
+            the carriers, trackers, and alerts underneath. We were pushed to put a blind
+            user in the room from week one, and what shipped is a tool the whole business
+            runs on.
           </p>
         </blockquote>
       </figure>
     </Container>
   </Section>
 
+  <!-- CTA -->
   <Section tone="ink" padding="loose">
     <Container width="wide">
-      <p class="mono-label !text-paper/65 mb-6">The standard, not the exception</p>
-      <Heading level={2} visual="display-lg" tone="paper">
-        This is the standard, not the exception.
+      <p class="mono-label !text-paper/65 mb-6">Product design engineering</p>
+      <Heading level={2} visual="display-lg" tone="paper" class="max-w-3xl">
+        Design the product, then build what it runs on.
       </Heading>
       <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
-        Accessibility as architecture is how I build every product: the mechanism that makes the
-        thing work for everyone, not a checkbox at the end. If that's the bar you're hiring for, let's talk.
+        The flows and the system underneath are one job when the same person holds
+        both. IVFCryo needed a product designed and a platform built to carry something
+        irreplaceable across the country, and to keep every promise the interface made.
+        If that's the bar you're hiring for, let's talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button
@@ -439,9 +845,141 @@ const docket = [
       </div>
 
       <div class="mt-14 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
-        <Link variant="arrow" href="/projects/americas-test-kitchen/">Flagship: America's Test Kitchen</Link>
-        <Link variant="arrow" href="/projects/">Back to all projects</Link>
+        <Link variant="arrow" href="/projects/vmspark/" class="!text-paper hover:!text-accent">Next: VMSpark</Link>
+        <Link variant="arrow" href="/projects/" class="!text-paper hover:!text-accent">Back to all projects</Link>
       </div>
     </Container>
   </Section>
 </BaseLayout>
+
+<script>
+  // Flow mounts only claim "more below" when the diagram really is cut off.
+  document.querySelectorAll<HTMLElement>('.flow-plate__mount').forEach((mount) => {
+    const stage = mount.querySelector<HTMLElement>('.flow-plate__stage');
+    if (!stage) return;
+    const sync = () => {
+      mount.dataset.overflow = String(stage.scrollHeight > stage.clientHeight + 4);
+    };
+    stage.querySelectorAll('img').forEach((img) => {
+      if (img.complete) sync();
+      else img.addEventListener('load', sync, { once: true });
+    });
+    new ResizeObserver(sync).observe(mount);
+    sync();
+  });
+</script>
+
+<style>
+  /* Flow plate — same mounted-specimen language as ScrollShot and FidelityPlate,
+     at half width. The diagrams are tall, so the mount is a scroll window. */
+  /* Column layout so the two mounts share a height and the captions land on the
+     same baseline, whatever the diagrams' natural aspect ratios are. */
+  .flow-plate {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .flow-plate__mount { flex: 1; }
+
+  .flow-plate__index {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .flow-plate__index span { margin: 0 0.35em; opacity: 0.6; }
+
+  .flow-plate__mount {
+    position: relative;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+  }
+
+  .flow-plate__stage {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    height: 100%;
+    max-height: 620px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    /* Fixed light stage: the diagrams are dark-on-white line work and do not
+       invert, so the mount stays a lightbox in either theme. */
+    background: #ffffff;
+    scrollbar-width: thin;
+  }
+  .flow-plate__stage:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .flow-plate__stage :global(img) { width: 100%; height: auto; display: block; }
+
+  /* Shown only when the diagram is actually taller than its window. */
+  .flow-plate__fade {
+    position: absolute;
+    left: 9px;
+    right: 9px;
+    bottom: 9px;
+    height: 56px;
+    border-radius: 0 0 9px 9px;
+    background: linear-gradient(to bottom, transparent, #ffffff);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.2s var(--ease-out);
+  }
+  .flow-plate__mount[data-overflow='true'] .flow-plate__fade { opacity: 1; }
+
+  .flow-plate__title {
+    margin: 1rem 0 0;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+  .flow-plate__note {
+    margin: 0.6rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  /* Rest-of-system rail — cropped heads of the remaining sheets. Uniform 4:3
+     crops anchored to the top, so the grid stays even however tall the sheet is. */
+  .rest-shot { margin: 0; }
+
+  .rest-shot__frame {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    aspect-ratio: 4 / 3;
+  }
+  .rest-shot__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .rest-shot__label {
+    display: block;
+    margin-top: 0.7rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+  }
+</style>

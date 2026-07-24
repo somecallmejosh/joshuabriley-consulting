@@ -1,0 +1,507 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>CACFP menu planner — Logatot wireframe</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<style>
+  /* Five days across an 828px pane leaves each day about 100px, so the week
+     grid gets fixed columns and greeked dish names rather than real ones. */
+  .week-wrap { display: flex; align-items: flex-start; gap: 12px; }
+  .week-wrap .grid { flex: 1; min-width: 0; }
+  .week-wrap .library { width: 182px; flex: none; }
+
+  table.week { table-layout: fixed; width: 100%; }
+  table.week th { padding: 7px 6px; vertical-align: bottom; }
+  table.week th .d { margin-top: 2px; font-family: var(--sans); font-size: 11.5px; font-weight: bold; letter-spacing: 0; color: var(--ink); }
+  table.week td { padding: 5px; vertical-align: top; }
+  table.week td.lab { padding-left: 9px; padding-top: 9px; }
+
+  .meal {
+    padding: 7px;
+    border: 1.5px solid var(--line);
+    border-radius: 3px;
+    background: var(--paper);
+  }
+  .meal .top { display: flex; align-items: flex-start; gap: 5px; }
+  .meal .lines { flex: 1; min-width: 0; }
+  .meal .bar { display: block; }
+  .meal .bar + .bar { margin-top: 4px; }
+  .meal .foot { margin-top: 7px; }
+
+  /* Filled marker = every component present. Hollow = one short. */
+  .mk { width: 8px; height: 8px; flex: none; margin-top: 1px; border-radius: 50%; background: var(--ink); }
+  .mk.open { background: none; border: 1.5px dashed var(--rust); }
+
+  .meal.short { border-style: dashed; border-color: var(--rust); background: var(--rust-tint); }
+  .meal.add {
+    border-style: dashed;
+    border-color: var(--line-soft);
+    background: var(--fill-1);
+    text-align: center;
+    font-size: 11px;
+    color: var(--faint);
+    padding: 20px 7px;
+  }
+
+  /* The gap flag names the missing component, so it has to wrap rather than
+     truncate — a clipped flag is the same as no flag. */
+  .flag {
+    display: block;
+    height: auto;
+    margin-top: 7px;
+    padding: 3px 5px;
+    white-space: normal;
+    font-size: 9.5px;
+    line-height: 1.35;
+    text-align: center;
+  }
+
+  .count-chip { height: 18px; padding: 0 6px; font-size: 10px; }
+
+  .lib-row {
+    padding: 7px 8px;
+    border: 1.5px solid var(--line-soft);
+    border-radius: 3px;
+    background: var(--paper);
+  }
+  .lib-row .c { margin-top: 5px; font-size: 10px; color: var(--muted); }
+  .lib-head { font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.12em; color: var(--faint); }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>CACFP menu planner</h1>
+      <p class="sub">Compliance is checked at plan time, while a mistake is still an edit.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">WIREFRAME</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">app.logatot.com/cacfp/menus?week=2026-07-20&amp;age_group=3-5</span>
+        </div>
+
+        <div class="app">
+          <nav class="side">
+            <div class="logo">LOGO</div>
+            <div class="nav-item"><span class="box"></span> Voiceboard</div>
+            <div class="nav-item"><span class="box"></span> Children</div>
+            <div class="nav-item"><span class="box"></span> Logged Events <span class="count">3</span></div>
+            <div class="nav-item on"><span class="box"></span> Meals</div>
+
+            <div class="group">MODULES</div>
+            <div class="nav-item"><span class="box"></span> Calendar <span class="count">2</span></div>
+            <div class="nav-item"><span class="box"></span> Chat</div>
+            <div class="nav-item locked"><span class="box"></span> Custom Forms</div>
+            <div class="nav-item locked"><span class="box"></span> Documents</div>
+            <div class="nav-item locked"><span class="box"></span> Expenses</div>
+
+            <div class="group">RESOURCES</div>
+            <div class="nav-item"><span class="box"></span> Photo Gallery</div>
+            <div class="nav-item"><span class="box"></span> Reports</div>
+            <div class="nav-item"><span class="box"></span> Video Library</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <span class="box" style="width:13px;height:13px;border:1.5px solid var(--line);border-radius:2px"></span>
+              <span class="title">Bright Start Family Care</span>
+              <div class="right">
+                <span class="pill">CACFP · Tier I</span>
+                <span class="avatar sm"></span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Menu planner</p>
+                  <p class="sub-line" data-note="1">Age group 3–5 years · component rules run as you plan</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="pill on">Weekly</span>
+                  <span class="pill">Monthly</span>
+                </div>
+              </div>
+
+              <div class="between">
+                <div class="row" style="gap:7px">
+                  <span class="btn sm quiet">‹</span>
+                  <span class="field" style="width:170px;text-align:center">Jul 20 – Jul 24, 2026</span>
+                  <span class="btn sm quiet">›</span>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm quiet">Print week</span>
+                  <span class="btn sm" data-note="2">Duplicate week</span>
+                </div>
+              </div>
+
+              <div class="week-wrap">
+                <div class="grid">
+                <div class="panel" style="padding:0;overflow:hidden">
+                  <table class="wire week">
+                    <colgroup>
+                      <col style="width:66px">
+                      <col style="width:20%"><col style="width:20%"><col style="width:20%">
+                      <col style="width:20%"><col style="width:20%">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th>MEAL</th>
+                        <th>MON<div class="d">Jul 20</div></th>
+                        <th>TUE<div class="d">Jul 21</div></th>
+                        <th>WED<div class="d">Jul 22</div></th>
+                        <th>THU<div class="d">Jul 23</div></th>
+                        <th>FRI<div class="d">Jul 24</div></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td class="lab">
+                          <div class="eyebrow">BREAKFAST</div>
+                          <div class="faint" style="font-size:10px;margin-top:3px">3 of 3</div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:88%"></span>
+                                <span class="bar sm" style="width:72%"></span>
+                                <span class="bar sm" style="width:60%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">3 of 3</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:76%"></span>
+                                <span class="bar sm" style="width:66%"></span>
+                                <span class="bar sm" style="width:80%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">3 of 3</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:84%"></span>
+                                <span class="bar sm" style="width:58%"></span>
+                                <span class="bar sm" style="width:70%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">3 of 3</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:70%"></span>
+                                <span class="bar sm" style="width:78%"></span>
+                                <span class="bar sm" style="width:54%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">3 of 3</span></div>
+                          </div>
+                        </td>
+                        <td><div class="meal add">+ Add meal</div></td>
+                      </tr>
+
+                      <tr>
+                        <td class="lab">
+                          <div class="eyebrow">AM SNACK</div>
+                          <div class="faint" style="font-size:10px;margin-top:3px">2 of 5</div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:80%"></span>
+                                <span class="bar sm" style="width:62%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:72%"></span>
+                                <span class="bar sm" style="width:76%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:86%"></span>
+                                <span class="bar sm" style="width:58%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:64%"></span>
+                                <span class="bar sm" style="width:70%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:78%"></span>
+                                <span class="bar sm" style="width:66%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="lab">
+                          <div class="eyebrow">LUNCH</div>
+                          <div class="faint" style="font-size:10px;margin-top:3px">5 of 5</div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:88%"></span>
+                                <span class="bar sm" style="width:74%"></span>
+                                <span class="bar sm" style="width:62%"></span>
+                                <span class="bar sm" style="width:80%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">5 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:74%"></span>
+                                <span class="bar sm" style="width:82%"></span>
+                                <span class="bar sm" style="width:56%"></span>
+                                <span class="bar sm" style="width:70%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">5 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal short" data-note="4" data-note-side="bottom">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:84%"></span>
+                                <span class="bar sm" style="width:66%"></span>
+                                <span class="bar sm" style="width:78%"></span>
+                              </div>
+                              <span class="mk open"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">4 of 5</span></div>
+                            <span class="chip rust flag">Missing: 2nd fruit/veg</span>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:80%"></span>
+                                <span class="bar sm" style="width:60%"></span>
+                                <span class="bar sm" style="width:76%"></span>
+                                <span class="bar sm" style="width:64%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">5 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:90%"></span>
+                                <span class="bar sm" style="width:68%"></span>
+                                <span class="bar sm" style="width:58%"></span>
+                                <span class="bar sm" style="width:74%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">5 of 5</span></div>
+                          </div>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="lab">
+                          <div class="eyebrow">PM SNACK</div>
+                          <div class="faint" style="font-size:10px;margin-top:3px">2 of 5</div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:82%"></span>
+                                <span class="bar sm" style="width:64%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:70%"></span>
+                                <span class="bar sm" style="width:78%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:86%"></span>
+                                <span class="bar sm" style="width:60%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                        <td><div class="meal add">+ Add meal</div></td>
+                        <td>
+                          <div class="meal">
+                            <div class="top">
+                              <div class="lines">
+                                <span class="bar" style="width:76%"></span>
+                                <span class="bar sm" style="width:68%"></span>
+                              </div>
+                              <span class="mk"></span>
+                            </div>
+                            <div class="foot"><span class="chip count-chip">2 of 5</span></div>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+                <div class="aside" style="margin-top:12px" data-note="3">
+                  <span class="t">Requirement matrix — lunch, ages 3–5</span>
+                  <div class="row" style="gap:6px;margin-top:7px">
+                    <span class="chip">Milk · ¾ cup</span>
+                    <span class="chip">Meat/alt · 1½ oz</span>
+                    <span class="chip">Grain · ½ serving</span>
+                    <span class="chip">Fruit/veg · ¼ cup</span>
+                    <span class="chip">Fruit/veg · ¼ cup</span>
+                  </div>
+                </div>
+                </div>
+
+                <div class="library panel stack-8" data-note="5" data-note-side="top">
+                  <p class="eyebrow">MEAL LIBRARY</p>
+                  <div class="field" style="font-size:10.5px">Search saved meals…</div>
+                  <div class="row" style="gap:5px">
+                    <span class="pill on" style="height:22px;padding:0 9px;font-size:10.5px">All</span>
+                    <span class="pill" style="height:22px;padding:0 9px;font-size:10.5px">Lunch</span>
+                    <span class="pill" style="height:22px;padding:0 9px;font-size:10.5px">Snack</span>
+                  </div>
+
+                  <div class="lib-head">BREAKFAST — 9 SAVED</div>
+                  <div class="lib-row">
+                    <span class="bar" style="display:block;width:82%"></span>
+                    <div class="c">3 of 3 components</div>
+                  </div>
+
+                  <div class="lib-head">LUNCH — 14 SAVED</div>
+                  <div class="lib-row">
+                    <span class="bar" style="display:block;width:74%"></span>
+                    <div class="c">5 of 5 components</div>
+                  </div>
+                  <div class="lib-row">
+                    <span class="bar" style="display:block;width:88%"></span>
+                    <div class="c">4 of 5 — needs fruit/veg</div>
+                  </div>
+
+                  <div class="lib-head">SNACKS — 11 SAVED</div>
+                  <div class="lib-row">
+                    <span class="bar" style="display:block;width:70%"></span>
+                    <div class="c">2 of 2 components</div>
+                  </div>
+
+                  <span class="btn sm ghost" style="width:100%">+ New meal</span>
+                  <p class="sub-line" style="font-size:10px">Drag a saved meal onto any day, or select a cell and press Enter.</p>
+                </div>
+              </div>
+
+              <div class="panel fill between" style="padding:11px 14px" data-note="6">
+                <div class="row" style="gap:16px;font-size:11.5px">
+                  <span><span class="b">18 of 20</span> meals planned</span>
+                  <span class="rust">1 needs a component</span>
+                  <span>Reimbursable this week: <span class="b">17</span></span>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm quiet">Export claim</span>
+                  <span class="btn sm solid">Shopping list</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Every cell is validated against the component requirements for the age group as the menu is built, not when the claim is filed. Catching a gap here costs thirty seconds; catching it at claim time costs the meal — the food has been eaten and the money spent, and there is nothing left to fix.</li>
+      <li data-for="2">Duplicate week is the single biggest time saver in the feature. Real menus rotate on a two-to-four week cycle, so copying last week forward and swapping two dishes turns an hour of planning into a few minutes — which is the difference between a planner that gets used and one that does not.</li>
+      <li data-for="3">Requirements are modelled as a real matrix — age group by meal type by ingredient type by minimum amount and unit — rather than approximated as a rule of thumb. That is what makes plan-time validation possible at all: an approximation could only ever warn, where a matrix can say that lunch wants the fruit/veg row twice and this meal has it once.</li>
+      <li data-for="4">The flag names the gap. “Missing: 2nd fruit/veg,” not “invalid meal” — providers are not nutritionists, and the interface has to say which component is short so the fix is one addition rather than an evening of research.</li>
+      <li data-for="5">A validated meal becomes a reusable object with its component count attached, so the rules are learned once per dish instead of re-derived every week. The count travels with the meal, which is why dropping a saved one onto a day is safe by default.</li>
+      <li data-for="6">Serving a meal rides the same event pipeline as a nap or a diaper change, so there is no food-only workflow to remember — one habit covers every kind of record. Month end then joins two tables that already exist, which makes the claim a reconciliation, and the shopping list a free by-product of a plan she was writing anyway.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

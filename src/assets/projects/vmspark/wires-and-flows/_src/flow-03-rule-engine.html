@@ -1,0 +1,224 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>The rule engine — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Two bands: what an operator does to author one rule, and what the engine
+     then does with it on every listing it touches. The divider is the point —
+     the top half is ours to design, the bottom half was not. */
+  .band {
+    width: 100% !important;
+    border-top: 1px solid var(--line);
+  }
+  .lane { width: 300px !important; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>The Rule Engine</h1>
+      <p class="sub">How one account's custom rules are authored, ordered and previewed — and how they evaluate against every listing that arrives.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="56" data-rowh="92"
+           data-edges='[
+             {"from":"n1","to":"n2"},
+             {"from":"n2","to":"n3"},
+             {"from":"a1","to":"n3","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n3","to":"n4"},
+             {"from":"n4","to":"n5"},
+             {"from":"n5","to":"d1"},
+             {"from":"d1","to":"n6","label":"looks right"},
+             {"from":"d1","to":"n7","fromSide":"r","toSide":"l","label":"no"},
+             {"from":"n7","to":"n5","fromSide":"t","toSide":"r","label":"preview again","labelDx":6},
+             {"from":"n6","to":"n8","dashed":true,"label":"one save → queued backfill","labelDx":10},
+             {"from":"e1","to":"e2"},
+             {"from":"e2","to":"d2"},
+             {"from":"d2","to":"e3","fromSide":"r","toSide":"l","label":"disabled"},
+             {"from":"d2","to":"e4","label":"enabled"},
+             {"from":"a2","to":"e2","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"e4","to":"d3"},
+             {"from":"d3","to":"e5","fromSide":"r","toSide":"l","label":"no match"},
+             {"from":"d3","to":"e6","label":"match"},
+             {"from":"e6","to":"e7"},
+             {"from":"e7","to":"d4"},
+             {"from":"d4","to":"e8","fromSide":"r","toSide":"l","label":"unusable"},
+             {"from":"d4","to":"e9","label":"usable"},
+             {"from":"e9","to":"d2","fromSide":"l","toSide":"l","dashed":true,"label":"next rule, in order","labelDx":-132,"labelDy":-4},
+             {"from":"e9","to":"e10","label":"no rules remain","labelDx":10}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="lane" data-cell="0,0" data-dy="-4">
+          AUTHORING ONE RULE
+          <span class="s">what an operator does before a rule touches anything</span>
+        </div>
+
+        <div class="node entry" id="n1" data-cell="1,1">
+          <span class="t">One account asks for one thing</span>
+          <span class="s">Aya · "our ICU bill rates need a 3% uplift"</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="2,1" data-note="1">
+          <span class="t">Opens Custom Rules for that account</span>
+          <span class="s">Scoped to the account, never to the shared pipeline</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="3,0" data-dy="6">
+          <span class="t">Conditions are typed</span>
+          Values arrive from JSONB as strings, so each condition coerces to the
+          field's declared type before it compares.
+        </div>
+
+        <div class="node" id="n3" data-cell="3,1">
+          <span class="t">Writes conditions and a result</span>
+          <span class="s">profession = Registered Nurse AND specialty in [ICU, Telemetry]</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="4,1" data-dy="10" data-note="2">
+          <span class="t">Drags it into position</span>
+          <span class="s">Row order is precedence — rule 3 can settle what rule 7 never sees</span>
+        </div>
+
+        <div class="node" id="n5" data-cell="5,1" data-dy="20" data-note="3">
+          <span class="t">Previews against real listings</span>
+          <span class="s">Dry run over the last 200 ingested · 41 matched, nothing written</span>
+        </div>
+
+        <div class="design-note" data-cell="6,0" data-dy="34">
+          Nothing is saved until she has watched it run.
+        </div>
+
+        <div class="node branch" id="d1" data-cell="6,1" data-dy="30">
+          <span class="t">Did it do what she meant?</span>
+        </div>
+
+        <div class="node" id="n7" data-cell="6,2" data-dy="34">
+          <span class="t">Narrows the conditions</span>
+          <span class="s">41 matched was too many — adds a bill-rate floor</span>
+        </div>
+
+        <div class="node commit" id="n6" data-cell="7,1" data-dy="40">
+          <span class="t">Saves and enables the rule</span>
+          <span class="s">Writes a CustomRule against this account only</span>
+        </div>
+
+        <div class="node dashed" id="n8" data-cell="8,1" data-dy="46">
+          <span class="async">ASYNC</span>
+          <span class="t">Matching listings queued for reprocess</span>
+          <span class="s">The save returns now; the backfill happens behind it</span>
+        </div>
+
+        <!-- Engine band -->
+        <div class="band" data-cell="9,0" data-dy="42"></div>
+        <div class="lane" data-cell="9,0" data-dy="62">
+          THE ENGINE, PER LISTING
+          <span class="s">evaluation runs inside a pipeline the redesign could not change</span>
+        </div>
+
+        <div class="node entry" id="e1" data-cell="10,1" data-dy="56">
+          <span class="t">A listing reaches the rule step</span>
+          <span class="s">Spark::ProcessJobListing · mapped fields already resolved</span>
+        </div>
+
+        <div class="node" id="e2" data-cell="11,1" data-dy="60">
+          <span class="t">Loads that account's rules in display order</span>
+          <span class="s">First to last, exactly as she left them</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="12,1" data-dy="64">
+          <span class="t">Rule enabled?</span>
+        </div>
+
+        <div class="node" id="e3" data-cell="12,2" data-dy="64" data-note="4">
+          <span class="t">Skipped, still listed</span>
+          <span class="s">Greyed and in place, not deleted</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="11,0" data-dy="52">
+          <span class="t">Same rules, either side</span>
+          Preview and production run the same evaluator, so a preview that lies
+          is a bug rather than an approximation.
+        </div>
+
+        <div class="node" id="e4" data-cell="13,1" data-dy="68">
+          <span class="t">Evaluates the conditions</span>
+          <span class="s">Coerced to the field's type, then compared</span>
+        </div>
+
+        <div class="node branch" id="d3" data-cell="14,1" data-dy="72">
+          <span class="t">All conditions match?</span>
+        </div>
+
+        <div class="node" id="e5" data-cell="14,2" data-dy="74" data-note="5">
+          <span class="t">Falls through · matched 0 today</span>
+          <span class="s">The count is shown beside the rule</span>
+        </div>
+
+        <div class="node" id="e6" data-cell="15,1" data-dy="80" data-note="6">
+          <span class="t">Applies the result</span>
+          <span class="s">A static value, a Liquid template, or an AI prompt</span>
+        </div>
+
+        <div class="node dashed" id="e7" data-cell="16,1" data-dy="86">
+          <span class="async">ASYNC</span>
+          <span class="t">AI results keyed on the prompt hash</span>
+          <span class="s">Same prompt, same listing — replayed, not re-billed</span>
+        </div>
+
+        <div class="node branch" id="d4" data-cell="17,1" data-dy="92">
+          <span class="t">Response usable?</span>
+        </div>
+
+        <div class="node bad" id="e8" data-cell="17,2" data-dy="94">
+          <span class="t">Stamps ai_failed_at, keeps the prior value</span>
+          <span class="s">One field degrades; the listing does not fail</span>
+        </div>
+
+        <div class="node commit" id="e9" data-cell="18,1" data-dy="98">
+          <span class="t">Writes onto the mapped field</span>
+          <span class="s">Static, Liquid and AI all land the same way</span>
+        </div>
+
+        <div class="node good" id="e10" data-cell="19,1" data-dy="106">
+          <span class="t">Derived fields persisted</span>
+          <span class="s">Back into automatch and the ATS sync</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key commit"></span> Commit</span>
+        <span class="item"><span class="key good"></span> Resolved</span>
+        <span class="item"><span class="key bad"></span> Degraded</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Rules belong to an account, not to the pipeline. Without them every client request lands as a conditional inside code that runs for all of them, so the twentieth client's edge case becomes a regression risk for the other nineteen. This screen is the escape hatch that keeps the shared path shared.</li>
+      <li data-for="2">Precedence is the row order and nothing else, because an earlier rule can settle an outcome the later ones never see. Order implied by creation date leaves an operator no way to change a decision except deleting a rule and writing it again, so dragging is the whole affordance rather than a convenience.</li>
+      <li data-for="3">A rule runs against real recent listings before it can be saved, and the preview reports how many it touched. A rule that silently rewrites four thousand records is the failure this design exists to prevent — the same reasoning that makes the backfill queued rather than synchronous, applied one step earlier.</li>
+      <li data-for="4">Turning a rule off and seeing whether the complaints stop is the actual debugging move, so a disabled rule stays in the list in its own position rather than disappearing. Deleting it throws away the ordering that made it wrong, which is usually the thing worth reading.</li>
+      <li data-for="5">A rule that matches nothing looks identical to one that works until somebody checks, so the match count sits beside it. Most reports of "the rule isn't firing" turn out to be a condition that has never once been true, and establishing that otherwise takes a database query.</li>
+      <li data-for="6">The engine's semantics were not ours to change — the same evaluator, the same coercion, the same three kinds of result. The design work was making an existing thing legible and safe to operate, which is a narrower claim than redesigning it and the honest one.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

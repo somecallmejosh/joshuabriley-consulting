@@ -1,0 +1,436 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Listing Inspector — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* The inspector is an overlay, so the app underneath has to stay on screen —
+     that is half the point of the screen. .app becomes the positioning context
+     and gets an explicit height so the absolutely-placed dialog has a box. */
+  .app { position: relative; min-height: 816px; }
+  .side { width: 150px; }
+
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.74);
+  }
+
+  /* Anchored right rather than centred: every callout leader then leaves the
+     dialog's right edge with only scrim between it and the gutter. */
+  .dlg {
+    position: absolute;
+    top: 30px;
+    right: 38px;
+    width: 700px;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: 0 10px 34px rgba(31, 41, 55, 0.16);
+    overflow: hidden;
+  }
+  .dlg-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--line);
+  }
+  .dlg-head .t { font-size: 15px; font-weight: 700; color: var(--ink); }
+  .dlg-body { padding: 16px 18px; }
+  .dlg-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 18px;
+    border-top: 1px solid var(--line);
+    background: var(--fill-2);
+  }
+
+  /* The failure banner names the field, not just the state. */
+  .fail {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 14px;
+    border: 1px solid var(--warn);
+    border-radius: var(--r);
+    background: var(--warn-tint);
+  }
+  .fail .t { font-size: 12.5px; font-weight: 700; color: var(--warn); }
+  .fail .s { margin-top: 3px; font-size: 11.5px; color: var(--warn); opacity: 0.92; }
+  .fail .go {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  .compare { display: flex; gap: 16px; align-items: flex-start; }
+  .compare > div { min-width: 0; }
+  .col-map { width: 350px; flex: none; }
+  .col-raw { flex: 1; }
+  .cap {
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    color: var(--faint);
+    text-transform: uppercase;
+  }
+
+  table.map { width: 100%; table-layout: fixed; border-collapse: collapse; }
+  table.map td {
+    padding: 6px 0;
+    border-bottom: 1px solid var(--hair);
+    font-size: 11.5px;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.map td.k { width: 118px; color: var(--muted); }
+  table.map tr.miss td { color: var(--warn); font-weight: 600; }
+
+  .json {
+    height: 298px;
+    padding: 10px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    background: var(--fill-2);
+    font-family: var(--mono);
+    font-size: 10.5px;
+    line-height: 1.72;
+    color: var(--muted);
+    overflow: hidden;
+  }
+  .json b { font-weight: 400; color: var(--ink); }
+  .json em { font-style: normal; color: var(--warn); font-weight: 700; }
+
+  /* Two collapsed rows: the payload's bulk is reachable, not in the way. */
+  .drawer {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .drawer .n { font-size: 11.5px; font-weight: 600; color: var(--ink); }
+
+  .hist { display: flex; align-items: baseline; gap: 10px; padding: 5px 0; }
+  .hist .dot {
+    width: 8px;
+    height: 8px;
+    flex: none;
+    border-radius: 50%;
+    background: var(--fill-4);
+    transform: translateY(-1px);
+  }
+  .hist .dot.ok { background: var(--ok); }
+  .hist .dot.bad { background: var(--warn); }
+  .hist .n { width: 62px; flex: none; font-size: 11.5px; font-weight: 600; color: var(--ink); }
+  .hist .n.bad { color: var(--warn); }
+  .hist .ts {
+    width: 58px;
+    flex: none;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--faint);
+  }
+  .hist .d { font-size: 11.5px; color: var(--muted); }
+
+  /* Ghosted grid behind the overlay — trimmed to seven columns because it is
+     read through a scrim and only has to be recognisable as the same screen. */
+  table.behind { table-layout: fixed; width: 100%; }
+  table.behind th, table.behind td {
+    padding: 6px 6px;
+    font-size: 10.5px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.behind th { font-size: 8.5px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Listing Inspector</h1>
+      <p class="sub">Why one requisition ended up in the state it did — raw payload against mapped result, and the trail between them.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /jobs/job_listings?status=failed &rsaquo; REQ-88240</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i class="on"></i><i></i><i></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Job Listings</div>
+            <div class="nav-item on">Job Listings <span class="count">12</span></div>
+            <div class="nav-item">Manual Jobs</div>
+            <div class="nav-item">Direct Client Jobs</div>
+            <div class="nav-item">Candidates</div>
+            <div class="nav-item">Candidate Profiles</div>
+            <div class="nav-item locked">Applications &amp; Matches</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Job Listings</p>
+                  <p class="sub-line">Filtered: Failed · Results 1–12 of 12</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm">Save Page</span>
+                  <span class="btn sm">Export Results</span>
+                  <span class="btn sm solid">Reprocess All</span>
+                </div>
+              </div>
+
+              <div class="tabs">
+                <span class="tab">All <span class="chip sm">3,418</span></span>
+                <span class="tab">Processed <span class="chip sm ok">3,102</span></span>
+                <span class="tab on">Failed <span class="chip sm warn">12</span></span>
+                <span class="tab">Skipped <span class="chip sm">304</span></span>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden">
+                <table class="wire behind">
+                  <colgroup>
+                    <col style="width:20px"><col style="width:64px"><col style="width:150px">
+                    <col style="width:140px"><col style="width:76px"><col style="width:64px"><col style="width:70px">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><span class="cb"></span></th>
+                      <th>JOB ID</th><th>POSITION TITLE</th><th>FACILITY</th>
+                      <th>SPECIALTY</th><th>STATUS</th><th>VMS SOURCE</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88240</td><td>Registered Nurse – Tele</td>
+                      <td class="k">Mercy Genl - Sac</td><td>Telemetry</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Medefis</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88258</td><td>Registered Nurse – ICU</td>
+                      <td class="k">Mercy Genl - Rsvl</td><td>ICU</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Medefis</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88263</td><td>Surgical Technologist</td>
+                      <td class="k">Baptist Hlth Dtwn</td><td>OR</td>
+                      <td><span class="chip warn">FAILED</span></td><td>HealthTrust</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88271</td><td>Respiratory Therapist</td>
+                      <td class="k">Providence Regl N</td><td>Respiratory</td>
+                      <td><span class="chip warn">FAILED</span></td><td>AMN</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88284</td><td>Registered Nurse – L&amp;D</td>
+                      <td class="k">Ascension Via Chr</td><td>L&amp;D</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Aya</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88290</td><td>CT Technologist</td>
+                      <td class="k">Banner Desert Ctr</td><td>Radiology</td>
+                      <td><span class="chip warn">FAILED</span></td><td>AMN</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88301</td><td>Travel RN – Med/Surg</td>
+                      <td class="k">St. Luke's Med Ctr</td><td>Med/Surg</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Aya</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88312</td><td>Registered Nurse – ER</td>
+                      <td class="k">Tampa Genl Hosp E</td><td>ER</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Medefis</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88318</td><td>Physical Therapist</td>
+                      <td class="k">Mercy Genl - Elk</td><td>Rehab</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Medefis</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88327</td><td>Registered Nurse – PCU</td>
+                      <td class="k">St. Luke's North</td><td>PCU</td>
+                      <td><span class="chip warn">FAILED</span></td><td>Aya</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88334</td><td>Ultrasound Technologist</td>
+                      <td class="k">Banner Thunderbird</td><td>Radiology</td>
+                      <td><span class="chip warn">FAILED</span></td><td>AMN</td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td>REQ-88341</td><td>Registered Nurse – OR</td>
+                      <td class="k">Providence Regl S</td><td>OR</td>
+                      <td><span class="chip warn">FAILED</span></td><td>HealthTrust</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="scrim"></div>
+
+          <div class="dlg">
+            <div class="dlg-head" data-note="1">
+              <span class="t">REQ-88240 · Registered Nurse – Telemetry</span>
+              <span class="chip sm warn">FAILED</span>
+              <span class="sub-line" style="margin:0 0 0 auto">Esc to close</span>
+              <span class="btn sm icon">✕</span>
+            </div>
+
+            <div class="dlg-body stack-12">
+              <div class="fail" data-note="2">
+                <div>
+                  <p class="t">This listing failed to process</p>
+                  <p class="s">Rule engine: no ATS facility mapped for “Mercy Genl - Sac”</p>
+                </div>
+                <span class="go">Fix this mapping →</span>
+              </div>
+
+              <div class="compare" data-note="3">
+                <div class="col-map">
+                  <p class="cap" style="margin:0 0 7px">Mapped result · what VMSpark wrote</p>
+                  <table class="map">
+                    <tr class="miss">
+                      <td class="k">Facility</td>
+                      <td>— <span class="chip sm warn" style="margin-left:6px">UNMAPPED</span></td>
+                    </tr>
+                    <tr><td class="k">Profession</td><td>Registered Nurse</td></tr>
+                    <tr><td class="k">Specialty</td><td>Telemetry</td></tr>
+                    <tr><td class="k">City / State</td><td>Sacramento, CA</td></tr>
+                    <tr><td class="k">Start Date</td><td>09/01/2026</td></tr>
+                    <tr><td class="k">Duration</td><td>13 weeks</td></tr>
+                    <tr><td class="k">Shift</td><td>Nights, 3×12</td></tr>
+                    <tr><td class="k">Bill Rate</td><td>$61.25/hr</td></tr>
+                    <tr><td class="k">Positions</td><td>2</td></tr>
+                    <tr><td class="k">Status</td><td>Open</td></tr>
+                  </table>
+                </div>
+
+                <div class="col-raw">
+                  <p class="cap" style="margin:0 0 7px">Raw VMS payload · what arrived</p>
+                  <div class="json">
+                    {<br>
+                    &nbsp;&nbsp;"reqId": <b>"88240"</b>,<br>
+                    &nbsp;&nbsp;"facilityName": <em>"Mercy Genl - Sac"</em>,<br>
+                    &nbsp;&nbsp;"professionCode": <b>"RN"</b>,<br>
+                    &nbsp;&nbsp;"specialtyCode": <b>"TELE-ADLT"</b>,<br>
+                    &nbsp;&nbsp;"city": <b>"Sacramento"</b>,<br>
+                    &nbsp;&nbsp;"state": <b>"CA"</b>,<br>
+                    &nbsp;&nbsp;"startDate": <b>"2026-09-01"</b>,<br>
+                    &nbsp;&nbsp;"durationWeeks": <b>13</b>,<br>
+                    &nbsp;&nbsp;"shiftDescription": <b>"Nights 3x12"</b>,<br>
+                    &nbsp;&nbsp;"billRateRegular": <b>61.25</b>,<br>
+                    &nbsp;&nbsp;"openings": <b>2</b>,<br>
+                    &nbsp;&nbsp;"vmsSource": <b>"Medefis"</b><br>
+                    }
+                  </div>
+                </div>
+              </div>
+
+              <div class="stack-8" data-note="4">
+                <div class="drawer">
+                  <span class="faint">›</span>
+                  <span class="n">Job description</span>
+                  <span>4,112 characters · sanitised HTML · collapsed by default</span>
+                </div>
+                <div class="drawer">
+                  <span class="faint">›</span>
+                  <span class="n">Access link</span>
+                  <span style="font-family:var(--mono);font-size:10.5px">https://vms.medefis.com/req/88240?tok=8f3c9a…</span>
+                  <span class="btn sm" style="margin-left:auto">Copy</span>
+                </div>
+              </div>
+
+              <div data-note="5">
+                <p class="cap" style="margin:0 0 6px">Process history</p>
+                <div class="hist">
+                  <span class="dot"></span>
+                  <span class="n">Imported</span>
+                  <span class="ts">06:12:04</span>
+                  <span class="d">Raw payload persisted from the Medefis client pull</span>
+                </div>
+                <div class="hist">
+                  <span class="dot ok"></span>
+                  <span class="n">Mapped</span>
+                  <span class="ts">06:12:05</span>
+                  <span class="d">9 of 10 fields resolved from account mapping</span>
+                </div>
+                <div class="hist">
+                  <span class="dot bad"></span>
+                  <span class="n bad">Failed</span>
+                  <span class="ts">06:12:05</span>
+                  <span class="d">Facility lookup returned no AccountFacility record</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="dlg-foot" data-note="6">
+              <span class="sub-line" style="margin:0">Reprocessing re-runs mapping and the rule engine for this listing only.</span>
+              <span class="btn sm" style="margin-left:auto">Add Note</span>
+              <span class="btn sm solid">Reprocess This Listing</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The inspector opens over the filtered list rather than navigating away from it, and it fetches on open — nothing about this panel is on the hot path, so it costs first paint nothing. Triage is a run of twelve failures, and losing the filter and scroll position between each one is what turns a ten-minute pass into an afternoon.</li>
+      <li data-for="2">A FAILED chip on the grid says something went wrong; this says which field the mapper could not resolve, in the operator's own words rather than a stack trace. The whole reason this screen exists is that the alternative was a support ticket and someone grepping the import log.</li>
+      <li data-for="3">Raw payload beside the mapped result, because those are the two things in dispute whenever a listing is wrong — did the VMS send us rubbish, or did we mishandle good data. Keeping the inbound JSON means that stays answerable weeks after the import that caused it, not just while the failure is fresh.</li>
+      <li data-for="4">The description and the access link are collapsed. They are the bulk of the payload and almost never the thing being diagnosed, so they stay reachable without pushing the comparison and the history below the fold.</li>
+      <li data-for="5">Timestamped stages turn "it failed" into a sequence with a point of departure — imported fine, mapped nine of ten, fell over on the tenth. That ordering is what tells an operator whether to fix a mapping or chase the VMS feed.</li>
+      <li data-for="6">Read-mostly on purpose. The only writes here are reprocess and a note; editing the mapping happens on the mapping screen, reached from the banner above. A second editing surface would drift from the first, and then nobody would know which one the pipeline actually reads.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

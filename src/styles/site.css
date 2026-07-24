@@ -882,6 +882,13 @@ header .mobile-menu a[aria-current='page'] {
   display: grid;
   gap: 0;
 }
+/* Grid items default to min-width:auto, so a wide child (a CodeBlock's <pre>)
+   stretches the track instead of scrolling inside its own overflow-x:auto. That
+   pushed the whole page into horizontal scroll on narrow viewports. */
+.case-layout__head,
+.case-layout__body {
+  min-width: 0;
+}
 @media (min-width: 1024px) {
   .case-layout {
     grid-template-columns: minmax(0, 17.5rem) minmax(0, 1fr);

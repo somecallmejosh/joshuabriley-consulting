@@ -1,0 +1,247 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Job Listings — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Thirteen columns in a 796px pane. Fixed widths, or the operator vocabulary
+     columns (Profession, Specialty) squeeze the identifiers out. */
+  table.jobs { table-layout: fixed; width: 100%; }
+  table.jobs th, table.jobs td {
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.jobs th { font-size: 8.5px; letter-spacing: 0.03em; }
+  table.jobs td { font-size: 10.5px; padding-top: 7px; padding-bottom: 7px; }
+  table.jobs th:first-child, table.jobs td:first-child { padding-left: 8px; }
+  /* The filter row is part of the header, so it reads as one control block. */
+  tr.filters td { padding-top: 4px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  tr.filters .field { height: 22px; line-height: 20px; font-size: 10px; padding: 0 5px; }
+  .prog {
+    width: 190px;
+    height: 5px;
+    border-radius: 3px;
+    background: var(--fill-3);
+    overflow: hidden;
+  }
+  .prog i { display: block; width: 68%; height: 100%; background: var(--accent); }
+  .grip { color: var(--faint); font-size: 9px; }
+  /* A narrower nav buys the grid ~36px. Twelve columns of real staffing text
+     needs every one of them, and the nav labels are short. */
+  .side { width: 150px; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Job Listings</h1>
+      <p class="sub">The primary triage surface. Filter, inspect, and reprocess ingested VMS requisitions.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /jobs/job_listings?status=open</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i class="on"></i><i></i><i></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Job Listings</div>
+            <div class="nav-item on">Job Listings <span class="count">12</span></div>
+            <div class="nav-item">Manual Jobs</div>
+            <div class="nav-item">Direct Client Jobs</div>
+            <div class="nav-item">Candidates</div>
+            <div class="nav-item">Candidate Profiles</div>
+            <div class="nav-item locked">Applications &amp; Matches</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn" data-note="1">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="h">Job Listings</p>
+                  <p class="sub-line">Results 1–25 of 3,418 · Page 1 of 137</p>
+                </div>
+                <div class="row" style="gap:7px" data-note="2">
+                  <span class="btn sm">Save Page</span>
+                  <span class="btn sm">Saved Pages ⌘⇧S</span>
+                  <span class="btn sm">Export Results</span>
+                  <span class="btn sm solid">Reprocess All</span>
+                </div>
+              </div>
+
+              <div class="row" style="justify-content:flex-end;gap:10px;margin-top:-4px" data-note="3">
+                <span class="prog"><i></i></span>
+                <span class="sub-line">68% complete · 2,324 queued</span>
+              </div>
+
+              <div class="tabs" data-note="4">
+                <span class="tab on">All <span class="chip sm on">3,418</span></span>
+                <span class="tab">Processed <span class="chip sm ok">3,102</span></span>
+                <span class="tab">Failed <span class="chip sm warn">12</span></span>
+                <span class="tab">Skipped <span class="chip sm">304</span></span>
+              </div>
+
+              <div>
+                <p class="grip" style="text-align:center;margin:0 0 2px">drag to resize ⇿</p>
+                <div class="panel" style="padding:0;overflow:hidden">
+                  <table class="wire jobs">
+                    <colgroup>
+                      <col style="width:20px"><col style="width:42px"><col style="width:64px">
+                      <col style="width:126px"><col style="width:118px"><col style="width:96px">
+                      <col style="width:56px"><col style="width:56px"><col style="width:38px">
+                      <col style="width:56px"><col style="width:56px"><col style="width:64px">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th><span class="cb"></span></th>
+                        <th>ACTIONS</th><th>JOB ID</th><th>POSITION TITLE</th>
+                        <th>FACILITY</th><th>PROFESSION</th><th>SPECIALTY</th>
+                        <th class="sorted">START ▲</th><th>SHIFT</th>
+                        <th>BILL RATE</th><th>STATUS</th><th>VMS SOURCE</th>
+                      </tr>
+                      <tr class="filters" data-note="5">
+                        <td></td><td></td>
+                        <td><span class="field placeholder" style="display:block">REQ-</span></td>
+                        <td><span class="field placeholder" style="display:block">contains…</span></td>
+                        <td><span class="field" style="display:block">Mercy</span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                        <td><span class="field focus" style="display:block">Open ⌄</span></td>
+                        <td><span class="field" style="display:block"></span></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88214</td><td>Registered Nurse – ICU</td><td>Mercy General – Sac</td>
+                        <td>Registered Nurse</td><td>ICU</td>
+                        <td>08/04/2026</td><td>Nights</td><td class="num">$64.50/hr</td>
+                        <td><span class="chip">Open</span></td><td>AMN</td>
+                      </tr>
+                      <tr class="sel">
+                        <td><span class="cb on"></span></td>
+                        <td><span class="chip sm sq">⋯</span> <span class="chip sm">2</span></td>
+                        <td>REQ-88217</td><td>Travel RN – Med/Surg</td><td>St. Luke's Medical Ctr</td>
+                        <td>Registered Nurse</td><td>Med/Surg</td>
+                        <td>08/11/2026</td><td>Days</td><td class="num">$52.75/hr</td>
+                        <td><span class="chip">Open</span></td><td>Aya</td>
+                      </tr>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88231</td><td>Surgical Technologist</td><td>Baptist Health Dtwn</td>
+                        <td>Allied</td><td>OR</td>
+                        <td>08/18/2026</td><td>Days</td><td class="num">$41.00/hr</td>
+                        <td><span class="chip">Open</span></td><td>HealthTrust</td>
+                      </tr>
+                      <tr class="bad" data-note="6">
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88240</td><td>Registered Nurse – Tele</td>
+                        <td class="k">Mercy Genl - Sac</td>
+                        <td>Registered Nurse</td><td>Telemetry</td>
+                        <td>09/01/2026</td><td>Nights</td><td class="num">$61.25/hr</td>
+                        <td><span class="chip warn">FAILED</span></td><td>Medefis</td>
+                      </tr>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span> <span class="chip sm">1</span></td>
+                        <td>REQ-88244</td><td>Respiratory Therapist</td><td>Providence Regional</td>
+                        <td>Allied</td><td>Respiratory</td>
+                        <td>08/25/2026</td><td>Nights</td><td class="num">$46.80/hr</td>
+                        <td><span class="chip">Open</span></td><td>AMN</td>
+                      </tr>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88251</td><td>Registered Nurse – L&amp;D</td><td>Ascension Via Christi</td>
+                        <td>Registered Nurse</td><td>L&amp;D</td>
+                        <td>09/08/2026</td><td>Days</td><td class="num">$58.00/hr</td>
+                        <td><span class="chip">Open</span></td><td>Aya</td>
+                      </tr>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88270</td><td>Registered Nurse – ER</td><td>Tampa General Hosp</td>
+                        <td>Registered Nurse</td><td>ER</td>
+                        <td>09/15/2026</td><td>Nights</td><td class="num">$63.10/hr</td>
+                        <td><span class="chip">Closed</span></td><td>Medefis</td>
+                      </tr>
+                      <tr>
+                        <td><span class="cb"></span></td>
+                        <td><span class="chip sm sq">⋯</span></td>
+                        <td>REQ-88282</td><td>CT Technologist <span class="chip sm on">AI</span></td>
+                        <td>Banner Desert Ctr</td>
+                        <td>Allied</td><td>Radiology</td>
+                        <td>08/22/2026</td><td>Mids</td><td class="num">$49.90/hr</td>
+                        <td><span class="chip">Open</span></td><td>AMN</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              <div class="between">
+                <div class="row" style="gap:5px">
+                  <span class="btn sm icon">‹</span>
+                  <span class="btn sm solid" style="width:26px;padding:0">1</span>
+                  <span class="btn sm icon">2</span>
+                  <span class="btn sm icon">3</span>
+                  <span class="sub-line">…</span>
+                  <span class="btn sm">137</span>
+                  <span class="btn sm icon">›</span>
+                  <span class="sub-line" style="margin-left:8px">1 listing selected</span>
+                </div>
+                <span class="field" style="width:110px" data-note="7">25 per page ⌄</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Every screen is scoped to one client, and an internal operator can be looking at any of them. The workspace name sits in the chrome rather than in a settings page, and the amber return-to-owner control stays visible the whole time someone is impersonating — the expensive mistake here is reprocessing three thousand listings against the wrong tenant.</li>
+      <li data-for="2">A saved page captures filters, visible columns and sort as one shareable view. Triage questions recur weekly (“Mercy, telemetry, failed”), so the unit worth saving is the whole query, not a bookmark of the URL.</li>
+      <li data-for="3">Reprocess is queued, never synchronous. One mapping fix can touch thousands of listings, so the button hands off to a job and the progress bar reports depth — a button that blocks for four minutes gets clicked twice.</li>
+      <li data-for="4">The tab counts double as queue depth per processing state, so the size of the problem is legible before anyone clicks into it. Failed is a count, not a badge you discover.</li>
+      <li data-for="5">A filter input under every column keeps query building inline rather than behind a modal. Operators arrive knowing one fact — a facility, a REQ number — and the fastest path is typing it where they are already looking.</li>
+      <li data-for="6">Failed rows stay in the main list, tinted rather than exiled to a separate screen. Triage is then one pass instead of two, and the failure is visible next to the healthy rows it is supposed to look like — here, a facility string the mapper could not resolve.</li>
+      <li data-for="7">Page size, sort direction and column widths persist per user, so a triage layout survives a reload and a shift change. The column set itself is account-configurable from 50+ mapped fields, so each client sees its own vocabulary rather than a lowest-common-denominator grid.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

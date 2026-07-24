@@ -1,0 +1,305 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Applications &amp; Matches — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Same narrowed nav as the listings grid — ten columns of real candidate and
+     requisition text needs every pixel the rail leaves behind. */
+  .side { width: 150px; }
+
+  table.apps { table-layout: fixed; width: 100%; }
+  table.apps th, table.apps td {
+    padding-left: 5px;
+    padding-right: 5px;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  table.apps th { font-size: 8.5px; letter-spacing: 0.03em; }
+  table.apps td { font-size: 10.5px; padding-top: 7px; padding-bottom: 7px; }
+  table.apps th:first-child, table.apps td:first-child { padding-left: 8px; }
+  tr.filters td { padding-top: 4px; padding-bottom: 6px; border-bottom: 1px solid var(--line); }
+  tr.filters .field { height: 22px; line-height: 20px; font-size: 10px; padding: 0 5px; }
+
+  /* Provenance tag. A match and an application land in the same queue, so the
+     row has to say which one it is without a colour that implies a state. */
+  .prov {
+    display: inline-block;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: var(--fill-3);
+    font-family: var(--mono);
+    font-size: 8.5px;
+    letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .prov.sys { background: var(--accent-tint); color: var(--accent); }
+
+  /* The score and the criteria that produced it travel together in one cell. */
+  .score { font-weight: 700; font-size: 11px; font-variant-numeric: tabular-nums; }
+  .crit {
+    display: inline-block;
+    margin-left: 4px;
+    font-size: 9px;
+    color: var(--ok);
+  }
+  .crit.no { color: var(--warn); font-weight: 600; }
+  .crit.na { color: var(--faint); }
+  .nomatch { font-size: 9.5px; color: var(--warn); font-weight: 600; }
+  .direct { font-size: 9.5px; color: var(--faint); }
+
+  /* Confirmation dock. Anchored under the bulk bar rather than floated over the
+     grid, so the rows it is about stay readable while it is open. */
+  .confirm { width: 372px; margin-left: auto; padding: 12px 14px; }
+  .confirm .t { font-size: 12.5px; font-weight: 700; color: var(--ink); }
+  .confirm .d { font-size: 11px; color: var(--muted); margin-top: 4px; line-height: 1.45; }
+  .bulkbar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--accent);
+    border-radius: var(--r);
+    background: var(--accent-tint);
+  }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Applications &amp; Matches</h1>
+      <p class="sub">Where candidates meet requisitions. The system proposes a match; a recruiter disposes of it.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">SCREEN</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="browser" style="width:var(--art-w)">
+        <div class="browser-bar">
+          <i></i><i></i><i></i>
+          <span class="url">VMSpark — /jobs/job_applications?state=submitted</span>
+        </div>
+
+        <div class="app">
+          <nav class="rail">
+            <i class="on"></i><i></i><i></i><i></i>
+          </nav>
+
+          <nav class="side">
+            <div class="title">Jobs</div>
+            <div class="nav-item">Job Listings <span class="count">12</span></div>
+            <div class="nav-item">Manual Jobs</div>
+            <div class="nav-item">Direct Client Jobs</div>
+            <div class="nav-item">Candidates</div>
+            <div class="nav-item">Candidate Profiles</div>
+            <div class="nav-item on">Applications &amp; Matches</div>
+          </nav>
+
+          <div class="main">
+            <div class="appbar">
+              <div class="workspace">
+                <span class="k">WORKSPACE</span>
+                <span class="v">Cascade Staffing Group ⌄</span>
+              </div>
+              <span class="omnibox">Search jobs, candidates, facilities… <span class="kbd" style="margin-left:auto">⌘K</span></span>
+              <div class="right">
+                <span class="btn sm warn">↩ Back to Owner View</span>
+                <span class="avatar sm"></span>
+              </div>
+            </div>
+
+            <div class="pane stack-12">
+              <div class="between">
+                <div>
+                  <p class="eyebrow">QUEUE</p>
+                  <p class="h">Job Applications &amp; Matches</p>
+                  <p class="sub-line">Results 1–25 of 612 · Cascade Staffing Group</p>
+                </div>
+                <div class="row" style="gap:7px">
+                  <span class="btn sm quiet">Clear Search</span>
+                  <span class="btn sm">Saved Pages</span>
+                </div>
+              </div>
+
+              <div class="tabs" data-note="1">
+                <span class="tab">All <span class="chip sm">612</span></span>
+                <span class="tab">New <span class="chip sm on">184</span></span>
+                <span class="tab">Contacted <span class="chip sm">96</span></span>
+                <span class="tab on">Submitted <span class="chip sm on">41</span></span>
+                <span class="tab">Placed <span class="chip sm ok">18</span></span>
+                <span class="tab">Rejected <span class="chip sm">273</span></span>
+              </div>
+
+              <div class="panel" style="padding:0;overflow:hidden">
+                <table class="wire apps">
+                  <colgroup>
+                    <col style="width:20px"><col style="width:52px"><col style="width:76px">
+                    <col style="width:66px"><col style="width:98px"><col style="width:92px">
+                    <col style="width:70px"><col style="width:82px"><col style="width:72px">
+                    <col style="width:160px">
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th><span class="cb"></span></th>
+                      <th>SOURCE</th><th>STATUS</th><th>JOB ID</th>
+                      <th>CANDIDATE</th><th>PROFESSION</th><th>SPECIALTY</th>
+                      <th>LOCATION</th><th class="sorted">UPDATED ▼</th>
+                      <th>MATCH QUALITY</th>
+                    </tr>
+                    <tr class="filters">
+                      <td></td>
+                      <td><span class="field" style="display:block">Any ⌄</span></td>
+                      <td><span class="field focus" style="display:block">Submitted ⌄</span></td>
+                      <td><span class="field placeholder" style="display:block">REQ-</span></td>
+                      <td><span class="field placeholder" style="display:block">name…</span></td>
+                      <td><span class="field" style="display:block"></span></td>
+                      <td><span class="field" style="display:block"></span></td>
+                      <td><span class="field" style="display:block"></span></td>
+                      <td><span class="field" style="display:block"></span></td>
+                      <td><span class="field placeholder" style="display:block">Score ≥ 70</span></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="sel">
+                      <td><span class="cb on"></span></td>
+                      <td><span class="prov">APPLIED</span></td>
+                      <td><span class="chip on">Submitted</span></td>
+                      <td>REQ-88214</td><td>Reyes, Alicia</td>
+                      <td>Registered Nurse</td><td>ICU</td>
+                      <td>Sacramento CA</td><td>03/14 09:12</td>
+                      <td data-note="2"><span class="direct">Candidate applied — not scored</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov sys">MATCH</span></td>
+                      <td><span class="chip">New</span></td>
+                      <td>REQ-88207</td><td>Okafor, Maurice</td>
+                      <td>Registered Nurse</td><td>Med/Surg</td>
+                      <td>Fresno CA</td><td>03/14 08:41</td>
+                      <td><span class="score">92%</span>
+                        <span class="crit">✓ prof</span><span class="crit">✓ spec</span><span class="crit">✓ lic</span></td>
+                    </tr>
+                    <tr class="sel">
+                      <td><span class="cb on"></span></td>
+                      <td><span class="prov">APPLIED</span></td>
+                      <td><span class="chip on">Submitted</span></td>
+                      <td>REQ-87990</td><td>Lindqvist, Jonas</td>
+                      <td>Allied</td><td>CT Tech</td>
+                      <td>Mesa AZ</td><td>03/13 17:05</td>
+                      <td><span class="direct">Candidate applied — not scored</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov sys">MATCH</span></td>
+                      <td><span class="chip">New</span></td>
+                      <td>REQ-88231</td><td>Delacruz, Rosa</td>
+                      <td>Registered Nurse</td><td>Telemetry</td>
+                      <td>Reno NV</td><td>03/13 15:20</td>
+                      <td data-note="3"><span class="score">74%</span>
+                        <span class="crit">✓ prof</span><span class="crit">✓ spec</span><span class="crit no">✗ lic</span></td>
+                    </tr>
+                    <tr class="bad">
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov sys">MATCH</span></td>
+                      <td><span class="chip">New</span></td>
+                      <td>REQ-88120</td><td>Barrett, Dean</td>
+                      <td>Allied</td>
+                      <td class="k">Rad Tech II</td>
+                      <td>Tucson AZ</td><td>03/13 14:47</td>
+                      <td data-note="4"><span class="nomatch">Not scored — unmapped</span></td>
+                    </tr>
+                    <tr class="sel">
+                      <td><span class="cb on"></span></td>
+                      <td><span class="prov">APPLIED</span></td>
+                      <td><span class="chip on">Submitted</span></td>
+                      <td>REQ-87844</td><td>Nwosu, Grace</td>
+                      <td>Registered Nurse</td><td>OR</td>
+                      <td>Austin TX</td><td>03/13 11:02</td>
+                      <td><span class="direct">Candidate applied — not scored</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov sys">MATCH</span></td>
+                      <td><span class="chip">Contacted</span></td>
+                      <td>REQ-88244</td><td>Whitfield, Dana</td>
+                      <td>LPN</td><td>Long Term</td>
+                      <td>Salinas CA</td><td>03/12 16:30</td>
+                      <td><span class="score">81%</span>
+                        <span class="crit">✓ prof</span><span class="crit">✓ spec</span><span class="crit na">– shift</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov">APPLIED</span></td>
+                      <td><span class="chip ok">Placed</span></td>
+                      <td>REQ-88185</td><td>Vargas, Iris</td>
+                      <td>Registered Nurse</td><td>ICU</td>
+                      <td>Modesto CA</td><td>03/12 09:58</td>
+                      <td><span class="direct">Candidate applied — not scored</span></td>
+                    </tr>
+                    <tr>
+                      <td><span class="cb"></span></td>
+                      <td><span class="prov sys">MATCH</span></td>
+                      <td><span class="chip">Rejected</span></td>
+                      <td>REQ-88033</td><td>Amara, Kene</td>
+                      <td>Registered Nurse</td><td>PICU</td>
+                      <td>Denver CO</td><td>03/11 15:14</td>
+                      <td><span class="score">68%</span>
+                        <span class="crit">✓ prof</span><span class="crit no">✗ spec</span><span class="crit">✓ lic</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="bulkbar" data-note="5">
+                <span class="sub-line" style="color:var(--accent);font-weight:600">3 selected</span>
+                <span class="btn sm">Set Status ⌄</span>
+                <span class="btn sm">Assign Recruiter ⌄</span>
+                <span class="btn sm">Add Note</span>
+                <span class="btn sm solid" style="margin-left:auto">Submit to VMS →</span>
+              </div>
+
+              <div class="panel confirm" data-note="6">
+                <p class="t">Submit 3 candidates to Aya?</p>
+                <p class="d">This writes to the VMS and the facility sees it immediately. Withdrawing a submission is a phone call, not a click.</p>
+                <div class="row" style="gap:7px;justify-content:flex-end;margin-top:10px">
+                  <span class="btn sm quiet">Cancel</span>
+                  <span class="btn sm solid">Submit 3</span>
+                </div>
+              </div>
+
+              <div class="between">
+                <div class="row" style="gap:5px">
+                  <span class="btn sm icon">‹</span>
+                  <span class="btn sm solid" style="width:26px;padding:0">1</span>
+                  <span class="btn sm icon">2</span>
+                  <span class="btn sm icon">3</span>
+                  <span class="sub-line">…</span>
+                  <span class="btn sm">25</span>
+                  <span class="btn sm icon">›</span>
+                </div>
+                <span class="field" style="width:110px">25 per page ⌄</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Everyone arrives at this screen with the same question — where is this submission. So state is the top-level filter rather than a column you sort, the same call made on the listings grid, and the counts give a recruiter the size of each pile before they open it.</li>
+      <li data-for="2">Proposed matches and inbound applications share one queue because the recruiter's next action is identical either way: call the person, then move the status. What differs is provenance, so the row records whether the candidate chose this job or the system suggested them — a match carries no consent yet, and treating the two as the same thing is how candidates get submitted without being asked.</li>
+      <li data-for="3">A bare score gives a recruiter nothing to act on. Showing which criteria matched and which did not turns the ranked list into a work queue — 74% with the licence failing is a call to the licensing team, while 68% with the specialty failing is a rejection. The system proposes; the column is what lets a person dispose.</li>
+      <li data-for="4">Matching runs entirely on the vocabulary resolved upstream in Data Mapping, so an unmapped specialty cannot be scored at all. The row stays visible and says why rather than quietly ranking last, because this is the point where mapping debt stops being untidy and starts being a candidate nobody was shown for a live requisition.</li>
+      <li data-for="5">Bulk actions carry the selection count in the verb rather than beside it, so intent is unambiguous at the moment of the click. Status and notes stay inline — those are internal and cheap to undo.</li>
+      <li data-for="6">Submitting writes back to the VMS and is visible to the facility within seconds, so it is the one action that gets a confirmation and it names both the count and the destination. The rule was to make the correct path easier than the incorrect one: the dialog docks under the queue instead of covering it, so the rows being submitted can still be read while deciding.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/sheet.js"></script>

@@ -1,0 +1,223 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="2090" viewBox="0 0 1400 2090" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ah" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L8,3 L0,6 z" fill="#333333"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1400" height="2090" fill="#ffffff"/>
+
+  <!-- title -->
+  <text x="40" y="48" font-size="22" font-weight="bold" fill="#333333">User Flow — Authentication &amp; Account Recovery</text>
+  <line x1="40" y1="70" x2="1360" y2="70" stroke="#cccccc" stroke-width="1"/>
+
+  <g stroke="#333333" stroke-width="1.5" fill="#ffffff">
+
+    <!-- ===== NODES ===== -->
+
+    <!-- entry terminal -->
+    <rect x="420" y="110" width="280" height="46" rx="18" fill="#e0e0e0"/>
+
+    <!-- has an account? -->
+    <path d="M560,188 L690,230 L560,272 L430,230 z"/>
+
+    <!-- register -->
+    <rect x="150" y="200" width="220" height="66" rx="2"/>
+
+    <!-- account created -->
+    <rect x="150" y="330" width="220" height="66" rx="2"/>
+
+    <!-- sign in -->
+    <rect x="420" y="330" width="280" height="66" rx="2"/>
+
+    <!-- credentials valid? -->
+    <path d="M560,428 L700,470 L560,512 L420,470 z"/>
+
+    <!-- inline error -->
+    <rect x="880" y="440" width="260" height="60" rx="2"/>
+
+    <!-- account active? -->
+    <path d="M560,578 L700,620 L560,662 L420,620 z"/>
+
+    <!-- blocked -->
+    <rect x="880" y="588" width="260" height="66" rx="2"/>
+
+    <!-- exit to support -->
+    <rect x="900" y="732" width="220" height="46" rx="18"/>
+
+    <!-- choose verification channel (user choice) -->
+    <path d="M448,745 L700,745 L700,807 L420,807 z" fill="#f2f2f2"/>
+
+    <!-- code sent -->
+    <rect x="420" y="870" width="280" height="60" rx="2"/>
+
+    <!-- enter 6-digit code -->
+    <rect x="420" y="995" width="280" height="60" rx="2"/>
+
+    <!-- code valid? -->
+    <path d="M560,1108 L690,1150 L560,1192 L430,1150 z"/>
+
+    <!-- resend code -->
+    <rect x="150" y="1120" width="220" height="60" rx="2"/>
+
+    <!-- use a backup code -->
+    <rect x="150" y="1250" width="220" height="60" rx="2"/>
+
+    <!-- admin? -->
+    <path d="M560,1358 L690,1400 L560,1442 L430,1400 z"/>
+
+    <!-- admin view / client view -->
+    <rect x="220" y="1520" width="250" height="76" rx="2"/>
+    <rect x="660" y="1520" width="250" height="76" rx="2"/>
+
+    <!-- destination terminal -->
+    <rect x="420" y="1682" width="280" height="46" rx="18"/>
+
+    <!-- ===== PASSWORD RECOVERY STRIP ===== -->
+    <rect x="130" y="1870" width="220" height="60" rx="2"/>
+    <path d="M420,1870 L640,1870 L640,1922 q-27.5,-16 -55,0 t-55,0 t-55,0 t-55,0 z"/>
+    <rect x="710" y="1870" width="220" height="60" rx="2"/>
+    <rect x="1000" y="1870" width="240" height="46" rx="18"/>
+
+    <!-- ===== ARROWS ===== -->
+    <g fill="none" marker-end="url(#ah)">
+      <!-- entry -> has account? -->
+      <line x1="560" y1="156" x2="560" y2="188"/>
+      <!-- has account? No -> register -->
+      <line x1="430" y1="230" x2="370" y2="230"/>
+      <!-- register -> account created -->
+      <line x1="260" y1="266" x2="260" y2="330"/>
+      <!-- account created -> sign in -->
+      <line x1="370" y1="363" x2="420" y2="363"/>
+      <!-- has account? Yes -> sign in -->
+      <line x1="560" y1="272" x2="560" y2="330"/>
+      <!-- sign in -> credentials valid? -->
+      <line x1="560" y1="396" x2="560" y2="428"/>
+      <!-- credentials No -> inline error -->
+      <line x1="700" y1="470" x2="880" y2="470"/>
+      <!-- retry loop back to sign in -->
+      <polyline points="1010,440 1010,414 760,414 760,375 700,375"/>
+      <!-- credentials Yes -> account active? -->
+      <line x1="560" y1="512" x2="560" y2="578"/>
+      <!-- account active No -> blocked -->
+      <line x1="700" y1="620" x2="880" y2="620"/>
+      <!-- blocked -> exit to support -->
+      <line x1="1010" y1="654" x2="1010" y2="732"/>
+      <!-- account active Yes -> choose channel -->
+      <line x1="560" y1="662" x2="560" y2="745"/>
+      <!-- choose channel -> code sent -->
+      <line x1="560" y1="807" x2="560" y2="870"/>
+      <!-- code sent -> enter code -->
+      <line x1="560" y1="930" x2="560" y2="995"/>
+      <!-- enter code -> code valid? -->
+      <line x1="560" y1="1055" x2="560" y2="1108"/>
+      <!-- code valid No -> resend code -->
+      <line x1="430" y1="1150" x2="370" y2="1150"/>
+      <!-- code valid No -> use a backup code -->
+      <polyline points="400,1150 400,1280 370,1280"/>
+      <!-- resend code -> code sent (re-send loop) -->
+      <polyline points="150,1150 100,1150 100,900 420,900"/>
+      <!-- backup code accepted -> admin? -->
+      <polyline points="260,1310 260,1400 430,1400"/>
+      <!-- code valid Yes -> admin? -->
+      <line x1="560" y1="1192" x2="560" y2="1358"/>
+      <!-- admin? Yes -> admin view -->
+      <polyline points="560,1442 560,1472 345,1472 345,1520"/>
+      <!-- admin? No -> client view -->
+      <polyline points="560,1442 560,1472 785,1472 785,1520"/>
+      <!-- admin view -> destination -->
+      <polyline points="345,1596 345,1650 490,1650 490,1682"/>
+      <!-- client view -> destination -->
+      <polyline points="785,1596 785,1650 630,1650 630,1682"/>
+      <!-- password recovery strip -->
+      <line x1="350" y1="1900" x2="420" y2="1900"/>
+      <line x1="640" y1="1900" x2="710" y2="1900"/>
+      <line x1="930" y1="1900" x2="1000" y2="1900"/>
+    </g>
+
+    <!-- junction dot on the No branch -->
+    <circle cx="400" cy="1150" r="3" fill="#333333" stroke="none"/>
+  </g>
+
+  <!-- ===== LABELS ===== -->
+  <g font-size="13" fill="#333333" text-anchor="middle">
+    <text x="560" y="138">Visitor lands on ivfcryo.com</text>
+    <text x="560" y="234">Has an account?</text>
+    <text x="260" y="228" font-weight="bold">Register</text>
+    <text x="260" y="358" font-weight="bold">Account created</text>
+    <text x="560" y="358" font-weight="bold">Sign in</text>
+    <text x="560" y="474">Credentials valid?</text>
+    <text x="1010" y="465" font-weight="bold">Inline error</text>
+    <text x="560" y="624">Account active?</text>
+    <text x="1010" y="611" font-weight="bold">Blocked — not yet</text>
+    <text x="1010" y="628" font-weight="bold">activated</text>
+    <text x="1010" y="761">Exit to support</text>
+    <text x="565" y="770" font-weight="bold">Choose verification</text>
+    <text x="565" y="788" font-weight="bold">channel</text>
+    <text x="560" y="905" font-weight="bold">Code sent by email or SMS</text>
+    <text x="560" y="1030" font-weight="bold">Enter 6-digit code</text>
+    <text x="560" y="1154">Code valid?</text>
+    <text x="260" y="1155" font-weight="bold">Resend code</text>
+    <text x="260" y="1285" font-weight="bold">Use a backup code</text>
+    <text x="560" y="1404">Admin?</text>
+    <text x="345" y="1550" font-weight="bold">Admin view</text>
+    <text x="785" y="1554" font-weight="bold">Client view</text>
+    <text x="560" y="1710">/shipments/status/pending</text>
+    <text x="240" y="1904" font-weight="bold">Forgot password</text>
+    <text x="530" y="1900" font-weight="bold">Reset email sent</text>
+    <text x="820" y="1904" font-weight="bold">Set new password</text>
+    <text x="1120" y="1898">Rejoins Sign in</text>
+  </g>
+
+  <!-- meta / sub labels -->
+  <g font-size="11" fill="#666666" text-anchor="middle">
+    <text x="260" y="248">5 fields</text>
+    <text x="260" y="378">Pending activation</text>
+    <text x="560" y="378">Email + password</text>
+    <text x="1010" y="486">Field retains focus</text>
+    <text x="1010" y="645">Shows a support contact</text>
+    <text x="345" y="1568">All shipments, telemetry,</text>
+    <text x="345" y="1583">destructive actions</text>
+    <text x="785" y="1572">Own shipments only</text>
+  </g>
+
+  <!-- branch labels -->
+  <g font-size="11" fill="#333333" text-anchor="middle">
+    <text x="400" y="222">No</text>
+    <text x="578" y="300">Yes</text>
+    <text x="790" y="462">No</text>
+    <text x="885" y="408">retry</text>
+    <text x="578" y="548">Yes</text>
+    <text x="790" y="612">No</text>
+    <text x="578" y="700">Yes</text>
+    <text x="400" y="1140">No</text>
+    <text x="250" y="892">re-send</text>
+    <text x="578" y="1280">Yes</text>
+    <text x="330" y="1392">accepted</text>
+    <text x="440" y="1465">Yes</text>
+    <text x="700" y="1465">No</text>
+  </g>
+
+  <!-- password recovery section -->
+  <text x="130" y="1826" font-size="14" font-weight="bold" fill="#333333">Password recovery — a separate entry point from the Sign in screen</text>
+  <line x1="130" y1="1840" x2="1240" y2="1840" stroke="#cccccc" stroke-width="1"/>
+
+  <!-- ===== LEGEND ===== -->
+  <line x1="40" y1="1985" x2="1360" y2="1985" stroke="#cccccc" stroke-width="1"/>
+  <g stroke="#333333" stroke-width="1.5" fill="#ffffff">
+    <rect x="45" y="2022" width="30" height="16" rx="8" fill="#e0e0e0"/>
+    <rect x="185" y="2022" width="30" height="16" rx="2"/>
+    <path d="M330,2030 L348,2022 L366,2030 L348,2038 z"/>
+    <path d="M490,2022 L520,2022 L514,2038 L484,2038 z" fill="#f2f2f2"/>
+    <path d="M660,2020 L690,2020 L690,2034 q-7.5,-6 -15,0 t-15,0 z"/>
+    <rect x="880" y="2022" width="30" height="16" rx="8"/>
+  </g>
+  <g font-size="11" fill="#666666">
+    <text x="85" y="2035">Entry</text>
+    <text x="225" y="2035">Step</text>
+    <text x="376" y="2035">Branch</text>
+    <text x="530" y="2035">User choice</text>
+    <text x="700" y="2035">System message</text>
+    <text x="920" y="2035">Exit</text>
+  </g>
+</svg>

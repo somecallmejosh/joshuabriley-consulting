@@ -1,0 +1,185 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Ingestion &amp; ATS sync — VMSpark</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+<link rel="stylesheet" href="theme.css">
+<style>
+  /* Two bands. The upper one is the pipeline the rebuild was forbidden from
+     touching; the lower one is the only part the redesign could reach. The rule
+     between them is the sheet's argument. */
+  .band {
+    width: 100% !important;
+    border-top: 1px solid var(--line);
+  }
+  .lane { width: 300px !important; }
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>Ingestion &amp; ATS Sync</h1>
+      <p class="sub">How a requisition travels from a VMS into VMSpark and out to the ATS — and why the redesign left every step of it alone.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">VMSPARK</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="56" data-rowh="92"
+           data-edges='[
+             {"from":"a1","to":"n1","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n1","to":"n2"},
+             {"from":"n2","to":"d0"},
+             {"from":"d0","to":"t1","fromSide":"r","toSide":"l","label":"no"},
+             {"from":"d0","to":"n3","label":"yes","labelDx":6},
+             {"from":"n3","to":"n4"},
+             {"from":"n4","to":"d1"},
+             {"from":"d1","to":"b1","fromSide":"r","toSide":"l","label":"no"},
+             {"from":"d1","to":"n5","label":"yes","labelDx":6},
+             {"from":"n5","to":"n6"},
+             {"from":"n6","to":"n7"},
+             {"from":"n7","to":"n8"},
+             {"from":"a2","to":"n8","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n8","to":"u1","label":"surfaces in the grid","labelDx":6,"labelDy":-62,"dashed":true},
+             {"from":"b1","to":"u2","label":"waits for a human","labelDx":6,"labelDy":-262,"dashed":true},
+             {"from":"u1","to":"u2","label":"Failed tab","labelDx":34,"labelDy":24},
+             {"from":"u2","to":"u3"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="lane" data-cell="0,0" data-dy="-4">
+          THE PIPELINE
+          <span class="s">rebuilt around, never rebuilt — four phases, zero pipeline regressions</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="1,0" data-dy="-2">
+          <span class="t">Four vocabularies, one shape</span>
+          AMN, Aya, HealthTrust and Medefis each name the same requisition
+          differently. Reconciling them is the pipeline's entire job.
+        </div>
+
+        <div class="node entry" id="n1" data-cell="1,1">
+          <span class="t">A VMS source pushes a batch</span>
+          <span class="s">AMN · Aya · HealthTrust · Medefis</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="2,1" data-note="1">
+          <span class="t">Persist the raw payload</span>
+          <span class="s">Stored verbatim before anything parses it</span>
+        </div>
+
+        <div class="node branch" id="d0" data-cell="3,1" data-dy="6">
+          <span class="t">New or changed?</span>
+        </div>
+
+        <div class="node terminal" id="t1" data-cell="3,2" data-dy="10" data-note="2">
+          <span class="t">state = skipped</span>
+          <span class="s">A counted no-op, not a silent drop</span>
+        </div>
+
+        <div class="design-note" data-cell="4,0" data-dy="18">
+          Four phases of rebuild. Nothing in this band moved.
+        </div>
+
+        <div class="node dashed" id="n3" data-cell="4,1" data-dy="14" data-note="3">
+          <span class="async">ASYNC</span>
+          <span class="t">Spark::ProcessJobListing</span>
+          <span class="s">One queued job per listing — never inside a request</span>
+        </div>
+
+        <div class="node" id="n4" data-cell="5,1" data-dy="20">
+          <span class="t">Normalise to the internal shape</span>
+          <span class="s">Facility · profession · specialty · bill rate</span>
+        </div>
+
+        <div class="node branch" id="d1" data-cell="6,1" data-dy="26">
+          <span class="t">Mappings resolved?</span>
+        </div>
+
+        <div class="node bad" id="b1" data-cell="6,2" data-dy="30" data-note="4">
+          <span class="t">state = failed</span>
+          <span class="s">failed_message names the value it could not map</span>
+        </div>
+
+        <div class="node" id="n5" data-cell="7,1" data-dy="34">
+          <span class="t">Run the rule engine</span>
+          <span class="s">Ordered conditions → bill rate, shift, automatch</span>
+        </div>
+
+        <div class="node commit" id="n6" data-cell="8,1" data-dy="40">
+          <span class="t">Commit the listing and its candidates</span>
+          <span class="s">state = processed</span>
+        </div>
+
+        <div class="aside" id="a2" data-cell="9,0" data-dy="60">
+          <span class="t">Neither end is ours</span>
+          The VMS owns the requisition and the ATS owns the placement. VMSpark
+          holds a working copy in between and has to hand it back.
+        </div>
+
+        <div class="node dashed" id="n7" data-cell="9,1" data-dy="46">
+          <span class="async">ASYNC</span>
+          <span class="t">Per-provider sync jobs</span>
+          <span class="s">Bullhorn · Kamana · TargetRecruit — one queue each</span>
+        </div>
+
+        <div class="node good" id="n8" data-cell="10,1" data-dy="52" data-note="5">
+          <span class="t">Re-synced to the ATS</span>
+          <span class="s">The requisition lands where recruiters actually work</span>
+        </div>
+
+        <!-- Everything the redesign was actually allowed to touch -->
+        <div class="band" data-cell="12,0" data-dy="14"></div>
+        <div class="lane" data-cell="12,0" data-dy="34">
+          WHAT THE UI COULD CHANGE
+          <span class="s">not the states themselves — only whether anyone can see them</span>
+        </div>
+
+        <div class="node" id="u1" data-cell="13,1" data-dy="40" data-note="6" data-note-dy="-16">
+          <span class="t">Job listings grid</span>
+          <span class="s">Processed 4,812 · Failed 37 · Skipped 1,140</span>
+        </div>
+
+        <div class="node" id="u2" data-cell="14,2" data-dy="46">
+          <span class="t">Mapping queue</span>
+          <span class="s">Data Mapping → the unresolved facility or specialty</span>
+        </div>
+
+        <div class="node exit" id="u3" data-cell="15,2" data-dy="52">
+          <span class="t">Continues in Flow 02</span>
+          <span class="s">An operator clears it and the listing reprocesses</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry / terminal</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> Async job</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key commit"></span> Commit</span>
+        <span class="item"><span class="key good"></span> Delivered</span>
+        <span class="item"><span class="key bad"></span> Failed</span>
+        <span class="item"><span class="key exit"></span> Hand-off</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">The vendor payload is written down verbatim before anything tries to read it. That is what makes a bad ingest replayable rather than something you have to ask a VMS to send again — and several of them will not. It also means every downstream failure can be reproduced from a row in the database instead of reconstructed from a log line.</li>
+      <li data-for="2">Skipped is a recorded outcome, not silence. A source that re-pushes the same eight thousand listings every hour would otherwise make a healthy run look identical to a dead one. Counting the no-ops is the only way an operator can tell a quiet pipeline from a stalled one.</li>
+      <li data-for="3">A single source push can carry thousands of listings, so nothing here can happen inside a request. That constraint sits upstream of every screen in the product: it is why the grid shows states rather than progress bars, and why no button in the UI is allowed to promise a result.</li>
+      <li data-for="4">A listing whose facility, profession or specialty has no ATS counterpart does not raise — it lands in failed and waits. Storing failure as a state rather than throwing it as an exception is what turns the mapping queue into a workload somebody can be held to, instead of an alert somebody dismisses.</li>
+      <li data-for="5">The pipeline ends by writing back to the ATS, which is the honest description of what VMSpark is: a translation layer between two systems of record, owning neither. Any design that treats VMSpark's own copy as authoritative is wrong by construction, however convenient it would be.</li>
+      <li data-for="6">None of the band above could be touched — the rebuild ran in four phases with the pipeline left exactly as it was, and shipped no pipeline regressions. So the design work was entirely about surfacing states it had no power to change: processed, failed and skipped become tab counts on one screen, rather than a success view with the failures filed somewhere nobody opens.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

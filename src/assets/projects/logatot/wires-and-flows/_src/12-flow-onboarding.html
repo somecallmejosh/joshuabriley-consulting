@@ -1,0 +1,172 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>User flow — Provider onboarding — Logatot</title>
+<link rel="stylesheet" href="../../../../wireframe-kit/sheet.css">
+
+<style>
+  /* Legend keys the shared stylesheet does not carry: a white stadium for the
+     exit state, and a dashed rectangle for a system/background step. */
+</style>
+
+<div class="sheet">
+  <header class="sheet-head">
+    <div>
+      <h1>User Flow — Provider Onboarding</h1>
+      <p class="sub">The empty board is the churn risk, not the signup form. Activation is where the flow starts, not where it ends.</p>
+    </div>
+    <div class="mark">
+      <span class="brand">LOGATOT</span>
+      <span class="kind">USER FLOW</span>
+    </div>
+  </header>
+
+  <div class="sheet-body">
+    <svg class="leaders"></svg>
+
+    <div class="stage">
+      <div class="flow"
+           data-cols="3" data-colw="300" data-gutter="60" data-rowh="96"
+           data-edges='[
+             {"from":"n1","to":"n2"},
+             {"from":"n2","to":"n3"},
+             {"from":"a1","to":"n3","fromSide":"r","toSide":"l","dashed":true,"noArrow":true,"soft":true},
+             {"from":"n3","to":"d1"},
+             {"from":"d1","to":"p1","fromSide":"l","toSide":"r","label":"card","labelDy":-4},
+             {"from":"d1","to":"p2","label":"association","labelDx":4},
+             {"from":"d1","to":"p3","fromSide":"r","toSide":"l","label":"beta code","labelDx":-38,"labelDy":-6},
+             {"from":"p1","to":"n4","fromSide":"r","toSide":"l"},
+             {"from":"p2","to":"n4"},
+             {"from":"p3","to":"n4","fromSide":"l","toSide":"r"},
+             {"from":"n4","to":"n5"},
+             {"from":"n5","to":"c1"},
+             {"from":"c1","to":"m1","fromSide":"r","toSide":"l","label":"by hand","labelDy":-10},
+             {"from":"c1","to":"n6","label":"the list she already has","labelDx":4},
+             {"from":"m1","to":"d2"},
+             {"from":"d2","to":"m2","label":"no","labelDx":4},
+             {"from":"d2","to":"n8","fromSide":"l","toSide":"r","dashed":true,"label":"yes","labelDx":-26,"labelDy":-6},
+             {"from":"n6","to":"n7"},
+             {"from":"n7","to":"n8"},
+             {"from":"n8","to":"n9"}
+           ]'>
+        <svg class="wires"></svg>
+
+        <div class="node entry" id="n1" data-cell="0,1">
+          <span class="t">A provider decides to try it</span>
+          <span class="s">Twelve children, a paper attendance sheet, no software of any kind</span>
+        </div>
+
+        <div class="node" id="n2" data-cell="1,1" data-note="1">
+          <span class="t">Signup form</span>
+          <span class="s">Her name, the daycare&rsquo;s name, email, password &mdash; about ninety seconds</span>
+        </div>
+
+        <div class="node dashed" id="n3" data-cell="2,1">
+          <span class="t">One submit writes three records</span>
+          <span class="s">User, daycare account and provider, in a single transaction</span>
+        </div>
+
+        <div class="aside" id="a1" data-cell="2,0" data-dy="4">
+          <span class="t">She is one person, not three rows</span>
+          A solo operator does not think of herself as a user, an account and a
+          member of staff. The data model can carry all three as long as the form
+          never mentions them.
+        </div>
+
+        <div class="node branch" id="d1" data-cell="3,1" data-dy="12" data-note="2">
+          <span class="t">How does the account become active?</span>
+        </div>
+
+        <div class="node" id="p1" data-cell="4,0" data-dy="24">
+          <span class="t">Stripe subscription</span>
+          <span class="s">$30 a month or $300 a year, sold as just $1 a day</span>
+        </div>
+
+        <div class="node" id="p2" data-cell="4,1" data-dy="24">
+          <span class="t">Association membership</span>
+          <span class="s">Number checked against the union API, sponsor relationship recorded</span>
+        </div>
+
+        <div class="node" id="p3" data-cell="4,2" data-dy="24">
+          <span class="t">Beta code</span>
+          <span class="s">Full access, no billing record behind it</span>
+        </div>
+
+        <div class="node dashed" id="n4" data-cell="5,1" data-dy="36">
+          <span class="t">Active is derived, never toggled</span>
+          <span class="s">Membership type, sponsor, beta code, subscription date &mdash; any one of the four is sufficient</span>
+        </div>
+
+        <div class="node" id="n5" data-cell="6,1" data-dy="44" data-note="3">
+          <span class="t">The board loads, and it is empty</span>
+          <span class="s">No children, no rows, nothing to say a name at</span>
+        </div>
+
+        <div class="design-note" data-cell="6,0" data-dy="30">
+          The empty board is the real churn risk, not the signup form. Signup takes
+          ninety seconds. Entering twelve children by hand is the wall, and an
+          account that never clears it never sees the product work.
+        </div>
+
+        <div class="node choice" id="c1" data-cell="7,1" data-dy="52">
+          <span class="t">Twelve children have to get onto the roster</span>
+        </div>
+
+        <div class="node" id="m1" data-cell="7,2" data-dy="48" data-note="4">
+          <span class="t">Add child, one at a time</span>
+          <span class="s">Name, birthday, enrolment dates, caregivers &mdash; then again, eleven times</span>
+        </div>
+
+        <div class="node branch" id="d2" data-cell="8,2" data-dy="56">
+          <span class="t">Finishes all twelve?</span>
+        </div>
+
+        <div class="node terminal" id="m2" data-cell="9,2" data-dy="64">
+          <span class="t">Half a roster, then nothing</span>
+          <span class="s">Paying, or entitled, and still has never watched an event land</span>
+        </div>
+
+        <div class="node" id="n6" data-cell="10,1" data-dy="56" data-note="5">
+          <span class="t">CSV import from the roster header</span>
+          <span class="s">Beside Add child, not in settings &mdash; map columns, preview rows, confirm</span>
+        </div>
+
+        <div class="node dashed" id="n7" data-cell="11,1" data-dy="60" data-note="6">
+          <span class="t">A background job runs per child</span>
+          <span class="s">An LLM pre-computes the ways that name is likely to be misheard</span>
+        </div>
+
+        <div class="node" id="n8" data-cell="12,1" data-dy="64">
+          <span class="t">Twelve rows on the board</span>
+          <span class="s">Placeholder rows render up front, keyed to each child&rsquo;s id</span>
+        </div>
+
+        <div class="node exit" id="n9" data-cell="13,1" data-dy="68">
+          <span class="t">First spoken event lands in a row</span>
+          <span class="s">This, not account created, is time to first value</span>
+        </div>
+      </div>
+
+      <div class="flow-legend">
+        <span class="item"><span class="key entry"></span> Entry / terminal</span>
+        <span class="item"><span class="key"></span> Step</span>
+        <span class="item"><span class="key sys"></span> System step</span>
+        <span class="item"><span class="key branch"></span> Branch</span>
+        <span class="item"><span class="key choice"></span> User choice</span>
+        <span class="item"><span class="key exit"></span> Exit</span>
+        <span class="item"><span class="key note"></span> Design note</span>
+      </div>
+    </div>
+
+    <ol class="notes">
+      <li data-for="1">Signup is ninety seconds and is treated as the cheap early step rather than the goal &mdash; one form, one submit, three linked records written together. Spending more design effort here would be polishing the part that already works, and the flow deliberately puts eleven steps after it.</li>
+      <li data-for="2">Activation branches because the money arrives through more than one door. Membership type, sponsor relationship, beta code and subscription date are each independently sufficient, so a card is one of four signals rather than the gate. A meaningful share of accounts come through a state or national association, and treating those as exceptions bolted onto Stripe would mean special-casing every association at checkout instead of once, at entitlement.</li>
+      <li data-for="3">Time to first value is not &ldquo;account created&rdquo;. It is &ldquo;the board has children on it and a spoken event has landed in a row&rdquo;, which is why that is the terminal state of this sheet and account creation sits near the top as a cheap step. The empty board is where the flow either completes or quietly stops.</li>
+      <li data-for="4">This is the branch that loses accounts. Twelve forms is not hard, it is long, and a provider who stops at the fourth child now has an entitlement, an empty-ish board and no reason to open it again. Drawing the stall as a real outcome rather than assuming completion is what made import worth building at all.</li>
+      <li data-for="5">CSV import sits on the roster header beside Add child rather than in settings, because a provider signing up already has twelve children written down somewhere from her licensing renewal. In settings it would be found by people who already know it exists &mdash; which is not the people stalling at the fourth form.</li>
+      <li data-for="6">Adding a child is also what makes voice work: each name goes to a background job that pre-computes its phonetic aliases before the matcher ever needs them. So the roster import is not data entry ahead of the product, it is the product being configured &mdash; and a board filled by hand and a board filled by CSV arrive at exactly the same state.</li>
+    </ol>
+  </div>
+</div>
+
+<script src="../../../../wireframe-kit/flow.js"></script>
+<script src="../../../../wireframe-kit/sheet.js"></script>

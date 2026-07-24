@@ -10,10 +10,13 @@ import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import SiteShot from '~/components/patterns/SiteShot.astro';
 import ScrollShot from '~/components/patterns/ScrollShot.astro';
+import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 
 const title = 'VMSpark | Joshua Briley';
 const description =
-  'Case study: redesigning the VMSpark admin shell (a multi-tenant VMS-to-ATS pipeline) to read as a 2026-caliber product without touching the pipeline underneath. Covers inventory, direction selection, phased rollout, and brand alignment.';
+  'Case study: as a product design engineer, I audited, redesigned, and rebuilt the VMSpark admin app (a multi-tenant VMS-to-ATS pipeline) in four phases, owning the design direction and the engineering without touching the pipeline underneath. Covers inventory, direction selection, phased rollout, and brand alignment.';
 
 interface Finding {
   count: string;
@@ -123,17 +126,102 @@ const outcomeStats = [
 ];
 
 const proof = [
-  { label: 'Skills proven', items: ['CRUD Development', 'Accessible component APIs', 'Frontend architecture', 'UI/UX Design', 'Style Guide Documentation', 'Training'] },
+  { label: 'Skills proven', items: ['Design-system audit', 'UI/UX design direction', 'Accessible component APIs', 'Frontend architecture', 'Style-guide documentation', 'Product decisions'] },
   { label: 'Stack', items: ['Ruby on Rails', 'Stimulus.js', 'Design tokens', 'Modern CSS'] },
   { label: 'Quality', items: ['Keyboard operability', 'Focus management', 'ARIA semantics', 'Token contrast checks'] },
-  { label: 'Outcomes', items: ['Increase in sales conversion', 'Increase customer retention', 'Increase usage by existing customers'] },
+  { label: 'Outcomes', items: ['Zero pipeline regressions', 'No operator retraining', 'One token layer, app and brand', 'No new JS on hot paths'] },
 ];
 
 const docket = [
-  { href: '#inventory', label: 'Inventory before invention' },
-  { href: '#directions', label: 'Three directions, one chosen' },
-  { href: '#rollout', label: 'Phased rollout' },
-  { href: '#outcome', label: 'Outcome' },
+  { href: '#inventory', icon: 'ph:clipboard-text', label: 'Inventory before invention' },
+  { href: '#directions', icon: 'ph:signpost', label: 'Three directions, one chosen' },
+  { href: '#rollout', icon: 'ph:stack', label: 'Phased rollout' },
+  { href: '#sheets', icon: 'ph:squares-four', label: 'Screens and flows' },
+  { href: '#outcome', icon: 'ph:trend-up', label: 'What shipping it changed' },
+];
+
+// Sheets render from src/ so Astro can process them — anything under public/ is
+// copied verbatim and never optimized. Sources are 2x headless-Chromium PNGs.
+const sheetFiles = import.meta.glob<{ default: ImageMetadata }>(
+  '../../assets/projects/vmspark/wires-and-flows/*.png',
+  { eager: true },
+);
+const sheet = (slug: string) =>
+  sheetFiles[`../../assets/projects/vmspark/wires-and-flows/${slug}.png`].default;
+
+// The sketch and clean-wireframe passes are SVG and need no processing.
+const art = (file: string) => `/images/projects/vmspark/wires-and-flows/${file}`;
+
+// Four screens went through all three fidelities. The ladder ends in colour
+// here rather than greyscale, because arriving at one coherent visual language
+// is what the project was.
+const keyScreens = [
+  {
+    slug: '01-app-shell',
+    index: '01',
+    title: 'App shell',
+    note: 'One shell applied to every authenticated screen. The sprawl came from every view having somewhere of its own to decide.',
+    alt: 'Annotated design sheet of the VMSpark app shell: icon rail, nav sidebar, workspace switcher, command palette and impersonation control, with callouts explaining why tenant identity lives in the chrome and why the token path had to be the shortest one.',
+  },
+  {
+    slug: '02-job-listings',
+    index: '02',
+    title: 'Job listings',
+    note: 'The primary triage surface. Status is a tab count, and a failed row stays in the list rather than being exiled to another screen.',
+    alt: 'Annotated design sheet of the job listings grid: per-column filter inputs, status tabs carrying queue depth, and a tinted failed row among the healthy ones, with callouts on queued reprocessing and per-user column persistence.',
+  },
+  {
+    slug: '03-inspector',
+    index: '03',
+    title: 'Inspector',
+    note: 'Why one listing ended up in the state it did. Raw payload beside mapped result, so a failure is self-explaining rather than a support ticket.',
+    alt: 'Annotated design sheet of the listing inspector: an overlay opening over the filtered grid, showing the mapped result beside the raw VMS payload with the unresolved facility field marked on both sides, plus a timestamped process history.',
+  },
+  {
+    slug: '04-data-mapping',
+    index: '04',
+    title: 'Data mapping',
+    note: 'The operational centre. Unmapped values are a revenue problem, not a tidiness problem, so the queue is built to visibly empty.',
+    alt: 'Annotated design sheet of the data mapping screen: entity-type tabs carrying unmapped counts, and two-column resolution cards pairing each inbound VMS value with its ATS candidates, with callouts on auto-mapping, focus advance, and why Ignore is a real decision.',
+  },
+];
+
+const restOfSystem = [
+  { slug: '05-custom-rules', title: 'Custom rules' },
+  { slug: '06-candidate-profiles', title: 'Candidate profiles' },
+  { slug: '07-applications-matches', title: 'Applications & matches' },
+  { slug: '08-settings', title: 'Settings' },
+  { slug: '09-candidate-portal', title: 'Candidate portal' },
+  { slug: '10-ai-usage', title: 'AI usage' },
+  { slug: '11-design-system', title: 'The design system' },
+];
+
+const flows = [
+  {
+    slug: 'flow-01-ingestion',
+    title: 'Ingestion',
+    note: 'The pipeline the redesign was forbidden from touching. Processed, failed and skipped are all first-class outcomes.',
+  },
+  {
+    slug: 'flow-02-mapping-resolution',
+    title: 'Mapping resolution & fan-out',
+    note: 'What an operator does to clear one unmapped facility, and what that single save costs downstream.',
+  },
+  {
+    slug: 'flow-03-rule-engine',
+    title: 'Rule engine',
+    note: 'Per-account rules as the escape hatch that keeps client special cases out of a shared pipeline.',
+  },
+  {
+    slug: 'flow-04-candidate-match',
+    title: 'Candidate matching',
+    note: 'The system proposes, a recruiter disposes. Submission is the only externally visible step, so it is the only one that asks.',
+  },
+  {
+    slug: 'flow-05-journeys',
+    title: 'User journeys',
+    note: 'Three people with opposite needs, one shell, and a mapping queue upstream of all of them.',
+  },
 ];
 ---
 
@@ -156,11 +244,11 @@ const docket = [
           </div>
 
           <Heading level={1} visual="display-xl" tone="ink" class="hero-in hero-in-3">
-            A Rails shell, <em class="ink-wink font-normal italic">rebuilt for 2026</em>.
+            A Rails platform, <em class="ink-wink font-normal italic">designed and rebuilt</em> as one job.
           </Heading>
 
           <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-8 max-w-xl">
-            A shell redesign for VMSpark, the multi-tenant pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen+ ATS providers, raising the visual caliber of the admin app without touching the pipeline underneath.
+            Product design engineering on VMSpark's admin app, the surface riding a multi-tenant pipeline that normalizes thousands of VMS jobs a day and fans them out to a dozen-plus ATS providers. I owned the audit, the design direction, and the phased rebuild, without touching the pipeline underneath.
           </Text>
         </div>
 
@@ -168,7 +256,7 @@ const docket = [
           <dl>
             <div>
               <dt>Role</dt>
-              <dd>Design + Eng</dd>
+              <dd>Product Design Engineer</dd>
             </div>
             <div>
               <dt>Client</dt>
@@ -185,19 +273,6 @@ const docket = [
           </dl>
         </aside>
       </div>
-    </Container>
-  </Section>
-
-  {/* Live site — a framed look at what shipped, linking out to the real thing. */}
-  <Section tone="paper" padding="tight">
-    <Container width="wide">
-      <SiteShot
-        src="/images/projects/vmspark/vmspark-live.webp"
-        alt="VMSpark homepage, live"
-        href="https://vmspark.com/"
-        label="vmspark.com"
-        index="01"
-      />
     </Container>
   </Section>
 
@@ -252,9 +327,10 @@ const docket = [
       </Text>
       <Text size="lg" tone="muted" class="mt-5 measure">
         The brief I gave myself:
-        <strong class="text-ink font-semibold">make the shell read as a modern, enterprise-grade product that matches the
+        <strong class="text-ink font-semibold">make the admin app read as a modern, enterprise-grade product that matches the
         sophistication of the pipeline underneath</strong>, without touching the pipeline, the rule engine, or anything an operator had muscle
-        memory for.
+        memory for. That meant owning it as one job: the design-system audit, the product calls about what to build and what to
+        drop, and the Rails engineering to ship it.
       </Text>
     </Container>
   </Section>
@@ -326,54 +402,12 @@ const docket = [
         </div>
       </div>
 
-      <Text size="lg" tone="muted" class="mt-12">
-        With the inventory in hand, I could fix the UI sprawl at the root rather than one
-        screen at a time. Buttons collapsed to a single set of component classes. Form
-        inputs, selects, and labels moved onto shared primitives with consistent padding,
-        focus states, and required-field treatment. Tables standardized on one header
-        style, one pagination component, one density rule. Each fix cascaded across dozens
-        of views because the semantic token layer was already in place. I just needed the
-        views to route through it.
+      <Text size="lg" tone="muted" class="mt-12 measure">
+        The inventory is what made a root fix possible instead of a screen-by-screen one.
+        Every finding above resolved to a single decision applied once, and because the
+        semantic token layer already existed, each of those decisions cascaded across
+        dozens of views. The remaining work was routing the views through it.
       </Text>
-
-      <div class="mt-16">
-        <p class="mono-label mb-3">What it looks like now</p>
-        <Text tone="muted" class="mb-10 max-w-2xl">
-          The same surfaces, rebuilt onto one system: the admin UI playground every screen now
-          inherits from. Scroll any frame to walk the full page.
-        </Text>
-
-        <div class="space-y-12">
-          <ScrollShot
-            src="/images/projects/vmspark/playground-overview.webp"
-            alt="VMSpark admin UI playground: the style-guide overview indexing every primitive"
-            label="Style guide: overview"
-            caption="The admin-only style guide: every primitive, button, table, and form pattern documented in one place."
-            index="01"
-          />
-          <ScrollShot
-            src="/images/projects/vmspark/playground-primitives.webp"
-            alt="VMSpark UI primitives: color ramps, type scale, spacing, and elevation"
-            label="Primitives"
-            caption="Color, type, spacing, and elevation: the shared primitives every screen now draws from."
-            index="02"
-          />
-          <ScrollShot
-            src="/images/projects/vmspark/playground-tables.webp"
-            alt="VMSpark table system: one header style, one density rule, one pagination component"
-            label="Tables"
-            caption="One header style, one density rule, one pagination component, standardized across every table."
-            index="03"
-          />
-          <ScrollShot
-            src="/images/projects/vmspark/playground-buttons.webp"
-            alt="VMSpark button system: variants, sizes, states, and density from one set of classes"
-            label="Buttons"
-            caption="Eight-plus button styles collapsed into a single set of component classes: every variant, size, and state."
-            index="04"
-          />
-        </div>
-      </div>
     </Container>
   </Section>
 
@@ -568,6 +602,160 @@ const docket = [
     </Container>
   </Section>
 
+  {/* The result of the four phases, so it sits after them rather than inside the
+      audit. Same four surfaces the sprawl images showed, rebuilt onto one system. */}
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-3">What it looks like now</p>
+      <Heading level={2} visual="display-md" tone="ink" class="mb-6">One system, documented in the app</Heading>
+      <Text size="lg" tone="muted" class="measure mb-4">
+        Buttons collapsed to a single set of component classes. Inputs, selects, and
+        labels moved onto shared primitives with consistent padding, focus states, and
+        required-field treatment. Tables standardized on one header style, one pagination
+        component, one density rule.
+      </Text>
+      <Text size="lg" tone="muted" class="measure mb-12">
+        All of it lives in an admin-only style guide that ships with the app, so the next
+        person to build a screen inherits the decisions instead of re-litigating them.
+        Scroll any frame to walk the full page.
+      </Text>
+
+      <div class="space-y-12">
+        <ScrollShot
+          src="/images/projects/vmspark/playground-overview.webp"
+          alt="VMSpark admin UI playground: the style-guide overview indexing every primitive"
+          label="Style guide: overview"
+          caption="The admin-only style guide: every primitive, button, table, and form pattern documented in one place."
+          index="01"
+        />
+        <ScrollShot
+          src="/images/projects/vmspark/playground-primitives.webp"
+          alt="VMSpark UI primitives: color ramps, type scale, spacing, and elevation"
+          label="Primitives"
+          caption="Color, type, spacing, and elevation: the shared primitives every screen now draws from."
+          index="02"
+        />
+        <ScrollShot
+          src="/images/projects/vmspark/playground-buttons.webp"
+          alt="VMSpark button system: variants, sizes, states, and density from one set of classes"
+          label="Buttons"
+          caption="The eight-plus button treatments from the audit, resolved into one set of component classes covering every variant, size, and state."
+          index="03"
+        />
+        <ScrollShot
+          src="/images/projects/vmspark/playground-tables.webp"
+          alt="VMSpark table system: one header style, one density rule, one pagination component"
+          label="Tables"
+          caption="One header style, one density rule, one pagination component, standardized across every table."
+          index="04"
+        />
+      </div>
+    </Container>
+  </Section>
+
+  <!-- SCREENS AND FLOWS -->
+  <Section id="sheets" tone="paper" padding="default" class="scroll-mt-24 border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-3">Screens and flows</p>
+      <Heading level={2} visual="display-md" tone="ink" class="mb-6">What actually got built</Heading>
+      <Text size="lg" tone="muted" class="measure mb-6">
+        Eleven screens and five flows, with the reasoning written onto each sheet
+        rather than left for a reader to infer. These are reconstructions, drawn
+        after the fact to document the decisions rather than the original working files.
+      </Text>
+      <Text size="lg" tone="muted" class="measure mb-12">
+        Four of them went through three passes: a crude sketch to argue about the
+        shape, a lo-fi wireframe to fix it, and the real thing with the reasoning
+        annotated on top. The ladder ends in colour rather than greyscale here,
+        because arriving at <em>one</em> visual language is what this project was.
+        Switch any plate to walk the passes.
+      </Text>
+
+      <div class="space-y-16">
+        {keyScreens.map((s) => (
+          <FidelityPlate
+            index={s.index}
+            title={s.title}
+            caption={s.note}
+            sketch={art(`${s.slug}-sketch.svg`)}
+            wire={art(`${s.slug}.svg`)}
+            annotated={sheet(s.slug)}
+            annotatedAlt={s.alt}
+          />
+        ))}
+      </div>
+
+      <div class="mt-20 border-t border-line pt-10">
+        <p class="mono-label mb-3">The rest of the system</p>
+        <Text tone="muted" class="measure mb-8">
+          Seven more screens, ending with the component and token inventory that
+          replaced eight button styles, ten form-element styles and six table
+          conventions with one of each.
+        </Text>
+        <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+          {restOfSystem.map((s) => (
+            <li>
+              <figure class="rest-sheet">
+                <div class="rest-sheet__frame">
+                  <Image
+                    src={sheet(s.slug)}
+                    alt={`Annotated design sheet of the ${s.title.toLowerCase()} screen.`}
+                    width={640}
+                    widths={[320, 480, 640]}
+                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption class="rest-sheet__label">{s.title}</figcaption>
+              </figure>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="mt-20 border-t border-line pt-10">
+        <p class="mono-label mb-3">User flows</p>
+        <Text tone="muted" class="measure mb-8">
+          Five flows covering the paths the screens sit on. Each splits what a
+          person does from what the system does with it, because in a pipeline
+          product the gap between those two is where the design decisions live.
+        </Text>
+        <div class="grid gap-10 lg:grid-cols-2">
+          {flows.map((f, i) => (
+            <figure class="flow-sheet">
+              <p class="flow-sheet__index">Flow <span aria-hidden="true">/</span> F{i + 1}</p>
+              <div class="flow-sheet__mount">
+                <div
+                  class="flow-sheet__stage"
+                  tabindex="0"
+                  role="group"
+                  aria-label={`${f.title}: flow diagram, scrollable`}
+                >
+                  <Image
+                    src={sheet(f.slug)}
+                    alt={`User flow diagram: ${f.title.toLowerCase()}. ${f.note}`}
+                    width={1120}
+                    widths={[560, 840, 1120]}
+                    sizes="(min-width: 1024px) 560px, 100vw"
+                    format="webp"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              </div>
+              <figcaption>
+                <p class="flow-sheet__title">{f.title}</p>
+                <p class="flow-sheet__note">{f.note}</p>
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </Container>
+  </Section>
+
   <Section id="outcome" tone="paper" padding="default" class="scroll-mt-24">
     <Container width="content">
       <div class="case-layout">
@@ -590,9 +778,9 @@ const docket = [
               forms, tables, and labels finally behaved the same from screen to screen, which
               made the product feel deliberate and trustworthy rather than patched together.
               Leadership stopped apologizing for the admin UI in investor demos. The audit is
-              what made that possible:
-              <strong class="text-ink font-semibold">a map of every inconsistency first, a disciplined fix second, confidence on
-              both sides of the table third.</strong>
+              what made both of those possible:
+              <strong class="text-ink font-semibold">nothing got fixed until every inconsistency
+              had been written down and traced to its cause.</strong>
             </Text>
           </div>
 
@@ -606,10 +794,10 @@ const docket = [
             ))}
           </div>
 
-          <div class="mt-12 rounded-lg border border-line p-7 md:p-9">
+          <div class="mt-12">
             <p class="mono-label mb-3">A detail worth calling out</p>
-            <Heading level={3} visual="h3" tone="ink" class="mb-3">Aligning the app with the marketing site</Heading>
-            <Text tone="muted">
+            <Heading level={3} visual="h3" tone="ink" class="mb-4">Aligning the app with the marketing site</Heading>
+            <Text tone="muted" class="measure">
               Partway through Phase 2 I pulled the marketing site's
               <code class="font-mono text-[0.82rem] bg-ink/[0.04] text-ink px-1.5 rounded-[4px]">:root</code> custom properties (five
               brand colors, pinned) and re-pointed the app's semantic token layer at them. The
@@ -619,6 +807,18 @@ const docket = [
               blue rather than darkening, and link hover goes near-black instead of lighter,
               both inherited from the marketing brand.
             </Text>
+
+            {/* The brand source the token layer was re-pointed at, shown where it is
+                argued about rather than as an opening flourish. */}
+            <div class="mt-8">
+              <SiteShot
+                src="/images/projects/vmspark/vmspark-live.webp"
+                alt="The VMSpark marketing site, the source of the five pinned brand colors the admin app's token layer was re-pointed at"
+                href="https://vmspark.com/"
+                label="vmspark.com"
+                index="01"
+              />
+            </div>
           </div>
 
           <figure class="my-12 border-l-2 border-accent pl-6">
@@ -654,7 +854,7 @@ const docket = [
         <blockquote class="md:col-span-8">
           <Icon name="ph:quotes" size={48} class="mb-5 text-accent opacity-25" />
           <p class="max-w-[46ch] font-display text-2xl md:text-3xl tracking-tight leading-snug text-ink">
-            Josh inventoried 350 ERB templates before he wrote a line of new CSS, then turned that audit into a phased
+            Josh inventoried 350 ERB templates before writing a line of new CSS, then turned that audit into a phased
             rollout we could ship behind no flags. The shell finally reads like the enterprise product the pipeline always
             was, and operators didn't lose a single piece of muscle memory in the move.
           </p>
@@ -667,12 +867,13 @@ const docket = [
     <Container width="wide">
       <p class="mono-label !text-paper/65 mb-4">Product design engineering</p>
       <Heading level={2} visual="display-lg" tone="paper" class="max-w-3xl">
-        I rebuilt the whole platform, and shipped it without a flag.
+        Four phases, no feature flags, nothing broken underneath.
       </Heading>
       <Text size="lg" tone="whiteMuted" class="mt-5 max-w-2xl">
-        Inventory first, architecture second, a rollout nobody has to be afraid of, and a product
-        that makes the right output the default. This is how I build: the whole thing, from the
-        data underneath to the UI on top, owned so it ships finished and stays that way.
+        The interface and the design system are where I bring the most value, backed by enough
+        command of the Rails underneath to ship the whole thing finished. That combination is
+        what let this rebuild land on a live multi-tenant product without a rollback plan.
+        If that's the bar you're hiring for, let's talk.
       </Text>
       <div class="mt-8 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
         <Button variant="navy" size="lg" iconLeft="ph:envelope" href="/contact/" class="js-magnetic">
@@ -688,10 +889,108 @@ const docket = [
       </div>
 
       <div class="mt-12 flex flex-wrap items-center gap-x-8 gap-y-3 border-t border-paper/15 pt-8">
-        <Link variant="arrow" href="/projects/americas-test-kitchen/">Flagship: America's Test Kitchen</Link>
+        <Link variant="arrow" href="/projects/logatot/">Next: Logatot</Link>
         <Link variant="arrow" href="/projects/">Back to all projects</Link>
       </div>
     </Container>
   </Section>
 
 </BaseLayout>
+
+<style>
+  /* The rest-of-system grid: each sheet cropped to its title band and the top of
+     the layout, which is the part that reads at this size. Same treatment as the
+     Logatot case study so the two sets look like one standard. */
+  .rest-sheet { margin: 0; }
+
+  .rest-sheet__frame {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    /* The artwork is fixed light-on-white, so the frame stays a lightbox in
+       either theme rather than inverting underneath the drawing. */
+    background: #ffffff;
+    aspect-ratio: 4 / 3;
+  }
+  .rest-sheet__frame :global(img) {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+  }
+
+  .rest-sheet__label {
+    display: block;
+    margin-top: 0.7rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink-muted);
+  }
+
+  /* Flow sheets are tall, so the mount is a scroll window rather than an aspect
+     box. A flow scaled to fit its column is unreadable. Deliberately not
+     ScrollShot: that takes a string src, which bypasses Astro's image pipeline
+     and ships the full 3200px PNG. */
+  .flow-sheet {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .flow-sheet__index {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .flow-sheet__index span { margin: 0 0.35em; opacity: 0.6; }
+
+  .flow-sheet__mount {
+    flex: 1;
+    padding: 8px;
+    border-radius: 16px;
+    background: var(--raised);
+    border: 1px solid var(--line);
+    box-shadow:
+      0 1px 2px rgba(27, 26, 23, 0.04),
+      0 18px 50px -28px rgba(27, 26, 23, 0.3);
+  }
+
+  .flow-sheet__stage {
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    height: 100%;
+    max-height: 560px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: #ffffff;
+    scrollbar-width: thin;
+  }
+  .flow-sheet__stage:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .flow-sheet__stage :global(img) { width: 100%; height: auto; display: block; }
+
+  .flow-sheet__title {
+    margin: 0.85rem 0 0;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+  }
+  .flow-sheet__note {
+    margin: 0.5rem 0 0;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+</style>
