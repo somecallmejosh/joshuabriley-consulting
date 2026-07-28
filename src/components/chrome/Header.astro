@@ -32,14 +32,6 @@ const isResumePage = Astro.url.pathname.replace(/\/$/, '') === '/resume';
     </nav>
 
     <div class="hidden md:flex items-center gap-5 shrink-0">
-      {/* Availability signal is informational; only surfaced at xl where it fits without crowding the CTA. */}
-      <span class="mono-label hidden xl:inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-        <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
-          <span class="absolute inline-flex h-full w-full rounded-full bg-accent/60 motion-safe:animate-ping"></span>
-          <span class="relative inline-flex h-1.5 w-1.5 rounded-full bg-accent"></span>
-        </span>
-        Open to product design engineering roles
-      </span>
       {!isResumePage && (
         <a
           href="/resume/"

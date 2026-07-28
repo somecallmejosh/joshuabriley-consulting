@@ -1,3 +1,35 @@
+# Site-wide content audit (2026-07-27)
+
+Full-project scan for factual inconsistencies and LLM writing patterns.
+
+## Applied
+- [x] Drop NASCAR + NFL from the homepage "Shipped at" strip (unsourced anywhere in repo)
+- [x] Align the homepage project `kind` labels to the vocabulary `projects.astro:14` declares
+- [x] Rewrite the homepage Logatot line (gerund cargo phrasing, repeated the client name)
+- [x] Reframe `audit-findings.mdx` from a sold service to the method behind the work
+- [x] Correct six stale facts in README (title, case studies, personal projects, `content.config.ts` path, tools collection, tools location)
+- [x] Remove the duplicate H1 in `web-component-libraries-in-the-ai-era.mdx` and the duplicate H2 in `future-proofing-front-end-dev-roles.mdx`
+- [x] Blog titles to sentence case; hyphenate "Future-proofing"; terminal periods on descriptions
+- [x] `readMinutes: 19` → `8` on the 1,345-word adoption spec
+- [x] De-LLM the two research posts (triads, not-X-but-Y, "most profound shift", holistic/seamless/robust)
+- [x] Drop needless acronym expansions (DOM, JSON, CLI) for a front-end audience
+- [x] "Astro.js" → "Astro"; LinkedIn URL trailing slash; Privacy/Terms title case
+- [x] Replace five "Click below" instructions in `ScorecardEngine.astro`
+
+## Open (needs Josh)
+- [ ] Em dash policy (49 in shipped prose: 40 in `src/pages`, 2 in `src/content`, 7 in README) — not decided, left untouched
+- [ ] British vs American spelling (`colour` ×34, `modelled`, `behaviour`, `centre`) — not decided, left untouched
+- [ ] Testimonial names: `12-adam-czerepinsky.json` displays "Czerepinkski"; `14-michael-peritore.json` displays "Pertiore". Filename + image path disagree with the `name` field in both
+- [ ] `astro.config.mjs:26-27` redirects `/projects/clempo` and `/projects/bass-face` to pages that don't exist
+- [ ] Homepage `3 → 1 brands` metric is real but its only source is the unpublished `notes/americas-test-kitchen.astro`
+- [ ] ROI table rows in `roi-calculator.mdx` don't reproduce from one set of stated inputs
+- [ ] "Design System Scorecard" in `the-hidden-cost-of-component-inconsistency.mdx` describes a different tool than `/tools/scorecard/`
+- [ ] `IVFCRYO` (22×) vs `IVFCryo` (8×); `Logatot` vs `LogATot, Inc.` in `resume.astro:34`
+- [ ] "20 years" site-wide vs "20+ years" twice in `resume.astro`
+- [ ] Changing `resume.astro` desyncs `public/resume.pdf` (source: `notes/resume.md`)
+
+---
+
 # VMSpark design artifacts → shared standard
 
 ## Plan

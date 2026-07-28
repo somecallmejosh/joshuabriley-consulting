@@ -10,7 +10,7 @@ import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
 
 // ── Content (every claim is backed by the site itself or a real case study) ──
-const clients = ['Travelers', 'Berkshire Hathaway', "America's Test Kitchen", 'NASCAR', 'NFL'];
+const clients = ['Travelers', 'Berkshire Hathaway', "America's Test Kitchen"];
 
 const capabilities = [
   'Design-grade front-end',
@@ -56,14 +56,14 @@ const work = [
   {
     href: '/projects/ivfcryo/',
     client: 'IVFCRYO',
-    kind: 'Accessible flows',
+    kind: 'Logistics platform',
     line: 'Recoverable specimen-shipping flows for a fertility logistics product. Accessibility was the mechanism that moved the numbers.',
   },
-    {
+  {
     href: '/projects/logatot/',
     client: 'Logatot',
-    kind: 'Voice driven interface',
-    line: 'A voice-driven interface for the Logatot platform, enabling hands-free interaction and improved accessibility.',
+    kind: 'Voice platform',
+    line: 'A voice-controlled operations platform for home-based child care, built for a user whose hands are already full.',
   },
   {
     href: '/projects/vmspark/',
@@ -86,7 +86,7 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
 ---
 
 <BaseLayout
-  title="Joshua Briley | Design & front-end focused Product Design Engineer"
+  title="Joshua Briley | Design- and front-end-focused Product Design Engineer"
   description="Design- and front-end-focused product design engineer with 20 years in production UI. The interface is where I bring the most value: design-grade, accessible, and finished to the last detail."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
@@ -128,22 +128,14 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
   {/* ───────────────────────── CREDENTIALS STRIP ───────────────────────── */}
   <Section tone="paper" padding="tight" class="!py-9 border-b border-line">
     <Container width="wide">
-      <div class="grid gap-x-10 gap-y-6 lg:grid-cols-12 lg:items-center">
-        <ul class="lg:col-span-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+      <div class="">
+        <ul class="flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
           {capabilities.map((c) => (
             <li class="flex items-center gap-2">
               <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{c}
             </li>
           ))}
         </ul>
-        <div class="lg:col-span-6 flex flex-wrap items-center gap-x-7 gap-y-2 lg:justify-end">
-          <span class="mono-label whitespace-nowrap"><span class="sr-only">My work has shipped at </span>Shipped at</span>
-          <ul class="flex flex-wrap items-center gap-x-6 gap-y-2">
-            {clients.map((c) => (
-              <li class="font-display text-[0.92rem] font-medium tracking-tight text-ink-muted">{c}</li>
-            ))}
-          </ul>
-        </div>
       </div>
     </Container>
   </Section>

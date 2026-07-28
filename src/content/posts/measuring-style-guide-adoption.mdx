@@ -1,21 +1,19 @@
 ---
-title: Measuring Style Guide Adoption
-description: 'A specification for measuring Rudiment UI adoption across an organization using the rudi namespace'
+title: Measuring style guide adoption
+description: 'A specification for measuring Rudiment UI adoption across an organization using the rudi namespace.'
 date: 2026-07-21
 category: Design Systems
 tags:
   - Design Systems
   - Contribution
   - Developer Experience
-readMinutes: 19
+readMinutes: 8
 icon: ph:robot-duotone
 gradient: from-sky/30 via-plum/30 to-coral/30
 sticker: plum
 ---
 
-## rudi check: adoption measurement specification • Rudiment UI
-
-A specification for measuring Rudiment UI adoption across an organization, built on the `rudi` namespace. It covers three things: why the namespace is the measurement foundation, the `rudi check` command-line interface (CLI) and its output schema, and a GitHub Actions rollout plan.
+A specification for measuring Rudiment UI adoption across an organization, built on the `rudi` namespace: why the namespace is the measurement foundation, what the `rudi check` CLI emits, and how to roll it out through GitHub Actions.
 
 ## Why the namespace is the measurement instrument
 
@@ -24,7 +22,7 @@ Most published adoption tooling exists to solve an identity problem: in React co
 Custom elements dissolve that problem. The platform requires every custom element name to contain a hyphen, and registration is global. `<rudi-button>` means the same thing in every file, every template language, and every framework. There is no alias, no local rename, and no ambiguity. The `rudi` prefix turns a branding decision into a measurement contract:
 
 - **Identity is stable at the usage site.** A scanner matches the tag name. It doesn't trace imports, resolve barrels, or guess about wrappers. This removes the largest source of false negatives in React-based adoption tooling.
-- **The namespace survives every layer.** The same `rudi-` string appears in source templates, JSX, Vue and Svelte templates, Lit template literals, server-rendered HTML, and the live Document Object Model (DOM). You can measure at build time with static analysis and at runtime with `querySelectorAll`, and the two numbers reconcile. React import analysis only ever sees source.
+- **The namespace survives every layer.** The same `rudi-` string appears in source templates, JSX, Vue and Svelte templates, Lit template literals, server-rendered HTML, and the live DOM. You can measure at build time with static analysis and at runtime with `querySelectorAll`, and the two numbers reconcile. React import analysis only ever sees source.
 - **Recreation detection becomes a set difference.** Every hyphenated tag is a component by definition. Partition all custom element tags into `rudi-*` and everything else. The "everything else" set is your recreated-component report, with names attached. No visual analysis or wrapper heuristics required.
 - **Tokens inherit the same property.** `--rudi-color-*` custom properties are collision-free and greppable. Any `var(--rudi-*)` reference is adoption. Any hardcoded color value in product CSS is measurable drift.
 - **The namespace works with zero tooling.** GitHub code search for `rudi-` across the organization gives you a rough adoption census before you build anything. The CLI below exists to make that census structured, repeatable, and trend-able.
@@ -34,7 +32,7 @@ One honest limitation: static scanning misses tags composed at runtime from dyna
 
 ## The rudi check CLI
 
-`rudi check` is a read-only scanner. Run it at the root of any repository. It parses source files, counts namespace usage and drift signals, and emits one JavaScript Object Notation (JSON) report.
+`rudi check` is a read-only scanner. Run it at the root of any repository. It parses source files, counts namespace usage and drift signals, and emits one JSON report.
 
 ### What it scans
 

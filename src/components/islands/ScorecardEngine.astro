@@ -319,19 +319,19 @@ const labels = [
         let body: string;
         if (pct >= 85) {
           headline = 'Gold stars all around.';
-          body = 'Your system is doing its job. Click below for a detailed breakdown with your radar chart and personalized recommendation.';
+          body = 'Your system is doing its job. Your detailed results add a radar chart and a recommendation tuned to the answers you gave.';
         } else if (pct >= 70) {
           headline = 'Solid fundamentals, a few soft spots.';
-          body = 'The bones are good. Click below for a detailed breakdown showing exactly where to focus first.';
+          body = 'The bones are good. Your detailed results show exactly where to focus first.';
         } else if (pct >= 55) {
           headline = 'A system in the making, not quite trusted yet.';
-          body = 'The components exist but the system around them needs work. Click below for your radar chart and a prioritized recommendation.';
+          body = 'The components exist but the system around them needs work. Your detailed results add a radar chart and a prioritized recommendation.';
         } else if (pct >= 40) {
           headline = 'Quietly burning your team out.';
-          body = 'Every new feature costs more than the last one. Click below for a detailed breakdown with a specific recommendation on where to start.';
+          body = 'Every new feature costs more than the last one. Your detailed results name a specific place to start.';
         } else {
           headline = "You’re building on sand, and that’s okay to name.";
-          body = "A low score isn’t a failing grade, it’s a starting map. Click below for your personalized report with exactly what to tackle first.";
+          body = "A low score isn’t a failing grade, it’s a starting map. Your detailed results lay out exactly what to tackle first.";
         }
         resultHeadline.textContent = headline;
         resultBody.textContent = body;
