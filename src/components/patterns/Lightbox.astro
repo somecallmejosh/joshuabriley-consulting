@@ -1,0 +1,325 @@
+---
+import Icon from '~/components/primitives/Icon.astro';
+
+/**
+ * Lightbox — a single, page-global full-viewport viewer for the case-study
+ * artifacts (annotated wireframes and flow diagrams). Those sheets are 3200px
+ * of dense, callout-heavy line work; no reading column can render them legibly.
+ * The inline plate is the preview, this is where the annotations are actually
+ * read.
+ *
+ * Wiring is data-attribute only, so it works for any artifact anywhere:
+ *
+ *   <button data-zoom-src="/big.webp" data-zoom-alt="…" data-zoom-label="04 / New shipment">
+ *
+ * Any element carrying data-zoom-src becomes an activator. The script mounts
+ * once, traps focus while open, restores it on close, and honours reduced
+ * motion. Fit-to-viewport by default; click (or the toolbar control) toggles to
+ * actual pixels, at which point the stage pans by drag or scroll.
+ *
+ * Rendered once, at the end of BaseLayout's body.
+ */
+---
+
+<div class="lb" data-lightbox hidden>
+  <div class="lb__scrim" data-lb-close aria-hidden="true"></div>
+
+  <div class="lb__frame" role="dialog" aria-modal="true" aria-label="Artifact viewer" data-lb-frame>
+    <div class="lb__bar">
+      <p class="lb__label" data-lb-label></p>
+      <div class="lb__tools">
+        <button type="button" class="lb__tool" data-lb-toggle aria-pressed="false">
+          <Icon name="ph:magnifying-glass-plus" size={15} />
+          <span data-lb-toggle-text>Actual size</span>
+        </button>
+        <button type="button" class="lb__tool lb__tool--close" data-lb-close aria-label="Close viewer">
+          <Icon name="ph:x" size={16} />
+        </button>
+      </div>
+    </div>
+
+    <div class="lb__stage" data-lb-stage tabindex="0">
+      <img class="lb__img" data-lb-img alt="" draggable="false" />
+    </div>
+
+    <p class="lb__hint" data-lb-hint aria-hidden="true"></p>
+  </div>
+</div>
+
+<style>
+  .lb {
+    position: fixed;
+    inset: 0;
+    z-index: 90;
+    display: grid;
+    grid-template-rows: 1fr;
+    padding: clamp(0.75rem, 3vw, 2.5rem);
+  }
+  .lb[hidden] { display: none; }
+
+  .lb__scrim {
+    position: absolute;
+    inset: 0;
+    background: rgba(18, 17, 15, 0.82);
+    backdrop-filter: blur(3px);
+    opacity: 0;
+    transition: opacity 0.22s var(--ease-out);
+  }
+  .lb[data-open] .lb__scrim { opacity: 1; }
+
+  .lb__frame {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    max-width: min(1500px, 100%);
+    width: 100%;
+    margin: 0 auto;
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+    transition:
+      opacity 0.24s var(--ease-out),
+      transform 0.24s var(--ease-out);
+  }
+  .lb[data-open] .lb__frame {
+    opacity: 1;
+    transform: none;
+  }
+
+  .lb__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0 0.25rem 0.6rem;
+  }
+  .lb__label {
+    margin: 0;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: rgba(255, 255, 255, 0.72);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .lb__tools {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-shrink: 0;
+  }
+  .lb__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.7rem;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(255, 255, 255, 0.08);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.62rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.88);
+    cursor: pointer;
+    transition:
+      background-color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out);
+  }
+  .lb__tool:hover {
+    background: rgba(255, 255, 255, 0.16);
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+  .lb__tool:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+  .lb__tool--close { padding: 0.4rem; }
+
+  .lb__stage {
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+    border-radius: 12px;
+    background: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.6);
+    /* Fit mode: image is centred and letter-boxed inside the stage. */
+    display: grid;
+    place-items: center;
+    scrollbar-width: thin;
+  }
+  .lb__stage:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 2px;
+  }
+
+  .lb__img {
+    display: block;
+    /* Fit-to-stage default. */
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    cursor: zoom-in;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  /* Actual-pixel mode: the image takes its natural width and the stage scrolls
+     around it. place-items:start keeps the top-left anchored so panning starts
+     from the sheet's header. */
+  .lb[data-zoomed] .lb__stage { place-items: start; }
+  .lb[data-zoomed] .lb__img {
+    max-width: none;
+    max-height: none;
+    width: var(--lb-natural-w, auto);
+    height: auto;
+    cursor: grab;
+  }
+  .lb[data-zoomed][data-panning] .lb__img { cursor: grabbing; }
+
+  .lb__hint {
+    margin: 0.6rem 0 0;
+    text-align: center;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .lb__scrim,
+    .lb__frame {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  const root = document.querySelector<HTMLElement>('[data-lightbox]');
+  if (root) {
+    const frame = root.querySelector<HTMLElement>('[data-lb-frame]')!;
+    const stage = root.querySelector<HTMLElement>('[data-lb-stage]')!;
+    const img = root.querySelector<HTMLImageElement>('[data-lb-img]')!;
+    const labelEl = root.querySelector<HTMLElement>('[data-lb-label]')!;
+    const hintEl = root.querySelector<HTMLElement>('[data-lb-hint]')!;
+    const toggle = root.querySelector<HTMLButtonElement>('[data-lb-toggle]')!;
+    const toggleText = root.querySelector<HTMLElement>('[data-lb-toggle-text]')!;
+    const closers = [...root.querySelectorAll<HTMLElement>('[data-lb-close]')];
+
+    let opener: HTMLElement | null = null;
+    let naturalW = 0;
+
+    const focusable = () => [
+      toggle,
+      ...root.querySelectorAll<HTMLElement>('[data-lb-close]'),
+      stage,
+    ];
+
+    const setZoom = (on: boolean) => {
+      if (on && naturalW) {
+        // Cap actual-size at the true pixel width; on small screens that still
+        // overflows the stage and pans, which is the point.
+        root.style.setProperty('--lb-natural-w', `${naturalW}px`);
+        root.setAttribute('data-zoomed', '');
+        toggle.setAttribute('aria-pressed', 'true');
+        toggleText.textContent = 'Fit';
+        hintEl.textContent = 'Drag to pan · click image to fit';
+      } else {
+        root.removeAttribute('data-zoomed');
+        toggle.setAttribute('aria-pressed', 'false');
+        toggleText.textContent = 'Actual size';
+        hintEl.textContent = 'Click image to zoom · Esc to close';
+        stage.scrollTo(0, 0);
+      }
+    };
+
+    const open = (trigger: HTMLElement) => {
+      opener = trigger;
+      const src = trigger.dataset.zoomSrc!;
+      img.src = src;
+      img.alt = trigger.dataset.zoomAlt || '';
+      labelEl.textContent = trigger.dataset.zoomLabel || '';
+      naturalW = 0;
+      setZoom(false);
+
+      root.hidden = false;
+      document.documentElement.style.setProperty('overflow', 'hidden');
+      // Next frame so the open transition runs from the hidden state.
+      requestAnimationFrame(() => root.setAttribute('data-open', ''));
+
+      const measure = () => { naturalW = img.naturalWidth; };
+      if (img.complete && img.naturalWidth) measure();
+      else img.addEventListener('load', measure, { once: true });
+
+      toggle.focus();
+    };
+
+    const close = () => {
+      root.removeAttribute('data-open');
+      root.removeAttribute('data-zoomed');
+      document.documentElement.style.removeProperty('overflow');
+      const done = () => {
+        root.hidden = true;
+        img.src = '';
+        frame.removeEventListener('transitionend', done);
+      };
+      const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (reduce) done();
+      else frame.addEventListener('transitionend', done);
+      opener?.focus();
+      opener = null;
+    };
+
+    // Any element with data-zoom-src opens the viewer.
+    document.querySelectorAll<HTMLElement>('[data-zoom-src]').forEach((el) => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        open(el);
+      });
+    });
+
+    closers.forEach((c) => c.addEventListener('click', close));
+    toggle.addEventListener('click', () => setZoom(!root.hasAttribute('data-zoomed')));
+    img.addEventListener('click', () => setZoom(!root.hasAttribute('data-zoomed')));
+
+    // Drag-to-pan while zoomed.
+    let panning = false;
+    let sx = 0, sy = 0, sl = 0, st = 0;
+    stage.addEventListener('pointerdown', (e) => {
+      if (!root.hasAttribute('data-zoomed')) return;
+      panning = true;
+      root.setAttribute('data-panning', '');
+      sx = e.clientX; sy = e.clientY;
+      sl = stage.scrollLeft; st = stage.scrollTop;
+      stage.setPointerCapture(e.pointerId);
+    });
+    stage.addEventListener('pointermove', (e) => {
+      if (!panning) return;
+      stage.scrollLeft = sl - (e.clientX - sx);
+      stage.scrollTop = st - (e.clientY - sy);
+    });
+    const endPan = () => { panning = false; root.removeAttribute('data-panning'); };
+    stage.addEventListener('pointerup', endPan);
+    stage.addEventListener('pointercancel', endPan);
+
+    root.addEventListener('keydown', (e) => {
+      if (root.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      // Focus trap across the toolbar + stage.
+      const items = focusable().filter((el) => el.offsetParent !== null || el === stage);
+      if (!items.length) return;
+      const first = items[0];
+      const last = items[items.length - 1];
+      const active = document.activeElement as HTMLElement;
+      if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+    });
+  }
+</script>

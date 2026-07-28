@@ -6,6 +6,7 @@ import Header from '~/components/chrome/Header.astro';
 import Footer from '~/components/chrome/Footer.astro';
 import InspectorMode from '~/components/islands/InspectorMode.astro';
 import ViewSource from '~/components/islands/ViewSource.astro';
+import Lightbox from '~/components/patterns/Lightbox.astro';
 import { ogImageForPath } from '~/lib/og-pages.mjs';
 
 interface ArticleMeta {
@@ -198,6 +199,7 @@ const jsonLdGraph = {
     {!bare && <Footer />}
     <InspectorMode />
     <ViewSource />
+    <Lightbox />
     <script>
       import '~/scripts/scroll-reveal';
       import '~/scripts/whimsy';
