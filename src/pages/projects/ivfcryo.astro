@@ -9,8 +9,8 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import CodeBlock from '~/components/patterns/CodeBlock.astro';
-import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
-import { Image, getImage } from 'astro:assets';
+import Plate from '~/components/patterns/Plate.astro';
+import FidelityBand from '~/components/patterns/FidelityBand.astro';
 import type { ImageMetadata } from 'astro';
 
 const title = 'IVFCRYO | Joshua Briley';
@@ -57,7 +57,7 @@ const parties = [
 // The physical chain of custody, with a named-contact acknowledgment at every
 // handoff — "chain of custody does not end with a delivery scan at the front desk."
 const custody = [
-  { icon: 'ph:package', title: 'Prepare & release', body: 'IVFCryo ships the unit with an IVFCRYO-Sense tracker inside; the sending lab loads the specimens and a named contact releases them.' },
+  { icon: 'ph:package', title: 'Prepare & release', body: 'IVFCRYO ships the unit with an IVFCRYO-Sense tracker inside; the sending lab loads the specimens and a named contact releases them.' },
   { icon: 'ph:airplane-tilt', title: 'Courier pickup', body: 'A dedicated medical courier accepts custody from the named lab contact and hand-carries the sealed unit — the handoff is acknowledged, not assumed.' },
   { icon: 'ph:thermometer', title: 'Delivery & inspection', body: 'The receiving lab inspects the unit and records a calibrated temperature at specimen-storage level before taking custody.' },
   { icon: 'ph:seal-check', title: 'Accept & close', body: 'Qualified staff accept the specimens into storage and the record closes on acknowledgment — "delivered" is not "accepted."' },
@@ -265,18 +265,6 @@ const flows = [
 // collected into one gallery, so these look them up by slug at the point of use.
 const plate = (slug: string) => plates.find((p) => p.slug === slug)!;
 const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
-
-// Large rasters for the zoom viewer, keyed by slug — flows and the
-// rest-of-system sheets, which are too dense to read in the reading column.
-const zoomSlugs = [...flows.map((f) => f.slug), ...restOfSystem.map((s) => s.slug)];
-const zoomEntries = await Promise.all(
-  zoomSlugs.map(async (slug) => [
-    slug,
-    (await getImage({ src: annotated(slug), width: 2000, format: 'webp' })).src,
-  ] as const),
-);
-const zoomUrls = new Map(zoomEntries);
-const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -376,7 +364,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
       </ul>
 
       <Text size="lg" tone="muted" class="mt-10 measure">
-        IVFCryo ships cryogenically preserved embryos and reproductive tissue:
+        IVFCRYO ships cryogenically preserved embryos and reproductive tissue:
         material that is, quite literally, irreplaceable — sometimes a patient's last
         remaining embryo. I started with stakeholder research, interviewing the owner,
         the COO, and the office manager, and it changed how I framed the whole product.
@@ -395,7 +383,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
 
 
   <!-- STEP 01 — MODEL THE FIVE-PARTY WORKFLOW -->
-  <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24 border-t border-line space-y-24">
+  <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
@@ -415,7 +403,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
               The research made the real shape clear. As Don, the owner, put it, a
               shipment "looks like one transaction to the patient, but it is actually a
               chain of separate responsibilities" — patient, sending clinic, receiving
-              clinic, courier, and IVFCryo, each with its own systems, paperwork, and
+              clinic, courier, and IVFCRYO, each with its own systems, paperwork, and
               approvals. So the first design artifact wasn't a wireframe. It was a map of
               who owed what to whom, because the interface could only be as trustworthy as
               its model of what was actually happening to the box.
@@ -462,38 +450,33 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             <figcaption class="mt-4 text-sm text-ink-muted">Don Fish · Owner, IVFCRYO</figcaption>
           </figure>
 
-          {/* First plate on the page, so the reading instructions live here rather
-              than in a gallery preamble the reader meets before any artwork. */}
-          <div class="mt-12 rounded-lg border border-line p-6 md:p-8">
-            <p class="mono-label mb-4">How to read the plates</p>
-            <div class="space-y-4 text-ink-muted leading-relaxed">
-              <p>
-                Every screen went through the same three passes. A crude sketch to settle
-                what the page is for, a clean wireframe to settle where things go, and then
-                the same wireframe with the decisions written onto it.
-              </p>
-              <p>
-                That third pass is the one that did the work. Writing down <em>why</em>
-                status lives in the URL, or why a half-filled form is never abandoned, is
-                what turned a picture of a screen into a decision anyone on the project
-                could check. Switch any plate to walk the three passes.
-              </p>
-            </div>
-          </div>
-
-          <div class="mt-12">
-            <FidelityPlate
-              index={plate('05-shipment-detail').index}
-              title={plate('05-shipment-detail').title}
-              caption={plate('05-shipment-detail').note}
-              sketch={art('05-shipment-detail-sketch.svg')}
-              wire={art('05-shipment-detail.svg')}
-              annotated={annotated('05-shipment-detail')}
-              annotatedAlt={plate('05-shipment-detail').alt}
-            />
-          </div>
         </div>
       </div>
+    </Container>
+
+    {/* The three passes, shown once. Every sheet after this one is the
+        annotated pass at full width, so the progression gets explained here
+        rather than re-staged on every plate. */}
+    <Container width="wide" class="mt-16">
+      <p class="mono-label mb-6">How a screen got built</p>
+      <FidelityBand
+        title={plate('05-shipment-detail').title}
+        sketch={art('05-shipment-detail-sketch.svg')}
+        wire={art('05-shipment-detail.svg')}
+        annotated={annotated('05-shipment-detail')}
+        annotatedAlt={plate('05-shipment-detail').alt}
+        caption="A crude sketch to settle what the page is for, a clean wireframe to settle where things go, then the same wireframe with the decisions written onto it. That third pass did the work: writing down why status lives in the URL, or why a half-filled form is never abandoned, is what turned a picture of a screen into a decision anyone on the project could check."
+      />
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={plate('05-shipment-detail').index}
+        title={plate('05-shipment-detail').title}
+        caption={plate('05-shipment-detail').note}
+        src={annotated('05-shipment-detail')}
+        alt={plate('05-shipment-detail').alt}
+      />
     </Container>
   </Section>
 
@@ -563,7 +546,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
   </Section>
 
   <!-- STEP 03 — TWO-SIDED + PUBLIC -->
-  <Section tone="paper" padding="default" id="flows" class="scroll-mt-24 border-t border-line space-y-12">
+  <Section tone="paper" padding="default" id="flows" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
         <div class="case-layout__head">
@@ -575,7 +558,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             <p>
               One shipment has very different users. The customer, often a clinic moving
               fast or a patient touching an emotionally loaded process for the first time,
-              needs a short, reassuring path from request to tracking. The IVFCryo admin
+              needs a short, reassuring path from request to tracking. The IVFCRYO admin
               lives in the tool all day and needs range: every shipment, every client, and
               enough control to resolve the exceptions.
             </p>
@@ -612,7 +595,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
               <div>
                 <div class="mb-5 flex items-center gap-3 border-b border-line-strong pb-3">
                   <Icon name="ph:users-three" size={18} class="text-accent" />
-                  <p class="font-display font-semibold text-ink">Admin &middot; IVFCryo staff</p>
+                  <p class="font-display font-semibold text-ink">Admin &middot; IVFCRYO staff</p>
                 </div>
                 <ul>
                   {adminFlow.map((p, i) => (
@@ -629,85 +612,52 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </div>
           </div>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={plate('03-shipments-index').index}
-              title={plate('03-shipments-index').title}
-              caption={plate('03-shipments-index').note}
-              sketch={art('03-shipments-index-sketch.svg')}
-              wire={art('03-shipments-index.svg')}
-              annotated={annotated('03-shipments-index')}
-              annotatedAlt={plate('03-shipments-index').alt}
-            />
-          </div>
-
-          <div class="mt-14">
-            <figure class="flow-plate">
-              <p class="flow-plate__index">Flow <span aria-hidden="true">/</span> 11</p>
-              <div class="flow-plate__mount">
-                <div
-                  class="flow-plate__stage"
-                  tabindex="0"
-                  role="group"
-                  aria-label={`${flow('11-flow-authentication').title}: flow diagram, scrollable`}
-                >
-                  <Image
-                    src={annotated('11-flow-authentication')}
-                    alt={flow('11-flow-authentication').alt}
-                    width={1400}
-                    widths={[700, 1050, 1400]}
-                    sizes="(min-width: 1024px) 720px, 100vw"
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                    data-zoom-src={zoomSrc('11-flow-authentication')}
-                    data-zoom-alt={flow('11-flow-authentication').alt}
-                    data-zoom-label={flow('11-flow-authentication').title}
-                  />
-                </div>
-                <span class="flow-plate__fade" aria-hidden="true"></span>
-                <button
-                  type="button"
-                  class="flow-plate__zoom"
-                  data-zoom-src={zoomSrc('11-flow-authentication')}
-                  data-zoom-alt={flow('11-flow-authentication').alt}
-                  data-zoom-label={flow('11-flow-authentication').title}
-                >
-                  <Icon name="ph:arrows-out" size={13} /> Enlarge
-                </button>
-              </div>
-              <figcaption>
-                <p class="flow-plate__title">{flow('11-flow-authentication').title}</p>
-                <p class="flow-plate__note">{flow('11-flow-authentication').note}</p>
-              </figcaption>
-            </figure>
-          </div>
-
-          <div class="mt-14 measure space-y-5 leading-relaxed text-ink-muted text-lg">
-            <p>
-              A third audience never signs in at all. The receiving clinic or family
-              gets a link by email and SMS, and needs one question answered without an
-              account, a password, or a sidebar. Both Don and Sasha flagged the same
-              tension: raw telemetry "reassuring to an operator" is "alarming to someone
-              waiting on a specimen." So the public page withholds the temperature graph
-              on purpose, speaks in plain status, and puts a staffed phone number in the
-              footer.
-            </p>
-          </div>
-
-          <div class="mt-12">
-            <FidelityPlate
-              index={plate('06-public-tracking').index}
-              title={plate('06-public-tracking').title}
-              caption={plate('06-public-tracking').note}
-              sketch={art('06-public-tracking-sketch.svg')}
-              wire={art('06-public-tracking.svg')}
-              annotated={annotated('06-public-tracking')}
-              annotatedAlt={plate('06-public-tracking').alt}
-            />
-          </div>
         </div>
       </div>
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={plate('03-shipments-index').index}
+        title={plate('03-shipments-index').title}
+        caption={plate('03-shipments-index').note}
+        src={annotated('03-shipments-index')}
+        alt={plate('03-shipments-index').alt}
+      />
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index="11"
+        title={flow('11-flow-authentication').title}
+        caption={flow('11-flow-authentication').note}
+        src={annotated('11-flow-authentication')}
+        alt={flow('11-flow-authentication').alt}
+      />
+    </Container>
+
+    <Container width="content" class="mt-16">
+      <div class="case-layout-cont measure space-y-5 leading-relaxed text-ink-muted text-lg">
+        <p>
+          A third audience never signs in at all. The receiving clinic or family
+          gets a link by email and SMS, and needs one question answered without an
+          account, a password, or a sidebar. Both Don and Sasha flagged the same
+          tension: raw telemetry "reassuring to an operator" is "alarming to someone
+          waiting on a specimen." So the public page withholds the temperature graph
+          on purpose, speaks in plain status, and puts a staffed phone number in the
+          footer.
+        </p>
+      </div>
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={plate('06-public-tracking').index}
+        title={plate('06-public-tracking').title}
+        caption={plate('06-public-tracking').note}
+        src={annotated('06-public-tracking')}
+        alt={plate('06-public-tracking').alt}
+      />
     </Container>
   </Section>
 
@@ -734,7 +684,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
               <strong class="text-ink font-semibold">make the correct path easier than the incorrect one.</strong>
             </p>
             <p>
-              The research gave that rule a second job. IVFCryo's service guarantee,
+              The research gave that rule a second job. IVFCRYO's service guarantee,
               <strong class="text-ink font-semibold">CRYO Shield</strong>, turns
               documentation into part of the safety system rather than paperwork added
               after the fact. A qualifying claim needs an error-free order, documented
@@ -767,69 +717,38 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </ul>
           </div>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={plate('04-new-shipment').index}
-              title={plate('04-new-shipment').title}
-              caption={plate('04-new-shipment').note}
-              sketch={art('04-new-shipment-sketch.svg')}
-              wire={art('04-new-shipment.svg')}
-              annotated={annotated('04-new-shipment')}
-              annotatedAlt={plate('04-new-shipment').alt}
-            />
-          </div>
-
-          <div class="mt-14">
-            <figure class="flow-plate">
-              <p class="flow-plate__index">Flow <span aria-hidden="true">/</span> 12</p>
-              <div class="flow-plate__mount">
-                <div
-                  class="flow-plate__stage"
-                  tabindex="0"
-                  role="group"
-                  aria-label={`${flow('12-flow-create-shipment').title}: flow diagram, scrollable`}
-                >
-                  <Image
-                    src={annotated('12-flow-create-shipment')}
-                    alt={flow('12-flow-create-shipment').alt}
-                    width={1400}
-                    widths={[700, 1050, 1400]}
-                    sizes="(min-width: 1024px) 720px, 100vw"
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                    data-zoom-src={zoomSrc('12-flow-create-shipment')}
-                    data-zoom-alt={flow('12-flow-create-shipment').alt}
-                    data-zoom-label={flow('12-flow-create-shipment').title}
-                  />
-                </div>
-                <span class="flow-plate__fade" aria-hidden="true"></span>
-                <button
-                  type="button"
-                  class="flow-plate__zoom"
-                  data-zoom-src={zoomSrc('12-flow-create-shipment')}
-                  data-zoom-alt={flow('12-flow-create-shipment').alt}
-                  data-zoom-label={flow('12-flow-create-shipment').title}
-                >
-                  <Icon name="ph:arrows-out" size={13} /> Enlarge
-                </button>
-              </div>
-              <figcaption>
-                <p class="flow-plate__title">{flow('12-flow-create-shipment').title}</p>
-                <p class="flow-plate__note">{flow('12-flow-create-shipment').note}</p>
-              </figcaption>
-            </figure>
-          </div>
-
-          <figure class="my-12 border-l-2 border-accent pl-6">
-            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-              Every tension a screen reader exposed, an unlabeled control, a silent status
-              change, a color-only signal, was a tension every stressed user was quietly
-              hitting too.
-            </blockquote>
-          </figure>
         </div>
       </div>
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={plate('04-new-shipment').index}
+        title={plate('04-new-shipment').title}
+        caption={plate('04-new-shipment').note}
+        src={annotated('04-new-shipment')}
+        alt={plate('04-new-shipment').alt}
+      />
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index="12"
+        title={flow('12-flow-create-shipment').title}
+        caption={flow('12-flow-create-shipment').note}
+        src={annotated('12-flow-create-shipment')}
+        alt={flow('12-flow-create-shipment').alt}
+      />
+    </Container>
+
+    <Container width="content" class="mt-16">
+      <figure class="case-layout-cont border-l-2 border-accent pl-6">
+        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+          Every tension a screen reader exposed, an unlabeled control, a silent status
+          change, a color-only signal, was a tension every stressed user was quietly
+          hitting too.
+        </blockquote>
+      </figure>
     </Container>
   </Section>
 
@@ -989,39 +908,24 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
 
   <!-- THE REST OF THE SYSTEM -->
   <Section tone="paper" padding="default" class="border-t border-line" data-rest-of-system>
-    <Container width="content">
+    <Container width="wide">
       <div>
         <p class="mono-label mb-3">The rest of the system</p>
-        <Text tone="muted" class="measure mb-8">
+        <Text tone="muted" class="measure mb-10">
           Six more screens went through the same three passes. These are the
-          annotated pass, at a glance.
+          annotated pass, whole.
         </Text>
-        <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        {/* Two-up rather than a three-column thumbnail rail: these are still
+            annotated sheets, and a 4:3 crop of one is a picture of a header. */}
+        <ul class="grid gap-x-8 gap-y-14 md:grid-cols-2">
           {restOfSystem.map((s) => (
             <li>
-              <figure class="rest-shot">
-                {/* Cropped to the head of each sheet: the title band and the top
-                    of the layout. The frame opens the full sheet in the viewer. */}
-                <button
-                  type="button"
-                  class="rest-shot__frame"
-                  data-zoom-src={zoomSrc(s.slug)}
-                  data-zoom-alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
-                  data-zoom-label={s.title}
-                >
-                  <Image
-                    src={annotated(s.slug)}
-                    alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
-                    width={640}
-                    widths={[320, 480, 640]}
-                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-                <figcaption class="rest-shot__label">{s.title}</figcaption>
-              </figure>
+              <Plate
+                size="half"
+                title={s.title}
+                src={annotated(s.slug)}
+                alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
+              />
             </li>
           ))}
         </ul>
@@ -1075,7 +979,7 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
         The best product design engineers do the research, design the product, and own
         the front end — then sit with the engineers who own the platform and help shape
         the model that keeps every promise the interface makes. That seam is where I
-        work. IVFCryo needed someone to carry a design from a stakeholder interview all
+        work. IVFCRYO needed someone to carry a design from a stakeholder interview all
         the way to a shipped, accessible front end, and to hold the backend to what the
         design required. If that's the bar you're hiring for, let's talk.
       </Text>
@@ -1105,168 +1009,3 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
     </Container>
   </Section>
 </BaseLayout>
-
-<script>
-  // Flow mounts only claim "more below" when the diagram really is cut off.
-  document.querySelectorAll<HTMLElement>('.flow-plate__mount').forEach((mount) => {
-    const stage = mount.querySelector<HTMLElement>('.flow-plate__stage');
-    if (!stage) return;
-    const sync = () => {
-      mount.dataset.overflow = String(stage.scrollHeight > stage.clientHeight + 4);
-    };
-    stage.querySelectorAll('img').forEach((img) => {
-      if (img.complete) sync();
-      else img.addEventListener('load', sync, { once: true });
-    });
-    new ResizeObserver(sync).observe(mount);
-    sync();
-  });
-</script>
-
-<style>
-  /* Flow plate — same mounted-specimen language as ScrollShot and FidelityPlate,
-     at half width. The diagrams are tall, so the mount is a scroll window. */
-  /* Column layout so the two mounts share a height and the captions land on the
-     same baseline, whatever the diagrams' natural aspect ratios are. */
-  .flow-plate {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .flow-plate__mount { flex: 1; }
-
-  .flow-plate__index {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--ink-faint);
-  }
-  .flow-plate__index span { margin: 0 0.35em; opacity: 0.6; }
-
-  .flow-plate__mount {
-    position: relative;
-    padding: 8px;
-    border-radius: 16px;
-    background: var(--raised);
-    border: 1px solid var(--line);
-    box-shadow:
-      0 1px 2px rgba(27, 26, 23, 0.04),
-      0 18px 50px -28px rgba(27, 26, 23, 0.3);
-  }
-
-  .flow-plate__stage {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    height: 100%;
-    max-height: 620px;
-    border-radius: 9px;
-    border: 1px solid var(--line);
-    /* Fixed light stage: the diagrams are dark-on-white line work and do not
-       invert, so the mount stays a lightbox in either theme. */
-    background: #ffffff;
-    scrollbar-width: thin;
-  }
-  .flow-plate__stage:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .flow-plate__stage :global(img) { width: 100%; height: auto; display: block; cursor: zoom-in; }
-
-  /* Enlarge — opens the full flow in the zoom viewer, where the labels read. */
-  .flow-plate__zoom {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.34rem 0.65rem;
-    border-radius: 999px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
-  }
-  .flow-plate__zoom:hover { color: var(--ink); border-color: var(--line-strong); }
-  .flow-plate__zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* Shown only when the diagram is actually taller than its window. */
-  .flow-plate__fade {
-    position: absolute;
-    left: 9px;
-    right: 9px;
-    bottom: 9px;
-    height: 56px;
-    border-radius: 0 0 9px 9px;
-    background: linear-gradient(to bottom, transparent, #ffffff);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s var(--ease-out);
-  }
-  .flow-plate__mount[data-overflow='true'] .flow-plate__fade { opacity: 1; }
-
-  .flow-plate__title {
-    margin: 1rem 0 0;
-    padding-top: 0.7rem;
-    border-top: 1px solid var(--line);
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--ink);
-  }
-  .flow-plate__note {
-    margin: 0.6rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--ink-muted);
-  }
-
-  /* Rest-of-system rail — cropped heads of the remaining sheets. Uniform 4:3
-     crops anchored to the top, so the grid stays even however tall the sheet is. */
-  .rest-shot { margin: 0; }
-
-  .rest-shot__frame {
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: #ffffff;
-    aspect-ratio: 4 / 3;
-  }
-  .rest-shot__frame :global(img) {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: top center;
-  }
-  /* The rest-of-system frame is now a button into the viewer. */
-  button.rest-shot__frame {
-    display: block;
-    width: 100%;
-    padding: 0;
-    cursor: zoom-in;
-    transition: border-color 0.2s var(--ease-out);
-  }
-  button.rest-shot__frame:hover { border-color: var(--line-strong); }
-  button.rest-shot__frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  .rest-shot__label {
-    display: block;
-    margin-top: 0.7rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-  }
-</style>

@@ -10,8 +10,8 @@ import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import SiteShot from '~/components/patterns/SiteShot.astro';
 import ScrollShot from '~/components/patterns/ScrollShot.astro';
-import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
-import { Image, getImage } from 'astro:assets';
+import Plate from '~/components/patterns/Plate.astro';
+import FidelityBand from '~/components/patterns/FidelityBand.astro';
 import type { ImageMetadata } from 'astro';
 
 const title = 'VMSpark | Joshua Briley';
@@ -224,17 +224,6 @@ const flows = [
   },
 ];
 
-// Large rasters for the zoom viewer, keyed by slug. The inline mounts top out at
-// the reading column, which cannot render a 3200px sheet legibly.
-const zoomSlugs = [...restOfSystem.map((s) => s.slug), ...flows.map((f) => f.slug)];
-const zoomEntries = await Promise.all(
-  zoomSlugs.map(async (slug) => [
-    slug,
-    (await getImage({ src: sheet(slug), width: 2000, format: 'webp' })).src,
-  ] as const),
-);
-const zoomUrls = new Map(zoomEntries);
-const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -631,13 +620,15 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
         required-field treatment. Tables standardized on one header style, one pagination
         component, one density rule.
       </Text>
-      <Text size="lg" tone="muted" class="measure mb-12">
+      <Text size="lg" tone="muted" class="measure">
         All of it lives in an admin-only style guide that ships with the app, so the next
         person to build a screen inherits the decisions instead of re-litigating them.
-        Scroll any frame to walk the full page.
+        These are whole-page captures, so each one opens to its full height in place.
       </Text>
+    </Container>
 
-      <div class="space-y-12">
+    <Container width="wide" class="mt-14">
+      <div class="space-y-16">
         <ScrollShot
           src="/images/projects/vmspark/playground-overview.webp"
           alt="VMSpark admin UI playground: the style-guide overview indexing every primitive"
@@ -680,111 +671,80 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
         rather than left for a reader to infer. These are reconstructions, drawn
         after the fact to document the decisions rather than the original working files.
       </Text>
-      <Text size="lg" tone="muted" class="measure mb-12">
+      <Text size="lg" tone="muted" class="measure">
         Four of them went through three passes: a crude sketch to argue about the
         shape, a lo-fi wireframe to fix it, and the real thing with the reasoning
         annotated on top. The ladder ends in colour rather than greyscale here,
         because arriving at <em>one</em> visual language is what this project was.
-        Switch any plate to walk the passes.
       </Text>
+    </Container>
 
+    <Container width="wide" class="mt-14">
+      <p class="mono-label mb-6">How a screen got built</p>
+      <FidelityBand
+        title={keyScreens[0].title}
+        sketch={art(`${keyScreens[0].slug}-sketch.svg`)}
+        wire={art(`${keyScreens[0].slug}.svg`)}
+        annotated={sheet(keyScreens[0].slug)}
+        annotatedAlt={keyScreens[0].alt}
+        caption="The passes run left to right, and the ladder ends in colour rather than greyscale because arriving at one visual language is what this project was."
+      />
+    </Container>
+
+    <Container width="wide" class="mt-16">
       <div class="space-y-16">
         {keyScreens.map((s) => (
-          <FidelityPlate
+          <Plate
             index={s.index}
             title={s.title}
             caption={s.note}
-            sketch={art(`${s.slug}-sketch.svg`)}
-            wire={art(`${s.slug}.svg`)}
-            annotated={sheet(s.slug)}
-            annotatedAlt={s.alt}
+            src={sheet(s.slug)}
+            alt={s.alt}
           />
         ))}
       </div>
+    </Container>
 
-      <div class="mt-20 border-t border-line pt-10">
+    <Container width="wide" class="mt-20">
+      <div class="border-t border-line pt-10">
         <p class="mono-label mb-3">The rest of the system</p>
-        <Text tone="muted" class="measure mb-8">
+        <Text tone="muted" class="measure mb-10">
           Seven more screens, ending with the component and token inventory that
           replaced eight button styles, ten form-element styles and six table
           conventions with one of each.
         </Text>
-        <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+        <ul class="grid gap-x-8 gap-y-14 md:grid-cols-2">
           {restOfSystem.map((s) => (
             <li>
-              <figure class="rest-sheet">
-                <button
-                  type="button"
-                  class="rest-sheet__frame"
-                  data-zoom-src={zoomSrc(s.slug)}
-                  data-zoom-alt={`Annotated design sheet of the ${s.title.toLowerCase()} screen.`}
-                  data-zoom-label={s.title}
-                >
-                  <Image
-                    src={sheet(s.slug)}
-                    alt={`Annotated design sheet of the ${s.title.toLowerCase()} screen.`}
-                    width={640}
-                    widths={[320, 480, 640]}
-                    sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </button>
-                <figcaption class="rest-sheet__label">{s.title}</figcaption>
-              </figure>
+              <Plate
+                size="half"
+                title={s.title}
+                src={sheet(s.slug)}
+                alt={`Annotated design sheet of the ${s.title.toLowerCase()} screen.`}
+              />
             </li>
           ))}
         </ul>
       </div>
+    </Container>
 
-      <div class="mt-20 border-t border-line pt-10">
+    <Container width="wide" class="mt-20">
+      <div class="border-t border-line pt-10">
         <p class="mono-label mb-3">User flows</p>
-        <Text tone="muted" class="measure mb-8">
+        <Text tone="muted" class="measure mb-10">
           Five flows covering the paths the screens sit on. Each splits what a
           person does from what the system does with it, because in a pipeline
           product the gap between those two is where the design decisions live.
         </Text>
-        <div class="space-y-14">
+        <div class="space-y-16">
           {flows.map((f, i) => (
-            <figure class="flow-sheet">
-              <p class="flow-sheet__index">Flow <span aria-hidden="true">/</span> F{i + 1}</p>
-              <div class="flow-sheet__mount">
-                <div
-                  class="flow-sheet__stage"
-                  tabindex="0"
-                  role="group"
-                  aria-label={`${f.title}: flow diagram, scrollable`}
-                >
-                  <Image
-                    src={sheet(f.slug)}
-                    alt={`User flow diagram: ${f.title.toLowerCase()}. ${f.note}`}
-                    width={1400}
-                    widths={[700, 1050, 1400]}
-                    sizes="(min-width: 1024px) 720px, 100vw"
-                    format="webp"
-                    loading="lazy"
-                    decoding="async"
-                    data-zoom-src={zoomSrc(f.slug)}
-                    data-zoom-alt={`User flow diagram: ${f.title.toLowerCase()}. ${f.note}`}
-                    data-zoom-label={f.title}
-                  />
-                </div>
-                <button
-                  type="button"
-                  class="flow-sheet__zoom"
-                  data-zoom-src={zoomSrc(f.slug)}
-                  data-zoom-alt={`User flow diagram: ${f.title.toLowerCase()}. ${f.note}`}
-                  data-zoom-label={f.title}
-                >
-                  <Icon name="ph:arrows-out" size={13} /> Enlarge
-                </button>
-              </div>
-              <figcaption>
-                <p class="flow-sheet__title">{f.title}</p>
-                <p class="flow-sheet__note">{f.note}</p>
-              </figcaption>
-            </figure>
+            <Plate
+              index={`F${i + 1}`}
+              title={f.title}
+              caption={f.note}
+              src={sheet(f.slug)}
+              alt={`User flow diagram: ${f.title.toLowerCase()}. ${f.note}`}
+            />
           ))}
         </div>
       </div>
@@ -931,135 +891,3 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
   </Section>
 
 </BaseLayout>
-
-<style>
-  /* The rest-of-system grid: each sheet cropped to its title band and the top of
-     the layout, which is the part that reads at this size. Same treatment as the
-     Logatot case study so the two sets look like one standard. */
-  .rest-sheet { margin: 0; }
-
-  .rest-sheet__frame {
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    /* The artwork is fixed light-on-white, so the frame stays a lightbox in
-       either theme rather than inverting underneath the drawing. */
-    background: #ffffff;
-    aspect-ratio: 4 / 3;
-  }
-  .rest-sheet__frame :global(img) {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: top center;
-  }
-  /* The rest-of-system frame is now a button into the viewer. */
-  button.rest-sheet__frame {
-    display: block;
-    width: 100%;
-    padding: 0;
-    cursor: zoom-in;
-    transition: border-color 0.2s var(--ease-out);
-  }
-  button.rest-sheet__frame:hover { border-color: var(--line-strong); }
-  button.rest-sheet__frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  .rest-sheet__label {
-    display: block;
-    margin-top: 0.7rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-  }
-
-  /* Flow sheets are tall, so the mount is a scroll window rather than an aspect
-     box. A flow scaled to fit its column is unreadable. Deliberately not
-     ScrollShot: that takes a string src, which bypasses Astro's image pipeline
-     and ships the full 3200px PNG. */
-  .flow-sheet {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-
-  .flow-sheet__index {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--ink-faint);
-  }
-  .flow-sheet__index span { margin: 0 0.35em; opacity: 0.6; }
-
-  .flow-sheet__mount {
-    position: relative;
-    flex: 1;
-    padding: 8px;
-    border-radius: 16px;
-    background: var(--raised);
-    border: 1px solid var(--line);
-    box-shadow:
-      0 1px 2px rgba(27, 26, 23, 0.04),
-      0 18px 50px -28px rgba(27, 26, 23, 0.3);
-  }
-
-  /* Enlarge — opens the full flow in the zoom viewer, where the labels read. */
-  .flow-sheet__zoom {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.34rem 0.65rem;
-    border-radius: 999px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
-  }
-  .flow-sheet__zoom:hover { color: var(--ink); border-color: var(--line-strong); }
-  .flow-sheet__zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  .flow-sheet__stage {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    height: 100%;
-    max-height: 560px;
-    border-radius: 9px;
-    border: 1px solid var(--line);
-    background: #ffffff;
-    scrollbar-width: thin;
-  }
-  .flow-sheet__stage:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .flow-sheet__stage :global(img) { width: 100%; height: auto; display: block; cursor: zoom-in; }
-
-  .flow-sheet__title {
-    margin: 0.85rem 0 0;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink);
-  }
-  .flow-sheet__note {
-    margin: 0.5rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--ink-muted);
-  }
-</style>

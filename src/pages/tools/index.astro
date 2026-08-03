@@ -7,7 +7,6 @@ import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
-import CTABanner from '~/components/patterns/CTABanner.astro';
 
 const tools = (await getCollection('tools', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,

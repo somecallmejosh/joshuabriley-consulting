@@ -11,6 +11,7 @@
     "astro": "astro",
     "prepare": "git config core.hooksPath .githooks || true",
     "og:generate": "node scripts/generate-og.mjs",
+    "resume:pdf": "node scripts/generate-resume-pdf.mjs",
     "audit:contrast": "node scripts/check-contrast.mjs",
     "audit:style-guide": "node scripts/audit-style-guide.mjs",
     "check": "astro check",

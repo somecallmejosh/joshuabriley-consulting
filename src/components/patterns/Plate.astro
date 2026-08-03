@@ -1,0 +1,234 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * Plate — one design sheet, shown whole.
+ *
+ * This replaces five bespoke treatments (fplate, flow-plate, sheet-plate,
+ * flow-sheet, rest-shot) that all made the same mistake: they laid a 3200px
+ * annotated sheet out on the prose grid, inside a fixed-height window with its
+ * own scrollbar. In the reading column a sheet renders around 680px — 19% of
+ * source — which is far too small to read a callout, so the lightbox became the
+ * only way to actually see anything, and the nested scrollbar trapped the page
+ * scroll on the way past.
+ *
+ * Two rules hold here:
+ *
+ * 1. The sheet renders at its natural aspect ratio. No max-height, no overflow,
+ *    no fade gradient, no scroll cue. The page scroll is the only scroll.
+ * 2. `size` picks the track, and the caller supplies the width by placing this
+ *    in a `<Container width="wide">` (band, ~1232px = 38.5% of source, which
+ *    reads) or a two-column grid cell (half, ~600px, for sheets that only need
+ *    to be surveyed).
+ *
+ * The lightbox stays available for 1:1 pixel inspection, but nothing on the
+ * page requires it any more. Wiring follows the dual-trigger pattern the
+ * viewer expects: the <img> carries data-zoom-* for pointer users, and a real
+ * labelled <button> carries it for keyboard users.
+ */
+
+interface Props {
+  /** The sheet, imported so Astro can process it. */
+  src: ImageMetadata;
+  /** Real description of the sheet, for screen readers. */
+  alt: string;
+  /** Screen name, e.g. "Shipment detail". */
+  title: string;
+  /** Optional plate index, e.g. "05" — renders a "Plate / 05" tag above. */
+  index?: string;
+  /** Optional note under the caption rail. */
+  caption?: string;
+  /** `band` fills a wide container; `half` fills a two-up grid cell. */
+  size?: 'band' | 'half';
+  /** Set false to omit the lightbox wiring entirely. */
+  zoom?: boolean;
+  class?: string;
+}
+
+const {
+  src,
+  alt,
+  title,
+  index,
+  caption,
+  size = 'band',
+  zoom = true,
+  class: className,
+} = Astro.props;
+
+// Sized for the two tracks this component actually renders in. The old values
+// were tuned for the ~680px reading column and now under-serve the band badly.
+const SIZING = {
+  band: {
+    width: 1600,
+    widths: [640, 960, 1280, 1600],
+    sizes: '(min-width: 1280px) 1232px, (min-width: 1024px) calc(100vw - 3rem), 100vw',
+  },
+  half: {
+    width: 1200,
+    widths: [480, 600, 900, 1200],
+    sizes: '(min-width: 1024px) 600px, (min-width: 640px) calc(50vw - 2rem), 100vw',
+  },
+} as const;
+
+const track = SIZING[size];
+const label = index ? `${index} · ${title}` : title;
+
+// A large raster for the viewer. 2000px is plenty legible at actual-pixel zoom
+// without shipping the full 3200px original.
+const zoomImg = zoom ? await getImage({ src, width: 2000, format: 'webp' }) : null;
+---
+
+<figure class={cx('plate', className)} data-plate data-size={size}>
+  {index && (
+    <p class="plate__index">Plate <span aria-hidden="true">/</span> {index}</p>
+  )}
+
+  <div class="plate__frame">
+    <Image
+      src={src}
+      alt={alt}
+      width={track.width}
+      widths={[...track.widths]}
+      sizes={track.sizes}
+      format="webp"
+      loading="lazy"
+      decoding="async"
+      data-zoom-src={zoomImg?.src}
+      data-zoom-alt={zoomImg ? alt : undefined}
+      data-zoom-label={zoomImg ? label : undefined}
+    />
+  </div>
+
+  <figcaption class="plate__cap">
+    <div class="plate__spec">
+      <span class="plate__name">
+        {index && <><span class="plate__num">{index}</span><span class="plate__sep" aria-hidden="true">/</span></>}{title}
+      </span>
+      {zoomImg && (
+        <button
+          type="button"
+          class="plate__zoom"
+          data-zoom-src={zoomImg.src}
+          data-zoom-alt={alt}
+          data-zoom-label={label}
+        >
+          <Icon name="ph:arrows-out" size={12} /> Full size
+        </button>
+      )}
+    </div>
+    {caption && <p class="plate__note">{caption}</p>}
+  </figcaption>
+</figure>
+
+<style>
+  .plate { margin: 0; }
+
+  .plate__index {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--ink-faint);
+  }
+  .plate__index span { margin: 0 0.35em; opacity: 0.6; }
+
+  /* A hairline frame, not a raised card. The sheets are white line work, so all
+     they need is an edge; the old 8px mount plus drop shadow was chrome around
+     chrome. */
+  .plate__frame {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    /* Fixed light stage: the artwork is dark-on-white and does not invert, so
+       the frame stays a lightbox in either theme rather than fighting the
+       drawing underneath it. */
+    background: #ffffff;
+  }
+  /* <Image> renders through a child component, so the scope attribute does not
+     reach the <img> — this has to be :global. Astro emits width/height on the
+     tag, so height:auto gives the browser a natural aspect ratio to reserve
+     space with, and the page never shifts as sheets lazy-load in. */
+  .plate__frame :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+    cursor: zoom-in;
+  }
+
+  .plate__cap { margin-top: 0.85rem; }
+
+  .plate__spec {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.7rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .plate__name {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+  }
+  .plate__num { color: var(--ink-muted); }
+  .plate__sep { margin: 0 0.45em; opacity: 0.5; }
+
+  .plate__zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    padding: 0.3rem 0.6rem;
+    border-radius: 999px;
+    background: none;
+    border: 1px solid var(--line);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.58rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition:
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out);
+  }
+  .plate__zoom:hover {
+    color: var(--ink);
+    border-color: var(--line-strong);
+  }
+  .plate__zoom:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  .plate__note {
+    margin: 0.75rem 0 0;
+    max-width: 68ch;
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--ink-muted);
+  }
+
+  /* Half plates sit two-up and carry less weight in the page, so their caption
+     rail steps down with them. */
+  .plate[data-size='half'] .plate__name { font-size: 0.66rem; }
+  .plate[data-size='half'] .plate__note { margin-top: 0.6rem; font-size: 0.83rem; }
+  /* Sheets in a two-up row are rarely the same height. Dropping the caption to
+     the foot of the cell lines both hairlines up per row instead of leaving
+     them at whatever height each sheet happens to end at. */
+  .plate[data-size='half'] {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .plate[data-size='half'] .plate__cap { margin-top: auto; }
+</style>

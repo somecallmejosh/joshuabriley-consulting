@@ -10,11 +10,11 @@ import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
 
 // ── Content (every claim is backed by the site itself or a real case study) ──
-const clients = ['Travelers', 'Berkshire Hathaway', "America's Test Kitchen"];
-
+// Same four chips as the about page, worded identically. Two pages rendering
+// the same strip with different items read as two different claims.
 const capabilities = [
   'Design-grade front-end',
-  'React · TypeScript · 20 yrs',
+  'React · TypeScript',
   'Accessibility built in',
   'Design systems',
 ];
@@ -45,31 +45,35 @@ const facets = [
   },
 ];
 
+// One number per case study linked below, in the same order as the list, so
+// every figure here is a claim the reader can click through and check. Numbers
+// from clients without a published case study belong on the resume, not here.
 const metrics = [
-  { value: '75%', label: 'fewer support calls', note: 'IVFCRYO: clearer, recoverable flows' },
-  { value: '55%', label: 'fewer shipping errors', note: 'IVFCRYO: accessible forms at the source' },
-  { value: '3 → 1', label: 'brands, one library', note: "America's Test Kitchen: one system, three brands" },
+  { value: '75%', label: 'fewer support calls', note: 'IVFCRYO: a readiness gate before scheduling' },
+  { value: 'Zero', label: 'pipeline regressions', note: 'VMSpark: four phases, no feature flags' },
+  { value: '2+ hrs', label: 'a day of data entry removed', note: 'Logatot: hands-free capture in the moment' },
 ];
 
-// Client products where I owned the interface. Order follows the positioning doc.
+// Client products where I owned the interface. Order matches /projects/, so the
+// two lists cannot present the same three case studies in different sequences.
 const work = [
   {
     href: '/projects/ivfcryo/',
     client: 'IVFCRYO',
     kind: 'Logistics platform',
-    line: 'Recoverable specimen-shipping flows for a fertility logistics product. Accessibility was the mechanism that moved the numbers.',
-  },
-  {
-    href: '/projects/logatot/',
-    client: 'Logatot',
-    kind: 'Voice platform',
-    line: 'A voice-controlled operations platform for home-based child care, built for a user whose hands are already full.',
+    line: 'A self-service platform for cryogenic fertility shipments, where the hard part was getting five parties provably ready before a specimen moved.',
   },
   {
     href: '/projects/vmspark/',
     client: 'VMSpark',
     kind: 'Admin platform',
     line: 'A multi-tenant admin platform rebuilt and shipped in four phases: the operator-facing UI and workflows, delivered with zero pipeline regressions.',
+  },
+  {
+    href: '/projects/logatot/',
+    client: 'Logatot',
+    kind: 'Voice platform',
+    line: 'A voice-controlled operations platform for home-based child care, built for a user whose hands are already full.',
   },
 ];
 
@@ -83,6 +87,9 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
     name: t.data.title,
     line: t.data.takeaway,
   }));
+
+// Counted, not hardcoded, so adding a fifth tool can't leave the copy claiming four.
+const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.length] ?? String(tools.length);
 ---
 
 <BaseLayout
@@ -99,8 +106,8 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
       </p>
 
       {/* Editorial hero on the shared 12-col grid, so its measure matches the
-          about/resume heroes. No illustration: the "Shipped at" credentials strip
-          directly below carries the proof. */}
+          about/resume heroes. No illustration: the capability strip directly
+          below and the selected-work numbers further down carry the proof. */}
       <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-8">
           <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[19ch]">
@@ -114,7 +121,7 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
 
           <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
             <Button variant="primary" size="lg" href="/projects/" iconRight="ph:arrow-right" class="js-magnetic">
-              See what I've built
+              See the work
             </Button>
             <Button variant="ghost" size="lg" href="/about/">
               Read how I work
@@ -186,12 +193,15 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
           <p class="mono-label !text-paper/65">Selected work</p>
           <Heading level={2} visual="display-md" tone="paper" class="mt-4 text-balance">Products where I owned the interface.</Heading>
         </div>
-        <div class="lg:col-span-6 grid grid-cols-3 gap-6">
+        {/* Same figure/label/caption typography as the <Metric> component the
+            case studies use, in paper rather than ink because this band sits on
+            the dark surface. Three across only once there is room for them. */}
+        <div class="lg:col-span-6 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
           {metrics.map((m) => (
-            <div>
-              <p class="font-serif text-4xl md:text-5xl font-semibold tracking-[-0.02em] text-paper">{m.value}</p>
-              <p class="mt-1 text-sm text-paper/70">{m.label}</p>
-              <p class="mt-2 font-mono text-[0.62rem] uppercase tracking-[0.1em] leading-relaxed text-paper/60">{m.note}</p>
+            <div class="flex flex-col">
+              <p class="font-display text-4xl md:text-5xl font-semibold leading-none tracking-[-0.03em] text-paper">{m.value}</p>
+              <p class="mt-2 font-sans text-sm font-medium tracking-tight text-paper/70">{m.label}</p>
+              <p class="mt-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] leading-relaxed text-paper/60">{m.note}</p>
             </div>
           ))}
         </div>
@@ -234,7 +244,7 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
           </div>
           <div class="lg:col-span-5">
             <Text size="sm" tone="whiteMuted" class="max-w-md">
-              Four working instruments for design-system teams. Each runs in your browser. No
+              {toolCount} working instruments for design-system teams. Each runs in your browser. No
               signup, nothing saved, nothing sent anywhere.
             </Text>
           </div>
@@ -345,22 +355,5 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
   </Section>
 </BaseLayout>
 
-<style>
-  /* ── Hero load-in. A calm staggered rise on first paint. Transform/opacity only. */
-  .hero-in {
-    opacity: 0;
-    transform: translateY(12px);
-    animation: hero-in 0.7s var(--ease-out) forwards;
-  }
-  .hero-in-1 { animation-delay: 0.04s; }
-  .hero-in-2 { animation-delay: 0.11s; }
-  .hero-in-3 { animation-delay: 0.19s; }
-  .hero-in-4 { animation-delay: 0.28s; }
-  @keyframes hero-in {
-    to { opacity: 1; transform: none; }
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .hero-in { animation: none; opacity: 1; transform: none; }
-  }
-</style>
+{/* No scoped hero-load-in block here: `.hero-in` and its delay steps live in
+    site.css, same as every other page hero, reduced-motion guard included. */}

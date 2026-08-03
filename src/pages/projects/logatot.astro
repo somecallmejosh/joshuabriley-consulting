@@ -9,8 +9,8 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Metric from '~/components/patterns/Metric.astro';
 import CodeBlock from '~/components/patterns/CodeBlock.astro';
-import FidelityPlate from '~/components/patterns/FidelityPlate.astro';
-import { Image, getImage } from 'astro:assets';
+import Plate from '~/components/patterns/Plate.astro';
+import FidelityBand from '~/components/patterns/FidelityBand.astro';
 import type { ImageMetadata } from 'astro';
 
 const title = 'Logatot | Joshua Briley';
@@ -244,17 +244,6 @@ const flows = [
 const screen = (slug: string) => keyScreens.find((s) => s.slug === slug)!;
 const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slug === s)!);
 
-// Large rasters for the zoom viewer, keyed by slug. The inline mounts top out
-// at the reading column; these are what make the callouts actually readable.
-const zoomSlugs = [...flows.map((f) => f.slug), ...restOfSystem.map((s) => s.slug)];
-const zoomEntries = await Promise.all(
-  zoomSlugs.map(async (slug) => [
-    slug,
-    (await getImage({ src: sheet(slug), width: 2000, format: 'webp' })).src,
-  ] as const),
-);
-const zoomUrls = new Map(zoomEntries);
-const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
 ---
 
 <BaseLayout title={title} description={description}>
@@ -495,74 +484,91 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </div>
           </div>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={screen('01-voiceboard').index}
-              title={screen('01-voiceboard').title}
-              caption={screen('01-voiceboard').note}
-              sketch={art('01-voiceboard-sketch.svg')}
-              wire={art('01-voiceboard.svg')}
-              annotated={sheet('01-voiceboard')}
-              annotatedAlt={screen('01-voiceboard').alt}
-            />
-          </div>
+        </div>
+      </div>
+    </Container>
 
-          <div class="mt-12 measure space-y-5 leading-relaxed text-ink-muted text-lg">
-            <p>
-              The parent portal shows exactly the same events as a
-              <strong class="text-ink font-semibold">timeline</strong>: time down the left,
-              one child at a time. The provider is scanning twelve children at once, so the
-              provider gets a grid. A parent is reading about one child in order, so the
-              parent gets a chronology. Same data, opposite affordance. The portal is
-              read-mostly with exactly one write, messaging the provider, because every
-              extra write surface becomes one more thing to triage during the day.
-            </p>
-          </div>
+    {/* The three passes, shown once. Every sheet after this one is the
+        annotated pass at full width. */}
+    <Container width="wide" class="mt-16">
+      <p class="mono-label mb-6">How a screen got built</p>
+      <FidelityBand
+        title={screen('01-voiceboard').title}
+        sketch={art('01-voiceboard-sketch.svg')}
+        wire={art('01-voiceboard.svg')}
+        annotated={sheet('01-voiceboard')}
+        annotatedAlt={screen('01-voiceboard').alt}
+        caption="A crude sketch to settle what the page is for, a clean wireframe to settle where things go, then the same wireframe with the decisions written onto it. The third pass is the one that did the work: it records why a row scrolls horizontally in sync, and why empty rows are pre-rendered rather than drawn on demand."
+      />
+    </Container>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={screen('06-parent-portal').index}
-              title={screen('06-parent-portal').title}
-              caption={screen('06-parent-portal').note}
-              sketch={art('06-parent-portal-sketch.svg')}
-              wire={art('06-parent-portal.svg')}
-              annotated={sheet('06-parent-portal')}
-              annotatedAlt={screen('06-parent-portal').alt}
-            />
-          </div>
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={screen('01-voiceboard').index}
+        title={screen('01-voiceboard').title}
+        caption={screen('01-voiceboard').note}
+        src={sheet('01-voiceboard')}
+        alt={screen('01-voiceboard').alt}
+      />
+    </Container>
 
-          <div class="mt-12 measure space-y-5 leading-relaxed text-ink-muted text-lg">
-            <p>
-              Underneath both, attendance is <em>derived</em> from the event log rather than
-              stored as state. That costs query complexity and buys correctness: a stored
-              flag drifts the moment any write path forgets to update it, and the write paths
-              here include voice, the kiosk, the board, and the API. The same reasoning
-              produced the rule that enrolment status is derived from start and end dates and
-              never toggled, so a provider can never leave a child marked Active six months
-              after they left. A wrong headcount is a licensing problem, not a display bug.
-            </p>
-          </div>
+    <Container width="content" class="mt-16">
+      <div class="case-layout-cont measure space-y-5 leading-relaxed text-ink-muted text-lg">
+        <p>
+          The parent portal shows exactly the same events as a
+          <strong class="text-ink font-semibold">timeline</strong>: time down the left,
+          one child at a time. The provider is scanning twelve children at once, so the
+          provider gets a grid. A parent is reading about one child in order, so the
+          parent gets a chronology. Same data, opposite affordance. The portal is
+          read-mostly with exactly one write, messaging the provider, because every
+          extra write surface becomes one more thing to triage during the day.
+        </p>
+      </div>
+    </Container>
 
-          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
-            <p class="mono-label mb-5">Decisions that live in the system, not the screen</p>
-            <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
-              {structural.map((item) => (
-                <li class="flex items-center gap-3 text-ink">
-                  <Icon name={item.icon} size={20} class="shrink-0 text-ink-muted" />
-                  {item.label}
-                </li>
-              ))}
-            </ul>
-          </div>
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={screen('06-parent-portal').index}
+        title={screen('06-parent-portal').title}
+        caption={screen('06-parent-portal').note}
+        src={sheet('06-parent-portal')}
+        alt={screen('06-parent-portal').alt}
+      />
+    </Container>
 
-          <div class="mt-10">
-            <CodeBlock
-              filename="logged_event.rb"
-              lang="ruby"
-              code={modelSnippet}
-              caption="The event log as the one record every write path already agrees on, with the failure diagnostics that make repair possible."
-            />
-          </div>
+    <Container width="content" class="mt-16">
+      <div class="case-layout-cont">
+        <div class="measure space-y-5 leading-relaxed text-ink-muted text-lg">
+          <p>
+            Underneath both, attendance is <em>derived</em> from the event log rather than
+            stored as state. That costs query complexity and buys correctness: a stored
+            flag drifts the moment any write path forgets to update it, and the write paths
+            here include voice, the kiosk, the board, and the API. The same reasoning
+            produced the rule that enrolment status is derived from start and end dates and
+            never toggled, so a provider can never leave a child marked Active six months
+            after they left. A wrong headcount is a licensing problem, not a display bug.
+          </p>
+        </div>
+
+        <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
+          <p class="mono-label mb-5">Decisions that live in the system, not the screen</p>
+          <ul class="grid gap-x-8 gap-y-3 sm:grid-cols-2">
+            {structural.map((item) => (
+              <li class="flex items-center gap-3 text-ink">
+                <Icon name={item.icon} size={20} class="shrink-0 text-ink-muted" />
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div class="mt-10">
+          <CodeBlock
+            filename="logged_event.rb"
+            lang="ruby"
+            code={modelSnippet}
+            caption="The event log as the one record every write path already agrees on, with the failure diagnostics that make repair possible."
+          />
         </div>
       </div>
     </Container>
@@ -592,62 +598,31 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </p>
           </div>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={screen('05-checkin-kiosk').index}
-              title={screen('05-checkin-kiosk').title}
-              caption={screen('05-checkin-kiosk').note}
-              sketch={art('05-checkin-kiosk-sketch.svg')}
-              wire={art('05-checkin-kiosk.svg')}
-              annotated={sheet('05-checkin-kiosk')}
-              annotatedAlt={screen('05-checkin-kiosk').alt}
-            />
-          </div>
-
-          <div class="mt-14 space-y-14">
-            {flowSet('13-flow-checkin', '14-flow-parent-access').map((flow) => (
-              <figure class="sheet-plate">
-                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
-                <div class="sheet-plate__mount">
-                  <div
-                    class="sheet-plate__stage"
-                    tabindex="0"
-                    role="group"
-                    aria-label={`${flow.title}: flow diagram, scrollable`}
-                  >
-                    <Image
-                      src={sheet(flow.slug)}
-                      alt={flow.alt}
-                      width={1400}
-                      widths={[700, 1050, 1400]}
-                      sizes="(min-width: 1024px) 720px, 100vw"
-                      format="webp"
-                      loading="lazy"
-                      decoding="async"
-                      data-zoom-src={zoomSrc(flow.slug)}
-                      data-zoom-alt={flow.alt}
-                      data-zoom-label={flow.title}
-                    />
-                  </div>
-                  <span class="sheet-plate__fade" aria-hidden="true"></span>
-                  <button
-                    type="button"
-                    class="sheet-plate__zoom"
-                    data-zoom-src={zoomSrc(flow.slug)}
-                    data-zoom-alt={flow.alt}
-                    data-zoom-label={flow.title}
-                  >
-                    <Icon name="ph:arrows-out" size={13} /> Enlarge
-                  </button>
-                </div>
-                <figcaption>
-                  <p class="sheet-plate__title">{flow.title}</p>
-                  <p class="sheet-plate__note">{flow.note}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
         </div>
+      </div>
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={screen('05-checkin-kiosk').index}
+        title={screen('05-checkin-kiosk').title}
+        caption={screen('05-checkin-kiosk').note}
+        src={sheet('05-checkin-kiosk')}
+        alt={screen('05-checkin-kiosk').alt}
+      />
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <div class="space-y-16">
+        {flowSet('13-flow-checkin', '14-flow-parent-access').map((flow) => (
+          <Plate
+            index={flow.slug.slice(0, 2)}
+            title={flow.title}
+            caption={flow.note}
+            src={sheet(flow.slug)}
+            alt={flow.alt}
+          />
+        ))}
       </div>
     </Container>
   </Section>
@@ -691,28 +666,29 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </p>
           </div>
 
-          <div class="mt-12">
-            <FidelityPlate
-              index={screen('04-logged-events').index}
-              title={screen('04-logged-events').title}
-              caption={screen('04-logged-events').note}
-              sketch={art('04-logged-events-sketch.svg')}
-              wire={art('04-logged-events.svg')}
-              annotated={sheet('04-logged-events')}
-              annotatedAlt={screen('04-logged-events').alt}
-            />
-          </div>
-
-          <figure class="my-12 border-l-2 border-accent pl-6">
-            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-              We couldn&rsquo;t spot the child&rsquo;s name in this event. Help us by
-              selecting a word below that sounds like the name. If there&rsquo;s no match,
-              no worries, just ignore this step!
-            </blockquote>
-            <figcaption class="mono-label mt-5">The repair screen, verbatim</figcaption>
-          </figure>
         </div>
       </div>
+    </Container>
+
+    <Container width="wide" class="mt-16">
+      <Plate
+        index={screen('04-logged-events').index}
+        title={screen('04-logged-events').title}
+        caption={screen('04-logged-events').note}
+        src={sheet('04-logged-events')}
+        alt={screen('04-logged-events').alt}
+      />
+    </Container>
+
+    <Container width="content" class="mt-16">
+      <figure class="case-layout-cont border-l-2 border-accent pl-6">
+        <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+          We couldn&rsquo;t spot the child&rsquo;s name in this event. Help us by
+          selecting a word below that sounds like the name. If there&rsquo;s no match,
+          no worries, just ignore this step!
+        </blockquote>
+        <figcaption class="mono-label mt-5">The repair screen, verbatim</figcaption>
+      </figure>
     </Container>
   </Section>
 
@@ -771,75 +747,47 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
             </p>
           </div>
 
-          {/* The pipeline this step describes, drawn end to end. Given the full
-              column rather than a half, because the failure branch is the point. */}
-          <div class="mt-12">
-            {flowSet('11-flow-voice-logging').map((flow) => (
-              <figure class="sheet-plate">
-                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
-                <div class="sheet-plate__mount">
-                  <div
-                    class="sheet-plate__stage"
-                    tabindex="0"
-                    role="group"
-                    aria-label={`${flow.title}: flow diagram, scrollable`}
-                  >
-                    <Image
-                      src={sheet(flow.slug)}
-                      alt={flow.alt}
-                      width={1400}
-                      widths={[700, 1050, 1400]}
-                      sizes="(min-width: 1024px) 720px, 100vw"
-                      format="webp"
-                      loading="lazy"
-                      decoding="async"
-                      data-zoom-src={zoomSrc(flow.slug)}
-                      data-zoom-alt={flow.alt}
-                      data-zoom-label={flow.title}
-                    />
-                  </div>
-                  <span class="sheet-plate__fade" aria-hidden="true"></span>
-                  <button
-                    type="button"
-                    class="sheet-plate__zoom"
-                    data-zoom-src={zoomSrc(flow.slug)}
-                    data-zoom-alt={flow.alt}
-                    data-zoom-label={flow.title}
-                  >
-                    <Icon name="ph:arrows-out" size={13} /> Enlarge
-                  </button>
-                </div>
-                <figcaption>
-                  <p class="sheet-plate__title">{flow.title}</p>
-                  <p class="sheet-plate__note">{flow.note}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
-
-          <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
-            <p class="mono-label mb-6">The services that made it real</p>
-            <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
-              {integrations.map((svc) => (
-                <li class="flex gap-3.5">
-                  <Icon name={svc.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
-                  <div>
-                    <p class="font-medium text-ink leading-snug">{svc.name}</p>
-                    <p class="mt-0.5 text-sm text-ink-muted leading-snug">{svc.role}</p>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <figure class="my-12 border-l-2 border-accent pl-6">
-            <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
-              Keeping the language model out of the parse path and putting it in front of
-              the roster instead is a product decision about what kind of wrongness is
-              acceptable in a record a licensor may read, expressed as an architecture.
-            </blockquote>
-          </figure>
         </div>
+      </div>
+    </Container>
+
+    {/* The pipeline this step describes, drawn end to end. */}
+    <Container width="wide" class="mt-16">
+      {flowSet('11-flow-voice-logging').map((flow) => (
+        <Plate
+          index={flow.slug.slice(0, 2)}
+          title={flow.title}
+          caption={flow.note}
+          src={sheet(flow.slug)}
+          alt={flow.alt}
+        />
+      ))}
+    </Container>
+
+    <Container width="content" class="mt-16">
+      <div class="case-layout-cont">
+        <div class="rounded-lg border border-line p-6 md:p-8">
+          <p class="mono-label mb-6">The services that made it real</p>
+          <ul class="grid gap-x-8 gap-y-5 sm:grid-cols-2">
+            {integrations.map((svc) => (
+              <li class="flex gap-3.5">
+                <Icon name={svc.icon} size={22} class="mt-0.5 shrink-0 text-ink-muted" />
+                <div>
+                  <p class="font-medium text-ink leading-snug">{svc.name}</p>
+                  <p class="mt-0.5 text-sm text-ink-muted leading-snug">{svc.role}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <figure class="mt-12 border-l-2 border-accent pl-6">
+          <blockquote class="font-display text-2xl md:text-3xl tracking-tight text-ink leading-snug">
+            Keeping the language model out of the parse path and putting it in front of
+            the roster instead is a product decision about what kind of wrongness is
+            acceptable in a record a licensor may read, expressed as an architecture.
+          </blockquote>
+        </figure>
       </div>
     </Container>
   </Section>
@@ -930,60 +878,31 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
               </div>
             ))}
           </div>
-          {/* The two flows that carry the outcome claims: onboarding is where the
-              product is won or lost, and the food program is compliance falling out
-              of records captured for another reason. */}
-          <div class="mt-14 space-y-14">
-            {flowSet('12-flow-onboarding', '15-flow-food-program').map((flow) => (
-              <figure class="sheet-plate">
-                <p class="sheet-plate__index">Flow <span aria-hidden="true">/</span> {flow.slug.slice(0, 2)}</p>
-                <div class="sheet-plate__mount">
-                  <div
-                    class="sheet-plate__stage"
-                    tabindex="0"
-                    role="group"
-                    aria-label={`${flow.title}: flow diagram, scrollable`}
-                  >
-                    <Image
-                      src={sheet(flow.slug)}
-                      alt={flow.alt}
-                      width={1400}
-                      widths={[700, 1050, 1400]}
-                      sizes="(min-width: 1024px) 720px, 100vw"
-                      format="webp"
-                      loading="lazy"
-                      decoding="async"
-                      data-zoom-src={zoomSrc(flow.slug)}
-                      data-zoom-alt={flow.alt}
-                      data-zoom-label={flow.title}
-                    />
-                  </div>
-                  <span class="sheet-plate__fade" aria-hidden="true"></span>
-                  <button
-                    type="button"
-                    class="sheet-plate__zoom"
-                    data-zoom-src={zoomSrc(flow.slug)}
-                    data-zoom-alt={flow.alt}
-                    data-zoom-label={flow.title}
-                  >
-                    <Icon name="ph:arrows-out" size={13} /> Enlarge
-                  </button>
-                </div>
-                <figcaption>
-                  <p class="sheet-plate__title">{flow.title}</p>
-                  <p class="sheet-plate__note">{flow.note}</p>
-                </figcaption>
-              </figure>
-            ))}
-          </div>
         </div>
+      </div>
+    </Container>
+
+    {/* The two flows that carry the outcome claims: onboarding is where the
+        product is won or lost, and the food program is compliance falling out
+        of records captured for another reason. */}
+    <Container width="wide" class="mt-16">
+      <div class="space-y-16">
+        {flowSet('12-flow-onboarding', '15-flow-food-program').map((flow) => (
+          <Plate
+            index={flow.slug.slice(0, 2)}
+            title={flow.title}
+            caption={flow.note}
+            src={sheet(flow.slug)}
+            alt={flow.alt}
+          />
+        ))}
       </div>
     </Container>
   </Section>
 
   <!-- THE REST OF THE SYSTEM -->
   <Section tone="paper" padding="default" class="border-t border-line">
-    <Container width="content">
+    <Container width="wide">
       <p class="mono-label mb-3">The rest of the system</p>
       <Text size="lg" tone="muted" class="measure mb-10">
         Six more sheets round out the product without repeating the device: the roster
@@ -991,33 +910,15 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
         validation, drills as their own task type, print-first reports, and the
         manual-entry tier that shipped with its own home screen.
       </Text>
-      <ul class="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
+      <ul class="grid gap-x-8 gap-y-14 md:grid-cols-2">
         {restOfSystem.map((s) => (
           <li>
-            <figure class="rest-shot">
-              {/* Cropped to the head of each sheet: the title band and the top
-                  of the layout, which is the part that reads at this size. The
-                  frame opens the full sheet in the zoom viewer. */}
-              <button
-                type="button"
-                class="rest-shot__frame"
-                data-zoom-src={zoomSrc(s.slug)}
-                data-zoom-alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
-                data-zoom-label={s.title}
-              >
-                <Image
-                  src={sheet(s.slug)}
-                  alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
-                  width={640}
-                  widths={[320, 480, 640]}
-                  sizes="(min-width: 1024px) 320px, (min-width: 640px) 50vw, 100vw"
-                  format="webp"
-                  loading="lazy"
-                  decoding="async"
-                />
-              </button>
-              <figcaption class="rest-shot__label">{s.title}</figcaption>
-            </figure>
+            <Plate
+              size="half"
+              title={s.title}
+              src={sheet(s.slug)}
+              alt={`Annotated wireframe of the ${s.title.toLowerCase()} screen.`}
+            />
           </li>
         ))}
       </ul>
@@ -1108,171 +1009,3 @@ const zoomSrc = (slug: string) => zoomUrls.get(slug)!;
     </Container>
   </Section>
 </BaseLayout>
-
-<script>
-  // Sheet mounts only claim "more below" when the artwork really is cut off.
-  document.querySelectorAll<HTMLElement>('.sheet-plate__mount').forEach((mount) => {
-    const stage = mount.querySelector<HTMLElement>('.sheet-plate__stage');
-    if (!stage) return;
-    const sync = () => {
-      mount.dataset.overflow = String(stage.scrollHeight > stage.clientHeight + 4);
-    };
-    stage.querySelectorAll('img').forEach((img) => {
-      if (img.complete) sync();
-      else img.addEventListener('load', sync, { once: true });
-    });
-    new ResizeObserver(sync).observe(mount);
-    sync();
-  });
-</script>
-
-<style>
-  /* Sheet plate — the same mounted-specimen language as ScrollShot and
-     FidelityPlate, at half width. Logatot's sheets are a single annotated pass
-     (no sketch/wireframe variants), so there is no tab rail: just the mount.
-     The artwork is tall, so the mount is a scroll window. */
-  /* Column layout so plates in a row share a height and the captions land on the
-     same baseline, whatever the artwork's natural aspect ratio is. */
-  .sheet-plate {
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-  }
-  .sheet-plate__mount { flex: 1; }
-
-  .sheet-plate__index {
-    margin: 0 0 0.75rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.2em;
-    color: var(--ink-faint);
-  }
-  .sheet-plate__index span { margin: 0 0.35em; opacity: 0.6; }
-
-  .sheet-plate__mount {
-    position: relative;
-    padding: 8px;
-    border-radius: 16px;
-    background: var(--raised);
-    border: 1px solid var(--line);
-    box-shadow:
-      0 1px 2px rgba(27, 26, 23, 0.04),
-      0 18px 50px -28px rgba(27, 26, 23, 0.3);
-  }
-
-  .sheet-plate__stage {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
-    height: 100%;
-    max-height: 620px;
-    border-radius: 9px;
-    border: 1px solid var(--line);
-    /* Fixed light stage: the sheets are dark-on-white line work and do not
-       invert, so the mount stays a lightbox in either theme. */
-    background: #ffffff;
-    scrollbar-width: thin;
-  }
-  .sheet-plate__stage:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-  .sheet-plate__stage :global(img) { width: 100%; height: auto; display: block; cursor: zoom-in; }
-
-  /* Enlarge — opens the full sheet in the zoom viewer, where the callouts read. */
-  .sheet-plate__zoom {
-    position: absolute;
-    top: 0.9rem;
-    right: 0.9rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.35rem;
-    padding: 0.34rem 0.65rem;
-    border-radius: 999px;
-    background: var(--paper);
-    border: 1px solid var(--line);
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.58rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-    cursor: pointer;
-    transition: color 0.2s var(--ease-out), border-color 0.2s var(--ease-out);
-  }
-  .sheet-plate__zoom:hover { color: var(--ink); border-color: var(--line-strong); }
-  .sheet-plate__zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* The rest-of-system frame is now a button into the viewer. */
-  .rest-shot__frame {
-    display: block;
-    width: 100%;
-    padding: 0;
-    cursor: zoom-in;
-    transition: border-color 0.2s var(--ease-out);
-  }
-  .rest-shot__frame:hover { border-color: var(--line-strong); }
-  .rest-shot__frame:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* Shown only when the artwork is actually taller than its window. */
-  .sheet-plate__fade {
-    position: absolute;
-    left: 9px;
-    right: 9px;
-    bottom: 9px;
-    height: 56px;
-    border-radius: 0 0 9px 9px;
-    background: linear-gradient(to bottom, transparent, #ffffff);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.2s var(--ease-out);
-  }
-  .sheet-plate__mount[data-overflow='true'] .sheet-plate__fade { opacity: 1; }
-
-  .sheet-plate__title {
-    margin: 1rem 0 0;
-    padding-top: 0.7rem;
-    border-top: 1px solid var(--line);
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.7rem;
-    text-transform: uppercase;
-    letter-spacing: 0.16em;
-    color: var(--ink);
-  }
-  .sheet-plate__note {
-    margin: 0.6rem 0 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: var(--ink-muted);
-  }
-
-  /* Rest-of-system rail — cropped heads of the remaining sheets. Uniform 4:3
-     crops anchored to the top, so the grid stays even however tall the sheet is. */
-  .rest-shot { margin: 0; }
-
-  .rest-shot__frame {
-    overflow: hidden;
-    border-radius: 10px;
-    border: 1px solid var(--line);
-    background: #ffffff;
-    aspect-ratio: 4 / 3;
-  }
-  .rest-shot__frame :global(img) {
-    width: 100%;
-    height: 100%;
-    display: block;
-    object-fit: cover;
-    object-position: top center;
-  }
-
-  .rest-shot__label {
-    display: block;
-    margin-top: 0.7rem;
-    font-family: var(--font-geist-mono), ui-monospace, monospace;
-    font-size: 0.68rem;
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-    color: var(--ink-muted);
-  }
-</style>

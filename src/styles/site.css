@@ -895,10 +895,23 @@ header .mobile-menu a[aria-current='page'] {
     column-gap: 4rem;
     align-items: start;
   }
-  /* Heading rail trails the prose while a long step scrolls. */
+  /* Heading rail trails the prose while a long step scrolls.
+
+     Artwork deliberately does NOT live in this grid. A 3200px design sheet
+     rendered in the ~680px body track is 19% of source, far too small to read
+     a callout, so plates sit in their own `<Container width="wide">` between
+     prose blocks instead. Keeping them out of the grid also keeps this rail
+     honest: a sticky grid item is constrained by the grid *container*, not by
+     its own grid area, so a plate placed in a second row would have the rail
+     pinned on top of the artwork all the way down it. */
   .case-layout__head {
     position: sticky;
     top: 6rem;
+  }
+  /* Prose that resumes after a full-width plate, aligned to the body column so
+     the step still reads as one continuous right-hand track. */
+  .case-layout-cont {
+    margin-left: 21.5rem;
   }
   /* Top-align the body with the heading (drop the single-column top gap). */
   .case-layout__body > :first-child {
@@ -911,9 +924,9 @@ header .mobile-menu a[aria-current='page'] {
   }
 }
 
-/* ── Hero load-in — a calm staggered rise on first paint. Used by page heroes
-   (the homepage defines its own scoped copy alongside the specimen styles).
-   Transform/opacity only; bows out under reduced motion. */
+/* ── Hero load-in — a calm staggered rise on first paint. The single definition
+   for every page hero, marketing and case study alike; no page should declare a
+   scoped copy. Transform/opacity only; bows out under reduced motion. */
 .hero-in {
   opacity: 0;
   transform: translateY(12px);

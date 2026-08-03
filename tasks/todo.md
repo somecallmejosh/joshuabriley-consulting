@@ -26,7 +26,7 @@ Full-project scan for factual inconsistencies and LLM writing patterns.
 - [ ] "Design System Scorecard" in `the-hidden-cost-of-component-inconsistency.mdx` describes a different tool than `/tools/scorecard/`
 - [ ] `IVFCRYO` (22×) vs `IVFCryo` (8×); `Logatot` vs `LogATot, Inc.` in `resume.astro:34`
 - [ ] "20 years" site-wide vs "20+ years" twice in `resume.astro`
-- [ ] Changing `resume.astro` desyncs `public/resume.pdf` (source: `notes/resume.md`)
+- [x] ~~Changing `resume.astro` desyncs `public/resume.pdf`~~ FIXED 2026-08-03: both now read `src/lib/resume-data.mjs`; `npm run resume:pdf` regenerates the PDF from `/resume-print/`. `notes/resume.md` retired to a pointer.
 
 ---
 
@@ -319,3 +319,209 @@ which produced the awkward "Open the self-assessment".
 Note: changing the collection schema requires a dev-server restart (or `rm -rf .astro`)
 before the new field appears in rendered output. The content layer caches parsed
 frontmatter and does not re-sync on schema edits alone.
+
+---
+
+# Home + about consistency pass against the case studies (2026-08-03)
+
+Reference pages (source of truth): `projects/ivfcryo.astro`, `projects/logatot.astro`,
+`projects/vmspark.astro`, plus `projects.astro` (the hub whose per-project notes
+the home page has to agree with). Mode: redesign-preserve. No IA, slug, nav, or
+brand-token changes. Dials held at the site's existing reading (variance 6,
+motion 3, density 4).
+
+## Applied
+
+### Factual conflicts
+- [x] Home metrics: `3 → 1 brands` (America's Test Kitchen) sat in a section
+      whose three links are IVFCRYO / VMSpark / Logatot. Replaced all three with
+      one number per linked case study, so every figure is click-through
+      verifiable. Closes the older open item at line 24 of the July audit: the
+      ATK number is real but its only source is unpublished, so it belongs on
+      the resume, not in a band of case-study links.
+- [x] Home IVFCRYO one-liner said "Accessibility was the mechanism that moved
+      the numbers." The case study's thesis is the five-party readiness gate.
+      Rewritten to match.
+- [x] Home work order (IVFCRYO, Logatot, VMSpark) disagreed with `projects.astro`
+      (IVFCRYO 01, VMSpark 02, Logatot 03). Home reordered to match.
+- [x] `projects.astro` IVFCRYO summary claimed he "built the Rails domain and the
+      carrier, telemetry, and alerting services underneath it." The case study is
+      emphatic that engineering owned the Rails/Postgres implementation and he
+      partnered on it. Corrected to the case study's own wording.
+- [x] `ivfcryo.astro` mixed `IVFCRYO` (11x) and `IVFCryo` (7x) within one page,
+      while every other file on the site uses `IVFCRYO`. Normalized to 18x
+      `IVFCRYO`. Closes part of the July open item at line 27 (the `Logatot` vs
+      `LogATot, Inc.` half is still open in `resume.astro`).
+- [x] Home "Four working instruments" hardcoded against the tools collection.
+      Now derived from `tools.length`.
+
+### Dead code / false comments
+- [x] Home `clients` array declared, never rendered. Removed.
+- [x] Home hero comment claimed a "Shipped at" credentials strip carried the
+      proof; the strip below renders capability chips. Comment corrected.
+- [x] `about.astro` imported `Link`, never used it. Removed.
+- [x] Home `<style>` block re-declared `.hero-in`, its delay steps, and the
+      reduced-motion guard, all already global in `site.css` (which also defines
+      `-5`). Removed, and the stale site.css comment pointing at it corrected.
+
+### Style drift on identical elements
+- [x] Home hand-rolled its metric figure in `font-serif` (Fraunces); the
+      `<Metric>` component the case studies use renders figures in
+      `font-display` (Hanken). Home now matches Metric's figure/label/caption
+      typography exactly, in paper rather than ink for the dark surface.
+- [x] Capability chips: home and about rendered the same strip with different
+      items and different phrasing. Unified to one four-item list, declared in
+      each page's frontmatter.
+- [x] Portfolio-intent CTA had three labels ("See what I've built", "See the
+      work", "View all projects"). Both hero CTAs are now "See the work";
+      "View all projects" kept as the list-overflow link, matching the case
+      studies' "Back to all projects".
+- [x] `about.astro` ink CTA was missing `js-magnetic`, which every other primary
+      CTA on the site carries. Added.
+
+### Copy
+- [x] `about.astro` ran "the empty states, the keyboard paths, the screen that
+      shows when there's nothing to show yet" verbatim in the hero and again in
+      the pull quote one section later. Hero paragraph rewritten to carry range
+      instead, leaving the formulation to land once.
+- [x] `about.astro` described Rudiment UI two ways on one page ("open-source
+      sandbox for accessible component primitives" vs "open-source library").
+      Both aligned to `personal-projects/rudiment-ui.astro`: "open-source React
+      component library".
+
+### Responsive
+- [x] Home selected-work metrics used `grid-cols-3` at every width, including
+      320px. Now `grid-cols-1 sm:grid-cols-3`.
+
+## Deliberate no-change
+- The resume secondary link and primary-CTA icon differ between the marketing
+  family (`index`, `about`, `projects`, `personal-projects`: mono micro-link,
+  arrow-right) and the case-study family (`ivfcryo`, `logatot`, `vmspark`: sans
+  link, envelope-left). Each family is internally consistent; flipping either
+  creates more drift than it removes. Left alone.
+
+## Decided
+- The home page no longer shows any client credibility. The `clients` array
+  (Travelers, Berkshire Hathaway, America's Test Kitchen) was dead code, and the
+  hero comment showed a "Shipped at" strip was once intended there. Josh's call
+  (2026-08-03): **do not build the "Shipped at" strip.** Closed, not deferred.
+  The capability chips and the case-study numbers carry the proof instead.
+
+## Review
+`npm run build` clean; rendered output verified in `dist/` for the metric
+typography, work order, derived tool count, matched capability chips, and the
+IVFCRYO casing. `npx astro check` crashes in the compiler WASM on
+`components/patterns/FAQ.astro` — pre-existing, unrelated to these edits.
+
+---
+
+# Resume rewrite + PDF pipeline (2026-08-03)
+
+Ask: much less verbose introduction; job bullets that read as benefits to the
+company rather than tech-stack descriptions.
+
+## Content
+- [x] Summary cut from 95 words / 3 long sentences to 41 words. Drops the
+      process narration ("framing ambiguous problems, prototyping directly in
+      code, validating with real users and behavioral data..."), keeps the
+      positioning and the Travelers scale proof.
+- [x] Every bullet across all six roles rewritten to lead with what the company
+      got. Tech moved to the per-job `stack` line and `SKILLS`, so the keyword
+      surface is unchanged for ATS and skim-readers.
+- [x] Added Gatsby to the toolkit. It was named in the old Travelers bullet and
+      would otherwise have been lost when that bullet became a benefit.
+- [x] Added VMSpark to the freelance bullets. Real client with a published case
+      study and a testimonial, previously absent from the resume entirely.
+- [x] Freelance bullets now carry the numbers the case studies substantiate
+      (75% / 55% for IVFCRYO, zero pipeline regressions for VMSpark).
+
+## Pipeline (fixes the long-standing desync)
+- [x] `src/lib/resume-data.mjs` is now the single source of truth.
+- [x] `src/pages/resume-print/[...path].astro`: letter-format print document,
+      bare + noindex, dev-only via `getStaticPaths` (same guard as og-render, so
+      it never ships to dist). Excluded from the sitemap and robots.txt.
+- [x] `scripts/generate-resume-pdf.mjs` + `npm run resume:pdf`, following the
+      `generate-og.mjs` pattern (Playwright against a running `astro dev`).
+- [x] `resume.astro` now imports the shared data instead of inlining 107 lines
+      of it.
+- [x] `notes/resume.md` retired to a pointer at the new source, with the
+      regeneration steps and the bullet house rule.
+
+## Print-specific bugs found and fixed
+- [x] The layout's screen affordances (skip link, inspector toast, view-source
+      chip, lightbox scaffold) are siblings of `<main>` and printed as a stray
+      grey block at the foot of page 2. Hidden in the print route.
+- [x] Site's warm paper background forced to white for print stock.
+- [x] Masthead title was wrapping to a stranded "Developer"; widened to hold one
+      line.
+- [x] `break-inside: avoid` on jobs, strengths, and toolkit rows so a role never
+      splits across sheets; `break-after: avoid` on section rules.
+
+## Review
+Regenerated: 2 pages, letter, 218 KB. Both pages inspected as images. `npm run
+build` clean, `/resume-print/` absent from `dist/` and the sitemap, `/resume/`
+renders the new bullets.
+
+## Note
+`LogATot, Inc.` (resume) vs `Logatot` (case study) is left as-is: the resume
+lists the incorporated employer, the case study names the product. Still open in
+the July audit list as a naming inconsistency if Josh wants them unified.
+
+---
+
+# Tools CTA aligned to the site pattern (2026-08-03)
+
+`CTABanner.astro` was the only CTA on the site rendering as a centered paper
+card (`rounded-xl border border-line bg-raised`, `text-center`, `mx-auto`) on a
+`tone="paper"` section. Every other closing CTA is a full-bleed
+`tone="ink" padding="loose"` band, left-aligned, no card. Its only consumers
+were the tools pages, so the tools were the only pages ending differently.
+
+- [x] Rewrote `CTABanner.astro` to the canonical shape: ink surface, left
+      aligned, `mono-label !text-paper/65` eyebrow, `display-lg` heading in
+      paper, `whiteMuted` lead, `mt-8 flex flex-col items-start gap-4
+      sm:flex-row sm:items-center` button row.
+- [x] Dropped the now-meaningless `align` prop (neither call site passed it).
+- [x] Fixed both call sites' button variants for the dark surface:
+      `primary` → `navy`, `ghost` → `secondary`. `ghost` is `text-ink` and would
+      have been near-invisible on ink. Added the missing `size="lg"` on the
+      scorecard results buttons so they match every other CTA.
+- [x] Removed the unused `CTABanner` import from `tools/index.astro` (that page
+      closes with its own ink "Why these are here" band, not a CTA).
+
+Verified: build clean, old card markup absent from `dist/`, and the tool CTA
+screenshotted beside the IVFCRYO CTA at 1280px. Identical treatment.
+
+---
+
+# Resume PDF: borderless, type-only (2026-08-03)
+
+Ask: remove all borders and background colors from `public/resume.pdf`; let the
+font do the design work; use the site's fonts.
+
+- [x] Removed every `border-*` and decorative `background` from the print route.
+      Only remaining background is `html, body { background: #fff }`, which is
+      paper, not decoration: without it the site's surface tokens invert under
+      `prefers-color-scheme: dark` and the resume prints white-on-black.
+- [x] Bullet markers were `background: #a8412a` squares on `::before`. Now real
+      `list-style: disc` with a muted `::marker`, so the marker is drawn by the
+      font.
+- [x] Type now matches the site's three faces in their site roles: Newsreader
+      (`--font-fraunces`) for the name, Hanken Grotesk (`--font-hanken`) for
+      body, Geist Mono (`--font-geist-mono`) for the uppercase labels (contact
+      block, section labels, periods, stack, toolkit groups). Previously the
+      whole document was Hanken.
+- [x] With the hairlines gone, hierarchy is spacing + scale + the accent mono
+      section label. Section labels get much more space above than below so they
+      group with the content beneath rather than floating between blocks.
+
+## Bug found
+- [x] Section headings were `class="rule"`. `site.css:196` already owns `.rule`
+      as a 1px hairline with `background: var(--line)`. Astro's scoped styles do
+      not override properties they don't declare, so every section heading
+      printed with a grey bar behind it. Renamed to `.section-label`. Caught by
+      dumping `getComputedStyle` for borders/backgrounds across `.doc *` in a
+      headless browser, not by reading the CSS.
+
+Verified: `getComputedStyle` reports zero borders and zero backgrounds inside
+`.doc`; regenerated at 2 pages, letter, 211 KB; both pages inspected as images.

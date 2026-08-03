@@ -84,6 +84,7 @@ export default defineConfig({
         !page.includes('/dev/') &&
         !page.includes('/component-inventory') &&
         !page.includes('/og-render') &&
+        !page.includes('/resume-print') &&
         !page.includes('/tools/scorecard/results'),
     }),
   ],

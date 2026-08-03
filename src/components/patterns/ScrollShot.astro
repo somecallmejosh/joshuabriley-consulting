@@ -3,11 +3,22 @@ import Icon from '~/components/primitives/Icon.astro';
 import { cx } from '~/lib/cx';
 
 /**
- * ScrollShot — a full-page capture shown as a tall *editorial plate* that scrolls
- * internally. Same mounted-specimen language as SiteShot (no browser chrome): a
- * hairline paper mount, an optional plate index above, and a mono spec rail
- * below. A soft bottom fade + a quiet "scroll" cue signal there's more page to
- * walk. Pass `href` to link the source domain out to the live site.
+ * ScrollShot — a full-page capture, shown as a tall editorial plate.
+ *
+ * These are a different asset class from the design sheets in `Plate.astro`.
+ * A sheet is a document meant to be read whole; a full-page capture is an
+ * entire page's scroll flattened into one image, and some of them are extreme
+ * (the style-guide tables capture is 1600x11531, a 7:1 ratio — at band width
+ * that single image would be nearly 9000px tall). They genuinely cannot render
+ * whole by default.
+ *
+ * So this one keeps a bound, but not a scrollbar. A nested scroll region inside
+ * a scrolling page traps the wheel on the way past, which is the single most
+ * uncomfortable thing a long case study can do. Instead the capture is clipped
+ * to `maxH` and an explicit control expands it in place to its full height.
+ * One honest click, no trap, and the collapsed page length is unchanged.
+ *
+ * Pass `href` to link the source domain out to the live site.
  */
 
 interface Props {
@@ -23,7 +34,7 @@ interface Props {
   index?: string;
   /** Kind label shown at the caption rail's left. */
   kind?: string;
-  /** Max visible height of the scroll stage. */
+  /** Visible height while collapsed. */
   maxH?: string;
   class?: string;
 }
@@ -36,9 +47,11 @@ const {
   href,
   index,
   kind = 'Full page',
-  maxH = '620px',
+  maxH = '70vh',
   class: className,
 } = Astro.props;
+
+const uid = `shot-${label.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 ---
 
 <figure class={cx('scroll-shot', className)}>
@@ -47,19 +60,20 @@ const {
   )}
 
   <div class="scroll-shot-mount">
-    <div
-      class="scroll-shot-stage"
-      style={`max-height:${maxH}`}
-      tabindex="0"
-      role="group"
-      aria-label={`${label}: full-page capture, scrollable`}
-    >
+    <div class="scroll-shot-stage" id={uid} style={`--shot-max:${maxH}`}>
       <img src={src} alt={alt} loading="lazy" decoding="async" />
     </div>
     <span class="scroll-shot-fade" aria-hidden="true"></span>
-    <span class="scroll-shot-cue" aria-hidden="true">
-      scroll <Icon name="ph:arrows-down-up" size={12} />
-    </span>
+    <button
+      type="button"
+      class="scroll-shot-toggle"
+      data-shot-toggle
+      aria-controls={uid}
+      aria-expanded="false"
+    >
+      <Icon name="ph:arrows-out-line-vertical" size={12} />
+      <span data-shot-toggle-text>Expand</span>
+    </button>
   </div>
 
   <figcaption class="scroll-shot-cap">
@@ -106,50 +120,84 @@ const {
       0 18px 50px -28px rgba(27, 26, 23, 0.3);
   }
 
+  /* Clipped, never scrolled. The wheel belongs to the page. */
   .scroll-shot-stage {
-    overflow-y: auto;
-    overflow-x: hidden;
-    overscroll-behavior: contain;
+    overflow: hidden;
+    max-height: var(--shot-max, 70vh);
     border-radius: 9px;
     border: 1px solid var(--line);
     background: var(--raised);
-    scrollbar-width: thin;
   }
-  .scroll-shot-stage:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
+  .scroll-shot[data-expanded] .scroll-shot-stage { max-height: none; }
   .scroll-shot-stage img { width: 100%; height: auto; display: block; }
 
-  /* A soft fade at the mount's lower edge: signals more page below the fold. */
+  /* The fade and the control are claims that there is more capture below. They
+     only render when that is actually true — the script clears the flag on a
+     capture that already fits, and an expand button on a fully-visible image is
+     just a lie. */
+  .scroll-shot-fade,
+  .scroll-shot-toggle {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s var(--ease-out);
+  }
+  .scroll-shot[data-overflow] .scroll-shot-fade { opacity: 1; }
+  .scroll-shot[data-overflow] .scroll-shot-toggle {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
   .scroll-shot-fade {
     position: absolute;
     left: 9px;
     right: 9px;
     bottom: 9px;
-    height: 64px;
+    height: 96px;
     border-radius: 0 0 9px 9px;
     background: linear-gradient(to bottom, transparent, var(--raised));
-    pointer-events: none;
   }
+  /* Once expanded there is nothing left below to fade toward. */
+  .scroll-shot[data-expanded] .scroll-shot-fade { opacity: 0; }
 
-  .scroll-shot-cue {
+  .scroll-shot-toggle {
     position: absolute;
-    right: 1.1rem;
-    bottom: 1rem;
+    left: 50%;
+    bottom: 1.15rem;
+    transform: translateX(-50%);
     display: inline-flex;
     align-items: center;
-    gap: 0.35rem;
-    padding: 0.3rem 0.6rem;
+    gap: 0.4rem;
+    padding: 0.42rem 0.85rem;
     border-radius: 999px;
     background: var(--paper);
-    border: 1px solid var(--line);
+    border: 1px solid var(--line-strong);
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.58rem;
     text-transform: uppercase;
     letter-spacing: 0.14em;
+    white-space: nowrap;
     color: var(--ink-muted);
-    pointer-events: none;
+    cursor: pointer;
+    transition:
+      opacity 0.2s var(--ease-out),
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out);
+  }
+  .scroll-shot-toggle:hover { color: var(--ink); border-color: var(--ink-faint); }
+  .scroll-shot-toggle:focus-visible {
+    opacity: 1;
+    pointer-events: auto;
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  /* Expanded, the control moves out of the artwork and sits under it, so it is
+     not floating over 9000px of screenshot. */
+  .scroll-shot[data-expanded] .scroll-shot-toggle {
+    position: static;
+    transform: none;
+    margin: 0.85rem auto 0;
+    display: flex;
+    width: fit-content;
   }
 
   /* Caption — spec rail (kind + source) then optional note. */
@@ -191,3 +239,42 @@ const {
     color: var(--ink-muted);
   }
 </style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.scroll-shot').forEach((shot) => {
+    const stage = shot.querySelector<HTMLElement>('.scroll-shot-stage');
+    const btn = shot.querySelector<HTMLButtonElement>('[data-shot-toggle]');
+    const btnText = shot.querySelector<HTMLElement>('[data-shot-toggle-text]');
+    const img = stage?.querySelector('img');
+    if (!stage || !btn || !btnText || !img) return;
+
+    // Only offer the control when the capture is genuinely taller than its
+    // collapsed window. Measured against scrollHeight because the stage is
+    // clipped, not scrolled.
+    const sync = () => {
+      if (shot.hasAttribute('data-expanded')) return;
+      shot.toggleAttribute('data-overflow', stage.scrollHeight > stage.clientHeight + 4);
+    };
+
+    if (img.complete) sync();
+    else img.addEventListener('load', sync, { once: true });
+    new ResizeObserver(sync).observe(shot);
+
+    btn.addEventListener('click', () => {
+      const open = shot.toggleAttribute('data-expanded');
+      btn.setAttribute('aria-expanded', String(open));
+      btnText.textContent = open ? 'Collapse' : 'Expand';
+      if (!open) {
+        // Collapsing from far down the image would otherwise strand the reader
+        // below the plate with no context.
+        shot.scrollIntoView({
+          block: 'nearest',
+          behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+            ? 'auto'
+            : 'smooth',
+        });
+        sync();
+      }
+    });
+  });
+</script>

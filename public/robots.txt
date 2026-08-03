@@ -4,5 +4,6 @@ Allow: /
 Disallow: /dev/
 Disallow: /component-inventory
 Disallow: /og-render/
+Disallow: /resume-print/
 
 Sitemap: https://joshuabriley.com/sitemap-index.xml

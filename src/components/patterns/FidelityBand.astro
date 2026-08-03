@@ -1,0 +1,209 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Icon from '~/components/primitives/Icon.astro';
+import { cx } from '~/lib/cx';
+import type { ImageMetadata } from 'astro';
+
+/**
+ * FidelityBand — the sketch → wireframe → annotated progression, shown once.
+ *
+ * This used to be a tab rail repeated on every plate: four plates per page,
+ * three tabs each, which meant eight of the twelve artifacts were hidden behind
+ * a click and the same device was re-explained four times over. The progression
+ * is a single point about how the work was made, so it gets made once, here,
+ * and every sheet after this one is just the annotated pass at full width.
+ *
+ * The columns widen left to right (1fr / 1fr / 2fr). That size ramp is the
+ * argument — fidelity climbing — so there is no arrow, no step number, and no
+ * chrome doing the job the layout already does.
+ */
+
+interface Props {
+  /** Screen name the three artifacts share, e.g. "Shipments index". */
+  title: string;
+  /** Crude-sketch SVG (public URL). */
+  sketch: string;
+  /** Clean-wireframe SVG (public URL). */
+  wire: string;
+  /** Annotated wireframe, imported so Astro can process it. */
+  annotated: ImageMetadata;
+  /** Real description of the annotated sheet, for screen readers. */
+  annotatedAlt: string;
+  /** Optional note under the band. */
+  caption?: string;
+  class?: string;
+}
+
+const { title, sketch, wire, annotated, annotatedAlt, caption, class: className } =
+  Astro.props;
+
+const zoomImg = await getImage({ src: annotated, width: 2000, format: 'webp' });
+const zoomLabel = `${title} · annotated`;
+---
+
+<figure class={cx('fband', className)}>
+  <div class="fband__grid">
+    <div class="fband__cell">
+      <div class="fband__frame">
+        <img
+          src={sketch}
+          alt={`${title}, rough hand-drawn concept sketch.`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <p class="fband__label">Sketch</p>
+      <p class="fband__gloss">Arguing about the shape.</p>
+    </div>
+
+    <div class="fband__cell">
+      <div class="fband__frame">
+        <img
+          src={wire}
+          alt={`${title}, clean wireframe without annotations.`}
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+      <p class="fband__label">Wireframe</p>
+      <p class="fband__gloss">Fixing it.</p>
+    </div>
+
+    <div class="fband__cell fband__cell--lead">
+      <div class="fband__frame">
+        <Image
+          src={annotated}
+          alt={annotatedAlt}
+          width={1200}
+          widths={[480, 720, 1200]}
+          sizes="(min-width: 1024px) 600px, (min-width: 768px) calc(100vw - 3rem), 100vw"
+          format="webp"
+          loading="lazy"
+          decoding="async"
+          data-zoom-src={zoomImg.src}
+          data-zoom-alt={annotatedAlt}
+          data-zoom-label={zoomLabel}
+        />
+      </div>
+      <p class="fband__label">
+        Annotated
+        <button
+          type="button"
+          class="fband__zoom"
+          data-zoom-src={zoomImg.src}
+          data-zoom-alt={annotatedAlt}
+          data-zoom-label={zoomLabel}
+        >
+          <Icon name="ph:arrows-out" size={12} /> Full size
+        </button>
+      </p>
+      <p class="fband__gloss">The reasoning written on top.</p>
+    </div>
+  </div>
+
+  {caption && <figcaption class="fband__cap">{caption}</figcaption>}
+</figure>
+
+<style>
+  .fband { margin: 0; }
+
+  .fband__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+  /* Two-up at tablet: the two low-fidelity passes pair off and the annotated
+     sheet takes the full row beneath them, where it has room to read. */
+  @media (min-width: 768px) {
+    .fband__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem 1.75rem;
+    }
+    .fband__cell--lead { grid-column: 1 / -1; }
+  }
+  /* The ramp proper. */
+  @media (min-width: 1024px) {
+    .fband__grid {
+      grid-template-columns: 1fr 1fr 2fr;
+      align-items: stretch;
+      gap: 2rem;
+    }
+    .fband__cell--lead { grid-column: auto; }
+    /* The three artifacts are different shapes and the columns widen to the
+       right, so the cells never match in height. Dropping the caption to the
+       foot of each cell lines the three hairlines up into one rule across the
+       band instead of three at random heights. */
+    .fband__cell {
+      display: flex;
+      flex-direction: column;
+    }
+    .fband__label { margin-top: auto; }
+  }
+
+  .fband__frame {
+    overflow: hidden;
+    border-radius: 10px;
+    border: 1px solid var(--line);
+    /* Same fixed light stage as Plate — the artwork does not invert. */
+    background: #ffffff;
+  }
+  .fband__frame :global(img) {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .fband__cell--lead .fband__frame :global(img) { cursor: zoom-in; }
+
+  .fband__label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin: 0.8rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1px solid var(--line);
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.66rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+  }
+
+  .fband__gloss {
+    margin: 0.4rem 0 0;
+    font-size: 0.83rem;
+    line-height: 1.55;
+    color: var(--ink-muted);
+  }
+
+  .fband__zoom {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    flex-shrink: 0;
+    padding: 0.28rem 0.55rem;
+    border-radius: 999px;
+    background: none;
+    border: 1px solid var(--line);
+    font-family: inherit;
+    font-size: 0.56rem;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition:
+      color 0.2s var(--ease-out),
+      border-color 0.2s var(--ease-out);
+  }
+  .fband__zoom:hover { color: var(--ink); border-color: var(--line-strong); }
+  .fband__zoom:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .fband__cap {
+    margin: 1.5rem 0 0;
+    max-width: 68ch;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--ink-muted);
+  }
+</style>

@@ -5,11 +5,19 @@ import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
-import Link from '~/components/primitives/Link.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
   'Design- and front-end-focused product design engineer. 20 years in production UI: design-grade, accessible interfaces with the judgment most teams have to hire a separate designer to get.';
+
+// Same four chips as the home page, worded identically. Two pages rendering the
+// same strip with different items read as two different claims.
+const capabilities = [
+  'Design-grade front-end',
+  'React · TypeScript',
+  'Accessibility built in',
+  'Design systems',
+];
 
 const principles = [
   {
@@ -36,7 +44,7 @@ const learning = [
   { title: 'WAI-ARIA & APG', note: 'Authoring practices for patterns that truly work for assistive tech.' },
   { title: 'Design Tokens CG', note: 'The emerging standard for portable, multi-platform design decisions.' },
   { title: 'CSS Working Group', note: 'Container queries, anchor positioning, cascade layers (the good stuff).' },
-  { title: 'Rudiment UI', note: 'My open-source sandbox for accessible component primitives.' },
+  { title: 'Rudiment UI', note: 'My open-source React component library, built with the reasoning left in.' },
 ];
 ---
 
@@ -60,11 +68,14 @@ const learning = [
             interface is where I bring the most value: design-grade, accessible, with the judgment
             most teams have to hire a separate designer to get.
           </Text>
+          {/* The empty-state/keyboard-path formulation is the pull quote's job
+              one section down. Saying it twice on one page blunts it, so this
+              paragraph carries the range instead. */}
           <Text tone="muted" class="hero-in hero-in-3 mt-5 max-w-xl">
-            The part I care about most is the part most engineers leave blank:
-            <em class="text-ink not-italic font-medium"> the empty states, the keyboard paths, the
-            screen that shows when there's nothing to show yet</em>, the details that decide whether
-            a product feels finished.
+            I work across the whole product, from the stakeholder interviews that decide what to
+            build through to the <em class="text-ink not-italic font-medium">data model the
+            interface has to keep its promises against</em>. But the surface is where I do my
+            best work, and where I hold the highest standard.
           </Text>
 
           <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
@@ -77,7 +88,7 @@ const learning = [
           </div>
 
           <ul class="hero-in hero-in-4 mt-10 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
-            {['Design-grade front-end', 'React · TypeScript', 'Accessibility', 'Full-stack capable'].map((p) => (
+            {capabilities.map((p) => (
               <li class="flex items-center gap-2">
                 <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
               </li>
@@ -163,7 +174,8 @@ const learning = [
             </p>
             <p>
               I also maintain <span class="text-ink font-medium">Rudiment UI</span>, an
-              open-source library where I sharpen ideas in public before they land in production systems.
+              open-source React component library where I sharpen ideas in public before they land
+              in production systems.
             </p>
           </div>
         </div>
@@ -202,7 +214,7 @@ const learning = [
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">
           <div class="flex flex-col items-start gap-3">
-            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
+            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">Get in touch</Button>
             <a
               href="/resume/"
               class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"

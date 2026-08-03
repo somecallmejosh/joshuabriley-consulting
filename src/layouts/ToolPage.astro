@@ -172,17 +172,24 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
     </Section>
   )}
 
-  {/* ───────────────────────── CLOSE ───────────────────────── */}
+  {/* ───────────────────────── CLOSE ─────────────────────────
+      Not a sales pitch. The tools are not for sale and there is no audit
+      service behind them, so this closes on what the tool actually is: a work
+      sample, pointing at the case studies where the same standard runs at
+      product scale. No eyebrow: the hero and the related-tools band already
+      carry one each, which is the cap for a page this length.
+
+      The secondary deliberately is NOT "see all four tools" any more; the
+      related-tools list immediately above already does that job. */}
   <CTABanner
-    eyebrow="Past the self-assessment"
-    title="Want the version with your name on it?"
-    lead="These tools give you the shape of the problem. An audit gives you the specifics: which patterns are drifting, what each one costs, and the order to fix them in."
+    title="Built the way I build production work."
+    lead="Accessible controls, live state, no framework underneath, and the same tokens as the rest of this site. It should hold up to being inspected as production work. The case studies show the same standard at full product scale."
   >
-    <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
+    <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">
       Get in touch
     </Button>
-    <Button variant="ghost" size="lg" href="/tools/">
-      See all four tools
+    <Button variant="secondary" size="lg" href="/projects/">
+      See the work
     </Button>
   </CTABanner>
 </BaseLayout>

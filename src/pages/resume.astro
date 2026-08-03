@@ -7,121 +7,22 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
-const updated = 'July 2026';
+// Shared with /resume-print/ and therefore with public/resume.pdf, so the page
+// and the download cannot drift. Edit the content in src/lib/resume-data.mjs,
+// then re-run `npm run resume:pdf`.
+import {
+  SUMMARY as summary,
+  EXPERIENCE as experience,
+  SKILLS as skills,
+  EDUCATION as education,
+  CONTINUING_ED as continuingEd,
+  CERT_FOCUS as certFocus,
+  UPDATED as updated,
+} from '~/lib/resume-data.mjs';
 
 const description =
-  'Product design engineer and front-end UI developer with 20+ years shipping accessible, high-performance interfaces, design systems, and data-rich tools for insurance platforms and consumer products.';
+  'Product design engineer with 20+ years in production UI. Design-grade, accessible interfaces, design systems, and data-rich tools for insurance platforms and consumer products.';
 
-const summary =
-  'Product design engineer and front-end UI developer with 20+ years shipping production interfaces for insurance platforms, design systems, data-rich tools, and consumer products. Strongest where product judgment, accessible interaction design, and hands-on front-end implementation meet: framing ambiguous problems, prototyping directly in code, validating with real users and behavioral data, and carrying the strong ideas through to production without losing intent in a handoff. Current work builds and automates an enterprise design system used by thousands of engineers and designers, with AI tooling running the full loop from research to build to test and real judgment applied to what it produces.';
-
-const experience = [
-  {
-    period: '2025 - Present',
-    company: 'Travelers',
-    role: 'Software Engineer II, Design System',
-    stack: 'Stencil Web Components · React',
-    bullets: [
-      'Build and maintain enterprise design-system components used by roughly 3,500 software engineers and designers across the organization.',
-      'Work in Stencil Web Components, React wrappers, Storybook, Gatsby documentation, Playwright, Jest, Figma Code Connect, and Node automation to improve design-to-code adoption.',
-      'Automated Storybook story development, saving more than 10 hours per component story and cutting repetitive setup for the team.',
-      'Automated Figma Code Connect mapping so design and engineering artifacts stay closer together with less manual translation.',
-      'Contribute to documentation, accessibility expectations, implementation guidance, and cross-framework usage for teams consuming the system.',
-    ],
-  },
-  {
-    period: '2023 - 2024',
-    company: 'LogATot, Inc.',
-    role: 'Senior UI Developer',
-    stack: 'Rails · ViewComponents',
-    bullets: [
-      'Owned UI and UX delivery for a Rails platform supporting attendance, CACFP workflows, timeclock features, voice logging, Stripe billing, and bilingual English and Spanish interfaces.',
-      'Designed and developed modular, accessible ViewComponent patterns with Hotwire, HTMX, and Alpine.js: forms, navigation, status states, tables, and admin flows that kept behavior clear and consistent for daily operators.',
-      'Read real usage through Hotjar, Google Analytics, and HubSpot, then reworked the flows and forms where the data showed people getting stuck.',
-      'Partnered with product and engineering to turn workflow needs into production interfaces, balancing speed, usability, accessibility, and implementation cost.',
-    ],
-  },
-  {
-    period: '2022 - 2023',
-    company: "America's Test Kitchen",
-    role: 'Senior Software Engineer',
-    stack: 'React · Next.js',
-    bullets: [
-      'Built and documented React, Next.js, and Storybook components during migration from a legacy Rails experience to a modern front-end platform.',
-      'Improved accessibility, responsive behavior, and front-end quality across consumer-facing digital experiences used by a large editorial audience.',
-      'Worked closely with editorial, product, design, and engineering partners to preserve content intent while shipping maintainable production UI.',
-      "Settled design questions with Optimizely A/B tests and the site's analytics stack instead of opinion, and weighed each third-party script against its cost to performance, accessibility, and security.",
-    ],
-  },
-  {
-    period: '2018 - 2022',
-    company: 'Berkshire Hathaway Specialty Insurance',
-    role: 'Principal Design Engineer',
-    stack: 'Vue.js · Nuxt.js',
-    bullets: [
-      'Designed and built a custom Vue.js, Nuxt.js, and Hugo-based UI library for specialty-insurance portals, standardizing front-end work across internal, agent, and customer surfaces with shared components, documentation, and accessibility guidance.',
-      'Created data-heavy interfaces for underwriting, administration, customer service, and agent workflows, including tables, filters, forms, dashboards, and task-oriented screens.',
-      'Instrumented the portals with Segment and Heap so real underwriter and agent behavior drove which workflows and screens to prioritize, rather than guessing at what mattered.',
-      'Translated complex insurance processes into clear, accessible, production-ready UI patterns while working with stakeholders, engineers, and subject-matter experts.',
-    ],
-  },
-  {
-    period: '2016 - 2018',
-    company: "America's Test Kitchen",
-    role: 'Lead UI Developer',
-    stack: 'UI Systems',
-    bullets: [
-      'Designed and implemented a scalable UI utility system that improved consistency, development speed, accessibility, SEO, and performance across digital properties.',
-      'Trained team members on accessible markup, front-end performance, responsive behavior, and durable UI implementation practices.',
-      "Received the Breaking Bread Award for user-friendly, innovative content solutions that strengthened the brand's digital engagement.",
-    ],
-  },
-  {
-    period: '2010 - Present',
-    company: 'Independent',
-    role: 'Freelance UI Developer',
-    stack: 'Contract',
-    bullets: [
-      'Design and build focused web applications, component systems, and front-end experiences for clients with an emphasis on clarity, accessibility, and practical delivery.',
-      'Built data-intensive user and admin portal work for Berkshire Hathaway Specialty Insurance, and designed a web application for IVFCRYO supporting customer shipping and real-time monitoring workflows.',
-      'Create full-stack prototypes and production applications in Rails, Hotwire, Vue, Nuxt, React, and modern CSS when direct product exploration is faster than static design.',
-    ],
-  },
-];
-
-const education = [
-  {
-    title: 'B.S. Biology',
-    org: 'Troy University',
-    note: 'Built analytical and technical-writing habits through research-based projects.',
-  },
-];
-
-const continuingEd = [
-  { title: 'Web Accessibility', org: 'Deque University' },
-  { title: 'Personal learning projects', org: 'Ongoing' },
-];
-
-const certFocus = 'IAAP CPACC and WAS accessibility exams';
-
-const skills = [
-  {
-    group: 'Front end',
-    items: ['HTML', 'CSS', 'Sass', 'Tailwind', 'JavaScript', 'TypeScript', 'React', 'Next.js', 'Vue', 'Nuxt', 'Astro', 'Stencil Web Components', 'Storybook', 'Alpine.js', 'HTMX', 'Hotwire', 'Stimulus'],
-  },
-  {
-    group: 'Systems & testing',
-    items: ['Design systems', 'Component libraries', 'Design tokens', 'Figma Code Connect', 'Playwright', 'Jest', 'Vitest', 'Cypress', 'Lighthouse', 'Node scripts', 'Git', 'CI workflows'],
-  },
-  {
-    group: 'Data & experimentation',
-    items: ['Segment', 'Heap', 'Hotjar', 'Google Analytics', 'HubSpot', 'Optimizely', 'Core Web Vitals'],
-  },
-  {
-    group: 'Design & craft',
-    items: ['Figma', 'Adobe CS', 'Accessible UI', 'WCAG 2.1 / 2.2', 'Responsive design', 'Workflow design', 'Prototyping', 'Design-to-code'],
-  },
-];
 ---
 
 <BaseLayout title="Resume | Joshua Briley | Product Design Engineer" description={description}>
