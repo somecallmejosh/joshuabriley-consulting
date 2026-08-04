@@ -129,15 +129,10 @@ const zoomLabel = `${title} · annotated`;
       gap: 2rem;
     }
     .fband__cell--lead { grid-column: auto; }
-    /* The three artifacts are different shapes and the columns widen to the
-       right, so the cells never match in height. Dropping the caption to the
-       foot of each cell lines the three hairlines up into one rule across the
-       band instead of three at random heights. */
     .fband__cell {
       display: flex;
       flex-direction: column;
     }
-    .fband__label { margin-top: auto; }
   }
 
   .fband__frame {
@@ -161,6 +156,10 @@ const zoomLabel = `${title} · annotated`;
     gap: 1rem;
     margin: 0.8rem 0 0;
     padding-top: 0.6rem;
+    /* Only the annotated cell carries a control in its label. Without a floor on
+       the row, that one label is ~9px taller and its hairline sits proud of the
+       other two, which is the exact raggedness this band is trying to fix. */
+    min-height: 2.15rem;
     border-top: 1px solid var(--line);
     font-family: var(--font-geist-mono), ui-monospace, monospace;
     font-size: 0.66rem;
@@ -174,6 +173,16 @@ const zoomLabel = `${title} · annotated`;
     font-size: 0.83rem;
     line-height: 1.55;
     color: var(--ink-muted);
+  }
+
+  /* The three artifacts are different shapes and the columns widen to the right,
+     so the cells never match in height. Dropping the caption to the foot of each
+     cell lines the three hairlines up into one rule across the band instead of
+     three at random heights. Declared after the base rule above, not inside the
+     layout media query further up: both selectors score 0-1-0, and a media query
+     adds no specificity, so source order is what decides this. */
+  @media (min-width: 1024px) {
+    .fband__label { margin-top: auto; }
   }
 
   .fband__zoom {

@@ -525,3 +525,83 @@ font do the design work; use the site's fonts.
 
 Verified: `getComputedStyle` reports zero borders and zero backgrounds inside
 `.doc`; regenerated at 2 pages, letter, 211 KB; both pages inspected as images.
+
+---
+
+# Project case-study pages: redesign around the artwork
+
+Ask: minimize clicks to see all visual assets; comfortable on the eyes; minimize
+cognitive load. Applies to `ivfcryo`, `logatot`, `vmspark`.
+
+## Diagnosis (measured, not assumed)
+
+| | ivfcryo | logatot | vmspark |
+|---|---|---|---|
+| Interactions to see every asset | ~44 | ~56 | ~58 |
+| Tab clicks hiding artifacts | 8 | 8 | 8 |
+| Lightbox open/close round-trips | 18 | 24 | 25 |
+| Nested scroll traps | 3 | 4 | 7 |
+
+Root cause: artwork was laid out on the prose grid. Sheets are 3200px wide; in
+`case-layout__body` they rendered at ~680px = **19% of source**, which cannot
+show a callout, so the lightbox was the only way to read anything. Verified the
+same sheet at 1320px (41%) reads cleanly, which set the target width.
+
+## Done
+
+- [x] `Plate.astro` — one artifact primitive replacing five bespoke treatments
+      (`fplate`, `flow-plate`, `sheet-plate`, `flow-sheet`, `rest-shot`).
+      Natural aspect, no max-height, no overflow, no fade, no scroll cue.
+      `band` (1230px) and `half` (598px) tracks.
+- [x] `FidelityBand.astro` — sketch → wireframe → annotated shown ONCE per page
+      in a 1fr/1fr/2fr ramp. Replaced the tab rail that repeated 4x per page and
+      hid 8 artifacts behind clicks.
+- [x] Plates moved out of `case-layout` into sibling `<Container width="wide">`.
+- [x] `ScrollShot` converted from internal scrollbar to expand-in-place.
+- [x] Rest-of-system grids: 4:3 crops behind modals → whole sheets, two-up.
+- [x] `FidelityPlate.astro` deleted; all page-scoped plate CSS deleted.
+
+## Bugs found and fixed during the work
+
+- [x] **Sticky rail painted over the plates.** First attempt put plates inside
+      `.case-layout` as a `1 / -1` grid item. A sticky grid item is constrained
+      by the grid *container*, not its own grid area, so the section rail stayed
+      pinned on top of the artwork all the way down it. `grid-row: 1` does not
+      fix it. Fixed by keeping plates out of the grid entirely (sibling
+      Containers), which also removed the need for any custom width math.
+- [x] **Caption bottom-align silently did nothing.** `.fband__label
+      { margin-top: auto }` sat inside a `@media` block placed *before* the base
+      `.fband__label` rule. Both score 0-1-0 and a media query adds no
+      specificity, so source order decided it and the base rule won. Same family
+      of trap as the `.rule` collision noted above: it is not always a global-vs-
+      scoped conflict, sometimes it is just order.
+- [x] **`.plate__index` failed WCAG AA at 2.69:1** — `--ink-faint` (#9a9aa1) on
+      paper. Inherited from the old plate chrome, and there are far more of these
+      labels now. Moved to `--ink-muted`. Same fix applied to
+      `.scroll-shot-index` / `.scroll-shot-kind`.
+
+## Result
+
+| | ivfcryo | logatot | vmspark |
+|---|---|---|---|
+| Clicks required to see every asset | 0 | 0 | 4 |
+| Nested scroll traps | 0 | 0 | 0 |
+| `role="tab"` buttons | 0 | 0 | 0 |
+| Sheet render width | 1230px | 1230px | 1230px |
+| Page height | 20.6k → 26.4k | 22.2k → 29.5k | 21.8k → 32.2k |
+
+vmspark's 4 clicks are the style-guide full-page captures (up to 1600x11531,
+a 7:1 ratio) which cannot render whole; they expand in place rather than trap
+the scroll. Pages are 29-48% longer: that is the trade for removing ~150
+interactions across the three. If it reads long, the lever is the `size` prop
+per call site, not a return to cropping.
+
+Verified: `npm run build` clean; `npm test` 3/3; `npm run test:e2e` 26/26;
+`npm run audit:contrast` 0 fail; axe WCAG 2.1 AA shows **0 violations in the new
+components** on all three pages (remaining 1-3 are pre-existing site-wide
+elements also present on the untouched `/projects/` control). No horizontal
+scroll at 390/768/1440. Reduced-motion expand/collapse round-trips cleanly.
+Lightbox still traps focus and restores it to the opener on Escape.
+
+Note: `astro check` crashes in the WASM compiler on `src/components/patterns/
+FAQ.astro`, an untouched file. Pre-existing, not caused by this work.
