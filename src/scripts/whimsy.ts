@@ -2,9 +2,9 @@
    Whimsy — the sneakers worn with the suit. Two deliberate flourishes:
 
    1. Magnetic elements (.js-magnetic) lean toward the cursor with a soft spring
-      and squish on press. Used in exactly two places (hero CTA + JB monogram),
-      never sprayed across the page — the site removed hover-lifts everywhere
-      else on purpose, so this stays a signature, not a default.
+      and squish on press. Reserved for primary CTAs, never sprayed across the
+      page — the site removed hover-lifts everywhere else on purpose, so this
+      stays a signature, not a default.
    2. A blurred-tab wink: the title nods at you when you look away.
 
    Transform/opacity only. Magnetism is gated to fine pointers and bows out
@@ -23,7 +23,7 @@ if (!reduce && finePointer) {
 
   document.querySelectorAll<HTMLElement>('.js-magnetic').forEach((el) => {
     // First icon (the trailing arrow on a CTA) drifts at half strength for a
-    // touch of internal parallax. Null for the icon-less monogram tile.
+    // touch of internal parallax. Null when the element carries no icon.
     const icon = el.querySelector<HTMLElement>('iconify-icon, svg')
     let mx = 0
     let my = 0

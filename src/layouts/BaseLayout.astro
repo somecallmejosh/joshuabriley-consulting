@@ -69,9 +69,10 @@ const personSchema = {
   '@id': `${SITE_URL}/#person`,
   name: 'Joshua Briley',
   url: SITE_URL + '/',
-  image: new URL('/images/about/josh-biz-cazsh.jpg', SITE_URL + '/').toString(),
+  // JPEG on purpose: crawlers are unreliable about AVIF/WebP.
+  image: new URL('/images/about/josh-suit-social-1200.jpg', SITE_URL + '/').toString(),
   jobTitle: 'Product Design Engineer',
-  description: 'Design- and front-end-focused product design engineer with 20 years in production UI. The interface is where he brings the most value: design-grade, accessible front-end, finished to the last detail.',
+  description: 'Design- and front-end-focused product design engineer with 20 years in production UI. He designs the interface and builds it himself, accessible from the start and finished to the last detail.',
   sameAs: [
     'https://github.com/somecallmejosh',
     'https://www.linkedin.com/in/joshuabriley/',
@@ -83,7 +84,7 @@ const websiteSchema = {
   '@id': `${SITE_URL}/#website`,
   url: SITE_URL + '/',
   name: SITE_NAME,
-  description: 'Design- and front-end-focused product design engineering by Joshua Briley: design-grade, accessible UI, finished to the last detail.',
+  description: 'Design- and front-end-focused product design engineering by Joshua Briley: accessible UI, finished to the last detail.',
   publisher: { '@id': `${SITE_URL}/#person` },
   inLanguage: 'en-US',
 };
@@ -143,7 +144,12 @@ const jsonLdGraph = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {/* All generated from one outlined mark — see scripts/generate-favicon.mjs. */}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="theme-color" content="#1A1B1E" />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
     {/* Open Graph */}
@@ -181,6 +187,9 @@ const jsonLdGraph = {
 
     <Font cssVariable="--font-hanken" preload />
     <Font cssVariable="--font-fraunces" preload />
+    {/* Preloaded: the lockup is the first paint in the header, and a swap on
+        the wordmark reflows the whole nav row. */}
+    <Font cssVariable="--font-script" preload />
     <Font cssVariable="--font-geist-mono" />
 
     <script

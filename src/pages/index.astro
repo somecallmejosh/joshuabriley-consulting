@@ -25,7 +25,7 @@ const facets = [
   {
     title: 'The UI is where I bring the most value',
     body:
-      'Twenty years in design systems taught me where interfaces break: type, spacing, motion, the empty and error states most engineers leave blank. I build it myself, design-grade, instead of handing a spec to someone who will approximate it.',
+      'Twenty years in design systems taught me where interfaces break: type, spacing, motion, the empty and error states most engineers leave blank. I build it myself instead of handing a spec to someone who will approximate it.',
     featured: true,
   },
   {
@@ -94,7 +94,7 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
 
 <BaseLayout
   title="Joshua Briley | Design- and front-end-focused Product Design Engineer"
-  description="Design- and front-end-focused product design engineer with 20 years in production UI. The interface is where I bring the most value: design-grade, accessible, and finished to the last detail."
+  description="Design- and front-end-focused product design engineer with 20 years in production UI. I design the interface and build it myself, accessible from the start and finished to the last detail."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
@@ -114,9 +114,9 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
             My best work lives at the <em class="ink-wink font-normal italic">interface</em>, down to the last detail.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-            I'm a design- and front-end-focused product design engineer with 20 years in production UI. The
-            interface is where I bring the most value: design-grade, accessible, and finished to the
-            last detail.
+            I'm a design- and front-end-focused product design engineer with 20 years in production
+            UI. I design the interface and build it myself, accessible from the start, so nothing
+            gets lost in a handoff.
           </Text>
 
           <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
@@ -284,9 +284,30 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
       <div class="grid items-start gap-10 md:grid-cols-12 md:gap-14">
         <div class="md:col-span-4">
           <div class="overflow-hidden rounded-lg border border-line">
+            {/* 4-of-12 in the `wide` container tops out at ~373px, so 1000w is
+                already a 2x source; the phone case (100vw) is what needs it. */}
             <picture>
-              <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
-              <img src="/images/about/josh-biz-cazsh.jpg" alt="Joshua Briley, product design engineer" class="aspect-[4/5] w-full object-cover" loading="lazy" width="640" height="800" />
+              <source
+                type="image/avif"
+                sizes="(min-width: 1280px) 373px, (min-width: 768px) 30vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.avif 400w, /images/about/josh-suit-portrait-640.avif 640w, /images/about/josh-suit-portrait-1000.avif 1000w"
+              />
+              <source
+                type="image/webp"
+                sizes="(min-width: 1280px) 373px, (min-width: 768px) 30vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.webp 400w, /images/about/josh-suit-portrait-640.webp 640w, /images/about/josh-suit-portrait-1000.webp 1000w"
+              />
+              <img
+                src="/images/about/josh-suit-portrait-640.jpg"
+                sizes="(min-width: 1280px) 373px, (min-width: 768px) 30vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.jpg 400w, /images/about/josh-suit-portrait-640.jpg 640w, /images/about/josh-suit-portrait-1000.jpg 1000w"
+                alt="Joshua Briley, product design engineer"
+                class="aspect-[4/5] w-full object-cover"
+                loading="lazy"
+                decoding="async"
+                width="1000"
+                height="1250"
+              />
             </picture>
           </div>
         </div>
@@ -298,8 +319,8 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
             <p>
               I started in design and moved into engineering because I wanted to build the things I
               drew, not hand them off. Twenty years later, the front end is where I do my best work:
-              design-grade, accessible UI with the judgment most engineering teams have to hire a
-              separate designer to get.
+              accessible UI with the design judgment most engineering teams have to hire a separate
+              designer to get.
             </p>
             <p>
               I build by feel, fast, and I sweat the finish. Away from the screen, I play bass and

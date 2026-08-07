@@ -175,13 +175,27 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
           <aside class="mt-16 rounded-lg bg-surface-warm p-7 sm:p-9" aria-label="About the author">
             <div class="flex flex-col gap-6 sm:flex-row sm:gap-7">
               <a href="/about/" class="group shrink-0" aria-label="More about Joshua Briley">
+                {/* The tight head-and-shoulders crop, not the 4:5 figure — at
+                    72px the torso version reads as a smudge. */}
                 <picture>
-                  <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
+                  <source
+                    type="image/avif"
+                    sizes="(min-width: 640px) 96px, 72px"
+                    srcset="/images/about/josh-suit-avatar-96.avif 96w, /images/about/josh-suit-avatar-192.avif 192w, /images/about/josh-suit-avatar-288.avif 288w"
+                  />
+                  <source
+                    type="image/webp"
+                    sizes="(min-width: 640px) 96px, 72px"
+                    srcset="/images/about/josh-suit-avatar-96.webp 96w, /images/about/josh-suit-avatar-192.webp 192w, /images/about/josh-suit-avatar-288.webp 288w"
+                  />
                   <img
-                    src="/images/about/josh-biz-cazsh.jpg"
+                    src="/images/about/josh-suit-avatar-192.jpg"
+                    sizes="(min-width: 640px) 96px, 72px"
+                    srcset="/images/about/josh-suit-avatar-96.jpg 96w, /images/about/josh-suit-avatar-192.jpg 192w, /images/about/josh-suit-avatar-288.jpg 288w"
                     alt="Joshua Briley"
                     class="h-[4.5rem] w-[4.5rem] rounded-lg border border-line object-cover transition duration-300 ease-out group-hover:-translate-y-0.5 group-hover:border-line-strong sm:h-24 sm:w-24"
                     loading="lazy"
+                    decoding="async"
                     width="96"
                     height="96"
                   />

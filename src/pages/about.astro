@@ -40,6 +40,31 @@ const principles = [
   },
 ];
 
+// Makes the pull quote concrete. The quote names three of these; the fourth is
+// there so the list reads as a practice rather than a tidy rhetorical triple.
+const states = [
+  {
+    label: 'Empty',
+    body:
+      'The first-run screen says what goes here and how to put something in it, instead of handing you a blank panel and a shrug.',
+  },
+  {
+    label: 'Error',
+    body:
+      'When a request fails, the message names what broke and what to do next, and it appears next to the thing that broke.',
+  },
+  {
+    label: 'Loading',
+    body:
+      'Skeletons hold the shape of the final layout, so nothing jumps under the cursor when the data lands.',
+  },
+  {
+    label: 'Keyboard',
+    body:
+      'Every action is reachable without a mouse, in an order that makes sense, with focus you can actually see.',
+  },
+];
+
 const learning = [
   { title: 'WAI-ARIA & APG', note: 'Authoring practices for patterns that truly work for assistive tech.' },
   { title: 'Design Tokens CG', note: 'The emerging standard for portable, multi-platform design decisions.' },
@@ -98,15 +123,30 @@ const learning = [
 
         <div class="hero-in hero-in-5 lg:col-span-5">
           <figure class="overflow-hidden rounded-lg border border-line">
+            {/* Above the fold and the LCP candidate on this route, so it loads
+                eagerly. 5-of-12 in the `wide` container tops out at ~476px. */}
             <picture>
-              <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
+              <source
+                type="image/avif"
+                sizes="(min-width: 1280px) 476px, (min-width: 1024px) 40vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.avif 400w, /images/about/josh-suit-portrait-640.avif 640w, /images/about/josh-suit-portrait-1000.avif 1000w"
+              />
+              <source
+                type="image/webp"
+                sizes="(min-width: 1280px) 476px, (min-width: 1024px) 40vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.webp 400w, /images/about/josh-suit-portrait-640.webp 640w, /images/about/josh-suit-portrait-1000.webp 1000w"
+              />
               <img
-                src="/images/about/josh-biz-cazsh.jpg"
+                src="/images/about/josh-suit-portrait-640.jpg"
+                sizes="(min-width: 1280px) 476px, (min-width: 1024px) 40vw, 100vw"
+                srcset="/images/about/josh-suit-portrait-400.jpg 400w, /images/about/josh-suit-portrait-640.jpg 640w, /images/about/josh-suit-portrait-1000.jpg 1000w"
                 alt="Joshua Briley, product design engineer"
                 class="aspect-[4/5] w-full object-cover"
-                loading="lazy"
-                width="640"
-                height="800"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
+                width="1000"
+                height="1250"
               />
             </picture>
           </figure>
@@ -121,12 +161,31 @@ const learning = [
       <p class="mono-label">The standard</p>
       <blockquote class="mt-5">
         <p class="font-display text-2xl md:text-3xl lg:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.025em] text-ink text-balance">
-          Most engineers ship the screen. I ship the empty state, the keyboard
-          path, and the screen that shows when there's
-          <span class="text-accent">nothing to show yet</span>.
+          Most engineers ship the screen with the data in it. I ship that one
+          too, then the empty one, the failed one, and the one someone is
+          driving <span class="text-accent">without a mouse</span>.
         </p>
       </blockquote>
-      <p class="mt-6 mono-label">The last 10% is the point</p>
+
+      <Text tone="muted" class="mt-8 max-w-2xl">
+        That isn't polish added at the end. A feature isn't done when the happy path renders.
+        It's done when it holds up with no data, a failed request, and someone who never touches
+        the trackpad. Built into the first pass, those states cost hours. Bolted on later, they
+        cost weeks.
+      </Text>
+
+      <ul class="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2" data-reveal-stagger>
+        {states.map((s) => (
+          <li class="border-t border-line pt-4">
+            <p class="flex items-center gap-2.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink">
+              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{s.label}
+            </p>
+            <p class="mt-2 text-sm leading-relaxed text-ink-muted">{s.body}</p>
+          </li>
+        ))}
+      </ul>
+
+      <p class="mt-12 mono-label">The last 10% is the point</p>
     </Container>
   </Section>
 

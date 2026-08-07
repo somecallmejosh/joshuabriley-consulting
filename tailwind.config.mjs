@@ -15,8 +15,10 @@ export default {
         display: ['var(--font-hanken)', 'system-ui', 'sans-serif'],
         heading: ['var(--font-hanken)', 'system-ui', 'sans-serif'],
         body: ['var(--font-hanken)', 'system-ui', 'sans-serif'],
-        logo: ['var(--font-hanken)', 'system-ui', 'sans-serif'],
-        hand: ['var(--font-hanken)', 'system-ui', 'sans-serif'],
+        // Signature script — reserved for the Logo wordmark. Applying it
+        // anywhere else is a bug: it has one weight, no mono/tabular figures,
+        // and is unreadable below ~20px.
+        script: ['var(--font-script)', 'Snell Roundhand', 'cursive'],
         mono: ['var(--font-geist-mono)', 'ui-monospace', 'monospace'],
       },
       colors: {

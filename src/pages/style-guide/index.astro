@@ -124,15 +124,28 @@ const metrics = [
 
       <div class="mt-12 grid gap-8 md:grid-cols-5 md:items-center">
         <figure class="overflow-hidden rounded-lg border border-line md:col-span-2">
+          {/* 2-of-5 in the `wide` container tops out at ~474px. */}
           <picture>
-            <source srcset="/images/about/josh-biz-cazsh.webp" type="image/webp" />
+            <source
+              type="image/avif"
+              sizes="(min-width: 1280px) 474px, (min-width: 768px) 40vw, 100vw"
+              srcset="/images/about/josh-suit-portrait-400.avif 400w, /images/about/josh-suit-portrait-640.avif 640w, /images/about/josh-suit-portrait-1000.avif 1000w"
+            />
+            <source
+              type="image/webp"
+              sizes="(min-width: 1280px) 474px, (min-width: 768px) 40vw, 100vw"
+              srcset="/images/about/josh-suit-portrait-400.webp 400w, /images/about/josh-suit-portrait-640.webp 640w, /images/about/josh-suit-portrait-1000.webp 1000w"
+            />
             <img
-              src="/images/about/josh-biz-cazsh.jpg"
+              src="/images/about/josh-suit-portrait-640.jpg"
+              sizes="(min-width: 1280px) 474px, (min-width: 768px) 40vw, 100vw"
+              srcset="/images/about/josh-suit-portrait-400.jpg 400w, /images/about/josh-suit-portrait-640.jpg 640w, /images/about/josh-suit-portrait-1000.jpg 1000w"
               alt="Joshua Briley seated in a sunlit room, the source photograph the palette was sampled from"
               class="aspect-[4/5] w-full object-cover"
               loading="lazy"
-              width="640"
-              height="800"
+              decoding="async"
+              width="1000"
+              height="1250"
             />
           </picture>
         </figure>
@@ -249,8 +262,8 @@ const metrics = [
               </Text>
             </div>
             <div class="flex items-center gap-3">
-              <Logo variant="wordmark" />
-              <span class="mono-label">Wordmark · Hanken</span>
+              <Logo />
+              <span class="mono-label">Wordmark · Style Script</span>
             </div>
           </div>
         </div>
@@ -339,15 +352,16 @@ const metrics = [
 
         {/* Logo */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
-          <p class="mono-label">Logo: lockup / monogram / wordmark</p>
-          <div class="mt-6 flex flex-wrap items-center gap-x-10 gap-y-6">
-            <Logo variant="lockup" />
-            <Logo variant="monogram" />
-            <Logo variant="wordmark" />
+          <p class="mono-label">Logo: sm / md / lg</p>
+          <div class="mt-6 flex flex-wrap items-baseline gap-x-10 gap-y-6">
+            <Logo size="sm" />
+            <Logo size="md" />
+            <Logo size="lg" />
           </div>
           <Text size="xs" tone="muted" class="mt-5">
-            A machined monogram plate plus a tight grotesk wordmark. The wordmark
-            carries the accessible name; the monogram is decorative.
+            The name in the signature script, set as real text so it carries the
+            accessible name. The favicon is the same script's J, outlined so the
+            tab icon does not wait on a font.
           </Text>
         </div>
 

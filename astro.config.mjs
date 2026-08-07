@@ -63,6 +63,21 @@ export default defineConfig({
         fallbacks: ['Georgia', 'Times New Roman', 'serif'],
       },
       {
+        // Signature script — the brand lockup ONLY (header + footer wordmark).
+        // Style Script is a sign-painter hand: even stroke weight, short
+        // swashes, generous x-height, so it stays legible at header size and
+        // does not optically collapse reversed out on the ink footer. Single
+        // weight by design; never ask for bold, the browser will fake it.
+        provider: fontProviders.google(),
+        name: 'Style Script',
+        cssVariable: '--font-script',
+        weights: [400],
+        styles: ['normal'],
+        subsets: ['latin'],
+        display: 'swap',
+        fallbacks: ['Snell Roundhand', 'Apple Chancery', 'cursive'],
+      },
+      {
         provider: fontProviders.google(),
         name: 'Geist Mono',
         cssVariable: '--font-geist-mono',

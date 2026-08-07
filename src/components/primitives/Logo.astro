@@ -2,13 +2,15 @@
 import { cx } from '~/lib/cx';
 
 /**
- * Brand lockup — a precise typographic wordmark with a monospace monogram tile.
- * No cursive, no gradient. The monogram reads as a machined index plate; the
- * wordmark is set in the grotesk with tight tracking. Accessible text either way.
+ * Brand wordmark — the name set in the signature script, and nothing else.
+ * Real, selectable text, so it carries the accessible name without an image.
+ *
+ * Sizing note: the script carries far less optical weight per point than the
+ * grotesk, so this scale runs well above the equivalent sans size. Do not
+ * "fix" these numbers back down to the type scale.
  */
 
 interface Props {
-  variant?: 'lockup' | 'wordmark' | 'monogram';
   size?: 'sm' | 'md' | 'lg';
   /** Color treatment — paper surfaces vs. ink (dark) surfaces. */
   tone?: 'default' | 'inverse';
@@ -18,7 +20,6 @@ interface Props {
 }
 
 const {
-  variant = 'lockup',
   size = 'md',
   tone = 'default',
   href,
@@ -26,22 +27,12 @@ const {
   class: className,
 } = Astro.props;
 
-const monogramSize: Record<NonNullable<Props['size']>, string> = {
-  sm: 'h-6 w-6 text-[10px]',
-  md: 'h-7 w-7 text-[11px]',
-  lg: 'h-9 w-9 text-sm',
-};
-
 const wordmarkSize: Record<NonNullable<Props['size']>, string> = {
-  sm: 'text-[0.95rem]',
-  md: 'text-base',
-  lg: 'text-xl',
+  sm: 'text-[1.5rem]',
+  md: 'text-[1.9rem]',
+  lg: 'text-[2.1rem]',
 };
 
-const monoTone: Record<NonNullable<Props['tone']>, string> = {
-  default: 'bg-ink text-paper',
-  inverse: 'bg-paper text-ink',
-};
 const wordmarkTone: Record<NonNullable<Props['tone']>, string> = {
   default: 'text-ink',
   inverse: 'text-paper',
@@ -54,25 +45,14 @@ const Tag = href ? 'a' : 'span';
   href={href}
   aria-label={label}
   role={href ? undefined : 'img'}
-  class={cx('group inline-flex items-center gap-2.5', className)}
->
-  {variant !== 'wordmark' && (
-    <span
-      aria-hidden="true"
-      class={cx(
-        'js-magnetic inline-flex items-center justify-center rounded-[3px] font-mono font-semibold tracking-tight transition-transform duration-300 ease-out group-hover:-translate-y-px',
-        monogramSize[size],
-        monoTone[tone],
-      )}
-    >JB</span>
+  class={cx(
+    // The script has a tall ascender and a deep descender, so leading-none
+    // clips the J and the y. Reserve the space inside the glyph box with real
+    // leading, then pull the layout box back in so the wordmark does not
+    // inflate the header row.
+    'inline-block font-script font-normal leading-[1.05] tracking-normal [text-rendering:optimizeLegibility] -my-[0.16em]',
+    wordmarkSize[size],
+    wordmarkTone[tone],
+    className,
   )}
-  {variant !== 'monogram' && (
-    <span
-      class={cx(
-        'font-sans font-semibold leading-none tracking-[-0.02em]',
-        wordmarkSize[size],
-        wordmarkTone[tone],
-      )}
-    >Joshua Briley<span class="brand-dot text-accent">.</span></span>
-  )}
-</Tag>
+>JoshuaBriley<span class="brand-dot text-accent">.</span></Tag>
