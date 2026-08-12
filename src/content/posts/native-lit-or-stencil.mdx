@@ -1,0 +1,388 @@
+---
+title: Native, Lit, or Stencil?
+description: 'An enterprise comparison of direct browser APIs, Lit, and Stencil across authoring model, distribution, npm packaging, and cross-framework consumption.'
+date: 2026-08-02
+category: Design Systems
+tags:
+  - Design Systems
+  - Architecture
+  - Developer Experience
+readMinutes: 22
+icon: ph:signpost-duotone
+figure: shared-floor
+gradient: from-lemon/30 via-sage/20 to-coral/30
+sticker: sage
+---
+
+Every organization that commits to web components makes the same three-way choice: write against the browser APIs directly, adopt Lit, or adopt Stencil. In most rooms the choice gets settled on bundle size and syntax preference, which are close to the least important inputs available.
+
+All three produce real custom elements, and consumers use all three as plain HTML. What actually differs is how much of the surrounding machinery arrives with the tool, how much you design yourself, and how much generated surface area you sign up to support. The expensive parts show up months later: package topology, version collisions in the global custom-element registry, framework-specific typing, form participation, server rendering, asset paths, security review, and release governance across a dozen application teams.
+
+This is that comparison, written for a library with many consuming applications, mixed framework versions, an internal registry, real accessibility requirements, and a support horizon measured in years. It is not a benchmark. Measure performance with your own component catalog and your own consumer applications, because nobody else's numbers describe your page.
+
+## The short version
+
+**Lit is the strongest general-purpose default.** It gives you a productive rendering and reactivity model without a compiler-centered ecosystem, and it leaves the package, wrapper, and documentation architecture in your hands, which is where most organizations want it anyway.
+
+**Stencil is strongest when a large design system must serve several application frameworks at once.** Generated wrappers, formal output targets, optional lazy loading, and a dedicated hydrate build remove real organizational cost, and they add a larger build and support surface in exchange.
+
+**Direct browser APIs are strongest when dependency minimization beats authoring speed.** Small or foundational libraries, low-interactivity elements, embedded widgets, tightly controlled environments, and teams that deliberately want to own every abstraction.
+
+One rule holds regardless: do not ship the same component library as three independently authored implementations. Pick one canonical implementation and hand-maintain or generate thin consumer adapters only where they earn their keep.
+
+An important qualification before any of that. No approach automatically produces accessible, fast, secure, or framework-neutral components. Those outcomes come from API design, semantic HTML, keyboard behavior, event contracts, form participation, styling contracts, tests, and disciplined releases. Native APIs offer the fewest guardrails. Lit offers useful authoring conventions. Stencil offers the most integrated production machinery, and also the most generated surface area to understand and support.
+
+## What the three options actually are
+
+"Native web components" here means autonomous custom elements written directly against browser APIs: `HTMLElement`, `customElements.define()`, Shadow DOM, `template`, `slot`, `CustomEvent`, and `ElementInternals`. It does not mean using only built-in HTML elements, and it does not require Shadow DOM on every component. Web Components is a group of browser technologies rather than a single product.
+
+A Lit component is still a custom element registered with the browser. Lit supplies declarative templates, reactive properties, scoped styles, lifecycle hooks, and reusable controllers on top of that.
+
+A Stencil component is authored with TypeScript, JSX, decorators, and compiler conventions, then compiled into standards-compliant custom elements. Stencil can additionally emit framework wrappers, several distribution formats, machine-readable metadata, and hydration artifacts.
+
+Neither Lit nor Stencil replaces the standards. Both help authors create and package components more consistently. That is the whole of the difference, and it is smaller than the marketing on any side suggests.
+
+| Criterion               | Native APIs                 | Lit                                       | Stencil                                                        |
+| ----------------------- | --------------------------- | ----------------------------------------- | -------------------------------------------------------------- |
+| Runtime foundation      | Browser platform only       | Browser platform plus the Lit runtime     | Generated elements plus a Stencil runtime or loader, by output |
+| Authoring style         | Imperative, self-designed   | Declarative templates, reactive props     | TypeScript, JSX, decorators, compiler                          |
+| Initial setup           | Low                         | Low to moderate                           | Moderate                                                       |
+| Large-library coherence | Must be designed in-house   | Good conventions, flexible tooling        | Strong integrated conventions and outputs                      |
+| Framework adapters      | Handwritten or third-party  | React utilities exist, others are choices | Official generation paths for the major frameworks             |
+| SSR and hydration       | Possible, application-owned | Lit SSR, currently in Labs                | Dedicated hydrate output and prerender tooling                 |
+| Dependency surface      | Smallest                    | Small runtime dependency                  | Largest toolchain surface, runtime varies by output            |
+| Best fit                | Maximum control             | Balanced standards-first default          | Large multi-framework design systems                           |
+
+The trade-off summary is shorter and more useful:
+
+| Dimension                  | Native               | Lit                     | Stencil                          |
+| -------------------------- | -------------------- | ----------------------- | -------------------------------- |
+| Author productivity        | Moderate for experts | High                    | High once the toolchain lands    |
+| Platform transparency      | Highest              | High                    | Moderate                         |
+| Generated integration      | Low                  | Low to moderate         | Highest                          |
+| Build complexity           | Lowest initially     | Moderate                | Highest                          |
+| Cross-framework experience | Basic HTML           | Good, wrappers may help | Strongest when wrappers are kept |
+| Lock-in risk               | Lowest API lock-in   | Low to moderate         | Moderate toolchain lock-in       |
+| Governance needed          | High                 | High                    | High, plus generated packages    |
+
+Read the last row twice. It is the only row where all three answers are the same, and it is the row that decides whether the library survives.
+
+## Direct browser APIs
+
+Direct browser APIs give you the clearest relationship between source code and browser behavior that exists. No component framework version to coordinate, no framework runtime to duplicate across applications, no compiler-specific output contract. That is genuinely valuable for long-lived primitives, embedded widgets, regulated environments, constrained delivery surfaces, and any team that wants a deliberately small supply chain.
+
+It fits best for:
+
+- Small libraries where a shared base class and a few internal utilities are enough.
+- Low-interactivity elements that mainly compose semantic HTML and styles.
+- Components embedded across many technology stacks, where the most conservative runtime footprint wins.
+- Organizations with deep browser-platform expertise and an appetite for building internal conventions.
+
+The cost is specific and predictable. The browser gives you lifecycle callbacks and DOM primitives. It does not prescribe reactive state, keyed list updates, template ergonomics, asynchronous scheduling, context, localization, testing utilities, documentation metadata, or package layout. A mature native library grows an internal mini-framework whether or not anyone decided to build one. That can be an entirely sound decision. It should be a recognized and governed one.
+
+Where it goes wrong at scale:
+
+- Patterns diverge between authors unless the team defines a base architecture and enforces it in review.
+- Property reflection, change detection, cleanup, event dispatch, and rendering are all handwritten, repeatedly.
+- Without a clear performance model, every update becomes a direct DOM manipulation and nobody notices until a page carries forty components.
+- Documentation and TypeScript metadata have to be deliberately generated or they do not exist.
+- SSR and hydration are possible, particularly with Declarative Shadow DOM, but the integration design belongs entirely to you.
+
+**Use native when** the organization values a minimal dependency surface and direct platform ownership, and the intended scope is small enough that the missing conventions will not quietly become a framework project nobody staffed.
+
+## Lit
+
+Lit adds a focused authoring layer rather than an application framework. Components stay normal HTML elements. You get declarative templates, reactive properties, scoped styles, lifecycle hooks, and reusable controllers, and you keep a build pipeline a new contributor can still read. For most enterprise teams that is the correct middle position.
+
+It fits best for medium to large libraries that need consistent rendering and state updates, teams that want to stay close to the standards, libraries consumed by several frameworks where adapters are added only where they help, and organizations that would rather compose their own documentation, testing, and release toolchain than adopt an all-in-one compiler workflow.
+
+Lit's distribution guidance is worth following even if you never adopt Lit. It recommends publishing modern JavaScript modules, TypeScript declarations, self-defining element modules, and exported element classes. It advises library authors not to import polyfills and generally not to bundle or minify npm modules, because application bundlers are better positioned to deduplicate dependencies and optimize the final application. CDN bundles stay separate from npm modules. That is the right shape for a component package regardless of what compiled it.
+
+Where it goes wrong:
+
+- Lit is a runtime dependency. Version policy and deduplication still matter, small as the library is.
+- The surrounding toolchain is assembled rather than prescribed. Documentation, wrappers, tests, and release patterns are all decisions you own.
+- Server rendering needs additional architecture. Lit SSR remains in the Lit Labs family and imposes server-safe authoring constraints.
+- Framework consumers may still want typed wrappers, particularly when passing objects, mapping custom events, or supporting older framework versions.
+
+**Use Lit when** you want a durable web components foundation with a productive rendering model, and you are comfortable owning the package, wrapper, documentation, and governance architecture around it.
+
+## Stencil
+
+Stencil is explicitly designed as a compiler for component libraries and design systems. TypeScript, JSX, decorators, a virtual DOM, async rendering, development tooling, output targets, and framework integrations arrive as one product. The result is still standards-compliant custom elements. The authoring and distribution experience is compiler-centered.
+
+It fits best for large design systems with many components and many contributors, organizations that officially support Angular, React, Vue, and plain custom-element consumers, libraries that benefit from generated wrappers or lazy-loading output or a dedicated hydrate package, and teams that would rather adopt integrated conventions than assemble a toolchain.
+
+Output choice is the decision that actually matters, and it is easy to make casually. The lazy-loading `dist` target and the `dist-custom-elements` target solve different delivery problems. The `dist` target provides a self-lazy-loading library. The custom-elements target emits components that directly extend `HTMLElement`, and it is the better choice when the consuming application owns bundling, lazy loading, and registration. Stencil also supports different auto-definition and export behaviors on top of that.
+
+Where it goes wrong:
+
+- The compiler, decorators, JSX conventions, output targets, and generated packages together create a large upgrade and support surface.
+- Different output modes have materially different registration, asset, lazy-loading, and bundling behavior. Choosing one without consumer testing produces deployment surprises after release, not before.
+- Framework wrappers become additional products. Version alignment, peer-dependency policy, smoke tests, documentation, and release ownership all apply to each of them.
+- Static assets may require explicit copying and asset-path configuration, particularly with custom-elements output.
+- SSR uses a generated hydrate application and a server integration. Capable, and one more server artifact to maintain.
+
+**Use Stencil when** the value of standardized output targets and framework-specific packages clearly exceeds the cost of a compiler-centered platform and a larger release matrix. If you cannot name the frameworks that need first-class packages, you do not have that requirement yet.
+
+## Where each one fits
+
+| Situation                                                   | Start with                | Why                                                                              |
+| ----------------------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------- |
+| Small internal component set, expert maintainers            | Native or Lit             | Native minimizes dependencies. Lit removes the repetitive rendering code.        |
+| Design system across Angular, React, Vue, and static HTML   | Stencil                   | Generated wrappers and formal outputs remove repeated integration work.          |
+| Standards-first library with selective adapters             | Lit                       | The best balance of browser alignment and author productivity.                   |
+| Third-party embed or constrained widget                     | Native or Lit             | A smaller, more transparent runtime simplifies embedding.                        |
+| Large catalog that needs lazy component loading             | Stencil                   | The lazy-loading distribution is an explicit product capability.                 |
+| SSR-heavy product portfolio                                 | Prototype Lit and Stencil | Both need server architecture. Maturity and framework fit must be tested.        |
+| Long-lived regulated platform, strict dependency review     | Native or Lit             | A smaller dependency surface helps review. Internal code still needs controls.   |
+| Fast-growing design system team that needs firm conventions | Stencil or governed Lit   | Stencil provides more conventions. Lit needs a stronger internal platform layer. |
+
+The decision rule underneath that table: **choose the least complex authoring and distribution platform that fully supports your consumer matrix.** If one or two frameworks need first-class wrappers, Lit plus focused adapters is simpler. If every release must generate and validate several framework-native packages, Stencil's integrated model pays for itself. If the component set is narrow and stable, direct APIs are enough.
+
+And do not decide from a demo component. A button or a card makes all three look easy. Evaluate a representative slice instead: a form-associated input, a composite widget, a component with slots and CSS parts, one with async data, one with icons or fonts, and one that must render on the server. Test those in at least two real consumer frameworks and inside your actual production build pipeline.
+
+## The floor underneath all three
+
+Everything below this line costs the same regardless of which column you picked. It is also the part that gets left out of framework comparisons, which is why the comparison feels decisive and the implementation does not.
+
+### The global custom-element registry
+
+Custom-element tag names are effectively page-level identifiers in the common global-registry model. Two incompatible libraries cannot safely define the same tag name on one page. Duplicate registration can throw, and a silent "define if absent" guard hides a version mismatch rather than solving it.
+
+Use a durable organization prefix, `acme-button` rather than `ds-button`, and plan for one compatible major version per tag name per page. Scoped registries are emerging, and an enterprise should verify its exact browser and framework matrix before depending on them.
+
+### The public API is larger than the properties
+
+Treat all of the following as versioned contracts: tag names, attributes, properties, methods, custom-event names and detail payloads, event bubbling and composition, slots, CSS custom properties, CSS parts, form behavior, focus behavior, and exported module paths.
+
+Shadow DOM makes internal markup less directly accessible. Named parts and slots are still intentionally public, and consumers will treat anything reachable as supported unless you say otherwise.
+
+### Shadow DOM is an architectural choice
+
+It reduces accidental style collisions and protects internal structure. It also changes theming, automated testing, analytics instrumentation, and debugging. Expose a deliberate theming contract through tokens, CSS custom properties, parts, and slots, and resist exposing a large set of internal parts that makes future refactoring impossible. Open shadow roots are fine for practical tooling and debugging without treating internal nodes as public API.
+
+### Events are the cross-framework backbone
+
+Prefer DOM events for outward communication. For each one, define whether it bubbles, whether it crosses the shadow boundary with `composed: true`, whether it is cancelable, and what shape its `detail` carries. Avoid callback properties as the only integration path. Framework wrappers can map DOM events to idiomatic outputs, and the underlying event must stay usable from plain JavaScript.
+
+### Attributes and properties are different contracts
+
+Attributes are strings. They work naturally in HTML and in server-rendered output. Properties carry objects, arrays, functions, and richer state, and they require the element to be upgraded first, and frameworks and server renderers handle them differently.
+
+Use attributes for serializable configuration and reflected state. Use properties for complex data. Document how `null`, `undefined`, booleans, numbers, and JSON-like values behave, because every consumer will discover it eventually and you would rather they read it than find it.
+
+### Framework consumption got better, not frictionless
+
+React 19 added full custom-element support, including improved property handling, which genuinely reduces the historical need for wrappers. Angular still requires `CUSTOM_ELEMENTS_SCHEMA` when templates contain non-Angular custom elements. Wrappers still add TypeScript types, idiomatic event naming, router integration, reactive-forms support, and framework-native documentation. The question is no longer "can we use these" but "how much sugar does each consumer team need."
+
+## Distribution and npm
+
+More libraries fail here than fail on authoring model. This section is the same work whichever tool compiled the elements.
+
+### Package topology
+
+Separate the standards-based implementation from optional consumer adapters. It keeps the canonical API legible and stops every consumer installing framework packages it does not use.
+
+| Package         | Responsibility                                     | Typical consumers                   |
+| --------------- | -------------------------------------------------- | ----------------------------------- |
+| `@org/elements` | Canonical custom elements, types, styles, manifest | Plain HTML, bundlers, every wrapper |
+| `@org/react`    | Typed React components and event mapping           | React applications                  |
+| `@org/angular`  | Angular proxies, outputs, forms adapters           | Angular applications                |
+| `@org/vue`      | Typed Vue integration and v-model support          | Vue applications                    |
+| `@org/tokens`   | Design tokens and platform-neutral assets          | Applications, design tooling, docs  |
+| `@org/icons`    | Icons with an explicit loading strategy            | Elements and applications           |
+
+### Publish source-like modules and application-ready types
+
+The npm package should contain browser-consumable JavaScript, not raw TypeScript and not proposal-stage syntax. It should also contain declaration files, source maps if policy allows, and an explicit public export map. Do not ask every consumer to learn the library's private directory structure.
+
+### Registration strategy
+
+Choose and document one primary registration model. Side-effect imports are convenient, where importing a module defines its tag. Class-only exports enable advanced registration and push more responsibility to consumers.
+
+A practical package exposes both through clearly separate paths: `@org/elements/button.js` for self-registration, `@org/elements/classes/button.js` for the class. The package must prevent accidental duplicate registration, and it must state plainly whether the root entry defines every element or none of them.
+
+### Bundling
+
+- For npm consumers, prefer per-component ESM and let the application bundle and deduplicate.
+- For CDN and no-build consumers, publish a separately identified browser bundle with stable URLs, an integrity policy where feasible, and explicit browser support.
+- Never mix npm-optimized and CDN-optimized artifacts behind the same ambiguous entry point.
+- Verify tree shaking in a real consumer production build. Element registration is a side effect, so an incorrect `sideEffects` declaration makes components disappear in production and only in production.
+
+### Static assets
+
+Icons, fonts, localization files, workers, and images cause more deployment failures than component JavaScript does. Decide explicitly whether assets are inlined, imported as modules, copied into the consumer's public directory, or served from a controlled CDN. Stencil's custom-elements output may require `setAssetPath()` plus an explicit copy step. Asset URLs have to work behind reverse proxies, on non-root base paths, and under a content security policy.
+
+### The npm failure modes worth pre-empting
+
+| Issue                    | What the consumer sees                                              | Mitigation                                                              |
+| ------------------------ | ------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Wrong exports map        | Imports fail in Node, tests, SSR, or one specific bundler           | Contract-test every documented entry in representative tools            |
+| Missing published files  | Types, chunks, styles, or assets resolve locally, not after install | Run `npm pack`, inspect the tarball, install it in clean fixtures       |
+| Duplicate runtime copies | Larger bundles, or subtle behavior differences                      | Externalize shared runtimes and use compatible version ranges           |
+| Peer-dependency conflict | Install fails, or a wrapper claims an unsupported framework         | Use broad tested ranges, keep wrappers out of the core package          |
+| Bad `sideEffects` data   | Tree shaking removes element registration or styles                 | Mark registration and global-style modules accurately, test prod builds |
+| Deep-import dependence   | Consumer breaks after an internal reorganization                    | Expose supported subpaths through `exports`, block the rest             |
+| Tag-name collision       | Only one version works, or definition throws                        | Prefix tags, keep incompatible majors off the same page                 |
+| Lockfile drift           | Different applications resolve different transitive versions        | Enforce lockfiles in CI, automate approved updates                      |
+
+On dependencies versus peer dependencies: put code the component requires at runtime in `dependencies`, unless the host application must supply a single compatible instance. Use `peerDependencies` for framework wrappers and host integrations, not as a general way to avoid declaring runtime needs. Modern npm installs peer dependencies by default, and incompatible ranges can make installation fail outright, so keep ranges as broad as tested compatibility allows.
+
+The `exports` field defines public entry points, provides conditional paths for browser, Node, import, and types, and prevents consumers reaching unlisted internals. The `files` field controls what enters the tarball. Test them together, because a correct export pointing at an omitted file still fails.
+
+An illustrative contract, not a drop-in file. Exact conditions depend on your toolchain and SSR strategy:
+
+```json
+{
+  "name": "@org/elements",
+  "version": "4.2.0",
+  "type": "module",
+  "files": ["dist", "custom-elements.json", "README.md", "LICENSE"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "browser": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./button.js": {
+      "types": "./dist/button.d.ts",
+      "default": "./dist/button.js"
+    },
+    "./define-all.js": "./dist/define-all.js",
+    "./custom-elements.json": "./custom-elements.json"
+  },
+  "customElements": "custom-elements.json",
+  "sideEffects": ["./dist/define-all.js", "./dist/*/register.js"]
+}
+```
+
+Then contract-test it: every documented export resolves in Node ESM, in the supported bundlers, in the test runners, and in the SSR tools. Every export target is present in the tarball. Per-component imports pull only the expected code. Registration modules survive tree shaking. Type declarations resolve and augment the tag-name map where intended. The manifest matches the released API. Assets resolve from root and non-root deployment paths. And the package installs through the enterprise registry proxy, not only from a local workspace.
+
+On releases: version on consumer-visible behavior rather than TypeScript signatures. Publish prereleases under a `next` or `beta` dist-tag and validate them in real application pipelines. Keep core and wrapper versions aligned unless you have a strong reason, because alignment is what makes incident response tractable. Publish migration notes for changed attributes, events, slots, parts, focus behavior, or wrapper APIs. Define a deprecation window, and instrument usage where policy permits.
+
+Enterprises commonly sit behind a private registry proxy, so validate scoped-package authentication, offline or cached installation, retention rules, and whether provenance data survives the proxy. Avoid install-time scripts unless they are essential. And establish a recovery process for a bad publish before you need one, because npm versions are effectively immutable and rollback means publishing a new version or moving a dist-tag.
+
+## Deployment realities
+
+**SSR and hydration.** Server rendering is not automatic merely because browsers understand custom elements. The server must emit meaningful HTML or Declarative Shadow DOM, and the client must upgrade components without replacing content in a way that shifts layout or loses input. Lit SSR currently belongs to Lit Labs and requires server-safe authoring. Stencil can generate a hydrate application and serialize Declarative Shadow DOM. Direct implementations can use Declarative Shadow DOM, with serialization and hydration behavior owned by your team.
+
+**Upgrade timing.** Custom elements can appear in the DOM before their JavaScript loads and registers. Reserve layout space, provide meaningful light-DOM fallbacks where appropriate, and use `:defined` carefully. Globally hiding every undefined custom element removes usable content the moment a script fails to load. Measure definition timing in production, not on a warm local machine.
+
+**Content Security Policy.** Test under your actual policy. Inline styles, dynamically created style elements, data URLs, remote fonts, workers, and CDN modules may all be restricted. Constructable stylesheets reduce repeated style parsing and do not remove the need for an explicit policy. Avoid any code-generation pattern that requires `unsafe-eval`.
+
+**CDN and no-build consumption.** Useful for prototypes, legacy pages, and separately deployed portals, and it needs a pinning strategy. Never point a production page at an unpinned latest URL. Confirm ESM MIME types, CORS headers, relative chunk resolution, asset base paths, cache-control, rollback behavior, and how integrity checks apply when the entry module imports further chunks.
+
+**Micro-frontends.** Web components make good boundaries and solve none of the dependency coordination by themselves. Independently deployed applications still bring incompatible majors sharing tag names, duplicate runtimes, and disagree about tokens. A shell-level compatibility policy and a shared release catalog are not optional.
+
+**Browser policy.** Custom elements, Shadow DOM, templates, and `ElementInternals` have broad evergreen support, and specific capabilities still vary. Customized built-in elements are the notable risk, since Safari does not plan to support them. Prefer autonomous custom elements, publish a tested browser matrix, and keep polyfills an application-level decision rather than something each component package injects silently.
+
+## Styling, accessibility, forms, and testing
+
+Design tokens are the primary theming API. CSS custom properties cross the shadow boundary through inheritance, which makes them well suited to controlled customization. Use `::part` for a small set of stable structural hooks. Use slots for content composition rather than as a substitute for application state. Document which tokens are global, which are semantic, which are component-specific, and which are deprecated.
+
+Accessibility is part of the component API, not a review step at the end. Prefer native semantic HTML inside components: a custom button should contain or delegate to a real button rather than recreate button behavior on a div. Define focus order, visible focus, keyboard interaction, names, descriptions, errors, states, high-contrast behavior, reduced motion, zoom, and right-to-left behavior as acceptance criteria. Then test with actual assistive technology, because automated rules do not evaluate whether what is there is correct.
+
+`ElementInternals` lets custom elements participate in forms, constraint validation, labels, and accessibility semantics, which closes a genuinely important historical gap. It still requires deliberate work on state restoration, validation messages, disabled behavior, name and value semantics, and framework-form adapters. The capability has been broadly available since 2023, and your specific enterprise browser matrix is still worth verifying.
+
+Seven testing layers, and skipping the last three is the usual mistake:
+
+1. Unit-test state transitions, property and attribute reflection, event payloads, and cleanup.
+2. Browser-test keyboard use, focus, slots, styles, forms, and upgrade timing.
+3. Run accessibility checks plus targeted screen-reader tests on high-risk patterns.
+4. Install the packed npm artifact into clean React, Angular, and plain-HTML fixtures.
+5. Run production builds to verify tree shaking, chunks, CSS, assets, and source maps.
+6. Test SSR and hydration separately from client-only rendering.
+7. Measure a representative page carrying many real components, not isolated microbenchmarks.
+
+Publish a Custom Elements Manifest or equivalent machine-readable metadata describing attributes, properties, methods, events, slots, CSS parts, custom properties, inheritance, and exports. It feeds IDE tooling, documentation generation, and adapter generation. Treat it as a tested release artifact rather than incidental documentation, because everything downstream will trust it.
+
+## Security, supply chain, and governance
+
+A smaller dependency count reduces review surface. It does not prove safety. Native implementations can still contain vulnerable code, unsafe HTML handling, or compromised publishing credentials. Apply the same controls to all three approaches:
+
+- Publish only from CI, using trusted publishing or short-lived credentials where supported.
+- Generate npm provenance so consumers can verify the relationship between package, source, and build workflow. Provenance improves traceability and certifies nothing about the code itself.
+- Require review for dependency changes, build scripts, generated code, and any change to package exports.
+- Produce an SBOM where policy requires one, and scan both dependencies and the final tarball.
+- Keep secrets out of source maps, demo data, generated documentation, and package metadata.
+- Use an allowlist for published files and verify it with `npm pack` before every release.
+- Document emergency ownership, dist-tag rollback, deprecation, and compromised-package response.
+
+The implementation choice matters far less than whether the organization can run a stable service around it. Name owners for the core package, the wrappers, the tokens, the documentation, the build infrastructure, accessibility, and releases. Establish a support window for framework and browser versions. Publish a compatibility matrix that application teams can actually trust.
+
+| Release gate      | Evidence expected                                                                |
+| ----------------- | -------------------------------------------------------------------------------- |
+| API review        | Attributes, properties, events, slots, parts, methods, form and focus behavior   |
+| Accessibility     | Automated checks plus manual keyboard and targeted assistive-technology evidence |
+| Package contract  | `npm pack` inspection and clean fixture installation                             |
+| Consumer builds   | Supported React, Angular, Vue, and plain ESM fixtures                            |
+| Visual regression | Theme, density, zoom, contrast mode, and responsive states                       |
+| Performance       | Bundle contribution, definition time, render cost, page-level behavior           |
+| Security          | Dependency review, provenance, scan results, publishing controls                 |
+| Migration         | Changelog, codemod or examples, deprecation notes, rollback path                 |
+
+State your support policy explicitly. Whether the library supports direct custom-element usage, only generated wrappers, or both. Which SSR stacks are supported. Whether deep imports, subclassing, internal shadow nodes, and undocumented CSS selectors are unsupported. Ambiguity becomes permanent accidental API, and you will be maintaining it either way.
+
+## How to decide
+
+Adopt Lit as the default candidate for a new standards-first enterprise library. Prefer Stencil when generated multi-framework packages, lazy loading, or integrated hydration are explicit, named requirements. Prefer direct browser APIs for narrow, stable, dependency-sensitive components, or when the organization has consciously chosen to maintain its own authoring platform.
+
+**If an existing Stencil library already works, leave it alone.** Do not migrate because Lit is lighter or native code looks simpler. Migration is justified when Stencil's compiler and output model create measurable cost, block a required capability, or stop fitting the support strategy. Price in recreating wrappers, hydration, docs metadata, tests, and release automation. For a functioning enterprise design system, switching cost dominates syntax preference by a wide margin.
+
+**If an existing native library is growing, watch for repetition.** Reactive updates, scheduling, templating, context, controllers, rendering diffs. If the team keeps rebuilding those, compare the internal platform against Lit instead of assuming "no framework" is still simpler. If the pain is wrapper and release generation across many frameworks, compare against Stencil.
+
+Then run a real proof of concept:
+
+1. Select six representative components, including a form control and a composite interactive widget.
+2. Implement or port the same public API in the two leading candidates.
+3. Publish packed prerelease artifacts through the actual internal registry path.
+4. Consume them in one Angular application, one React application, and one SSR or static-rendering application that matters to you.
+5. Measure authoring effort, package size contribution, runtime behavior, accessibility, build compatibility, and debugging experience.
+6. Have consumer teams complete normal tasks with no help from the component authors. This step finds more than the other five combined.
+7. Score the options, record the architectural decision, and set a review date.
+
+Score with weights you can defend:
+
+| Criterion                 | Weight | Evidence to collect                                                 |
+| ------------------------- | ------ | ------------------------------------------------------------------- |
+| Consumer compatibility    | 20%    | Framework, SSR, bundler, TypeScript, and browser fixtures           |
+| Accessibility and forms   | 15%    | Keyboard, assistive technology, validation, labels, focus, contrast |
+| Author productivity       | 15%    | Time and code required for representative components                |
+| Distribution reliability  | 15%    | Packed installs, assets, chunks, exports, wrappers, rollback        |
+| Maintainability           | 10%    | Upgrade effort, generated code, debugging, contributor onboarding   |
+| Performance               | 10%    | Application bundle impact and representative page metrics           |
+| Security and supply chain | 10%    | Dependency surface, provenance, scans, publish controls             |
+| Ecosystem longevity       | 5%     | Standards alignment, stewardship, release history, exit strategy    |
+
+Three thresholds sit above the arithmetic. Reject any option that cannot meet a mandatory accessibility, security, browser, or SSR requirement, whatever its total. Require a documented mitigation for any score below 3 in consumer compatibility or distribution reliability. Revisit the decision when the framework matrix, the SSR strategy, or the supported browser policy materially changes.
+
+And before the first release, get through the list that has nothing to do with which tool you picked: the supported browser, framework, TypeScript, Node, package-manager, and SSR matrix. A durable tag prefix and a documented collision policy. Attributes, properties, events, methods, slots, parts, tokens, forms, and focus declared as versioned APIs. A Shadow DOM policy and theming strategy. A registration model. The canonical package and its optional wrappers. Explicit exports, types, files allowlist, asset strategy, and side-effect metadata. A tested decision about whether runtimes are bundled, externalized, or peer dependencies. Packed-artifact tests in clean fixtures. Separately defined CDN artifacts if you need them. A stated SSR position, including "unsupported" if that is the answer. Keyboard, screen-reader, form, high-contrast, zoom, motion, and RTL tests. Generated metadata verified against the release. CI publishing with provenance, dependency review, scanning, and a rehearsed rollback. And published compatibility, versioning, deprecation, migration, and support policies.
+
+## The part worth arguing about
+
+The authoring model is the smallest decision in this document. It is also the only one that produces a satisfying meeting, which is why it consumes the most oxygen.
+
+Native, Lit, and Stencil differ in how much of the job arrives already built. They do not differ at all in the work underneath: tag-name policy, packaging, form participation, server rendering, and the release machinery that keeps a dozen application teams unblocked. That floor is the same width whichever column you stand on, and it is where the next five years of effort actually goes.
+
+So the useful question in the room is not "which one is better." It is: **when the first consumer team files a bug against a component in a server-rendered Angular application on a non-root base path, who owns the fix, what does the release look like, and how long does it take?** Every option here can answer that well. None of them answers it for you.
+
+## Sources and further reading
+
+Primary documentation reviewed August 11, 2026. Product behavior and browser support change, so verify exact versions before adopting a production baseline.
+
+- [MDN: Web Components](https://developer.mozilla.org/en-US/docs/Web/API/Web_components)
+- [MDN: Using shadow DOM](https://developer.mozilla.org/en-US/docs/Web/API/Web_components/Using_shadow_DOM)
+- [MDN: ElementInternals](https://developer.mozilla.org/en-US/docs/Web/API/ElementInternals)
+- [Lit: Components overview](https://lit.dev/docs/components/overview/)
+- [Lit: Publishing](https://lit.dev/docs/tools/publishing/)
+- [Lit: Authoring components for Lit SSR](https://lit.dev/docs/ssr/authoring/)
+- [Stencil: Introduction](https://stenciljs.com/docs/introduction)
+- [Stencil: Distribution output target](https://stenciljs.com/docs/distribution)
+- [Stencil: Custom Elements output target](https://stenciljs.com/docs/custom-elements)
+- [Stencil: Hydrate App](https://stenciljs.com/docs/hydrate-app)
+- [Angular: Advanced component configuration](https://angular.dev/guide/components/advanced-configuration)
+- [React 19 release notes, including custom element support](https://react.dev/blog/2024/12/05/react-19)
+- [npm: package.json](https://docs.npmjs.com/cli/v11/configuring-npm/package-json)
+- [npm: Generating provenance statements](https://docs.npmjs.com/generating-provenance-statements)
+- [Custom Elements Manifest](https://github.com/webcomponents/custom-elements-manifest)

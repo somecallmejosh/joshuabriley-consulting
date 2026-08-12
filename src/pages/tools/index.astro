@@ -7,6 +7,7 @@ import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import ToolGlyph from '~/components/patterns/ToolGlyph.astro';
 
 const tools = (await getCollection('tools', ({ data }) => !data.draft)).sort(
   (a, b) => a.data.order - b.data.order,
@@ -62,11 +63,9 @@ const description =
           href={`/tools/${featured.id}/`}
           class="group tool-cell p-7 md:p-10 lg:col-span-2 lg:row-span-3 lg:flex lg:flex-col lg:justify-center transition-colors"
         >
-          <span class="flex items-center gap-3">
-            <Icon name={featured.data.icon} size={20} class="text-accent" />
-            <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{featured.data.kind}</span>
-          </span>
-          <Heading level={2} visual="h2" class="mt-5 max-w-[16ch] transition-colors group-hover:text-accent">
+          <ToolGlyph tool={featured.data.tool} size="xl" class="text-ink" />
+          <span class="mt-8 block font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{featured.data.kind}</span>
+          <Heading level={2} visual="h2" class="mt-3 max-w-[16ch] transition-colors group-hover:text-accent">
             {featured.data.title}
           </Heading>
           <Text tone="muted" class="mt-4 max-w-lg">{featured.data.description}</Text>
@@ -96,8 +95,10 @@ const description =
             href={`/tools/${t.id}/`}
             class="group tool-cell p-7 md:p-8 transition-colors"
           >
-            <span class="flex items-center gap-3">
-              <Icon name={t.data.icon} size={17} class="text-accent" />
+            {/* The stacked cells are half the featured cell's width, so the
+                glyph runs alongside the label rather than above it. */}
+            <span class="flex items-center gap-4">
+              <ToolGlyph tool={t.data.tool} size="sm" class="shrink-0 text-ink" />
               <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">{t.data.kind}</span>
             </span>
             <Heading level={2} visual="h3" class="mt-4 transition-colors group-hover:text-accent">

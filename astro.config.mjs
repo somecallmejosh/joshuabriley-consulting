@@ -25,6 +25,9 @@ export default defineConfig({
     // Clempo + Bass Face moved into the personal-projects section.
     '/projects/clempo': '/personal-projects/clempo',
     '/projects/bass-face': '/personal-projects/bass-face',
+    // Rudiment UI moved the other way: it now sits with the client case
+    // studies rather than under personal projects.
+    '/personal-projects/rudiment-ui': '/projects/rudiment-ui',
   },
   ...(isDev ? {} : { adapter: netlify() }),
   // Default (sharp) image service. The passthrough service was carried in at the

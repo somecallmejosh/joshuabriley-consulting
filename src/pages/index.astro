@@ -8,6 +8,7 @@ import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import Button from '~/components/primitives/Button.astro';
 import Link from '~/components/primitives/Link.astro';
+import ToolGlyph from '~/components/patterns/ToolGlyph.astro';
 
 // ── Content (every claim is backed by the site itself or a real case study) ──
 // Same four chips as the about page, worded identically. Two pages rendering
@@ -54,9 +55,16 @@ const metrics = [
   { value: '2+ hrs', label: 'a day of data entry removed', note: 'Logatot: hands-free capture in the moment' },
 ];
 
-// Client products where I owned the interface. Order matches /projects/, so the
-// two lists cannot present the same three case studies in different sequences.
+// Products where I owned the interface: three client platforms and the
+// open-source library. Order matches /projects/, so the two lists cannot
+// present the same case studies in different sequences.
 const work = [
+  {
+    href: '/projects/rudiment-ui/',
+    client: 'Rudiment UI',
+    kind: 'Component library',
+    line: 'An open-source React component library paired with a guide that explains why each architectural decision was made, and what it costs you later to make a different one.',
+  },
   {
     href: '/projects/ivfcryo/',
     client: 'IVFCRYO',
@@ -86,6 +94,8 @@ const tools = (await getCollection('tools', ({ data }) => !data.draft))
     kind: t.data.kind,
     name: t.data.title,
     line: t.data.takeaway,
+    action: t.data.action,
+    tool: t.data.tool,
   }));
 
 // Counted, not hardcoded, so adding a fifth tool can't leave the copy claiming four.
@@ -93,8 +103,8 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
 ---
 
 <BaseLayout
-  title="Joshua Briley | Design- and front-end-focused Product Design Engineer"
-  description="Design- and front-end-focused product design engineer with 20 years in production UI. I design the interface and build it myself, accessible from the start and finished to the last detail."
+  title="Joshua Briley | Design systems & UI platform engineer"
+  description="Design systems & UI platform engineer with 20 years in production UI. I design the interface and build it myself, accessible from the start and finished to the last detail."
 >
   {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
@@ -114,7 +124,7 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
             My best work lives at the <em class="ink-wink font-normal italic">interface</em>, down to the last detail.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
-            I'm a design- and front-end-focused product design engineer with 20 years in production
+            I'm a design systems & UI platform engineer with 20 years in production
             UI. I design the interface and build it myself, accessible from the start, so nothing
             gets lost in a handoff.
           </Text>
@@ -232,8 +242,10 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
         </a>
       </div>
 
-      {/* ── Tools. Same ink surface, same row grammar as the work list above,
-             so the two read as one body of work rather than a sidebar. ── */}
+      {/* ── Tools. Same ink surface as the work list above, but a grid rather
+             than more rows: these are things to run, not case studies to read,
+             and each one carries a diagram of what it actually does. Three
+             consecutive row-lists on one page also read as a template. ── */}
       <div class="mt-20 border-t border-paper/15 pt-14">
         <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div class="lg:col-span-7">
@@ -250,24 +262,28 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
           </div>
         </div>
 
-        <ul class="mt-12 border-t border-paper/10" data-reveal-stagger>
+        {/* Hairline grid, same construction as the /tools/ bento: a `bg-paper/15`
+            sheet showing through 1px gaps between opaque cells, so the set reads
+            as one ruled plate rather than four floating cards. */}
+        <div
+          class="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-paper/15 sm:grid-cols-2 lg:grid-cols-4"
+          data-reveal-stagger
+        >
           {tools.map((t) => (
-            <li>
-              <a href={t.href} class="group grid grid-cols-12 items-center gap-4 border-b border-paper/10 py-5 transition-colors hover:bg-paper/[0.03]">
-                <span class="col-span-12 flex items-center gap-3 sm:col-span-4">
-                  <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{t.kind}</span>
-                </span>
-                <span class="col-span-10 sm:col-span-7">
-                  <span class="font-display text-lg font-medium tracking-tight text-paper">{t.name}</span>
-                  <span class="mt-0.5 block text-sm text-paper/55">{t.line}</span>
-                </span>
-                <span class="col-span-2 flex justify-end sm:col-span-1">
-                  <Icon name="ph:arrow-right" size={18} class="text-paper/50 transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-paper" />
-                </span>
-              </a>
-            </li>
+            <a href={t.href} class="group tool-tile flex flex-col p-6 md:p-7 transition-colors">
+              <ToolGlyph tool={t.tool} size="md" class="text-paper" />
+              <span class="mt-6 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">{t.kind}</span>
+              <span class="mt-2.5 font-display text-lg font-medium leading-snug tracking-tight text-paper transition-colors group-hover:text-accent">
+                {t.name}
+              </span>
+              <span class="mt-2 text-sm leading-relaxed text-paper/55">{t.line}</span>
+              <span class="mt-auto flex items-center gap-2 pt-6 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-paper/70">
+                {t.action}
+                <Icon name="ph:arrow-right" size={13} class="transition-transform duration-300 ease-out group-hover:translate-x-1" />
+              </span>
+            </a>
           ))}
-        </ul>
+        </div>
 
         <div class="mt-8">
           <a href="/tools/" class="inline-flex items-center gap-2 font-sans text-[0.9rem] font-medium text-paper transition-colors hover:text-accent">
@@ -378,3 +394,18 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
 
 {/* No scoped hero-load-in block here: `.hero-in` and its delay steps live in
     site.css, same as every other page hero, reduced-motion guard included. */}
+
+<style>
+  /* ── Tool tiles sit on a `bg-paper/15` grid sheet, so they must stay opaque.
+     A `hover:bg-paper/[0.03]` utility REPLACES the cell background instead of
+     layering on it, which exposes the light grid underneath and flashes the
+     cell nearly white. Mixing the tint into ink keeps the cell opaque and lands
+     on the colour the row-list hovers composite to. Same fix as `.tool-cell` on
+     the /tools/ index, inverted for the dark surface. */
+  .tool-tile {
+    background: var(--ink);
+  }
+  .tool-tile:hover {
+    background: color-mix(in srgb, var(--paper) 4%, var(--ink));
+  }
+</style>

@@ -7,6 +7,7 @@ import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 import CTABanner from '~/components/patterns/CTABanner.astro';
+import ToolGlyph from '~/components/patterns/ToolGlyph.astro';
 
 import ScorecardEngine from '~/components/islands/ScorecardEngine.astro';
 import RoiCalculator from '~/components/islands/RoiCalculator.astro';
@@ -25,6 +26,7 @@ interface RelatedTool {
   kind: string;
   title: string;
   takeaway: string;
+  tool: 'ScorecardEngine' | 'RoiCalculator' | 'TokenPlayground' | 'Diagnostic';
 }
 
 interface Props {
@@ -75,23 +77,33 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
         <span class="hidden sm:inline text-ink-muted">Free to use</span>
       </div>
 
-      <div class="mt-10 max-w-3xl lg:mt-12">
-        <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
-          {title}
-        </Heading>
-        <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
-          {description}
-        </Text>
+      {/* The same diagram that stands in for this tool on the home band and the
+          /tools/ index, at its largest here: it is the reader's confirmation
+          they landed on the thing they clicked. Right-aligned in the last four
+          columns on desktop, above the headline once the grid collapses. */}
+      <div class="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-12 lg:items-center lg:gap-12">
+        <div class="lg:col-span-8">
+          <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
+            {title}
+          </Heading>
+          <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
+            {description}
+          </Text>
 
-        {toolProps.length > 0 && (
-          <ul class="hero-in hero-in-4 mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
-            {toolProps.map((p) => (
-              <li class="flex items-center gap-2">
-                <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
-              </li>
-            ))}
-          </ul>
-        )}
+          {toolProps.length > 0 && (
+            <ul class="hero-in hero-in-4 mt-9 flex flex-wrap gap-x-6 gap-y-2 font-mono text-[0.7rem] uppercase tracking-[0.1em] text-ink-muted">
+              {toolProps.map((p) => (
+                <li class="flex items-center gap-2">
+                  <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{p}
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+
+        <div class="hero-in hero-in-3 order-first lg:order-none lg:col-span-4 lg:flex lg:justify-end">
+          <ToolGlyph tool={tool} size="2xl" class="text-ink" />
+        </div>
       </div>
     </Container>
   </Section>
@@ -154,7 +166,8 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
           {related.map((r) => (
             <li>
               <a href={r.href} class="group grid grid-cols-12 items-center gap-4 border-b border-paper/10 py-5 transition-colors hover:bg-paper/[0.03]">
-                <span class="col-span-12 sm:col-span-3">
+                <span class="col-span-12 flex items-center gap-4 sm:col-span-3">
+                  <ToolGlyph tool={r.tool} size="sm" class="shrink-0 text-paper" />
                   <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{r.kind}</span>
                 </span>
                 <span class="col-span-10 sm:col-span-8">

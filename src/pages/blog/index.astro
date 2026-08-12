@@ -6,19 +6,32 @@ import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import PostFigure from '~/components/patterns/PostFigure.astro';
 
 const description =
   'Practical notes on front-end, design systems, and accessibility, from 20 years of building real products.';
 
 const all = await getCollection('posts', ({ data }) => !data.draft);
-const sorted = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+const posts = all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-const featured = sorted.find((p) => p.data.featured) ?? sorted[0];
-// Every essay renders as the same row; the latest just leads and wears a tag.
-const posts = [featured, ...sorted.filter((p) => p !== featured)];
+// Recency is the hierarchy: the newest essay leads at feature scale, everything
+// older sits in the grid beneath it. The previous version led with whichever
+// post carried `featured: true` while still labelling it "Latest", which was
+// only true by accident. A post that is still flagged featured but has been
+// overtaken keeps a quiet tag in the grid instead.
+const [lead, ...rest] = posts;
 
+// Frontmatter dates are bare `YYYY-MM-DD`, which `z.coerce.date()` parses as
+// UTC midnight. Formatting without a timeZone renders them in the build
+// machine's zone, so anything west of Greenwich printed the previous day.
 const fmtDate = (d: Date) =>
-  d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  d.toLocaleDateString('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    timeZone: 'UTC',
+  });
+const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
 <BaseLayout title="Blog | Joshua Briley" description={description}>
@@ -48,55 +61,87 @@ const fmtDate = (d: Date) =>
     </Container>
   </Section>
 
-  {/* ───────────────────────── ESSAY LIST ───────────────────────── */}
+  {/* ───────────────────────── ESSAYS ─────────────────────────
+      A front-page hierarchy rather than five identical rows: the newest essay
+      runs at feature scale above a horizontal colophon strip (the case-study
+      spec rail turned on its side), and the rest fall into a hairline grid
+      beneath it. Deliberately not the `gap-px bg-line` bento the tools index
+      uses: the two index pages should not be interchangeable at a glance. */}
   <Section tone="paper" padding="default">
     <Container width="wide">
-      <p class="mono-label">All essays</p>
+      <Heading level={2} visual="eyebrow" tone="muted" class="mt-20">Posts and research</Heading>
 
-      <ul class="mt-8 border-t border-line">
+      {/* Two tracks, not three: the four remaining essays fill a 2x2 exactly,
+          where a 3-up leaves a hole in the second row. */}
+      <ul
+        class="mt-6 grid grid-cols-1 gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16"
+        data-reveal-stagger
+      >
         {posts.map((post, i) => (
-          <li>
+          <li
+
+          >
             <a
               href={`/blog/${post.id}/`}
-              class="group grid grid-cols-12 items-baseline gap-4 border-b border-line py-7 transition-colors hover:bg-ink/[0.02]"
+              class="essay group flex h-full flex-col border-t border-line pb-9 pt-6 transition-colors hover:bg-ink/[0.02]"
             >
-              <div class="col-span-12 flex flex-wrap items-center gap-x-3 gap-y-1 sm:col-span-3 lg:col-span-3">
-                <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-accent">{post.data.category}</span>
-                <time datetime={post.data.date.toISOString().slice(0, 10)} class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">
+              <span class="flex flex-wrap items-center gap-x-3 gap-y-1">
+                <Icon name={post.data.icon} size={15} class="text-accent" />
+                <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-accent">
+                  {post.data.category}
+                </span>
+                <time
+                  datetime={iso(post.data.date)}
+                  class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-muted"
+                >
                   {fmtDate(post.data.date)}
                 </time>
-                {i === 0 && (
-                  <span class="font-mono text-[0.65rem] uppercase tracking-[0.12em] text-ink-muted">· Latest</span>
+                {/* ink-muted, not ink-faint: #9A9AA1 on paper is ~2.5:1 and
+                    fails AA at this size. */}
+                {post.data.featured && (
+                  <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-muted">
+                    Featured
+                  </span>
                 )}
-              </div>
+              </span>
 
-              <div class="col-span-10 sm:col-span-8 lg:col-span-8">
-                <Heading level={2} visual="h3" class="transition-colors group-hover:text-accent">
-                  {post.data.title}
-                </Heading>
-                <Text tone="muted" class="mt-2 max-w-2xl">
-                  {post.data.description}
-                </Text>
-                <span class="mt-3 inline-flex items-center gap-1.5 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-ink-muted">
-                  <Icon name="ph:clock" size={13} />{post.data.readMinutes} min read
-                </span>
-              </div>
+              {/* Wide enough that "front-end" is never broken at its own hyphen. */}
+              <Heading
+                level={3}
+                visual="h3"
+                class="mt-4 max-w-[34ch] text-balance transition-colors group-hover:text-accent"
+              >
+                {post.data.title}
+              </Heading>
 
-              <div class="col-span-2 flex justify-end sm:col-span-1 lg:col-span-1">
-                <Icon name="ph:arrow-right" size={18} class="text-ink-faint transition-transform duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent" />
-              </div>
+              <Text tone="muted" size="sm" class="mt-3 max-w-prose">
+                {post.data.description}
+              </Text>
+
+              <span class="mt-5 inline-flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.1em] text-ink-muted">
+                <Icon name="ph:clock" size={13} />{post.data.readMinutes} min read
+                <Icon
+                  name="ph:arrow-right"
+                  size={13}
+                  class="transition-all duration-300 ease-out group-hover:translate-x-1 group-hover:text-accent"
+                />
+              </span>
             </a>
           </li>
         ))}
       </ul>
 
       {/* The four interactive pieces used to live in this list, where nothing
-          marked them as runnable. They have their own section now. */}
-      <p class="mt-8 text-sm text-ink-muted max-w-xl">
-        Looking for the scorecard, the cost calculator, the token playground, or the audit
-        inspector? Those are running software rather than essays, so they live in
-        <a href="/tools/" class="hero-link">tools</a>.
-      </p>
+          marked them as runnable. They have their own section now. The rule runs
+          the full container width to match the hairlines above it; only the copy
+          is held to a reading measure. */}
+      <div class="mt-12 border-t border-line pt-8">
+        <p class="max-w-xl text-sm text-ink-muted">
+          Looking for the scorecard, the cost calculator, the token playground, or the audit
+          inspector? Those are running software rather than essays, so they live in
+          <a href="/tools/" class="hero-link">tools</a>.
+        </p>
+      </div>
     </Container>
   </Section>
 
@@ -122,7 +167,7 @@ const fmtDate = (d: Date) =>
               type="email"
               required
               placeholder="you@workmail.com"
-              class="flex-1 rounded-md border border-paper/20 bg-paper/10 px-4 py-3 font-sans text-paper placeholder-paper/45 transition-colors focus:border-accent focus:bg-paper/15 focus:outline-none"
+              class="flex-1 rounded-md border border-paper/20 bg-paper/10 px-4 py-3 font-sans text-paper placeholder-paper/65 transition-colors focus:border-accent focus:bg-paper/15 focus:outline-none"
             />
             <button
               type="submit"
@@ -137,3 +182,30 @@ const fmtDate = (d: Date) =>
     </Container>
   </Section>
 </BaseLayout>
+
+<style>
+  /* Colophon strip — mono label over a set value, matching the ruled spec rail
+     on the case-study heroes (.hero-rail in site.css) so an essay and a project
+     open in the same voice. Declared locally because this one runs horizontally
+     across the block rather than down a 14rem rail. */
+  .lead-colophon dt {
+    font-family: var(--font-geist-mono), ui-monospace, monospace;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--ink-muted);
+    margin-bottom: 0.4rem;
+  }
+  .lead-colophon dd {
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    line-height: 1.25;
+  }
+
+  /* The outlined display ampersand that used to fill the lead's right-hand
+     white space is gone: the lead essay's own figure occupies that column now.
+     The watermark device itself is unchanged on the case-study heroes
+     (.hero-index in site.css) and on the OG cards. */
+</style>

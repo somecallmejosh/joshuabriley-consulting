@@ -26,7 +26,7 @@ const { value, label, caption, before, trend, class: className } = Astro.props;
 <div class={cx('flex flex-col', className)}>
   <div class="flex items-baseline gap-2">
     {before && (
-      <span class="font-display text-2xl md:text-3xl text-ink-faint line-through decoration-accent/50">{before}</span>
+      <span class="font-display text-2xl md:text-3xl text-ink-muted line-through decoration-accent/50">{before}</span>
     )}
     {before && <Icon name="ph:arrow-right" size={16} class="self-center text-ink-faint" />}
     <span class="font-display font-semibold leading-none text-4xl md:text-5xl tracking-[-0.03em] text-ink">{value}</span>

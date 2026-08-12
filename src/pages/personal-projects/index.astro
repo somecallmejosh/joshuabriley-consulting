@@ -8,21 +8,14 @@ import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
 
 const description =
-  'Personal projects by Joshua Briley: an open-source accessible React component library, a playable arcade game that teaches the W3C design-tokens spec, and a custom Rails CMS shipped in a weekend. Built without a client, finished to the same standard as the client work.';
+  'Personal projects by Joshua Briley: a playable arcade game that teaches the W3C design-tokens spec, built in a real sandbox with an assertion engine that grades your code. Built without a client, finished to the same standard as the client work.';
 
+// Rudiment UI moved to /projects/ and sits with the client case studies now.
+// West Baton Rouge Presbyterian is unlisted rather than deleted: the case study
+// is still live at its own URL, it just no longer appears in this index.
 const projects = [
-    {
+  {
     index: '01',
-    href: '/personal-projects/rudiment-ui/',
-    client: 'Rudiment UI',
-    kind: 'Open source',
-    title: 'Accessible component primitives, built in public',
-    summary:
-      'An open-source React component library and companion guide covering architectural decisions, a three-tier token system, intrinsic layout primitives, accessible components with React Aria, Storybook docs, testing, and npm distribution.',
-    note: '3-tier token system',
-  },
-    {
-    index: '02',
     href: '/personal-projects/token-galaga/',
     client: 'Token Adventure',
     kind: 'Arcade game · Teaching tool',
@@ -31,17 +24,6 @@ const projects = [
       'Twenty sectors of the W3C Design Tokens Format (2025.10), where you write real tokens in a CodeMirror editor, run them in a sandboxed iframe, and clear the wave when a serializable assertion engine grades your code against the spec. A hard spec turned into something you actually want to finish.',
     note: 'Real sandbox + assertion engine',
   },
-  {
-    index: '03',
-    href: '/personal-projects/west-baton-rouge-presbyterian/',
-    client: 'West Baton Rouge Presbyterian',
-    kind: 'Rails CMS',
-    title: 'A full CMS',
-    summary:
-      'A custom Rails CMS built end to end: content models for events, galleries, and pages, a Cloudinary media pipeline, staff authentication, and an accessible public site. Proof of range and speed.',
-    note: 'Shipped in a weekend',
-  },
-
 ];
 ---
 

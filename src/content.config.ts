@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob, file } from 'astro/loaders';
+import { FIGURES } from './lib/figures';
 
 const testimonialVariant = z.enum(['polaroid', 'sticky', 'index', 'plum']);
 const avatarTone = z.enum(['coral', 'plum', 'sage', 'sky', 'navy']);
@@ -44,6 +45,11 @@ const posts = defineCollection({
     readMinutes: z.number(),
     /** Iconify name for the gradient hero block on the index card. */
     icon: z.string(),
+    /** Hand-authored article figure — keys one drawing in PostFigure.astro.
+     *  Optional because the figures are bespoke per essay and cannot be reused:
+     *  a new post must not fail the build for not having one drawn yet. Every
+     *  placement is guarded, so a post without a figure renders unchanged. */
+    figure: z.enum(FIGURES).optional(),
     /** Tailwind classes for the index card's gradient block (e.g. "from-lemon via-coral/40 to-sky/30"). */
     gradient: z.string(),
     /** Tone applied to the corner sticker on the index card. */
@@ -79,8 +85,9 @@ const tools = defineCollection({
     props: z.array(z.string()).default([]),
     /** How to drive the tool. Renders directly above it, so it never says "below". */
     instructions: z.string(),
-    /** Iconify name, used on the index bento. */
-    icon: z.string(),
+    /* No `icon` field: the tool's illustration is the <ToolGlyph> keyed to
+       `tool` above, so the home band, the index and the tool page all draw the
+       same mark from one place rather than from a per-file icon name. */
     tags: z.array(z.string()).default([]),
     draft: z.boolean().default(false),
   }),

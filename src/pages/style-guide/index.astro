@@ -162,13 +162,17 @@ const metrics = [
           </Text>
 
           <dl class="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line">
+            {/* A `dl` may wrap each term/description pair in ONE div, and that
+                div may hold only dt and dd — the previous nesting put both two
+                divs deep, which invalidates the list. The swatch rides inside
+                the dt instead, and the dd indents past it to keep the column. */}
             {originMap.map((m) => (
-              <div class="flex items-center gap-4 bg-raised px-4 py-3">
-                <span class={`h-9 w-9 shrink-0 rounded-[5px] border ${m.fill} ${m.border}`} aria-hidden="true"></span>
-                <div>
-                  <dt class="font-mono text-[0.7rem] uppercase tracking-[0.06em] text-accent">{m.token}</dt>
-                  <dd class="text-sm leading-snug text-ink-muted">{m.from}</dd>
-                </div>
+              <div class="bg-raised px-4 py-3">
+                <dt class="flex items-center gap-4">
+                  <span class={`h-9 w-9 shrink-0 rounded-[5px] border ${m.fill} ${m.border}`} aria-hidden="true"></span>
+                  <span class="font-mono text-[0.7rem] uppercase tracking-[0.06em] text-accent">{m.token}</span>
+                </dt>
+                <dd class="mt-1 pl-[3.25rem] text-sm leading-snug text-ink-muted">{m.from}</dd>
               </div>
             ))}
           </dl>

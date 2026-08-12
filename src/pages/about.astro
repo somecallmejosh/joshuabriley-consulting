@@ -6,9 +6,10 @@ import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
 import Icon from '~/components/primitives/Icon.astro';
+import PrincipleGlyph from '~/components/patterns/PrincipleGlyph.astro';
 
 const description =
-  'Design- and front-end-focused product design engineer. 20 years in production UI: design-grade, accessible interfaces with the judgment most teams have to hire a separate designer to get.';
+  'Product design engineer working at the intersection of front-end engineering and UX. 20 years in production UI, most recently building accessible component libraries in Vue, React, and Web Components.';
 
 // Same four chips as the home page, worded identically. Two pages rendering the
 // same strip with different items read as two different claims.
@@ -19,49 +20,52 @@ const capabilities = [
   'Design systems',
 ];
 
+// Each principle carries its own drawing instead of an index number. The glyph
+// does the work the `01 / 02 / 03` was doing (marking where a cell starts) and
+// says something besides "this is the first one".
 const principles = [
   {
-    index: '01',
-    title: 'The UI is where the value is',
+    glyph: 'system' as const,
+    title: 'A design system is a product, and its users write code',
     body:
-      "The interface is my strongest work: type, spacing, motion, the empty and error states most engineers leave blank. I build it design-grade myself, instead of handing a spec to someone who will approximate it.",
+      "If the API fights the team consuming it, they will copy the markup, tweak it, and move on, and the system quietly stops being one. So the props, the defaults, and the docs get the same care as the type and the spacing.",
   },
   {
-    index: '02',
-    title: 'Design and accessibility, built in',
+    glyph: 'accessibility' as const,
+    title: 'Accessibility belongs inside the component',
     body:
-      "Not an audit at the end. Not a ticket for later. The keyboard paths, focus states, and empty screens are part of how I build, which is why the things I ship work for everyone and feel finished.",
+      "Not an audit at the end. Not a ticket for later. When the keyboard paths, focus states, and semantics ship inside the component, every team that adopts it inherits them, and nobody has to be an expert to get it right.",
   },
   {
-    index: '03',
+    glyph: 'directness' as const,
     title: 'Directness over diplomacy',
     body:
       "If a product is in trouble, I'll tell you exactly where and why. Kindly, but without hedging. Then we'll map the shortest honest path forward. You're hiring me for the truth, not the comfort.",
   },
 ];
 
-// Makes the pull quote concrete. The quote names three of these; the fourth is
-// there so the list reads as a practice rather than a tidy rhetorical triple.
-const states = [
+// Makes the pull quote concrete: what a component owes the two audiences named
+// in the quote. Four items, so it reads as a practice rather than a tidy triple.
+const contract = [
   {
-    label: 'Empty',
+    label: 'Accessibility',
     body:
-      'The first-run screen says what goes here and how to put something in it, instead of handing you a blank panel and a shrug.',
+      'Keyboard paths, focus states, and semantics live inside the component, so a team that adopts it inherits them without reading a spec first.',
   },
   {
-    label: 'Error',
+    label: 'API surface',
     body:
-      'When a request fails, the message names what broke and what to do next, and it appears next to the thing that broke.',
+      'Props that make the wrong combination hard to express and the right one obvious at the call site, so people reach for the component instead of around it.',
   },
   {
-    label: 'Loading',
+    label: 'Docs and tests',
     body:
-      'Skeletons hold the shape of the final layout, so nothing jumps under the cursor when the data lands.',
+      'Storybook stories, usage guidance, and automated tests, so a consuming team can answer its own question and trust the answer.',
   },
   {
-    label: 'Keyboard',
+    label: 'Portability',
     body:
-      'Every action is reachable without a mouse, in an order that makes sense, with focus you can actually see.',
+      'One Web Component that behaves the same in React, Vue, or plain HTML, so the system does not fork the day a team picks a different stack.',
   },
 ];
 
@@ -86,21 +90,22 @@ const learning = [
       <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div class="lg:col-span-7">
           <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
-            I build the whole product, and I sweat the parts most engineers <em class="ink-wink font-normal italic">skip</em>.
+            Twenty years between front-end engineering and UX. Lately, mostly <em class="ink-wink font-normal italic">systems</em>.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
-            I'm a design- and front-end-focused product design engineer with 20 years in production UI. The
-            interface is where I bring the most value: design-grade, accessible, with the judgment
-            most teams have to hire a separate designer to get.
+            I've spent most of my career at the intersection of front-end engineering and UX, with
+            design systems becoming an increasingly large part of that work. I've built and
+            supported component libraries in Vue, React, and Web Components, for teams that had to
+            ship on all three.
           </Text>
-          {/* The empty-state/keyboard-path formulation is the pull quote's job
-              one section down. Saying it twice on one page blunts it, so this
-              paragraph carries the range instead. */}
+          {/* The two-audiences formulation is the pull quote's job one section
+              down, so this paragraph states the constant plainly and lands the
+              current stack instead of reaching for the same phrasing twice. */}
           <Text tone="muted" class="hero-in hero-in-3 mt-5 max-w-xl">
-            I work across the whole product, from the stakeholder interviews that decide what to
-            build through to the <em class="text-ink not-italic font-medium">data model the
-            interface has to keep its promises against</em>. But the surface is where I do my
-            best work, and where I hold the highest standard.
+            The constant across all of them is accessibility, and <em class="text-ink not-italic font-medium">component
+            APIs that work as well for the engineers consuming the system as they do for the people
+            using the product</em>. Right now that means Stencil-based Web Components, Storybook,
+            automated testing, and Figma integration.
           </Text>
 
           <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
@@ -158,24 +163,24 @@ const learning = [
   {/* ───────────────────────── PULL QUOTE ───────────────────────── */}
   <Section tone="paper" padding="default" class="border-b border-line">
     <Container width="narrow">
-      <p class="mono-label">The standard</p>
+      <p class="mono-label">Two audiences</p>
       <blockquote class="mt-5">
         <p class="font-display text-2xl md:text-3xl lg:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.025em] text-ink text-balance">
-          Most engineers ship the screen with the data in it. I ship that one
-          too, then the empty one, the failed one, and the one someone is
-          driving <span class="text-accent">without a mouse</span>.
+          A component has two users: whoever clicks the button, and whoever
+          has to make it do something new next quarter. Serve one and
+          <span class="text-accent">you've failed the other</span>.
         </p>
       </blockquote>
 
       <Text tone="muted" class="mt-8 max-w-2xl">
-        That isn't polish added at the end. A feature isn't done when the happy path renders.
-        It's done when it holds up with no data, a failed request, and someone who never touches
-        the trackpad. Built into the first pass, those states cost hours. Bolted on later, they
-        cost weeks.
+        That's the part of a design system that gets skipped. A library that looks right in
+        Storybook but fights the team consuming it loses to copy and paste within two quarters.
+        The API, the defaults, the docs, and the accessibility baked into them are the product,
+        as much as the type and the spacing are.
       </Text>
 
       <ul class="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2" data-reveal-stagger>
-        {states.map((s) => (
+        {contract.map((s) => (
           <li class="border-t border-line pt-4">
             <p class="flex items-center gap-2.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink">
               <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{s.label}
@@ -185,7 +190,7 @@ const learning = [
         ))}
       </ul>
 
-      <p class="mt-12 mono-label">The last 10% is the point</p>
+      <p class="mt-12 mono-label">Adoption is the only real metric</p>
     </Container>
   </Section>
 
@@ -203,13 +208,13 @@ const learning = [
         class="mt-14 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-line bg-line lg:grid-cols-3"
         data-reveal-stagger
       >
-        {principles.map((p) => (
-          <div class={`bg-paper p-7 md:p-9 ${p.index === '01' ? 'lg:col-span-2 lg:row-span-2 lg:flex lg:flex-col lg:justify-center md:p-10' : ''}`}>
-            <div class="flex items-baseline gap-3">
-              <span class="font-mono text-[0.75rem] text-accent">{p.index}</span>
-              <Heading level={3} visual={p.index === '01' ? 'h2' : 'h3'}>{p.title}</Heading>
-            </div>
-            <Text tone="muted" class={p.index === '01' ? 'mt-4 max-w-lg' : 'mt-3'} size={p.index === '01' ? undefined : 'sm'}>{p.body}</Text>
+        {principles.map((p, i) => (
+          <div class={`bg-paper p-7 md:p-9 ${i === 0 ? 'lg:col-span-2 lg:row-span-2 lg:flex lg:flex-col lg:justify-center md:p-10' : ''}`}>
+            <PrincipleGlyph name={p.glyph} size={i === 0 ? 'lg' : 'md'} class="text-ink" />
+            {/* The featured cell spans two columns, so its longer title needs
+                a measure of its own or it outruns the body copy beneath it. */}
+            <Heading level={3} visual={i === 0 ? 'h2' : 'h3'} class={i === 0 ? 'mt-7 max-w-[22ch]' : 'mt-6'}>{p.title}</Heading>
+            <Text tone="muted" class={i === 0 ? 'mt-4 max-w-lg' : 'mt-3'} size={i === 0 ? undefined : 'sm'}>{p.body}</Text>
           </div>
         ))}
       </div>
@@ -266,9 +271,9 @@ const learning = [
             Think we'd work well together?
           </Heading>
           <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            If you're hiring a product design engineer who builds the whole thing and sweats the finish,
-            send a note. I'll tell you honestly whether I'm the right fit, and if not, I probably
-            know who is.
+            If you're building a design system, or the products that have to depend on one, send a
+            note. I'll tell you honestly whether I'm the right fit, and if not, I probably know who
+            is.
           </Text>
         </div>
         <div class="lg:col-span-4 lg:flex lg:justify-end">

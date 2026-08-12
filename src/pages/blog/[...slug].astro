@@ -18,7 +18,10 @@ const { Content, headings } = await render(post);
 const orderedPosts = (await getCollection('posts', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 const currentIndex = orderedPosts.findIndex((p) => p.id === post.id);
-const toLink = (p) => (p ? { id: p.id, title: p.data.title } : null);
+// `orderedPosts[i]` is undefined at both ends of the range, so the parameter is
+// widened past the element type rather than relying on an implicit any.
+const toLink = (p: (typeof orderedPosts)[number] | undefined) =>
+  p ? { id: p.id, title: p.data.title } : null;
 const prevPost = toLink(orderedPosts[currentIndex + 1]);
 const nextPost = toLink(orderedPosts[currentIndex - 1]);
 ---
@@ -35,6 +38,7 @@ const nextPost = toLink(orderedPosts[currentIndex - 1]);
   prevPost={prevPost}
   nextPost={nextPost}
   wide={post.data.interactive}
+  figure={post.data.figure}
 >
   <Content />
 </BlogPost>
