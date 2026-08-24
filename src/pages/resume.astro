@@ -5,7 +5,6 @@ import Container from '~/components/layout/Container.astro';
 import Heading from '~/components/primitives/Heading.astro';
 import Text from '~/components/primitives/Text.astro';
 import Button from '~/components/primitives/Button.astro';
-import Icon from '~/components/primitives/Icon.astro';
 
 // Shared with /resume-print/ and therefore with public/resume.pdf, so the page
 // and the download cannot drift. Edit the content in src/lib/resume-data.mjs,
@@ -154,35 +153,6 @@ const description =
           </div>
         </div>
 
-      </div>
-    </Container>
-  </Section>
-
-  {/* ───────────────────────── CONTACT ───────────────────────── */}
-  <Section tone="paper" padding="loose" class="border-t border-line">
-    <Container width="wide">
-      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div class="lg:col-span-8">
-          <Heading level={2} visual="display-lg" class="max-w-[20ch]">
-            Looks like a fit? Let's talk.
-          </Heading>
-          <Text size="lg" tone="muted" class="mt-6 max-w-xl">
-            If you're hiring a product design engineer who builds the whole thing and sweats the finish,
-            send a note. I'll tell you honestly whether I'm the right fit, and if not, I probably
-            know who is.
-          </Text>
-        </div>
-        <div class="lg:col-span-4 lg:flex lg:justify-end">
-          <div class="flex flex-col items-start gap-3">
-            <Button variant="primary" size="lg" href="/contact/" iconRight="ph:arrow-right">Get in touch</Button>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener"
-              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink-muted transition-colors hover:text-ink"
-            >Download PDF <Icon name="ph:download-simple" size={12} /></a>
-          </div>
-        </div>
       </div>
     </Container>
   </Section>

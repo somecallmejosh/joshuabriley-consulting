@@ -196,6 +196,22 @@ const restOfSystem = [
   { slug: '11-design-system', title: 'The design system' },
 ];
 
+// The edges — honest, not exhaustive. Both are gaps a manual, page-by-page
+// audit cannot reliably catch: patterns that only exist on interaction, not
+// on a screen you can scan or screenshot.
+const edges = [
+  {
+    icon: 'ph:app-window',
+    title: 'Modals the inventory did not catch',
+    body: 'The audit counted button styles, form patterns, and table conventions because those repeat across a grid you can scan. Modals do not: each one only appears when triggered. Every modal in the app turned out to share no HTML structure, no CSS classes, and its own hand-rolled JavaScript. Tooltips had the same problem, split across an implementation from Bootstrap and a second library nobody had fully retired. Both got folded into the rebuild, but neither was in the original ~700-line inventory.',
+  },
+  {
+    icon: 'ph:robot',
+    title: 'Finding the rest of the sprawl took a tool, not just eyes',
+    body: 'A manual pass through 350 templates finds the patterns that repeat often enough to notice. It does not reliably find the ones that do not — a bespoke modal or an orphaned tooltip library can hide in a screen opened once a month. I built a Claude skill to scan the app for component intent rather than markup, plus a mapping plan pairing every legacy pattern to its replacement class, and that is what actually surfaced the modals and tooltips the manual audit missed. Both are shipped and running in the app now.',
+  },
+];
+
 const flows = [
   {
     slug: 'flow-01-ingestion',
@@ -855,6 +871,27 @@ const flows = [
           </p>
         </blockquote>
       </figure>
+    </Container>
+  </Section>
+
+  <!-- THE EDGES -->
+  <Section tone="paper" padding="default" class="border-t border-line">
+    <Container width="content">
+      <p class="mono-label mb-3">The edges</p>
+      <Text size="lg" tone="muted" class="measure mb-10">
+        Both of these are gaps a manual, page-by-page audit cannot reliably
+        catch: patterns that only exist on interaction, not on a screen you
+        can scan or screenshot.
+      </Text>
+      <ul class="grid gap-x-10 gap-y-10 md:grid-cols-2">
+        {edges.map((e) => (
+          <li class="border-t border-line pt-5">
+            <Icon name={e.icon} size={24} class="mb-3 text-ink-muted" />
+            <Heading level={3} visual="h3" tone="ink" class="mb-1.5">{e.title}</Heading>
+            <Text size="sm" tone="muted">{e.body}</Text>
+          </li>
+        ))}
+      </ul>
     </Container>
   </Section>
 

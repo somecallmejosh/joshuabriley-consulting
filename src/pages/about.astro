@@ -44,36 +44,37 @@ const principles = [
   },
 ];
 
-// Makes the pull quote concrete: what a component owes the two audiences named
-// in the quote. Four items, so it reads as a practice rather than a tidy triple.
-const contract = [
-  {
-    label: 'Accessibility',
-    body:
-      'Keyboard paths, focus states, and semantics live inside the component, so a team that adopts it inherits them without reading a spec first.',
-  },
-  {
-    label: 'API surface',
-    body:
-      'Props that make the wrong combination hard to express and the right one obvious at the call site, so people reach for the component instead of around it.',
-  },
-  {
-    label: 'Docs and tests',
-    body:
-      'Storybook stories, usage guidance, and automated tests, so a consuming team can answer its own question and trust the answer.',
-  },
-  {
-    label: 'Portability',
-    body:
-      'One Web Component that behaves the same in React, Vue, or plain HTML, so the system does not fork the day a team picks a different stack.',
-  },
-];
-
 const learning = [
   { title: 'WAI-ARIA & APG', note: 'Authoring practices for patterns that truly work for assistive tech.' },
   { title: 'Design Tokens CG', note: 'The emerging standard for portable, multi-platform design decisions.' },
   { title: 'CSS Working Group', note: 'Container queries, anchor positioning, cascade layers (the good stuff).' },
   { title: 'Rudiment UI', note: 'My open-source React component library, built with the reasoning left in.' },
+];
+
+// Real facts, not a bio-page mood board. Ordered as a rough life arc: where I'm
+// from, what the Army had us do with that, what I still do with a bass or a
+// drum kit, and what our family spends its time and money on now.
+const personal = [
+  {
+    icon: 'ph:cooking-pot',
+    title: 'Louisiana runs deep',
+    body: "I grew up in Louisiana on Cajun food and Cajun music. Nothing beats my grandmother's chicken and sausage gumbo, her crawfish étouffée, or my step dad's boiled crawfish. Nothing!",
+  },
+  {
+    icon: 'ph:shield-star',
+    title: 'My wife and I both served',
+    body: "We're Army veterans who met at our first duty station, overseas. We were stationed in Hohenfels, Germany, lived in the nearby village of Seubersdorf, and had our first child there. Ein bier, bitte!",
+  },
+  {
+    icon: 'ph:music-notes-simple',
+    title: 'Bass, drums, thirty-plus years',
+    body: 'In my younger days I toured the southeast college circuit, playing in fraternity houses and college clubs. I also spent a lot of time playing gigs on Bourbon Street and Frenchman Street in New Orleans. These days I keep it local.',
+  },
+  {
+    icon: 'ph:map-trifold',
+    title: 'We travel as a family, a lot',
+    body: 'Every chance we get, with our kids: Canada, the Bahamas, Italy, Iceland, Ireland, France, Austria, and Germany so far. Iceland is still our favorite. We also enjoy stateside travel and like staying off the beaten path.',
+  },
 ];
 ---
 
@@ -90,7 +91,7 @@ const learning = [
       <div class="mt-10 grid gap-12 lg:mt-14 lg:grid-cols-12 lg:gap-16 lg:items-center">
         <div class="lg:col-span-7">
           <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
-            Twenty years between front-end engineering and UX. Lately, mostly <em class="ink-wink font-normal italic">systems</em>.
+            <em class="ink-wink font-normal italic">Twenty years</em> between front end engineering & UX.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-xl">
             I've spent most of my career at the intersection of front-end engineering and UX, with
@@ -98,9 +99,6 @@ const learning = [
             supported component libraries in Vue, React, and Web Components, for teams that had to
             ship on all three.
           </Text>
-          {/* The two-audiences formulation is the pull quote's job one section
-              down, so this paragraph states the constant plainly and lands the
-              current stack instead of reaching for the same phrasing twice. */}
           <Text tone="muted" class="hero-in hero-in-3 mt-5 max-w-xl">
             The constant across all of them is accessibility, and <em class="text-ink not-italic font-medium">component
             APIs that work as well for the engineers consuming the system as they do for the people
@@ -157,40 +155,6 @@ const learning = [
           </figure>
         </div>
       </div>
-    </Container>
-  </Section>
-
-  {/* ───────────────────────── PULL QUOTE ───────────────────────── */}
-  <Section tone="paper" padding="default" class="border-b border-line">
-    <Container width="narrow">
-      <p class="mono-label">Two audiences</p>
-      <blockquote class="mt-5">
-        <p class="font-display text-2xl md:text-3xl lg:text-[2.5rem] font-semibold leading-[1.15] tracking-[-0.025em] text-ink text-balance">
-          A component has two users: whoever clicks the button, and whoever
-          has to make it do something new next quarter. Serve one and
-          <span class="text-accent">you've failed the other</span>.
-        </p>
-      </blockquote>
-
-      <Text tone="muted" class="mt-8 max-w-2xl">
-        That's the part of a design system that gets skipped. A library that looks right in
-        Storybook but fights the team consuming it loses to copy and paste within two quarters.
-        The API, the defaults, the docs, and the accessibility baked into them are the product,
-        as much as the type and the spacing are.
-      </Text>
-
-      <ul class="mt-12 grid gap-x-10 gap-y-8 sm:grid-cols-2" data-reveal-stagger>
-        {contract.map((s) => (
-          <li class="border-t border-line pt-4">
-            <p class="flex items-center gap-2.5 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-ink">
-              <span class="h-1 w-1 rounded-[1px] bg-accent" aria-hidden="true"></span>{s.label}
-            </p>
-            <p class="mt-2 text-sm leading-relaxed text-ink-muted">{s.body}</p>
-          </li>
-        ))}
-      </ul>
-
-      <p class="mt-12 mono-label">Adoption is the only real metric</p>
     </Container>
   </Section>
 
@@ -262,29 +226,30 @@ const learning = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── CONTACT (ink) ───────────────────────── */}
-  <Section tone="ink" padding="loose">
+  {/* ───────────────────────── OFF THE CLOCK ───────────────────────── */}
+  <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="wide">
-      <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
-        <div class="lg:col-span-8">
-          <Heading level={2} visual="display-lg" tone="paper" class="max-w-[20ch] text-balance">
-            Think we'd work well together?
-          </Heading>
-          <Text size="lg" tone="whiteMuted" class="mt-6 max-w-xl">
-            If you're building a design system, or the products that have to depend on one, send a
-            note. I'll tell you honestly whether I'm the right fit, and if not, I probably know who
-            is.
-          </Text>
-        </div>
-        <div class="lg:col-span-4 lg:flex lg:justify-end">
-          <div class="flex flex-col items-start gap-3">
-            <Button variant="navy" size="lg" href="/contact/" iconRight="ph:arrow-right" class="js-magnetic">Get in touch</Button>
-            <a
-              href="/resume/"
-              class="inline-flex items-center gap-2 font-mono text-[0.7rem] uppercase tracking-[0.12em] text-paper/55 transition-colors hover:text-paper"
-            >Résumé <Icon name="ph:file-text" size={12} /></a>
+      <div class="max-w-3xl">
+        <Heading level={2} visual="display-md">
+          A few things that aren't on the résumé.
+        </Heading>
+        <Text tone="muted" class="mt-4 max-w-xl">
+          The professional stuff is the rest of this page. Here's the short version of
+          everything else.
+        </Text>
+      </div>
+
+      <div
+        class="mt-14 grid grid-cols-1 gap-x-10 gap-y-10 sm:grid-cols-2 md:gap-y-12"
+        data-reveal-stagger
+      >
+        {personal.map((p) => (
+          <div>
+            <Icon name={p.icon} size={28} class="text-accent" />
+            <Heading level={3} visual="h3" class="mt-5">{p.title}</Heading>
+            <Text tone="muted" size="sm" class="mt-3 max-w-sm">{p.body}</Text>
           </div>
-        </div>
+        ))}
       </div>
     </Container>
   </Section>
