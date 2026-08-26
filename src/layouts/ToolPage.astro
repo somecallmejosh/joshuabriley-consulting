@@ -69,7 +69,6 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
   pathname={pathname}
   article={{ publishedTime: date, section: 'Tools', author: 'Joshua Briley' }}
 >
-  {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="tight" class="pt-12 md:pt-16">
     <Container width="wide">
       <div class="flex items-center justify-between gap-4 mono-label">
@@ -77,10 +76,6 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
         <span class="hidden sm:inline text-ink-muted">Free to use</span>
       </div>
 
-      {/* The same diagram that stands in for this tool on the home band and the
-          /tools/ index, at its largest here: it is the reader's confirmation
-          they landed on the thing they clicked. Right-aligned in the last four
-          columns on desktop, above the headline once the grid collapses. */}
       <div class="mt-10 grid gap-8 lg:mt-12 lg:grid-cols-12 lg:items-center lg:gap-12">
         <div class="lg:col-span-8">
           <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[18ch]">
@@ -108,14 +103,9 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
     </Container>
   </Section>
 
-  {/* ───────────────────────── THE TOOL ─────────────────────────
-      Instructions sit directly above the island, so nothing in the copy
-      has to point "below" at something the reader has already scrolled past. */}
   <Section tone="paper" padding="default" class="!pt-10 md:!pt-12">
     <Container width="wide">
       <div class="tool-stage">
-        {/* Left-aligned to the island's own edge, so it reads as that thing's
-            caption rather than floating between the hero and the tool. */}
         <p class="tool-instructions max-w-2xl text-ink-muted leading-relaxed">
           {instructions}
         </p>
@@ -127,7 +117,6 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
     </Container>
   </Section>
 
-  {/* ───────────────────────── THE ESSAY ───────────────────────── */}
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="wide">
       <div class="mx-auto max-w-2xl">
@@ -153,7 +142,6 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
     </Container>
   </Section>
 
-  {/* ───────────────────────── RELATED TOOLS (ink) ───────────────────────── */}
   {related.length > 0 && (
     <Section tone="ink" padding="default">
       <Container width="wide">
@@ -185,15 +173,6 @@ const liShare = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURI
     </Section>
   )}
 
-  {/* ───────────────────────── CLOSE ─────────────────────────
-      Not a sales pitch. The tools are not for sale and there is no audit
-      service behind them, so this closes on what the tool actually is: a work
-      sample, pointing at the case studies where the same standard runs at
-      product scale. No eyebrow: the hero and the related-tools band already
-      carry one each, which is the cap for a page this length.
-
-      The secondary deliberately is NOT "see all four tools" any more; the
-      related-tools list immediately above already does that job. */}
   <CTABanner
     title="Built the way I build production work."
     lead="Accessible controls, live state, no framework underneath, and the same tokens as the rest of this site. It should hold up to being inspected as production work. The case studies show the same standard at full product scale."

@@ -35,7 +35,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 ---
 
 <BaseLayout title="Blog | Joshua Briley" description={description}>
-  {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
@@ -61,18 +60,10 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
     </Container>
   </Section>
 
-  {/* ───────────────────────── ESSAYS ─────────────────────────
-      A front-page hierarchy rather than five identical rows: the newest essay
-      runs at feature scale above a horizontal colophon strip (the case-study
-      spec rail turned on its side), and the rest fall into a hairline grid
-      beneath it. Deliberately not the `gap-px bg-line` bento the tools index
-      uses: the two index pages should not be interchangeable at a glance. */}
   <Section tone="paper" padding="default">
     <Container width="wide">
       <Heading level={2} visual="eyebrow" tone="muted" class="mt-20">Posts and research</Heading>
 
-      {/* Two tracks, not three: the four remaining essays fill a 2x2 exactly,
-          where a 3-up leaves a hole in the second row. */}
       <ul
         class="mt-6 grid grid-cols-1 gap-x-10 gap-y-0 sm:grid-cols-2 lg:grid-cols-3 lg:gap-16"
         data-reveal-stagger
@@ -96,8 +87,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
                 >
                   {fmtDate(post.data.date)}
                 </time>
-                {/* ink-muted, not ink-faint: #9A9AA1 on paper is ~2.5:1 and
-                    fails AA at this size. */}
                 {post.data.featured && (
                   <span class="font-mono text-[0.62rem] uppercase tracking-[0.12em] text-ink-muted">
                     Featured
@@ -105,7 +94,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
                 )}
               </span>
 
-              {/* Wide enough that "front-end" is never broken at its own hyphen. */}
               <Heading
                 level={3}
                 visual="h3"
@@ -131,10 +119,6 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
         ))}
       </ul>
 
-      {/* The four interactive pieces used to live in this list, where nothing
-          marked them as runnable. They have their own section now. The rule runs
-          the full container width to match the hairlines above it; only the copy
-          is held to a reading measure. */}
       <div class="mt-12 border-t border-line pt-8">
         <p class="max-w-xl text-sm text-ink-muted">
           Looking for the scorecard, the cost calculator, the token playground, or the audit

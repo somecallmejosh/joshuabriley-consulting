@@ -80,7 +80,6 @@ const metrics = [
   title="Design system: Editorial-Technical reference | Joshua Briley"
   description="The Editorial-Technical design system: cool paper, near-black ink, one denim-navy accent, Hanken Grotesk and Geist Mono. Colour tokens, type scale, primitives, patterns, and accessible form components."
 >
-  {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <div class="flex items-center justify-between gap-4 mono-label">
@@ -108,7 +107,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 01 · FOUNDATIONS ───────────────────────── */}
   <Section id="foundations" tone="paper" padding="default" class="border-b border-line">
     <Container width="wide">
       <p class="mono-label">Foundations / 01</p>
@@ -124,7 +122,6 @@ const metrics = [
 
       <div class="mt-12 grid gap-8 md:grid-cols-5 md:items-center">
         <figure class="overflow-hidden rounded-lg border border-line md:col-span-2">
-          {/* 2-of-5 in the `wide` container tops out at ~474px. */}
           <picture>
             <source
               type="image/avif"
@@ -162,10 +159,6 @@ const metrics = [
           </Text>
 
           <dl class="mt-6 grid gap-px overflow-hidden rounded-lg border border-line bg-line">
-            {/* A `dl` may wrap each term/description pair in ONE div, and that
-                div may hold only dt and dd — the previous nesting put both two
-                divs deep, which invalidates the list. The swatch rides inside
-                the dt instead, and the dd indents past it to keep the column. */}
             {originMap.map((m) => (
               <div class="bg-raised px-4 py-3">
                 <dt class="flex items-center gap-4">
@@ -207,7 +200,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 02 · TYPOGRAPHY ───────────────────────── */}
   <Section id="typography" tone="paper" padding="default" class="border-b border-line">
     <Container width="wide">
       <p class="mono-label">Typography / 02</p>
@@ -275,7 +267,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 03 · PRIMITIVES ───────────────────────── */}
   <Section id="primitives" tone="paper" padding="default" class="border-b border-line">
     <Container width="wide">
       <p class="mono-label">Primitives / 03</p>
@@ -288,7 +279,6 @@ const metrics = [
       </div>
 
       <div class="mt-12 grid gap-8 lg:grid-cols-2">
-        {/* Buttons */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Button: variants &amp; sizes</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
@@ -308,7 +298,6 @@ const metrics = [
           </Text>
         </div>
 
-        {/* Buttons on ink */}
         <div class="rounded-lg border border-ink bg-ink p-6 md:p-8">
           <p class="mono-label !text-paper/65">Button: on ink surfaces</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
@@ -321,7 +310,6 @@ const metrics = [
           </Text>
         </div>
 
-        {/* Links */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Link: inline / arrow / nav</p>
           <div class="mt-5 space-y-3 text-sm">
@@ -337,7 +325,6 @@ const metrics = [
           </div>
         </div>
 
-        {/* Badge */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Badge: mono label chip</p>
           <div class="mt-5 flex flex-wrap items-center gap-3">
@@ -354,7 +341,6 @@ const metrics = [
           </Text>
         </div>
 
-        {/* Logo */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Logo: sm / md / lg</p>
           <div class="mt-6 flex flex-wrap items-baseline gap-x-10 gap-y-6">
@@ -369,7 +355,6 @@ const metrics = [
           </Text>
         </div>
 
-        {/* Icon */}
         <div class="rounded-lg border border-line bg-raised p-6 md:p-8">
           <p class="mono-label">Icon: Phosphor set</p>
           <div class="mt-6 flex flex-wrap items-center gap-6 text-ink">
@@ -388,7 +373,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 04 · PATTERNS ───────────────────────── */}
   <Section id="patterns" tone="paper" padding="default" class="border-b border-line">
     <Container width="wide">
       <p class="mono-label">Patterns / 04</p>
@@ -400,7 +384,6 @@ const metrics = [
         </Text>
       </div>
 
-      {/* SectionHeader */}
       <div class="mt-12 rounded-lg border border-line bg-raised p-7 md:p-10">
         <p class="mono-label mb-6">SectionHeader</p>
         <SectionHeader
@@ -411,7 +394,6 @@ const metrics = [
         />
       </div>
 
-      {/* Metric */}
       <div class="mt-8 rounded-lg border border-line bg-raised p-7 md:p-10">
         <p class="mono-label mb-6">Metric: a row of measured outcomes</p>
         <div class="grid grid-cols-2 gap-8 md:grid-cols-4">
@@ -425,7 +407,6 @@ const metrics = [
         </Text>
       </div>
 
-      {/* CodeBlock */}
       <div class="mt-8">
         <p class="mono-label mb-4">CodeBlock: framed code window</p>
         <CodeBlock
@@ -436,7 +417,6 @@ const metrics = [
         />
       </div>
 
-      {/* FAQ */}
       <div class="mt-10 rounded-lg border border-line bg-raised p-7 md:p-10">
         <p class="mono-label mb-2">FAQ: native details/summary, zero JS</p>
         <FAQ class="mt-4">
@@ -457,7 +437,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 05 · FORMS ───────────────────────── */}
   <Section id="forms" tone="paper" padding="default" class="border-b border-line">
     <Container width="wide">
       <p class="mono-label">Forms / 05</p>
@@ -529,7 +508,6 @@ const metrics = [
     </Container>
   </Section>
 
-  {/* ───────────────────────── 06 · MOTION & SPACING ───────────────────────── */}
   <Section id="motion" tone="ink" padding="default">
     <Container width="wide">
       <p class="mono-label !text-paper/65">Motion &amp; spacing / 06</p>

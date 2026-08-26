@@ -257,7 +257,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
 
 <BaseLayout title={title} description={description}>
 
-  <!-- HERO -->
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <nav
@@ -303,7 +302,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- RECEIPTS -->
   <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="content">
       <p class="mono-label mb-8">Receipts</p>
@@ -327,7 +325,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- ON THE DOCKET -->
   <Section tone="paper" padding="tight">
     <Container width="content">
       <p class="mono-label mb-5">On the docket</p>
@@ -359,7 +356,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 01 — THE USER WITH NO FREE HANDS -->
   <Section tone="paper" padding="default" id="hands" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -447,7 +443,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 02 — VIDEO CALLS BEFORE WIREFRAMES -->
   <Section tone="paper" padding="default" id="research" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -532,7 +527,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 03 — TWO SHAPES FOR THE SAME DAY -->
   <Section tone="paper" padding="default" id="shapes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -554,8 +548,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
             </p>
           </div>
 
-          {/* First sheet on the page, so the reading instructions live here rather
-              than in a gallery preamble the reader meets before any artwork. */}
           <div class="mt-10 rounded-lg border border-line p-6 md:p-8">
             <p class="mono-label mb-4">How to read the sheets</p>
             <div class="space-y-4 text-ink-muted leading-relaxed">
@@ -585,8 +577,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
       </div>
     </Container>
 
-    {/* The three passes, shown once. Every sheet after this one is the
-        annotated pass at full width. */}
     <Container width="wide" class="mt-16">
       <p class="mono-label mb-6">How a screen got built</p>
       <FidelityBand
@@ -673,7 +663,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- THE HANDOFF — kiosk screen with the two flows that explain it -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -726,7 +715,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 04 — FAILURE IS A NORMAL STATE -->
   <Section tone="paper" padding="default" id="failure" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -791,7 +779,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 05 — THE VOICE PIPELINE -->
   <Section tone="paper" padding="default" id="pipeline" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -857,7 +844,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
       </div>
     </Container>
 
-    {/* The pipeline this step describes, drawn end to end. */}
     <Container width="wide" class="mt-16">
       {flowSet('11-flow-voice-logging').map((flow) => (
         <Plate
@@ -899,7 +885,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- ACCESSIBILITY -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -953,7 +938,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- STEP 06 — OUTCOMES -->
   <Section tone="paper" padding="default" id="outcomes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -995,9 +979,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
       </div>
     </Container>
 
-    {/* The two flows that carry the outcome claims: onboarding is where the
-        product is won or lost, and the food program is compliance falling out
-        of records captured for another reason. */}
     <Container width="wide" class="mt-16">
       <div class="space-y-16">
         {flowSet('12-flow-onboarding', '15-flow-food-program').map((flow) => (
@@ -1013,7 +994,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- THE REST OF THE SYSTEM -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="wide">
       <p class="mono-label mb-3">The rest of the system</p>
@@ -1038,7 +1018,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- TESTIMONIALS -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <p class="mono-label mb-10">What providers said</p>
@@ -1059,7 +1038,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- THE EDGES -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <p class="mono-label mb-3">The edges</p>
@@ -1082,7 +1060,6 @@ const flowSet = (...slugs: string[]) => slugs.map((s) => flows.find((f) => f.slu
     </Container>
   </Section>
 
-  <!-- CTA -->
   <Section tone="ink" padding="loose">
     <Container width="wide">
       <p class="mono-label !text-paper/65 mb-6">Product design engineering</p>

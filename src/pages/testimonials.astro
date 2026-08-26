@@ -16,7 +16,6 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
 
 <BaseLayout title="Testimonials | Joshua Briley | Product Design Engineer" description={description}>
 
-  {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <div class="hero-in hero-in-1 flex items-center justify-between gap-4 mono-label">
@@ -57,7 +56,6 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
     </Container>
   </Section>
 
-  {/* ───────────────────────── THE WALL ───────────────────────── */}
   <Section id="wall" tone="paper" padding="default">
     <Container width="wide">
       <div class="max-w-3xl">
@@ -66,8 +64,6 @@ const sorted = all.sort((a, b) => a.data.order - b.data.order);
         </Heading>
       </div>
 
-      {/* A quiet, uniform wall. CSS columns let each quote sit at its natural
-          height (organic stagger) while every voice is weighted the same. */}
       <div class="mt-12 columns-1 [column-gap:2.5rem] sm:columns-2 lg:mt-14 lg:columns-3 lg:[column-gap:3rem]" data-reveal-stagger>
         {sorted.map((t) => (
           <figure class="mb-12 break-inside-avoid lg:mb-14">

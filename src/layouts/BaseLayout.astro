@@ -144,7 +144,6 @@ const jsonLdGraph = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {/* All generated from one outlined mark — see scripts/generate-favicon.mjs. */}
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
@@ -152,7 +151,6 @@ const jsonLdGraph = {
     <meta name="theme-color" content="#1A1B1E" />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
-    {/* Open Graph */}
     <meta property="og:type" content={resolvedOgType} />
     <meta property="og:site_name" content={SITE_NAME} />
     <meta property="og:title" content={title} />
@@ -173,7 +171,6 @@ const jsonLdGraph = {
       </>
     )}
 
-    {/* Twitter */}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content={TWITTER_HANDLE} />
     <meta name="twitter:creator" content={TWITTER_HANDLE} />
@@ -182,13 +179,10 @@ const jsonLdGraph = {
     <meta name="twitter:image" content={absoluteImage} />
     <meta name="twitter:image:alt" content={`${title}: ${SITE_NAME}`} />
 
-    {/* JSON-LD */}
     <script type="application/ld+json" set:html={JSON.stringify(jsonLdGraph)} />
 
     <Font cssVariable="--font-hanken" preload />
     <Font cssVariable="--font-fraunces" preload />
-    {/* Preloaded: the lockup is the first paint in the header, and a swap on
-        the wordmark reflows the whole nav row. */}
     <Font cssVariable="--font-script" preload />
     <Font cssVariable="--font-geist-mono" />
 
@@ -214,8 +208,6 @@ const jsonLdGraph = {
       import '~/scripts/whimsy';
     </script>
 
-    {/* A note for the curious dev in the console — on-brand for a UX engineer's
-        site, invisible to everyone else, and a quiet nudge toward the secret mode. */}
     <script is:inline>
       (() => {
         const head = 'color:#1b1a17;font:600 22px/1.2 Georgia,serif';

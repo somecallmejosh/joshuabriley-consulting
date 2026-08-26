@@ -285,7 +285,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
 
 <BaseLayout title={title} description={description}>
 
-  <!-- HERO -->
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <nav
@@ -336,7 +335,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- RECEIPTS -->
   <Section tone="paper" padding="tight" aria-label="Project receipts">
     <Container width="content">
       <p class="mono-label mb-8">Receipts</p>
@@ -360,7 +358,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- ON THE DOCKET -->
   <Section tone="paper" padding="tight">
     <Container width="content">
       <p class="mono-label mb-5">On the docket</p>
@@ -397,8 +394,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-
-  <!-- STEP 01 — MODEL THE FIVE-PARTY WORKFLOW -->
   <Section tone="paper" padding="default" id="stakes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -470,9 +465,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
       </div>
     </Container>
 
-    {/* The three passes, shown once. Every sheet after this one is the
-        annotated pass at full width, so the progression gets explained here
-        rather than re-staged on every plate. */}
     <Container width="wide" class="mt-16">
       <p class="mono-label mb-6">How a screen got built</p>
       <FidelityBand
@@ -496,7 +488,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- STEP 02 — THE READINESS GATE -->
   <Section tone="paper" padding="default" id="readiness" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -561,7 +552,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- STEP 03 — TWO-SIDED + PUBLIC -->
   <Section tone="paper" padding="default" id="flows" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -683,7 +673,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- STEP 04 — RECOVERY SYSTEM + CRYO SHIELD + ACCESSIBILITY -->
   <Section tone="paper" padding="default" id="recovery" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -780,7 +769,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- STEP 05 — PARTNERING ON THE SYSTEM UNDERNEATH -->
   <Section tone="paper" padding="default" id="architecture" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -871,7 +859,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- STEP 06 — OUTCOMES -->
   <Section tone="paper" padding="default" id="outcomes" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <div class="case-layout">
@@ -936,7 +923,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- THE REST OF THE SYSTEM -->
   <Section tone="paper" padding="default" class="border-t border-line" data-rest-of-system>
     <Container width="wide">
       <div>
@@ -945,8 +931,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
           Six more screens went through the same three passes. These are the
           annotated pass, whole.
         </Text>
-        {/* Two-up rather than a three-column thumbnail rail: these are still
-            annotated sheets, and a 4:3 crop of one is a picture of a header. */}
         <ul class="grid gap-x-8 gap-y-14 md:grid-cols-2">
           {restOfSystem.map((s) => (
             <li>
@@ -963,7 +947,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- TESTIMONIAL -->
   <Section tone="paper" padding="default" class="border-t border-line">
     <Container width="content">
       <figure class="grid gap-x-10 gap-y-10 md:grid-cols-12 md:items-start lg:gap-x-16">
@@ -998,7 +981,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- THE EDGES -->
   <Section tone="paper" padding="default" id="edges" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <p class="mono-label mb-3">The edges</p>
@@ -1019,7 +1001,6 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
     </Container>
   </Section>
 
-  <!-- CTA -->
   <Section tone="ink" padding="loose">
     <Container width="wide">
       <p class="mono-label !text-paper/65 mb-6">Product design engineering</p>

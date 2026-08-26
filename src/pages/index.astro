@@ -98,9 +98,8 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
 
 <BaseLayout
   title="Joshua Briley | Design systems & UI platform engineer"
-  description="Design systems & UI platform engineer with 20 years in production UI, from insurance platforms to fantasy-sports games with a million-plus players. I design it and build it myself, so nothing gets lost in the handoff."
+  description="Design systems & UI platform engineer with 20 years in production UI, from insurance platforms to fantasy-sports games with a million-plus players. I design interfaces, build them, and ship code to production."
 >
-  {/* ───────────────────────── HERO ───────────────────────── */}
   <Section tone="paper" padding="default" class="pt-12 md:pt-16 border-b border-line">
     <Container width="wide">
       <p class="hero-in hero-in-1 mono-label">
@@ -109,18 +108,15 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
         <span class="sr-only">I focus on </span>Design &amp; front-end
       </p>
 
-      {/* Editorial hero on the shared 12-col grid, so its measure matches the
-          about/resume heroes. No illustration: the capability strip directly
-          below and the selected-work numbers further down carry the proof. */}
       <div class="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:gap-16">
         <div class="lg:col-span-8">
           <Heading level={1} visual="display-xl" class="hero-in hero-in-2 max-w-[19ch]">
-            The <em class="ink-wink font-normal italic">interface</em> is where I add the most value.
+            Where <em class="ink-wink font-normal italic">design meets code</em> is where I add value.
           </Heading>
           <Text size="lg" tone="muted" class="hero-in hero-in-3 mt-7 max-w-2xl">
             Design systems & UI platform engineer, 20 years in production UI, from insurance
-            platforms to fantasy-sports games with a million-plus players. I design it and build
-            it myself, so nothing gets lost in the handoff.
+            platforms to fantasy-sports games with a million-plus players. I design interfaces,
+            build them, and ship code to production.
           </Text>
 
           <div class="hero-in hero-in-4 mt-9 flex flex-wrap items-center gap-3">
@@ -136,7 +132,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
     </Container>
   </Section>
 
-  {/* ───────────────────────── CREDENTIALS STRIP ───────────────────────── */}
   <Section tone="paper" padding="tight" class="!py-9 border-b border-line">
     <Container width="wide">
       <div class="">
@@ -151,7 +146,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
     </Container>
   </Section>
 
-  {/* ───────────────────────── DIFFERENTIATOR (asymmetric bento) ───────────────────────── */}
   <Section tone="paper" padding="default">
     <Container width="wide">
       <div class="max-w-3xl">
@@ -189,7 +183,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
     </Container>
   </Section>
 
-  {/* ───────────────────────── SELECTED WORK (ink) ───────────────────────── */}
   <Section tone="ink" padding="default">
     <Container width="wide">
       <div class="grid gap-10 lg:grid-cols-12 lg:items-end">
@@ -197,9 +190,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
           <p class="mono-label !text-paper/65">Selected work</p>
           <Heading level={2} visual="display-md" tone="paper" class="mt-4 text-balance">Products where I owned the interface.</Heading>
         </div>
-        {/* Same figure/label/caption typography as the <Metric> component the
-            case studies use, in paper rather than ink because this band sits on
-            the dark surface. Three across only once there is room for them. */}
         <div class="lg:col-span-6 grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
           {metrics.map((m) => (
             <div class="flex flex-col">
@@ -236,10 +226,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
         </a>
       </div>
 
-      {/* ── Tools. Same ink surface as the work list above, but a grid rather
-             than more rows: these are things to run, not case studies to read,
-             and each one carries a diagram of what it actually does. Three
-             consecutive row-lists on one page also read as a template. ── */}
       <div class="mt-20 border-t border-paper/15 pt-14">
         <div class="grid gap-6 lg:grid-cols-12 lg:items-end">
           <div class="lg:col-span-7">
@@ -256,9 +242,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
           </div>
         </div>
 
-        {/* Hairline grid, same construction as the /tools/ bento: a `bg-paper/15`
-            sheet showing through 1px gaps between opaque cells, so the set reads
-            as one ruled plate rather than four floating cards. */}
         <div
           class="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg bg-paper/15 sm:grid-cols-2 lg:grid-cols-4"
           data-reveal-stagger
@@ -288,14 +271,11 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
     </Container>
   </Section>
 
-  {/* ───────────────────────── ABOUT STRIP (warm — personal) ───────────────────────── */}
-  <Section tone="surface-warm" padding="default">
+  <Section tone="paper" padding="default">
     <Container width="wide">
       <div class="grid items-start gap-10 md:grid-cols-12 md:gap-14">
         <div class="md:col-span-4">
           <div class="overflow-hidden rounded-lg border border-line">
-            {/* 4-of-12 in the `wide` container tops out at ~373px, so 1000w is
-                already a 2x source; the phone case (100vw) is what needs it. */}
             <picture>
               <source
                 type="image/avif"
@@ -346,8 +326,6 @@ const toolCount = ['No', 'One', 'Two', 'Three', 'Four', 'Five', 'Six'][tools.len
   </Section>
 </BaseLayout>
 
-{/* No scoped hero-load-in block here: `.hero-in` and its delay steps live in
-    site.css, same as every other page hero, reduced-motion guard included. */}
 
 <style>
   /* ── Tool tiles sit on a `bg-paper/15` grid sheet, so they must stay opaque.

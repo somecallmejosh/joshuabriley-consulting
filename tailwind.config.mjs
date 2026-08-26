@@ -25,7 +25,7 @@ export default {
         // ── New "Editorial Technical" system ──────────────────────────────
         paper: '#FAFBFC', // page background — near-white, faint cool cast (terracotta + slate)
         raised: '#FFFFFF', // cards / raised surfaces (pure white, lifts off paper)
-        'surface-warm': 'var(--surface-warm)', // warm "about me" surface — personal/first-person sections only
+        'surface-warm': 'var(--surface-warm)', // warm tint for small inline callouts only (e.g. blog author card), not section washes
         ink: {
           DEFAULT: '#1A1B1E', // primary text + dark surfaces (cool near-black)
           soft: '#292A2E',

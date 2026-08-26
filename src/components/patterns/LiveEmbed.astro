@@ -43,13 +43,11 @@ const {
 
 <figure class={cx('live-embed', className)} data-live-embed data-view="desktop">
   <div class="live-embed-frame">
-    {/* Corner registration brackets — the viewfinder signature. */}
     <span class="live-embed-corner live-embed-corner--tl" aria-hidden="true"></span>
     <span class="live-embed-corner live-embed-corner--tr" aria-hidden="true"></span>
     <span class="live-embed-corner live-embed-corner--bl" aria-hidden="true"></span>
     <span class="live-embed-corner live-embed-corner--br" aria-hidden="true"></span>
 
-    {/* Persistent live tag — reads as a real-time feed, not a screenshot. */}
     <span class="live-embed-tag">
       <span class="live-embed-tag-dot" aria-hidden="true"></span>
       live <span class="live-embed-tag-sep" aria-hidden="true">·</span> interactive
@@ -67,7 +65,6 @@ const {
           <span class="live-embed-cta-note">{ctaNote}</span>
         </button>
 
-        {/* Pre-rendered, src-less: no network until activated; scoped styles apply. */}
         <iframe
           class="live-embed-iframe"
           data-embed-frame
@@ -81,7 +78,6 @@ const {
     </div>
   </div>
 
-  {/* Spec rail — title left, viewport switch + open affordance right. */}
   <figcaption class="live-embed-rail">
     <span class="live-embed-title">{title}</span>
 

@@ -11,9 +11,9 @@
 :root {
   --paper: #fafbfc;
   --raised: #ffffff;
-  /* Warm paper — the "about me" surface. Reserved for sections whose content is
-     personal (author bios, personal projects, first-person intros), so the
-     warmth reads as an intentional voice, not a stray tint. */
+  /* Warm paper. Reserved for small inline callouts (e.g. the blog post author
+     card) — not for full-width section washes, which read as an unbalanced,
+     unintentional tint next to the site's paper/ink pairing. */
   --surface-warm: #f7f5f0;
   --ink: #1a1b1e;
   --ink-muted: #565760;
