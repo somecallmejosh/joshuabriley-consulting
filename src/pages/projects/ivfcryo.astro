@@ -157,13 +157,13 @@ const metricLenses = [
 const edges = [
   {
     icon: 'ph:speaker-high',
-    title: 'One polling cadence, whether you wanted it or not',
-    body: 'The Sense Data API polled every sixty seconds for temperature, location, humidity, battery, and light exposure. Visually that is fine sitting in a browser tab. Audibly, for a screen-reader user with a live region announcing each cycle, one update finished and the next one started right behind it. We shipped a setting to reduce the frequency, but it is opt-in — the default is still the aggressive one, and a first-time user has to notice the noise before finding the control.',
+    title: 'One update speed, whether you wanted it or not',
+    body: 'The tracker checked in every sixty seconds with temperature, location, humidity, battery level, and light exposure. Visually, that is fine sitting quietly in a browser tab. For someone using a screen reader, each update gets read aloud, and the next one started before the last one finished being read. We shipped a setting to slow it down, but a person has to go find it. The default is still the fast one, and a first-time user has to notice the noise before they know the control exists. If I revisit this, the fix is changing the default, not adding a second setting.',
   },
   {
     icon: 'ph:tag',
     title: 'Same label, different carrier',
-    body: 'Once a shipment involved more than one carrier, our label-creation and transit-status announcements reused the same ARIA label for both. A sighted user could tell them apart by position on screen; a screen-reader user testing the flow could not tell which carrier currently held the shipment. That is exactly the ambiguity the whole product exists to prevent, and it only surfaced because someone who relies on a screen reader tested the multi-carrier path.',
+    body: 'Once a shipment involved more than one carrier, our label-creation and transit-status announcements described both carriers with identical wording read aloud to a screen reader. A sighted user could tell them apart by where they sat on the screen. Someone using a screen reader testing the flow could not tell which carrier currently held the shipment. That is exactly the kind of confusion the whole product exists to prevent, and it only surfaced because someone who relies on a screen reader tested the multi-carrier path. First thing I would fix if I touched this flow again: name each carrier explicitly in that wording, so the confusion cannot happen again the next time a shipment adds a second carrier.',
   },
 ];
 
@@ -312,8 +312,8 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
           <Text size="lg" tone="muted" class="hero-in hero-in-4 mt-8 max-w-xl">
             A self-service platform for high-stakes fertility shipments. I led the
             design and owned the front end, then partnered with engineering on the
-            Rails model and the carrier, telemetry, and notification services beneath
-            it. The stakeholder research reframed the whole product around the person
+            software underneath it: the parts that track carriers, monitor
+            temperature, and send notifications. The stakeholder research reframed the whole product around the person
             in the middle of it: a patient, often moving their only remaining embryo
             against a treatment deadline, left to project-manage two clinics and a
             courier no one had introduced. Tracking the truck was never the hard part.
@@ -519,9 +519,9 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
               and sometimes it becomes a last-minute cancellation, wasted courier time, and
               more anxiety. So I designed readiness as a
               <strong class="text-ink font-semibold">formal state, not a general
-              impression</strong> — and had the model distinguish a requested date, a
-              provisional plan, and a confirmed shipment, three things a paper process let
-              look identical.
+              impression</strong>, and built the system to keep a requested date, a
+              provisional plan, and a confirmed shipment as three distinct things,
+              where a paper process let them all look the same.
             </p>
           </div>
 
@@ -579,11 +579,17 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
               enough control to resolve the exceptions.
             </p>
             <p>
-              Rather than build two apps, I mapped two sitemaps off one shared home — the
-              shipping list — and let the information architecture fork from there. A
-              readiness view now sits on the customer side, because Sasha's hardest daily
-              work was chasing "what are we still waiting for?" across email, fax, and
-              clinic portals. Same spine, different reach.
+              Two apps was the obvious shape: one for customers, one for the admin team,
+              each simpler to build in isolation. I rejected it for the same reason the
+              product exists at all — two apps means two records of one shipment, and the
+              moment they drift apart, the interface reintroduces the exact ambiguity
+              ("sent" isn't "received and approved") that breaks trust at every handoff in
+              the paper process. So I mapped two sitemaps off one shared home instead — the
+              shipping list — and let the information architecture fork from there, one
+              shipment record underneath both. A readiness view now sits on the customer
+              side, because Sasha's hardest daily work was chasing "what are we still
+              waiting for?" across email, fax, and clinic portals. Same spine, different
+              reach.
             </p>
           </div>
 
@@ -712,12 +718,18 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
               record is incomplete, the event can't be reconstructed later.
             </p>
             <p>
-              Accessibility was part of the same strategy, not a later pass. A legally
-              blind customer collaborated from the beginning, testing flows with a screen
-              reader while the product was still being shaped. Status, errors, and alerts
-              carried text, icon, and shape, never color alone; components that changed
-              visibility managed their own focus; dynamic updates announced themselves
-              through live regions.
+              Accessibility was part of the same strategy, not a later pass, and not a
+              single round of feedback either. A legally blind customer collaborated from
+              the beginning, testing flows with a screen reader while the product was
+              still being shaped, and stayed involved after launch: the multi-carrier
+              labeling gap in
+              <a href="#edges" class="hero-link">the edges below</a>
+              only surfaced because that same kind of testing kept running against real
+              releases. Status, errors, and alerts carried text, icon, and shape, never
+              color alone. When something appeared or disappeared on screen, the page
+              kept track of where a keyboard user's attention should land next, and
+              important updates were read aloud automatically instead of only
+              appearing silently on screen.
             </p>
           </div>
 
@@ -788,12 +800,14 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
               My contribution to the backend was design-driven. I translated the workflow
               research into the lifecycle states and the readiness gate the data had to
               enforce, drew where each carrier and service boundary should sit so vendor
-              quirks never leaked into the UI, and set the telemetry and alerting
-              requirements the cold chain depended on. The engineers owned the Rails and
-              Postgres implementation; I owned the front-end component system built against
-              it — shared partials progressively enhanced with Alpine.js and Turbolinks,
-              so a new screen composes already-accessible pieces instead of reinventing
-              them — and the specification the model answered to.
+              quirks never leaked into the interface, and set the monitoring and
+              alerting requirements the cold chain depended on. The engineers owned
+              the backend implementation. I owned the front-end component system
+              built against it: reusable building blocks that already work correctly
+              before all of a page's scripts finish loading, so a new screen
+              assembles from pieces that are already accessible instead of being
+              built from scratch. I also owned the specification that system had to
+              answer to.
             </p>
             <p>
               That is the seam a
@@ -985,13 +999,13 @@ const flow = (slug: string) => flows.find((f) => f.slug === slug)!;
   </Section>
 
   <!-- THE EDGES -->
-  <Section tone="paper" padding="default" class="border-t border-line">
+  <Section tone="paper" padding="default" id="edges" class="scroll-mt-24 border-t border-line">
     <Container width="content">
       <p class="mono-label mb-3">The edges</p>
       <Text size="lg" tone="muted" class="measure mb-10">
-        Both of these traced back to the same root cause: live telemetry from
-        more than one source, polled continuously, with no shared cadence or
-        labeling rule set early enough to prevent it.
+        Both of these trace back to the same root cause: live data streaming in
+        from more than one source, continuously, with no shared rule for timing
+        or wording set early enough to prevent it.
       </Text>
       <ul class="grid gap-x-10 gap-y-10 md:grid-cols-2">
         {edges.map((e) => (
