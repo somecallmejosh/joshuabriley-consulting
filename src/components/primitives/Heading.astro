@@ -69,8 +69,8 @@ const tones: Record<NonNullable<Props['tone']>, string> = {
     visualStyles[resolvedVisual],
     tones[tone],
     align === 'center' && 'text-center',
-    balance && 'text-balance',
     className,
+    'text-pretty'
   )}
 >
   <slot />
